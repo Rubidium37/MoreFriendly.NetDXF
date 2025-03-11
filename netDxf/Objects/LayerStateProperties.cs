@@ -28,9 +28,7 @@ using netDxf.Tables;
 
 namespace netDxf.Objects
 {
-	/// <summary>
-	/// Represents the state of the properties of a layer.
-	/// </summary>
+	/// <summary>Represents the state of the properties of a layer.</summary>
 	public class LayerStateProperties :
 		ICloneable
 	{
@@ -48,9 +46,7 @@ namespace netDxf.Objects
 
 		#region constructor
 
-		/// <summary>
-		/// Initializes a new instance of the <c>LayerStateProperties</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="name">Name of the layer state properties.</param>
 		public LayerStateProperties(string name)
 		{
@@ -67,9 +63,7 @@ namespace netDxf.Objects
 			//this.plotStyle = "Color_7";
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>LayerStateProperties</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="layer">Layer from which copy the properties.</param>
 		public LayerStateProperties(Layer layer)
 		{
@@ -89,26 +83,20 @@ namespace netDxf.Objects
 
 		#region public properties
 
-		/// <summary>
-		/// Gets the layer properties name.
-		/// </summary>
+		/// <summary>Gets the layer properties name.</summary>
 		public string Name
 		{
 			get { return this.name; }
 		}
 
-		/// <summary>
-		/// Layer properties flags.
-		/// </summary>
+		/// <summary>Layer properties flags.</summary>
 		public LayerPropertiesFlags Flags
 		{
 			get { return this.flags; }
 			set { this.flags = value; }
 		}
 
-		/// <summary>
-		/// Layer properties linetype name.
-		/// </summary>
+		/// <summary>Layer properties linetype name.</summary>
 		public string LinetypeName
 		{
 			get { return this.linetype; }
@@ -122,27 +110,21 @@ namespace netDxf.Objects
 			}
 		}
 
-		/// <summary>
-		/// Layer properties color.
-		/// </summary>
+		/// <summary>Layer properties color.</summary>
 		public AciColor Color
 		{
 			get { return this.color; }
 			set { this.color = value; }
 		}
 
-		/// <summary>
-		/// Layer properties lineweight.
-		/// </summary>
+		/// <summary>Layer properties lineweight.</summary>
 		public Lineweight Lineweight
 		{
 			get { return this.lineweight; }
 			set { this.lineweight = value; }
 		}
 
-		/// <summary>
-		/// Layer properties transparency.
-		/// </summary>
+		/// <summary>Layer properties transparency.</summary>
 		public Transparency Transparency
 		{
 			get { return this.transparency; }
@@ -162,9 +144,7 @@ namespace netDxf.Objects
 
 		#region public methods
 
-		/// <summary>
-		/// Copy the layer to the current layer state properties.
-		/// </summary>
+		/// <summary>Copy the layer to the current layer state properties.</summary>
 		/// <param name="layer">Layer from which copy the properties.</param>
 		/// <param name="options">Layer properties to copy.</param>
 		public void CopyFrom(Layer layer, LayerPropertiesRestoreFlags options)
@@ -210,9 +190,7 @@ namespace netDxf.Objects
 			}
 		}
 
-		/// <summary>
-		/// Copy the current layer state properties to a layer.
-		/// </summary>
+		/// <summary>Copy the current layer state properties to a layer.</summary>
 		/// <param name="layer">Layer to which copy the properties.</param>
 		/// <param name="options">Layer properties to copy.</param>
 		public void CopyTo(Layer layer, LayerPropertiesRestoreFlags options)
@@ -263,11 +241,9 @@ namespace netDxf.Objects
 			}
 		}
 
-		/// <summary>
-		/// Compares the stored properties with the specified layer.
-		/// </summary>
+		/// <summary>Compares the stored properties with the specified layer.</summary>
 		/// <param name="layer">Layer to compare with.</param>
-		/// <returns>If the stored properties are the same as the specified layer it returns true, false otherwise.</returns>
+		/// <returns>If the stored properties are the same as the specified layer it returns <see langword="true"/>; otherwise, <see langword="false"/>.</returns>
 		public bool CompareWith(Layer layer)
 		{
 			if (!string.Equals(layer.Name, this.name, StringComparison.InvariantCultureIgnoreCase))
@@ -322,6 +298,7 @@ namespace netDxf.Objects
 
 		#region ICloneable
 
+		/// <inheritdoc/>
 		public object Clone()
 		{
 			return new LayerStateProperties(this.name)

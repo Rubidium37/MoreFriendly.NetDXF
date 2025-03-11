@@ -29,9 +29,7 @@ using System.Threading;
 
 namespace netDxf
 {
-	/// <summary>
-	/// Represents a 2x2 double precision matrix.
-	/// </summary>
+	/// <summary>Represents a 2x2 double precision matrix.</summary>
 	public struct Matrix2 :
 		IEquatable<Matrix2>
 	{
@@ -49,9 +47,7 @@ namespace netDxf
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of Matrix2.
-		/// </summary>
+		/// <summary>Initializes a new instance of Matrix2.</summary>
 		/// <param name="m11">Element [0,0].</param>
 		/// <param name="m12">Element [0,1].</param>
 		/// <param name="m21">Element [1,0].</param>
@@ -72,9 +68,7 @@ namespace netDxf
 
 		#region constants
 
-		/// <summary>
-		/// Gets the zero matrix.
-		/// </summary>
+		/// <summary>Gets the zero matrix.</summary>
 		public static Matrix2 Zero
 		{
 			get
@@ -85,9 +79,7 @@ namespace netDxf
 			}
 		}
 
-		/// <summary>
-		/// Gets the identity matrix.
-		/// </summary>
+		/// <summary>Gets the identity matrix.</summary>
 		public static Matrix2 Identity
 		{
 			get
@@ -102,9 +94,7 @@ namespace netDxf
 
 		#region public properties
 
-		/// <summary>
-		/// Gets or sets the matrix element [0,0].
-		/// </summary>
+		/// <summary>Gets or sets the matrix element [0,0].</summary>
 		public double M11
 		{
 			get { return this.m11; }
@@ -115,9 +105,7 @@ namespace netDxf
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the matrix element [0,1].
-		/// </summary>
+		/// <summary>Gets or sets the matrix element [0,1].</summary>
 		public double M12
 		{
 			get { return this.m12; }
@@ -128,9 +116,7 @@ namespace netDxf
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the matrix element [1,0].
-		/// </summary>
+		/// <summary>Gets or sets the matrix element [1,0].</summary>
 		public double M21
 		{
 			get { return this.m21; }
@@ -141,9 +127,7 @@ namespace netDxf
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the matrix element [1,1].
-		/// </summary>
+		/// <summary>Gets or sets the matrix element [1,1].</summary>
 		public double M22
 		{
 			get { return this.m22; }
@@ -228,9 +212,7 @@ namespace netDxf
 			}
 		}
 
-		/// <summary>
-		/// Gets if the actual matrix is the identity.
-		/// </summary>
+		/// <summary>Gets if the actual matrix is the identity.</summary>
 		/// <remarks>
 		/// The checks to see if the matrix is the identity uses the MathHelper.Epsilon as a the threshold for testing values close to one and zero.
 		/// </remarks>
@@ -275,9 +257,7 @@ namespace netDxf
 
 		#region overloaded operators
 
-		/// <summary>
-		/// Matrix addition.
-		/// </summary>
+		/// <summary>Matrix addition.</summary>
 		/// <param name="a">Matrix2.</param>
 		/// <param name="b">Matrix2.</param>
 		/// <returns>Matrix2.</returns>
@@ -287,9 +267,7 @@ namespace netDxf
 								a.M21 + b.M21, a.M22 + b.M22);
 		}
 
-		/// <summary>
-		/// Matrix addition.
-		/// </summary>
+		/// <summary>Matrix addition.</summary>
 		/// <param name="a">Matrix2.</param>
 		/// <param name="b">Matrix2.</param>
 		/// <returns>Matrix2.</returns>
@@ -299,9 +277,7 @@ namespace netDxf
 								a.M21 + b.M21, a.M22 + b.M22);
 		}
 
-		/// <summary>
-		/// Matrix subtraction.
-		/// </summary>
+		/// <summary>Matrix subtraction.</summary>
 		/// <param name="a">Matrix2.</param>
 		/// <param name="b">Matrix2.</param>
 		/// <returns>Matrix2.</returns>
@@ -311,9 +287,7 @@ namespace netDxf
 								a.M21 - b.M21, a.M22 - b.M22);
 		}
 
-		/// <summary>
-		/// Matrix subtraction.
-		/// </summary>
+		/// <summary>Matrix subtraction.</summary>
 		/// <param name="a">Matrix2.</param>
 		/// <param name="b">Matrix2.</param>
 		/// <returns>Matrix2.</returns>
@@ -323,9 +297,7 @@ namespace netDxf
 								a.M21 - b.M21, a.M22 - b.M22);
 		}
 
-		/// <summary>
-		/// Product of two matrices.
-		/// </summary>
+		/// <summary>Product of two matrices.</summary>
 		/// <param name="a">Matrix2.</param>
 		/// <param name="b">Matrix2.</param>
 		/// <returns>Matrix2.</returns>
@@ -345,9 +317,7 @@ namespace netDxf
 								a.M21 * b.M11 + a.M22 * b.M21, a.M21 * b.M12 + a.M22 * b.M22);
 		}
 
-		/// <summary>
-		/// Product of two matrices.
-		/// </summary>
+		/// <summary>Product of two matrices.</summary>
 		/// <param name="a">Matrix2.</param>
 		/// <param name="b">Matrix2.</param>
 		/// <returns>Matrix2.</returns>
@@ -367,9 +337,7 @@ namespace netDxf
 								a.M21 * b.M11 + a.M22 * b.M21, a.M21 * b.M12 + a.M22 * b.M22);
 		}
 
-		/// <summary>
-		/// Product of a matrix with a vector.
-		/// </summary>
+		/// <summary>Product of a matrix with a vector.</summary>
 		/// <param name="a">Matrix2.</param>
 		/// <param name="u">Vector2.</param>
 		/// <returns>Matrix2.</returns>
@@ -380,9 +348,7 @@ namespace netDxf
 													a.M21 * u.X + a.M22 * u.Y);
 		}
 
-		/// <summary>
-		/// Product of a matrix with a vector.
-		/// </summary>
+		/// <summary>Product of a matrix with a vector.</summary>
 		/// <param name="a">Matrix2.</param>
 		/// <param name="u">Vector2.</param>
 		/// <returns>Matrix2.</returns>
@@ -393,9 +359,7 @@ namespace netDxf
 													a.M21 * u.X + a.M22 * u.Y);
 		}
 
-		/// <summary>
-		/// Product of a matrix with a scalar.
-		/// </summary>
+		/// <summary>Product of a matrix with a scalar.</summary>
 		/// <param name="m">Matrix2.</param>
 		/// <param name="a">Scalar.</param>
 		/// <returns>Matrix2.</returns>
@@ -405,9 +369,7 @@ namespace netDxf
 								m.M21 * a, m.M22 * a);
 		}
 
-		/// <summary>
-		/// Product of a matrix with a scalar.
-		/// </summary>
+		/// <summary>Product of a matrix with a scalar.</summary>
 		/// <param name="m">Matrix2.</param>
 		/// <param name="a">Scalar.</param>
 		/// <returns>Matrix2.</returns>
@@ -417,23 +379,19 @@ namespace netDxf
 								m.M21 * a, m.M22 * a);
 		}
 
-		/// <summary>
-		/// Check if the components of two matrices are equal.
-		/// </summary>
+		/// <summary>Check if the components of two matrices are equal.</summary>
 		/// <param name="u">Matrix2.</param>
 		/// <param name="v">Matrix2.</param>
-		/// <returns>True if the matrix components are equal or false in any other case.</returns>
+		/// <returns><see langword="true"/> if the matrix components are equal or <see langword="false"/> in any other case.</returns>
 		public static bool operator ==(Matrix2 u, Matrix2 v)
 		{
 			return Equals(u, v);
 		}
 
-		/// <summary>
-		/// Check if the components of two matrices are different.
-		/// </summary>
+		/// <summary>Check if the components of two matrices are different.</summary>
 		/// <param name="u">Matrix2.</param>
 		/// <param name="v">Matrix2.</param>
-		/// <returns>True if the matrix components are different or false in any other case.</returns>
+		/// <returns><see langword="true"/> if the matrix components are different or <see langword="false"/> in any other case.</returns>
 		public static bool operator !=(Matrix2 u, Matrix2 v)
 		{
 			return !Equals(u, v);
@@ -443,18 +401,14 @@ namespace netDxf
 
 		#region public methods
 
-		/// <summary>
-		/// Calculate the determinant of the actual matrix.
-		/// </summary>
+		/// <summary>Calculate the determinant of the actual matrix.</summary>
 		/// <returns>Determinant.</returns>
 		public double Determinant()
 		{
 			return this.IsIdentity ? 1.0 : this.m11 * this.m22 - this.m12 * this.m21;
 		}
 
-		/// <summary>
-		/// Calculates the inverse matrix.
-		/// </summary>
+		/// <summary>Calculates the inverse matrix.</summary>
 		/// <returns>Inverse Matrix2.</returns>
 		public Matrix2 Inverse()
 		{
@@ -475,9 +429,7 @@ namespace netDxf
 								-det * this.m21, det * this.m11);
 		}
 
-		/// <summary>
-		/// Obtains the transpose matrix.
-		/// </summary>
+		/// <summary>Obtains the transpose matrix.</summary>
 		/// <returns>Transpose matrix.</returns>
 		public Matrix2 Transpose()
 		{
@@ -489,12 +441,10 @@ namespace netDxf
 
 		#region static methods
 
-		/// <summary>
-		/// Builds a rotation matrix for a rotation.
-		/// </summary>
+		/// <summary>Builds a rotation matrix for a rotation.</summary>
 		/// <param name="angle">The counter-clockwise angle in radians.</param>
-		/// <returns>The resulting Matrix2 instance.</returns>
-		/// <remarks>Matrix2 adopts the convention of using column vectors to represent a transformation matrix.</remarks>
+		/// <returns>The resulting <see cref="Matrix2"/> instance.</returns>
+		/// <remarks><see cref="Matrix2"/> adopts the convention of using column vectors to represent a transformation matrix.</remarks>
 		public static Matrix2 Rotation(double angle)
 		{
 			double cos = Math.Cos(angle);
@@ -502,9 +452,7 @@ namespace netDxf
 			return new Matrix2(cos, -sin, sin, cos);
 		}
 
-		/// <summary>
-		/// Build a scaling matrix.
-		/// </summary>
+		/// <summary>Build a scaling matrix.</summary>
 		/// <param name="value">Single scale factor for x and y axis.</param>
 		/// <returns>A scaling matrix.</returns>
 		public static Matrix2 Scale(double value)
@@ -512,9 +460,7 @@ namespace netDxf
 			return Scale(value, value);
 		}
 
-		/// <summary>
-		/// Build a scaling matrix.
-		/// </summary>
+		/// <summary>Build a scaling matrix.</summary>
 		/// <param name="value">Scale factors for x and y axis.</param>
 		/// <returns>A scaling matrix.</returns>
 		public static Matrix2 Scale(Vector2 value)
@@ -522,9 +468,7 @@ namespace netDxf
 			return Scale(value.X, value.Y);
 		}
 
-		/// <summary>
-		/// Build a scaling matrix.
-		/// </summary>
+		/// <summary>Build a scaling matrix.</summary>
 		/// <param name="x">Scale factor for x-axis.</param>
 		/// <param name="y">Scale factor for y-axis.</param>
 		/// <returns>A scaling matrix.</returns>
@@ -538,59 +482,7 @@ namespace netDxf
 
 		#region comparison methods
 
-		/// <summary>
-		/// Check if the components of two matrices are approximate equal.
-		/// </summary>
-		/// <param name="a">Matrix2.</param>
-		/// <param name="b">Matrix2.</param>
-		/// <returns>True if the matrix components are almost equal or false in any other case.</returns>
-		public static bool Equals(Matrix2 a, Matrix2 b)
-		{
-			return a.Equals(b, MathHelper.Epsilon);
-		}
-
-		/// <summary>
-		/// Check if the components of two matrices are approximate equal.
-		/// </summary>
-		/// <param name="a">Matrix2.</param>
-		/// <param name="b">Matrix2.</param>
-		/// <param name="threshold">Maximum tolerance.</param>
-		/// <returns>True if the matrix components are almost equal or false in any other case.</returns>
-		public static bool Equals(Matrix2 a, Matrix2 b, double threshold)
-		{
-			return a.Equals(b, threshold);
-		}
-
-		/// <summary>
-		/// Check if the components of two matrices are approximate equal.
-		/// </summary>
-		/// <param name="other">Matrix2.</param>
-		/// <returns>True if the matrix components are almost equal or false in any other case.</returns>
-		public bool Equals(Matrix2 other)
-		{
-			return this.Equals(other, MathHelper.Epsilon);
-		}
-
-		/// <summary>
-		/// Check if the components of two matrices are approximate equal.
-		/// </summary>
-		/// <param name="obj">Matrix2.</param>
-		/// <param name="threshold">Maximum tolerance.</param>
-		/// <returns>True if the matrix components are almost equal or false in any other case.</returns>
-		public bool Equals(Matrix2 obj, double threshold)
-		{
-			return
-				MathHelper.IsEqual(obj.M11, this.M11, threshold) &&
-				MathHelper.IsEqual(obj.M12, this.M12, threshold) &&
-				MathHelper.IsEqual(obj.M21, this.M21, threshold) &&
-				MathHelper.IsEqual(obj.M22, this.M22, threshold);
-		}
-
-		/// <summary>
-		/// Indicates whether this instance and a specified object are equal.
-		/// </summary>
-		/// <param name="obj">Another object to compare to.</param>
-		/// <returns>True if obj and this instance are the same type and represent the same value; otherwise, false.</returns>
+		/// <inheritdoc/>
 		public override bool Equals(object obj)
 		{
 			if (obj is Matrix2 matrix)
@@ -600,11 +492,42 @@ namespace netDxf
 
 			return false;
 		}
+		/// <inheritdoc/>
+		public bool Equals(Matrix2 other)
+		{
+			return this.Equals(other, MathHelper.Epsilon);
+		}
+		/// <summary>Check if the components of two matrices are approximate equal.</summary>
+		/// <param name="obj">Matrix2.</param>
+		/// <param name="threshold">Maximum tolerance.</param>
+		/// <returns><see langword="true"/> if the matrix components are almost equal or <see langword="false"/> in any other case.</returns>
+		public bool Equals(Matrix2 obj, double threshold)
+		{
+			return
+				MathHelper.IsEqual(obj.M11, this.M11, threshold) &&
+				MathHelper.IsEqual(obj.M12, this.M12, threshold) &&
+				MathHelper.IsEqual(obj.M21, this.M21, threshold) &&
+				MathHelper.IsEqual(obj.M22, this.M22, threshold);
+		}
+		/// <summary>Check if the components of two matrices are approximate equal.</summary>
+		/// <param name="a">Matrix2.</param>
+		/// <param name="b">Matrix2.</param>
+		/// <returns><see langword="true"/> if the matrix components are almost equal or <see langword="false"/> in any other case.</returns>
+		public static bool Equals(Matrix2 a, Matrix2 b)
+		{
+			return a.Equals(b, MathHelper.Epsilon);
+		}
+		/// <summary>Check if the components of two matrices are approximate equal.</summary>
+		/// <param name="a">Matrix2.</param>
+		/// <param name="b">Matrix2.</param>
+		/// <param name="threshold">Maximum tolerance.</param>
+		/// <returns><see langword="true"/> if the matrix components are almost equal or <see langword="false"/> in any other case.</returns>
+		public static bool Equals(Matrix2 a, Matrix2 b, double threshold)
+		{
+			return a.Equals(b, threshold);
+		}
 
-		/// <summary>
-		/// Returns the hash code for this instance.
-		/// </summary>
-		/// <returns>A 32-bit signed integer that is the hash code for this instance.</returns>
+		/// <inheritdoc/>
 		public override int GetHashCode()
 		{
 			return this.M11.GetHashCode() ^ this.M12.GetHashCode() ^ this.M21.GetHashCode() ^ this.M22.GetHashCode();
@@ -614,10 +537,7 @@ namespace netDxf
 
 		#region overrides
 
-		/// <summary>
-		/// Obtains a string that represents the matrix.
-		/// </summary>
-		/// <returns>A string text.</returns>
+		/// <inheritdoc/>
 		public override string ToString()
 		{
 			string separator = Thread.CurrentThread.CurrentCulture.TextInfo.ListSeparator;
@@ -627,10 +547,8 @@ namespace netDxf
 			return s.ToString();
 		}
 
-		/// <summary>
-		/// Obtains a string that represents the matrix.
-		/// </summary>
-		/// <param name="provider">An IFormatProvider interface implementation that supplies culture-specific formatting information. </param>
+		/// <summary>Obtains a string that represents the matrix.</summary>
+		/// <param name="provider">An <see cref="IFormatProvider"/> object implementation that supplies culture-specific formatting information. </param>
 		/// <returns>A string text.</returns>
 		public string ToString(IFormatProvider provider)
 		{

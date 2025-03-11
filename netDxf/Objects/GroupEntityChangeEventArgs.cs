@@ -39,9 +39,7 @@ namespace netDxf.Objects
 
 		#region constructor
 
-		/// <summary>
-		/// Initializes a new instance of <c>BlockEntityChangeEventArgs</c>.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="item">The entity that is being added or removed from the block.</param>
 		public GroupEntityChangeEventArgs(EntityObject item)
 		{
@@ -52,9 +50,7 @@ namespace netDxf.Objects
 
 		#region public properties
 
-		/// <summary>
-		/// Gets the entity that is being added or removed.
-		/// </summary>
+		/// <summary>Gets the entity that is being added or removed.</summary>
 		public EntityObject Item
 		{
 			get { return this.item; }

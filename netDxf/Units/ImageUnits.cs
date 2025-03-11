@@ -25,57 +25,37 @@
 
 namespace netDxf.Units
 {
-	/// <summary>
-	/// AutoCAD units for inserting images.
-	/// </summary>
+	/// <summary>AutoCAD units for inserting images.</summary>
 	/// <remarks>
-	/// This is what one AutoCAD unit is equal to for the purpose of inserting and scaling images with an associated resolution.
+	/// This is what one <b>AutoCAD</b> unit is equal to for the purpose of inserting and scaling images with an associated resolution.
 	/// </remarks>
 	public enum ImageUnits
 	{
-		/// <summary>
-		/// No units.
-		/// </summary>
+		/// <summary>No units.</summary>
 		Unitless = 0,
 
-		/// <summary>
-		/// Millimeters.
-		/// </summary>
+		/// <summary>Millimeters.</summary>
 		Millimeters = 1,
 
-		/// <summary>
-		/// Centimeters.
-		/// </summary>
+		/// <summary>Centimeters.</summary>
 		Centimeters = 2,
 
-		/// <summary>
-		/// Meters.
-		/// </summary>
+		/// <summary>Meters.</summary>
 		Meters = 3,
 
-		/// <summary>
-		/// Kilometers.
-		/// </summary>
+		/// <summary>Kilometers.</summary>
 		Kilometers = 4,
 
-		/// <summary>
-		/// Inches.
-		/// </summary>
+		/// <summary>Inches.</summary>
 		Inches = 5,
 
-		/// <summary>
-		/// Feet.
-		/// </summary>
+		/// <summary>Feet.</summary>
 		Feet = 6,
 
-		/// <summary>
-		/// Yards.
-		/// </summary>
+		/// <summary>Yards.</summary>
 		Yards = 7,
 
-		/// <summary>
-		/// Miles.
-		/// </summary>
+		/// <summary>Miles.</summary>
 		Miles = 8
 	}
 }

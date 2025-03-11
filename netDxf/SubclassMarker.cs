@@ -25,9 +25,7 @@
 
 namespace netDxf
 {
-	/// <summary>
-	/// DXF object subclass string markers (code 100).
-	/// </summary>
+	/// <summary>DXF object subclass string markers (code 100).</summary>
 	internal static class SubclassMarker
 	{
 		public const string ApplicationId = "AcDbRegAppTableRecord";

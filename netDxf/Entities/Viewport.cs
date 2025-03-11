@@ -30,9 +30,7 @@ using netDxf.Tables;
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Represents a view in paper space of the model.
-	/// </summary>
+	/// <summary>Represents a view in paper space of the model.</summary>
 	/// <remarks>
 	/// The viewport with id equals 1 is the view of the paper space layout itself and it does not show the model.
 	/// </remarks>
@@ -97,9 +95,7 @@ namespace netDxf.Entities
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new viewport object.
-		/// </summary>
+		/// <summary>Initializes a new viewport object.</summary>
 		public Viewport()
 			: this(2)
 		{
@@ -167,27 +163,21 @@ namespace netDxf.Entities
 
 		#region public properties
 
-		/// <summary>
-		/// Gets or sets the center point in paper space units.
-		/// </summary>
+		/// <summary>Gets or sets the center point in paper space units.</summary>
 		public Vector3 Center
 		{
 			get { return this.center; }
 			set { this.center = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the width in paper space units.
-		/// </summary>
+		/// <summary>Gets or sets the width in paper space units.</summary>
 		public double Width
 		{
 			get { return this.width; }
 			set { this.width = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the height in paper space units.
-		/// </summary>
+		/// <summary>Gets or sets the height in paper space units.</summary>
 		public double Height
 		{
 			get { return this.height; }
@@ -214,137 +204,107 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the viewport ID.
-		/// </summary>
+		/// <summary>Gets or sets the viewport ID.</summary>
 		internal short Id
 		{
 			get { return this.id; }
 			set { this.id = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the view center point (in DCS).
-		/// </summary>
+		/// <summary>Gets or sets the view center point (in DCS).</summary>
 		public Vector2 ViewCenter
 		{
 			get { return this.viewCenter; }
 			set { this.viewCenter = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the snap base point.
-		/// </summary>
+		/// <summary>Gets or sets the snap base point.</summary>
 		public Vector2 SnapBase
 		{
 			get { return this.snapBase; }
 			set { this.snapBase = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the snap spacing.
-		/// </summary>
+		/// <summary>Gets or sets the snap spacing.</summary>
 		public Vector2 SnapSpacing
 		{
 			get { return this.snapSpacing; }
 			set { this.snapSpacing = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the grid spacing.
-		/// </summary>
+		/// <summary>Gets or sets the grid spacing.</summary>
 		public Vector2 GridSpacing
 		{
 			get { return this.gridSpacing; }
 			set { this.gridSpacing = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the view direction vector (in WCS).
-		/// </summary>
+		/// <summary>Gets or sets the view direction vector (in WCS).</summary>
 		public Vector3 ViewDirection
 		{
 			get { return this.viewDirection; }
 			set { this.viewDirection = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the view target point (in WCS).
-		/// </summary>
+		/// <summary>Gets or sets the view target point (in WCS).</summary>
 		public Vector3 ViewTarget
 		{
 			get { return this.viewTarget; }
 			set { this.viewTarget = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the perspective lens length.
-		/// </summary>
+		/// <summary>Gets or sets the perspective lens length.</summary>
 		public double LensLength
 		{
 			get { return this.lensLength; }
 			set { this.lensLength = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the front clip plane Z value.
-		/// </summary>
+		/// <summary>Gets or sets the front clip plane Z value.</summary>
 		public double FrontClipPlane
 		{
 			get { return this.frontClipPlane; }
 			set { this.frontClipPlane = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the back clip plane Z value.
-		/// </summary>
+		/// <summary>Gets or sets the back clip plane Z value.</summary>
 		public double BackClipPlane
 		{
 			get { return this.backClipPlane; }
 			set { this.backClipPlane = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the view height (in model space units).
-		/// </summary>
+		/// <summary>Gets or sets the view height (in model space units).</summary>
 		public double ViewHeight
 		{
 			get { return this.viewHeight; }
 			set { this.viewHeight = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the snap angle.
-		/// </summary>
+		/// <summary>Gets or sets the snap angle.</summary>
 		public double SnapAngle
 		{
 			get { return this.snapAngle; }
 			set { this.snapAngle = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the view twist angle.
-		/// </summary>
+		/// <summary>Gets or sets the view twist angle.</summary>
 		public double TwistAngle
 		{
 			get { return this.twistAngle; }
 			set { this.twistAngle = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the circle zoom percent.
-		/// </summary>
+		/// <summary>Gets or sets the circle zoom percent.</summary>
 		public short CircleZoomPercent
 		{
 			get { return this.circleZoomPercent; }
 			set { this.circleZoomPercent = value; }
 		}
 
-		/// <summary>
-		/// Gets the list of layers that are frozen in this viewport.
-		/// </summary>
+		/// <summary>Gets the list of layers that are frozen in this viewport.</summary>
 		/// <remarks>
-		/// The FrozenLayers list cannot contain null items and layers that belong to different documents.
+		/// The FrozenLayers list cannot contain <see langword="null"/> items and layers that belong to different documents.
 		/// Even if duplicate items should not cause any problems, it is not allowed to have two layers with the same name in the list.
 		/// </remarks>
 		public ObservableCollection<Layer> FrozenLayers
@@ -352,59 +312,47 @@ namespace netDxf.Entities
 			get { return this.frozenLayers; }
 		}
 
-		/// <summary>
-		/// Gets or sets the <see cref="ViewportStatusFlags">viewport status flags</see>:
-		/// </summary>
+		/// <summary>Gets or sets the <see cref="ViewportStatusFlags">viewport status flags</see>:</summary>
 		public ViewportStatusFlags Status
 		{
 			get { return this.status; }
 			set { this.status = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the UCS origin.
-		/// </summary>
+		/// <summary>Gets or sets the <b>UCS</b> origin.</summary>
 		public Vector3 UcsOrigin
 		{
 			get { return this.ucsOrigin; }
 			set { this.ucsOrigin = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the UCS X axis.
-		/// </summary>
+		/// <summary>Gets or sets the <b>UCS</b> X axis.</summary>
 		public Vector3 UcsXAxis
 		{
 			get { return this.ucsXAxis; }
 			set { this.ucsXAxis = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the UCS Y axis.
-		/// </summary>
+		/// <summary>Gets or sets the <b>UCS</b> Y axis.</summary>
 		public Vector3 UcsYAxis
 		{
 			get { return this.ucsYAxis; }
 			set { this.ucsYAxis = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the elevation.
-		/// </summary>
+		/// <summary>Gets or sets the elevation.</summary>
 		public double Elevation
 		{
 			get { return this.elevation; }
 			set { this.elevation = value; }
 		}
 
-		/// <summary>
-		/// Entity that serves as the viewport clipping boundary (only present if viewport is non-rectangular).
-		/// </summary>
+		/// <summary>Entity that serves as the viewport clipping boundary (only present if viewport is non-rectangular).</summary>
 		/// <remarks>
-		/// AutoCad does not allow the creation of viewports from open shapes such as LwPolylines, Polylines, or ellipse arcs;
+		/// <b>AutoCAD</b> does not allow the creation of viewports from open shapes such as LwPolylines, Polylines, or ellipse arcs;
 		/// but if they are edited afterward, making them open, it will not complain, and they will work without problems.
 		/// So, it is possible to use open shapes as clipping boundaries, even if it is not recommended.
-		/// It might not be supported by all programs that read DXF files and a redraw of the layout might be required to show them correctly inside AutoCad.<br />
+		/// It might not be supported by all programs that read <b>DXF</b> files and a redraw of the layout might be required to show them correctly inside AutoCad.<br />
 		/// Only X and Y coordinates will be used the entity normal will be considered as UnitZ.<br />
 		/// When the viewport is added to the document this entity will be added too.
 		/// </remarks>
@@ -488,12 +436,7 @@ namespace netDxf.Entities
 
 		#region overrides
 
-		/// <summary>
-		/// Moves, scales, and/or rotates the current entity given a 3x3 transformation matrix and a translation vector.
-		/// </summary>
-		/// <param name="transformation">Transformation matrix.</param>
-		/// <param name="translation">Translation vector.</param>
-		/// <remarks>Matrix3 adopts the convention of using column vectors to represent a transformation matrix.</remarks>
+		/// <inheritdoc/>
 		public override void TransformBy(Matrix3 transformation, Vector3 translation)
 		{
 			Vector3 newNormal = transformation * this.Normal;
@@ -527,10 +470,7 @@ namespace netDxf.Entities
 			this.ClippingBoundary = clippingEntity;
 		}
 
-		/// <summary>
-		/// Creates a new viewport that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new viewport that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override object Clone()
 		{
 			Viewport viewport = new Viewport

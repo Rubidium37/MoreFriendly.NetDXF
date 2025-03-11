@@ -27,9 +27,7 @@ using System;
 
 namespace netDxf.Header
 {
-	/// <summary>
-	/// Defines a header variable.
-	/// </summary>
+	/// <summary>Defines a header variable.</summary>
 	public class HeaderVariable
 	{
 		#region private fields
@@ -42,18 +40,16 @@ namespace netDxf.Header
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of the <c>HeaderVariable</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="name">Header variable name.</param>
 		/// <param name="groupCode">Header variable group code.</param>
 		/// <param name="value">Header variable value.</param>
 		/// <remarks>
 		/// It is very important to match the group code with its corresponding value type,
-		/// check the DXF documentation for details about what group code correspond to its associated type.
+		/// check the <b>DXF</b> documentation for details about what group code correspond to its associated type.
 		/// For example, typical groups codes are 70, 40, and 2 that correspond to short, double, and string value types, respectively.<br />
-		/// If the header value is a Vector3 use the group code 30, if it is a Vector2 use group code 20,
-		/// when the variable is written to the DXF the codes 10, 20, and 30 will be added as necessary.
+		/// If the header value is a <see cref="Vector3"/> use the group code 30, if it is a <see cref="Vector2"/> use group code 20,
+		/// when the variable is written to the <b>DXF</b> the codes 10, 20, and 30 will be added as necessary.
 		/// </remarks>
 		public HeaderVariable(string name, short groupCode, object value)
 		{
@@ -68,32 +64,26 @@ namespace netDxf.Header
 
 		#region public properties
 
-		/// <summary>
-		/// Gets the header variable name.
-		/// </summary>
+		/// <summary>Gets the header variable name.</summary>
 		/// <remarks>The header variable name is case insensitive.</remarks>
 		public string Name
 		{
 			get { return this.name; }
 		}
 
-		/// <summary>
-		/// Gets the header variable group code.
-		/// </summary>
+		/// <summary>Gets the header variable group code.</summary>
 		public short GroupCode
 		{
 			get { return this.groupCode; }
 		}
 
-		/// <summary>
-		/// Gets the header variable stored value.
-		/// </summary>
+		/// <summary>Gets the header variable stored value.</summary>
 		/// <remarks>
 		/// It is very important to match the group code with its corresponding value type,
-		/// check the DXF documentation for details about what group code correspond to its associated type.
+		/// check the <b>DXF</b> documentation for details about what group code correspond to its associated type.
 		/// For example, typical groups codes are 70, 40, and 2 that correspond to short, double, and string value types, respectively.<br />
-		/// If the header value is a Vector3 use the group code 30, if it is a Vector2 use group code 20,
-		/// when the variable is written to the DXF the codes 10, 20, and 30 will be added as necessary.
+		/// If the header value is a <see cref="Vector3"/> use the group code 30, if it is a <see cref="Vector2"/> use group code 20,
+		/// when the variable is written to the <b>DXF</b> the codes 10, 20, and 30 will be added as necessary.
 		/// </remarks>
 		public object Value
 		{
@@ -105,10 +95,7 @@ namespace netDxf.Header
 
 		#region overrides
 
-		/// <summary>
-		/// Obtains a string that represents the header variable.
-		/// </summary>
-		/// <returns>A string text.</returns>
+		/// <inheritdoc/>
 		public override string ToString()
 		{
 			return string.Format("{0}:{1}", this.name, this.variable);

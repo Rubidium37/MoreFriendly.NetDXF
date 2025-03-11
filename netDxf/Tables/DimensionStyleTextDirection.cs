@@ -25,19 +25,13 @@
 
 namespace netDxf.Tables
 {
-	/// <summary>
-	/// Specifies the direction of the dimension text.
-	/// </summary>
+	/// <summary>Specifies the direction of the dimension text.</summary>
 	public enum DimensionStyleTextDirection
 	{
-		/// <summary>
-		/// Displays dimension text in a Left-to-Right reading style.
-		/// </summary>
+		/// <summary>Displays dimension text in a Left-to-Right reading style.</summary>
 		LeftToRight = 0,
 
-		/// <summary>
-		/// Displays dimension text in a Right-to-Left reading style.
-		/// </summary>
+		/// <summary>Displays dimension text in a Right-to-Left reading style.</summary>
 		RightToLeft = 1
 
 	}

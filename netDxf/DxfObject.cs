@@ -28,9 +28,7 @@ using netDxf.Tables;
 
 namespace netDxf
 {
-	/// <summary>
-	/// Represents the base class for all DXF objects.
-	/// </summary>
+	/// <summary>Represents the base class for all <b>DXF</b> objects.</summary>
 	public abstract class DxfObject
 	{
 		#region delegates and events
@@ -70,9 +68,7 @@ namespace netDxf
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of the <c>DxfObject</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="codename"><see cref="DxfObjectCode">DXF object name</see>.</param>
 		protected DxfObject(string codename)
 		{
@@ -88,21 +84,17 @@ namespace netDxf
 
 		#region public properties
 
-		/// <summary>
-		/// Gets the <see cref="DxfObjectCode">DXF object name</see>.
-		/// </summary>
+		/// <summary>Gets the <see cref="DxfObjectCode">DXF object name</see>.</summary>
 		public string CodeName
 		{
 			get { return this.codename; }
 			protected set { this.codename = value; }
 		}
 
-		/// <summary>
-		/// Gets the handle assigned to the DXF object.
-		/// </summary>
+		/// <summary>Gets the handle assigned to the <b>DXF</b> object.</summary>
 		/// <remarks>
-		/// The handle is a unique hexadecimal number assigned automatically to every DXF object,
-		/// that has been added to a <see cref="DxfDocument">DxfDocument</see>.
+		/// The handle is a unique hexadecimal number assigned automatically to every <b>DXF</b> object,
+		/// that has been added to a <see cref="DxfDocument"/>.
 		/// </remarks>
 		public string Handle
 		{
@@ -110,18 +102,14 @@ namespace netDxf
 			internal set { this.handle = value; }
 		}
 
-		/// <summary>
-		/// Gets the owner of the actual <see cref="DxfObject">DxfObject</see>.
-		/// </summary>
+		/// <summary>Gets the owner of the actual <see cref="DxfObject"/>.</summary>
 		public DxfObject Owner
 		{
 			get { return this.owner; }
 			internal set { this.owner = value; }
 		}
 
-		/// <summary>
-		/// Gets the entity <see cref="XDataDictionary">extended data</see>.
-		/// </summary>
+		/// <summary>Gets the entity <see cref="XDataDictionary">extended data</see>.</summary>
 		public XDataDictionary XData
 		{
 			get { return this.xData; }
@@ -131,9 +119,7 @@ namespace netDxf
 
 		#region internal methods
 
-		/// <summary>
-		/// Assigns a handle to the object based in a integer counter.
-		/// </summary>
+		/// <summary>Assigns a handle to the object based in a integer counter.</summary>
 		/// <param name="entityNumber">Number to assign to the actual object.</param>
 		/// <returns>Next available entity number.</returns>
 		/// <remarks>
@@ -150,10 +136,7 @@ namespace netDxf
 
 		#region overrides
 
-		/// <summary>
-		/// Obtains a string that represents the DXF object.
-		/// </summary>
-		/// <returns>A string text.</returns>
+		/// <inheritdoc/>
 		public override string ToString()
 		{
 			return this.codename;

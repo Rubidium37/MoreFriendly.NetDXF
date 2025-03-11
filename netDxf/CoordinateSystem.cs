@@ -25,19 +25,13 @@
 
 namespace netDxf
 {
-	/// <summary>
-	/// Defines the coordinate system reference.
-	/// </summary>
+	/// <summary>Defines the coordinate system reference.</summary>
 	public enum CoordinateSystem
 	{
-		/// <summary>
-		/// World coordinates.
-		/// </summary>
+		/// <summary>World coordinates.</summary>
 		World,
 
-		/// <summary>
-		/// Object/Local coordinates.
-		/// </summary>
+		/// <summary>Object/Local coordinates.</summary>
 		Object
 	}
 }

@@ -30,9 +30,7 @@ using netDxf.Tables;
 
 namespace netDxf.Collections
 {
-	/// <summary>
-	/// Represents a dictionary of <see cref="DimensionStyleOverride">DimensionStyleOverrides</see>.
-	/// </summary>
+	/// <summary>Represents a dictionary of <see cref="DimensionStyleOverride">DimensionStyleOverrides</see>.</summary>
 	public sealed class DimensionStyleOverrideDictionary :
 		IDictionary<DimensionStyleOverrideType, DimensionStyleOverride>
 	{
@@ -102,17 +100,13 @@ namespace netDxf.Collections
 
 		#region constructor
 
-		/// <summary>
-		/// Initializes a new instance of <c>DimensionStyleOverrideDictionary</c>.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		public DimensionStyleOverrideDictionary()
 		{
 			this.innerDictionary = new Dictionary<DimensionStyleOverrideType, DimensionStyleOverride>();
 		}
 
-		/// <summary>
-		/// Initializes a new instance of <c>DimensionStyleOverrideDictionary</c> and has the specified initial capacity.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class and has the specified initial capacity.</summary>
 		/// <param name="capacity">The number of items the collection can initially store.</param>
 		public DimensionStyleOverrideDictionary(int capacity)
 		{
@@ -123,11 +117,7 @@ namespace netDxf.Collections
 
 		#region public properties
 
-		/// <summary>
-		/// Gets or sets the <see cref="DimensionStyleOverride">DimensionStyleOverride</see> with the specified type.
-		/// </summary>
-		/// <param name="type">The type of the DimensionStyleOverride to get or set.</param>
-		/// <returns>The <see cref="DimensionStyleOverride">DimensionStyleOverride</see> with the specified type.</returns>
+		/// <inheritdoc/>
 		public DimensionStyleOverride this[DimensionStyleOverrideType type]
 		{
 			get { return this.innerDictionary[type]; }
@@ -160,33 +150,25 @@ namespace netDxf.Collections
 			}
 		}
 
-		/// <summary>
-		/// Gets an ICollection containing the types of the current dictionary.
-		/// </summary>
+		/// <summary>Gets a collection containing the types of the current dictionary.</summary>
 		public ICollection<DimensionStyleOverrideType> Types
 		{
 			get { return this.innerDictionary.Keys; }
 		}
 
-		/// <summary>
-		/// Gets an ICollection containing the <see cref="DimensionStyleOverride">DimensionStyleOverride</see> list of the current dictionary.
-		/// </summary>
+		/// <inheritdoc/>
 		public ICollection<DimensionStyleOverride> Values
 		{
 			get { return this.innerDictionary.Values; }
 		}
 
-		/// <summary>
-		/// Gets the number of <see cref="DimensionStyleOverride">DimensionStyleOverride</see> contained in the current dictionary.
-		/// </summary>
+		/// <inheritdoc/>
 		public int Count
 		{
 			get { return this.innerDictionary.Count; }
 		}
 
-		/// <summary>
-		/// Gets a value indicating whether the actual dictionary is read-only.
-		/// </summary>
+		/// <inheritdoc/>
 		public bool IsReadOnly
 		{
 			get { return false; }
@@ -196,21 +178,17 @@ namespace netDxf.Collections
 
 		#region public methods
 
-		/// <summary>
-		/// Adds a <see cref="DimensionStyleOverride">DimensionStyleOverride</see> to the dictionary from its type and value.
-		/// </summary>
+		/// <summary>Adds a <see cref="DimensionStyleOverride"/> to the dictionary from its type and value.</summary>
 		/// <param name="type">Dimension style override type.</param>
 		/// <param name="value">Dimension style override value.</param>
-		/// <remarks>A new DimensionStyleOverride will be created from the specified arguments.</remarks>
+		/// <remarks>A new <see cref="DimensionStyleOverride"/> will be created from the specified arguments.</remarks>
 		public void Add(DimensionStyleOverrideType type, object value)
 		{
 			this.Add(new DimensionStyleOverride(type, value));
 		}
 
-		/// <summary>
-		/// Adds an <see cref="DimensionStyleOverride">DimensionStyleOverride</see> to the dictionary.
-		/// </summary>
-		/// <param name="item">The <see cref="DimensionStyleOverride">DimensionStyleOverride</see> to add.</param>
+		/// <summary>Adds an <see cref="DimensionStyleOverride"/> to the dictionary.</summary>
+		/// <param name="item">The <see cref="DimensionStyleOverride"/> to add.</param>
 		public void Add(DimensionStyleOverride item)
 		{
 			if (item == null)
@@ -227,9 +205,7 @@ namespace netDxf.Collections
 			this.OnAddItemEvent(item);
 		}
 
-		/// <summary>
-		/// Adds an <see cref="DimensionStyleOverride">DimensionStyleOverride</see> list to the dictionary.
-		/// </summary>
+		/// <summary>Adds an <see cref="DimensionStyleOverride"/> list to the dictionary.</summary>
 		/// <param name="collection">The collection whose elements should be added.</param>
 		public void AddRange(IEnumerable<DimensionStyleOverride> collection)
 		{
@@ -245,11 +221,7 @@ namespace netDxf.Collections
 			}
 		}
 
-		/// <summary>
-		/// Removes an <see cref="DimensionStyleOverride">DimensionStyleOverride</see> of the specified type from the current dictionary.
-		/// </summary>
-		/// <param name="type">The type of the <see cref="DimensionStyleOverride">DimensionStyleOverride</see> to remove.</param>
-		/// <returns>True if the <see cref="DimensionStyleOverride">DimensionStyleOverride</see> is successfully removed; otherwise, false.</returns>
+		/// <inheritdoc/>
 		public bool Remove(DimensionStyleOverrideType type)
 		{
 			if (!this.innerDictionary.TryGetValue(type, out DimensionStyleOverride remove))
@@ -267,9 +239,7 @@ namespace netDxf.Collections
 			return true;
 		}
 
-		/// <summary>
-		/// Removes all <see cref="DimensionStyleOverride">DimensionStyleOverride</see> from the current dictionary.
-		/// </summary>
+		/// <inheritdoc/>
 		public void Clear()
 		{
 			DimensionStyleOverrideType[] types = new DimensionStyleOverrideType[this.innerDictionary.Count];
@@ -280,42 +250,29 @@ namespace netDxf.Collections
 			}
 		}
 
-		/// <summary>
-		/// Determines whether current dictionary contains an <see cref="DimensionStyleOverride">DimensionStyleOverride</see> of the specified type.
-		/// </summary>
+		/// <summary>Determines whether current dictionary contains an <see cref="DimensionStyleOverride"/> of the specified type.</summary>
 		/// <param name="type">The type to locate in the current dictionary.</param>
-		/// <returns>True if the current dictionary contains an <see cref="DimensionStyleOverride">DimensionStyleOverride</see> of the type; otherwise, false.</returns>
+		/// <returns><see langword="true"/> if the current dictionary contains an <see cref="DimensionStyleOverride"/> of the type; otherwise, <see langword="false"/>.</returns>
 		public bool ContainsType(DimensionStyleOverrideType type)
 		{
 			return this.innerDictionary.ContainsKey(type);
 		}
 
-		/// <summary>
-		/// Determines whether current dictionary contains a specified <see cref="DimensionStyleOverride">DimensionStyleOverride</see>.
-		/// </summary>
-		/// <param name="value">The <see cref="DimensionStyleOverride">DimensionStyleOverride</see> to locate in the current dictionary.</param>
-		/// <returns>True if the current dictionary contains the <see cref="DimensionStyleOverride">DimensionStyleOverride</see>; otherwise, false.</returns>
+		/// <summary>Determines whether current dictionary contains a specified <see cref="DimensionStyleOverride"/>.</summary>
+		/// <param name="value">The <see cref="DimensionStyleOverride"/> to locate in the current dictionary.</param>
+		/// <returns><see langword="true"/> if the current dictionary contains the <see cref="DimensionStyleOverride"/>; otherwise, <see langword="false"/>.</returns>
 		public bool ContainsValue(DimensionStyleOverride value)
 		{
 			return this.innerDictionary.ContainsValue(value);
 		}
 
-		/// <summary>
-		/// Gets the <see cref="DimensionStyleOverride">DimensionStyleOverride</see> associated of the specified type.
-		/// </summary>
-		/// <param name="type">The type whose value to get.</param>
-		/// <param name="value">When this method returns, the <see cref="DimensionStyleOverride">DimensionStyleOverride</see> associated of the specified type,
-		/// if the tag is found; otherwise, null. This parameter is passed uninitialized.</param>
-		/// <returns>True if the current dictionary contains an <see cref="DimensionStyleOverride">DimensionStyleOverride</see> of the specified type; otherwise, false.</returns>
+		/// <inheritdoc/>
 		public bool TryGetValue(DimensionStyleOverrideType type, out DimensionStyleOverride value)
 		{
 			return this.innerDictionary.TryGetValue(type, out value);
 		}
 
-		/// <summary>
-		/// Returns an enumerator that iterates through the dictionary.
-		/// </summary>
-		/// <returns>An enumerator that can be used to iterate through the dictionary.</returns>
+		/// <inheritdoc/>
 		public IEnumerator<KeyValuePair<DimensionStyleOverrideType, DimensionStyleOverride>> GetEnumerator()
 		{
 			return this.innerDictionary.GetEnumerator();

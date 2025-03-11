@@ -29,9 +29,7 @@ using netDxf.Tables;
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Represents a generic polyline <see cref="EntityObject">entity</see>.
-	/// </summary>
+	/// <summary>Represents a generic polyline <see cref="EntityObject">entity</see>.</summary>
 	public class Polyline3D :
 		EntityObject
 	{
@@ -46,26 +44,20 @@ namespace netDxf.Entities
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Polyline3d</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		public Polyline3D()
 			: this(new List<Vector3>(), false)
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Polyline3d</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="vertexes">3d polyline <see cref="Vector3">vertex</see> list.</param>
 		public Polyline3D(IEnumerable<Vector3> vertexes)
 			: this(vertexes, false)
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Polyline3d</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="vertexes">3d polyline <see cref="Vector3">vertex</see> list.</param>
 		/// <param name="isClosed">Sets if the polyline is closed, by default it will create an open polyline.</param>
 		public Polyline3D(IEnumerable<Vector3> vertexes, bool isClosed)
@@ -85,9 +77,7 @@ namespace netDxf.Entities
 
 		#region public properties
 
-		/// <summary>
-		/// Gets or sets if the default SplineSegs value, this value is used by the Explode method when the current Polyline2D does not belong to a DXF document.
-		/// </summary>
+		/// <summary>Gets or sets if the default SplineSegs value, this value is used by the Explode method when the current <see cref="Polyline2D"/> does not belong to a <b>DXF</b> document.</summary>
 		public static short DefaultSplineSegs
 		{
 			get { return defaultSplineSegs; }
@@ -101,17 +91,13 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets the polyline <see cref="Vector3">vertex</see> list.
-		/// </summary>
+		/// <summary>Gets the polyline <see cref="Vector3">vertex</see> list.</summary>
 		public List<Vector3> Vertexes
 		{
 			get { return this.vertexes; }
 		}
 
-		/// <summary>
-		/// Gets or sets if the polyline is closed.
-		/// </summary>
+		/// <summary>Gets or sets if the polyline is closed.</summary>
 		public bool IsClosed
 		{
 			get { return this.flags.HasFlag(PolylineTypeFlags.ClosedPolylineOrClosedPolygonMeshInM); }
@@ -128,9 +114,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Enable or disable if the line type pattern is generated continuously around the vertexes of the polyline.
-		/// </summary>
+		/// <summary>Enable or disable if the line type pattern is generated continuously around the vertexes of the polyline.</summary>
 		public bool LinetypeGeneration
 		{
 			get { return this.flags.HasFlag(PolylineTypeFlags.ContinuousLinetypePattern); }
@@ -147,11 +131,9 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the curve smooth type.
-		/// </summary>
+		/// <summary>Gets or sets the curve smooth type.</summary>
 		/// <remarks>
-		/// The additional polyline vertexes corresponding to the SplineFit will be created when writing the DXF file.
+		/// The additional polyline vertexes corresponding to the SplineFit will be created when writing the <b>DXF</b> file.
 		/// </remarks>
 		public PolylineSmoothType SmoothType
 		{
@@ -174,9 +156,7 @@ namespace netDxf.Entities
 
 		#region internal properties
 
-		/// <summary>
-		/// Gets the Polyline3D flags.
-		/// </summary>
+		/// <summary>Gets the <see cref="Polyline3D"/> flags.</summary>
 		internal PolylineTypeFlags Flags
 		{
 			get { return this.flags; }
@@ -187,9 +167,7 @@ namespace netDxf.Entities
 
 		#region public methods
 
-		/// <summary>
-		/// Switch the polyline direction.
-		/// </summary>
+		/// <summary>Switch the polyline direction.</summary>
 		public void Reverse()
 		{
 			if (this.vertexes.Count < 2)
@@ -200,9 +178,7 @@ namespace netDxf.Entities
 			this.vertexes.Reverse();
 		}
 
-		/// <summary>
-		/// Decompose the actual polyline in a list of <see cref="Line">lines</see>.
-		/// </summary>
+		/// <summary>Decompose the actual polyline in a list of <see cref="Line">lines</see>.</summary>
 		/// <returns>A list of <see cref="Line">lines</see> that made up the polyline.</returns>
 		public List<EntityObject> Explode()
 		{
@@ -292,9 +268,7 @@ namespace netDxf.Entities
 			return entities;
 		}
 
-		/// <summary>
-		/// Converts the polyline in a list of vertexes.
-		/// </summary>
+		/// <summary>Converts the polyline in a list of vertexes.</summary>
 		/// <param name="precision">Number of vertexes generated, only applicable for smoothed polylines.</param>
 		/// <returns>A list vertexes that represents the polyline.</returns>
 		public List<Vector3> PolygonalVertexes(int precision)
@@ -329,13 +303,11 @@ namespace netDxf.Entities
 			return Spline.NurbsEvaluator(this.vertexes.ToArray(), null, null, degree, false, this.IsClosed, precision);
 		}
 
-		/// <summary>
-		/// Converts the actual Polyline3D in a Polyline2D.
-		/// </summary>
+		/// <summary>Converts the actual <see cref="Polyline3D"/> in a <see cref="Polyline2D"/>.</summary>
 		/// <param name="precision">Number of vertexes generated, only applicable for smoothed polylines.</param>
-		/// <returns>A Polyline2D that represents the polyline.</returns>
+		/// <returns>A <see cref="Polyline2D"/> that represents the polyline.</returns>
 		/// <remarks>
-		/// The resulting Polyline2D will be a projection of the actual polyline into the plane defined by its normal vector.
+		/// The resulting <see cref="Polyline2D"/> will be a projection of the actual polyline into the plane defined by its normal vector.
 		/// </remarks>
 		public Polyline2D ToPolyline2D(int precision)
 		{
@@ -360,12 +332,7 @@ namespace netDxf.Entities
 
 		#region overrides
 
-		/// <summary>
-		/// Moves, scales, and/or rotates the current entity given a 3x3 transformation matrix and a translation vector.
-		/// </summary>
-		/// <param name="transformation">Transformation matrix.</param>
-		/// <param name="translation">Translation vector.</param>
-		/// <remarks>Matrix3 adopts the convention of using column vectors to represent a transformation matrix.</remarks>
+		/// <inheritdoc/>
 		public override void TransformBy(Matrix3 transformation, Vector3 translation)
 		{
 			for (int i = 0; i < this.vertexes.Count; i++)
@@ -381,10 +348,7 @@ namespace netDxf.Entities
 			this.Normal = newNormal;
 		}
 
-		/// <summary>
-		/// Creates a new Polyline3D that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new Polyline3D that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override object Clone()
 		{
 			Polyline3D entity = new Polyline3D(this.vertexes)

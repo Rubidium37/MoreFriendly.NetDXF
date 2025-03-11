@@ -25,34 +25,22 @@
 
 namespace netDxf.Tables
 {
-	/// <summary>
-	/// Controls the vertical placement of dimension text in relation to the dimension line.
-	/// </summary>
+	/// <summary>Controls the vertical placement of dimension text in relation to the dimension line.</summary>
 	public enum DimensionStyleTextHorizontalPlacement
 	{
-		/// <summary>
-		/// Centers the dimension text along the dimension line between the extension lines.
-		/// </summary>
+		/// <summary>Centers the dimension text along the dimension line between the extension lines.</summary>
 		Centered = 0,
 
-		/// <summary>
-		/// Left-justifies the text with the first extension line along the dimension line.
-		/// </summary>
+		/// <summary>Left-justifies the text with the first extension line along the dimension line.</summary>
 		AtExtLines1 = 1,
 
-		/// <summary>
-		/// Right-justifies the text with the second extension line along the dimension line.
-		/// </summary>
+		/// <summary>Right-justifies the text with the second extension line along the dimension line.</summary>
 		AtExtLine2 = 2,
 
-		/// <summary>
-		/// Positions the text over or along the first extension line.
-		/// </summary>
+		/// <summary>Positions the text over or along the first extension line.</summary>
 		OverExtLine1 = 3,
 
-		/// <summary>
-		/// Positions the text over or along the second extension line.
-		/// </summary>
+		/// <summary>Positions the text over or along the second extension line.</summary>
 		OverExtLine2 = 4
 	}
 }

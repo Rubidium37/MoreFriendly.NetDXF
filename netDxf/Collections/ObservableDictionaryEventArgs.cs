@@ -28,9 +28,7 @@ using System.Collections.Generic;
 
 namespace netDxf.Collections
 {
-	/// <summary>
-	/// Represents the arguments thrown by the <c>ObservableDictionaryEventArgs</c> events.
-	/// </summary>
+	/// <summary>Represents the arguments thrown by the <see cref="ObservableDictionary{TKey, TValue}"/> events.</summary>
 	/// <typeparam name="TKey">Type of items.</typeparam>
 	/// <typeparam name="TValue">Type of items.</typeparam>
 	public class ObservableDictionaryEventArgs<TKey, TValue> :
@@ -45,9 +43,7 @@ namespace netDxf.Collections
 
 		#region constructor
 
-		/// <summary>
-		/// Initializes a new instance of <c>ObservableDictionaryEventArgs</c>.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="item">Item that is being added or removed from the dictionary.</param>
 		public ObservableDictionaryEventArgs(KeyValuePair<TKey, TValue> item)
 		{
@@ -59,18 +55,14 @@ namespace netDxf.Collections
 
 		#region public properties
 
-		/// <summary>
-		/// Get the item that is being added to or removed from the dictionary.
-		/// </summary>
+		/// <summary>Get the item that is being added to or removed from the dictionary.</summary>
 		public KeyValuePair<TKey, TValue> Item
 		{
 			get { return this.item; }
 		}
 
-		/// <summary>
-		/// Gets or sets if the operation must be canceled.
-		/// </summary>
-		/// <remarks>This property is used by the OnBeforeAdd and OnBeforeRemove events to cancel the add or remove operations.</remarks>
+		/// <summary>Gets or sets if the operation must be canceled.</summary>
+		/// <remarks>This property is used by the <see cref="ObservableDictionary{TKey, TValue}.BeforeAddItem"/> and <see cref="ObservableDictionary{TKey, TValue}.BeforeRemoveItem"/> events to cancel the add or remove operations.</remarks>
 		public bool Cancel
 		{
 			get { return this.cancel; }

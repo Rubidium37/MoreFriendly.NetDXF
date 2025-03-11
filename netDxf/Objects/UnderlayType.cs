@@ -25,24 +25,16 @@
 
 namespace netDxf.Objects
 {
-	/// <summary>
-	/// Defines the different underlay documents available.
-	/// </summary>
+	/// <summary>Defines the different underlay documents available.</summary>
 	public enum UnderlayType
 	{
-		/// <summary>
-		/// DGN
-		/// </summary>
+		/// <summary>DGN</summary>
 		DGN,
 
-		/// <summary>
-		/// DWF
-		/// </summary>
+		/// <summary>DWF</summary>
 		DWF,
 
-		/// <summary>
-		/// PDF
-		/// </summary>
+		/// <summary>PDF</summary>
 		PDF
 	}
 }

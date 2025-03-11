@@ -30,9 +30,7 @@ using netDxf.Entities;
 
 namespace netDxf.Collections
 {
-	/// <summary>
-	/// Represents a dictionary of <see cref="AttributeDefinition">AttributeDefinitions</see>.
-	/// </summary>
+	/// <summary>Represents a dictionary of <see cref="AttributeDefinition">AttributeDefinitions</see>.</summary>
 	public sealed class AttributeDefinitionDictionary :
 		IDictionary<string, AttributeDefinition>
 	{
@@ -102,17 +100,13 @@ namespace netDxf.Collections
 
 		#region constructor
 
-		/// <summary>
-		/// Initializes a new instance of <c>AttributeDefinitionDictionary</c>.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		public AttributeDefinitionDictionary()
 		{
 			this.innerDictionary = new Dictionary<string, AttributeDefinition>(StringComparer.OrdinalIgnoreCase);
 		}
 
-		/// <summary>
-		/// Initializes a new instance of <c>AttributeDefinitionDictionary</c> and has the specified initial capacity.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class and has the specified initial capacity.</summary>
 		/// <param name="capacity">The number of items the collection can initially store.</param>
 		public AttributeDefinitionDictionary(int capacity)
 		{
@@ -123,11 +117,7 @@ namespace netDxf.Collections
 
 		#region public properties
 
-		/// <summary>
-		/// Gets or sets the <see cref="AttributeDefinition">attribute definition</see> with the specified tag.
-		/// </summary>
-		/// <param name="tag">The tag of the attribute definition to get or set.</param>
-		/// <returns>The <see cref="AttributeDefinition">attribute definition</see> with the specified tag.</returns>
+		/// <inheritdoc/>
 		public AttributeDefinition this[string tag]
 		{
 			get { return this.innerDictionary[tag]; }
@@ -165,33 +155,25 @@ namespace netDxf.Collections
 			}
 		}
 
-		/// <summary>
-		/// Gets an ICollection containing the tags of the current dictionary.
-		/// </summary>
+		/// <summary>Gets a collection containing the tags of the current dictionary.</summary>
 		public ICollection<string> Tags
 		{
 			get { return this.innerDictionary.Keys; }
 		}
 
-		/// <summary>
-		/// Gets an ICollection containing the <see cref="AttributeDefinition">attribute definition</see> list of the current dictionary.
-		/// </summary>
+		/// <inheritdoc/>
 		public ICollection<AttributeDefinition> Values
 		{
 			get { return this.innerDictionary.Values; }
 		}
 
-		/// <summary>
-		/// Gets the number of <see cref="AttributeDefinition">attribute definition</see> contained in the current dictionary.
-		/// </summary>
+		/// <inheritdoc/>
 		public int Count
 		{
 			get { return this.innerDictionary.Count; }
 		}
 
-		/// <summary>
-		/// Gets a value indicating whether the actual dictionary is read-only.
-		/// </summary>
+		/// <inheritdoc/>
 		public bool IsReadOnly
 		{
 			get { return false; }
@@ -201,9 +183,7 @@ namespace netDxf.Collections
 
 		#region public methods
 
-		/// <summary>
-		/// Adds an <see cref="AttributeDefinition">attribute definition</see> to the dictionary.
-		/// </summary>
+		/// <summary>Adds an <see cref="AttributeDefinition">attribute definition</see> to the dictionary.</summary>
 		/// <param name="item">The <see cref="AttributeDefinition">attribute definition</see> to add.</param>
 		public void Add(AttributeDefinition item)
 		{
@@ -221,9 +201,7 @@ namespace netDxf.Collections
 			this.OnAddItemEvent(item);
 		}
 
-		/// <summary>
-		/// Adds an <see cref="AttributeDefinition">attribute definition</see> list to the dictionary.
-		/// </summary>
+		/// <summary>Adds an <see cref="AttributeDefinition">attribute definition</see> list to the dictionary.</summary>
 		/// <param name="collection">The collection whose elements should be added.</param>
 		public void AddRange(IEnumerable<AttributeDefinition> collection)
 		{
@@ -239,11 +217,7 @@ namespace netDxf.Collections
 			}
 		}
 
-		/// <summary>
-		/// Removes an <see cref="AttributeDefinition">attribute definition</see> with the specified tag from the current dictionary.
-		/// </summary>
-		/// <param name="tag">The tag of the <see cref="AttributeDefinition">attribute definition</see> to remove.</param>
-		/// <returns>True if the <see cref="AttributeDefinition">attribute definition</see> is successfully removed; otherwise, false.</returns>
+		/// <inheritdoc/>
 		public bool Remove(string tag)
 		{
 			if (!this.innerDictionary.TryGetValue(tag, out AttributeDefinition remove))
@@ -261,9 +235,7 @@ namespace netDxf.Collections
 			return true;
 		}
 
-		/// <summary>
-		/// Removes all <see cref="AttributeDefinition">attribute definition</see> from the current dictionary.
-		/// </summary>
+		/// <inheritdoc/>
 		public void Clear()
 		{
 			string[] tags = new string[this.innerDictionary.Count];
@@ -274,42 +246,29 @@ namespace netDxf.Collections
 			}
 		}
 
-		/// <summary>
-		/// Determines whether current dictionary contains an <see cref="AttributeDefinition">attribute definition</see> with the specified tag.
-		/// </summary>
+		/// <summary>Determines whether current dictionary contains an <see cref="AttributeDefinition">attribute definition</see> with the specified tag.</summary>
 		/// <param name="tag">The tag to locate in the current dictionary.</param>
-		/// <returns>True if the current dictionary contains an <see cref="AttributeDefinition">attribute definition</see> with the tag; otherwise, false.</returns>
+		/// <returns><see langword="true"/> if the current dictionary contains an <see cref="AttributeDefinition">attribute definition</see> with the tag; otherwise, <see langword="false"/>.</returns>
 		public bool ContainsTag(string tag)
 		{
 			return this.innerDictionary.ContainsKey(tag);
 		}
 
-		/// <summary>
-		/// Determines whether current dictionary contains a specified <see cref="AttributeDefinition">attribute definition</see>.
-		/// </summary>
+		/// <summary>Determines whether current dictionary contains a specified <see cref="AttributeDefinition">attribute definition</see>.</summary>
 		/// <param name="value">The <see cref="AttributeDefinition">attribute definition</see> to locate in the current dictionary.</param>
-		/// <returns>True if the current dictionary contains the <see cref="AttributeDefinition">attribute definition</see>; otherwise, false.</returns>
+		/// <returns><see langword="true"/> if the current dictionary contains the <see cref="AttributeDefinition">attribute definition</see>; otherwise, <see langword="false"/>.</returns>
 		public bool ContainsValue(AttributeDefinition value)
 		{
 			return this.innerDictionary.ContainsValue(value);
 		}
 
-		/// <summary>
-		/// Gets the <see cref="AttributeDefinition">attribute definition</see> associated with the specified tag.
-		/// </summary>
-		/// <param name="tag">The tag whose value to get.</param>
-		/// <param name="value">When this method returns, the <see cref="AttributeDefinition">attribute definition</see> associated with the specified tag,
-		/// if the tag is found; otherwise, null. This parameter is passed uninitialized.</param>
-		/// <returns>True if the current dictionary contains an <see cref="AttributeDefinition">attribute definition</see> with the specified tag; otherwise, false.</returns>
+		/// <inheritdoc/>
 		public bool TryGetValue(string tag, out AttributeDefinition value)
 		{
 			return this.innerDictionary.TryGetValue(tag, out value);
 		}
 
-		/// <summary>
-		/// Returns an enumerator that iterates through the dictionary.
-		/// </summary>
-		/// <returns>An enumerator that can be used to iterate through the dictionary.</returns>
+		/// <inheritdoc/>
 		public IEnumerator<KeyValuePair<string, AttributeDefinition>> GetEnumerator()
 		{
 			return this.innerDictionary.GetEnumerator();

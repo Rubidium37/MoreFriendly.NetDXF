@@ -29,9 +29,7 @@ using netDxf.Tables;
 
 namespace netDxf.Collections
 {
-	/// <summary>
-	/// Represents a collection of text styles.
-	/// </summary>
+	/// <summary>Represents a collection of text styles.</summary>
 	public sealed class TextStyles :
 		TableObjects<TextStyle>
 	{
@@ -51,15 +49,7 @@ namespace netDxf.Collections
 
 		#region override methods
 
-		/// <summary>
-		/// Adds a text style to the list.
-		/// </summary>
-		/// <param name="style"><see cref="TextStyle">TextStyle</see> to add to the list.</param>
-		/// <param name="assignHandle">Specifies if a handle needs to be generated for the text style parameter.</param>
-		/// <returns>
-		/// If a text style already exists with the same name as the instance that is being added the method returns the existing text style,
-		/// if not it will return the new text style.
-		/// </returns>
+		/// <inheritdoc/>
 		internal override TextStyle Add(TextStyle style, bool assignHandle)
 		{
 			if (style == null)
@@ -89,23 +79,12 @@ namespace netDxf.Collections
 			return style;
 		}
 
-		/// <summary>
-		/// Removes a text style.
-		/// </summary>
-		/// <param name="name"><see cref="TextStyle">TextStyle</see> name to remove from the document.</param>
-		/// <returns>True if the text style has been successfully removed, or false otherwise.</returns>
-		/// <remarks>Reserved text styles or any other referenced by objects cannot be removed.</remarks>
+		/// <inheritdoc/>
 		public override bool Remove(string name)
 		{
 			return this.Remove(this[name]);
 		}
-
-		/// <summary>
-		/// Removes a text style.
-		/// </summary>
-		/// <param name="item"><see cref="TextStyle">TextStyle</see> to remove from the document.</param>
-		/// <returns>True if the text style has been successfully removed, or false otherwise.</returns>
-		/// <remarks>Reserved text styles or any other referenced by objects cannot be removed.</remarks>
+		/// <inheritdoc/>
 		public override bool Remove(TextStyle item)
 		{
 			if (item == null)

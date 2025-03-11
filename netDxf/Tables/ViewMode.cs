@@ -30,34 +30,24 @@ namespace netDxf.Tables
 	[Flags]
 	public enum ViewModeFlags
 	{
-		/// <summary>
-		/// Turned off.
-		/// </summary>
+		/// <summary>Turned off.</summary>
 		Off = 0,
 
-		/// <summary>
-		/// Perspective view active.
-		/// </summary>
+		/// <summary>Perspective view active.</summary>
 		Perspective = 1,
 
-		/// <summary>
-		/// Front clipping on.
-		/// </summary>
+		/// <summary>Front clipping on.</summary>
 		FrontClippingPlane = 2,
 
-		/// <summary>
-		/// Back clipping on.
-		/// </summary>
+		/// <summary>Back clipping on.</summary>
 		BackClippingPlane = 4,
 
-		/// <summary>
-		/// UCS Follow mode on.
-		/// </summary>
+		/// <summary><b>UCS</b> Follow mode on.</summary>
 		UCSFollow = 8,
 
 		/// <summary>
-		/// Front clip not at eye. If on, the front clip distance (FRONTZ) determines the front clipping plane.
-		/// If off, FRONTZ is ignored, and the front clipping plane is set to pass through the camera point (vectors behind the camera are not displayed).
+		/// Front clip not at eye. If on, the front clip distance (<b>FRONTZ</b>) determines the front clipping plane.
+		/// If off, <b>FRONTZ</b> is ignored, and the front clipping plane is set to pass through the camera point (vectors behind the camera are not displayed).
 		/// This flag is ignored if the front-clipping bit (2) is off.
 		/// </summary>
 		FrontClipNotAtEye = 16

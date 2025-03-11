@@ -606,6 +606,17 @@ namespace netDxf.GTE
 			return new GVector(0);
 		}
 
+		/// <inheritdoc/>
+		public override bool Equals(object obj)
+		{
+			if (obj == null)
+			{
+				return false;
+			}
+
+			return obj.GetType() == this.GetType() && this.Equals((GVector)obj);
+		}
+		/// <inheritdoc/>
 		public bool Equals(GVector other)
 		{
 			if (other == null)
@@ -630,16 +641,7 @@ namespace netDxf.GTE
 			return true;
 		}
 
-		public override bool Equals(object obj)
-		{
-			if (obj == null)
-			{
-				return false;
-			}
-
-			return obj.GetType() == this.GetType() && this.Equals((GVector)obj);
-		}
-
+		/// <inheritdoc/>
 		public override int GetHashCode()
 		{
 			return this.vector.GetHashCode();

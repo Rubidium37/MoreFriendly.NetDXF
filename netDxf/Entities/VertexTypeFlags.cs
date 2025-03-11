@@ -27,56 +27,38 @@ using System;
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Defines the vertex type.
-	/// </summary>
+	/// <summary>Defines the vertex type.</summary>
 	[Flags]
 	internal enum VertexTypeFlags
 	{
-		/// <summary>
-		/// Default (2D polyline vertex).
-		/// </summary>
+		/// <summary>Default (2D polyline vertex).</summary>
 		Polyline2DVertex = 0,
 
-		/// <summary>
-		/// Extra vertex created by curve-fitting.
-		/// </summary>
+		/// <summary>Extra vertex created by curve-fitting.</summary>
 		CurveFittingExtraVertex = 1,
 
 		/// <summary>
 		/// Curve-fit tangent defined for this vertex.
-		/// A curve-fit tangent direction of 0 may be omitted from DXF output but is significant if this bit is set.
+		/// A curve-fit tangent direction of 0 may be omitted from <b>DXF</b> output but is significant if this bit is set.
 		/// </summary>
 		CurveFitTangent = 2,
 
-		/// <summary>
-		/// Not used.
-		/// </summary>
+		/// <summary>Not used.</summary>
 		NotUsed = 4,
 
-		/// <summary>
-		/// Spline vertex created by spline-fitting.
-		/// </summary>
+		/// <summary>Spline vertex created by spline-fitting.</summary>
 		SplineVertexFromSplineFitting = 8,
 
-		/// <summary>
-		/// Spline frame control point.
-		/// </summary>
+		/// <summary>Spline frame control point.</summary>
 		SplineFrameControlPoint = 16,
 
-		/// <summary>
-		/// 3D polyline vertex.
-		/// </summary>
+		/// <summary>3D polyline vertex.</summary>
 		Polyline3DVertex = 32,
 
-		/// <summary>
-		/// 3D polygon mesh vertex.
-		/// </summary>
+		/// <summary>3D polygon mesh vertex.</summary>
 		Polygon3DMeshVertex = 64,
 
-		/// <summary>
-		/// Polyface mesh vertex.
-		/// </summary>
+		/// <summary>Polyface mesh vertex.</summary>
 		PolyfaceMeshVertex = 128
 	}
 }

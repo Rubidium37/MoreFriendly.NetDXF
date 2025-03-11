@@ -25,24 +25,16 @@
 
 namespace netDxf.Tables
 {
-	/// <summary>
-	/// Define the linetype segment type simple, text, or shape.
-	/// </summary>
+	/// <summary>Define the linetype segment type simple, text, or shape.</summary>
 	public enum LinetypeSegmentType
 	{
-		/// <summary>
-		/// Linetype segment made only of a simple dash, dot, or space.
-		/// </summary>
+		/// <summary>Linetype segment made only of a simple dash, dot, or space.</summary>
 		Simple,
 
-		/// <summary>
-		/// Linetype segment made of a text string.
-		/// </summary>
+		/// <summary>Linetype segment made of a text string.</summary>
 		Text,
 
-		/// <summary>
-		/// Linetype segment made of a shape.
-		/// </summary>
+		/// <summary>Linetype segment made of a shape.</summary>
 		Shape
 	}
 }

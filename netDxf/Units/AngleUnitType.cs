@@ -25,34 +25,22 @@
 
 namespace netDxf.Units
 {
-	/// <summary>
-	/// Angular units format for creating objects.
-	/// </summary>
+	/// <summary>Angular units format for creating objects.</summary>
 	public enum AngleUnitType
 	{
-		/// <summary>
-		/// Decimal degrees.
-		/// </summary>
+		/// <summary>Decimal degrees.</summary>
 		DecimalDegrees = 0,
 
-		/// <summary>
-		/// Degrees/minutes/seconds.
-		/// </summary>
+		/// <summary>Degrees/minutes/seconds.</summary>
 		DegreesMinutesSeconds = 1,
 
-		/// <summary>
-		/// Gradians
-		/// </summary>
+		/// <summary>Gradians</summary>
 		Gradians = 2,
 
-		/// <summary>
-		/// Radians
-		/// </summary>
+		/// <summary>Radians</summary>
 		Radians = 3,
 
-		/// <summary>
-		/// Surveyor's units.
-		/// </summary>
+		/// <summary>Surveyor's units.</summary>
 		SurveyorUnits = 4
 	}
 }

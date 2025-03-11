@@ -27,30 +27,20 @@ using System;
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Image display options.
-	/// </summary>
+	/// <summary>Image display options.</summary>
 	[Flags]
 	public enum ImageDisplayFlags
 	{
-		/// <summary>
-		/// Show image.
-		/// </summary>
+		/// <summary>Show image.</summary>
 		ShowImage = 1,
 
-		/// <summary>
-		/// Show image when not aligned with screen.
-		/// </summary>
+		/// <summary>Show image when not aligned with screen.</summary>
 		ShowImageWhenNotAlignedWithScreen = 2,
 
-		/// <summary>
-		/// Use clipping boundary.
-		/// </summary>
+		/// <summary>Use clipping boundary.</summary>
 		UseClippingBoundary = 4,
 
-		/// <summary>
-		/// Transparency on.
-		/// </summary>
+		/// <summary>Transparency on.</summary>
 		TransparencyOn = 8
 	}
 }

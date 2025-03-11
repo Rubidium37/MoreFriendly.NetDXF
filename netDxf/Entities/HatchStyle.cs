@@ -25,24 +25,16 @@
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Hatch pattern style.
-	/// </summary>
+	/// <summary>Hatch pattern style.</summary>
 	public enum HatchStyle
 	{
-		/// <summary>
-		/// Hatch "odd parity" area.
-		/// </summary>
+		/// <summary>Hatch "odd parity" area.</summary>
 		Normal = 0,
 
-		/// <summary>
-		/// Hatch outermost area only.
-		/// </summary>
+		/// <summary>Hatch outermost area only.</summary>
 		Outer = 1,
 
-		/// <summary>
-		/// Hatch through entire area.
-		/// </summary>
+		/// <summary>Hatch through entire area.</summary>
 		Ignore = 2
 	}
 }

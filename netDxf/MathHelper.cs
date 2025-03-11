@@ -28,51 +28,33 @@ using System.Collections.Generic;
 
 namespace netDxf
 {
-	/// <summary>
-	/// Utility math functions and constants.
-	/// </summary>
+	/// <summary>Utility math functions and constants.</summary>
 	public static class MathHelper
 	{
 		#region constants
 
-		/// <summary>
-		/// Constant to transform an angle between degrees and radians.
-		/// </summary>
+		/// <summary>Constant to transform an angle between degrees and radians.</summary>
 		public const double DegToRad = Math.PI / 180.0;
 
-		/// <summary>
-		/// Constant to transform an angle between degrees and radians.
-		/// </summary>
+		/// <summary>Constant to transform an angle between degrees and radians.</summary>
 		public const double RadToDeg = 180.0 / Math.PI;
 
-		/// <summary>
-		/// Constant to transform an angle between degrees and gradians.
-		/// </summary>
+		/// <summary>Constant to transform an angle between degrees and gradians.</summary>
 		public const double DegToGrad = 10.0 / 9.0;
 
-		/// <summary>
-		/// Constant to transform an angle between degrees and gradians.
-		/// </summary>
+		/// <summary>Constant to transform an angle between degrees and gradians.</summary>
 		public const double GradToDeg = 9.0 / 10.0;
 
-		/// <summary>
-		/// PI/2 (90 degrees)
-		/// </summary>
+		/// <summary>PI/2 (90 degrees)</summary>
 		public const double HalfPI = Math.PI * 0.5;
 
-		/// <summary>
-		/// PI (180 degrees)
-		/// </summary>
+		/// <summary>PI (180 degrees)</summary>
 		public const double PI = Math.PI;
 
-		/// <summary>
-		/// 3*PI/2 (270 degrees)
-		/// </summary>
+		/// <summary>3*PI/2 (270 degrees)</summary>
 		public const double ThreeHalfPI = 3 * Math.PI * 0.5;
 
-		/// <summary>
-		/// 2*PI (360 degrees)
-		/// </summary>
+		/// <summary>2*PI (360 degrees)</summary>
 		public const double TwoPI = 2 * Math.PI;
 
 		#endregion
@@ -81,9 +63,7 @@ namespace netDxf
 
 		private static double epsilon = 1e-12;
 
-		/// <summary>
-		/// Represents the smallest number used for comparison purposes.
-		/// </summary>
+		/// <summary>Represents the smallest number used for comparison purposes.</summary>
 		/// <remarks>
 		/// The epsilon value must be a positive number greater than zero.
 		/// </remarks>
@@ -104,9 +84,7 @@ namespace netDxf
 
 		#region static methods
 
-		/// <summary>
-		/// Returns a value indicating the sign of a double-precision floating-point number.
-		/// </summary>
+		/// <summary>Returns a value indicating the sign of a double-precision floating-point number.</summary>
 		/// <param name="number">Double precision number.
 		/// </param>
 		/// <returns>
@@ -122,9 +100,7 @@ namespace netDxf
 			return IsZero(number) ? 0 : Math.Sign(number);
 		}
 
-		/// <summary>
-		/// Returns a value indicating the sign of a double-precision floating-point number.
-		/// </summary>
+		/// <summary>Returns a value indicating the sign of a double-precision floating-point number.</summary>
 		/// <param name="number">Double precision number.</param>
 		/// <param name="threshold">Tolerance.</param>
 		/// <returns>
@@ -140,74 +116,60 @@ namespace netDxf
 			return IsZero(number, threshold) ? 0 : Math.Sign(number);
 		}
 
-		/// <summary>
-		/// Checks if a number is close to one.
-		/// </summary>
+		/// <summary>Checks if a number is close to one.</summary>
 		/// <param name="number">Double precision number.</param>
-		/// <returns>True if its close to one or false in any other case.</returns>
+		/// <returns><see langword="true"/> if its close to one or <see langword="false"/> in any other case.</returns>
 		public static bool IsOne(double number)
 		{
 			return IsOne(number, Epsilon);
 		}
 
-		/// <summary>
-		/// Checks if a number is close to one.
-		/// </summary>
+		/// <summary>Checks if a number is close to one.</summary>
 		/// <param name="number">Double precision number.</param>
 		/// <param name="threshold">Tolerance.</param>
-		/// <returns>True if its close to one or false in any other case.</returns>
+		/// <returns><see langword="true"/> if its close to one or <see langword="false"/> in any other case.</returns>
 		public static bool IsOne(double number, double threshold)
 		{
 			return IsZero(number - 1, threshold);
 		}
 
-		/// <summary>
-		/// Checks if a number is close to zero.
-		/// </summary>
+		/// <summary>Checks if a number is close to zero.</summary>
 		/// <param name="number">Double precision number.</param>
-		/// <returns>True if its close to one or false in any other case.</returns>
+		/// <returns><see langword="true"/> if its close to one or <see langword="false"/> in any other case.</returns>
 		public static bool IsZero(double number)
 		{
 			return IsZero(number, Epsilon);
 		}
 
-		/// <summary>
-		/// Checks if a number is close to zero.
-		/// </summary>
+		/// <summary>Checks if a number is close to zero.</summary>
 		/// <param name="number">Double precision number.</param>
 		/// <param name="threshold">Tolerance.</param>
-		/// <returns>True if its close to one or false in any other case.</returns>
+		/// <returns><see langword="true"/> if its close to one or <see langword="false"/> in any other case.</returns>
 		public static bool IsZero(double number, double threshold)
 		{
 			return number >= -threshold && number <= threshold;
 		}
 
-		/// <summary>
-		/// Checks if a number is equal to another.
-		/// </summary>
+		/// <summary>Checks if a number is equal to another.</summary>
 		/// <param name="a">Double precision number.</param>
 		/// <param name="b">Double precision number.</param>
-		/// <returns>True if its close to one or false in any other case.</returns>
+		/// <returns><see langword="true"/> if its close to one or <see langword="false"/> in any other case.</returns>
 		public static bool IsEqual(double a, double b)
 		{
 			return IsEqual(a, b, Epsilon);
 		}
 
-		/// <summary>
-		/// Checks if a number is equal to another.
-		/// </summary>
+		/// <summary>Checks if a number is equal to another.</summary>
 		/// <param name="a">Double precision number.</param>
 		/// <param name="b">Double precision number.</param>
 		/// <param name="threshold">Tolerance.</param>
-		/// <returns>True if its close to one or false in any other case.</returns>
+		/// <returns><see langword="true"/> if its close to one or <see langword="false"/> in any other case.</returns>
 		public static bool IsEqual(double a, double b, double threshold)
 		{
 			return IsZero(a - b, threshold);
 		}
 
-		/// <summary>
-		/// Transforms a point between coordinate systems.
-		/// </summary>
+		/// <summary>Transforms a point between coordinate systems.</summary>
 		/// <param name="point">Point to transform.</param>
 		/// <param name="rotation">Rotation angle in radians.</param>
 		/// <param name="from">Point coordinate system.</param>
@@ -234,9 +196,7 @@ namespace netDxf
 			}
 		}
 
-		/// <summary>
-		/// Transforms a point list between coordinate systems.
-		/// </summary>
+		/// <summary>Transforms a point list between coordinate systems.</summary>
 		/// <param name="points">Point list to transform.</param>
 		/// <param name="rotation">Rotation angle in radians.</param>
 		/// <param name="from">Point coordinate system.</param>
@@ -284,9 +244,7 @@ namespace netDxf
 			}
 		}
 
-		/// <summary>
-		/// Transforms a point between coordinate systems.
-		/// </summary>
+		/// <summary>Transforms a point between coordinate systems.</summary>
 		/// <param name="point">Point to transform.</param>
 		/// <param name="zAxis">Object normal vector.</param>
 		/// <param name="from">Point coordinate system.</param>
@@ -307,9 +265,7 @@ namespace netDxf
 			}
 		}
 
-		/// <summary>
-		/// Transforms a point list between coordinate systems.
-		/// </summary>
+		/// <summary>Transforms a point list between coordinate systems.</summary>
 		/// <param name="points">Points to transform.</param>
 		/// <param name="zAxis">Object normal vector.</param>
 		/// <param name="from">Points coordinate system.</param>
@@ -350,9 +306,7 @@ namespace netDxf
 			}
 		}
 
-		/// <summary>
-		/// Transform a 2d point from object coordinates to world coordinates.
-		/// </summary>
+		/// <summary>Transform a 2d point from object coordinates to world coordinates.</summary>
 		/// <param name="point">Points to transform.</param>
 		/// <param name="zAxis">Object normal vector.</param>
 		/// <param name="elevation">Object elevation.</param>
@@ -363,9 +317,7 @@ namespace netDxf
 			return trans * new Vector3(point.X, point.Y, elevation);
 		}
 
-		/// <summary>
-		/// Transform a 2d point list from object coordinates to world coordinates.
-		/// </summary>
+		/// <summary>Transform a 2d point list from object coordinates to world coordinates.</summary>
 		/// <param name="points">Point to transform.</param>
 		/// <param name="zAxis">Object normal vector.</param>
 		/// <param name="elevation">Object elevation.</param>
@@ -386,9 +338,7 @@ namespace netDxf
 			return transPoints;
 		}
 
-		/// <summary>
-		/// Transform a 3d point from world coordinates to object coordinates.
-		/// </summary>
+		/// <summary>Transform a 3d point from world coordinates to object coordinates.</summary>
 		/// <param name="point">Point to transform.</param>
 		/// <param name="zAxis">Object normal vector.</param>
 		/// <param name="elevation">Z axis value of the transformed point.</param>
@@ -401,9 +351,7 @@ namespace netDxf
 			return new Vector2(p.X, p.Y);
 		}
 
-		/// <summary>
-		/// Transform a 3d point list from world coordinates to object coordinates.
-		/// </summary>
+		/// <summary>Transform a 3d point list from world coordinates to object coordinates.</summary>
 		/// <param name="points">Points to transform.</param>
 		/// <param name="zAxis">Object normal vector.</param>
 		/// <param name="elevation">Average Z axis value of the transformed points.</param>
@@ -429,9 +377,7 @@ namespace netDxf
 			return transPoints;
 		}
 
-		/// <summary>
-		/// Gets the rotation matrix from the normal vector (extrusion direction) of an entity.
-		/// </summary>
+		/// <summary>Gets the rotation matrix from the normal vector (extrusion direction) of an entity.</summary>
 		/// <param name="zAxis">Normal vector.</param>
 		/// <returns>Rotation matrix.</returns>
 		public static Matrix3 ArbitraryAxis(Vector3 zAxis)
@@ -464,9 +410,7 @@ namespace netDxf
 			return new Matrix3(aX.X, aY.X, zAxis.X, aX.Y, aY.Y, zAxis.Y, aX.Z, aY.Z, zAxis.Z);
 		}
 
-		/// <summary>
-		/// Calculates the minimum distance between a point and a line.
-		/// </summary>
+		/// <summary>Calculates the minimum distance between a point and a line.</summary>
 		/// <param name="p">A point.</param>
 		/// <param name="origin">Line origin point.</param>
 		/// <param name="dir">Line direction.</param>
@@ -480,9 +424,7 @@ namespace netDxf
 			return Math.Sqrt(distanceSquared);
 		}
 
-		/// <summary>
-		/// Calculates the minimum distance between a point and a line.
-		/// </summary>
+		/// <summary>Calculates the minimum distance between a point and a line.</summary>
 		/// <param name="p">A point.</param>
 		/// <param name="origin">Line origin point.</param>
 		/// <param name="dir">Line direction.</param>
@@ -496,9 +438,7 @@ namespace netDxf
 			return Math.Sqrt(distanceSquared);
 		}
 
-		/// <summary>
-		/// Checks if a point is inside a line segment.
-		/// </summary>
+		/// <summary>Checks if a point is inside a line segment.</summary>
 		/// <param name="p">A point.</param>
 		/// <param name="start">Segment start point.</param>
 		/// <param name="end">Segment end point.</param>
@@ -506,7 +446,7 @@ namespace netDxf
 		/// <remarks>
 		/// For testing purposes a point is considered inside a segment,
 		/// if it falls inside the volume from start to end of the segment that extends infinitely perpendicularly to its direction.
-		/// Later, if needed, you can use the PointLineDistance method, if the distance is zero the point is along the line defined by the start and end points.
+		/// Later, if needed, you can use the <see cref="PointLineDistance"/> method, if the distance is zero the point is along the line defined by the start and end points.
 		/// </remarks>
 		public static int PointInSegment(Vector3 p, Vector3 start, Vector3 end)
 		{
@@ -525,9 +465,7 @@ namespace netDxf
 			return 0;
 		}
 
-		/// <summary>
-		/// Checks if a point is inside a line segment.
-		/// </summary>
+		/// <summary>Checks if a point is inside a line segment.</summary>
 		/// <param name="p">A point.</param>
 		/// <param name="start">Segment start point.</param>
 		/// <param name="end">Segment end point.</param>
@@ -535,7 +473,7 @@ namespace netDxf
 		/// <remarks>
 		/// For testing purposes a point is considered inside a segment,
 		/// if it falls inside the area from start to end of the segment that extends infinitely perpendicularly to its direction.
-		/// Later, if needed, you can use the PointLineDistance method, if the distance is zero the point is along the line defined by the start and end points.
+		/// Later, if needed, you can use the <see cref="PointLineDistance"/> method, if the distance is zero the point is along the line defined by the start and end points.
 		/// </remarks>
 		public static int PointInSegment(Vector2 p, Vector2 start, Vector2 end)
 		{
@@ -554,9 +492,7 @@ namespace netDxf
 			return 0;
 		}
 
-		/// <summary>
-		/// Calculates the intersection point of two lines.
-		/// </summary>
+		/// <summary>Calculates the intersection point of two lines.</summary>
 		/// <param name="point0">First line origin point.</param>
 		/// <param name="dir0">First line direction.</param>
 		/// <param name="point1">Second line origin point.</param>
@@ -568,9 +504,7 @@ namespace netDxf
 			return FindIntersection(point0, dir0, point1, dir1, Epsilon);
 		}
 
-		/// <summary>
-		/// Calculates the intersection point of two lines.
-		/// </summary>
+		/// <summary>Calculates the intersection point of two lines.</summary>
 		/// <param name="point0">First line origin point.</param>
 		/// <param name="dir0">First line direction.</param>
 		/// <param name="point1">Second line origin point.</param>
@@ -593,9 +527,7 @@ namespace netDxf
 			return point0 + s * dir0;
 		}
 
-		/// <summary>
-		/// Normalizes the value of an angle in degrees between [0, 360[.
-		/// </summary>
+		/// <summary>Normalizes the value of an angle in degrees between [0, 360[.</summary>
 		/// <param name="angle">Angle in degrees.</param>
 		/// <returns>The equivalent angle in the range [0, 360[.</returns>
 		/// <remarks>Negative angles will be converted to its positive equivalent.</remarks>
@@ -615,9 +547,7 @@ namespace netDxf
 			return normalized;
 		}
 
-		/// <summary>
-		/// Round off a numeric value to the nearest of another value.
-		/// </summary>
+		/// <summary>Round off a numeric value to the nearest of another value.</summary>
 		/// <param name="number">Number to round off.</param>
 		/// <param name="roundTo">The number will be rounded to the nearest of this value.</param>
 		/// <returns>The number rounded to the nearest value.</returns>
@@ -627,9 +557,7 @@ namespace netDxf
 			return multiplier * roundTo;
 		}
 
-		/// <summary>
-		/// Obtains the data for an arc that has a start point, an end point, and a bulge value.
-		/// </summary>
+		/// <summary>Obtains the data for an arc that has a start point, an end point, and a bulge value.</summary>
 		/// <param name="startPoint">Arc start point.</param>
 		/// <param name="endPoint">Arc end point.</param>
 		/// <param name="bulge">Arc bulge value.</param>
@@ -663,9 +591,7 @@ namespace netDxf
 			return new Tuple<Vector2, double, double, double>(center, radius, startAngle, endAngle);
 		}
 
-		/// <summary>
-		/// Obtains the start point, end point, and bulge value from an arc.
-		/// </summary>
+		/// <summary>Obtains the start point, end point, and bulge value from an arc.</summary>
 		/// <param name="center">Arc center.</param>
 		/// <param name="radius">Arc radius.</param>
 		/// <param name="startAngle">Arc start angle in degrees.</param>

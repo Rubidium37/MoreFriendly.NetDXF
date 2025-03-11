@@ -28,16 +28,12 @@ using System.Globalization;
 
 namespace netDxf.Units
 {
-	/// <summary>
-	/// Utility methods to format a decimal angle in degrees to its different string representations.
-	/// </summary>
+	/// <summary>Utility methods to format a decimal angle in degrees to its different string representations.</summary>
 	public static class AngleUnitFormat
 	{
 		#region public methods
 
-		/// <summary>
-		/// Converts an angle value in degrees into its decimal string representation.
-		/// </summary>
+		/// <summary>Converts an angle value in degrees into its decimal string representation.</summary>
 		/// <param name="angle">The angle value in degrees.</param>
 		/// <param name="format">The unit style format.</param>
 		/// <returns>A string that represents the angle in decimal units.</returns>
@@ -56,9 +52,7 @@ namespace netDxf.Units
 			return angle.ToString(DecimalNumberFormat(format), numberFormat) + format.DegreesSymbol;
 		}
 
-		/// <summary>
-		/// Converts an angle value in degrees into its degrees, minutes and seconds string representation.
-		/// </summary>
+		/// <summary>Converts an angle value in degrees into its degrees, minutes and seconds string representation.</summary>
 		/// <param name="angle">The angle value in degrees.</param>
 		/// <param name="format">The unit style format.</param>
 		/// <returns>A string that represents the angle in degrees, minutes and seconds.</returns>
@@ -98,9 +92,7 @@ namespace netDxf.Units
 			return string.Format(numberFormat, "{0}" + format.DegreesSymbol + "{1}" + format.MinutesSymbol + "{2}" + format.SecondsSymbol, (int)degrees, (int)minutes, seconds.ToString(f, numberFormat));
 		}
 
-		/// <summary>
-		/// Converts an angle value in degrees into its gradians string representation.
-		/// </summary>
+		/// <summary>Converts an angle value in degrees into its gradians string representation.</summary>
 		/// <param name="angle">The angle value in degrees.</param>
 		/// <param name="format">The unit style format.</param>
 		/// <returns>A string that represents the angle in gradians.</returns>
@@ -119,9 +111,7 @@ namespace netDxf.Units
 			return (angle * MathHelper.DegToGrad).ToString(DecimalNumberFormat(format), numberFormat) + format.GradiansSymbol;
 		}
 
-		/// <summary>
-		/// Converts an angle value in degrees into its radians string representation.
-		/// </summary>
+		/// <summary>Converts an angle value in degrees into its radians string representation.</summary>
 		/// <param name="angle">The angle value in degrees.</param>
 		/// <param name="format">The unit style format.</param>
 		/// <returns>A string that represents the angle in radians.</returns>

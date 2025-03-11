@@ -27,9 +27,7 @@ using System;
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Represents datum reference, a theoretically exact point, axis, or plane from which you make measurements and verify dimensions.
-	/// </summary>
+	/// <summary>Represents datum reference, a theoretically exact point, axis, or plane from which you make measurements and verify dimensions.</summary>
 	public class DatumReferenceValue :
 		ICloneable
 	{
@@ -42,18 +40,14 @@ namespace netDxf.Entities
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of the <c>DatumReferenceValue</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		public DatumReferenceValue()
 		{
 			this.datum = string.Empty;
 			this.materialCondition = ToleranceMaterialCondition.None;
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>DatumReferenceValue</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="value">Datum reference value.</param>
 		/// <param name="materialCondition">Datum material condition.</param>
 		public DatumReferenceValue(string value, ToleranceMaterialCondition materialCondition)
@@ -66,18 +60,14 @@ namespace netDxf.Entities
 
 		#region public properties
 
-		/// <summary>
-		/// Gets or sets the datum value.
-		/// </summary>
+		/// <summary>Gets or sets the datum value.</summary>
 		public string Value
 		{
 			get { return this.datum; }
 			set { this.datum = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the datum material condition.
-		/// </summary>
+		/// <summary>Gets or sets the datum material condition.</summary>
 		public ToleranceMaterialCondition MaterialCondition
 		{
 			get { return this.materialCondition; }
@@ -88,10 +78,7 @@ namespace netDxf.Entities
 
 		#region ICloneable
 
-		/// <summary>
-		/// Creates a new DatumReferenceValue that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new DatumReferenceValue that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public object Clone()
 		{
 			return new DatumReferenceValue

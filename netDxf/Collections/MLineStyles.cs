@@ -30,9 +30,7 @@ using netDxf.Tables;
 
 namespace netDxf.Collections
 {
-	/// <summary>
-	/// Represents a collection of multiline styles.
-	/// </summary>
+	/// <summary>Represents a collection of multiline styles.</summary>
 	public sealed class MLineStyles :
 		TableObjects<MLineStyle>
 	{
@@ -52,15 +50,7 @@ namespace netDxf.Collections
 
 		#region override methods
 
-		/// <summary>
-		/// Adds a multiline style to the list.
-		/// </summary>
-		/// <param name="style"><see cref="MLineStyle">MLineStyle</see> to add to the list.</param>
-		/// <param name="assignHandle">Specifies if a handle needs to be generated for the multiline style parameter.</param>
-		/// <returns>
-		/// If a multiline style already exists with the same name as the instance that is being added the method returns the existing multiline style,
-		/// if not it will return the new multiline style.
-		/// </returns>
+		/// <inheritdoc/>
 		internal override MLineStyle Add(MLineStyle style, bool assignHandle)
 		{
 			if (style == null)
@@ -98,23 +88,12 @@ namespace netDxf.Collections
 			return style;
 		}
 
-		/// <summary>
-		/// Removes a multiline style.
-		/// </summary>
-		/// <param name="name"><see cref="MLineStyle">MLineStyle</see> name to remove from the document.</param>
-		/// <returns>True if the multiline style has been successfully removed, or false otherwise.</returns>
-		/// <remarks>Reserved multiline styles or any other referenced by objects cannot be removed.</remarks>
+		/// <inheritdoc/>
 		public override bool Remove(string name)
 		{
 			return this.Remove(this[name]);
 		}
-
-		/// <summary>
-		/// Removes a multiline style.
-		/// </summary>
-		/// <param name="item"><see cref="MLineStyle">MLineStyle</see> to remove from the document.</param>
-		/// <returns>True if the multiline style has been successfully removed, or false otherwise.</returns>
-		/// <remarks>Reserved multiline styles or any other referenced by objects cannot be removed.</remarks>
+		/// <inheritdoc/>
 		public override bool Remove(MLineStyle item)
 		{
 			if (item == null)

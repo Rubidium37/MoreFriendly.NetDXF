@@ -25,9 +25,7 @@
 
 namespace netDxf.Tables
 {
-	/// <summary>
-	/// Represents a simple linetype segment.
-	/// </summary>
+	/// <summary>Represents a simple linetype segment.</summary>
 	public class LinetypeSimpleSegment :
 		LinetypeSegment
 	{
@@ -37,16 +35,12 @@ namespace netDxf.Tables
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of the <c>LinetypeSimpleSegment</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		public LinetypeSimpleSegment() : this(0.0)
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>LinetypeSimpleSegment</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="length">Dash or space length of the segment.</param>
 		public LinetypeSimpleSegment(double length) : base(LinetypeSegmentType.Simple, length)
 		{
@@ -60,10 +54,7 @@ namespace netDxf.Tables
 
 		#region overrides
 
-		/// <summary>
-		/// Creates a new <c>LinetypeSimpleSegment</c> that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new <c>LinetypeSimpleSegment</c> that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override object Clone()
 		{
 			return new LinetypeSimpleSegment(this.Length);

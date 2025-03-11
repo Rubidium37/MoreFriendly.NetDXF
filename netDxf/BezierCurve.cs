@@ -29,9 +29,7 @@ using System.Linq;
 
 namespace netDxf
 {
-	/// <summary>
-	/// Represent a bezier curve.
-	/// </summary>
+	/// <summary>Represent a bezier curve.</summary>
 	public abstract class BezierCurve
 	{
 		#region private fields
@@ -43,9 +41,7 @@ namespace netDxf
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of the <c>BezierCurve</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="controlPoints">A list of control points.</param>
 		/// <param name="degree">Bezier curve degree.</param>
 		/// <remarks>
@@ -75,17 +71,13 @@ namespace netDxf
 
 		#region public properties
 
-		/// <summary>
-		/// Gets the control points.
-		/// </summary>
+		/// <summary>Gets the control points.</summary>
 		public Vector3[] ControlPoints
 		{
 			get { return this.controlPoints; }
 		}
 
-		/// <summary>
-		/// Gets the bezier curve degree.
-		/// </summary>
+		/// <summary>Gets the bezier curve degree.</summary>
 		public int Degree
 		{
 			get { return this.degree; }
@@ -95,16 +87,12 @@ namespace netDxf
 
 		#region public methods
 
-		/// <summary>
-		/// Obtains a point along the curve at parameter t.
-		/// </summary>
+		/// <summary>Obtains a point along the curve at parameter t.</summary>
 		/// <param name="t">Parameter t, between 0.0 and 1.0.</param>
 		/// <returns>A point along the curve.</returns>
 		public abstract Vector3 CalculatePoint(double t);
 
-		/// <summary>
-		/// Calculates the tangent vector at parameter t.
-		/// </summary>
+		/// <summary>Calculates the tangent vector at parameter t.</summary>
 		/// <param name="t">Parameter t, between 0.0 and 1.0.</param>
 		/// <returns>A normalized tangent vector.</returns>
 		public abstract Vector3 CalculateTangent(double t);

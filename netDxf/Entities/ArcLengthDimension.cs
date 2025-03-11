@@ -29,9 +29,7 @@ using netDxf.Tables;
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Represents an arc length dimension <see cref="EntityObject">entity</see>.
-	/// </summary>
+	/// <summary>Represents an arc length dimension <see cref="EntityObject">entity</see>.</summary>
 	public class ArcLengthDimension :
 		Dimension
 	{
@@ -47,27 +45,21 @@ namespace netDxf.Entities
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of the <c>ArcLengthDimension</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		public ArcLengthDimension()
 			: this(Vector2.Zero, 1, 0, 0, 0.1)
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>ArcLengthDimension</c> class.
-		/// </summary>
-		/// <param name="arc"><see cref="Arc">Arc</see> to measure.</param>
+		/// <summary>Initializes a new instance of the class.</summary>
+		/// <param name="arc"><see cref="Arc"/> to measure.</param>
 		/// <param name="offset">Distance between the center of the measured arc and the dimension line.</param>
 		public ArcLengthDimension(Arc arc, double offset)
 			: this(arc, offset, DimensionStyle.Default)
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>ArcLengthDimension</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="arc">Angle <see cref="Arc">arc</see> to measure.</param>
 		/// <param name="offset">Distance between the center of the measured arc and the dimension line.</param>
 		/// <param name="style">The <see cref="DimensionStyle">style</see> to use with the dimension.</param>
@@ -95,9 +87,7 @@ namespace netDxf.Entities
 			this.Update();
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>ArcLengthDimension</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="startPoint">Arc start point, the start point bulge must be different than zero.</param>
 		/// <param name="endPoint">Arc end point.</param>
 		/// <param name="offset">Distance between the center of the measured arc and the dimension line.</param>
@@ -107,9 +97,7 @@ namespace netDxf.Entities
 
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>ArcLengthDimension</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="startPoint">Arc start point.</param>
 		/// <param name="endPoint">Arc end point.</param>
 		/// <param name="bulge">Bulge value.</param>
@@ -119,9 +107,7 @@ namespace netDxf.Entities
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>ArcLengthDimension</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="startPoint">Arc start point.</param>
 		/// <param name="endPoint">Arc end point.</param>
 		/// <param name="bulge">Bulge value.</param>
@@ -144,9 +130,7 @@ namespace netDxf.Entities
 			this.Update();
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>ArcLengthDimension</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="center">Center of the angle arc to measure.</param>
 		/// <param name="radius">Arc radius.</param>
 		/// <param name="startAngle">Arc start angle in degrees.</param>
@@ -157,9 +141,7 @@ namespace netDxf.Entities
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>ArcLengthDimension</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="center">Center of the angle arc to measure.</param>
 		/// <param name="radius">Arc radius.</param>
 		/// <param name="startAngle">Arc start angle in degrees.</param>
@@ -190,18 +172,14 @@ namespace netDxf.Entities
 
 		#region public properties
 
-		/// <summary>
-		/// Gets or sets the center <see cref="Vector2">point</see> of the arc in OCS (object coordinate system).
-		/// </summary>
+		/// <summary>Gets or sets the center <see cref="Vector2">point</see> of the arc in <b>OCS</b> (object coordinate system).</summary>
 		public Vector2 CenterPoint
 		{
 			get { return this.center; }
 			set { this.center = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the arc radius.
-		/// </summary>
+		/// <summary>Gets or sets the arc radius.</summary>
 		public double Radius
 		{
 			get { return this.radius; }
@@ -215,35 +193,27 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the arc start angle in degrees.
-		/// </summary>
+		/// <summary>Gets or sets the arc start angle in degrees.</summary>
 		public double StartAngle
 		{
 			get { return this.startAngle; }
 			set { this.startAngle = MathHelper.NormalizeAngle(value); }
 		}
 
-		/// <summary>
-		/// Gets or sets the arc end angle in degrees.
-		/// </summary>
+		/// <summary>Gets or sets the arc end angle in degrees.</summary>
 		public double EndAngle
 		{
 			get { return this.endAngle; }
 			set { this.endAngle = MathHelper.NormalizeAngle(value); }
 		}
 
-		/// <summary>
-		/// Gets the location of the dimension line arc.
-		/// </summary>
+		/// <summary>Gets the location of the dimension line arc.</summary>
 		public Vector2 ArcDefinitionPoint
 		{
 			get { return this.defPoint; }
 		}
 
-		/// <summary>
-		/// Gets or sets the distance between the center of the measured arc and the dimension line.
-		/// </summary>
+		/// <summary>Gets or sets the distance between the center of the measured arc and the dimension line.</summary>
 		/// <remarks>
 		/// Positive values will measure the arc length between the start point and the end point while negative values will measure the opposite arc length.
 		/// Even thought, zero values are allowed, they are not recommended.
@@ -254,9 +224,7 @@ namespace netDxf.Entities
 			set { this.offset = value; }
 		}
 
-		/// <summary>
-		/// Gets the angle of the measured arc in degrees.
-		/// </summary>
+		/// <summary>Gets the angle of the measured arc in degrees.</summary>
 		public double ArcAngle
 		{
 			get
@@ -271,9 +239,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Actual measurement.
-		/// </summary>
+		/// <inheritdoc/>
 		public override double Measurement
 		{
 			get { return this.radius * this.ArcAngle * MathHelper.DegToRad; }
@@ -283,9 +249,7 @@ namespace netDxf.Entities
 
 		#region public method
 
-		/// <summary>
-		/// Calculates the dimension offset from a point along the dimension line.
-		/// </summary>
+		/// <summary>Calculates the dimension offset from a point along the dimension line.</summary>
 		/// <param name="point">Point along the dimension line.</param>
 		/// <remarks>
 		/// The start and end points of the reference lines will be modified,
@@ -336,15 +300,7 @@ namespace netDxf.Entities
 
 		#region overrides
 
-		/// <summary>
-		/// Moves, scales, and/or rotates the current entity given a 3x3 transformation matrix and a translation vector.
-		/// </summary>
-		/// <param name="transformation">Transformation matrix.</param>
-		/// <param name="translation">Translation vector.</param>
-		/// <remarks>
-		/// Non-uniform and zero scaling local to the dimension entity is not supported, the measured circular arc will become an elliptical arc.<br />
-		/// Matrix3 adopts the convention of using column vectors to represent a transformation matrix.
-		/// </remarks>
+		/// <inheritdoc/>
 		public override void TransformBy(Matrix3 transformation, Vector3 translation)
 		{
 			Vector3 newNormal = transformation * this.Normal;
@@ -417,9 +373,7 @@ namespace netDxf.Entities
 			this.SetDimensionLinePosition(this.defPoint);
 		}
 
-		/// <summary>
-		/// Calculate the dimension reference points.
-		/// </summary>
+		/// <inheritdoc/>
 		protected override void CalculateReferencePoints()
 		{
 			DimensionStyleOverride styleOverride;
@@ -460,20 +414,13 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets the block that contains the entities that make up the dimension picture.
-		/// </summary>
-		/// <param name="name">Name to be assigned to the generated block.</param>
-		/// <returns>The block that represents the actual dimension.</returns>
+		/// <inheritdoc/>
 		protected override Block BuildBlock(string name)
 		{
 			return DimensionBlock.Build(this, name);
 		}
 
-		/// <summary>
-		/// Creates a new ArcLengthDimension that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new ArcLengthDimension that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override object Clone()
 		{
 			ArcLengthDimension entity = new ArcLengthDimension

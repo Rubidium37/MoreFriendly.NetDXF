@@ -27,9 +27,7 @@ using netDxf.Tables;
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Represents a 3d Face <see cref="EntityObject">entity</see>.
-	/// </summary>
+	/// <summary>Represents a 3d Face <see cref="EntityObject">entity</see>.</summary>
 	public class Face3D :
 		EntityObject
 	{
@@ -45,17 +43,13 @@ namespace netDxf.Entities
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Face3D</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		public Face3D()
 			: this(Vector3.Zero, Vector3.Zero, Vector3.Zero, Vector3.Zero)
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Face3D</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="firstVertex">Face3D <see cref="Vector2">first vertex</see>.</param>
 		/// <param name="secondVertex">Face3D <see cref="Vector2">second vertex</see>.</param>
 		/// <param name="thirdVertex">Face3D <see cref="Vector2">third vertex</see>.</param>
@@ -67,9 +61,7 @@ namespace netDxf.Entities
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Face3D</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="firstVertex">Face3D <see cref="Vector2">first vertex</see>.</param>
 		/// <param name="secondVertex">Face3D <see cref="Vector2">second vertex</see>.</param>
 		/// <param name="thirdVertex">Face3D <see cref="Vector2">third vertex</see>.</param>
@@ -82,9 +74,7 @@ namespace netDxf.Entities
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Face3D</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="firstVertex">Face3D <see cref="Vector3">first vertex</see>.</param>
 		/// <param name="secondVertex">Face3D <see cref="Vector3">second vertex</see>.</param>
 		/// <param name="thirdVertex">Face3D <see cref="Vector3">third vertex</see>.</param>
@@ -93,9 +83,7 @@ namespace netDxf.Entities
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Face3D</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="firstVertex">Face3D <see cref="Vector3">first vertex</see>.</param>
 		/// <param name="secondVertex">Face3D <see cref="Vector3">second vertex</see>.</param>
 		/// <param name="thirdVertex">Face3D <see cref="Vector3">third vertex</see>.</param>
@@ -114,45 +102,35 @@ namespace netDxf.Entities
 
 		#region public properties
 
-		/// <summary>
-		/// Gets or sets the first Face3D <see cref="Vector3">vertex</see>.
-		/// </summary>
+		/// <summary>Gets or sets the first <b>Face3D</b> <see cref="Vector3">vertex</see>.</summary>
 		public Vector3 FirstVertex
 		{
 			get { return this.firstVertex; }
 			set { this.firstVertex = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the second Face3D <see cref="Vector3">vertex</see>.
-		/// </summary>
+		/// <summary>Gets or sets the second <b>Face3D</b> <see cref="Vector3">vertex</see>.</summary>
 		public Vector3 SecondVertex
 		{
 			get { return this.secondVertex; }
 			set { this.secondVertex = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the third Face3D <see cref="Vector3">vertex</see>.
-		/// </summary>
+		/// <summary>Gets or sets the third <b>Face3D</b> <see cref="Vector3">vertex</see>.</summary>
 		public Vector3 ThirdVertex
 		{
 			get { return this.thirdVertex; }
 			set { this.thirdVertex = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the fourth Face3D <see cref="Vector3">vertex</see>.
-		/// </summary>
+		/// <summary>Gets or sets the fourth <b>Face3D</b> <see cref="Vector3">vertex</see>.</summary>
 		public Vector3 FourthVertex
 		{
 			get { return this.fourthVertex; }
 			set { this.fourthVertex = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the Face3D edge visibility.
-		/// </summary>
+		/// <summary>Gets or sets the <b>Face3D</b> edge visibility.</summary>
 		public Face3DEdgeFlags EdgeFlags
 		{
 			get { return this.edgeFlags; }
@@ -163,12 +141,7 @@ namespace netDxf.Entities
 
 		#region overrides
 
-		/// <summary>
-		/// Moves, scales, and/or rotates the current entity given a 3x3 transformation matrix and a translation vector.
-		/// </summary>
-		/// <param name="transformation">Transformation matrix.</param>
-		/// <param name="translation">Translation vector.</param>
-		/// <remarks>Matrix3 adopts the convention of using column vectors to represent a transformation matrix.</remarks>
+		/// <inheritdoc/>
 		public override void TransformBy(Matrix3 transformation, Vector3 translation)
 		{
 			this.firstVertex = transformation * this.firstVertex + translation;
@@ -184,10 +157,7 @@ namespace netDxf.Entities
 			this.Normal = newNormal;
 		}
 
-		/// <summary>
-		/// Creates a new Face3D that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new Face3D that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override object Clone()
 		{
 			Face3D entity = new Face3D

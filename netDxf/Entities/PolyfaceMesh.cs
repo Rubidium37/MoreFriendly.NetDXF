@@ -30,9 +30,7 @@ using netDxf.Tables;
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Represents a polyface mesh <see cref="EntityObject">entity</see>.
-	/// </summary>
+	/// <summary>Represents a polyface mesh <see cref="EntityObject">entity</see>.</summary>
 	public class PolyfaceMesh :
 		EntityObject
 	{
@@ -64,9 +62,7 @@ namespace netDxf.Entities
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of the <c>PolyfaceMesh</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="vertexes">Polyface mesh <see cref="Vector3">vertex</see> list.</param>
 		/// <param name="faces">Polyface mesh faces list, a maximum of 4 indexes per face.</param>
 		public PolyfaceMesh(IEnumerable<Vector3> vertexes, IEnumerable<short[]> faces)
@@ -104,9 +100,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>PolyfaceMesh</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="vertexes">Polyface mesh <see cref="Vector3">vertex</see> list.</param>
 		/// <param name="faces">Polyface mesh faces list, a maximum of 4 indexes per face.</param>
 		public PolyfaceMesh(IEnumerable<Vector3> vertexes, IEnumerable<PolyfaceMeshFace> faces)
@@ -144,17 +138,13 @@ namespace netDxf.Entities
 
 		#region public properties
 
-		/// <summary>
-		/// Gets or sets the polyface mesh <see cref="Vector3">vertexes</see>.
-		/// </summary>
+		/// <summary>Gets or sets the polyface mesh <see cref="Vector3">vertexes</see>.</summary>
 		public Vector3[] Vertexes
 		{
 			get { return this.vertexes; }
 		}
 
-		/// <summary>
-		/// Gets or sets the polyface mesh <see cref="PolyfaceMeshFace">faces</see>.
-		/// </summary>
+		/// <summary>Gets or sets the polyface mesh <see cref="PolyfaceMeshFace">faces</see>.</summary>
 		public IReadOnlyList<PolyfaceMeshFace> Faces
 		{
 			get { return this.faces; }
@@ -164,9 +154,7 @@ namespace netDxf.Entities
 
 		#region internal properties
 
-		/// <summary>
-		/// Gets the polyface mesh flags.
-		/// </summary>
+		/// <summary>Gets the polyface mesh flags.</summary>
 		internal PolylineTypeFlags Flags
 		{
 			get { return this.flags; }
@@ -284,12 +272,7 @@ namespace netDxf.Entities
 
 		#region overrides
 
-		/// <summary>
-		/// Moves, scales, and/or rotates the current entity given a 3x3 transformation matrix and a translation vector.
-		/// </summary>
-		/// <param name="transformation">Transformation matrix.</param>
-		/// <param name="translation">Translation vector.</param>
-		/// <remarks>Matrix3 adopts the convention of using column vectors to represent a transformation matrix.</remarks>
+		/// <inheritdoc/>
 		public override void TransformBy(Matrix3 transformation, Vector3 translation)
 		{
 			for (int i = 0; i < this.vertexes.Length; i++)
@@ -305,10 +288,7 @@ namespace netDxf.Entities
 			this.Normal = newNormal;
 		}
 
-		/// <summary>
-		/// Creates a new PolyfaceMesh that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new PolyfaceMesh that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override object Clone()
 		{
 			PolyfaceMesh entity = new PolyfaceMesh(this.vertexes, this.faces)

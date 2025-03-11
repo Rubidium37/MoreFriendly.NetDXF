@@ -25,17 +25,13 @@
 
 namespace netDxf
 {
-	/// <summary>
-	/// Represent a reference to a TableObject.
-	/// </summary>
+	/// <summary>Represent a reference to a TableObject.</summary>
 	public class DxfObjectReference
 	{
 		private readonly DxfObject reference;
 		private readonly int uses;
 
-		/// <summary>
-		/// Initializes a new instance of the <c>DxfObjectReference</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="reference">DxfObject reference.</param>
 		/// <param name="uses">Number of times the specified reference uses the table object.</param>
 		public DxfObjectReference(DxfObject reference, int uses)
@@ -44,17 +40,13 @@ namespace netDxf
 			this.uses = uses;
 		}
 
-		/// <summary>
-		/// Gets the DxfObject that references the table object.
-		/// </summary>
+		/// <summary>Gets the <see cref="DxfObject"/> that references the table object.</summary>
 		public DxfObject Reference
 		{
 			get { return this.reference; }
 		}
 
-		/// <summary>
-		/// Gets the number of times this reference uses the table object.
-		/// </summary>
+		/// <summary>Gets the number of times this reference uses the table object.</summary>
 		public int Uses
 		{
 			get { return this.uses; }

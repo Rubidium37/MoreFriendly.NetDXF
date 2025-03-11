@@ -30,11 +30,9 @@ using netDxf.Tables;
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Represents a polyface mesh face.
-	/// </summary>
+	/// <summary>Represents a polyface mesh face.</summary>
 	/// <remarks>
-	/// The way the vertex indexes for a polyface mesh are defined follows the DXF documentation.
+	/// The way the vertex indexes for a polyface mesh are defined follows the <b>DXF</b> documentation.
 	/// The values of the vertex indexes specify one of the previously defined vertexes by the index in the list plus one.
 	/// If the index is negative, the edge that begins with that vertex is invisible.
 	/// For example if the vertex index in the list is 0 the vertex index for the face will be 1, and
@@ -72,9 +70,7 @@ namespace netDxf.Entities
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of the <c>PolyfaceMeshFace</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <remarks>
 		/// By default the face is made up of four vertexes.
 		/// </remarks>
@@ -83,9 +79,7 @@ namespace netDxf.Entities
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>PolyfaceMeshFace</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="vertexIndexes">Array of indexes to the vertex list of a polyface mesh that makes up the face.</param>
 		public PolyfaceMeshFace(IEnumerable<short> vertexIndexes)
 		{
@@ -107,26 +101,20 @@ namespace netDxf.Entities
 
 		#region public properties
 
-		/// <summary>
-		/// Gets the list of indexes to the vertex list of a polyface mesh that makes up the face.
-		/// </summary>
+		/// <summary>Gets the list of indexes to the vertex list of a polyface mesh that makes up the face.</summary>
 		public short[] VertexIndexes
 		{
 			get { return this.vertexIndexes; }
 		}
 
-		/// <summary>
-		/// Gets or sets the face color. Set to null to inherit from its parent polyface mesh.
-		/// </summary>
+		/// <summary>Gets or sets the face color. Set to <see langword="null"/> to inherit from its parent polyface mesh.</summary>
 		public AciColor Color
 		{
 			get { return this.color; }
 			set { this.color = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the face layer. Set to null to inherit from its parent polyface mesh.
-		/// </summary>
+		/// <summary>Gets or sets the face layer. Set to <see langword="null"/> to inherit from its parent polyface mesh.</summary>
 		public Layer Layer
 		{
 			get { return this.layer; }
@@ -137,19 +125,13 @@ namespace netDxf.Entities
 
 		#region overrides
 
-		/// <summary>
-		/// Converts the value of this instance to its equivalent string representation.
-		/// </summary>
-		/// <returns>The string representation.</returns>
+		/// <inheritdoc/>
 		public override string ToString()
 		{
 			return "PolyfaceMeshFace";
 		}
 
-		/// <summary>
-		/// Creates a new PolyfaceMeshFace that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new PolyfaceMeshFace that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public object Clone()
 		{
 			return new PolyfaceMeshFace(this.vertexIndexes)

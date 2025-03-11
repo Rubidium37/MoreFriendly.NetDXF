@@ -29,9 +29,7 @@ using netDxf.Collections;
 
 namespace netDxf.Tables
 {
-	/// <summary>
-	/// Represents a layer.
-	/// </summary>
+	/// <summary>Represents a layer.</summary>
 	public class Layer :
 		TableObject
 	{
@@ -69,14 +67,10 @@ namespace netDxf.Tables
 
 		#region constants
 
-		/// <summary>
-		/// Default layer name.
-		/// </summary>
+		/// <summary>Default layer name.</summary>
 		public const string DefaultName = "0";
 
-		/// <summary>
-		/// Gets the default Layer 0.
-		/// </summary>
+		/// <summary>Gets the default Layer 0.</summary>
 		public static Layer Default
 		{
 			get { return new Layer(DefaultName); }
@@ -86,9 +80,7 @@ namespace netDxf.Tables
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Layer</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="name">Layer name.</param>
 		public Layer(string name)
 			: this(name, true)
@@ -117,9 +109,7 @@ namespace netDxf.Tables
 
 		#region public properties
 
-		/// <summary>
-		/// Gets or sets the layer description.
-		/// </summary>
+		/// <summary>Gets or sets the layer description.</summary>
 		/// <remarks>
 		/// The layer description is saved in the extended data of the layer, it will be handle automatically when the file is saved or loaded.<br />
 		/// New line characters are not allowed.
@@ -130,9 +120,7 @@ namespace netDxf.Tables
 			set { this.description = string.IsNullOrEmpty(value) ? string.Empty : value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the layer <see cref="Linetype">line type</see>.
-		/// </summary>
+		/// <summary>Gets or sets the layer <see cref="Linetype">line type</see>.</summary>
 		public Linetype Linetype
 		{
 			get { return this.linetype; }
@@ -146,9 +134,7 @@ namespace netDxf.Tables
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the layer <see cref="AciColor">color</see>.
-		/// </summary>
+		/// <summary>Gets or sets the layer <see cref="AciColor">color</see>.</summary>
 		public AciColor Color
 		{
 			get { return this.color; }
@@ -161,52 +147,42 @@ namespace netDxf.Tables
 
 				if (value.IsByLayer || value.IsByBlock)
 				{
-					throw new ArgumentException("The layer color cannot be ByLayer or ByBlock", nameof(value));
+					throw new ArgumentException("The layer color cannot be <b>ByLayer</b> or <b>ByBlock</b>", nameof(value));
 				}
 				this.color = value;
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the layer visibility.
-		/// </summary>
+		/// <summary>Gets or sets the layer visibility.</summary>
 		public bool IsVisible
 		{
 			get { return this.isVisible; }
 			set { this.isVisible = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets if the layer is frozen; otherwise layer is thawed.
-		/// </summary>
+		/// <summary>Gets or sets if the layer is frozen; otherwise layer is thawed.</summary>
 		public bool IsFrozen
 		{
 			get { return this.isFrozen; }
 			set { this.isFrozen = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets if the layer is locked.
-		/// </summary>
+		/// <summary>Gets or sets if the layer is locked.</summary>
 		public bool IsLocked
 		{
 			get { return this.isLocked; }
 			set { this.isLocked = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets if the plotting flag.
-		/// </summary>
-		/// <remarks>If set to false, do not plot this layer.</remarks>
+		/// <summary>Gets or sets if the plotting flag.</summary>
+		/// <remarks>If set to <see langword="false"/>, do not plot this layer.</remarks>
 		public bool Plot
 		{
 			get { return this.plot; }
 			set { this.plot = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the layer line weight, one unit is always 1/100 mm (default = Default).
-		/// </summary>
+		/// <summary>Gets or sets the layer line weight, one unit is always 1/100 mm (default = Default).</summary>
 		public Lineweight Lineweight
 		{
 			get { return this.lineweight; }
@@ -214,15 +190,13 @@ namespace netDxf.Tables
 			{
 				if (value == Lineweight.ByLayer || value == Lineweight.ByBlock)
 				{
-					throw new ArgumentException("The lineweight of a layer cannot be set to ByLayer or ByBlock.", nameof(value));
+					throw new ArgumentException("The lineweight of a layer cannot be set to <b>ByLayer</b> or <b>ByBlock</b>.", nameof(value));
 				}
 				this.lineweight = value;
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets layer transparency (default: 0, opaque).
-		/// </summary>
+		/// <summary>Gets or sets layer transparency (default: 0, opaque).</summary>
 		public Transparency Transparency
 		{
 			get { return this.transparency; }
@@ -232,9 +206,7 @@ namespace netDxf.Tables
 			}
 		}
 
-		/// <summary>
-		/// Gets the owner of the actual layer.
-		/// </summary>
+		/// <summary>Gets the owner of the actual layer.</summary>
 		public new Layers Owner
 		{
 			get { return (Layers)base.Owner; }
@@ -245,41 +217,19 @@ namespace netDxf.Tables
 
 		#region overrides
 
-		/// <summary>
-		/// Checks if this instance has been referenced by other DxfObjects.
-		/// </summary>
-		/// <returns>
-		/// Returns true if this instance has been referenced by other DxfObjects, false otherwise.
-		/// It will always return false if this instance does not belong to a document.
-		/// </returns>
-		/// <remarks>
-		/// This method returns the same value as the HasReferences method that can be found in the TableObjects class.
-		/// </remarks>
+		/// <inheritdoc/>
 		public override bool HasReferences()
 		{
 			return this.Owner != null && this.Owner.HasReferences(this.Name);
 		}
 
-		/// <summary>
-		/// Gets the list of DxfObjects referenced by this instance.
-		/// </summary>
-		/// <returns>
-		/// A list of DxfObjectReference that contains the DxfObject referenced by this instance and the number of times it does.
-		/// It will return null if this instance does not belong to a document.
-		/// </returns>
-		/// <remarks>
-		/// This method returns the same list as the GetReferences method that can be found in the TableObjects class.
-		/// </remarks>
+		/// <inheritdoc/>
 		public override List<DxfObjectReference> GetReferences()
 		{
 			return this.Owner?.GetReferences(this.Name);
 		}
 
-		/// <summary>
-		/// Creates a new Layer that is a copy of the current instance.
-		/// </summary>
-		/// <param name="newName">Layer name of the copy.</param>
-		/// <returns>A new Layer that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override TableObject Clone(string newName)
 		{
 			Layer copy = new Layer(newName)
@@ -302,10 +252,7 @@ namespace netDxf.Tables
 			return copy;
 		}
 
-		/// <summary>
-		/// Creates a new Layer that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new Layer that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override object Clone()
 		{
 			return this.Clone(this.Name);

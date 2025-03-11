@@ -28,11 +28,10 @@ using netDxf.Tables;
 
 namespace netDxf.Objects
 {
-	/// <summary>
-	/// Represent each of the elements that make up a MLineStyle.
-	/// </summary>
+	/// <summary>Represent each of the elements that make up a MLineStyle.</summary>
 	public class MLineStyleElement :
 		IComparable<MLineStyleElement>,
+		IEquatable<MLineStyleElement>,
 		ICloneable
 	{
 		#region delegates and events
@@ -63,18 +62,14 @@ namespace netDxf.Objects
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of the <c>MLineStyleElement</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="offset">Element offset.</param>
 		public MLineStyleElement(double offset)
 			: this(offset, AciColor.ByLayer, Linetype.ByLayer)
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>MLineStyleElement</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="offset">Element offset.</param>
 		/// <param name="color">Element color.</param>
 		/// <param name="linetype">Element line type.</param>
@@ -89,20 +84,16 @@ namespace netDxf.Objects
 
 		#region public properties
 
-		/// <summary>
-		/// Gets or sets the element offset.
-		/// </summary>
+		/// <summary>Gets or sets the element offset.</summary>
 		public double Offset
 		{
 			get { return this.offset; }
 			set { this.offset = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the element color.
-		/// </summary>
+		/// <summary>Gets or sets the element color.</summary>
 		/// <remarks>
-		/// AutoCad2000 DXF version does not support true colors for MLineStyleElement color.
+		/// AutoCad2000 <b>DXF</b> version does not support <see langword="true"/> colors for MLineStyleElement color.
 		/// </remarks>
 		public AciColor Color
 		{
@@ -113,9 +104,7 @@ namespace netDxf.Objects
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the element line type.
-		/// </summary>
+		/// <summary>Gets or sets the element line type.</summary>
 		public Linetype Linetype
 		{
 			get { return this.linetype; }
@@ -133,16 +122,13 @@ namespace netDxf.Objects
 
 		#region implements IComparable
 
-		/// <summary>
-		/// Compares the current object with another object of the same type.
-		/// </summary>
-		/// <param name="other">An object to compare with this object.</param>
-		/// <returns>
+		/// <inheritdoc/>
+		/// <remarks>
 		/// The MLineStyleElements are ordered from larger to smaller offset values.
 		/// A 32-bit signed integer that indicates the relative order of the objects being compared.
 		/// The return value has the following meanings: Value Meaning Less than zero This object is less than the other parameter.
 		/// Zero This object is equal to other. Greater than zero This object is greater than other.
-		/// </returns>
+		/// </remarks>
 		public int CompareTo(MLineStyleElement other)
 		{
 			if (other == null)
@@ -153,14 +139,7 @@ namespace netDxf.Objects
 			return -this.offset.CompareTo(other.offset);
 		}
 
-		/// <summary>
-		/// Check if two MLineStyleElement are equal.
-		/// </summary>
-		/// <param name="other">Another MLineStyleElement to compare to.</param>
-		/// <returns>True if two MLineStyleElement are equal or false in any other case.</returns>
-		/// <remarks>
-		/// Two MLineStyleElement are considered equals if their offsets are the same.
-		/// </remarks>
+		/// <inheritdoc/>
 		public override bool Equals(object other)
 		{
 			if (other == null)
@@ -175,15 +154,7 @@ namespace netDxf.Objects
 
 			return this.Equals((MLineStyleElement)other);
 		}
-
-		/// <summary>
-		/// Check if two MLineStyleElement are equal.
-		/// </summary>
-		/// <param name="other">Another MLineStyleElement to compare to.</param>
-		/// <returns>True if two MLineStyleElement are equal or false in any other case.</returns>
-		/// <remarks>
-		/// Two MLineStyleElement are considered equals if their offsets are the same.
-		/// </remarks>
+		/// <inheritdoc/>
 		public bool Equals(MLineStyleElement other)
 		{
 			if (other == null)
@@ -194,10 +165,7 @@ namespace netDxf.Objects
 			return MathHelper.IsEqual(this.offset, other.offset);
 		}
 
-		/// <summary>
-		/// Returns the hash code for this instance.
-		/// </summary>
-		/// <returns>A 32-bit signed integer that is the hash code for this instance.</returns>
+		/// <inheritdoc/>
 		public override int GetHashCode()
 		{
 			return this.Offset.GetHashCode();
@@ -207,10 +175,7 @@ namespace netDxf.Objects
 
 		#region implements ICloneable
 
-		/// <summary>
-		/// Creates a MLineStyleElement that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new MLineStyleElement is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public object Clone()
 		{
 			return new MLineStyleElement(this.offset)
@@ -224,10 +189,7 @@ namespace netDxf.Objects
 
 		#region overrides
 
-		/// <summary>
-		/// Converts the value of this instance to its equivalent string representation.
-		/// </summary>
-		/// <returns>The string representation.</returns>
+		/// <inheritdoc/>
 		public override string ToString()
 		{
 			return string.Format("{0}, color:{1}, line type:{2}", this.offset, this.color, this.linetype);

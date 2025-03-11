@@ -27,81 +27,51 @@ using System;
 
 namespace netDxf.Objects
 {
-	/// <summary>
-	/// Defines the plot settings flag.
-	/// </summary>
+	/// <summary>Defines the plot settings flag.</summary>
 	/// <remarks>Bit flag.</remarks>
 	[Flags]
 	public enum PlotFlags
 	{
-		/// <summary>
-		/// Plot viewport borders.
-		/// </summary>
+		/// <summary>Plot viewport borders.</summary>
 		PlotViewportBorders = 1,
 
-		/// <summary>
-		/// Show plot styles.
-		/// </summary>
+		/// <summary>Show plot styles.</summary>
 		ShowPlotStyles = 2,
 
-		/// <summary>
-		/// Plot centered.
-		/// </summary>
+		/// <summary>Plot centered.</summary>
 		PlotCentered = 4,
 
-		/// <summary>
-		/// Plot hidden.
-		/// </summary>
+		/// <summary>Plot hidden.</summary>
 		PlotHidden = 8,
 
-		/// <summary>
-		/// Use standard scale.
-		/// </summary>
+		/// <summary>Use standard scale.</summary>
 		UseStandardScale = 16,
 
-		/// <summary>
-		/// Plot styles.
-		/// </summary>
+		/// <summary>Plot styles.</summary>
 		PlotPlotStyles = 32,
 
-		/// <summary>
-		/// Scale line weights.
-		/// </summary>
+		/// <summary>Scale line weights.</summary>
 		ScaleLineweights = 64,
 
-		/// <summary>
-		/// Print line weights.
-		/// </summary>
+		/// <summary>Print line weights.</summary>
 		PrintLineweights = 128,
 
-		/// <summary>
-		/// Draw viewports first.
-		/// </summary>
+		/// <summary>Draw viewports first.</summary>
 		DrawViewportsFirst = 512,
 
-		/// <summary>
-		/// Model type.
-		/// </summary>
+		/// <summary>Model type.</summary>
 		ModelType = 1024,
 
-		/// <summary>
-		/// Update paper.
-		/// </summary>
+		/// <summary>Update paper.</summary>
 		UpdatePaper = 2048,
 
-		/// <summary>
-		/// Soon to paper on update.
-		/// </summary>
+		/// <summary>Soon to paper on update.</summary>
 		ZoomToPaperOnUpdate = 4096,
 
-		/// <summary>
-		/// Initializing.
-		/// </summary>
+		/// <summary>Initializing.</summary>
 		Initializing = 8192,
 
-		/// <summary>
-		/// Preview plot initialization.
-		/// </summary>
+		/// <summary>Preview plot initialization.</summary>
 		PrevPlotInit = 16384
 	}
 }

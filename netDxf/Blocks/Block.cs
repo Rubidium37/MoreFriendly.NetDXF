@@ -34,9 +34,7 @@ using netDxf.Tables;
 
 namespace netDxf.Blocks
 {
-	/// <summary>
-	/// Represents a block definition.
-	/// </summary>
+	/// <summary>Represents a block definition.</summary>
 	public class Block :
 		TableObject
 	{
@@ -118,27 +116,19 @@ namespace netDxf.Blocks
 
 		#region constants
 
-		/// <summary>
-		/// Default ModelSpace block name.
-		/// </summary>
+		/// <summary>Default <see cref="ModelSpace"/> block name.</summary>
 		public const string DefaultModelSpaceName = "*Model_Space";
 
-		/// <summary>
-		/// Default PaperSpace block name.
-		/// </summary>
+		/// <summary>Default <see cref="PaperSpace"/> block name.</summary>
 		public const string DefaultPaperSpaceName = "*Paper_Space";
 
-		/// <summary>
-		/// Gets the default *Model_Space block.
-		/// </summary>
+		/// <summary>Gets the default <b>*Model_Space</b> block.</summary>
 		public static Block ModelSpace
 		{
 			get { return new Block(DefaultModelSpaceName, null, null, false); }
 		}
 
-		/// <summary>
-		/// Gets the default *Paper_Space block.
-		/// </summary>
+		/// <summary>Gets the default <b>*Paper_Space</b> block.</summary>
 		public static Block PaperSpace
 		{
 			get { return new Block(DefaultPaperSpaceName, null, null, false); }
@@ -148,24 +138,20 @@ namespace netDxf.Blocks
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Block</c> class as an external reference drawing.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class as an external reference drawing.</summary>
 		/// <param name="name">Block name.</param>
 		/// <param name="xrefFile">External reference path name.</param>
-		/// <remarks>Only DWG files can be used as externally referenced blocks.</remarks>
+		/// <remarks>Only <b>DWG</b> files can be used as externally referenced blocks.</remarks>
 		public Block(string name, string xrefFile)
 			: this(name, xrefFile, false)
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Block</c> class as an external reference drawing.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class as an external reference drawing.</summary>
 		/// <param name="name">Block name.</param>
 		/// <param name="xrefFile">External reference path name.</param>
-		/// <param name="overlay">Specifies if the external reference is an overlay, by default it is set to false.</param>
-		/// <remarks>Only DWG files can be used as externally referenced blocks.</remarks>
+		/// <param name="overlay">Specifies if the external reference is an overlay, by default it is set to <see langword="false"/>.</param>
+		/// <remarks>Only <b>DWG</b> files can be used as externally referenced blocks.</remarks>
 		public Block(string name, string xrefFile, bool overlay)
 			: this(name, null, null, true)
 		{
@@ -187,18 +173,14 @@ namespace netDxf.Blocks
 			}
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Block</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="name">Block name.</param>
 		public Block(string name)
 			: this(name, null, null, true)
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Block</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="name">Block name.</param>
 		/// <param name="entities">The list of entities that make the block.</param>
 		public Block(string name, IEnumerable<EntityObject> entities)
@@ -206,9 +188,7 @@ namespace netDxf.Blocks
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Block</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="name">Block name.</param>
 		/// <param name="entities">The list of entities that make the block.</param>
 		/// <param name="attributes">The list of attribute definitions that make the block.</param>
@@ -260,9 +240,7 @@ namespace netDxf.Blocks
 
 		#region public properties
 
-		/// <summary>
-		/// Gets the name of the table object.
-		/// </summary>
+		/// <summary>Gets the name of the table object.</summary>
 		/// <remarks>
 		/// Table object names are case insensitive.<br />
 		/// The internal blocks that start with "*U" or "*T" can be safely renamed.
@@ -295,13 +273,11 @@ namespace netDxf.Blocks
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the block description.
-		/// </summary>
+		/// <summary>Gets or sets the block description.</summary>
 		/// <remarks>
-		/// AutoCAD has an unknown limit on the number of characters for the description when loading an external DXF,
-		/// while, on the other hand is perfectly capable of saving a Block description that surpasses such limit.<br />
-		/// Keep in mind that when saving a DXF prior to the AutoCad2007 version, non-ASCII characters will be encoded,
+		/// <b>AutoCAD</b> has an unknown limit on the number of characters for the description when loading an external DXF,
+		/// while, on the other hand is perfectly capable of saving a <see cref="Block"/> description that surpasses such limit.<br />
+		/// Keep in mind that when saving a <b>DXF</b> prior to the <b>AutoCad2007</b> version, non-ASCII characters will be encoded,
 		/// therefore a single letter might consume more characters when saved into the DXF.<br />
 		/// New line characters are not allowed.
 		/// </remarks>
@@ -311,18 +287,14 @@ namespace netDxf.Blocks
 			set { this.description = string.IsNullOrEmpty(value) ? string.Empty : value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the block origin in world coordinates, it is recommended to always keep this value to the default Vector3.Zero.
-		/// </summary>
+		/// <summary>Gets or sets the block origin in world coordinates, it is recommended to always keep this value to the default Vector3.Zero.</summary>
 		public Vector3 Origin
 		{
 			get { return this.origin; }
 			set { this.origin = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the block <see cref="Layer">layer</see>.
-		/// </summary>
+		/// <summary>Gets or sets the block <see cref="Layer">layer</see>.</summary>
 		/// <remarks>It seems that the block layer is always the default "0" regardless of what is defined here, so it is pointless to change this value.</remarks>
 		public Layer Layer
 		{
@@ -337,20 +309,16 @@ namespace netDxf.Blocks
 			}
 		}
 
-		/// <summary>
-		/// Gets the <see cref="EntityObject">entity</see> list of the block.
-		/// </summary>
+		/// <summary>Gets the <see cref="EntityObject">entity</see> list of the block.</summary>
 		/// <remarks>Null entities, attribute definitions or entities already owned by another block or document cannot be added to the list.</remarks>
 		public EntityCollection Entities
 		{
 			get { return this.entities; }
 		}
 
-		/// <summary>
-		/// Gets the <see cref="AttributeDefinition">entity</see> list of the block.
-		/// </summary>
+		/// <summary>Gets the <see cref="AttributeDefinition">entity</see> list of the block.</summary>
 		/// <remarks>
-		/// Null or attribute definitions already owned by another block or document cannot be added to the list.
+		/// <see langword="null"/> or attribute definitions already owned by another block or document cannot be added to the list.
 		/// Additionally Paper Space blocks do not contain attribute definitions.
 		/// </remarks>
 		public AttributeDefinitionDictionary AttributeDefinitions
@@ -358,36 +326,28 @@ namespace netDxf.Blocks
 			get { return this.attributes; }
 		}
 
-		/// <summary>
-		/// Gets the owner of the actual DXF object.
-		/// </summary>
+		/// <summary>Gets the owner of the actual <b>DXF</b> object.</summary>
 		public new BlockRecord Owner
 		{
 			get { return (BlockRecord)base.Owner; }
 			internal set { base.Owner = value; }
 		}
 
-		/// <summary>
-		/// Gets the block record associated with this block.
-		/// </summary>
+		/// <summary>Gets the block record associated with this block.</summary>
 		/// <remarks>It returns the same object as the owner property.</remarks>
 		public BlockRecord Record
 		{
 			get { return this.Owner; }
 		}
 
-		/// <summary>
-		/// Gets the block-type flags (bit-coded values, may be combined).
-		/// </summary>
+		/// <summary>Gets the block-type flags (bit-coded values, may be combined).</summary>
 		public BlockTypeFlags Flags
 		{
 			get { return this.flags; }
 			internal set { this.flags = value; }
 		}
 
-		/// <summary>
-		/// Gets the external reference path name.
-		/// </summary>
+		/// <summary>Gets the external reference path name.</summary>
 		/// <remarks>
 		/// This property is only applicable to externally referenced blocks.
 		/// </remarks>
@@ -396,17 +356,13 @@ namespace netDxf.Blocks
 			get { return this.xrefFile; }
 		}
 
-		/// <summary>
-		/// Gets if the block is an external reference.
-		/// </summary>
+		/// <summary>Gets if the block is an external reference.</summary>
 		public bool IsXRef
 		{
 			get { return this.flags.HasFlag(BlockTypeFlags.XRef); }
 		}
 
-		/// <summary>
-		/// All blocks that starts with "*" are for internal use only.
-		/// </summary>
+		/// <summary>All blocks that starts with "*" are for internal use only.</summary>
 		public bool IsForInternalUseOnly
 		{
 			get { return this.forInternalUse; }
@@ -416,9 +372,7 @@ namespace netDxf.Blocks
 
 		#region internal properties
 
-		/// <summary>
-		/// Gets or sets the block end object.
-		/// </summary>
+		/// <summary>Gets or sets the block end object.</summary>
 		internal EndBlock End
 		{
 			get { return this.end; }
@@ -428,10 +382,8 @@ namespace netDxf.Blocks
 
 		#region public methods
 
-		/// <summary>
-		/// Creates a block from the content of a <see cref="DxfDocument">document</see>.
-		/// </summary>
-		/// <param name="doc">A <see cref="DxfDocument">DxfDocument</see> instance.</param>
+		/// <summary>Creates a block from the content of a <see cref="DxfDocument">document</see>.</summary>
+		/// <param name="doc">A <see cref="DxfDocument"/> instance.</param>
 		/// <param name="name">Name of the new block.</param>
 		/// <returns>The block build from the <see cref="DxfDocument">document</see> content.</returns>
 		/// <remarks>Only the entities contained in ModelSpace will make part of the block.</remarks>
@@ -472,55 +424,47 @@ namespace netDxf.Blocks
 			return block;
 		}
 
-		/// <summary>
-		/// Creates a block from an external DXF file.
-		/// </summary>
+		/// <summary>Creates a block from an external <b>DXF</b> file.</summary>
 		/// <param name="file">DXF file name.</param>
-		/// <returns>The block build from the DXF file content. It will return null if the file has not been able to load.</returns>
+		/// <returns>The block build from the <b>DXF</b> file content. It will return <see langword="null"/> if the file has not been able to load.</returns>
 		/// <remarks>
 		/// The name of the block will be the file name without extension, and
-		/// only the entities contained in ModelSpace will make part of the block.
+		/// only the entities contained in <see cref="ModelSpace"/> will make part of the block.
 		/// </remarks>
 		public static Block Load(string file)
 		{
 			return Load(file, string.Empty, new List<string>());
 		}
 
-		/// <summary>
-		/// Creates a block from an external DXF file.
-		/// </summary>
+		/// <summary>Creates a block from an external <b>DXF</b> file.</summary>
 		/// <param name="file">DXF file name.</param>
 		/// <param name="supportFolders">List of the document support folders.</param>
-		/// <returns>The block build from the DXF file content. It will return null if the file has not been able to load.</returns>
+		/// <returns>The block build from the <b>DXF</b> file content. It will return <see langword="null"/> if the file has not been able to load.</returns>
 		/// <remarks>
 		/// The name of the block will be the file name without extension, and
-		/// only the entities contained in ModelSpace will make part of the block.
+		/// only the entities contained in <see cref="ModelSpace"/> will make part of the block.
 		/// </remarks>
 		public static Block Load(string file, IEnumerable<string> supportFolders)
 		{
 			return Load(file, string.Empty, supportFolders);
 		}
 
-		/// <summary>
-		/// Creates a block from an external DXF file.
-		/// </summary>
+		/// <summary>Creates a block from an external <b>DXF</b> file.</summary>
 		/// <param name="file">DXF file name.</param>
 		/// <param name="name">Name of the new block.</param>
-		/// <returns>The block build from the DXF file content. It will return null if the file has not been able to load.</returns>
-		/// <remarks>Only the entities contained in ModelSpace will make part of the block.</remarks>
+		/// <returns>The block build from the <b>DXF</b> file content. It will return <see langword="null"/> if the file has not been able to load.</returns>
+		/// <remarks>Only the entities contained in <see cref="ModelSpace"/> will make part of the block.</remarks>
 		public static Block Load(string file, string name)
 		{
 			return Load(file, name, new List<string>());
 		}
 
-		/// <summary>
-		/// Creates a block from an external DXF file.
-		/// </summary>
+		/// <summary>Creates a block from an external <b>DXF</b> file.</summary>
 		/// <param name="file">DXF file name.</param>
 		/// <param name="name">Name of the new block.</param>
 		/// <param name="supportFolders">List of the document support folders.</param>
-		/// <returns>The block build from the DXF file content. It will return null if the file has not been able to load.</returns>
-		/// <remarks>Only the entities contained in ModelSpace will make part of the block.</remarks>
+		/// <returns>The block build from the <b>DXF</b> file content. It will return <see langword="null"/> if the file has not been able to load.</returns>
+		/// <remarks>Only the entities contained in <see cref="ModelSpace"/> will make part of the block.</remarks>
 		public static Block Load(string file, string name, IEnumerable<string> supportFolders)
 		{
 #if DEBUG
@@ -541,24 +485,20 @@ namespace netDxf.Blocks
 			return Create(dwg, blkName);
 		}
 
-		/// <summary>
-		/// Saves a block to a text DXF file.
-		/// </summary>
+		/// <summary>Saves a block to a text <b>DXF</b> file.</summary>
 		/// <param name="file">DXF file name.</param>
-		/// <param name="version">Version of the DXF database version.</param>
-		/// <returns>Return true if the file has been successfully save, false otherwise.</returns>
+		/// <param name="version">Version of the <b>DXF</b> database version.</param>
+		/// <returns>Return <see langword="true"/> if the file has been successfully save; otherwise, <see langword="false"/>.</returns>
 		public bool Save(string file, DxfVersion version)
 		{
 			return this.Save(file, version, false);
 		}
 
-		/// <summary>
-		/// Saves a block to a DXF file.
-		/// </summary>
+		/// <summary>Saves a block to a <b>DXF</b> file.</summary>
 		/// <param name="file">DXF file name.</param>
-		/// <param name="version">Version of the DXF database version.</param>
+		/// <param name="version">Version of the <b>DXF</b> database version.</param>
 		/// <param name="isBinary">Defines if the file will be saved as binary.</param>
-		/// <returns>Return true if the file has been successfully save, false otherwise.</returns>
+		/// <returns>Return <see langword="true"/> if the file has been successfully save; otherwise, <see langword="false"/>.</returns>
 		public bool Save(string file, DxfVersion version, bool isBinary)
 		{
 			DxfDocument dwg = new DxfDocument(version);
@@ -598,31 +538,13 @@ namespace netDxf.Blocks
 
 		#region overrides
 
-		/// <summary>
-		/// Checks if this instance has been referenced by other DxfObjects.
-		/// </summary>
-		/// <returns>
-		/// Returns true if this instance has been referenced by other DxfObjects, false otherwise.
-		/// It will always return false if this instance does not belong to a document.
-		/// </returns>
-		/// <remarks>
-		/// This method returns the same value as the HasReferences method that can be found in the TableObjects class.
-		/// </remarks>
+		/// <inheritdoc/>
 		public override bool HasReferences()
 		{
 			return this.Owner.Owner != null && this.Owner.Owner.HasReferences(this.Name);
 		}
 
-		/// <summary>
-		/// Gets the list of DxfObjects referenced by this instance.
-		/// </summary>
-		/// <returns>
-		/// A list of DxfObjectReference that contains the DxfObject referenced by this instance and the number of times it does.
-		/// It will return null if this instance does not belong to a document.
-		/// </returns>
-		/// <remarks>
-		/// This method returns the same list as the GetReferences method that can be found in the TableObjects class.
-		/// </remarks>
+		/// <inheritdoc/>
 		public override List<DxfObjectReference> GetReferences()
 		{
 			if (this.Owner.Owner == null)
@@ -677,34 +599,18 @@ namespace netDxf.Blocks
 			return copy;
 		}
 
-		/// <summary>
-		/// Creates a new Block that is a copy of the current instance.
-		/// </summary>
-		/// <param name="newName">Block name of the copy.</param>
-		/// <returns>A new Block that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override TableObject Clone(string newName)
 		{
 			return Clone(this, newName, true);
 		}
-
-		/// <summary>
-		/// Creates a new Block that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new Block that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override object Clone()
 		{
 			return Clone(this, this.Name, !this.flags.HasFlag(BlockTypeFlags.AnonymousBlock));
 		}
 
-		/// <summary>
-		/// Assigns a handle to the object based in a integer counter.
-		/// </summary>
-		/// <param name="entityNumber">Number to assign.</param>
-		/// <returns>Next available entity number.</returns>
-		/// <remarks>
-		/// Some objects might consume more than one, is, for example, the case of polylines that will assign
-		/// automatically a handle to its vertexes. The entity number will be converted to an hexadecimal number.
-		/// </remarks>
+		/// <inheritdoc/>
 		internal override long AssignHandle(long entityNumber)
 		{
 			entityNumber = this.Owner.AssignHandle(entityNumber);

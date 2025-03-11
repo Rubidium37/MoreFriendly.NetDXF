@@ -25,29 +25,19 @@
 
 namespace netDxf.Objects
 {
-	/// <summary>
-	/// Plot rotation
-	/// </summary>
+	/// <summary>Plot rotation</summary>
 	public enum PlotRotation
 	{
-		/// <summary>
-		/// No rotation.
-		/// </summary>
+		/// <summary>No rotation.</summary>
 		NoRotation = 0,
 
-		/// <summary>
-		/// 90 degrees counterclockwise.
-		/// </summary>
+		/// <summary>90 degrees counterclockwise.</summary>
 		Degrees90 = 1,
 
-		/// <summary>
-		/// Upside-down.
-		/// </summary>
+		/// <summary>Upside-down.</summary>
 		Degrees180 = 2,
 
-		/// <summary>
-		/// 90 degrees clockwise.
-		/// </summary>
+		/// <summary>90 degrees clockwise.</summary>
 		Degrees270 = 3
 	}
 }

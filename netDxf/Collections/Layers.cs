@@ -30,9 +30,7 @@ using netDxf.Tables;
 
 namespace netDxf.Collections
 {
-	/// <summary>
-	/// Represents a collection of layers.
-	/// </summary>
+	/// <summary>Represents a collection of layers.</summary>
 	public sealed class Layers :
 		TableObjects<Layer>
 	{
@@ -59,9 +57,7 @@ namespace netDxf.Collections
 
 		#region public properties
 
-		/// <summary>
-		/// Gets the layer state manager.
-		/// </summary>
+		/// <summary>Gets the layer state manager.</summary>
 		public LayerStateManager StateManager
 		{
 			get { return this.stateManager; }
@@ -71,15 +67,7 @@ namespace netDxf.Collections
 
 		#region override methods
 
-		/// <summary>
-		/// Adds a layer to the list.
-		/// </summary>
-		/// <param name="layer"><see cref="Layer">Layer</see> to add to the list.</param>
-		/// <param name="assignHandle">Specifies if a handle needs to be generated for the layer parameter.</param>
-		/// <returns>
-		/// If a layer already exists with the same name as the instance that is being added the method returns the existing layer,
-		/// if not it will return the new layer.
-		/// </returns>
+		/// <inheritdoc/>
 		internal override Layer Add(Layer layer, bool assignHandle)
 		{
 			if (layer == null)
@@ -113,23 +101,12 @@ namespace netDxf.Collections
 			return layer;
 		}
 
-		/// <summary>
-		/// Removes a layer.
-		/// </summary>
-		/// <param name="name"><see cref="Layer">Layer</see> name to remove from the document.</param>
-		/// <returns>True if the layer has been successfully removed, or false otherwise.</returns>
-		/// <remarks>Reserved layers or any other referenced by objects cannot be removed.</remarks>
+		/// <inheritdoc/>
 		public override bool Remove(string name)
 		{
 			return this.Remove(this[name]);
 		}
-
-		/// <summary>
-		/// Removes a layer.
-		/// </summary>
-		/// <param name="item"><see cref="Layer">Layer</see> to remove from the document.</param>
-		/// <returns>True if the layer has been successfully removed, or false otherwise.</returns>
-		/// <remarks>Reserved layers or any other referenced by objects cannot be removed.</remarks>
+		/// <inheritdoc/>
 		public override bool Remove(Layer item)
 		{
 			if (item == null)

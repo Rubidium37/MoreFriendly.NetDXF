@@ -25,9 +25,7 @@
 
 namespace netDxf.Units
 {
-	/// <summary>
-	/// Helper methods for unit conversion.
-	/// </summary>
+	/// <summary>Helper methods for unit conversion.</summary>
 	public static class UnitHelper
 	{
 		#region constants
@@ -66,9 +64,7 @@ namespace netDxf.Units
 
 		#region public methods
 
-		/// <summary>
-		/// Converts a value from one drawing unit to another.
-		/// </summary>
+		/// <summary>Converts a value from one drawing unit to another.</summary>
 		/// <param name="value">Number to convert.</param>
 		/// <param name="from">Original drawing units.</param>
 		/// <param name="to">Destination drawing units.</param>
@@ -78,9 +74,7 @@ namespace netDxf.Units
 			return value * ConversionFactor(from, to);
 		}
 
-		/// <summary>
-		/// Gets the conversion factor between drawing units.
-		/// </summary>
+		/// <summary>Gets the conversion factor between drawing units.</summary>
 		/// <param name="from">Original drawing units.</param>
 		/// <param name="to">Destination drawing units.</param>
 		/// <returns>The conversion factor between the drawing units.</returns>
@@ -96,9 +90,7 @@ namespace netDxf.Units
 			return (double)(factor1 / factor2);
 		}
 
-		/// <summary>
-		/// Gets the conversion factor between image and drawing units.
-		/// </summary>
+		/// <summary>Gets the conversion factor between image and drawing units.</summary>
 		/// <param name="from">Original image units.</param>
 		/// <param name="to">Destination drawing units.</param>
 		/// <returns>The conversion factor between the units.</returns>
@@ -107,9 +99,7 @@ namespace netDxf.Units
 			return ConversionFactor(ImageToDrawingUnits(from), to);
 		}
 
-		/// <summary>
-		/// Gets the conversion factor between units.
-		/// </summary>
+		/// <summary>Gets the conversion factor between units.</summary>
 		/// <param name="from">Original value units.</param>
 		/// <param name="to">Destination value units.</param>
 		/// <returns>The conversion factor between the passed units.</returns>

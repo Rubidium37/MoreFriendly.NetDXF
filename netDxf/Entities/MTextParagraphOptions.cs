@@ -27,10 +27,8 @@ using System;
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Options for the <see cref="MText">multiline text</see> entity paragraph formatting.
-	/// </summary>
-	/// <remarks>Old DXF versions might not support all available formatting codes.</remarks>
+	/// <summary>Options for the <see cref="MText">multiline text</see> entity paragraph formatting.</summary>
+	/// <remarks>Old <b>DXF</b> versions might not support all available formatting codes.</remarks>
 	public class MTextParagraphOptions
 	{
 		#region private fields
@@ -50,9 +48,7 @@ namespace netDxf.Entities
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of the <c>MTextParagraphOptions</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		public MTextParagraphOptions()
 		{
 			this.heightFactor = 1.0;
@@ -71,9 +67,7 @@ namespace netDxf.Entities
 
 		#region public properties
 
-		/// <summary>
-		/// Gets or sets the paragraph height factor.
-		/// </summary>
+		/// <summary>Gets or sets the paragraph height factor.</summary>
 		/// <remarks>Set as 1.0 to apply the default height factor.</remarks>
 		public double HeightFactor
 		{
@@ -86,18 +80,14 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the paragraph justification (text horizontal alignment).
-		/// </summary>
+		/// <summary>Gets or sets the paragraph justification (text horizontal alignment).</summary>
 		public MTextParagraphAlignment Alignment
 		{
 			get { return this.alignment; }
 			set { this.alignment = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the paragraph line vertical alignment.
-		/// </summary>
+		/// <summary>Gets or sets the paragraph line vertical alignment.</summary>
 		/// <remarks>
 		/// The vertical alignment affects how fractions, superscripts, subscripts, and characters of different heights are placed in a paragraph line.
 		/// By default the paragraph vertical alignment is Center.
@@ -108,9 +98,7 @@ namespace netDxf.Entities
 			set { this.verticalAlignment = value; }
 		}
 
-		/// <summary>
-		/// Specifies the spacing before the paragraphs.
-		/// </summary>
+		/// <summary>Specifies the spacing before the paragraphs.</summary>
 		/// <remarks>
 		/// If set to zero no value will be applied and the default will be inherited. When it is non zero, valid values range from 0.25 to 4.0.<br />
 		/// The distance between two paragraphs is determined by the total of the after paragraph spacing value of the upper paragraph
@@ -134,9 +122,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Specifies the spacing before or after the paragraph.
-		/// </summary>
+		/// <summary>Specifies the spacing before or after the paragraph.</summary>
 		/// <remarks>
 		/// If set to zero no value will be applied and the default will be inherited. When it is non zero, valid values range from 0.25 to 4.0.<br />
 		/// The distance between two paragraphs is determined by the total of the after paragraph spacing value of the upper paragraph
@@ -160,9 +146,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the indent value for the first line of the paragraph.
-		/// </summary>
+		/// <summary>Gets or sets the indent value for the first line of the paragraph.</summary>
 		/// <remarks>
 		/// Valid values range from -10000.0 to 10000.0, the default value 0.0.<br />
 		/// Negative first line indent values are limited by the left indent,
@@ -180,9 +164,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the left indent of the current paragraph.
-		/// </summary>
+		/// <summary>Gets or sets the left indent of the current paragraph.</summary>
 		/// <remarks>
 		/// Valid values range from 0.0 to 10000.0, the default value 0.0.
 		/// </remarks>
@@ -197,9 +179,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the right indent value of the paragraphs.
-		/// </summary>
+		/// <summary>Gets or sets the right indent value of the paragraphs.</summary>
 		/// <remarks>
 		/// Valid values range from 0.0 to 10000.0, the default value 0.0.
 		/// </remarks>
@@ -214,9 +194,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the paragraph line spacing factor.
-		/// </summary>
+		/// <summary>Gets or sets the paragraph line spacing factor.</summary>
 		/// <remarks>
 		/// Percentage of default line spacing to be applied. Valid values range from 0.25 to 4.0, the default value 1.0.
 		/// </remarks>
@@ -231,9 +209,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Get or sets the paragraph <see cref="MTextLineSpacingStyle">line spacing style</see>.
-		/// </summary>
+		/// <summary>Get or sets the paragraph <see cref="MTextLineSpacingStyle">line spacing style</see>.</summary>
 		public MTextLineSpacingStyle LineSpacingStyle
 		{
 			get { return this.lineSpacingStyle; }

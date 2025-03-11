@@ -29,9 +29,7 @@ using netDxf.Tables;
 
 namespace netDxf.Objects
 {
-	/// <summary>
-	/// Represents an underlay definition.
-	/// </summary>
+	/// <summary>Represents an underlay definition.</summary>
 	public abstract class UnderlayDefinition :
 		TableObject
 	{
@@ -44,9 +42,7 @@ namespace netDxf.Objects
 
 		#region constructor
 
-		/// <summary>
-		/// Initializes a new instance of the <c>UnderlayDefinition</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="name">Underlay name.</param>
 		/// <param name="file">Underlay file name with full or relative path.</param>
 		/// <param name="type">Underlay type.</param>
@@ -101,17 +97,13 @@ namespace netDxf.Objects
 
 		#region public properties
 
-		/// <summary>
-		/// Get the underlay type.
-		/// </summary>
+		/// <summary>Get the underlay type.</summary>
 		public UnderlayType Type
 		{
 			get { return this.type; }
 		}
 
-		/// <summary>
-		/// Gets or sets the underlay file.
-		/// </summary>
+		/// <summary>Gets or sets the underlay file.</summary>
 		/// <remarks>
 		/// The file extension must match the underlay type.
 		/// </remarks>

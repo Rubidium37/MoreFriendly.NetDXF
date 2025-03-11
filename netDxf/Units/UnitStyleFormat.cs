@@ -27,9 +27,7 @@ using System;
 
 namespace netDxf.Units
 {
-	/// <summary>
-	/// Represents the parameters to convert linear and angular units to its string representation.
-	/// </summary>
+	/// <summary>Represents the parameters to convert linear and angular units to its string representation.</summary>
 	public class UnitStyleFormat
 	{
 		#region private fields
@@ -58,9 +56,7 @@ namespace netDxf.Units
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of the <c>UnitStyleFormat</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		public UnitStyleFormat()
 		{
 			this.linearDecimalPlaces = 2;
@@ -88,9 +84,7 @@ namespace netDxf.Units
 
 		#region public properties
 
-		/// <summary>
-		/// Gets or sets the number of decimal places for linear units.
-		/// </summary>
+		/// <summary>Gets or sets the number of decimal places for linear units.</summary>
 		/// <remarks>
 		/// For architectural and fractional the precision used for the minimum fraction is 1/2^LinearDecimalPlaces.
 		/// </remarks>
@@ -107,9 +101,7 @@ namespace netDxf.Units
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the number of decimal places for angular units.
-		/// </summary>
+		/// <summary>Gets or sets the number of decimal places for angular units.</summary>
 		public short AngularDecimalPlaces
 		{
 			get { return this.angularDecimalPlaces; }
@@ -123,90 +115,70 @@ namespace netDxf.Units
 			}
 		}
 
-		/// <summary>
-		/// Gets or set the decimal separator.
-		/// </summary>
+		/// <summary>Gets or set the decimal separator.</summary>
 		public string DecimalSeparator
 		{
 			get { return this.decimalSeparator; }
 			set { this.decimalSeparator = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the separator between feet and inches.
-		/// </summary>
+		/// <summary>Gets or sets the separator between feet and inches.</summary>
 		public string FeetInchesSeparator
 		{
 			get { return this.feetInchesSeparator; }
 			set { this.feetInchesSeparator = value; }
 		}
 
-		/// <summary>
-		/// Gets or set the angle degrees symbol.
-		/// </summary>
+		/// <summary>Gets or set the angle degrees symbol.</summary>
 		public string DegreesSymbol
 		{
 			get { return this.degreesSymbol; }
 			set { this.degreesSymbol = value; }
 		}
 
-		/// <summary>
-		/// Gets or set the angle minutes symbol.
-		/// </summary>
+		/// <summary>Gets or set the angle minutes symbol.</summary>
 		public string MinutesSymbol
 		{
 			get { return this.minutesSymbol; }
 			set { this.minutesSymbol = value; }
 		}
 
-		/// <summary>
-		/// Gets or set the angle seconds symbol.
-		/// </summary>
+		/// <summary>Gets or set the angle seconds symbol.</summary>
 		public string SecondsSymbol
 		{
 			get { return this.secondsSymbol; }
 			set { this.secondsSymbol = value; }
 		}
 
-		/// <summary>
-		/// Gets or set the angle radians symbol.
-		/// </summary>
+		/// <summary>Gets or set the angle radians symbol.</summary>
 		public string RadiansSymbol
 		{
 			get { return this.radiansSymbol; }
 			set { this.radiansSymbol = value; }
 		}
 
-		/// <summary>
-		/// Gets or set the angle gradians symbol.
-		/// </summary>
+		/// <summary>Gets or set the angle gradians symbol.</summary>
 		public string GradiansSymbol
 		{
 			get { return this.gradiansSymbol; }
 			set { this.gradiansSymbol = value; }
 		}
 
-		/// <summary>
-		/// Gets or set the feet symbol.
-		/// </summary>
+		/// <summary>Gets or set the feet symbol.</summary>
 		public string FeetSymbol
 		{
 			get { return this.feetSymbol; }
 			set { this.feetSymbol = value; }
 		}
 
-		/// <summary>
-		/// Gets or set the inches symbol.
-		/// </summary>
+		/// <summary>Gets or set the inches symbol.</summary>
 		public string InchesSymbol
 		{
 			get { return this.inchesSymbol; }
 			set { this.inchesSymbol = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the scale of fractions relative to dimension text height.
-		/// </summary>
+		/// <summary>Gets or sets the scale of fractions relative to dimension text height.</summary>
 		public double FractionHeightScale
 		{
 			get { return this.fractionHeightScale; }
@@ -220,9 +192,7 @@ namespace netDxf.Units
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the fraction format for architectural or fractional units.
-		/// </summary>
+		/// <summary>Gets or sets the fraction format for architectural or fractional units.</summary>
 		/// <remarks>
 		/// Horizontal stacking<br/>
 		/// Diagonal stacking<br/>
@@ -234,54 +204,42 @@ namespace netDxf.Units
 			set { this.fractionType = value; }
 		}
 
-		/// <summary>
-		/// Suppresses leading zeros in linear decimal dimensions (for example, 0.5000 becomes .5000).
-		/// </summary>
+		/// <summary>Suppresses leading zeros in linear decimal dimensions (for example, 0.5000 becomes .5000).</summary>
 		public bool SuppressLinearLeadingZeros
 		{
 			get { return this.suppressLinearLeadingZeros; }
 			set { this.suppressLinearLeadingZeros = value; }
 		}
 
-		/// <summary>
-		/// Suppresses trailing zeros in linear decimal dimensions (for example, 12.5000 becomes 12.5).
-		/// </summary>
+		/// <summary>Suppresses trailing zeros in linear decimal dimensions (for example, 12.5000 becomes 12.5).</summary>
 		public bool SuppressLinearTrailingZeros
 		{
 			get { return this.suppressLinearTrailingZeros; }
 			set { this.suppressLinearTrailingZeros = value; }
 		}
 
-		/// <summary>
-		/// Suppresses leading zeros in angular decimal dimensions (for example, 0.5000 becomes .5000).
-		/// </summary>
+		/// <summary>Suppresses leading zeros in angular decimal dimensions (for example, 0.5000 becomes .5000).</summary>
 		public bool SuppressAngularLeadingZeros
 		{
 			get { return this.suppressAngularLeadingZeros; }
 			set { this.suppressAngularLeadingZeros = value; }
 		}
 
-		/// <summary>
-		/// Suppresses trailing zeros in angular decimal dimensions (for example, 12.5000 becomes 12.5).
-		/// </summary>
+		/// <summary>Suppresses trailing zeros in angular decimal dimensions (for example, 12.5000 becomes 12.5).</summary>
 		public bool SuppressAngularTrailingZeros
 		{
 			get { return this.suppressAngularTrailingZeros; }
 			set { this.suppressAngularTrailingZeros = value; }
 		}
 
-		/// <summary>
-		/// Suppresses zero feet in architectural dimensions.
-		/// </summary>
+		/// <summary>Suppresses zero feet in architectural dimensions.</summary>
 		public bool SuppressZeroFeet
 		{
 			get { return this.suppressZeroFeet; }
 			set { this.suppressZeroFeet = value; }
 		}
 
-		/// <summary>
-		/// Suppresses zero inches in architectural dimensions.
-		/// </summary>
+		/// <summary>Suppresses zero inches in architectural dimensions.</summary>
 		public bool SuppressZeroInches
 		{
 			get { return this.suppressZeroInches; }

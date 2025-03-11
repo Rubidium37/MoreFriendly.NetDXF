@@ -113,6 +113,7 @@ namespace netDxf.GTE
 		// derivatives dX/du, dX/dv; second-order derivatives d2X/du2,
 		// d2X/dudv, d2X/dv2.
 		// u and v [0,1]
+		/// <inheritdoc/>
 		public override void Evaluate(double u, double v, int order, out Vector3[] jet)
 		{
 			int supOrder = SUP_ORDER;

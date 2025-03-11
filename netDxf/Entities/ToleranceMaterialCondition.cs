@@ -25,29 +25,19 @@
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Tolerance Material Condition.
-	/// </summary>
+	/// <summary>Tolerance Material Condition.</summary>
 	public enum ToleranceMaterialCondition
 	{
-		/// <summary>
-		/// No material condition.
-		/// </summary>
+		/// <summary>No material condition.</summary>
 		None,
 
-		/// <summary>
-		/// Maximum Material Condition (MMC). A feature contains the maximum amount of material stated in the limits.
-		/// </summary>
+		/// <summary>Maximum Material Condition (<b>MMC</b>). A feature contains the maximum amount of material stated in the limits.</summary>
 		Maximum,
 
-		/// <summary>
-		/// Least Material Condition (LMC). A feature contains the minimum amount of material stated in the limits.
-		/// </summary>
+		/// <summary>Least Material Condition (<b>LMC</b>). A feature contains the minimum amount of material stated in the limits.</summary>
 		Least,
 
-		/// <summary>
-		/// Regardless of feature size. A feature can be any size within the stated limits.
-		/// </summary>
+		/// <summary>Regardless of feature size. A feature can be any size within the stated limits.</summary>
 		Regardless
 	}
 }

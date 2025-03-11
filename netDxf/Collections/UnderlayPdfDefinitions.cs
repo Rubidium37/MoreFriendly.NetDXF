@@ -30,9 +30,7 @@ using netDxf.Tables;
 
 namespace netDxf.Collections
 {
-	/// <summary>
-	/// Represents a collection of PDF underlay definitions.
-	/// </summary>
+	/// <summary>Represents a collection of <b>PDF</b> underlay definitions.</summary>
 	public sealed class UnderlayPdfDefinitions :
 		TableObjects<UnderlayPdfDefinition>
 	{
@@ -52,15 +50,7 @@ namespace netDxf.Collections
 
 		#region override methods
 
-		/// <summary>
-		/// Adds a PDF underlay definition to the list.
-		/// </summary>
-		/// <param name="underlayPdfDefinition"><see cref="UnderlayPdfDefinition">UnderlayPdfDefinition</see> to add to the list.</param>
-		/// <param name="assignHandle">Specifies if a handle needs to be generated for the underlay definition parameter.</param>
-		/// <returns>
-		/// If an underlay definition already exists with the same name as the instance that is being added the method returns the existing underlay definition,
-		/// if not it will return the new underlay definition.
-		/// </returns>
+		/// <inheritdoc/>
 		internal override UnderlayPdfDefinition Add(UnderlayPdfDefinition underlayPdfDefinition, bool assignHandle)
 		{
 			if (underlayPdfDefinition == null)
@@ -90,23 +80,12 @@ namespace netDxf.Collections
 			return underlayPdfDefinition;
 		}
 
-		/// <summary>
-		/// Removes a PDF underlay definition.
-		/// </summary>
-		/// <param name="name"><see cref="UnderlayPdfDefinition">UnderlayPdfDefinition</see> name to remove from the document.</param>
-		/// <returns>True if the underlay definition has been successfully removed, or false otherwise.</returns>
-		/// <remarks>Any underlay definition referenced by objects cannot be removed.</remarks>
+		/// <inheritdoc/>
 		public override bool Remove(string name)
 		{
 			return this.Remove(this[name]);
 		}
-
-		/// <summary>
-		/// Removes a PDF underlay definition.
-		/// </summary>
-		/// <param name="item"><see cref="UnderlayPdfDefinition">UnderlayPdfDefinition</see> to remove from the document.</param>
-		/// <returns>True if the underlay definition has been successfully removed, or false otherwise.</returns>
-		/// <remarks>Any underlay definition referenced by objects cannot be removed.</remarks>
+		/// <inheritdoc/>
 		public override bool Remove(UnderlayPdfDefinition item)
 		{
 			if (item == null)

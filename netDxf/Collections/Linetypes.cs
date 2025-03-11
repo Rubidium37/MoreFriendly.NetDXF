@@ -30,9 +30,7 @@ using netDxf.Tables;
 
 namespace netDxf.Collections
 {
-	/// <summary>
-	/// Represents a collection of line types.
-	/// </summary>
+	/// <summary>Represents a collection of line types.</summary>
 	public sealed class Linetypes :
 		TableObjects<Linetype>
 	{
@@ -52,11 +50,9 @@ namespace netDxf.Collections
 
 		#region public methods
 
-		/// <summary>
-		/// Gets the list of linetype names defined in a LIN file.
-		/// </summary>
+		/// <summary>Gets the list of linetype names defined in a <b>LIN</b> file.</summary>
 		/// <param name="file">Linetype definitions file.</param>
-		/// <returns>List of linetype names contained in the specified LIN file.</returns>
+		/// <returns>List of linetype names contained in the specified <b>LIN</b> file.</returns>
 		/// <remarks>
 		/// If the file is not found in the specified folder, it will try to find them in the list of supported folders defined in the DxfDocument.<br />
 		/// </remarks>
@@ -71,9 +67,7 @@ namespace netDxf.Collections
 			return Linetype.NamesFromFile(f);
 		}
 
-		/// <summary>
-		/// Adds all linetypes to the list from the definition in a LIN file.
-		/// </summary>
+		/// <summary>Adds all linetypes to the list from the definition in a <b>LIN</b> file.</summary>
 		/// <param name="file">File where the definition is located.</param>
 		/// <param name="reload">Specifies if the linetype definitions of the file will overwrite the existing ones, in case another with the same name exists in the file.</param>
 		/// <remarks>
@@ -95,15 +89,13 @@ namespace netDxf.Collections
 			}
 		}
 
-		/// <summary>
-		/// Adds a linetype to the list from the definition in a LIN file.
-		/// </summary>
+		/// <summary>Adds a linetype to the list from the definition in a <b>LIN</b> file.</summary>
 		/// <param name="file">File where the definition is located.</param>
 		/// <param name="linetypeName">Name of the line type definition to read (ignore case).</param>
 		/// <param name="reload">Specifies if the linetype definition of the file will overwrite the existing one, in case another with the same name exists in the file.</param>
 		/// <returns>
-		/// True if the linetype has been added from the linetype definitions LIN file; false otherwise.
-		/// It will return false if the linetype is present in the file and the reload argument is false.
+		/// <see langword="true"/> if the linetype has been added from the linetype definitions <b>LIN</b> file; <see langword="false"/> otherwise.
+		/// It will return false if the linetype is present in the file and the reload argument is <see langword="false"/>.
 		/// </returns>
 		/// <remarks>
 		/// If the file is not found in the specified folder, it will try to find them in the list of supported folders defined in the DxfDocument.<br />
@@ -141,12 +133,10 @@ namespace netDxf.Collections
 			return true;
 		}
 
-		/// <summary>
-		/// Saves all linetype definitions to a LIN file.
-		/// </summary>
+		/// <summary>Saves all linetype definitions to a <b>LIN</b> file.</summary>
 		/// <param name="file">File where the linetype definitions will be saved.</param>
 		/// <param name="overwrite">Defines if the file will be overwritten in case exits another one.</param>
-		/// <remarks>Only non reserved linetypes will be saved, therefore Continuous, ByLayer, and ByBlock will be excluded.</remarks>
+		/// <remarks>Only non reserved linetypes will be saved, therefore Continuous, <b>ByLayer</b>, and <b>ByBlock</b> will be excluded.</remarks>
 		public void Save(string file, bool overwrite)
 		{
 			if (overwrite) File.Delete(file);
@@ -163,15 +153,7 @@ namespace netDxf.Collections
 
 		#region override methods
 
-		/// <summary>
-		/// Adds a line type to the list.
-		/// </summary>
-		/// <param name="linetype"><see cref="Linetype">Linetype</see> to add to the list.</param>
-		/// <param name="assignHandle">Specifies if a handle needs to be generated for the line type parameter.</param>
-		/// <returns>
-		/// If a line type already exists with the same name as the instance that is being added the method returns the existing line type,
-		/// if not it will return the new line type.
-		/// </returns>
+		/// <inheritdoc/>
 		internal override Linetype Add(Linetype linetype, bool assignHandle)
 		{
 			if (linetype == null)
@@ -226,23 +208,12 @@ namespace netDxf.Collections
 			return linetype;
 		}
 
-		/// <summary>
-		/// Removes a line type.
-		/// </summary>
-		/// <param name="name"><see cref="Linetype">Linetype</see> name to remove from the document.</param>
-		/// <returns>True if the line type has been successfully removed, or false otherwise.</returns>
-		/// <remarks>Reserved line types or any other referenced by objects cannot be removed.</remarks>
+		/// <inheritdoc/>
 		public override bool Remove(string name)
 		{
 			return this.Remove(this[name]);
 		}
-
-		/// <summary>
-		/// Removes a line type.
-		/// </summary>
-		/// <param name="item"><see cref="Linetype">Linetype</see> to remove from the document.</param>
-		/// <returns>True if the line type has been successfully removed, or false otherwise.</returns>
-		/// <remarks>Reserved line types or any other referenced by objects cannot be removed.</remarks>
+		/// <inheritdoc/>
 		public override bool Remove(Linetype item)
 		{
 			if (item == null)

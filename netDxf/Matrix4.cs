@@ -29,9 +29,7 @@ using System.Threading;
 
 namespace netDxf
 {
-	/// <summary>
-	/// Represents a 4x4 double precision matrix.
-	/// </summary>
+	/// <summary>Represents a 4x4 double precision matrix.</summary>
 	public struct Matrix4 :
 		IEquatable<Matrix4>
 	{
@@ -61,9 +59,7 @@ namespace netDxf
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of Matrix4.
-		/// </summary>
+		/// <summary>Initializes a new instance of Matrix4.</summary>
 		/// <param name="m11">Element [0,0].</param>
 		/// <param name="m12">Element [0,1].</param>
 		/// <param name="m13">Element [0,2].</param>
@@ -113,9 +109,7 @@ namespace netDxf
 
 		#region constants
 
-		/// <summary>
-		/// Gets the zero matrix.
-		/// </summary>
+		/// <summary>Gets the zero matrix.</summary>
 		public static Matrix4 Zero
 		{
 			get
@@ -128,9 +122,7 @@ namespace netDxf
 			}
 		}
 
-		/// <summary>
-		/// Gets the identity matrix.
-		/// </summary>
+		/// <summary>Gets the identity matrix.</summary>
 		public static Matrix4 Identity
 		{
 			get
@@ -147,9 +139,7 @@ namespace netDxf
 
 		#region public properties
 
-		/// <summary>
-		/// Gets or sets the matrix element [0,0].
-		/// </summary>
+		/// <summary>Gets or sets the matrix element [0,0].</summary>
 		public double M11
 		{
 			get { return this.m11; }
@@ -160,9 +150,7 @@ namespace netDxf
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the matrix element [0,1].
-		/// </summary>
+		/// <summary>Gets or sets the matrix element [0,1].</summary>
 		public double M12
 		{
 			get { return this.m12; }
@@ -173,9 +161,7 @@ namespace netDxf
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the matrix element [0,2].
-		/// </summary>
+		/// <summary>Gets or sets the matrix element [0,2].</summary>
 		public double M13
 		{
 			get { return this.m13; }
@@ -186,9 +172,7 @@ namespace netDxf
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the matrix element [0,3].
-		/// </summary>
+		/// <summary>Gets or sets the matrix element [0,3].</summary>
 		public double M14
 		{
 			get { return this.m14; }
@@ -199,9 +183,7 @@ namespace netDxf
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the matrix element [1,0].
-		/// </summary>
+		/// <summary>Gets or sets the matrix element [1,0].</summary>
 		public double M21
 		{
 			get { return this.m21; }
@@ -212,9 +194,7 @@ namespace netDxf
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the matrix element [1,1].
-		/// </summary>
+		/// <summary>Gets or sets the matrix element [1,1].</summary>
 		public double M22
 		{
 			get { return this.m22; }
@@ -225,9 +205,7 @@ namespace netDxf
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the matrix element [1,2].
-		/// </summary>
+		/// <summary>Gets or sets the matrix element [1,2].</summary>
 		public double M23
 		{
 			get { return this.m23; }
@@ -238,9 +216,7 @@ namespace netDxf
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the matrix element [1,3].
-		/// </summary>
+		/// <summary>Gets or sets the matrix element [1,3].</summary>
 		public double M24
 		{
 			get { return this.m24; }
@@ -251,9 +227,7 @@ namespace netDxf
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the matrix element [2,0].
-		/// </summary>
+		/// <summary>Gets or sets the matrix element [2,0].</summary>
 		public double M31
 		{
 			get { return this.m31; }
@@ -264,9 +238,7 @@ namespace netDxf
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the matrix element [2,1].
-		/// </summary>
+		/// <summary>Gets or sets the matrix element [2,1].</summary>
 		public double M32
 		{
 			get { return this.m32; }
@@ -277,9 +249,7 @@ namespace netDxf
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the matrix element [2,2].
-		/// </summary>
+		/// <summary>Gets or sets the matrix element [2,2].</summary>
 		public double M33
 		{
 			get { return this.m33; }
@@ -290,9 +260,7 @@ namespace netDxf
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the matrix element [2,3].
-		/// </summary>
+		/// <summary>Gets or sets the matrix element [2,3].</summary>
 		public double M34
 		{
 			get { return this.m34; }
@@ -303,9 +271,7 @@ namespace netDxf
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the matrix element [3,0].
-		/// </summary>
+		/// <summary>Gets or sets the matrix element [3,0].</summary>
 		public double M41
 		{
 			get { return this.m41; }
@@ -316,9 +282,7 @@ namespace netDxf
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the matrix element [3,1].
-		/// </summary>
+		/// <summary>Gets or sets the matrix element [3,1].</summary>
 		public double M42
 		{
 			get { return this.m42; }
@@ -329,9 +293,7 @@ namespace netDxf
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the matrix element [3,2].
-		/// </summary>
+		/// <summary>Gets or sets the matrix element [3,2].</summary>
 		public double M43
 		{
 			get { return this.m43; }
@@ -342,9 +304,7 @@ namespace netDxf
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the matrix element [3,3].
-		/// </summary>
+		/// <summary>Gets or sets the matrix element [3,3].</summary>
 		public double M44
 		{
 			get { return this.m44; }
@@ -519,9 +479,7 @@ namespace netDxf
 			}
 		}
 
-		/// <summary>
-		/// Gets if the actual matrix is the identity.
-		/// </summary>
+		/// <summary>Gets if the actual matrix is the identity.</summary>
 		/// <remarks>
 		/// The checks to see if the matrix is the identity uses the MathHelper.Epsilon as a the threshold for testing values close to one and zero.
 		/// </remarks>
@@ -633,9 +591,7 @@ namespace netDxf
 
 		#region overloaded operators
 
-		/// <summary>
-		/// Matrix addition.
-		/// </summary>
+		/// <summary>Matrix addition.</summary>
 		/// <param name="a">Matrix4.</param>
 		/// <param name="b">Matrix4.</param>
 		/// <returns>Matrix4.</returns>
@@ -647,9 +603,7 @@ namespace netDxf
 								a.M41 + b.M41, a.M42 + b.M42, a.M43 + b.M43, a.m44 + b.m44);
 		}
 
-		/// <summary>
-		/// Matrix addition.
-		/// </summary>
+		/// <summary>Matrix addition.</summary>
 		/// <param name="a">Matrix4.</param>
 		/// <param name="b">Matrix4.</param>
 		/// <returns>Matrix4.</returns>
@@ -661,9 +615,7 @@ namespace netDxf
 								a.M41 + b.M41, a.M42 + b.M42, a.M43 + b.M43, a.m44 + b.m44);
 		}
 
-		/// <summary>
-		/// Matrix subtraction.
-		/// </summary>
+		/// <summary>Matrix subtraction.</summary>
 		/// <param name="a">Matrix4.</param>
 		/// <param name="b">Matrix4.</param>
 		/// <returns>Matrix4.</returns>
@@ -675,9 +627,7 @@ namespace netDxf
 								a.M41 - b.M41, a.M42 - b.M42, a.M43 - b.M43, a.m44 - b.m44);
 		}
 
-		/// <summary>
-		/// Matrix subtraction.
-		/// </summary>
+		/// <summary>Matrix subtraction.</summary>
 		/// <param name="a">Matrix4.</param>
 		/// <param name="b">Matrix4.</param>
 		/// <returns>Matrix4.</returns>
@@ -689,9 +639,7 @@ namespace netDxf
 								a.M41 - b.M41, a.M42 - b.M42, a.M43 - b.M43, a.m44 - b.m44);
 		}
 
-		/// <summary>
-		/// Product of two matrices.
-		/// </summary>
+		/// <summary>Product of two matrices.</summary>
 		/// <param name="a">Matrix4.</param>
 		/// <param name="b">Matrix4.</param>
 		/// <returns>Matrix4.</returns>
@@ -713,9 +661,7 @@ namespace netDxf
 								a.M41 * b.M11 + a.M42 * b.M21 + a.M43 * b.M31 + a.M44 * b.M41, a.M41 * b.M12 + a.M42 * b.M22 + a.M43 * b.M32 + a.M44 * b.M42, a.M41 * b.M13 + a.M42 * b.M23 + a.M43 * b.M33 + a.M44 * b.M43, a.M41 * b.M14 + a.M42 * b.M24 + a.M43 * b.M34 + a.M44 * b.M44);
 		}
 
-		/// <summary>
-		/// Product of two matrices.
-		/// </summary>
+		/// <summary>Product of two matrices.</summary>
 		/// <param name="a">Matrix4.</param>
 		/// <param name="b">Matrix4.</param>
 		/// <returns>Matrix4.</returns>
@@ -737,9 +683,7 @@ namespace netDxf
 								a.M41 * b.M11 + a.M42 * b.M21 + a.M43 * b.M31 + a.M44 * b.M41, a.M41 * b.M12 + a.M42 * b.M22 + a.M43 * b.M32 + a.M44 * b.M42, a.M41 * b.M13 + a.M42 * b.M23 + a.M43 * b.M33 + a.M44 * b.M43, a.M41 * b.M14 + a.M42 * b.M24 + a.M43 * b.M34 + a.M44 * b.M44);
 		}
 
-		/// <summary>
-		/// Product of a matrix with a vector.
-		/// </summary>
+		/// <summary>Product of a matrix with a vector.</summary>
 		/// <param name="a">Matrix4.</param>
 		/// <param name="u">Vector4.</param>
 		/// <returns>Matrix4.</returns>
@@ -752,9 +696,7 @@ namespace netDxf
 													a.M41 * u.X + a.M42 * u.Y + a.M43 * u.Z + a.M44 * u.W);
 		}
 
-		/// <summary>
-		/// Product of a matrix with a vector.
-		/// </summary>
+		/// <summary>Product of a matrix with a vector.</summary>
 		/// <param name="a">Matrix4.</param>
 		/// <param name="u">Vector4.</param>
 		/// <returns>Matrix4.</returns>
@@ -767,9 +709,7 @@ namespace netDxf
 													a.M41 * u.X + a.M42 * u.Y + a.M43 * u.Z + a.M44 * u.W);
 		}
 
-		/// <summary>
-		/// Product of a matrix with a scalar.
-		/// </summary>
+		/// <summary>Product of a matrix with a scalar.</summary>
 		/// <param name="m">Matrix4.</param>
 		/// <param name="a">Scalar.</param>
 		/// <returns>Matrix4.</returns>
@@ -781,9 +721,7 @@ namespace netDxf
 								m.M41 * a, m.M42 * a, m.M43 * a, m.M44 * a);
 		}
 
-		/// <summary>
-		/// Product of a matrix with a scalar.
-		/// </summary>
+		/// <summary>Product of a matrix with a scalar.</summary>
 		/// <param name="m">Matrix4.</param>
 		/// <param name="a">Scalar.</param>
 		/// <returns>Matrix4.</returns>
@@ -795,23 +733,19 @@ namespace netDxf
 								m.M41 * a, m.M42 * a, m.M43 * a, m.M44 * a);
 		}
 
-		/// <summary>
-		/// Check if the components of two matrices are equal.
-		/// </summary>
+		/// <summary>Check if the components of two matrices are equal.</summary>
 		/// <param name="u">Matrix4.</param>
 		/// <param name="v">Matrix4.</param>
-		/// <returns>True if the matrix components are equal or false in any other case.</returns>
+		/// <returns><see langword="true"/> if the matrix components are equal or <see langword="false"/> in any other case.</returns>
 		public static bool operator ==(Matrix4 u, Matrix4 v)
 		{
 			return Equals(u, v);
 		}
 
-		/// <summary>
-		/// Check if the components of two matrices are different.
-		/// </summary>
+		/// <summary>Check if the components of two matrices are different.</summary>
 		/// <param name="u">Matrix4.</param>
 		/// <param name="v">Matrix4.</param>
-		/// <returns>True if the matrix components are different or false in any other case.</returns>
+		/// <returns><see langword="true"/> if the matrix components are different or <see langword="false"/> in any other case.</returns>
 		public static bool operator !=(Matrix4 u, Matrix4 v)
 		{
 			return !Equals(u, v);
@@ -821,9 +755,7 @@ namespace netDxf
 
 		#region public methods
 
-		/// <summary>
-		/// Calculate the determinant of the actual matrix.
-		/// </summary>
+		/// <summary>Calculate the determinant of the actual matrix.</summary>
 		/// <returns>Determinant.</returns>
 		public double Determinant()
 		{
@@ -835,9 +767,7 @@ namespace netDxf
 					this.m14 * (this.m21 * (this.m32 * this.m43 - this.m33 * this.m42) - this.m22 * (this.m31 * this.m43 - this.m33 * this.m41) + this.m23 * (this.m31 * this.m42 - this.m32 * this.m41));
 		}
 
-		/// <summary>
-		/// Calculates the inverse matrix.
-		/// </summary>
+		/// <summary>Calculates the inverse matrix.</summary>
 		/// <returns>Inverse Matrix4.</returns>
 		public Matrix4 Inverse()
 		{
@@ -873,9 +803,7 @@ namespace netDxf
 				det * (this.m11 * (this.m22 * this.m33 - this.m23 * this.m32) - this.m12 * (this.m21 * this.m33 - this.m23 * this.m31) + this.m13 * (this.m21 * this.m32 - this.m22 * this.m31)));
 		}
 
-		/// <summary>
-		/// Obtains the transpose matrix.
-		/// </summary>
+		/// <summary>Obtains the transpose matrix.</summary>
 		/// <returns>Transpose matrix.</returns>
 		public Matrix4 Transpose()
 		{
@@ -889,12 +817,10 @@ namespace netDxf
 
 		#region static methods
 
-		/// <summary>
-		/// Builds a rotation matrix for a rotation around the x-axis.
-		/// </summary>
+		/// <summary>Builds a rotation matrix for a rotation around the x-axis.</summary>
 		/// <param name="angle">The counter-clockwise angle in radians.</param>
-		/// <returns>The resulting Matrix4 instance.</returns>
-		/// <remarks>Matrix4 adopts the convention of using column vectors to represent a transformation matrix.</remarks>
+		/// <returns>The resulting <see cref="Matrix4"/> instance.</returns>
+		/// <remarks><see cref="Matrix4"/> adopts the convention of using column vectors to represent a transformation matrix.</remarks>
 		public static Matrix4 RotationX(double angle)
 		{
 			double cos = Math.Cos(angle);
@@ -905,12 +831,10 @@ namespace netDxf
 								0.0, 0.0, 0.0, 1.0);
 		}
 
-		/// <summary>
-		/// Builds a rotation matrix for a rotation around the y-axis.
-		/// </summary>
+		/// <summary>Builds a rotation matrix for a rotation around the y-axis.</summary>
 		/// <param name="angle">The counter-clockwise angle in radians.</param>
-		/// <returns>The resulting Matrix4 instance.</returns>
-		/// <remarks>Matrix4 adopts the convention of using column vectors to represent a transformation matrix.</remarks>
+		/// <returns>The resulting <see cref="Matrix4"/> instance.</returns>
+		/// <remarks><see cref="Matrix4"/> adopts the convention of using column vectors to represent a transformation matrix.</remarks>
 		public static Matrix4 RotationY(double angle)
 		{
 			double cos = Math.Cos(angle);
@@ -921,12 +845,10 @@ namespace netDxf
 								0.0, 0.0, 0.0, 1.0);
 		}
 
-		/// <summary>
-		/// Builds a rotation matrix for a rotation around the z-axis.
-		/// </summary>
+		/// <summary>Builds a rotation matrix for a rotation around the z-axis.</summary>
 		/// <param name="angle">The counter-clockwise angle in radians.</param>
-		/// <returns>The resulting Matrix4 instance.</returns>
-		/// <remarks>Matrix4 adopts the convention of using column vectors to represent a transformation matrix.</remarks>
+		/// <returns>The resulting <see cref="Matrix4"/> instance.</returns>
+		/// <remarks><see cref="Matrix4"/> adopts the convention of using column vectors to represent a transformation matrix.</remarks>
 		public static Matrix4 RotationZ(double angle)
 		{
 			double cos = Math.Cos(angle);
@@ -937,9 +859,7 @@ namespace netDxf
 								0.0, 0.0, 0.0, 1.0);
 		}
 
-		/// <summary>
-		/// Build a scaling matrix.
-		/// </summary>
+		/// <summary>Build a scaling matrix.</summary>
 		/// <param name="value">Single scale factor for x, y, and z axis.</param>
 		/// <returns>A scaling matrix.</returns>
 		public static Matrix4 Scale(double value)
@@ -947,9 +867,7 @@ namespace netDxf
 			return Scale(value, value, value);
 		}
 
-		/// <summary>
-		/// Build a scaling matrix.
-		/// </summary>
+		/// <summary>Build a scaling matrix.</summary>
 		/// <param name="value">Scale factors for x, y, and z axis.</param>
 		/// <returns>A scaling matrix.</returns>
 		public static Matrix4 Scale(Vector3 value)
@@ -957,9 +875,7 @@ namespace netDxf
 			return Scale(value.X, value.Y, value.Z);
 		}
 
-		/// <summary>
-		/// Build a scaling matrix.
-		/// </summary>
+		/// <summary>Build a scaling matrix.</summary>
 		/// <param name="x">Scale factor for x-axis.</param>
 		/// <param name="y">Scale factor for y-axis.</param>
 		/// <param name="z">Scale factor for z-axis.</param>
@@ -972,9 +888,7 @@ namespace netDxf
 								0.0, 0.0, 0.0, 1.0);
 		}
 
-		/// <summary>
-		/// Build a translation matrix.
-		/// </summary>
+		/// <summary>Build a translation matrix.</summary>
 		/// <param name="vector">Translation vector along the X, Y, and Z axis.</param>
 		/// <returns>A translation matrix.</returns>
 		/// <remarks>Matrix4 adopts the convention of using column vectors to represent a transformation matrix.</remarks>
@@ -986,9 +900,7 @@ namespace netDxf
 								0.0, 0.0, 0.0, 1.0);
 		}
 
-		/// <summary>
-		/// Build a translation matrix.
-		/// </summary>
+		/// <summary>Build a translation matrix.</summary>
 		/// <param name="x">Translation along the X axis.</param>
 		/// <param name="y">Translation along the Y axis.</param>
 		/// <param name="z">Translation along the Z axis.</param>
@@ -1002,9 +914,7 @@ namespace netDxf
 								0.0, 0.0, 0.0, 1.0);
 		}
 
-		/// <summary>
-		/// Build the reflection matrix of a mirror plane that passes through a point.
-		/// </summary>
+		/// <summary>Build the reflection matrix of a mirror plane that passes through a point.</summary>
 		/// <param name="normal">Mirror plane normal vector.</param>
 		/// <param name="point">A point on the mirror plane.</param>
 		/// <returns>A mirror plane reflection matrix that passes through a point.</returns>
@@ -1026,45 +936,24 @@ namespace netDxf
 
 		#region comparison methods
 
-		/// <summary>
-		/// Check if the components of two matrices are approximate equal.
-		/// </summary>
-		/// <param name="a">Matrix4.</param>
-		/// <param name="b">Matrix4.</param>
-		/// <returns>True if the matrix components are almost equal or false in any other case.</returns>
-		public static bool Equals(Matrix4 a, Matrix4 b)
+		/// <inheritdoc/>
+		public override bool Equals(object obj)
 		{
-			return a.Equals(b, MathHelper.Epsilon);
+			if (obj is Matrix4 matrix)
+			{
+				return this.Equals(matrix);
+			}
+			return false;
 		}
-
-		/// <summary>
-		/// Check if the components of two matrices are approximate equal.
-		/// </summary>
-		/// <param name="a">Matrix4.</param>
-		/// <param name="b">Matrix4.</param>
-		/// <param name="threshold">Maximum tolerance.</param>
-		/// <returns>True if the matrix components are almost equal or false in any other case.</returns>
-		public static bool Equals(Matrix4 a, Matrix4 b, double threshold)
-		{
-			return a.Equals(b, threshold);
-		}
-
-		/// <summary>
-		/// Check if the components of two matrices are approximate equal.
-		/// </summary>
-		/// <param name="other">Matrix4.</param>
-		/// <returns>True if the matrix components are almost equal or false in any other case.</returns>
+		/// <inheritdoc/>
 		public bool Equals(Matrix4 other)
 		{
 			return this.Equals(other, MathHelper.Epsilon);
 		}
-
-		/// <summary>
-		/// Check if the components of two matrices are approximate equal.
-		/// </summary>
+		/// <summary>Check if the components of two matrices are approximate equal.</summary>
 		/// <param name="obj">Matrix4.</param>
 		/// <param name="threshold">Maximum tolerance.</param>
-		/// <returns>True if the matrix components are almost equal or false in any other case.</returns>
+		/// <returns><see langword="true"/> if the matrix components are almost equal or <see langword="false"/> in any other case.</returns>
 		public bool Equals(Matrix4 obj, double threshold)
 		{
 			return
@@ -1088,25 +977,25 @@ namespace netDxf
 				MathHelper.IsEqual(obj.M43, this.M43, threshold) &&
 				MathHelper.IsEqual(obj.M44, this.M44, threshold);
 		}
-
-		/// <summary>
-		/// Indicates whether this instance and a specified object are equal.
-		/// </summary>
-		/// <param name="obj">Another object to compare to.</param>
-		/// <returns>True if obj and this instance are the same type and represent the same value; otherwise, false.</returns>
-		public override bool Equals(object obj)
+		/// <summary>Check if the components of two matrices are approximate equal.</summary>
+		/// <param name="a">Matrix4.</param>
+		/// <param name="b">Matrix4.</param>
+		/// <returns><see langword="true"/> if the matrix components are almost equal or <see langword="false"/> in any other case.</returns>
+		public static bool Equals(Matrix4 a, Matrix4 b)
 		{
-			if (obj is Matrix4 matrix)
-			{
-				return this.Equals(matrix);
-			}
-			return false;
+			return a.Equals(b, MathHelper.Epsilon);
+		}
+		/// <summary>Check if the components of two matrices are approximate equal.</summary>
+		/// <param name="a">Matrix4.</param>
+		/// <param name="b">Matrix4.</param>
+		/// <param name="threshold">Maximum tolerance.</param>
+		/// <returns><see langword="true"/> if the matrix components are almost equal or <see langword="false"/> in any other case.</returns>
+		public static bool Equals(Matrix4 a, Matrix4 b, double threshold)
+		{
+			return a.Equals(b, threshold);
 		}
 
-		/// <summary>
-		/// Returns the hash code for this instance.
-		/// </summary>
-		/// <returns>A 32-bit signed integer that is the hash code for this instance.</returns>
+		/// <inheritdoc/>
 		public override int GetHashCode()
 		{
 			return
@@ -1120,10 +1009,7 @@ namespace netDxf
 
 		#region overrides
 
-		/// <summary>
-		/// Obtains a string that represents the matrix.
-		/// </summary>
-		/// <returns>A string text.</returns>
+		/// <inheritdoc/>
 		public override string ToString()
 		{
 			string separator = Thread.CurrentThread.CurrentCulture.TextInfo.ListSeparator;
@@ -1135,10 +1021,8 @@ namespace netDxf
 			return s.ToString();
 		}
 
-		/// <summary>
-		/// Obtains a string that represents the matrix.
-		/// </summary>
-		/// <param name="provider">An IFormatProvider interface implementation that supplies culture-specific formatting information. </param>
+		/// <summary>Obtains a string that represents the matrix.</summary>
+		/// <param name="provider">An <see cref="IFormatProvider"/> object implementation that supplies culture-specific formatting information. </param>
 		/// <returns>A string text.</returns>
 		public string ToString(IFormatProvider provider)
 		{

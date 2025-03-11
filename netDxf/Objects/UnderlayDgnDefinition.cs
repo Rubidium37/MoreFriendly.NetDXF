@@ -30,9 +30,7 @@ using netDxf.Tables;
 
 namespace netDxf.Objects
 {
-	/// <summary>
-	/// Represents a DGN underlay definition.
-	/// </summary>
+	/// <summary>Represents a <b>DGN</b> underlay definition.</summary>
 	public class UnderlayDgnDefinition :
 		UnderlayDefinition
 	{
@@ -44,9 +42,7 @@ namespace netDxf.Objects
 
 		#region constructor
 
-		/// <summary>
-		/// Initializes a new instance of the <c>UnderlayDgnDefinition</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="file">Underlay file name with full or relative path.</param>
 		/// <remarks>
 		/// The file extension must match the underlay type.
@@ -56,9 +52,7 @@ namespace netDxf.Objects
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>UnderlayDgnDefinition</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="name">Underlay definition name.</param>
 		/// <param name="file">Underlay file name with full or relative path.</param>
 		/// <remarks>
@@ -74,18 +68,14 @@ namespace netDxf.Objects
 
 		#region public properties
 
-		/// <summary>
-		/// Gets or sets the layout name to show.
-		/// </summary>
+		/// <summary>Gets or sets the layout name to show.</summary>
 		public string Layout
 		{
 			get { return this.layout; }
 			set { this.layout = value; }
 		}
 
-		/// <summary>
-		/// Gets the owner of the actual underlay DGN definition.
-		/// </summary>
+		/// <summary>Gets the owner of the actual underlay <b>DGN</b> definition.</summary>
 		public new UnderlayDgnDefinitions Owner
 		{
 			get { return (UnderlayDgnDefinitions)base.Owner; }
@@ -96,31 +86,13 @@ namespace netDxf.Objects
 
 		#region overrides
 
-		/// <summary>
-		/// Checks if this instance has been referenced by other DxfObjects.
-		/// </summary>
-		/// <returns>
-		/// Returns true if this instance has been referenced by other DxfObjects, false otherwise.
-		/// It will always return false if this instance does not belong to a document.
-		/// </returns>
-		/// <remarks>
-		/// This method returns the same value as the HasReferences method that can be found in the TableObjects class.
-		/// </remarks>
+		/// <inheritdoc/>
 		public override bool HasReferences()
 		{
 			return this.Owner != null && this.Owner.HasReferences(this.Name);
 		}
 
-		/// <summary>
-		/// Gets the list of DxfObjects referenced by this instance.
-		/// </summary>
-		/// <returns>
-		/// A list of DxfObjectReference that contains the DxfObject referenced by this instance and the number of times it does.
-		/// It will return null if this instance does not belong to a document.
-		/// </returns>
-		/// <remarks>
-		/// This method returns the same list as the GetReferences method that can be found in the TableObjects class.
-		/// </remarks>
+		/// <inheritdoc/>
 		public override List<DxfObjectReference> GetReferences()
 		{
 			if (this.Owner == null)
@@ -131,11 +103,7 @@ namespace netDxf.Objects
 			return this.Owner.GetReferences(this.Name);
 		}
 
-		/// <summary>
-		/// Creates a new UnderlayDgnDefinition that is a copy of the current instance.
-		/// </summary>
-		/// <param name="newName">UnderlayDgnDefinition name of the copy.</param>
-		/// <returns>A new UnderlayDgnDefinition that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override TableObject Clone(string newName)
 		{
 			UnderlayDgnDefinition copy = new UnderlayDgnDefinition(newName, this.File)
@@ -151,10 +119,7 @@ namespace netDxf.Objects
 			return copy;
 		}
 
-		/// <summary>
-		/// Creates a new UnderlayDgnDefinition that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new UnderlayDgnDefinition that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override object Clone()
 		{
 			return this.Clone(this.Name);

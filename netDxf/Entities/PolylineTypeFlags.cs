@@ -27,56 +27,36 @@ using System;
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Defines the polyline type.
-	/// </summary>
+	/// <summary>Defines the polyline type.</summary>
 	/// <remarks>Bit flag.</remarks>
 	[Flags]
 	internal enum PolylineTypeFlags
 	{
-		/// <summary>
-		/// Default (open polyline).
-		/// </summary>
+		/// <summary>Default (open polyline).</summary>
 		OpenPolyline = 0,
 
-		/// <summary>
-		/// This is a closed polyline (or a polygon mesh closed in the M direction).
-		/// </summary>
+		/// <summary>This is a closed polyline (or a polygon mesh closed in the M direction).</summary>
 		ClosedPolylineOrClosedPolygonMeshInM = 1,
 
-		/// <summary>
-		/// Curve-fit vertexes have been added.
-		/// </summary>
+		/// <summary>Curve-fit vertexes have been added.</summary>
 		CurveFit = 2,
 
-		/// <summary>
-		/// Spline-fit vertexes have been added.
-		/// </summary>
+		/// <summary>Spline-fit vertexes have been added.</summary>
 		SplineFit = 4,
 
-		/// <summary>
-		/// This is a 3D polyline.
-		/// </summary>
+		/// <summary>This is a 3D polyline.</summary>
 		Polyline3D = 8,
 
-		/// <summary>
-		/// This is a 3D polygon mesh.
-		/// </summary>
+		/// <summary>This is a 3D polygon mesh.</summary>
 		PolygonMesh = 16,
 
-		/// <summary>
-		/// The polygon mesh is closed in the N direction.
-		/// </summary>
+		/// <summary>The polygon mesh is closed in the N direction.</summary>
 		ClosedPolygonMeshInN = 32,
 
-		/// <summary>
-		/// The polyline is a polyface mesh.
-		/// </summary>
+		/// <summary>The polyline is a polyface mesh.</summary>
 		PolyfaceMesh = 64,
 
-		/// <summary>
-		/// The line type pattern is generated continuously around the vertexes of this polyline.
-		/// </summary>
+		/// <summary>The line type pattern is generated continuously around the vertexes of this polyline.</summary>
 		ContinuousLinetypePattern = 128
 	}
 }

@@ -30,9 +30,7 @@ using netDxf.Tables;
 
 namespace netDxf.Objects
 {
-	/// <summary>
-	/// Represents as MLine style.
-	/// </summary>
+	/// <summary>Represents as <b>MLine</b> style.</summary>
 	public class MLineStyle :
 		TableObject
 	{
@@ -89,14 +87,10 @@ namespace netDxf.Objects
 
 		#region constants
 
-		/// <summary>
-		/// Default multiline style name.
-		/// </summary>
+		/// <summary>Default multiline style name.</summary>
 		public const string DefaultName = "Standard";
 
-		/// <summary>
-		/// Gets the default MLine style.
-		/// </summary>
+		/// <summary>Gets the default <b>MLine</b> style.</summary>
 		public static MLineStyle Default
 		{
 			get { return new MLineStyle(DefaultName); }
@@ -106,9 +100,7 @@ namespace netDxf.Objects
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of the <c>MLineStyle</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="name">MLine style name.</param>
 		/// <remarks>By default the multiline style has to elements with offsets 0.5 y -0.5.</remarks>
 		public MLineStyle(string name)
@@ -116,9 +108,7 @@ namespace netDxf.Objects
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>MLineStyle</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="name">MLine style name.</param>
 		/// <param name="description">MLine style description.</param>
 		/// <remarks>By default the multiline style has to elements with offsets 0.5 y -0.5.</remarks>
@@ -127,21 +117,17 @@ namespace netDxf.Objects
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>MLineStyle</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="name">MLine style name.</param>
-		/// <param name="elements">Elements of the multiline, if null two default elements will be added.</param>
+		/// <param name="elements">Elements of the multiline, if <see langword="null"/> two default elements will be added.</param>
 		public MLineStyle(string name, IEnumerable<MLineStyleElement> elements)
 			: this(name, elements, string.Empty)
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>MLineStyle</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="name">MLine style name.</param>
-		/// <param name="elements">Elements of the multiline, if null two default elements will be added.</param>
+		/// <param name="elements">Elements of the multiline, if <see langword="null"/> two default elements will be added.</param>
 		/// <param name="description">MLine style description (optional).</param>
 		public MLineStyle(string name, IEnumerable<MLineStyleElement> elements, string description)
 			: base(name, DxfObjectCode.MLineStyle, true)
@@ -175,29 +161,23 @@ namespace netDxf.Objects
 
 		#region public properties
 
-		/// <summary>
-		/// Gets or sets the MLine style flags.
-		/// </summary>
+		/// <summary>Gets or sets the <b>MLine</b> style flags.</summary>
 		public MLineStyleFlags Flags
 		{
 			get { return this.flags; }
 			set { this.flags = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the line type description (optional).
-		/// </summary>
+		/// <summary>Gets or sets the line type description (optional).</summary>
 		public string Description
 		{
 			get { return this.description; }
 			set { this.description = string.IsNullOrEmpty(value) ? string.Empty : value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the MLine fill color.
-		/// </summary>
+		/// <summary>Gets or sets the <b>MLine</b> fill color.</summary>
 		/// <remarks>
-		/// AutoCad2000 DXF version does not support true colors for MLineStyle fill color.
+		/// AutoCad2000 <b>DXF</b> version does not support <see langword="true"/> colors for MLineStyle fill color.
 		/// </remarks>
 		public AciColor FillColor
 		{
@@ -208,9 +188,7 @@ namespace netDxf.Objects
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the MLine start angle in degrees.
-		/// </summary>
+		/// <summary>Gets or sets the <b>MLine</b> start angle in degrees.</summary>
 		/// <remarks>Valid values range from 10.0 to 170.0 degrees. Default: 90.0.</remarks>
 		public double StartAngle
 		{
@@ -225,9 +203,7 @@ namespace netDxf.Objects
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the MLine end angle in degrees.
-		/// </summary>
+		/// <summary>Gets or sets the <b>MLine</b> end angle in degrees.</summary>
 		/// <remarks>Valid values range from 10.0 to 170.0 degrees. Default: 90.0.</remarks>
 		public double EndAngle
 		{
@@ -242,9 +218,7 @@ namespace netDxf.Objects
 			}
 		}
 
-		/// <summary>
-		/// Gets the list of elements that make up the multiline.
-		/// </summary>
+		/// <summary>Gets the list of elements that make up the multiline.</summary>
 		/// <remarks>
 		/// The elements list must be ordered from larger to smaller <see cref="MLineStyleElement.Offset">offset</see> values.
 		/// During the initialization process the list will be sorted automatically,
@@ -256,9 +230,7 @@ namespace netDxf.Objects
 			get { return this.elements; }
 		}
 
-		/// <summary>
-		/// Gets the owner of the actual multi line style.
-		/// </summary>
+		/// <summary>Gets the owner of the actual multi line style.</summary>
 		public new MLineStyles Owner
 		{
 			get { return (MLineStyles)base.Owner; }
@@ -269,31 +241,13 @@ namespace netDxf.Objects
 
 		#region overrides
 
-		/// <summary>
-		/// Checks if this instance has been referenced by other DxfObjects.
-		/// </summary>
-		/// <returns>
-		/// Returns true if this instance has been referenced by other DxfObjects, false otherwise.
-		/// It will always return false if this instance does not belong to a document.
-		/// </returns>
-		/// <remarks>
-		/// This method returns the same value as the HasReferences method that can be found in the TableObjects class.
-		/// </remarks>
+		/// <inheritdoc/>
 		public override bool HasReferences()
 		{
 			return this.Owner != null && this.Owner.HasReferences(this.Name);
 		}
 
-		/// <summary>
-		/// Gets the list of DxfObjects referenced by this instance.
-		/// </summary>
-		/// <returns>
-		/// A list of DxfObjectReference that contains the DxfObject referenced by this instance and the number of times it does.
-		/// It will return null if this instance does not belong to a document.
-		/// </returns>
-		/// <remarks>
-		/// This method returns the same list as the GetReferences method that can be found in the TableObjects class.
-		/// </remarks>
+		/// <inheritdoc/>
 		public override List<DxfObjectReference> GetReferences()
 		{
 			if (this.Owner == null)
@@ -304,11 +258,7 @@ namespace netDxf.Objects
 			return this.Owner.GetReferences(this.Name);
 		}
 
-		/// <summary>
-		/// Creates a new MLineStyle that is a copy of the current instance.
-		/// </summary>
-		/// <param name="newName">MLineStyle name of the copy.</param>
-		/// <returns>A new MLineStyle that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override TableObject Clone(string newName)
 		{
 			List<MLineStyleElement> copyElements = new List<MLineStyleElement>();
@@ -334,10 +284,7 @@ namespace netDxf.Objects
 			return copy;
 		}
 
-		/// <summary>
-		/// Creates a new MLineStyle that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new MLineStyle that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override object Clone()
 		{
 			return this.Clone(this.Name);

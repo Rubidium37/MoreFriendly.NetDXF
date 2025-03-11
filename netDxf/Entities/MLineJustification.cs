@@ -25,24 +25,16 @@
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Justification.
-	/// </summary>
+	/// <summary>Justification.</summary>
 	public enum MLineJustification
 	{
-		/// <summary>
-		/// Top.
-		/// </summary>
+		/// <summary>Top.</summary>
 		Top = 0,
 
-		/// <summary>
-		/// Zero.
-		/// </summary>
+		/// <summary>Zero.</summary>
 		Zero = 1,
 
-		/// <summary>
-		/// Bottom.
-		/// </summary>
+		/// <summary>Bottom.</summary>
 		Bottom = 2
 	}
 }

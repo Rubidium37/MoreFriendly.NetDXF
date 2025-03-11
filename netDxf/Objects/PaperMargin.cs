@@ -25,9 +25,7 @@
 
 namespace netDxf.Objects
 {
-	/// <summary>
-	/// Represents the unprintable margins of a paper.
-	/// </summary>
+	/// <summary>Represents the unprintable margins of a paper.</summary>
 	public struct PaperMargin
 	{
 		#region private fields
@@ -41,9 +39,7 @@ namespace netDxf.Objects
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of <c>PaperMargin</c>.
-		/// </summary>
+		/// <summary>Initializes a new instance of the struct.</summary>
 		/// <param name="left">Margin on left side of paper.</param>
 		/// <param name="bottom">Margin on bottom side of paper.</param>
 		/// <param name="right">Margin on right side of paper.</param>
@@ -60,36 +56,28 @@ namespace netDxf.Objects
 
 		#region public properties
 
-		/// <summary>
-		/// Gets or set the size, in millimeters, of unprintable margin on left side of paper.
-		/// </summary>
+		/// <summary>Gets or set the size, in millimeters, of unprintable margin on left side of paper.</summary>
 		public double Left
 		{
 			get { return this.left; }
 			set { this.left = value; }
 		}
 
-		/// <summary>
-		/// Gets or set the size, in millimeters, of unprintable margin on bottom side of paper.
-		/// </summary>
+		/// <summary>Gets or set the size, in millimeters, of unprintable margin on bottom side of paper.</summary>
 		public double Bottom
 		{
 			get { return this.bottom; }
 			set { this.bottom = value; }
 		}
 
-		/// <summary>
-		/// Gets or set the size, in millimeters, of unprintable margin on right side of paper.
-		/// </summary>
+		/// <summary>Gets or set the size, in millimeters, of unprintable margin on right side of paper.</summary>
 		public double Right
 		{
 			get { return this.right; }
 			set { this.right = value; }
 		}
 
-		/// <summary>
-		/// Gets or set the size, in millimeters, of unprintable margin on top side of paper.
-		/// </summary>
+		/// <summary>Gets or set the size, in millimeters, of unprintable margin on top side of paper.</summary>
 		public double Top
 		{
 			get { return this.top; }

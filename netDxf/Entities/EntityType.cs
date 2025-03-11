@@ -25,154 +25,94 @@
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Defines the entity type.
-	/// </summary>
+	/// <summary>Defines the entity type.</summary>
 	public enum EntityType
 	{
-		/// <summary>
-		/// Arc entity.
-		/// </summary>
+		/// <summary>Arc entity.</summary>
 		Arc,
 
-		/// <summary>
-		/// Circle entity.
-		/// </summary>
+		/// <summary>Circle entity.</summary>
 		Circle,
 
-		/// <summary>
-		/// Dimension entity.
-		/// </summary>
+		/// <summary>Dimension entity.</summary>
 		Dimension,
 
-		/// <summary>
-		/// Ellipse entity.
-		/// </summary>
+		/// <summary>Ellipse entity.</summary>
 		Ellipse,
 
-		/// <summary>
-		/// 3d face entity.
-		/// </summary>
+		/// <summary>3d face entity.</summary>
 		Face3D,
 
-		/// <summary>
-		/// Hatch entity.
-		/// </summary>
+		/// <summary>Hatch entity.</summary>
 		Hatch,
 
-		/// <summary>
-		/// A raster image entity.
-		/// </summary>
+		/// <summary>A raster image entity.</summary>
 		Image,
 
-		/// <summary>
-		/// Block insertion entity.
-		/// </summary>
+		/// <summary>Block insertion entity.</summary>
 		Insert,
 
-		/// <summary>
-		/// Leader entity.
-		/// </summary>
+		/// <summary>Leader entity.</summary>
 		Leader,
 
-		/// <summary>
-		/// Line entity.
-		/// </summary>
+		/// <summary>Line entity.</summary>
 		Line,
 
-		/// <summary>
-		/// Mesh entity.
-		/// </summary>
+		/// <summary>Mesh entity.</summary>
 		Mesh,
 
-		/// <summary>
-		/// Multiline entity.
-		/// </summary>
+		/// <summary>Multiline entity.</summary>
 		MLine,
 
-		/// <summary>
-		/// Multiline text string entity.
-		/// </summary>
+		/// <summary>Multiline text string entity.</summary>
 		MText,
 
-		/// <summary>
-		/// Point entity.
-		/// </summary>
+		/// <summary>Point entity.</summary>
 		Point,
 
-		/// <summary>
-		/// Polyface mesh entity.
-		/// </summary>
+		/// <summary>Polyface mesh entity.</summary>
 		PolyfaceMesh,
 
-		/// <summary>
-		/// Polygon mesh entity.
-		/// </summary>
+		/// <summary>Polygon mesh entity.</summary>
 		PolygonMesh,
 
-		/// <summary>
-		/// Polyline2D entity.
-		/// </summary>
+		/// <summary>Polyline2D entity.</summary>
 		Polyline2D,
 
-		/// <summary>
-		/// Polyline3D entity.
-		/// </summary>
+		/// <summary>Polyline3D entity.</summary>
 		Polyline3D,
 
-		/// <summary>
-		/// Ray entity.
-		/// </summary>
+		/// <summary>Ray entity.</summary>
 		Ray,
 
-		/// <summary>
-		/// Shape entity.
-		/// </summary>
+		/// <summary>Shape entity.</summary>
 		Shape,
 
-		/// <summary>
-		/// Solid entity.
-		/// </summary>
+		/// <summary>Solid entity.</summary>
 		Solid,
 
-		/// <summary>
-		/// Spline (nonuniform rational B-splines NURBS).
-		/// </summary>
+		/// <summary>Spline (nonuniform rational B-splines NURBS).</summary>
 		Spline,
 
-		/// <summary>
-		/// Text string entity.
-		/// </summary>
+		/// <summary>Text string entity.</summary>
 		Text,
 
-		/// <summary>
-		/// Tolerance entity.
-		/// </summary>
+		/// <summary>Tolerance entity.</summary>
 		Tolerance,
 
-		/// <summary>
-		/// Trace entity.
-		/// </summary>
+		/// <summary>Trace entity.</summary>
 		Trace,
 
-		/// <summary>
-		/// Underlay entity.
-		/// </summary>
+		/// <summary>Underlay entity.</summary>
 		Underlay,
 
-		/// <summary>
-		/// Viewport entity.
-		/// </summary>
+		/// <summary>Viewport entity.</summary>
 		Viewport,
 
-		/// <summary>
-		/// Wipeout entity.
-		/// </summary>
+		/// <summary>Wipeout entity.</summary>
 		Wipeout,
 
-		/// <summary>
-		/// XLine entity.
-		/// </summary>
+		/// <summary>XLine entity.</summary>
 		XLine
 	}
 }

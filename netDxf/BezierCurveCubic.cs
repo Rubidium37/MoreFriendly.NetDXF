@@ -29,17 +29,13 @@ using System.Linq;
 
 namespace netDxf
 {
-	/// <summary>
-	/// Represent a cubic bezier curve.
-	/// </summary>
+	/// <summary>Represent a cubic bezier curve.</summary>
 	public class BezierCurveCubic :
 		BezierCurve
 	{
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of the <c>BezierCurve</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="controlPoints">A list of four control points.</param>
 		/// <remarks>
 		/// The list must contain four control points.
@@ -53,9 +49,7 @@ namespace netDxf
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>BezierCurve</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="startPoint">Start anchor point.</param>
 		/// <param name="firstControlPoint">First control point.</param>
 		/// <param name="secondControlPoint">Second control point.</param>
@@ -69,36 +63,28 @@ namespace netDxf
 
 		#region public properties
 
-		/// <summary>
-		/// Gets or sets the curve start point.
-		/// </summary>
+		/// <summary>Gets or sets the curve start point.</summary>
 		public Vector3 StartPoint
 		{
 			get { return this.controlPoints[0]; }
 			set { this.controlPoints[0] = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the first control point.
-		/// </summary>
+		/// <summary>Gets or sets the first control point.</summary>
 		public Vector3 FirstControlPoint
 		{
 			get { return this.controlPoints[1]; }
 			set { this.controlPoints[1] = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the second control point.
-		/// </summary>
+		/// <summary>Gets or sets the second control point.</summary>
 		public Vector3 SecondControlPoint
 		{
 			get { return this.controlPoints[2]; }
 			set { this.controlPoints[2] = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the curve end point.
-		/// </summary>
+		/// <summary>Gets or sets the curve end point.</summary>
 		public Vector3 EndPoint
 		{
 			get { return this.controlPoints[3]; }
@@ -109,11 +95,7 @@ namespace netDxf
 
 		#region public methods
 
-		/// <summary>
-		/// Obtains a point along the curve at parameter t.
-		/// </summary>
-		/// <param name="t">Parameter t, between 0.0 and 1.0.</param>
-		/// <returns>A point along the curve.</returns>
+		/// <inheritdoc/>
 		public override Vector3 CalculatePoint(double t)
 		{
 			if (t < 0.0 || t > 1.0)
@@ -125,11 +107,7 @@ namespace netDxf
 			return c * c * c * this.StartPoint + 3 * t * c * c * this.FirstControlPoint + 3 * c * t * t * this.SecondControlPoint + t * t * t * this.EndPoint;
 		}
 
-		/// <summary>
-		/// Calculates the tangent vector at parameter t.
-		/// </summary>
-		/// <param name="t">Parameter t, between 0.0 and 1.0.</param>
-		/// <returns>A normalized tangent vector.</returns>
+		/// <inheritdoc/>
 		public override Vector3 CalculateTangent(double t)
 		{
 			if (t < 0.0 || t > 1.0)
@@ -143,9 +121,7 @@ namespace netDxf
 			);
 		}
 
-		/// <summary>
-		/// Splits the actual bezier curve in two at parameter t.
-		/// </summary>
+		/// <summary>Splits the actual bezier curve in two at parameter t.</summary>
 		/// <param name="t">Parameter t, between 0.0 and 1.0.</param>
 		/// <returns>The two curves result of dividing the actual curve at parameter t.</returns>
 		public BezierCurveCubic[] Split(double t)
@@ -169,17 +145,13 @@ namespace netDxf
 			};
 		}
 
-		/// <summary>
-		/// Switch the bezier curve direction.
-		/// </summary>
+		/// <summary>Switch the bezier curve direction.</summary>
 		public void Reverse()
 		{
 			Array.Reverse(this.controlPoints);
 		}
 
-		/// <summary>
-		/// Converts the bezier curve in a list of vertexes.
-		/// </summary>
+		/// <summary>Converts the bezier curve in a list of vertexes.</summary>
 		/// <param name="precision">Number of vertexes generated.</param>
 		/// <returns>A list vertexes that represents the bezier curve.</returns>
 		public List<Vector3> PolygonalVertexes(int precision)
@@ -201,9 +173,7 @@ namespace netDxf
 			return vertexes;
 		}
 
-		/// <summary>
-		/// Generate a list of continuous cubic bezier curves that passes through a set of points.
-		/// </summary>
+		/// <summary>Generate a list of continuous cubic bezier curves that passes through a set of points.</summary>
 		/// <param name="fitPoints">List of points.</param>
 		/// <returns>A list of cubic bezier curves.</returns>
 		/// <returns>
@@ -310,9 +280,7 @@ namespace netDxf
 
 		#region private methods
 
-		/// <summary>
-		/// Solves a tri-diagonal system for one of coordinates (X, Y, or Z) of first Bezier control points.
-		/// </summary>
+		/// <summary>Solves a tri-diagonal system for one of coordinates (X, Y, or Z) of first Bezier control points.</summary>
 		/// <param name="rhs">Right hand side vector.</param>
 		/// <returns>Solution vector.</returns>
 		private static double[] GetFirstControlPoints(double[] rhs)

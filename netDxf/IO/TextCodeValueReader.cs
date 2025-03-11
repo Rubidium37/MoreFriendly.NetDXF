@@ -57,16 +57,19 @@ namespace netDxf.IO
 
 		#region public properties
 
+		/// <inheritdoc/>
 		public short Code
 		{
 			get { return this.code; }
 		}
 
+		/// <inheritdoc/>
 		public object Value
 		{
 			get { return this.value; }
 		}
 
+		/// <inheritdoc/>
 		public long CurrentPosition
 		{
 			get { return this.currentPosition; }
@@ -76,6 +79,7 @@ namespace netDxf.IO
 
 		#region public methods
 
+		/// <inheritdoc/>
 		public void Next()
 		{
 			string readCode = this.reader.ReadLine();
@@ -96,51 +100,61 @@ namespace netDxf.IO
 			}
 		}
 
+		/// <inheritdoc/>
 		public byte ReadByte()
 		{
 			return (byte)this.value;
 		}
 
+		/// <inheritdoc/>
 		public byte[] ReadBytes()
 		{
 			return (byte[])this.value;
 		}
 
+		/// <inheritdoc/>
 		public short ReadShort()
 		{
 			return (short)this.value;
 		}
 
+		/// <inheritdoc/>
 		public int ReadInt()
 		{
 			return (int)this.value;
 		}
 
+		/// <inheritdoc/>
 		public long ReadLong()
 		{
 			return (long)this.value;
 		}
 
+		/// <inheritdoc/>
 		public bool ReadBool()
 		{
 			return (bool)this.value;
 		}
 
+		/// <inheritdoc/>
 		public double ReadDouble()
 		{
 			return (double)this.value;
 		}
 
+		/// <inheritdoc/>
 		public string ReadString()
 		{
 			return (string)this.value;
 		}
 
+		/// <inheritdoc/>
 		public string ReadHex()
 		{
 			return (string)this.value;
 		}
 
+		/// <inheritdoc/>
 		public override string ToString()
 		{
 			return string.Format("{0}:{1}", this.code, this.value);

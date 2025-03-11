@@ -25,24 +25,16 @@
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Drawing direction.
-	/// </summary>
+	/// <summary>Drawing direction.</summary>
 	public enum MTextDrawingDirection
 	{
-		/// <summary>
-		/// Left to right.
-		/// </summary>
+		/// <summary>Left to right.</summary>
 		LeftToRight = 1,
 
-		/// <summary>
-		/// Top to bottom.
-		/// </summary>
+		/// <summary>Top to bottom.</summary>
 		TopToBottom = 3,
 
-		/// <summary>
-		/// By style (the flow direction is inherited from the associated text style).
-		/// </summary>
+		/// <summary>By style (the flow direction is inherited from the associated text style).</summary>
 		ByStyle = 5
 	}
 }

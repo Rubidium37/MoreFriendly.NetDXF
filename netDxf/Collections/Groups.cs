@@ -31,9 +31,7 @@ using netDxf.Tables;
 
 namespace netDxf.Collections
 {
-	/// <summary>
-	/// Represents a collection of groups.
-	/// </summary>
+	/// <summary>Represents a collection of groups.</summary>
 	public sealed class Groups :
 		TableObjects<Group>
 	{
@@ -53,16 +51,7 @@ namespace netDxf.Collections
 
 		#region override methods
 
-		/// <summary>
-		/// Adds a group to the list.
-		/// </summary>
-		/// <param name="group"><see cref="Group">Group</see> to add to the list.</param>
-		/// <param name="assignHandle">Specifies if a handle needs to be generated for the group parameter.</param>
-		/// <returns>
-		/// If a group already exists with the same name as the instance that is being added the method returns the existing group,
-		/// if not it will return the new group.<br />
-		/// The methods will automatically add the grouped entities to the document, if they have not been added previously.
-		/// </returns>
+		/// <inheritdoc/>
 		internal override Group Add(Group group, bool assignHandle)
 		{
 			if (group == null)
@@ -117,23 +106,12 @@ namespace netDxf.Collections
 			return group;
 		}
 
-		/// <summary>
-		/// Deletes a group.
-		/// </summary>
-		/// <param name="name"><see cref="Group">Group</see> name to remove from the document.</param>
-		/// <returns>True if the group has been successfully removed, or false otherwise.</returns>
-		/// <remarks>Removing a group only deletes it from the collection, the entities that once belonged to the group are not deleted.</remarks>
+		/// <inheritdoc/>
 		public override bool Remove(string name)
 		{
 			return this.Remove(this[name]);
 		}
-
-		/// <summary>
-		/// Deletes a group.
-		/// </summary>
-		/// <param name="item"><see cref="Group">Group</see> to remove from the document.</param>
-		/// <returns>True if the group has been successfully removed, or false otherwise.</returns>
-		/// <remarks>Removing a group only deletes it from the collection, the entities that once belonged to the group are not deleted.</remarks>
+		/// <inheritdoc/>
 		public override bool Remove(Group item)
 		{
 			if (item == null)

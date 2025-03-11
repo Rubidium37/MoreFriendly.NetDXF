@@ -27,9 +27,7 @@ using System;
 
 namespace netDxf.Tables
 {
-	/// <summary>
-	/// Base class for the three kinds of linetype segments simple, text, and shape.
-	/// </summary>
+	/// <summary>Base class for the three kinds of linetype segments simple, text, and shape.</summary>
 	public abstract class LinetypeSegment :
 		ICloneable
 	{
@@ -42,9 +40,7 @@ namespace netDxf.Tables
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of the <c>LinetypeSegment</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="type">Type of the linetype segment.</param>
 		/// <param name="length">Dash or space length of the segment.</param>
 		protected LinetypeSegment(LinetypeSegmentType type, double length)
@@ -57,17 +53,13 @@ namespace netDxf.Tables
 
 		#region public properties
 
-		/// <summary>
-		/// Gets the linetype segment simple, text, or shape.
-		/// </summary>
+		/// <summary>Gets the linetype segment simple, text, or shape.</summary>
 		public LinetypeSegmentType Type
 		{
 			get { return this.type; }
 		}
 
-		/// <summary>
-		/// Gets or sets the dash, dot or space length.
-		/// </summary>
+		/// <summary>Gets or sets the dash, dot or space length.</summary>
 		/// <remarks>
 		/// A positive decimal number denotes a pen-down (dash) segment of that length.
 		/// A negative decimal number denotes a pen-up (space) segment of that length.
@@ -83,10 +75,7 @@ namespace netDxf.Tables
 
 		#region implements ICloneable
 
-		/// <summary>
-		/// Creates a new <c>LinetypeSegment</c> that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new <c>LinetypeSegment</c> that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public abstract object Clone();
 
 		#endregion

@@ -33,9 +33,7 @@ using netDxf.IO;
 
 namespace netDxf.Objects
 {
-	/// <summary>
-	/// Represents a layer state.
-	/// </summary>
+	/// <summary>Represents a layer state.</summary>
 	public class LayerState :
 		TableObject
 	{
@@ -53,18 +51,14 @@ namespace netDxf.Objects
 
 		#region constructor
 
-		/// <summary>
-		/// Initializes a new instance of the <c>LayerState</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="name">Layer state name.</param>
 		public LayerState(string name)
 			: this(name, new List<Layer>())
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>LayerState</c> class from a specified list of layers.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class from a specified list of layers.</summary>
 		/// <param name="name">Layer state name.</param>
 		/// <param name="layers">List of layers.</param>
 		public LayerState(string name, IEnumerable<Layer> layers)
@@ -93,18 +87,14 @@ namespace netDxf.Objects
 
 		#region public properties
 
-		/// <summary>
-		/// Gets or sets the layer state description.
-		/// </summary>
+		/// <summary>Gets or sets the layer state description.</summary>
 		public string Description
 		{
 			get { return this.description; }
 			set { this.description = string.IsNullOrEmpty(value) ? string.Empty : value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the current layer name.
-		/// </summary>
+		/// <summary>Gets or sets the current layer name.</summary>
 		public string CurrentLayer
 		{
 			get { return this.currentLayer; }
@@ -126,26 +116,20 @@ namespace netDxf.Objects
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets if the layer state belongs to a paper space layout.
-		/// </summary>
+		/// <summary>Gets or sets if the layer state belongs to a paper space layout.</summary>
 		public bool PaperSpace
 		{
 			get { return this.paperSpace; }
 			set { this.paperSpace = value; }
 		}
 
-		/// <summary>
-		/// Gets the list of layer state properties.
-		/// </summary>
+		/// <summary>Gets the list of layer state properties.</summary>
 		public ObservableDictionary<string, LayerStateProperties> Properties
 		{
 			get { return this.properties; }
 		}
 
-		/// <summary>
-		/// Gets the owner of the actual layer state.
-		/// </summary>
+		/// <summary>Gets the owner of the actual layer state.</summary>
 		public new LayerStateManager Owner
 		{
 			get { return (LayerStateManager)base.Owner; }
@@ -156,10 +140,8 @@ namespace netDxf.Objects
 
 		#region public methods
 
-		/// <summary>
-		/// Loads a layer state from an LAS file.
-		/// </summary>
-		/// <param name="file">LAS file to load.</param>
+		/// <summary>Loads a layer state from an <b>LAS</b> file.</summary>
+		/// <param name="file"><b>LAS</b> file to load.</param>
 		/// <returns>A layer state.</returns>
 		public static LayerState Load(string file)
 		{
@@ -179,11 +161,9 @@ namespace netDxf.Objects
 			}
 		}
 
-		/// <summary>
-		/// Saves the current layer state to a LAS file.
-		/// </summary>
-		/// <param name="file">LAS file to save.</param>
-		/// <returns>Returns true if the file has been successfully saved, false otherwise.</returns>
+		/// <summary>Saves the current layer state to a <b>LAS</b> file.</summary>
+		/// <param name="file"><b>LAS</b> file to save.</param>
+		/// <returns>Returns <see langword="true"/> if the file has been successfully saved; otherwise, <see langword="false"/>.</returns>
 		public bool Save(string file)
 		{
 			FileStream stream = File.Create(file);
@@ -415,31 +395,13 @@ namespace netDxf.Objects
 
 		#region overrides
 
-		/// <summary>
-		/// Checks if this instance has been referenced by other DxfObjects.
-		/// </summary>
-		/// <returns>
-		/// Returns true if this instance has been referenced by other DxfObjects, false otherwise.
-		/// It will always return false if this instance does not belong to a document.
-		/// </returns>
-		/// <remarks>
-		/// This method returns the same value as the HasReferences method that can be found in the TableObjects class.
-		/// </remarks>
+		/// <inheritdoc/>
 		public override bool HasReferences()
 		{
 			return this.Owner != null && this.Owner.HasReferences(this.Name);
 		}
 
-		/// <summary>
-		/// Gets the list of DxfObjects referenced by this instance.
-		/// </summary>
-		/// <returns>
-		/// A list of DxfObjectReference that contains the DxfObject referenced by this instance and the number of times it does.
-		/// It will return null if this instance does not belong to a document.
-		/// </returns>
-		/// <remarks>
-		/// This method returns the same list as the GetReferences method that can be found in the TableObjects class.
-		/// </remarks>
+		/// <inheritdoc/>
 		public override List<DxfObjectReference> GetReferences()
 		{
 			if (this.Owner == null)
@@ -450,11 +412,7 @@ namespace netDxf.Objects
 			return this.Owner.GetReferences(this.Name);
 		} // TODO: Check this
 
-		/// <summary>
-		/// Creates a new LayerState that is a copy of the current instance.
-		/// </summary>
-		/// <param name="newName">LayerState name of the copy.</param>
-		/// <returns>A new LayerState that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override TableObject Clone(string newName)
 		{
 			LayerState ls = new LayerState(newName)
@@ -472,10 +430,7 @@ namespace netDxf.Objects
 			return ls;
 		}
 
-		/// <summary>
-		/// Creates a new LayerState that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new LayerState that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override object Clone()
 		{
 			return this.Clone(this.Name);

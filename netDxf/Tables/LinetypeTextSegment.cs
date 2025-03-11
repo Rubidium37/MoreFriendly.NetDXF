@@ -27,9 +27,7 @@ using System;
 
 namespace netDxf.Tables
 {
-	/// <summary>
-	/// Represents a text linetype segment.
-	/// </summary>
+	/// <summary>Represents a text linetype segment.</summary>
 	public class LinetypeTextSegment :
 		LinetypeSegment
 	{
@@ -64,16 +62,12 @@ namespace netDxf.Tables
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of the <c>LinetypeShapeSegment</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		public LinetypeTextSegment() : this(string.Empty, TextStyle.Default, 1.0, Vector2.Zero, LinetypeSegmentRotationType.Relative, 0.0, 1.0)
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>LinetypeShapeSegment</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="text">Text to display on the linetype segment.</param>
 		/// <param name="style">Name of the TextStyle.</param>
 		/// <param name="length">Dash, dot, or space length of the linetype segment.</param>
@@ -81,9 +75,7 @@ namespace netDxf.Tables
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>LinetypeShapeSegment</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="text">Text to display on the linetype segment.</param>
 		/// <param name="style">Name of the TextStyle.</param>
 		/// <param name="length">Dash, dot, or space length of the linetype segment.</param>
@@ -106,18 +98,14 @@ namespace netDxf.Tables
 
 		#region public properties
 
-		/// <summary>
-		/// Gets or sets the text displayed by the linetype.
-		/// </summary>
+		/// <summary>Gets or sets the text displayed by the linetype.</summary>
 		public string Text
 		{
 			get { return this.text; }
 			set { this.text = string.IsNullOrEmpty(value) ? string.Empty : value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the TextStyle of the text to be displayed by the linetype.
-		/// </summary>
+		/// <summary>Gets or sets the TextStyle of the text to be displayed by the linetype.</summary>
 		public TextStyle Style
 		{
 			get { return this.style; }
@@ -131,36 +119,28 @@ namespace netDxf.Tables
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the shift of the text along the line.
-		/// </summary>
+		/// <summary>Gets or sets the shift of the text along the line.</summary>
 		public Vector2 Offset
 		{
 			get { return this.offset; }
 			set { this.offset = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the type of rotation defined by the rotation value upright, relative, or absolute.
-		/// </summary>
+		/// <summary>Gets or sets the type of rotation defined by the rotation value upright, relative, or absolute.</summary>
 		public LinetypeSegmentRotationType RotationType
 		{
 			get { return this.rotationType; }
 			set { this.rotationType = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the angle in degrees of the text.
-		/// </summary>
+		/// <summary>Gets or sets the angle in degrees of the text.</summary>
 		public double Rotation
 		{
 			get { return this.rotation; }
 			set { this.rotation = MathHelper.NormalizeAngle(value); }
 		}
 
-		/// <summary>
-		/// Gets or sets the scale of the text relative to the scale of the linetype.
-		/// </summary>
+		/// <summary>Gets or sets the scale of the text relative to the scale of the linetype.</summary>
 		public double Scale
 		{
 			get { return this.scale; }
@@ -171,10 +151,7 @@ namespace netDxf.Tables
 
 		#region overrides
 
-		/// <summary>
-		/// Creates a new <c>LinetypeShapeSegment</c> that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new <c>LinetypeShapeSegment</c> that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override object Clone()
 		{
 			return new LinetypeTextSegment(this.text, (TextStyle)this.style.Clone(), this.Length, this.offset, this.rotationType, this.rotation, this.scale);

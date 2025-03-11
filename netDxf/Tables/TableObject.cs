@@ -29,9 +29,7 @@ using System.Linq;
 
 namespace netDxf.Tables
 {
-	/// <summary>
-	/// Defines classes that can be accessed by name. They are usually part of the DXF TABLE section but can also be part of the OBJECTS section.
-	/// </summary>
+	/// <summary>Defines classes that can be accessed by name. They are usually part of the <b>DXF TABLE</b> section but can also be part of the <b>OBJECTS</b> section.</summary>
 	public abstract class TableObject :
 		DxfObject,
 		ICloneable,
@@ -65,9 +63,7 @@ namespace netDxf.Tables
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of the <c>TableObject</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="name">Table name. The following characters \&lt;&gt;/?":;*|,=` are not supported for table object names.</param>
 		/// <param name="codeName">Table <see cref="DxfObjectCode">code name</see>.</param>
 		/// <param name="checkName">Defines if the table object name needs to be checked for invalid characters.</param>
@@ -91,9 +87,7 @@ namespace netDxf.Tables
 
 		#region public properties
 
-		/// <summary>
-		/// Gets the name of the table object.
-		/// </summary>
+		/// <summary>Gets the name of the table object.</summary>
 		/// <remarks>Table object names are case insensitive.</remarks>
 		public string Name
 		{
@@ -101,18 +95,14 @@ namespace netDxf.Tables
 			set { this.SetName(value, true); }
 		}
 
-		/// <summary>
-		/// Gets if the table object is reserved and cannot be deleted.
-		/// </summary>
+		/// <summary>Gets if the table object is reserved and cannot be deleted.</summary>
 		public bool IsReserved
 		{
 			get { return this.reserved; }
 			internal set { this.reserved = value; }
 		}
 
-		/// <summary>
-		/// Gets the array of characters not supported as table object names.
-		/// </summary>
+		/// <summary>Gets the array of characters not supported as table object names.</summary>
 		public static char[] InvalidCharacters
 		{
 			get { return invalidCharacters.ToArray(); }
@@ -122,11 +112,9 @@ namespace netDxf.Tables
 
 		#region public methods
 
-		/// <summary>
-		/// Checks if a string is valid as a table object name.
-		/// </summary>
+		/// <summary>Checks if a string is valid as a table object name.</summary>
 		/// <param name="name">String to check.</param>
-		/// <returns>True if the string is valid as a table object name, or false otherwise.</returns>
+		/// <returns><see langword="true"/> if the string is valid as a table object name; otherwise, <see langword="false"/>.</returns>
 		public static bool IsValidName(string name)
 		{
 			if (string.IsNullOrEmpty(name))
@@ -137,27 +125,23 @@ namespace netDxf.Tables
 			return name.IndexOfAny(invalidCharacters) == -1;
 		}
 
-		/// <summary>
-		/// Checks if this instance has been referenced by other DxfObjects.
-		/// </summary>
+		/// <summary>Checks if this instance has been referenced by other <see cref="DxfObject"/>s.</summary>
 		/// <returns>
-		/// Returns true if this instance has been referenced by other DxfObjects, false otherwise.
-		/// It will always return false if this instance does not belong to a document.
+		/// Returns <see langword="true"/> if this instance has been referenced by other <see cref="DxfObject"/>s; otherwise, <see langword="false"/>.
+		/// It will always return <see langword="false"/> if this instance does not belong to a document.
 		/// </returns>
 		/// <remarks>
-		/// This method returns the same value as the HasReferences method that can be found in the TableObjects class.
+		/// This method returns the same value as the <see cref="HasReferences"/> method that can be found in the <see cref="TableObject"/>s class.
 		/// </remarks>
 		public abstract bool HasReferences();
 
-		/// <summary>
-		/// Gets the list of DxfObjects referenced by this instance.
-		/// </summary>
+		/// <summary>Gets the list of <see cref="DxfObject"/>s referenced by this instance.</summary>
 		/// <returns>
-		/// A list of DxfObjectReference that contains the DxfObject referenced by this instance and the number of times it does.
-		/// It will return null if this instance does not belong to a document.
+		/// A list of <see cref="DxfObjectReference"/> that contains the <see cref="DxfObject"/> referenced by this instance and the number of times it does.
+		/// It will return <see langword="null"/> if this instance does not belong to a document.
 		/// </returns>
 		/// <remarks>
-		/// This method returns the same list as the GetReferences method that can be found in the TableObjects class.
+		/// This method returns the same list as the <see cref="GetReferences"/> method that can be found in the <see cref="TableObject"/>s class.
 		/// </remarks>
 		public abstract List<DxfObjectReference> GetReferences();
 
@@ -199,10 +183,7 @@ namespace netDxf.Tables
 
 		#region overrides
 
-		/// <summary>
-		/// Converts the value of this instance to its equivalent string representation.
-		/// </summary>
-		/// <returns>The string representation.</returns>
+		/// <inheritdoc/>
 		public override string ToString()
 		{
 			return this.Name;
@@ -212,30 +193,14 @@ namespace netDxf.Tables
 
 		#region implements IComparable
 
-		/// <summary>
-		/// Compares the current TableObject with another TableObject of the same type.
-		/// </summary>
-		/// <param name="other">A TableObject to compare with this TableObject.</param>
-		/// <returns>
-		/// An integer that indicates the relative order of the table objects being compared.
-		/// The return value has the following meanings: Value Meaning Less than zero This object is less than the other parameter.
-		/// Zero This object is equal to other. Greater than zero This object is greater than other.
-		/// </returns>
+		/// <inheritdoc/>
 		/// <remarks>If both table objects are no of the same type it will return zero. The comparison is made by their names.</remarks>
 		public int CompareTo(object other)
 		{
 			return this.CompareTo((TableObject)other);
 		}
 
-		/// <summary>
-		/// Compares the current TableObject with another TableObject of the same type.
-		/// </summary>
-		/// <param name="other">A TableObject to compare with this TableObject.</param>
-		/// <returns>
-		/// An integer that indicates the relative order of the table objects being compared.
-		/// The return value has the following meanings: Value Meaning Less than zero This object is less than the other parameter.
-		/// Zero This object is equal to other. Greater than zero This object is greater than other.
-		/// </returns>
+		/// <inheritdoc/>
 		/// <remarks>If both table objects are not of the same type it will return zero. The comparison is made by their names.</remarks>
 		public int CompareTo(TableObject other)
 		{
@@ -247,10 +212,7 @@ namespace netDxf.Tables
 			return this.GetType() == other.GetType() ? string.Compare(this.Name, other.Name, StringComparison.OrdinalIgnoreCase) : 0;
 		}
 
-		/// <summary>
-		/// Returns the hash code for this instance.
-		/// </summary>
-		/// <returns>A 32-bit signed integer that is the hash code for this instance.</returns>
+		/// <inheritdoc/>
 		public override int GetHashCode()
 		{
 			return this.Name.GetHashCode();
@@ -261,7 +223,7 @@ namespace netDxf.Tables
 		///// </summary>
 		///// <param name="u">TableObject.</param>
 		///// <param name="v">TableObject.</param>
-		///// <returns>True if the two table names are equal, false in any other case.</returns>
+		///// <returns><see langword="true"/> if the two table names are equal, <see langword="false"/> in any other case.</returns>
 		//public static bool operator ==(TableObject u, TableObject v)
 		//{
 		//	if (ReferenceEquals(u, null) && ReferenceEquals(v, null))
@@ -278,7 +240,7 @@ namespace netDxf.Tables
 		///// </summary>
 		///// <param name="u">TableObject.</param>
 		///// <param name="v">TableObject.</param>
-		///// <returns>True if the two table names are different, false in any other case.</returns>
+		///// <returns><see langword="true"/> if the two table names are different, <see langword="false"/> in any other case.</returns>
 		//public static bool operator !=(TableObject u, TableObject v)
 		//{
 		//	if (ReferenceEquals(u, null) && ReferenceEquals(v, null))
@@ -295,7 +257,7 @@ namespace netDxf.Tables
 		///// </summary>
 		///// <param name="u">TableObject.</param>
 		///// <param name="v">TableObject.</param>
-		///// <returns>True if the first table name is lesser than the second, false in any other case.</returns>
+		///// <returns><see langword="true"/> if the first table name is lesser than the second, <see langword="false"/> in any other case.</returns>
 		//public static bool operator <(TableObject u, TableObject v)
 		//{
 		//	if (ReferenceEquals(u, null) || ReferenceEquals(v, null))
@@ -309,7 +271,7 @@ namespace netDxf.Tables
 		///// </summary>
 		///// <param name="u">TableObject.</param>
 		///// <param name="v">TableObject.</param>
-		///// <returns>True if the first table name is greater than the second, false in any other case.</returns>
+		///// <returns><see langword="true"/> if the first table name is greater than the second, <see langword="false"/> in any other case.</returns>
 		//public static bool operator >(TableObject u, TableObject v)
 		//{
 		//	if (ReferenceEquals(u, null) || ReferenceEquals(v, null))
@@ -322,15 +284,7 @@ namespace netDxf.Tables
 
 		#region implements IEquatable
 
-		/// <summary>
-		/// Check if two TableObject are equal.
-		/// </summary>
-		/// <param name="other">Another TableObject to compare to.</param>
-		/// <returns>True if two TableObject are equal or false in any other case.</returns>
-		/// <remarks>
-		/// Two TableObjects are considered equals if their names are the same, regardless of their internal values.
-		/// This is done this way because in a DXF two TableObjects cannot have the same name.
-		/// </remarks>
+		/// <inheritdoc/>
 		public override bool Equals(object other)
 		{
 			if (other == null)
@@ -345,16 +299,7 @@ namespace netDxf.Tables
 
 			return this.Equals((TableObject)other);
 		}
-
-		/// <summary>
-		/// Check if two TableObject are equal.
-		/// </summary>
-		/// <param name="other">Another TableObject to compare to.</param>
-		/// <returns>True if two TableObject are equal or false in any other case.</returns>
-		/// <remarks>
-		/// Two TableObjects are considered equals if their names are the same, regardless of their internal values.
-		/// This is done this way because in a DXF two TableObjects cannot have the same name.
-		/// </remarks>
+		/// <inheritdoc/>
 		public bool Equals(TableObject other)
 		{
 			if (other == null)
@@ -369,18 +314,12 @@ namespace netDxf.Tables
 
 		#region ICloneable
 
-		/// <summary>
-		/// Creates a new table object that is a copy of the current instance.
-		/// </summary>
+		/// <inheritdoc/>
+		public abstract object Clone();
+		/// <summary>Creates a new table object that is a copy of the current instance.</summary>
 		/// <param name="newName">TableObject name of the copy.</param>
 		/// <returns>A new table object that is a copy of this instance.</returns>
 		public abstract TableObject Clone(string newName);
-
-		/// <summary>
-		/// Creates a new table object that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new table object that is a copy of this instance.</returns>
-		public abstract object Clone();
 
 		#endregion
 

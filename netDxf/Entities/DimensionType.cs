@@ -25,49 +25,31 @@
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Dimension type.
-	/// </summary>
+	/// <summary>Dimension type.</summary>
 	public enum DimensionType
 	{
-		/// <summary>
-		/// Rotated, horizontal, or vertical.
-		/// </summary>
+		/// <summary>Rotated, horizontal, or vertical.</summary>
 		Linear = 0,
 
-		/// <summary>
-		/// Aligned.
-		/// </summary>
+		/// <summary>Aligned.</summary>
 		Aligned = 1,
 
-		/// <summary>
-		/// Angular 2 lines.
-		/// </summary>
+		/// <summary>Angular 2 lines.</summary>
 		Angular = 2,
 
-		/// <summary>
-		/// Diameter.
-		/// </summary>
+		/// <summary>Diameter.</summary>
 		Diameter = 3,
 
-		/// <summary>
-		/// Radius.
-		/// </summary>
+		/// <summary>Radius.</summary>
 		Radius = 4,
 
-		/// <summary>
-		/// Angular 3 points.
-		/// </summary>
+		/// <summary>Angular 3 points.</summary>
 		Angular3Point = 5,
 
-		/// <summary>
-		/// Ordinate.
-		/// </summary>
+		/// <summary>Ordinate.</summary>
 		Ordinate = 6,
 
-		/// <summary>
-		/// Arc Length.
-		/// </summary>
+		/// <summary>Arc Length.</summary>
 		ArcLength = 7
 	}
 }

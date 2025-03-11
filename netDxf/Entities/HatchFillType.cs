@@ -25,19 +25,13 @@
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Hatch pattern fill type.
-	/// </summary>
+	/// <summary>Hatch pattern fill type.</summary>
 	public enum HatchFillType
 	{
-		/// <summary>
-		/// Pattern fill.
-		/// </summary>
+		/// <summary>Pattern fill.</summary>
 		PatternFill = 0,
 
-		/// <summary>
-		/// Solid fill.
-		/// </summary>
+		/// <summary>Solid fill.</summary>
 		SolidFill = 1
 	}
 }

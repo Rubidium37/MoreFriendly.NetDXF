@@ -25,24 +25,16 @@
 
 namespace netDxf.Units
 {
-	/// <summary>
-	/// Defines the image resolution units.
-	/// </summary>
+	/// <summary>Defines the image resolution units.</summary>
 	public enum ImageResolutionUnits
 	{
-		/// <summary>
-		/// No units.
-		/// </summary>
+		/// <summary>No units.</summary>
 		Unitless = 0,
 
-		/// <summary>
-		/// Centimeters.
-		/// </summary>
+		/// <summary>Centimeters.</summary>
 		Centimeters = 2,
 
-		/// <summary>
-		/// Inches.
-		/// </summary>
+		/// <summary>Inches.</summary>
 		Inches = 5
 	}
 }

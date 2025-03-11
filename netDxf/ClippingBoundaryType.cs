@@ -25,19 +25,13 @@
 
 namespace netDxf
 {
-	/// <summary>
-	/// Image clipping boundary type.
-	/// </summary>
+	/// <summary>Image clipping boundary type.</summary>
 	public enum ClippingBoundaryType
 	{
-		/// <summary>
-		/// Rectangular.
-		/// </summary>
+		/// <summary>Rectangular.</summary>
 		Rectangular = 1,
 
-		/// <summary>
-		/// Polygonal.
-		/// </summary>
+		/// <summary>Polygonal.</summary>
 		Polygonal = 2
 	}
 }

@@ -29,11 +29,9 @@ using netDxf.Collections;
 
 namespace netDxf.Tables
 {
-	/// <summary>
-	/// Represents a registered application name to which the <see cref="XData">extended data</see> is associated.
-	/// </summary>
+	/// <summary>Represents a registered application name to which the <see cref="XData">extended data</see> is associated.</summary>
 	/// <remarks>
-	/// Do not use the default "ACAD" application registry name for your own extended data, it is sometimes used by AutoCad to store internal data.
+	/// Do not use the default "ACAD" application registry name for your own extended data, it is sometimes used by <b>AutoCAD</b> to store internal data.
 	/// Instead, create your own application registry name and store your extended data there.
 	/// </remarks>
 	public class ApplicationRegistry :
@@ -41,14 +39,10 @@ namespace netDxf.Tables
 	{
 		#region constants
 
-		/// <summary>
-		/// Default application registry name.
-		/// </summary>
+		/// <summary>Default application registry name.</summary>
 		public const string DefaultName = "ACAD";
 
-		/// <summary>
-		/// Gets the default application registry.
-		/// </summary>
+		/// <summary>Gets the default application registry.</summary>
 		public static ApplicationRegistry Default
 		{
 			get { return new ApplicationRegistry(DefaultName); }
@@ -58,9 +52,7 @@ namespace netDxf.Tables
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of the <c>ApplicationRegistry</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="name">Application registry name.</param>
 		public ApplicationRegistry(string name)
 			: this(name, true)
@@ -89,9 +81,7 @@ namespace netDxf.Tables
 
 		#region public properties
 
-		/// <summary>
-		/// Gets the owner of the actual DXF object.
-		/// </summary>
+		/// <summary>Gets the owner of the actual <b>DXF</b> object.</summary>
 		public new ApplicationRegistries Owner
 		{
 			get { return (ApplicationRegistries)base.Owner; }
@@ -102,41 +92,19 @@ namespace netDxf.Tables
 
 		#region overrides
 
-		/// <summary>
-		/// Checks if this instance has been referenced by other DxfObjects.
-		/// </summary>
-		/// <returns>
-		/// Returns true if this instance has been referenced by other DxfObjects, false otherwise.
-		/// It will always return false if this instance does not belong to a document.
-		/// </returns>
-		/// <remarks>
-		/// This method returns the same value as the HasReferences method that can be found in the TableObjects class.
-		/// </remarks>
+		/// <inheritdoc/>
 		public override bool HasReferences()
 		{
 			return this.Owner != null && this.Owner.HasReferences(this.Name);
 		}
 
-		/// <summary>
-		/// Gets the list of DxfObjects referenced by this instance.
-		/// </summary>
-		/// <returns>
-		/// A list of DxfObjectReference that contains the DxfObject referenced by this instance and the number of times it does.
-		/// It will return null if this instance does not belong to a document.
-		/// </returns>
-		/// <remarks>
-		/// This method returns the same list as the GetReferences method that can be found in the TableObjects class.
-		/// </remarks>
+		/// <inheritdoc/>
 		public override List<DxfObjectReference> GetReferences()
 		{
 			return this.Owner?.GetReferences(this.Name);
 		}
 
-		/// <summary>
-		/// Creates a new ApplicationRegistry that is a copy of the current instance.
-		/// </summary>
-		/// <param name="newName">ApplicationRegistry name of the copy.</param>
-		/// <returns>A new ApplicationRegistry that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override TableObject Clone(string newName)
 		{
 			// container to temporary store application registries that has already been cloned,
@@ -167,10 +135,7 @@ namespace netDxf.Tables
 			return copy;
 		}
 
-		/// <summary>
-		/// Creates a new ApplicationRegistry that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new ApplicationRegistry that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override object Clone()
 		{
 			return this.Clone(this.Name);

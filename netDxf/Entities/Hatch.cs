@@ -30,9 +30,7 @@ using netDxf.Tables;
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Represents a hatch <see cref="EntityObject">entity</see>.
-	/// </summary>
+	/// <summary>Represents a hatch <see cref="EntityObject">entity</see>.</summary>
 	public class Hatch :
 		EntityObject
 	{
@@ -73,9 +71,7 @@ namespace netDxf.Entities
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Hatch</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <remarks>
 		/// This constructor is initialized with an empty list of boundary paths, remember a hatch without boundaries will be discarded when saving the file.<br/>
 		/// When creating an associative hatch do not add the entities that make the boundary to the document, it will be done automatically. Doing so will throw an exception.<br/>
@@ -97,9 +93,7 @@ namespace netDxf.Entities
 			this.associative = associative;
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Hatch</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <remarks>
 		/// The hatch boundary paths must be on the same plane as the hatch.
 		/// The normal and the elevation of the boundary paths will be omitted (the hatch elevation and normal will be used instead).
@@ -150,9 +144,7 @@ namespace netDxf.Entities
 
 		#region public properties
 
-		/// <summary>
-		/// Gets the hatch pattern.
-		/// </summary>
+		/// <summary>Gets the hatch pattern.</summary>
 		public HatchPattern Pattern
 		{
 			get { return this.pattern; }
@@ -162,9 +154,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets the hatch boundary paths.
-		/// </summary>
+		/// <summary>Gets the hatch boundary paths.</summary>
 		/// <remarks>
 		/// The hatch must contain at least on valid boundary path to be able to add it to the DxfDocument, otherwise it will be rejected.
 		/// </remarks>
@@ -173,17 +163,13 @@ namespace netDxf.Entities
 			get { return this.boundaryPaths; }
 		}
 
-		/// <summary>
-		/// Gets if the hatch is associative or not, which means if the hatch object is associated with the hatch boundary entities.
-		/// </summary>
+		/// <summary>Gets if the hatch is associative or not, which means if the hatch object is associated with the hatch boundary entities.</summary>
 		public bool Associative
 		{
 			get { return this.associative; }
 		}
 
-		/// <summary>
-		/// Gets or sets the hatch elevation, its position along its normal.
-		/// </summary>
+		/// <summary>Gets or sets the hatch elevation, its position along its normal.</summary>
 		public double Elevation
 		{
 			get { return this.elevation; }
@@ -194,9 +180,7 @@ namespace netDxf.Entities
 
 		#region public methods
 
-		/// <summary>
-		/// Unlinks the boundary from the hatch, turning the associative property to false.
-		/// </summary>
+		/// <summary>Unlinks the boundary from the hatch, turning the associative property to <see langword="false"/>.</summary>
 		/// <returns>The list of unlinked entities from the boundary of the hatch.</returns>
 		/// <remarks>The entities that make the hatch boundaries will not be deleted from the document if they already belong to one.</remarks>
 		public List<EntityObject> UnLinkBoundary()
@@ -215,16 +199,14 @@ namespace netDxf.Entities
 			return boundary;
 		}
 
-		/// <summary>
-		/// Creates a list of entities that represents the boundary of the hatch and optionally associates to it.
-		/// </summary>
-		/// <param name="linkBoundary">Indicates if the new boundary will be associated with the hatch, turning the associative property to true.</param>
+		/// <summary>Creates a list of entities that represents the boundary of the hatch and optionally associates to it.</summary>
+		/// <param name="linkBoundary">Indicates if the new boundary will be associated with the hatch, turning the associative property to <see langword="true"/>.</param>
 		/// <returns>A list of entities that makes the boundary of the hatch.</returns>
 		/// <remarks>
 		/// If the actual hatch is already associative, the old boundary entities will be unlinked, but not deleted from the hatch document.
-		/// If linkBoundary is true, the new boundary entities will be added to the same layout and document as the hatch, in case it belongs to one,
+		/// If linkBoundary is <see langword="true"/>, the new boundary entities will be added to the same layout and document as the hatch, in case it belongs to one,
 		/// so, in this case, if you also try to add the return list to the document it will cause an error.<br/>
-		/// All entities are in world coordinates except the Polyline2D boundary path since by definition its vertexes are expressed in object coordinates.
+		/// All entities are in world coordinates except the <see cref="Polyline2D"/> boundary path since by definition its vertexes are expressed in object coordinates.
 		/// </remarks>
 		public List<EntityObject> CreateBoundary(bool linkBoundary)
 		{
@@ -410,12 +392,7 @@ namespace netDxf.Entities
 		//	this.Normal = newNormal;
 		//}
 
-		/// <summary>
-		/// Moves, scales, and/or rotates the current entity given a 3x3 transformation matrix and a translation vector.
-		/// </summary>
-		/// <param name="transformation">Transformation matrix.</param>
-		/// <param name="translation">Translation vector.</param>
-		/// <remarks>Matrix3 adopts the convention of using column vectors to represent a transformation matrix.</remarks>
+		/// <inheritdoc/>
 		public override void TransformBy(Matrix3 transformation, Vector3 translation)
 		{
 			if (this.associative)
@@ -494,14 +471,7 @@ namespace netDxf.Entities
 			this.BoundaryPaths.AddRange(paths);
 		}
 
-		/// <summary>
-		/// Creates a new Hatch that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new Hatch that is a copy of this instance.</returns>
-		/// <remarks>
-		/// If the hatch is associative the referenced boundary entities will not be automatically cloned, its associative property will be set to false.
-		/// Use CreateBoundary if required after cloning.
-		/// </remarks>
+		/// <inheritdoc/>
 		public override object Clone()
 		{
 			Hatch entity = new Hatch((HatchPattern)this.pattern.Clone(), false)

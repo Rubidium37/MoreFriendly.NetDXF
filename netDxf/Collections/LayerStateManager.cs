@@ -30,9 +30,7 @@ using netDxf.Tables;
 
 namespace netDxf.Collections
 {
-	/// <summary>
-	/// Manages the list of layer states in a drawing.
-	/// </summary>
+	/// <summary>Manages the list of layer states in a drawing.</summary>
 	public class LayerStateManager :
 		TableObjects<LayerState>
 	{
@@ -44,10 +42,8 @@ namespace netDxf.Collections
 
 		#region constructor
 
-		/// <summary>
-		/// Initializes a new instance of the <c>LayerStateManager</c> class.
-		/// </summary>
-		/// <param name="owner">Layers list associated with the current <c>LayerStateManager</c>.</param>
+		/// <summary>Initializes a new instance of the class.</summary>
+		/// <param name="owner">Layers list associated with the current <see cref="LayerStateManager"/>.</param>
 		internal LayerStateManager(DxfDocument owner)
 			: this(owner, null)
 		{
@@ -63,9 +59,7 @@ namespace netDxf.Collections
 
 		#region public properties
 
-		/// <summary>
-		/// Gets or sets the restoring options when updating the layer state from the layers list and vice versa.
-		/// </summary>
+		/// <summary>Gets or sets the restoring options when updating the layer state from the layers list and vice versa.</summary>
 		public LayerPropertiesRestoreFlags Options
 		{
 			get { return this.options; }
@@ -76,18 +70,14 @@ namespace netDxf.Collections
 
 		#region public methods
 
-		/// <summary>
-		/// Adds a new LayerState from the current state of the layers.
-		/// </summary>
+		/// <summary>Adds a new <see cref="LayerState"/> from the current state of the layers.</summary>
 		/// <param name="layerStateName">Layer state name.</param>
 		public void AddNew(string layerStateName)
 		{
 			this.AddNew(layerStateName, String.Empty);
 		}
 
-		/// <summary>
-		/// Adds a new LayerState from the current state of the layers.
-		/// </summary>
+		/// <summary>Adds a new <see cref="LayerState"/> from the current state of the layers.</summary>
 		/// <param name="layerStateName">Layer state name.</param>
 		/// <param name="layerStateDescription">Layer state description.</param>
 		public void AddNew(string layerStateName, string layerStateDescription)
@@ -96,9 +86,7 @@ namespace netDxf.Collections
 			this.Add(layerState);
 		}
 
-		/// <summary>
-		/// Restores the properties of the current layers list according to the specified layers state.
-		/// </summary>
+		/// <summary>Restores the properties of the current layers list according to the specified layers state.</summary>
 		/// <param name="layerStateName">Layer state name to restore.</param>
 		public void Restore(string layerStateName)
 		{
@@ -124,9 +112,7 @@ namespace netDxf.Collections
 			}
 		}
 
-		/// <summary>
-		/// Updates the specified layer state according to the properties of the current layers list.
-		/// </summary>
+		/// <summary>Updates the specified layer state according to the properties of the current layers list.</summary>
 		/// <param name="layerStateName">Layer state name to update.</param>
 		public void Update(string layerStateName)
 		{
@@ -151,10 +137,8 @@ namespace netDxf.Collections
 			}
 		}
 
-		/// <summary>
-		/// Imports a layer state from a LAS file.
-		/// </summary>
-		/// <param name="file">LAS file to import.</param>
+		/// <summary>Imports a layer state from a <b>LAS</b> file.</summary>
+		/// <param name="file"><b>LAS</b> file to import.</param>
 		/// <param name="overwrite">Defines if the imported layer state will overwrite any existing one with the same name.</param>
 		public void Import(string file, bool overwrite)
 		{
@@ -180,10 +164,8 @@ namespace netDxf.Collections
 			this.Restore(ls.Name);
 		}
 
-		/// <summary>
-		/// Exports a layer state to a LAS file.
-		/// </summary>
-		/// <param name="file">LAS file to export.</param>
+		/// <summary>Exports a layer state to a <b>LAS</b> file.</summary>
+		/// <param name="file"><b>LAS</b> file to export.</param>
 		/// <param name="layerStateName">Layer state name to export.</param>
 		public void Export(string file, string layerStateName)
 		{
@@ -196,9 +178,7 @@ namespace netDxf.Collections
 			ls.Save(file);
 		}
 
-		/// <summary>
-		/// Removes all layers states.
-		/// </summary>
+		/// <summary>Removes all layers states.</summary>
 		public void RemoveAll()
 		{
 			string[] names = new string[this.Names.Count];
@@ -213,15 +193,7 @@ namespace netDxf.Collections
 
 		#region overrrides
 
-		/// <summary>
-		/// Adds a LayerState to the list.
-		/// </summary>
-		/// <param name="layerState"><see cref="LayerState">LayerState</see> to add to the list.</param>
-		/// <param name="assignHandle">Specifies if a handle needs to be generated for the layerState parameter.</param>
-		/// <returns>
-		/// If a LayerState already exists with the same name as the instance that is being added the method returns the existing LayerState,
-		/// if not it will return the new LayerState.
-		/// </returns>
+		/// <inheritdoc/>
 		internal override LayerState Add(LayerState layerState, bool assignHandle)
 		{
 			if (layerState == null)
@@ -266,23 +238,12 @@ namespace netDxf.Collections
 			return layerState;
 		}
 
-		/// <summary>
-		/// Removes a LayerState.
-		/// </summary>
-		/// <param name="name"><see cref="LayerState">LayerState</see> name to remove from the document.</param>
-		/// <returns>True if the LayerState has been successfully removed, or false otherwise.</returns>
-		/// <remarks>Reserved LayerState or any other referenced by objects cannot be removed.</remarks>
+		/// <inheritdoc/>
 		public override bool Remove(string name)
 		{
 			return this.Remove(this[name]);
 		}
-
-		/// <summary>
-		/// Removes a LayerState.
-		/// </summary>
-		/// <param name="item"><see cref="LayerState">LayerState</see> to remove from the document.</param>
-		/// <returns>True if the LayerState has been successfully removed, or false otherwise.</returns>
-		/// <remarks>Reserved LayerState or any other referenced by objects cannot be removed.</remarks>
+		/// <inheritdoc/>
 		public override bool Remove(LayerState item)
 		{
 			if (item == null)

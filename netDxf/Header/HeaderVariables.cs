@@ -32,9 +32,7 @@ using netDxf.Units;
 
 namespace netDxf.Header
 {
-	/// <summary>
-	/// Represents the header variables of a DXF document.
-	/// </summary>
+	/// <summary>Represents the header variables of a <b>DXF</b> document.</summary>
 	public class HeaderVariables
 	{
 		#region private fields
@@ -47,10 +45,8 @@ namespace netDxf.Header
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of the <c>SystemVariables</c>.
-		/// </summary>
-		/// <remarks>The default values are the same ones that are apply to a new AutoCad drawing.</remarks>
+		/// <summary>Initializes a new instance of the class.</summary>
+		/// <remarks>The default values are the same ones that are apply to a new <b>AutoCAD</b> drawing.</remarks>
 		public HeaderVariables()
 		{
 			this.variables = new Dictionary<string, HeaderVariable>(StringComparer.OrdinalIgnoreCase)
@@ -105,11 +101,9 @@ namespace netDxf.Header
 
 		#region public properties
 
-		/// <summary>
-		/// The AutoCAD drawing database version number.
-		/// </summary>
-		/// <remarks>Only AutoCad2000 and higher DXF versions are supported.</remarks>
-		/// <exception cref="NotSupportedException">Only AutoCad2000 and higher DXF versions are supported.</exception>
+		/// <summary>The <b>AutoCAD</b> drawing database version number.</summary>
+		/// <remarks>Only <b>AutoCad2000</b>AutoCad2000 and higher <b>DXF</b> versions are supported.</remarks>
+		/// <exception cref="NotSupportedException">Only <b>AutoCad2000</b> and higher <b>DXF</b> versions are supported.</exception>
 		public DxfVersion AcadVer
 		{
 			get { return (DxfVersion)this.variables[HeaderVariableCode.AcadVer].Value; }
@@ -123,18 +117,14 @@ namespace netDxf.Header
 			}
 		}
 
-		/// <summary>
-		/// Next available handle.
-		/// </summary>
+		/// <summary>Next available handle.</summary>
 		public string HandleSeed
 		{
 			get { return (string)this.variables[HeaderVariableCode.HandleSeed].Value; }
 			internal set { this.variables[HeaderVariableCode.HandleSeed].Value = value; }
 		}
 
-		/// <summary>
-		/// Angle 0 base.
-		/// </summary>
+		/// <summary>Angle 0 base.</summary>
 		/// <remarks>Default value: 0.</remarks>
 		public double Angbase
 		{
@@ -142,9 +132,7 @@ namespace netDxf.Header
 			internal set { this.variables[HeaderVariableCode.Angbase].Value = value; }
 		}
 
-		/// <summary>
-		/// The angle direction.
-		/// </summary>
+		/// <summary>The angle direction.</summary>
 		/// <remarks>Default value: CCW.</remarks>
 		public AngleDirection Angdir
 		{
@@ -152,9 +140,7 @@ namespace netDxf.Header
 			internal set { this.variables[HeaderVariableCode.Angdir].Value = value; }
 		}
 
-		/// <summary>
-		/// Attribute visibility.
-		/// </summary>
+		/// <summary>Attribute visibility.</summary>
 		/// <remarks>Default value: Normal.</remarks>
 		public AttMode AttMode
 		{
@@ -162,9 +148,7 @@ namespace netDxf.Header
 			set { this.variables[HeaderVariableCode.AttMode].Value = value; }
 		}
 
-		/// <summary>
-		/// Units format for angles.
-		/// </summary>
+		/// <summary>Units format for angles.</summary>
 		/// <remarks>Default value: Decimal degrees.</remarks>
 		public AngleUnitType AUnits
 		{
@@ -172,9 +156,7 @@ namespace netDxf.Header
 			set { this.variables[HeaderVariableCode.AUnits].Value = value; }
 		}
 
-		/// <summary>
-		/// Units precision for angles.
-		/// </summary>
+		/// <summary>Units precision for angles.</summary>
 		/// <remarks>Valid values are integers from 0 to 8. Default value: 0.</remarks>
 		public short AUprec
 		{
@@ -189,10 +171,8 @@ namespace netDxf.Header
 			}
 		}
 
-		/// <summary>
-		/// Current entity color.
-		/// </summary>
-		/// <remarks>Default value: 256 (ByLayer). This header variable only supports indexed colors.</remarks>
+		/// <summary>Current entity color.</summary>
+		/// <remarks>Default value: 256 (<b>ByLayer</b>). This header variable only supports indexed colors.</remarks>
 		public AciColor CeColor
 		{
 			get { return (AciColor)this.variables[HeaderVariableCode.CeColor].Value; }
@@ -206,9 +186,7 @@ namespace netDxf.Header
 			}
 		}
 
-		/// <summary>
-		/// Current entity line type scale.
-		/// </summary>
+		/// <summary>Current entity line type scale.</summary>
 		/// <remarks>Default value: 1.0.</remarks>
 		public double CeLtScale
 		{
@@ -223,9 +201,7 @@ namespace netDxf.Header
 			}
 		}
 
-		/// <summary>
-		/// Current entity line weight.
-		/// </summary>
+		/// <summary>Current entity line weight.</summary>
 		/// <remarks>Default value: -1 (ByLayer).</remarks>
 		public Lineweight CeLweight
 		{
@@ -233,9 +209,7 @@ namespace netDxf.Header
 			set { this.variables[HeaderVariableCode.CeLweight].Value = value; }
 		}
 
-		/// <summary>
-		/// Current entity line type name.
-		/// </summary>
+		/// <summary>Current entity line type name.</summary>
 		/// <remarks>Default value: ByLayer.</remarks>
 		public string CeLtype
 		{
@@ -250,9 +224,7 @@ namespace netDxf.Header
 			}
 		}
 
-		/// <summary>
-		/// Current layer name.
-		/// </summary>
+		/// <summary>Current layer name.</summary>
 		/// <remarks>Default value: 0.</remarks>
 		public string CLayer
 		{
@@ -267,9 +239,7 @@ namespace netDxf.Header
 			}
 		}
 
-		/// <summary>
-		/// Current multiline justification.
-		/// </summary>
+		/// <summary>Current multiline justification.</summary>
 		/// <remarks>Default value: 0 (Top).</remarks>
 		public MLineJustification CMLJust
 		{
@@ -277,9 +247,7 @@ namespace netDxf.Header
 			set { this.variables[HeaderVariableCode.CMLJust].Value = value; }
 		}
 
-		/// <summary>
-		/// Current multiline scale.
-		/// </summary>
+		/// <summary>Current multiline scale.</summary>
 		/// <remarks>Default value: 20.</remarks>
 		public double CMLScale
 		{
@@ -287,9 +255,7 @@ namespace netDxf.Header
 			set { this.variables[HeaderVariableCode.CMLScale].Value = value; }
 		}
 
-		/// <summary>
-		/// Current multiline style.
-		/// </summary>
+		/// <summary>Current multiline style.</summary>
 		/// <remarks>Default value: Standard.</remarks>
 		public string CMLStyle
 		{
@@ -304,9 +270,7 @@ namespace netDxf.Header
 			}
 		}
 
-		/// <summary>
-		/// Current dimension style.
-		/// </summary>
+		/// <summary>Current dimension style.</summary>
 		/// <remarks>Default value: Standard.</remarks>
 		public string DimStyle
 		{
@@ -321,9 +285,7 @@ namespace netDxf.Header
 			}
 		}
 
-		/// <summary>
-		/// Default text height.
-		/// </summary>
+		/// <summary>Default text height.</summary>
 		/// <remarks>Default value: 2.5.</remarks>
 		public double TextSize
 		{
@@ -338,9 +300,7 @@ namespace netDxf.Header
 			}
 		}
 
-		/// <summary>
-		/// Current text style.
-		/// </summary>
+		/// <summary>Current text style.</summary>
 		/// <remarks>Default value: Standard.</remarks>
 		public string TextStyle
 		{
@@ -355,12 +315,10 @@ namespace netDxf.Header
 			}
 		}
 
-		/// <summary>
-		/// Units format for coordinates and distances.
-		/// </summary>
+		/// <summary>Units format for coordinates and distances.</summary>
 		/// <remarks>
 		/// Default value: Decimal.<br />
-		/// If the LUnits is set to Architectural or Engineering the InsUnits variable will be set to Inches automatically.
+		/// If the LUnits is set to <see cref="LinearUnitType.Architectural"/> or <see cref="LinearUnitType.Engineering"/> the InsUnits variable will be set to Inches automatically.
 		/// </remarks>
 		public LinearUnitType LUnits
 		{
@@ -375,9 +333,7 @@ namespace netDxf.Header
 			}
 		}
 
-		/// <summary>
-		/// Units precision for coordinates and distances.
-		/// </summary>
+		/// <summary>Units precision for coordinates and distances.</summary>
 		/// <remarks>Valid values are integers from 0 to 8. Default value: 4.</remarks>
 		public short LUprec
 		{
@@ -392,28 +348,24 @@ namespace netDxf.Header
 			}
 		}
 
-		/// <summary>
-		/// Drawing code page; set to the system code page when a new drawing is created, but not otherwise maintained by AutoCAD.
-		/// </summary>
+		/// <summary>Drawing code page; set to the system code page when a new drawing is created, but not otherwise maintained by AutoCAD.</summary>
 		public string DwgCodePage
 		{
 			get { return (string)this.variables[HeaderVariableCode.DwgCodePage].Value; }
 			internal set { this.variables[HeaderVariableCode.DwgCodePage].Value = value; }
 		}
 
-		/// <summary>
-		/// Controls symbol table naming.
-		/// </summary>
+		/// <summary>Controls symbol table naming.</summary>
 		/// <remarks>
 		/// Default value: 1.<br />
 		/// Controls symbol table naming:<br />
 		/// 0 = Release 14 compatibility. Limits names to 31 characters in length.<br />
 		/// Names can include the letters A to Z, the numerals 0 to 9,
 		/// and the special characters dollar sign ($), underscore (_), and hyphen (-).<br />
-		/// 1 = AutoCAD 2000.<br />
+		/// 1 = <b>AutoCAD</b> 2000.<br />
 		/// Names can be up to 255 characters in length,
 		/// and can include the letters A to Z, the numerals 0 to 9, spaces,
-		/// and any special characters not used for other purposes by Microsoft Windows and AutoCAD.
+		/// and any special characters not used for other purposes by Microsoft Windows and <b>AutoCAD</b>.
 		/// </remarks>
 		public bool Extnames
 		{
@@ -421,9 +373,7 @@ namespace netDxf.Header
 			internal set { this.variables[HeaderVariableCode.Extnames].Value = value; }
 		}
 
-		/// <summary>
-		/// Insertion base point for the current drawing.
-		/// </summary>
+		/// <summary>Insertion base point for the current drawing.</summary>
 		/// <remarks>
 		/// When you insert or externally reference the current drawing into other drawings, this base point is used as the insertion base point.
 		/// </remarks>
@@ -433,12 +383,10 @@ namespace netDxf.Header
 			set { this.variables[HeaderVariableCode.InsBase].Value = value; }
 		}
 
-		/// <summary>
-		/// Specifies a drawing units value for automatic scaling of blocks, images, or xRefs when inserted or attached to a drawing.
-		/// </summary>
+		/// <summary>Specifies a drawing units value for automatic scaling of blocks, images, or xRefs when inserted or attached to a drawing.</summary>
 		/// <remarks>
 		/// Default value: Unitless.<br />
-		/// It is not recommend to change this value, if the LUnits variable has been set to Architectural or Engineering, they require the InsUnits to be set at Inches.
+		/// It is not recommend to change this value, if the LUnits variable has been set to <see cref="LinearUnitType.Architectural"/> or <see cref="LinearUnitType.Engineering"/>, they require the InsUnits to be set at Inches.
 		/// </remarks>
 		public DrawingUnits InsUnits
 		{
@@ -446,12 +394,10 @@ namespace netDxf.Header
 			set { this.variables[HeaderVariableCode.InsUnits].Value = value; }
 		}
 
-		/// <summary>
-		/// User name that saved the file.
-		/// </summary>
+		/// <summary>User name that saved the file.</summary>
 		/// <remarks>
 		/// By default it uses the user name of the person who is currently logged on to the Windows operating system.<br />
-		/// This header variable is not compatible with AutoCad2000 or lower versions.
+		/// This header variable is not compatible with <b>AutoCad2000</b> or lower versions.
 		/// </remarks>
 		public string LastSavedBy
 		{
@@ -459,9 +405,7 @@ namespace netDxf.Header
 			set { this.variables[HeaderVariableCode.LastSavedBy].Value = value; }
 		}
 
-		/// <summary>
-		/// Global line type scale.
-		/// </summary>
+		/// <summary>Global line type scale.</summary>
 		/// <remarks>Default value: 1.0.</remarks>
 		public double LtScale
 		{
@@ -476,13 +420,11 @@ namespace netDxf.Header
 			}
 		}
 
-		/// <summary>
-		/// Controls the display of line weights on the Model or Layout tab.
-		/// </summary>
+		/// <summary>Controls the display of line weights on the Model or Layout tab.</summary>
 		/// <remarks>
-		/// Default value: false.<br />
-		/// false = Line weight is not displayed.<br />
-		/// true = Line weight is displayed.<br />
+		/// Default value: <see langword="false"/>.<br />
+		/// <see langword="false"/> = Line weight is not displayed.<br />
+		/// <see langword="true"/> = Line weight is displayed.<br />
 		/// </remarks>
 		public bool LwDisplay
 		{
@@ -490,18 +432,14 @@ namespace netDxf.Header
 			set { this.variables[HeaderVariableCode.LwDisplay].Value = value; }
 		}
 
-		/// <summary>
-		/// Controls if the text will be mirrored during a symmetry.
-		/// </summary>
+		/// <summary>Controls if the text will be mirrored during a symmetry.</summary>
 		public bool MirrText
 		{
 			get { return (bool)this.variables[HeaderVariableCode.MirrText].Value; }
 			set { this.variables[HeaderVariableCode.MirrText].Value = value; }
 		}
 
-		/// <summary>
-		/// Controls the <see cref="PointShape">shape</see> to draw a point entity.
-		/// </summary>
+		/// <summary>Controls the <see cref="PointShape">shape</see> to draw a point entity.</summary>
 		/// <remarks>Default value: PointShape.Dot.</remarks>
 		public PointShape PdMode
 		{
@@ -509,13 +447,11 @@ namespace netDxf.Header
 			set { this.variables[HeaderVariableCode.PdMode].Value = value; }
 		}
 
-		/// <summary>
-		/// Controls the size of the point figures, except for PDMODE values 0 (Dot) and 1 (Empty).
-		/// </summary>
+		/// <summary>Controls the size of the point figures, except for <b>PDMODE</b> values 0 (Dot) and 1 (Empty).</summary>
 		/// <remarks>
 		/// Default value: 0.<br />
 		/// A setting of 0 generates the point at 5 percent of the drawing area height.<br />
-		/// A positive PDSIZE value specifies an absolute size for the point figures.<br />
+		/// A positive <b>PDSIZE</b> value specifies an absolute size for the point figures.<br />
 		/// A negative value is interpreted as a percentage of the viewport size. <br />
 		/// </remarks>
 		public double PdSize
@@ -524,9 +460,7 @@ namespace netDxf.Header
 			set { this.variables[HeaderVariableCode.PdSize].Value = value; }
 		}
 
-		/// <summary>
-		/// Governs the generation of line type patterns around the vertexes of a 2D polyline.
-		/// </summary>
+		/// <summary>Governs the generation of line type patterns around the vertexes of a 2D polyline.</summary>
 		/// <remarks>
 		/// Default value: 0.<br />
 		/// 1 = Line type is generated in a continuous pattern around vertexes of the polyline.<br />
@@ -545,9 +479,7 @@ namespace netDxf.Header
 			}
 		}
 
-		/// <summary>
-		/// Controls paper space line type scaling.
-		/// </summary>
+		/// <summary>Controls paper space line type scaling.</summary>
 		/// <remarks>
 		/// Default value: 1.<br />
 		/// 1 = No special line type scaling.<br />
@@ -566,12 +498,10 @@ namespace netDxf.Header
 			}
 		}
 
-		/// <summary>
-		/// Defines number of line segments generated for smoothed polylines.
-		/// </summary>
+		/// <summary>Defines number of line segments generated for smoothed polylines.</summary>
 		/// <remarks>
 		/// Accepted values must be greater than 0. Default value: 6.<br />
-		/// Even thought AutoCad accepts negative values for the SplineSegs header values only positive ones are supported.
+		/// Even thought <b>AutoCAD</b> accepts negative values for the SplineSegs header values only positive ones are supported.
 		/// </remarks>
 		public short SplineSegs
 		{
@@ -586,12 +516,10 @@ namespace netDxf.Header
 			}
 		}
 
-		/// <summary>
-		/// Define the number of segments generated for smoothed polygon meshes in U direction (local X axis).
-		/// </summary>
+		/// <summary>Define the number of segments generated for smoothed polygon meshes in U direction (local X axis).</summary>
 		/// <remarks>
 		/// Accepted value range from 0 to 200. Default value: 6.<br />
-		/// Although in AutoCAD the header variable SurfU accepts values less than 2, the minimum vertexes generated is 3 equivalent to a SurfV value of 2.
+		/// Although in <b>AutoCAD</b> the header variable SurfU accepts values less than 2, the minimum vertexes generated is 3 equivalent to a SurfV value of 2.
 		/// </remarks>
 		public short SurfU
 		{
@@ -606,12 +534,10 @@ namespace netDxf.Header
 			}
 		}
 
-		/// <summary>
-		/// Define the number of segments generated for smoothed polygon meshes in V direction (local Y axis).
-		/// </summary>
+		/// <summary>Define the number of segments generated for smoothed polygon meshes in V direction (local Y axis).</summary>
 		/// <remarks>
 		/// Accepted value range from 0 to 200. Default value: 6.<br />
-		/// Although in AutoCAD the header variable SurfV accepts values less than 2, the minimum vertexes generated is 3 equivalent to a SurfV value of 2.
+		/// Although in <b>AutoCAD</b> the header variable SurfV accepts values less than 2, the minimum vertexes generated is 3 equivalent to a SurfV value of 2.
 		/// </remarks>
 		public short SurfV
 		{
@@ -626,9 +552,7 @@ namespace netDxf.Header
 			}
 		}
 
-		/// <summary>
-		/// Local date/time of drawing creation.
-		/// </summary>
+		/// <summary>Local date/time of drawing creation.</summary>
 		/// <remarks>
 		/// This date/time is local to the time zone where the file was created.
 		/// </remarks>
@@ -638,18 +562,14 @@ namespace netDxf.Header
 			set { this.variables[HeaderVariableCode.TdCreate].Value = value; }
 		}
 
-		/// <summary>
-		/// Universal date/time the drawing was created.
-		/// </summary>
+		/// <summary>Universal date/time the drawing was created.</summary>
 		public DateTime TduCreate
 		{
 			get { return (DateTime)this.variables[HeaderVariableCode.TduCreate].Value; }
 			set { this.variables[HeaderVariableCode.TduCreate].Value = value; }
 		}
 
-		/// <summary>
-		/// Local date/time of last drawing update.
-		/// </summary>
+		/// <summary>Local date/time of last drawing update.</summary>
 		/// <remarks>This date/time is local to the time zone where the file was created.</remarks>
 		public DateTime TdUpdate
 		{
@@ -657,27 +577,21 @@ namespace netDxf.Header
 			set { this.variables[HeaderVariableCode.TdUpdate].Value = value; }
 		}
 
-		/// <summary>
-		/// Universal date/time the drawing was created.
-		/// </summary>
+		/// <summary>Universal date/time the drawing was created.</summary>
 		public DateTime TduUpdate
 		{
 			get { return (DateTime)this.variables[HeaderVariableCode.TduUpdate].Value; }
 			set { this.variables[HeaderVariableCode.TduUpdate].Value = value; }
 		}
 
-		/// <summary>
-		/// Cumulative editing time for this drawing.
-		/// </summary>
+		/// <summary>Cumulative editing time for this drawing.</summary>
 		public TimeSpan TdinDwg
 		{
 			get { return (TimeSpan)this.variables[HeaderVariableCode.TdinDwg].Value; }
 			set { this.variables[HeaderVariableCode.TdinDwg].Value = value; }
 		}
 
-		/// <summary>
-		/// Gets ore sets the current/active UCS of the drawing.
-		/// </summary>
+		/// <summary>Gets ore sets the current/active <b>UCS</b> of the drawing.</summary>
 		/// <remarks>
 		/// This field encapsulates the three drawing variables UcsOrg, UcsXDir, and UcsYDir.
 		/// </remarks>
@@ -691,45 +605,35 @@ namespace netDxf.Header
 
 		#region public methods
 
-		/// <summary>
-		/// Gets a collection of the known header variables.
-		/// </summary>
+		/// <summary>Gets a collection of the known header variables.</summary>
 		/// <returns>A list with the known header variables.</returns>
 		public List<HeaderVariable> KnownValues()
 		{
 			return new List<HeaderVariable>(this.variables.Values);
 		}
 
-		/// <summary>
-		/// Gets a collection of the known header variables names.
-		/// </summary>
+		/// <summary>Gets a collection of the known header variables names.</summary>
 		/// <returns>A list with the known header variables names.</returns>
 		public List<string> KnownNames()
 		{
 			return new List<string>(this.variables.Keys);
 		}
 
-		/// <summary>
-		/// Gets a collection of the custom header variables.
-		/// </summary>
+		/// <summary>Gets a collection of the custom header variables.</summary>
 		/// <returns>A list with the custom header variables.</returns>
 		public List<HeaderVariable> CustomValues()
 		{
 			return new List<HeaderVariable>(this.customVariables.Values);
 		}
 
-		/// <summary>
-		/// Gets a collection of the custom header variables names.
-		/// </summary>
+		/// <summary>Gets a collection of the custom header variables names.</summary>
 		/// <returns>A list with the custom header variables names.</returns>
 		public List<string> CustomNames()
 		{
 			return new List<string>(this.customVariables.Keys);
 		}
 
-		/// <summary>
-		/// Adds a custom <see cref="HeaderVariable">HeaderVariable</see> to the list.
-		/// </summary>
+		/// <summary>Adds a custom <see cref="HeaderVariable"/> to the list.</summary>
 		/// <param name="variable">Header variable to add to the list.</param>
 		/// <remarks>
 		/// All header variable names must start with the character '$'.<br />
@@ -755,11 +659,9 @@ namespace netDxf.Header
 			this.customVariables.Add(variable.Name, variable);
 		}
 
-		/// <summary>
-		/// Checks if a custom <see cref="HeaderVariable">HeaderVariable</see> name exits in the list.
-		/// </summary>
+		/// <summary>Checks if a custom <see cref="HeaderVariable"/> name exits in the list.</summary>
 		/// <param name="name">Header variable name.</param>
-		/// <returns>True if a header variable name exits in the list; otherwise, false.</returns>
+		/// <returns><see langword="true"/> if a header variable name exits in the list; otherwise, <see langword="false"/>.</returns>
 		/// <remarks>The header variable name is case insensitive.</remarks>
 		public bool ContainsCustomVariable(string name)
 		{
@@ -768,27 +670,23 @@ namespace netDxf.Header
 
 		/// <summary>Gets the header variable associated with the specified name.</summary>
 		/// <param name="name">The name of the header variable to get.</param>
-		/// <param name="variable">When this method returns, contains the header variable associated with the specified name, if the name is found; otherwise, it contains null.</param>
-		/// <returns>True if the list contains a header variable with the specified name; otherwise, false.</returns>
+		/// <param name="variable">When this method returns, contains the header variable associated with the specified name, if the name is found; otherwise, it contains <see langword="null"/>.</param>
+		/// <returns><see langword="true"/> if the list contains a header variable with the specified name; otherwise, <see langword="false"/>.</returns>
 		public bool TryGetCustomVariable(string name, out HeaderVariable variable)
 		{
 			return this.customVariables.TryGetValue(name, out variable);
 		}
 
-		/// <summary>
-		/// Removes a custom <see cref="HeaderVariable">HeaderVariable</see> from the list.
-		/// </summary>
+		/// <summary>Removes a custom <see cref="HeaderVariable"/> from the list.</summary>
 		/// <param name="name">Header variable to add to the list.</param>
-		/// <returns>True if the element is successfully found and removed; otherwise, false.</returns>
+		/// <returns><see langword="true"/> if the element is successfully found and removed; otherwise, <see langword="false"/>.</returns>
 		/// <remarks>The header variable name is case insensitive.</remarks>
 		public bool RemoveCustomVariable(string name)
 		{
 			return this.customVariables.Remove(name);
 		}
 
-		/// <summary>
-		/// Removes all custom <see cref="HeaderVariable">HeaderVariable</see> from the list.
-		/// </summary>
+		/// <summary>Removes all custom <see cref="HeaderVariable"/> from the list.</summary>
 		public void ClearCustomVariables()
 		{
 			this.customVariables.Clear();

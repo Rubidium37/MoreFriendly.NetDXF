@@ -32,9 +32,7 @@ using netDxf.Tables;
 
 namespace netDxf.Collections
 {
-	/// <summary>
-	/// Represents a collection of blocks.
-	/// </summary>
+	/// <summary>Represents a collection of blocks.</summary>
 	public sealed class BlockRecords :
 		TableObjects<Block>
 	{
@@ -54,15 +52,7 @@ namespace netDxf.Collections
 
 		#region override methods
 
-		/// <summary>
-		/// Adds a block to the list.
-		/// </summary>
-		/// <param name="block"><see cref="Block">Block</see> to add to the list.</param>
-		/// <param name="assignHandle">Specifies if a handle needs to be generated for the block parameter.</param>
-		/// <returns>
-		/// If a block already exists with the same name as the instance that is being added the method returns the existing block,
-		/// if not it will return the new block.
-		/// </returns>
+		/// <inheritdoc/>
 		internal override Block Add(Block block, bool assignHandle)
 		{
 			if (block == null)
@@ -114,23 +104,13 @@ namespace netDxf.Collections
 			return block;
 		}
 
-		/// <summary>
-		/// Removes a block.
-		/// </summary>
-		/// <param name="name"><see cref="Block">Block</see> name to remove from the document.</param>
-		/// <returns>True if the block has been successfully removed, or false otherwise.</returns>
-		/// <remarks>Reserved blocks or any other referenced by objects cannot be removed.</remarks>
+		/// <inheritdoc/>
 		public override bool Remove(string name)
 		{
 			return this.Remove(this[name]);
 		}
 
-		/// <summary>
-		/// Removes a block.
-		/// </summary>
-		/// <param name="item"><see cref="Block">Block</see> to remove from the document.</param>
-		/// <returns>True if the block has been successfully removed, or false otherwise.</returns>
-		/// <remarks>Reserved blocks or any other referenced by objects cannot be removed.</remarks>
+		/// <inheritdoc/>
 		public override bool Remove(Block item)
 		{
 			if (item == null)

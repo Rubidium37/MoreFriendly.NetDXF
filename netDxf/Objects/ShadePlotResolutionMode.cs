@@ -25,39 +25,25 @@
 
 namespace netDxf.Objects
 {
-	/// <summary>
-	/// Defines the shade plot resolution mode.
-	/// </summary>
+	/// <summary>Defines the shade plot resolution mode.</summary>
 	public enum ShadePlotResolutionMode
 	{
-		/// <summary>
-		/// Draft.
-		/// </summary>
+		/// <summary>Draft.</summary>
 		Draft = 0,
 
-		/// <summary>
-		/// Preview.
-		/// </summary>
+		/// <summary>Preview.</summary>
 		Preview = 1,
 
-		/// <summary>
-		/// Normal.
-		/// </summary>
+		/// <summary>Normal.</summary>
 		Normal = 2,
 
-		/// <summary>
-		/// Presentation.
-		/// </summary>
+		/// <summary>Presentation.</summary>
 		Presentation = 3,
 
-		/// <summary>
-		/// Maximum
-		/// </summary>
+		/// <summary>Maximum</summary>
 		Maximum = 4,
 
-		/// <summary>
-		/// Custom as specified by the shade plot DPI.
-		/// </summary>
+		/// <summary>Custom as specified by the shade plot DPI.</summary>
 		Custom = 5
 	}
 }

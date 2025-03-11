@@ -27,9 +27,7 @@ using netDxf.Tables;
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Represents a trace <see cref="EntityObject">entity</see>.
-	/// </summary>
+	/// <summary>Represents a trace <see cref="EntityObject">entity</see>.</summary>
 	/// <remarks>
 	/// The trace entity has exactly the same graphical representation as the Solid, and its functionality is exactly the same.
 	/// It is recommended to use the more common Solid entity instead.
@@ -50,20 +48,16 @@ namespace netDxf.Entities
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Trace</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		public Trace()
 			: this(Vector2.Zero, Vector2.Zero, Vector2.Zero, Vector2.Zero)
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Trace</c> class.
-		/// </summary>
-		/// <param name="firstVertex">Trace <see cref="Vector2">first vertex</see> in OCS (object coordinate system).</param>
-		/// <param name="secondVertex">Trace <see cref="Vector2">second vertex</see> in OCS (object coordinate system).</param>
-		/// <param name="thirdVertex">Trace <see cref="Vector2">third vertex</see> in OCS (object coordinate system).</param>
+		/// <summary>Initializes a new instance of the class.</summary>
+		/// <param name="firstVertex">Trace <see cref="Vector2">first vertex</see> in <b>OCS</b> (object coordinate system).</param>
+		/// <param name="secondVertex">Trace <see cref="Vector2">second vertex</see> in <b>OCS</b> (object coordinate system).</param>
+		/// <param name="thirdVertex">Trace <see cref="Vector2">third vertex</see> in <b>OCS</b> (object coordinate system).</param>
 		public Trace(Vector2 firstVertex, Vector2 secondVertex, Vector2 thirdVertex)
 			: this(new Vector2(firstVertex.X, firstVertex.Y),
 				new Vector2(secondVertex.X, secondVertex.Y),
@@ -72,13 +66,11 @@ namespace netDxf.Entities
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Trace</c> class.
-		/// </summary>
-		/// <param name="firstVertex">Trace <see cref="Vector2">first vertex</see> in OCS (object coordinate system).</param>
-		/// <param name="secondVertex">Trace <see cref="Vector2">second vertex</see> in OCS (object coordinate system).</param>
-		/// <param name="thirdVertex">Trace <see cref="Vector2">third vertex</see> in OCS (object coordinate system).</param>
-		/// <param name="fourthVertex">Trace <see cref="Vector2">fourth vertex</see> in OCS (object coordinate system).</param>
+		/// <summary>Initializes a new instance of the class.</summary>
+		/// <param name="firstVertex">Trace <see cref="Vector2">first vertex</see> in <b>OCS</b> (object coordinate system).</param>
+		/// <param name="secondVertex">Trace <see cref="Vector2">second vertex</see> in <b>OCS</b> (object coordinate system).</param>
+		/// <param name="thirdVertex">Trace <see cref="Vector2">third vertex</see> in <b>OCS</b> (object coordinate system).</param>
+		/// <param name="fourthVertex">Trace <see cref="Vector2">fourth vertex</see> in <b>OCS</b> (object coordinate system).</param>
 		public Trace(Vector2 firstVertex, Vector2 secondVertex, Vector2 thirdVertex, Vector2 fourthVertex)
 			: base(EntityType.Trace, DxfObjectCode.Trace)
 		{
@@ -94,45 +86,35 @@ namespace netDxf.Entities
 
 		#region public properties
 
-		/// <summary>
-		/// Gets or sets the first trace <see cref="Vector3">vertex in OCS (object coordinate system).</see>.
-		/// </summary>
+		/// <summary>Gets or sets the first trace <see cref="Vector3">vertex in <b>OCS</b> (object coordinate system).</see>.</summary>
 		public Vector2 FirstVertex
 		{
 			get { return this.firstVertex; }
 			set { this.firstVertex = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the second trace <see cref="Vector3">vertex in OCS (object coordinate system).</see>.
-		/// </summary>
+		/// <summary>Gets or sets the second trace <see cref="Vector3">vertex in <b>OCS</b> (object coordinate system).</see>.</summary>
 		public Vector2 SecondVertex
 		{
 			get { return this.secondVertex; }
 			set { this.secondVertex = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the third trace <see cref="Vector3">vertex in OCS (object coordinate system).</see>.
-		/// </summary>
+		/// <summary>Gets or sets the third trace <see cref="Vector3">vertex in <b>OCS</b> (object coordinate system).</see>.</summary>
 		public Vector2 ThirdVertex
 		{
 			get { return this.thirdVertex; }
 			set { this.thirdVertex = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the fourth trace <see cref="Vector3">vertex in OCS (object coordinate system).</see>.
-		/// </summary>
+		/// <summary>Gets or sets the fourth trace <see cref="Vector3">vertex in <b>OCS</b> (object coordinate system).</see>.</summary>
 		public Vector2 FourthVertex
 		{
 			get { return this.fourthVertex; }
 			set { this.fourthVertex = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the trace elevation.
-		/// </summary>
+		/// <summary>Gets or sets the trace elevation.</summary>
 		/// <remarks>This is the distance from the origin to the plane of the trace.</remarks>
 		public double Elevation
 		{
@@ -140,9 +122,7 @@ namespace netDxf.Entities
 			set { this.elevation = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the thickness of the trace.
-		/// </summary>
+		/// <summary>Gets or sets the thickness of the trace.</summary>
 		public double Thickness
 		{
 			get { return this.thickness; }
@@ -153,12 +133,7 @@ namespace netDxf.Entities
 
 		#region overrides
 
-		/// <summary>
-		/// Moves, scales, and/or rotates the current entity given a 3x3 transformation matrix and a translation vector.
-		/// </summary>
-		/// <param name="transformation">Transformation matrix.</param>
-		/// <param name="translation">Translation vector.</param>
-		/// <remarks>Matrix3 adopts the convention of using column vectors to represent a transformation matrix.</remarks>
+		/// <inheritdoc/>
 		public override void TransformBy(Matrix3 transformation, Vector3 translation)
 		{
 			Vector3 newNormal = transformation * this.Normal;
@@ -196,10 +171,7 @@ namespace netDxf.Entities
 			this.Elevation = v.Z;
 		}
 
-		/// <summary>
-		/// Creates a new Trace that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new Trace that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override object Clone()
 		{
 			Trace entity = new Trace

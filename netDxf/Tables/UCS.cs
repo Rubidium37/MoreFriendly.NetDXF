@@ -29,9 +29,7 @@ using netDxf.Collections;
 
 namespace netDxf.Tables
 {
-	/// <summary>
-	/// Represents a User Coordinate System.
-	/// </summary>
+	/// <summary>Represents a User Coordinate System.</summary>
 	public class UCS :
 		TableObject
 	{
@@ -46,9 +44,7 @@ namespace netDxf.Tables
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of the <c>UCS</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="name">User coordinate system name.</param>
 		public UCS(string name)
 			: this(name, true)
@@ -69,9 +65,7 @@ namespace netDxf.Tables
 			this.zAxis = Vector3.UnitZ;
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>UCS</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="name">User coordinate system name.</param>
 		/// <param name="origin">Origin in WCS.</param>
 		/// <param name="xDirection">X-axis direction in WCS.</param>
@@ -104,42 +98,32 @@ namespace netDxf.Tables
 
 		#region public properties
 
-		/// <summary>
-		/// Gets or sets the user coordinate system origin in WCS.
-		/// </summary>
+		/// <summary>Gets or sets the user coordinate system origin in WCS.</summary>
 		public Vector3 Origin
 		{
 			get { return this.origin; }
 			set { this.origin = value; }
 		}
 
-		/// <summary>
-		/// Gets the user coordinate system x-axis direction in WCS.
-		/// </summary>
+		/// <summary>Gets the user coordinate system x-axis direction in WCS.</summary>
 		public Vector3 XAxis
 		{
 			get { return this.xAxis; }
 		}
 
-		/// <summary>
-		/// Gets the user coordinate system y-axis direction in WCS.
-		/// </summary>
+		/// <summary>Gets the user coordinate system y-axis direction in WCS.</summary>
 		public Vector3 YAxis
 		{
 			get { return this.yAxis; }
 		}
 
-		/// <summary>
-		/// Gets the user coordinate system z-axis direction in WCS.
-		/// </summary>
+		/// <summary>Gets the user coordinate system z-axis direction in WCS.</summary>
 		public Vector3 ZAxis
 		{
 			get { return this.zAxis; }
 		}
 
-		/// <summary>
-		/// Gets the owner of the actual user coordinate system.
-		/// </summary>
+		/// <summary>Gets the owner of the actual user coordinate system.</summary>
 		public new UCSs Owner
 		{
 			get { return (UCSs)base.Owner; }
@@ -150,9 +134,7 @@ namespace netDxf.Tables
 
 		#region public methods
 
-		/// <summary>
-		/// Sets the user coordinate system x-axis and y-axis direction.
-		/// </summary>
+		/// <summary>Sets the user coordinate system x-axis and y-axis direction.</summary>
 		/// <param name="xDirection">X-axis direction in WCS.</param>
 		/// <param name="yDirection">Y-axis direction in WCS.</param>
 		public void SetAxis(Vector3 xDirection, Vector3 yDirection)
@@ -168,13 +150,11 @@ namespace netDxf.Tables
 			this.zAxis = Vector3.CrossProduct(this.xAxis, this.yAxis);
 		}
 
-		/// <summary>
-		/// Creates a new user coordinate system from the x-axis and a point on XY plane.
-		/// </summary>
+		/// <summary>Creates a new user coordinate system from the x-axis and a point on <b>XY</b> plane.</summary>
 		/// <param name="name">User coordinate system name.</param>
-		/// <param name="origin">Origin in WCS.</param>
-		/// <param name="xDirection">X-axis direction in WCS.</param>
-		/// <param name="pointOnPlaneXY">Point on the XY plane.</param>
+		/// <param name="origin">Origin in <b>WC</b>S.</param>
+		/// <param name="xDirection">X-axis direction in <b>WCS</b>.</param>
+		/// <param name="pointOnPlaneXY">Point on the <b>XY</b> plane.</param>
 		/// <returns>A new user coordinate system.</returns>
 		public static UCS FromXAxisAndPointOnXYplane(string name, Vector3 origin, Vector3 xDirection, Vector3 pointOnPlaneXY)
 		{
@@ -188,14 +168,12 @@ namespace netDxf.Tables
 			return ucs;
 		}
 
-		/// <summary>
-		/// Creates a new user coordinate system from the XY plane normal (z-axis).
-		/// </summary>
+		/// <summary>Creates a new user coordinate system from the <b>XY</b> plane normal (z-axis).</summary>
 		/// <param name="name">User coordinate system name.</param>
-		/// <param name="origin">Origin in WCS.</param>
+		/// <param name="origin">Origin in <b>WCS</b>.</param>
 		/// <param name="normal">XY plane normal (z-axis).</param>
 		/// <returns>A new user coordinate system.</returns>
-		/// <remarks>This method uses the ArbitraryAxis algorithm to obtain the user coordinate system x-axis and y-axis.</remarks>
+		/// <remarks>This method uses the <see cref="MathHelper.ArbitraryAxis"/> algorithm to obtain the user coordinate system x-axis and y-axis.</remarks>
 		public static UCS FromNormal(string name, Vector3 origin, Vector3 normal)
 		{
 			Matrix3 mat = MathHelper.ArbitraryAxis(normal);
@@ -207,15 +185,13 @@ namespace netDxf.Tables
 			return ucs;
 		}
 
-		/// <summary>
-		/// Creates a new user coordinate system from the XY plane normal (z-axis).
-		/// </summary>
+		/// <summary>Creates a new user coordinate system from the <b>XY</b> plane normal (z-axis).</summary>
 		/// <param name="name">User coordinate system name.</param>
-		/// <param name="origin">Origin in WCS.</param>
+		/// <param name="origin">Origin in <b>WCS</b>.</param>
 		/// <param name="normal">XY plane normal (z-axis).</param>
 		/// <param name="rotation">The counter-clockwise angle in radians along the normal (z-axis).</param>
 		/// <returns>A new user coordinate system.</returns>
-		/// <remarks>This method uses the ArbitraryAxis algorithm to obtain the user coordinate system x-axis and y-axis.</remarks>
+		/// <remarks>This method uses the <see cref="MathHelper.ArbitraryAxis"/> algorithm to obtain the user coordinate system x-axis and y-axis.</remarks>
 		public static UCS FromNormal(string name, Vector3 origin, Vector3 normal, double rotation)
 		{
 			Matrix3 mat = MathHelper.ArbitraryAxis(normal);
@@ -229,9 +205,7 @@ namespace netDxf.Tables
 			return ucs;
 		}
 
-		/// <summary>
-		/// Gets the user coordinate system rotation matrix.
-		/// </summary>
+		/// <summary>Gets the user coordinate system rotation matrix.</summary>
 		/// <returns>A Matrix3.</returns>
 		public Matrix3 GetTransformation()
 		{
@@ -240,9 +214,7 @@ namespace netDxf.Tables
 								this.xAxis.Z, this.yAxis.Z, this.zAxis.Z);
 		}
 
-		/// <summary>
-		/// Transforms a point between coordinate systems.
-		/// </summary>
+		/// <summary>Transforms a point between coordinate systems.</summary>
 		/// <param name="point">Point to transform.</param>
 		/// <param name="from">Points coordinate system.</param>
 		/// <param name="to">Coordinate system of the transformed points.</param>
@@ -268,9 +240,7 @@ namespace netDxf.Tables
 			}
 		}
 
-		/// <summary>
-		/// Transforms a point list between coordinate systems.
-		/// </summary>
+		/// <summary>Transforms a point list between coordinate systems.</summary>
 		/// <param name="points">Points to transform.</param>
 		/// <param name="from">Points coordinate system.</param>
 		/// <param name="to">Coordinate system of the transformed points.</param>
@@ -317,41 +287,19 @@ namespace netDxf.Tables
 
 		#region overrides
 
-		/// <summary>
-		/// Checks if this instance has been referenced by other DxfObjects.
-		/// </summary>
-		/// <returns>
-		/// Returns true if this instance has been referenced by other DxfObjects, false otherwise.
-		/// It will always return false if this instance does not belong to a document.
-		/// </returns>
-		/// <remarks>
-		/// This method returns the same value as the HasReferences method that can be found in the TableObjects class.
-		/// </remarks>
+		/// <inheritdoc/>
 		public override bool HasReferences()
 		{
 			return this.Owner != null && this.Owner.HasReferences(this.Name);
 		}
 
-		/// <summary>
-		/// Gets the list of DxfObjects referenced by this instance.
-		/// </summary>
-		/// <returns>
-		/// A list of DxfObjectReference that contains the DxfObject referenced by this instance and the number of times it does.
-		/// It will return null if this instance does not belong to a document.
-		/// </returns>
-		/// <remarks>
-		/// This method returns the same list as the GetReferences method that can be found in the TableObjects class.
-		/// </remarks>
+		/// <inheritdoc/>
 		public override List<DxfObjectReference> GetReferences()
 		{
 			return this.Owner?.GetReferences(this.Name);
 		}
 
-		/// <summary>
-		/// Creates a new UCS that is a copy of the current instance.
-		/// </summary>
-		/// <param name="newName">UCS name of the copy.</param>
-		/// <returns>A new UCS that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override TableObject Clone(string newName)
 		{
 			UCS copy = new UCS(newName)
@@ -370,10 +318,7 @@ namespace netDxf.Tables
 			return copy;
 		}
 
-		/// <summary>
-		/// Creates a new UCS that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new UCS that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override object Clone()
 		{
 			return this.Clone(this.Name);

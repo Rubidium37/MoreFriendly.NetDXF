@@ -27,9 +27,7 @@ using System;
 
 namespace netDxf.Collections
 {
-	/// <summary>
-	/// Represents the arguments thrown by the <c>ObservableCollection</c> events.
-	/// </summary>
+	/// <summary>Represents the arguments thrown by the <see cref="ObservableCollection{T}"/> events.</summary>
 	/// <typeparam name="T">Type of items.</typeparam>
 	public class ObservableCollectionEventArgs<T> :
 		EventArgs
@@ -43,9 +41,7 @@ namespace netDxf.Collections
 
 		#region constructor
 
-		/// <summary>
-		/// Initializes a new instance of <c>ObservableCollectionEventArgs</c>.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="item">Item that is being added or removed from the collection.</param>
 		public ObservableCollectionEventArgs(T item)
 		{
@@ -57,18 +53,14 @@ namespace netDxf.Collections
 
 		#region public properties
 
-		/// <summary>
-		/// Get the item that is being added or removed from the collection.
-		/// </summary>
+		/// <summary>Get the item that is being added or removed from the collection.</summary>
 		public T Item
 		{
 			get { return this.item; }
 		}
 
-		/// <summary>
-		/// Gets or sets if the operation must be canceled.
-		/// </summary>
-		/// <remarks>This property is used by the OnBeforeAdd and OnBeforeRemove events to cancel the add or remove operation.</remarks>
+		/// <summary>Gets or sets if the operation must be canceled.</summary>
+		/// <remarks>This property is used by the <see cref="ObservableCollection{T}.BeforeAddItem"/> and <see cref="ObservableCollection{T}.BeforeRemoveItem"/> events to cancel the add or remove operation.</remarks>
 		public bool Cancel
 		{
 			get { return this.cancel; }

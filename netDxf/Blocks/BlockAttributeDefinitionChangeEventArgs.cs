@@ -28,9 +28,7 @@ using netDxf.Entities;
 
 namespace netDxf.Blocks
 {
-	/// <summary>
-	/// Represents the arguments thrown when an attribute definition is added ore removed from a <see cref="Block">Block</see>.
-	/// </summary>
+	/// <summary>Represents the arguments thrown when an attribute definition is added ore removed from a <see cref="Block"/>.</summary>
 	public class BlockAttributeDefinitionChangeEventArgs :
 		EventArgs
 	{
@@ -42,9 +40,7 @@ namespace netDxf.Blocks
 
 		#region constructor
 
-		/// <summary>
-		/// Initializes a new instance of <c>BlockAttributeDefinitionChangeEventArgs</c>.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="item">The attribute definition that is being added or removed from the block.</param>
 		public BlockAttributeDefinitionChangeEventArgs(AttributeDefinition item)
 		{
@@ -55,9 +51,7 @@ namespace netDxf.Blocks
 
 		#region public properties
 
-		/// <summary>
-		/// Gets the attribute definition that is being added or removed.
-		/// </summary>
+		/// <summary>Gets the attribute definition that is being added or removed.</summary>
 		public AttributeDefinition Item
 		{
 			get { return this.item; }

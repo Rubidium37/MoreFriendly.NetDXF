@@ -27,48 +27,32 @@ using System;
 
 namespace netDxf.Objects
 {
-	/// <summary>
-	/// Layer properties flags.
-	/// </summary>
+	/// <summary>Layer properties flags.</summary>
 	[Flags]
 	public enum LayerPropertiesFlags
 	{
-		/// <summary>
-		/// No flags equivalent to layer On / Thawed / Unlocked / No Plot / No NewVpFreeze / No VpFreeze.
-		/// </summary>
+		/// <summary>No flags equivalent to layer On / Thawed / Unlocked / No Plot / No NewVpFreeze / No VpFreeze.</summary>
 		None = 0,
 
-		/// <summary>
-		/// Layer visibility flag On/Off.
-		/// </summary>
+		/// <summary>Layer visibility flag On/Off.</summary>
 		Hidden = 1,
 
-		/// <summary>
-		/// Layer freeze flag Frozen/Thawed.
-		/// </summary>
+		/// <summary>Layer freeze flag Frozen/Thawed.</summary>
 		Frozen = 2,
 
-		/// <summary>
-		/// Layer lock flag Locked/Unlocked.
-		/// </summary>
+		/// <summary>Layer lock flag Locked/Unlocked.</summary>
 		Locked = 4,
 
-		/// <summary>
-		/// Layer plot flag Plot/NoPlot.
-		/// </summary>
+		/// <summary>Layer plot flag Plot/NoPlot.</summary>
 		Plot = 8,
 
-		/// <summary>
-		/// Freeze layer in newly created viewports.
-		/// </summary>
+		/// <summary>Freeze layer in newly created viewports.</summary>
 		/// <remarks>
 		/// Not currently implemented. To freeze a layer in a viewport add it to its FrozenLayers list.
 		/// </remarks>
 		NewVpFrozen = 16,
 
-		/// <summary>
-		/// Freeze layer in current viewport.
-		/// </summary>
+		/// <summary>Freeze layer in current viewport.</summary>
 		/// <remarks>
 		/// Not currently implemented. To freeze a layer in a viewport add it to its FrozenLayers list.
 		/// </remarks>

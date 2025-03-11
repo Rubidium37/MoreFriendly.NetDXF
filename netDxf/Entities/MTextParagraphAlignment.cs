@@ -25,39 +25,25 @@
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Paragraph text horizontal alignment.
-	/// </summary>
+	/// <summary>Paragraph text horizontal alignment.</summary>
 	public enum MTextParagraphAlignment
 	{
-		/// <summary>
-		/// Default
-		/// </summary>
+		/// <summary>Default</summary>
 		Default = 0,
 
-		/// <summary>
-		/// Left.
-		/// </summary>
+		/// <summary>Left.</summary>
 		Left = 1,
 
-		/// <summary>
-		/// Center.
-		/// </summary>
+		/// <summary>Center.</summary>
 		Center = 2,
 
-		/// <summary>
-		/// Right.
-		/// </summary>
+		/// <summary>Right.</summary>
 		Right = 3,
 
-		/// <summary>
-		/// Justified.
-		/// </summary>
+		/// <summary>Justified.</summary>
 		Justified = 4,
 
-		/// <summary>
-		/// Distribute.
-		/// </summary>
+		/// <summary>Distribute.</summary>
 		Distribute = 5
 	}
 }

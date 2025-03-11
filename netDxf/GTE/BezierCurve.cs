@@ -129,6 +129,7 @@ namespace netDxf.GTE
 		// output array 'jet' must have enough storage to support the maximum
 		// order.  The values are ordered as: position, first derivative,
 		// second derivative, third derivative.
+		/// <inheritdoc/>
 		public override void Evaluate(double t, int order, out Vector3[] jet)
 		{
 			const int supOrder = SUP_ORDER;

@@ -30,9 +30,7 @@ using netDxf.Tables;
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Represents a radial dimension <see cref="EntityObject">entity</see>.
-	/// </summary>
+	/// <summary>Represents a radial dimension <see cref="EntityObject">entity</see>.</summary>
 	public class RadialDimension :
 		Dimension
 	{
@@ -45,18 +43,14 @@ namespace netDxf.Entities
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of the <c>RadialDimension</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		public RadialDimension()
 			: this(Vector2.Zero, Vector2.UnitX, DimensionStyle.Default)
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>RadialDimension</c> class.
-		/// </summary>
-		/// <param name="arc"><see cref="Arc">Arc</see> to measure.</param>
+		/// <summary>Initializes a new instance of the class.</summary>
+		/// <param name="arc"><see cref="Arc"/> to measure.</param>
 		/// <param name="rotation">Rotation in degrees of the dimension line.</param>
 		/// <remarks>The center point and the definition point define the distance to be measure.</remarks>
 		public RadialDimension(Arc arc, double rotation)
@@ -64,10 +58,8 @@ namespace netDxf.Entities
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>RadialDimension</c> class.
-		/// </summary>
-		/// <param name="arc"><see cref="Arc">Arc</see> to measure.</param>
+		/// <summary>Initializes a new instance of the class.</summary>
+		/// <param name="arc"><see cref="Arc"/> to measure.</param>
 		/// <param name="rotation">Rotation in degrees of the dimension line.</param>
 		/// <param name="style">The <see cref="DimensionStyle">style</see> to use with the dimension.</param>
 		/// <remarks>The center point and the definition point define the distance to be measure.</remarks>
@@ -89,10 +81,8 @@ namespace netDxf.Entities
 			this.Update();
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>RadialDimension</c> class.
-		/// </summary>
-		/// <param name="circle"><see cref="Circle">Circle</see> to measure.</param>
+		/// <summary>Initializes a new instance of the class.</summary>
+		/// <param name="circle"><see cref="Circle"/> to measure.</param>
 		/// <param name="rotation">Rotation in degrees of the dimension line.</param>
 		/// <remarks>The center point and the definition point define the distance to be measure.</remarks>
 		public RadialDimension(Circle circle, double rotation)
@@ -100,10 +90,8 @@ namespace netDxf.Entities
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>RadialDimension</c> class.
-		/// </summary>
-		/// <param name="circle"><see cref="Circle">Circle</see> to measure.</param>
+		/// <summary>Initializes a new instance of the class.</summary>
+		/// <param name="circle"><see cref="Circle"/> to measure.</param>
 		/// <param name="rotation">Rotation in degrees of the dimension line.</param>
 		/// <param name="style">The <see cref="DimensionStyle">style</see> to use with the dimension.</param>
 		/// <remarks>The center point and the definition point define the distance to be measure.</remarks>
@@ -125,9 +113,7 @@ namespace netDxf.Entities
 			this.Update();
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>RadialDimension</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="centerPoint">Center <see cref="Vector2">point</see> of the circumference.</param>
 		/// <param name="referencePoint"><see cref="Vector2">Point</see> on circle or arc.</param>
 		/// <remarks>The center point and the definition point define the distance to be measure.</remarks>
@@ -136,9 +122,7 @@ namespace netDxf.Entities
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>RadialDimension</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="centerPoint">Center <see cref="Vector2">point</see> of the circumference.</param>
 		/// <param name="referencePoint"><see cref="Vector2">Point</see> on circle or arc.</param>
 		/// <param name="style">The <see cref="DimensionStyle">style</see> to use with the dimension.</param>
@@ -161,27 +145,21 @@ namespace netDxf.Entities
 
 		#region public properties
 
-		/// <summary>
-		/// Gets or sets the center <see cref="Vector2">point</see> of the circumference in OCS (object coordinate system).
-		/// </summary>
+		/// <summary>Gets or sets the center <see cref="Vector2">point</see> of the circumference in <b>OCS</b> (object coordinate system).</summary>
 		public Vector2 CenterPoint
 		{
 			get { return this.center; }
 			set { this.center = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the <see cref="Vector2">point</see> on circumference or arc in OCS (object coordinate system).
-		/// </summary>
+		/// <summary>Gets or sets the <see cref="Vector2">point</see> on circumference or arc in <b>OCS</b> (object coordinate system).</summary>
 		public Vector2 ReferencePoint
 		{
 			get { return this.refPoint; }
 			set { this.refPoint = value; }
 		}
 
-		/// <summary>
-		/// Actual measurement.
-		/// </summary>
+		/// <inheritdoc/>
 		public override double Measurement
 		{
 			get { return Vector2.Distance(this.center, this.refPoint); }
@@ -191,9 +169,7 @@ namespace netDxf.Entities
 
 		#region public methods
 
-		/// <summary>
-		/// Calculates the reference point and dimension offset from a point along the dimension line.
-		/// </summary>
+		/// <summary>Calculates the reference point and dimension offset from a point along the dimension line.</summary>
 		/// <param name="point">Point along the dimension line.</param>
 		public void SetDimensionLinePosition(Vector2 point)
 		{
@@ -235,16 +211,7 @@ namespace netDxf.Entities
 
 		#region overrides
 
-		/// <summary>
-		/// Moves, scales, and/or rotates the current entity given a 3x3 transformation matrix and a translation vector.
-		/// </summary>
-		/// <param name="transformation">Transformation matrix.</param>
-		/// <param name="translation">Translation vector.</param>
-		/// <remarks>
-		/// Non-uniform and zero scaling local to the dimension entity are not supported.<br />
-		/// The transformation will not be applied if the resulting center and reference points are the same.<br />
-		/// Matrix3 adopts the convention of using column vectors to represent a transformation matrix.
-		/// </remarks>
+		/// <inheritdoc/>
 		public override void TransformBy(Matrix3 transformation, Vector3 translation)
 		{
 			Vector3 newNormal = transformation * this.Normal;
@@ -289,9 +256,7 @@ namespace netDxf.Entities
 			this.Normal = newNormal;
 		}
 
-		/// <summary>
-		/// Calculate the dimension reference points.
-		/// </summary>
+		/// <inheritdoc/>
 		protected override void CalculateReferencePoints()
 		{
 			if (Vector2.Equals(this.center, this.refPoint))
@@ -331,20 +296,13 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets the block that contains the entities that make up the dimension picture.
-		/// </summary>
-		/// <param name="name">Name to be assigned to the generated block.</param>
-		/// <returns>The block that represents the actual dimension.</returns>
+		/// <inheritdoc/>
 		protected override Block BuildBlock(string name)
 		{
 			return DimensionBlock.Build(this, name);
 		}
 
-		/// <summary>
-		/// Creates a new RadialDimension that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new RadialDimension that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override object Clone()
 		{
 			RadialDimension entity = new RadialDimension

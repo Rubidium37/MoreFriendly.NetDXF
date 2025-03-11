@@ -27,41 +27,27 @@ using System;
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Defines the spline type.
-	/// </summary>
+	/// <summary>Defines the spline type.</summary>
 	/// <remarks>Bit flag.</remarks>
 	[Flags]
 	internal enum SplineTypeFlags
 	{
-		/// <summary>
-		/// Default (open spline).
-		/// </summary>
+		/// <summary>Default (open spline).</summary>
 		Open = 0,
 
-		/// <summary>
-		/// Closed spline.
-		/// </summary>
+		/// <summary>Closed spline.</summary>
 		Closed = 1,
 
-		/// <summary>
-		/// Periodic spline.
-		/// </summary>
+		/// <summary>Periodic spline.</summary>
 		Periodic = 2,
 
-		/// <summary>
-		/// Rational spline.
-		/// </summary>
+		/// <summary>Rational spline.</summary>
 		Rational = 4,
 
-		/// <summary>
-		/// Planar.
-		/// </summary>
+		/// <summary>Planar.</summary>
 		Planar = 8,
 
-		/// <summary>
-		/// Linear (planar bit is also set).
-		/// </summary>
+		/// <summary>Linear (planar bit is also set).</summary>
 		Linear = 16,
 
 		// in AutoCAD 2012 the flags can be greater than 70 despite the information that shows the DXF documentation these values are just a guess.
@@ -71,14 +57,10 @@ namespace netDxf.Entities
 		FitCustom = 256,
 		Unknown = 512,
 
-		/// <summary>
-		/// Used by splines created by fit points.
-		/// </summary>
+		/// <summary>Used by splines created by fit points.</summary>
 		FitPointCreationMethod = 1024,
 
-		/// <summary>
-		/// Used for closed periodic splines.
-		/// </summary>
+		/// <summary>Used for closed periodic splines.</summary>
 		ClosedPeriodicSpline = 2048
 	}
 }

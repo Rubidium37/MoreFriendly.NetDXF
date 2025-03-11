@@ -25,24 +25,16 @@
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Hatch pattern type.
-	/// </summary>
+	/// <summary>Hatch pattern type.</summary>
 	public enum HatchType
 	{
-		/// <summary>
-		/// User defined.
-		/// </summary>
+		/// <summary>User defined.</summary>
 		UserDefined = 0,
 
-		/// <summary>
-		/// Predefined.
-		/// </summary>
+		/// <summary>Predefined.</summary>
 		Predefined = 1,
 
-		/// <summary>
-		/// Custom.
-		/// </summary>
+		/// <summary>Custom.</summary>
 		Custom = 2
 	}
 }

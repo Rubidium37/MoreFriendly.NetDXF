@@ -27,9 +27,7 @@ using System.Collections.Generic;
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Represents a <see cref="MLine">multiline</see> vertex.
-	/// </summary>
+	/// <summary>Represents a <see cref="MLine">multiline</see> vertex.</summary>
 	public class MLineVertex
 	{
 		#region private fields
@@ -55,9 +53,7 @@ namespace netDxf.Entities
 
 		#region public properties
 
-		/// <summary>
-		/// Gets the MLine vertex position.
-		/// </summary>
+		/// <summary>Gets the <b>MLine</b> vertex position.</summary>
 		/// <remarks>
 		/// If this property is modified the function MLine.Update() will need to be called manually to update the internal information.
 		/// </remarks>
@@ -67,25 +63,19 @@ namespace netDxf.Entities
 			set { this.position = value; }
 		}
 
-		/// <summary>
-		/// Gets the MLine vertex direction.
-		/// </summary>
+		/// <summary>Gets the <b>MLine</b> vertex direction.</summary>
 		public Vector2 Direction
 		{
 			get { return this.direction; }
 		}
 
-		/// <summary>
-		/// Gets the MLine vertex miter.
-		/// </summary>
+		/// <summary>Gets the <b>MLine</b> vertex miter.</summary>
 		public Vector2 Miter
 		{
 			get { return this.miter; }
 		}
 
-		/// <summary>
-		/// Gets the <see cref="MLine">multiline</see> vertex distances lists.
-		/// </summary>
+		/// <summary>Gets the <see cref="MLine">multiline</see> vertex distances lists.</summary>
 		/// <remarks>
 		/// <para>
 		/// There is a list for every MLineStyle element, and every list contains an array of real values
@@ -108,18 +98,13 @@ namespace netDxf.Entities
 
 		#region overrides
 
-		/// <summary>
-		/// Converts the value of this instance to its equivalent string representation.
-		/// </summary>
-		/// <returns>The string representation.</returns>
+		/// <inheritdoc/>
 		public override string ToString()
 		{
 			return string.Format("{0}: ({1})", "MLineVertex", this.position);
 		}
 
-		/// <summary>
-		/// Creates a new MLineVertex that is a copy of the current instance.
-		/// </summary>
+		/// <summary>Creates a new MLineVertex that is a copy of the current instance.</summary>
 		/// <returns>A new MLineVertex that is a copy of this instance.</returns>
 		public object Clone()
 		{

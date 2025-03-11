@@ -25,24 +25,16 @@
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Defines the smooth type of the polyline.
-	/// </summary>
+	/// <summary>Defines the smooth type of the polyline.</summary>
 	public enum PolylineSmoothType
 	{
-		/// <summary>
-		/// No smooth curve.
-		/// </summary>
+		/// <summary>No smooth curve.</summary>
 		NoSmooth = 0,
 
-		/// <summary>
-		/// Quadratic B-spline curve.
-		/// </summary>
+		/// <summary>Quadratic B-spline curve.</summary>
 		Quadratic = 5,
 
-		/// <summary>
-		/// Cubic B-spline curve.
-		/// </summary>
+		/// <summary>Cubic B-spline curve.</summary>
 		Cubic = 6,
 
 		///// <summary>

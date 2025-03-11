@@ -29,14 +29,12 @@ using netDxf.Tables;
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Represents an attribute.
-	/// </summary>
+	/// <summary>Represents an attribute.</summary>
 	/// <remarks>
-	/// The attribute position, rotation, height and width factor values also includes the transformation of the <see cref="Insert">Insert</see> entity to which it belongs.<br />
+	/// The attribute position, rotation, height and width factor values also includes the transformation of the <see cref="Insert"/> entity to which it belongs.<br />
 	/// During the attribute initialization a copy of all attribute definition properties will be copied,
 	/// so any changes made to the attribute definition will only be applied to new attribute instances and not to existing ones.
-	/// This behavior is to allow imported <see cref="Insert">Insert</see> entities to have attributes without definition in the block,
+	/// This behavior is to allow imported <see cref="Insert"/> entities to have attributes without definition in the block,
 	/// although this might sound not totally correct it is allowed by AutoCad.
 	/// </remarks>
 	public class Attribute :
@@ -131,9 +129,7 @@ namespace netDxf.Entities
 			this.tag = string.IsNullOrEmpty(tag) ? string.Empty : tag;
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Attribute</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="definition"><see cref="AttributeDefinition">Attribute definition</see>.</param>
 		public Attribute(AttributeDefinition definition)
 			: base(DxfObjectCode.Attribute)
@@ -172,9 +168,7 @@ namespace netDxf.Entities
 
 		#region public property
 
-		/// <summary>
-		/// Gets or sets the entity <see cref="AciColor">color</see>.
-		/// </summary>
+		/// <summary>Gets or sets the entity <see cref="AciColor">color</see>.</summary>
 		public AciColor Color
 		{
 			get { return this.color; }
@@ -184,9 +178,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the entity <see cref="Layer">layer</see>.
-		/// </summary>
+		/// <summary>Gets or sets the entity <see cref="Layer">layer</see>.</summary>
 		public Layer Layer
 		{
 			get { return this.layer; }
@@ -200,9 +192,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the entity <see cref="Linetype">line type</see>.
-		/// </summary>
+		/// <summary>Gets or sets the entity <see cref="Linetype">line type</see>.</summary>
 		public Linetype Linetype
 		{
 			get { return this.linetype; }
@@ -216,18 +206,14 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the entity line weight, one unit is always 1/100 mm (default = ByLayer).
-		/// </summary>
+		/// <summary>Gets or sets the entity line weight, one unit is always 1/100 mm (default = ByLayer).</summary>
 		public Lineweight Lineweight
 		{
 			get { return this.lineweight; }
 			set { this.lineweight = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets layer transparency (default: ByLayer).
-		/// </summary>
+		/// <summary>Gets or sets layer transparency (default: ByLayer).</summary>
 		public Transparency Transparency
 		{
 			get { return this.transparency; }
@@ -237,9 +223,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the entity line type scale.
-		/// </summary>
+		/// <summary>Gets or sets the entity line type scale.</summary>
 		public double LinetypeScale
 		{
 			get { return this.linetypeScale; }
@@ -253,18 +237,14 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or set the entity visibility.
-		/// </summary>
+		/// <summary>Gets or set the entity visibility.</summary>
 		public bool IsVisible
 		{
 			get { return this.isVisible; }
 			set { this.isVisible = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the entity <see cref="Vector3">normal</see>.
-		/// </summary>
+		/// <summary>Gets or sets the entity <see cref="Vector3">normal</see>.</summary>
 		public Vector3 Normal
 		{
 			get { return this.normal; }
@@ -278,36 +258,28 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets the owner of the actual DXF object.
-		/// </summary>
+		/// <summary>Gets the owner of the actual <b>DXF</b> object.</summary>
 		public new Insert Owner
 		{
 			get { return (Insert)base.Owner; }
 			internal set { base.Owner = value; }
 		}
 
-		/// <summary>
-		/// Gets the attribute definition.
-		/// </summary>
-		/// <remarks>If the insert attribute has no definition it will return null.</remarks>
+		/// <summary>Gets the attribute definition.</summary>
+		/// <remarks>If the insert attribute has no definition it will return <see langword="null"/>.</remarks>
 		public AttributeDefinition Definition
 		{
 			get { return this.definition; }
 			internal set { this.definition = value; }
 		}
 
-		/// <summary>
-		/// Gets the attribute tag.
-		/// </summary>
+		/// <summary>Gets the attribute tag.</summary>
 		public string Tag
 		{
 			get { return this.tag; }
 		}
 
-		/// <summary>
-		/// Gets or sets the text height.
-		/// </summary>
+		/// <summary>Gets or sets the text height.</summary>
 		/// <remarks>
 		/// Valid values must be greater than zero. Default: 1.0.<br />
 		/// When Alignment.Aligned is used this value is not applicable, it will be automatically adjusted so the text will fit in the specified width.
@@ -325,9 +297,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the text width, only applicable for text Alignment.Fit and Alignment.Align.
-		/// </summary>
+		/// <summary>Gets or sets the text width, only applicable for text Alignment.Fit and Alignment.Align.</summary>
 		/// <remarks>Valid values must be greater than zero. Default: 1.0.</remarks>
 		public double Width
 		{
@@ -342,9 +312,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the width factor.
-		/// </summary>
+		/// <summary>Gets or sets the width factor.</summary>
 		/// <remarks>
 		/// Valid values range from 0.01 to 100. Default: 1.0.<br />
 		/// When Alignment.Fit is used this value is not applicable, it will be automatically adjusted so the text will fit in the specified width.
@@ -362,9 +330,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the font oblique angle.
-		/// </summary>
+		/// <summary>Gets or sets the font oblique angle.</summary>
 		/// <remarks>Valid values range from -85 to 85. Default: 0.0.</remarks>
 		public double ObliqueAngle
 		{
@@ -379,18 +345,14 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the attribute value.
-		/// </summary>
+		/// <summary>Gets or sets the attribute value.</summary>
 		public string Value
 		{
 			get { return this.attValue; }
 			set { this.attValue = string.IsNullOrEmpty(value) ? string.Empty : value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the attribute text style.
-		/// </summary>
+		/// <summary>Gets or sets the attribute text style.</summary>
 		/// <remarks>
 		/// The <see cref="TextStyle">text style</see> defines the basic properties of the information text.
 		/// </remarks>
@@ -407,54 +369,42 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the attribute <see cref="Vector3">position</see>.
-		/// </summary>
+		/// <summary>Gets or sets the attribute <see cref="Vector3">position</see>.</summary>
 		public Vector3 Position
 		{
 			get { return this.position; }
 			set { this.position = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the attribute flags.
-		/// </summary>
+		/// <summary>Gets or sets the attribute flags.</summary>
 		public AttributeFlags Flags
 		{
 			get { return this.flags; }
 			set { this.flags = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the attribute text rotation in degrees.
-		/// </summary>
+		/// <summary>Gets or sets the attribute text rotation in degrees.</summary>
 		public double Rotation
 		{
 			get { return this.rotation; }
 			set { this.rotation = MathHelper.NormalizeAngle(value); }
 		}
 
-		/// <summary>
-		/// Gets or sets the text alignment.
-		/// </summary>
+		/// <summary>Gets or sets the text alignment.</summary>
 		public TextAlignment Alignment
 		{
 			get { return this.alignment; }
 			set { this.alignment = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets if the attribute text is backward (mirrored in X).
-		/// </summary>
+		/// <summary>Gets or sets if the attribute text is backward (mirrored in X).</summary>
 		public bool IsBackward
 		{
 			get { return this.isBackward; }
 			set { this.isBackward = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets if the attribute text is upside down (mirrored in Y).
-		/// </summary>
+		/// <summary>Gets or sets if the attribute text is upside down (mirrored in Y).</summary>
 		public bool IsUpsideDown
 		{
 			get { return this.isUpsideDown; }
@@ -465,9 +415,7 @@ namespace netDxf.Entities
 
 		#region public methods
 
-		/// <summary>
-		/// Moves, scales, and/or rotates the current attribute given a 3x3 transformation matrix and a translation vector.
-		/// </summary>
+		/// <summary>Moves, scales, and/or rotates the current attribute given a 3x3 transformation matrix and a translation vector.</summary>
 		/// <param name="transformation">Transformation matrix.</param>
 		/// <param name="translation">Translation vector.</param>
 		/// <remarks>Matrix3 adopts the convention of using column vectors to represent a transformation matrix.</remarks>
@@ -646,9 +594,7 @@ namespace netDxf.Entities
 			this.ObliqueAngle = newObliqueAngle;
 		}
 
-		/// <summary>
-		/// Moves, scales, and/or rotates the current entity given a 4x4 transformation matrix.
-		/// </summary>
+		/// <summary>Moves, scales, and/or rotates the current entity given a 4x4 transformation matrix.</summary>
 		/// <param name="transformation">Transformation matrix.</param>
 		/// <remarks>Matrix4 adopts the convention of using column vectors to represent a transformation matrix.</remarks>
 		public void TransformBy(Matrix4 transformation)
@@ -665,10 +611,7 @@ namespace netDxf.Entities
 
 		#region overrides
 
-		/// <summary>
-		/// Creates a new Attribute that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new Attribute that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public object Clone()
 		{
 			Attribute entity = new Attribute(this.tag)

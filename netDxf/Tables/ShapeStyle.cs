@@ -31,9 +31,7 @@ using netDxf.Collections;
 
 namespace netDxf.Tables
 {
-	/// <summary>
-	/// Represent a shape style.
-	/// </summary>
+	/// <summary>Represent a shape style.</summary>
 	public class ShapeStyle :
 		TableObject
 	{
@@ -48,14 +46,10 @@ namespace netDxf.Tables
 
 		#region constants
 
-		/// <summary>
-		/// Default text style font.
-		/// </summary>
+		/// <summary>Default text style font.</summary>
 		public const string DefaultShapeFile = "ltypeshp.shx";
 
-		/// <summary>
-		/// Gets the default shape style.
-		/// </summary>
+		/// <summary>Gets the default shape style.</summary>
 		/// <remarks>AutoCad stores the shapes for the predefined complex linetypes in the ltypeshp.shx file.</remarks>
 		internal static ShapeStyle Default
 		{
@@ -66,11 +60,9 @@ namespace netDxf.Tables
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of the <c>ShapeStyle</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="name">Shape style name.</param>
-		/// <param name="file">Shape definitions SHX file.</param>
+		/// <param name="file">Shape definitions <b>SHX</b> file.</param>
 		public ShapeStyle(string name, string file)
 			: this(name, file, 0.0, 1.0, 0.0)
 		{
@@ -99,9 +91,7 @@ namespace netDxf.Tables
 
 		#region public properties
 
-		/// <summary>
-		/// Gets or sets the shape SHX file name.
-		/// </summary>
+		/// <summary>Gets or sets the shape <b>SHX</b> file name.</summary>
 		public string File
 		{
 			get { return this.shapeFile; }
@@ -121,36 +111,28 @@ namespace netDxf.Tables
 			}
 		}
 
-		/// <summary>
-		/// Gets the shape size.
-		/// </summary>
+		/// <summary>Gets the shape size.</summary>
 		/// <remarks>This value seems to have no effect on shapes or complex line types with shapes. Default: 0.0.</remarks>
 		public double Size
 		{
 			get { return this.size; }
 		}
 
-		/// <summary>
-		/// Gets the shape width factor.
-		/// </summary>
+		/// <summary>Gets the shape width factor.</summary>
 		/// <remarks>This value seems to have no effect on shapes or complex line types with shapes. Default: 1.0.</remarks>
 		public double WidthFactor
 		{
 			get { return this.widthFactor; }
 		}
 
-		/// <summary>
-		/// Gets the shape oblique angle in degrees.
-		/// </summary>
+		/// <summary>Gets the shape oblique angle in degrees.</summary>
 		/// <remarks>This value seems to have no effect on shapes or complex line types with shapes. Default: 0.0.</remarks>
 		public double ObliqueAngle
 		{
 			get { return this.obliqueAngle; }
 		}
 
-		/// <summary>
-		/// Gets the owner of the actual shape style.
-		/// </summary>
+		/// <summary>Gets the owner of the actual shape style.</summary>
 		public new ShapeStyles Owner
 		{
 			get { return (ShapeStyles)base.Owner; }
@@ -161,11 +143,9 @@ namespace netDxf.Tables
 
 		#region public methods
 
-		/// <summary>
-		/// Gets the list of shapes names defined in a SHX file.
-		/// </summary>
-		/// <param name="file">Shape SHX file.</param>
-		/// <returns>List of shape names contained in the specified SHX file.</returns>
+		/// <summary>Gets the list of shapes names defined in a <b>SHX</b> file.</summary>
+		/// <param name="file">Shape <b>SHX</b> file.</param>
+		/// <returns>List of shape names contained in the specified <b>SHX</b> file.</returns>
 		public static List<string> NamesFromFile(string file)
 		{
 			List<string> names = new List<string>();
@@ -219,12 +199,10 @@ namespace netDxf.Tables
 			return names;
 		}
 
-		/// <summary>
-		/// Checks if the shape SHP file contains a shape with the specified name.
-		/// </summary>
-		/// <param name="file">Shape SHX file.</param>
+		/// <summary>Checks if the shape <b>SHP</b> file contains a shape with the specified name.</summary>
+		/// <param name="file">Shape <b>SHX</b> file.</param>
 		/// <param name="shapeName">Shape name.</param>
-		/// <returns>True if the shape SHX file that contains a shape with the specified name, false otherwise.</returns>
+		/// <returns><see langword="true"/> if the shape <b>SHX</b> file that contains a shape with the specified name; otherwise, <see langword="false"/>.</returns>
 		public static bool ContainsShapeName(string file, string shapeName)
 		{
 			List<string> names = NamesFromFile(file);
@@ -239,12 +217,10 @@ namespace netDxf.Tables
 			return false;
 		}
 
-		/// <summary>
-		/// Gets the list of shapes names defined in the actual shape style (the shape SHX file must be accessible).
-		/// </summary>
+		/// <summary>Gets the list of shapes names defined in the actual shape style (the shape <b>SHX</b> file must be accessible).</summary>
 		/// <returns>List of shape names contained in the actual shape style.</returns>
 		/// <remarks>
-		/// If the actual shape style belongs to a document, it will look for the SHX file also in the document support folders.
+		/// If the actual shape style belongs to a document, it will look for the <b>SHX</b> file also in the document support folders.
 		/// </remarks>
 		public List<string> NamesFromShapeStyle()
 		{
@@ -262,12 +238,10 @@ namespace netDxf.Tables
 			return NamesFromFile(f);
 		}
 
-		/// <summary>
-		/// Checks if the actual shape style contains a shape with the specified name (the shape SHX file must be accessible).
-		/// </summary>
+		/// <summary>Checks if the actual shape style contains a shape with the specified name (the shape <b>SHX</b> file must be accessible).</summary>
 		/// <param name="name">Shape name.</param>
-		/// <returns>True if the shape style that contains a shape with the specified name, false otherwise.</returns>
-		/// <remarks>If the actual shape style belongs to a document, it will look for the SHX file also in the document support folders.</remarks>
+		/// <returns><see langword="true"/> if the shape style that contains a shape with the specified name; otherwise, <see langword="false"/>.</returns>
+		/// <remarks>If the actual shape style belongs to a document, it will look for the <b>SHX</b> file also in the document support folders.</remarks>
 		public bool ContainsShapeName(string name)
 		{
 			List<string> names = this.NamesFromShapeStyle();
@@ -286,12 +260,10 @@ namespace netDxf.Tables
 
 		#region internal methods
 
-		/// <summary>
-		/// Gets the number of the shape with the specified name.
-		/// </summary>
+		/// <summary>Gets the number of the shape with the specified name.</summary>
 		/// <param name="name">Name of the shape.</param>
 		/// <returns>The number of the shape, 0 in case the shape has not been found.</returns>
-		/// <remarks>If the actual shape style belongs to a document, it will look for the SHX file also in the document support folders.</remarks>
+		/// <remarks>If the actual shape style belongs to a document, it will look for the <b>SHX</b> file also in the document support folders.</remarks>
 		public short ShapeNumber(string name)
 		{
 			if (string.IsNullOrEmpty(name))
@@ -360,12 +332,10 @@ namespace netDxf.Tables
 			return 0;
 		}
 
-		/// <summary>
-		/// Gets the name of the shape with the specified number.
-		/// </summary>
+		/// <summary>Gets the name of the shape with the specified number.</summary>
 		/// <param name="number">Number of the shape.</param>
 		/// <returns>The name of the shape, empty in case the shape has not been found.</returns>
-		/// <remarks>If the actual shape style belongs to a document, it will look for the SHX file also in the document support folders.</remarks>
+		/// <remarks>If the actual shape style belongs to a document, it will look for the <b>SHX</b> file also in the document support folders.</remarks>
 		public string ShapeName(short number)
 		{
 			string f = this.shapeFile;
@@ -459,10 +429,10 @@ namespace netDxf.Tables
 		#region public methods
 
 		///// <summary>
-		///// Gets the list of shapes names defined in a SHP file.
+		///// Gets the list of shapes names defined in a <b>SHP</b> file.
 		///// </summary>
-		///// <param name="file">Shape SHP file.</param>
-		///// <returns>List of shape names contained in the specified SHP file.</returns>
+		///// <param name="file">Shape <b>SHP</b> file.</param>
+		///// <returns>List of shape names contained in the specified <b>SHP</b> file.</returns>
 		//public static List<string> NamesFromFile(string file)
 		//{
 		//	List<string> names = new List<string>();
@@ -508,11 +478,11 @@ namespace netDxf.Tables
 		//}
 
 		///// <summary>
-		///// Checks if the shape SHP file contains a shape with the specified name.
+		///// Checks if the shape <b>SHP</b> file contains a shape with the specified name.
 		///// </summary>
-		///// <param name="file">Shape SHP file.</param>
+		///// <param name="file">Shape <b>SHP</b> file.</param>
 		///// <param name="shapeName">Shape name.</param>
-		///// <returns>True if the shape SHP file that contains a shape with the specified name, false otherwise.</returns>
+		///// <returns><see langword="true"/> if the shape <b>SHP</b> file that contains a shape with the specified name; otherwise, <see langword="false"/>.</returns>
 		//public static bool ContainsShapeName(string file, string shapeName)
 		//{
 		//	if (string.IsNullOrEmpty(file))
@@ -563,11 +533,11 @@ namespace netDxf.Tables
 		//}
 
 		///// <summary>
-		///// Gets the list of shapes names defined in the actual shape style (the shape SHP file must be accessible).
+		///// Gets the list of shapes names defined in the actual shape style (the shape <b>SHP</b> file must be accessible).
 		///// </summary>
 		///// <returns>List of shape names contained in the actual shape style.</returns>
 		///// <remarks>
-		///// If the actual shape style belongs to a document, it will look for the SHP file also in the document support folders.
+		///// If the actual shape style belongs to a document, it will look for the <b>SHP</b> file also in the document support folders.
 		///// </remarks>
 		//public List<string> NamesFromShapeStyle(string file)
 		//{
@@ -591,11 +561,11 @@ namespace netDxf.Tables
 		//}
 
 		///// <summary>
-		///// Checks if the actual shape style contains a shape with the specified name (the shape SHP file must be accessible).
+		///// Checks if the actual shape style contains a shape with the specified name (the shape <b>SHP</b> file must be accessible).
 		///// </summary>
 		///// <param name="name">Shape name.</param>
-		///// <returns>True if the shape style that contains a shape with the specified name, false otherwise.</returns>
-		///// <remarks>If the actual shape style belongs to a document, it will look for the SHP file also in the document support folders.</remarks>
+		///// <returns><see langword="true"/> if the shape style that contains a shape with the specified name; otherwise, <see langword="false"/>.</returns>
+		///// <remarks>If the actual shape style belongs to a document, it will look for the <b>SHP</b> file also in the document support folders.</remarks>
 		//public bool ContainsShapeName(string name)
 		//{
 		//	if (string.IsNullOrEmpty(name))
@@ -632,7 +602,7 @@ namespace netDxf.Tables
 		///// </summary>
 		///// <param name="name">Name of the shape.</param>
 		///// <returns>The number of the shape, 0 in case the shape has not been found.</returns>
-		///// <remarks>If the actual shape style belongs to a document, it will look for the SHP file also in the document support folders.</remarks>
+		///// <remarks>If the actual shape style belongs to a document, it will look for the <b>SHP</b> file also in the document support folders.</remarks>
 		//internal short ShapeNumber(string name)
 		//{
 		//	if (string.IsNullOrEmpty(name))
@@ -695,7 +665,7 @@ namespace netDxf.Tables
 		///// </summary>
 		///// <param name="number">Number of the shape.</param>
 		///// <returns>The name of the shape, empty in case the shape has not been found.</returns>
-		///// <remarks>If the actual shape style belongs to a document, it will look for the SHP file also in the document support folders.</remarks>
+		///// <remarks>If the actual shape style belongs to a document, it will look for the <b>SHP</b> file also in the document support folders.</remarks>
 		//internal string ShapeName(short number)
 		//{
 		//	// we will look for the shape name in the SHP file
@@ -751,41 +721,19 @@ namespace netDxf.Tables
 
 		#region overrides
 
-		/// <summary>
-		/// Checks if this instance has been referenced by other DxfObjects.
-		/// </summary>
-		/// <returns>
-		/// Returns true if this instance has been referenced by other DxfObjects, false otherwise.
-		/// It will always return false if this instance does not belong to a document.
-		/// </returns>
-		/// <remarks>
-		/// This method returns the same value as the HasReferences method that can be found in the TableObjects class.
-		/// </remarks>
+		/// <inheritdoc/>
 		public override bool HasReferences()
 		{
 			return this.Owner != null && this.Owner.HasReferences(this.Name);
 		}
 
-		/// <summary>
-		/// Gets the list of DxfObjects referenced by this instance.
-		/// </summary>
-		/// <returns>
-		/// A list of DxfObjectReference that contains the DxfObject referenced by this instance and the number of times it does.
-		/// It will return null if this instance does not belong to a document.
-		/// </returns>
-		/// <remarks>
-		/// This method returns the same list as the GetReferences method that can be found in the TableObjects class.
-		/// </remarks>
+		/// <inheritdoc/>
 		public override List<DxfObjectReference> GetReferences()
 		{
 			return this.Owner?.GetReferences(this.Name);
 		}
 
-		/// <summary>
-		/// Creates a new TextStyle that is a copy of the current instance.
-		/// </summary>
-		/// <param name="newName">TextStyle name of the copy.</param>
-		/// <returns>A new TextStyle that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override TableObject Clone(string newName)
 		{
 			ShapeStyle copy = new ShapeStyle(newName, this.shapeFile, this.size, this.widthFactor, this.obliqueAngle);
@@ -798,10 +746,7 @@ namespace netDxf.Tables
 			return copy;
 		}
 
-		/// <summary>
-		/// Creates a new TextStyle that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new TextStyle that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override object Clone()
 		{
 			return this.Clone(this.Name);

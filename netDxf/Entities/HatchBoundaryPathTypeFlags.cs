@@ -27,41 +27,27 @@ using System;
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Defines the boundary path type of the hatch.
-	/// </summary>
+	/// <summary>Defines the boundary path type of the hatch.</summary>
 	/// <remarks>Bit flag.</remarks>
 	[Flags]
 	public enum HatchBoundaryPathTypeFlags
 	{
-		/// <summary>
-		/// Default.
-		/// </summary>
+		/// <summary>Default.</summary>
 		Default = 0,
 
-		/// <summary>
-		/// External.
-		/// </summary>
+		/// <summary>External.</summary>
 		External = 1,
 
-		/// <summary>
-		/// Polyline.
-		/// </summary>
+		/// <summary>Polyline.</summary>
 		Polyline = 2,
 
-		/// <summary>
-		/// Derived.
-		/// </summary>
+		/// <summary>Derived.</summary>
 		Derived = 4,
 
-		/// <summary>
-		/// Text box.
-		/// </summary>
+		/// <summary>Text box.</summary>
 		Textbox = 8,
 
-		/// <summary>
-		/// Outermost.
-		/// </summary>
+		/// <summary>Outermost.</summary>
 		Outermost = 16
 	}
 }

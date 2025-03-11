@@ -31,9 +31,7 @@ using System.Threading;
 
 namespace netDxf
 {
-	/// <summary>
-	/// Represents an ACI color (AutoCAD Color Index) that also supports true color.
-	/// </summary>
+	/// <summary>Represents an <b>ACI</b> color (<b>AutoCAD</b> Color Index) that also supports <see langword="true"/> color.</summary>
 	public class AciColor :
 		ICloneable,
 		IEquatable<AciColor>
@@ -314,102 +312,78 @@ namespace netDxf
 
 		#region constants
 
-		/// <summary>
-		/// Gets the ByLayer color.
-		/// </summary>
+		/// <summary>Gets the <b>ByLayer</b> color.</summary>
 		public static AciColor ByLayer
 		{
 			get { return new AciColor { index = 256 }; }
 		}
 
-		/// <summary>
-		/// Gets the ByBlock color.
-		/// </summary>
+		/// <summary>Gets the <b>ByBlock</b> color.</summary>
 		public static AciColor ByBlock
 		{
 			get { return new AciColor { index = 0 }; }
 		}
 
-		/// <summary>
-		/// Defines a default red color.
-		/// </summary>
+		/// <summary>Defines a default red color.</summary>
 		public static AciColor Red
 		{
 			get { return new AciColor(1); }
 		}
 
-		/// <summary>
-		/// Defines a default yellow color.
-		/// </summary>
+		/// <summary>Defines a default yellow color.</summary>
 		public static AciColor Yellow
 		{
 			get { return new AciColor(2); }
 		}
 
-		/// <summary>
-		/// Defines a default green color.
-		/// </summary>
+		/// <summary>Defines a default green color.</summary>
 		public static AciColor Green
 		{
 			get { return new AciColor(3); }
 		}
 
-		/// <summary>
-		/// Defines a default cyan color.
-		/// </summary>
+		/// <summary>Defines a default cyan color.</summary>
 		public static AciColor Cyan
 		{
 			get { return new AciColor(4); }
 		}
 
-		/// <summary>
-		/// Defines a default blue color.
-		/// </summary>
+		/// <summary>Defines a default blue color.</summary>
 		public static AciColor Blue
 		{
 			get { return new AciColor(5); }
 		}
 
-		/// <summary>
-		/// Defines a default magenta color.
-		/// </summary>
+		/// <summary>Defines a default magenta color.</summary>
 		public static AciColor Magenta
 		{
 			get { return new AciColor(6); }
 		}
 
-		/// <summary>
-		/// Defines a default white/black color.
-		/// </summary>
+		/// <summary>Defines a default white/black color.</summary>
 		public static AciColor Default
 		{
 			get { return new AciColor(7); }
 		}
 
-		/// <summary>
-		/// Defines a default dark gray color.
-		/// </summary>
+		/// <summary>Defines a default dark gray color.</summary>
 		public static AciColor DarkGray
 		{
 			get { return new AciColor(8); }
 		}
 
-		/// <summary>
-		/// Defines a default light gray color.
-		/// </summary>
+		/// <summary>Defines a default light gray color.</summary>
 		public static AciColor LightGray
 		{
 			get { return new AciColor(9); }
 		}
 
-		/// <summary>
-		/// A list that contains the indexed colors, the key represents the color index and the value the RGB components of the color.
-		/// </summary>
+		/// <summary>A list that contains the indexed colors, the key represents the color index and the value the <b>RGB</b> components of the color.</summary>
 		/// <remarks>
-		/// This is the AutoCad default ACI color index to RGB values table.
-		/// Changes in the actual view background color in AutoCad might produce changes in the RGB equivalents in some ACI color indexes,
+		/// This is the <b>AutoCAD</b> default <b>ACI</b> color index to <b>RGB</b> values table.
+		/// Changes in the actual view background color in <b>AutoCAD</b> might produce changes in the <b>RGB</b> equivalents in some <b>ACI</b> color indexes,
 		/// specially the darkest ones.<br />
-		/// The color at index zero is not used, represents the RGB values for abstract colors such as ByLayer or ByBlock
+		/// The color at index zero is not used, represents the <b>RGB</b> values for abstract colors such as <b>ByLayer</b> or <b>ByBlock</b>
 		/// </remarks>
 		public static IReadOnlyList<byte[]> IndexRgb
 		{
@@ -420,31 +394,25 @@ namespace netDxf
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of the <c>AciColor</c> class with black/white color index 7.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class with black/white color index 7.</summary>
 		public AciColor()
 			: this(7)
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>AciColor</c> class from an array of three values.
-		/// </summary>
-		/// <param name="rgb">RGB components (input values range from 0 to 255). The array must contain three values.</param>
-		/// <remarks>By default the UseTrueColor will be set to true.</remarks>
+		/// <summary>Initializes a new instance of the class from an array of three values.</summary>
+		/// <param name="rgb"><b>RGB</b> components (input values range from 0 to 255). The array must contain three values.</param>
+		/// <remarks>By default the <see cref="UseTrueColor"/> will be set to <see langword="true"/>.</remarks>
 		public AciColor(byte[] rgb)
 			: this(rgb[0], rgb[1], rgb[2])
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>AciColor</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		///<param name="r">Red component (input values range from 0 to 255).</param>
 		///<param name="g">Green component (input values range from 0 to 255).</param>
 		///<param name="b">Blue component (input values range from 0 to 255).</param>
-		/// <remarks>By default the UseTrueColor will be set to true.</remarks>
+		/// <remarks>By default the <see cref="UseTrueColor"/> will be set to <see langword="true"/>.</remarks>
 		public AciColor(byte r, byte g, byte b)
 		{
 			this.r = r;
@@ -454,23 +422,19 @@ namespace netDxf
 			this.index = RgbToAci(this.r, this.g, this.b);
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>AciColor</c> class from an array of three values.
-		/// </summary>
-		/// <param name="rgb">RGB components (input values range from 0 to 1). The array must contain three values.</param>
-		/// <remarks>By default the UseTrueColor will be set to true.</remarks>
+		/// <summary>Initializes a new instance of the class from an array of three values.</summary>
+		/// <param name="rgb"><b>RGB</b> components (input values range from 0 to 1). The array must contain three values.</param>
+		/// <remarks>By default the <see cref="UseTrueColor"/> will be set to <see langword="true"/>.</remarks>
 		public AciColor(double[] rgb)
 			: this(rgb[0], rgb[1], rgb[2])
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>AciColor</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="r">Red component (input values range from 0 to 1).</param>
 		/// <param name="g">Green component (input values range from 0 to 1).</param>
 		/// <param name="b">Blue component (input values range from 0 to 1).</param>
-		/// <remarks>By default the UseTrueColor will be set to true.</remarks>
+		/// <remarks>By default the <see cref="UseTrueColor"/> will be set to <see langword="true"/>.</remarks>
 		public AciColor(double r, double g, double b)
 		{
 			if (r < 0 || r > 1)
@@ -493,24 +457,20 @@ namespace netDxf
 			this.index = RgbToAci(this.r, this.g, this.b);
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>AciColor</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="color">A <see cref="Color">color</see>.</param>
-		/// <remarks>By default the UseTrueColor will be set to true.</remarks>
+		/// <remarks>By default the <see cref="UseTrueColor"/> will be set to <see langword="true"/>.</remarks>
 		public AciColor(Color color)
 			: this(color.R, color.G, color.B)
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>AciColor</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="index">Color index.</param>
 		/// <remarks>
-		/// By default the UseTrueColor will be set to false.<br />
+		/// By default the <see cref="UseTrueColor"/> will be set to <see langword="false"/>.<br />
 		/// Accepted color index values range from 1 to 255.<br />
-		/// Indexes from 1 to 255 represents a color, the index 0 and 256 are reserved for ByLayer and ByBlock colors.
+		/// Indexes from 1 to 255 represents a color, the index 0 and 256 are reserved for <b>ByLayer</b> and <b>ByBlock</b> colors.
 		/// </remarks>
 		public AciColor(short index)
 		{
@@ -531,52 +491,40 @@ namespace netDxf
 
 		#region public properties
 
-		/// <summary>
-		/// Defines if the color is defined by layer.
-		/// </summary>
+		/// <summary>Defines if the color is defined by layer.</summary>
 		public bool IsByLayer
 		{
 			get { return this.index == 256; }
 		}
 
-		/// <summary>
-		/// Defines if the color is defined by block.
-		/// </summary>
+		/// <summary>Defines if the color is defined by block.</summary>
 		public bool IsByBlock
 		{
 			get { return this.index == 0; }
 		}
 
-		/// <summary>
-		/// Gets the red component of the AciColor.
-		/// </summary>
+		/// <summary>Gets the red component of the AciColor.</summary>
 		public byte R
 		{
 			get { return this.r; }
 		}
 
-		/// <summary>
-		/// Gets the green component of the AciColor.
-		/// </summary>
+		/// <summary>Gets the green component of the AciColor.</summary>
 		public byte G
 		{
 			get { return this.g; }
 		}
 
-		/// <summary>
-		/// Gets the blue component of the AciColor.
-		/// </summary>
+		/// <summary>Gets the blue component of the AciColor.</summary>
 		public byte B
 		{
 			get { return this.b; }
 		}
 
-		/// <summary>
-		/// Get or set if the AciColor should use true color values.
-		/// </summary>
+		/// <summary>Get or set if the <see cref="AciColor"/> should use <see langword="true"/> color values.</summary>
 		/// <remarks>
-		/// By default, the constructors that use RGB values will set this boolean to true
-		/// while the constants and the constructor that use a color index will set it to false.
+		/// By default, the constructors that use <b>RGB</b> values will set this boolean to <see langword="true"/>
+		/// while the constants and the constructor that use a color index will set it to <see langword="false"/>.
 		/// </remarks>
 		public bool UseTrueColor
 		{
@@ -584,12 +532,10 @@ namespace netDxf
 			set { this.useTrueColor = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the color index.
-		/// </summary>
+		/// <summary>Gets or sets the color index.</summary>
 		/// <remarks>
 		/// Accepted color index values range from 1 to 255.
-		/// Indexes from 1 to 255 represents a color, the index 0 and 256 are reserved for ByLayer and ByBlock colors.
+		/// Indexes from 1 to 255 represents a color, the index 0 and 256 are reserved for <b>ByLayer</b> and <b>ByBlock</b> colors.
 		/// </remarks>
 		public short Index
 		{
@@ -614,13 +560,11 @@ namespace netDxf
 
 		#region public methods
 
-		/// <summary>
-		/// Obtains the approximate color index from the RGB components.
-		/// </summary>
+		/// <summary>Obtains the approximate color index from the <b>RGB</b> components.</summary>
 		/// <param name="r">Red component.</param>
 		/// <param name="g">Green component.</param>
 		/// <param name="b">Blue component.</param>
-		/// <returns>The approximate color index from the RGB components.</returns>
+		/// <returns>The approximate color index from the <b>RGB</b> components.</returns>
 		public static byte RgbToAci(byte r, byte g, byte b)
 		{
 			int prevDist = int.MaxValue;
@@ -646,23 +590,19 @@ namespace netDxf
 			return index;
 		}
 
-		/// <summary>
-		/// Converts HSL (hue, saturation, lightness) value to an <see cref="AciColor">AciColor</see>.
-		/// </summary>
-		/// <param name="hsl">A Vector3 containing the hue, saturation, and lightness components.</param>
-		/// <returns>An <see cref="Color">AciColor</see> that represents the actual HSL value.</returns>
+		/// <summary>Converts <b>HSL</b> (hue, saturation, lightness) value to an <see cref="AciColor"/>.</summary>
+		/// <param name="hsl">A <see cref="Vector3"/> containing the hue, saturation, and lightness components.</param>
+		/// <returns>An <see cref="Color">AciColor</see> that represents the actual <b>HSL</b> value.</returns>
 		public static AciColor FromHsl(Vector3 hsl)
 		{
 			return FromHsl(hsl.X, hsl.Y, hsl.Z);
 		}
 
-		/// <summary>
-		/// Converts HSL (hue, saturation, lightness) value to an <see cref="AciColor">AciColor</see>.
-		/// </summary>
+		/// <summary>Converts <b>HSL</b> (hue, saturation, lightness) value to an <see cref="AciColor"/>.</summary>
 		/// <param name="hue">Hue (input values range from 0 to 1).</param>
 		/// <param name="saturation">Saturation (input values range from 0 to 1).</param>
 		/// <param name="lightness">Lightness (input values range from 0 to 1).</param>
-		/// <returns>An <see cref="Color">AciColor</see> that represents the actual HSL value.</returns>
+		/// <returns>An <see cref="Color">AciColor</see> that represents the actual <b>HSL</b> value.</returns>
 		public static AciColor FromHsl(double hue, double saturation, double lightness)
 		{
 			if (hue < 0 || hue > 1)
@@ -734,20 +674,16 @@ namespace netDxf
 			return new AciColor(red, green, blue);
 		}
 
-		/// <summary>
-		/// Converts the RGB (red, green, blue) components of an <see cref="AciColor">AciColor</see> to HSL (hue, saturation, lightness) values.
-		/// </summary>
+		/// <summary>Converts the <b>RGB</b> (red, green, blue) components of an <see cref="AciColor"/> to <b>HSL</b> (hue, saturation, lightness) values.</summary>
 		/// <param name="color">A <see cref="AciColor">color</see>.</param>
-		/// <param name="hsl">A Vector3 containing the hue, saturation, and lightness components (output values range from 0 to 1).</param>
+		/// <param name="hsl">A <see cref="Vector3"/> containing the hue, saturation, and lightness components (output values range from 0 to 1).</param>
 		public static void ToHsl(AciColor color, out Vector3 hsl)
 		{
 			ToHsl(color, out double h, out double s, out double l);
 			hsl = new Vector3(h, s, l);
 		}
 
-		/// <summary>
-		/// Converts the RGB (red, green, blue) components of an <see cref="AciColor">AciColor</see> to HSL (hue, saturation, lightness) values.
-		/// </summary>
+		/// <summary>Converts the <b>RGB</b> (red, green, blue) components of an <see cref="AciColor"/> to <b>HSL</b> (hue, saturation, lightness) values.</summary>
 		/// <param name="color">A <see cref="AciColor">color</see>.</param>
 		/// <param name="hue">Hue (output values range from 0 to 1).</param>
 		/// <param name="saturation">Saturation (output values range from 0 to 1).</param>
@@ -807,12 +743,10 @@ namespace netDxf
 			hue /= 6.0;
 		}
 
-		/// <summary>
-		/// Converts the RGB (red, green, blue) components of an <see cref="AciColor">AciColor</see> to HSL (hue, saturation, lightness) values.
-		/// </summary>
+		/// <summary>Converts the <b>RGB</b> (red, green, blue) components of an <see cref="AciColor"/> to <b>HSL</b> (hue, saturation, lightness) values.</summary>
 		/// <param name="color">A <see cref="AciColor">color</see>.</param>
 		/// <returns>
-		/// A Vector3 where the three coordinates x, y, z represents the hue, saturation, and lightness components (output values range from 0 to 1).
+		/// A <see cref="Vector3"/> where the three coordinates x, y, z represents the hue, saturation, and lightness components (output values range from 0 to 1).
 		/// </returns>
 		public static Vector3 ToHsl(AciColor color)
 		{
@@ -820,25 +754,21 @@ namespace netDxf
 			return new Vector3(h, s, l);
 		}
 
-		/// <summary>
-		/// Converts the AciColor to a <see cref="Color">color</see>.
-		/// </summary>
+		/// <summary>Converts the <see cref="AciColor"/> to a <see cref="Color">color</see>.</summary>
 		/// <returns>A <see cref="Color">System.Drawing.Color</see> that represents the actual AciColor.</returns>
 		/// <remarks>
-		/// A default color white will be used for ByLayer and ByBlock colors.
+		/// A default color white will be used for <b>ByLayer</b> and <b>ByBlock</b> colors.
 		/// </remarks>
 		public Color ToColor()
 		{
-			if (this.index < 1 || this.index > 255) //default color definition for ByLayer and ByBlock colors
+			if (this.index < 1 || this.index > 255) //default color definition for <b>ByLayer</b> and <b>ByBlock</b> colors
 			{
 				return Color.White;
 			}
 			return Color.FromArgb(this.r, this.g, this.b);
 		}
 
-		/// <summary>
-		/// Converts a <see cref="Color">color</see> to an <see cref="Color">AciColor</see>.
-		/// </summary>
+		/// <summary>Converts a <see cref="Color">color</see> to an <see cref="Color">AciColor</see>.</summary>
 		/// <param name="color">A <see cref="Color">color</see>.</param>
 		public void FromColor(Color color)
 		{
@@ -849,14 +779,12 @@ namespace netDxf
 			this.index = RgbToAci(this.r, this.g, this.b);
 		}
 
-		/// <summary>
-		/// Gets the <see cref="AciColor">color</see> from an index.
-		/// </summary>
-		/// <param name="index">A CAD indexed AciColor index.</param>
+		/// <summary>Gets the <see cref="AciColor">color</see> from an index.</summary>
+		/// <param name="index">A <b>CAD</b> indexed <see cref="AciColor"/> index.</param>
 		/// <returns>A <see cref="AciColor">color</see>.</returns>
 		/// <remarks>
-		/// Accepted index values range from 0 to 256. An index 0 represents a ByBlock color and an index 256 is a ByLayer color;
-		/// any other value will return one of the 255 indexed AciColors.
+		/// Accepted index values range from 0 to 256. An index 0 represents a <b>ByBlock</b> color and an index 256 is a <b>ByLayer</b> color;
+		/// any other value will return one of the 255 indexed <see cref="AciColor"/>s.
 		/// </remarks>
 		public static AciColor FromCadIndex(short index)
 		{
@@ -878,9 +806,7 @@ namespace netDxf
 			return new AciColor(index);
 		}
 
-		/// <summary>
-		/// Gets the <see cref="AciColor">color</see> from a 24-bit color value.
-		/// </summary>
+		/// <summary>Gets the <see cref="AciColor">color</see> from a 24-bit color value.</summary>
 		/// <param name="value">A 32-bit color value.</param>
 		/// <returns>A <see cref="AciColor">color</see>.</returns>
 		public static AciColor FromTrueColor(int value)
@@ -889,9 +815,7 @@ namespace netDxf
 			return new AciColor(bytes[2], bytes[1], bytes[0]);
 		}
 
-		/// <summary>
-		/// Gets the 32-bit color value from an AciColor.
-		/// </summary>
+		/// <summary>Gets the 32-bit color value from an AciColor.</summary>
 		/// <param name="color">A <see cref="AciColor">color</see>.</param>
 		/// <returns>A 32-bit color value.</returns>
 		public static int ToTrueColor(AciColor color)
@@ -913,10 +837,7 @@ namespace netDxf
 
 		#region overrides
 
-		/// <summary>
-		/// Converts the value of this instance to its equivalent string representation.
-		/// </summary>
-		/// <returns>The string representation.</returns>
+		/// <inheritdoc/>
 		public override string ToString()
 		{
 			if (this.index == 0)
@@ -941,10 +862,7 @@ namespace netDxf
 
 		#region implements ICloneable
 
-		/// <summary>
-		/// Creates a new color that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new color that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public object Clone()
 		{
 			AciColor color = new AciColor
@@ -963,11 +881,7 @@ namespace netDxf
 
 		#region implements IEquatable
 
-		/// <summary>
-		/// Check if the components of two colors are equal.
-		/// </summary>
-		/// <param name="other">Another color to compare to.</param>
-		/// <returns>True if the three components are equal or false in any other case.</returns>
+		/// <inheritdoc/>
 		public bool Equals(AciColor other)
 		{
 			if (other == null)

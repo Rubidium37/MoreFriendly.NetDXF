@@ -25,33 +25,23 @@
 
 namespace netDxf.Tables
 {
-	/// <summary>
-	/// Defines the method for calculating the tolerance.
-	/// </summary>
+	/// <summary>Defines the method for calculating the tolerance.</summary>
 	/// <remarks>
 	/// The Basic method for displaying tolerances in dimensions is not available,
-	/// use a negative number for the <c>TextOffset</c> of the dimension style. The result is exactly the same.
+	/// use a negative number for the <see cref="DimensionStyle.TextOffset"/> of the dimension style. The result is exactly the same.
 	/// </remarks>
 	public enum DimensionStyleTolerancesDisplayMethod
 	{
-		/// <summary>
-		/// Does not add a tolerance.
-		/// </summary>
+		/// <summary>Does not add a tolerance.</summary>
 		None,
 
-		/// <summary>
-		/// Adds a plus/minus expression of tolerance in which a single value of variation is applied to the dimension measurement.
-		/// </summary>
+		/// <summary>Adds a plus/minus expression of tolerance in which a single value of variation is applied to the dimension measurement.</summary>
 		Symmetrical,
 
-		/// <summary>
-		/// Adds a plus/minus tolerance expression. Different plus and minus values of variation are applied to the dimension measurement.
-		/// </summary>
+		/// <summary>Adds a plus/minus tolerance expression. Different plus and minus values of variation are applied to the dimension measurement.</summary>
 		Deviation,
 
-		/// <summary>
-		/// Creates a limit dimension. A maximum and a minimum value are displayed, one over the other.
-		/// </summary>
+		/// <summary>Creates a limit dimension. A maximum and a minimum value are displayed, one over the other.</summary>
 		Limits,
 	}
 }

@@ -31,9 +31,7 @@ using System.Text;
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Represents a <see cref="Hatch">hatch</see> pattern style.
-	/// </summary>
+	/// <summary>Represents a <see cref="Hatch">hatch</see> pattern style.</summary>
 	public class HatchPattern :
 		ICloneable
 	{
@@ -53,28 +51,22 @@ namespace netDxf.Entities
 
 		#region constructor
 
-		/// <summary>
-		/// Initializes a new instance of the <c>HatchPattern</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="name">Pattern name, always stored as uppercase.</param>
 		public HatchPattern(string name)
 			: this(name, null, string.Empty)
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>HatchPattern</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="name">Pattern name, always stored as uppercase.</param>
-		/// <param name="description">Description of the pattern (optional, this information is not saved in the DXF file). By default it will use the supplied name.</param>
+		/// <param name="description">Description of the pattern (optional, this information is not saved in the <b>DXF</b> file). By default it will use the supplied name.</param>
 		public HatchPattern(string name, string description)
 			: this(name, null, description)
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>HatchPattern</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="name">Pattern name, always stored as uppercase.</param>
 		/// <param name="lineDefinitions">The definition of the lines that make up the pattern (not applicable in Solid fills).</param>
 		public HatchPattern(string name, IEnumerable<HatchPatternLineDefinition> lineDefinitions)
@@ -82,12 +74,10 @@ namespace netDxf.Entities
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>HatchPattern</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="name">Pattern name, always stored as uppercase.</param>
 		/// <param name="lineDefinitions">The definition of the lines that make up the pattern (not applicable in Solid fills).</param>
-		/// <param name="description">Description of the pattern (optional, this information is not saved in the DXF file). By default it will use the supplied name.</param>
+		/// <param name="description">Description of the pattern (optional, this information is not saved in the <b>DXF</b> file). By default it will use the supplied name.</param>
 		public HatchPattern(string name, IEnumerable<HatchPatternLineDefinition> lineDefinitions, string description)
 		{
 			this.name = string.IsNullOrEmpty(name) ? string.Empty : name;
@@ -105,9 +95,7 @@ namespace netDxf.Entities
 
 		#region predefined patterns
 
-		/// <summary>
-		/// Solid hatch pattern.
-		/// </summary>
+		/// <summary>Solid hatch pattern.</summary>
 		/// <remarks>The predefined pattern values are based on the acad.pat file of AutoCAD.</remarks>
 		public static HatchPattern Solid
 		{
@@ -126,9 +114,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Lines hatch pattern.
-		/// </summary>
+		/// <summary>Lines hatch pattern.</summary>
 		/// <remarks>The predefined pattern values are based on the acad.pat file of AutoCAD.</remarks>
 		public static HatchPattern Line
 		{
@@ -147,9 +133,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Net or squares hatch pattern.
-		/// </summary>
+		/// <summary>Net or squares hatch pattern.</summary>
 		/// <remarks>The predefined pattern values are based on the acad.pat file of AutoCAD.</remarks>
 		public static HatchPattern Net
 		{
@@ -177,9 +161,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Dots hatch pattern.
-		/// </summary>
+		/// <summary>Dots hatch pattern.</summary>
 		/// <remarks>The predefined pattern values are based on the acad.pat file of AutoCAD.</remarks>
 		public static HatchPattern Dots
 		{
@@ -203,26 +185,20 @@ namespace netDxf.Entities
 
 		#region public properties
 
-		/// <summary>
-		/// Gets or sets the hatch pattern name.
-		/// </summary>
+		/// <summary>Gets or sets the hatch pattern name.</summary>
 		public string Name
 		{
 			get { return this.name; }
 		}
 
-		/// <summary>
-		/// Gets or sets the hatch description (optional, this information is not saved in the DXF file).
-		/// </summary>
+		/// <summary>Gets or sets the hatch description (optional, this information is not saved in the <b>DXF</b> file).</summary>
 		public string Description
 		{
 			get { return this.description; }
 			set { this.description = value; }
 		}
 
-		/// <summary>
-		/// Gets the hatch style.
-		/// </summary>
+		/// <summary>Gets the hatch style.</summary>
 		/// <remarks>Only normal style is implemented.</remarks>
 		public HatchStyle Style
 		{
@@ -230,45 +206,35 @@ namespace netDxf.Entities
 			internal set { this.style = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the hatch pattern type.
-		/// </summary>
+		/// <summary>Gets or sets the hatch pattern type.</summary>
 		public HatchType Type
 		{
 			get { return this.type; }
 			set { this.type = value; }
 		}
 
-		/// <summary>
-		/// Gets the solid fill flag.
-		/// </summary>
+		/// <summary>Gets the solid fill flag.</summary>
 		public HatchFillType Fill
 		{
 			get { return this.fill; }
 			internal set { this.fill = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the pattern origin.
-		/// </summary>
+		/// <summary>Gets or sets the pattern origin.</summary>
 		public Vector2 Origin
 		{
 			get { return this.origin; }
 			set { this.origin = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the pattern angle in degrees.
-		/// </summary>
+		/// <summary>Gets or sets the pattern angle in degrees.</summary>
 		public double Angle
 		{
 			get { return this.angle; }
 			set { this.angle = MathHelper.NormalizeAngle(value); }
 		}
 
-		/// <summary>
-		/// Gets or sets the pattern scale (not applicable in Solid fills).
-		/// </summary>
+		/// <summary>Gets or sets the pattern scale (not applicable in Solid fills).</summary>
 		public double Scale
 		{
 			get { return this.scale; }
@@ -280,9 +246,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets the definition of the lines that make up the pattern (not applicable in Solid fills).
-		/// </summary>
+		/// <summary>Gets the definition of the lines that make up the pattern (not applicable in Solid fills).</summary>
 		public List<HatchPatternLineDefinition> LineDefinitions
 		{
 			get { return this.lineDefinitions; }
@@ -292,11 +256,9 @@ namespace netDxf.Entities
 
 		#region public methods
 
-		/// <summary>
-		/// Gets the list of hatch pattern names defined in a PAT file.
-		/// </summary>
+		/// <summary>Gets the list of hatch pattern names defined in a <b>PAT</b> file.</summary>
 		/// <param name="file">Hatch pattern definitions file.</param>
-		/// <returns>List of hatch pattern names contained in the specified PAT file.</returns>
+		/// <returns>List of hatch pattern names contained in the specified <b>PAT</b> file.</returns>
 		public static List<string> NamesFromFile(string file)
 		{
 			List<string> names = new List<string>();
@@ -321,12 +283,10 @@ namespace netDxf.Entities
 			return names;
 		}
 
-		/// <summary>
-		/// Creates a new hatch pattern from the definition in a PAT file.
-		/// </summary>
+		/// <summary>Creates a new hatch pattern from the definition in a <b>PAT</b> file.</summary>
 		/// <param name="file">PAT file where the definition is located.</param>
 		/// <param name="patternName">Name of the pattern definition that wants to be read (ignore case).</param>
-		/// <returns>A Hatch pattern as defined in the PAT file.</returns>
+		/// <returns>A Hatch pattern as defined in the <b>PAT</b> file.</returns>
 		public static HatchPattern Load(string file, string patternName)
 		{
 			HatchPattern pattern = null;
@@ -422,9 +382,7 @@ namespace netDxf.Entities
 			return pattern;
 		}
 
-		/// <summary>
-		/// Saves the current linetype to the specified file, if the file does not exist it creates a new one.
-		/// </summary>
+		/// <summary>Saves the current linetype to the specified file, if the file does not exist it creates a new one.</summary>
 		/// <param name="file">File where the current linetype will be saved.</param>
 		public void Save(string file)
 		{
@@ -454,6 +412,7 @@ namespace netDxf.Entities
 
 		#region ICloneable
 
+		/// <inheritdoc/>
 		public virtual object Clone()
 		{
 			HatchPattern copy = new HatchPattern(this.name, this.description)

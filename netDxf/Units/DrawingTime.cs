@@ -27,16 +27,12 @@ using System;
 
 namespace netDxf.Units
 {
-	/// <summary>
-	/// Utility functions to handle DateTime conversions.
-	/// </summary>
+	/// <summary>Utility functions to handle DateTime conversions.</summary>
 	public static class DrawingTime
 	{
-		/// <summary>
-		/// Calculates a date represented as &lt;Julian date&gt;.&lt;Fraction of day&gt; from a <see cref="DateTime">DateTime</see> instance.
-		/// </summary>
-		/// <param name="date"><see cref="DateTime">DateTime</see> instance.</param>
-		/// <returns>The date represented as &lt;Julian date&gt;.&lt;Fraction of day&gt; equivalent to the <see cref="DateTime">DateTime</see> instance.</returns>
+		/// <summary>Calculates a date represented as &lt;Julian date&gt;.&lt;Fraction of day&gt; from a <see cref="DateTime"/> instance.</summary>
+		/// <param name="date"><see cref="DateTime"/> instance.</param>
+		/// <returns>The date represented as &lt;Julian date&gt;.&lt;Fraction of day&gt; equivalent to the <see cref="DateTime"/> instance.</returns>
 		public static double ToJulianCalendar(DateTime date)
 		{
 			int year = date.Year;
@@ -70,11 +66,9 @@ namespace netDxf.Units
 			return b + c + d + 1720995 + fraction;
 		}
 
-		/// <summary>
-		/// Calculates the <see cref="DateTime">DateTime</see> from a date represented as &lt;Julian date&gt;&lt;.Fraction of day&gt;.
-		/// </summary>
+		/// <summary>Calculates the <see cref="DateTime"/> from a date represented as &lt;Julian date&gt;&lt;.Fraction of day&gt;.</summary>
 		/// <param name="date">A date represented as &lt;Julian date&gt;.&lt;Fraction of day&gt;.</param>
-		/// <returns>The <see cref="DateTime">DateTime</see> equivalent to the Julian date.</returns>
+		/// <returns>The <see cref="DateTime"/> equivalent to the <b>Julian</b> date.</returns>
 		public static DateTime FromJulianCalendar(double date)
 		{
 			if (date < 1721426 || date > 5373484)
@@ -109,11 +103,9 @@ namespace netDxf.Units
 			return new DateTime(years, months, days, hours, minutes, seconds, milliseconds);
 		}
 
-		/// <summary>
-		/// Calculates the <see cref="TimeSpan">TimeSpan</see> from a elapsed time represented as &lt;Number of days&gt;.&lt;Fraction of day&gt;.
-		/// </summary>
+		/// <summary>Calculates the <see cref="TimeSpan"/> from a elapsed time represented as &lt;Number of days&gt;.&lt;Fraction of day&gt;.</summary>
 		/// <param name="elapsed">An elapsed time represented as &lt;Number of days&gt;.&lt;Fraction of day&gt;.</param>
-		/// <returns>The <see cref="TimeSpan">TimeSpan</see> equivalent to the elapsed time.</returns>
+		/// <returns>The <see cref="TimeSpan"/> equivalent to the elapsed time.</returns>
 		public static TimeSpan EditingTime(double elapsed)
 		{
 			int days = (int)elapsed;

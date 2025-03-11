@@ -30,9 +30,7 @@ using netDxf.Tables;
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Represents a mesh grid <see cref="EntityObject">entity</see>.
-	/// </summary>
+	/// <summary>Represents a mesh grid <see cref="EntityObject">entity</see>.</summary>
 	public class PolygonMesh :
 		EntityObject
 	{
@@ -53,9 +51,7 @@ namespace netDxf.Entities
 
 		#region constructor
 
-		/// <summary>
-		/// Initializes a new instance of the <c>PolygonMesh</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="u">Number of vertexes along the U direction (local X axis).</param>
 		/// <param name="v">Number of vertexes along the V direction (local Y axis).</param>
 		/// <param name="vertexes">Array of UxV vertexes that represents the mesh grid.</param>
@@ -96,17 +92,13 @@ namespace netDxf.Entities
 
 		#region public properties
 
-		/// <summary>
-		/// Gets the mesh vertexes.
-		/// </summary>
+		/// <summary>Gets the mesh vertexes.</summary>
 		public Vector3[] Vertexes
 		{
 			get { return this.vertexes; }
 		}
 
-		/// <summary>
-		/// Set a PolygonMesh vertex by its indexes.
-		/// </summary>
+		/// <summary>Set a <see cref="PolygonMesh"/> vertex by its indexes.</summary>
 		/// <param name="i0">Index of the vertex in the U direction.</param>
 		/// <param name="i1">Index of the vertex in the V direction.</param>
 		/// <param name="vertex">A Vector3.</param>
@@ -118,9 +110,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets a PolygonMesh vertex by its indexes.
-		/// </summary>
+		/// <summary>Gets a <see cref="PolygonMesh"/> vertex by its indexes.</summary>
 		/// <param name="i0">Index of the vertex in the U direction.</param>
 		/// <param name="i1">Index of the vertex in the V direction.</param>
 		public Vector3 GetVertex(int i0, int i1)
@@ -133,25 +123,19 @@ namespace netDxf.Entities
 			return this.vertexes[0];
 		}
 
-		/// <summary>
-		/// Gets the number of vertexes along the U direction (local X axis).
-		/// </summary>
+		/// <summary>Gets the number of vertexes along the U direction (local X axis).</summary>
 		public short U
 		{
 			get { return this.u; }
 		}
 
-		/// <summary>
-		/// Gets the number of vertexes along the V direction (local Y axis).
-		/// </summary>
+		/// <summary>Gets the number of vertexes along the V direction (local Y axis).</summary>
 		public short V
 		{
 			get { return this.v; }
 		}
 
-		/// <summary>
-		/// Smooth surface U density.
-		/// </summary>
+		/// <summary>Smooth surface U density.</summary>
 		/// <remarks>Valid values range from 3 to 201.</remarks>
 		public short DensityU
 		{
@@ -166,9 +150,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Smooth surface V density
-		/// </summary>
+		/// <summary>Smooth surface V density</summary>
 		/// <remarks>Valid values range from 3 to 201.</remarks>
 		public short DensityV
 		{
@@ -183,9 +165,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets if the polygon mesh is closed along the U direction (local X axis).
-		/// </summary>
+		/// <summary>Gets or sets if the polygon mesh is closed along the U direction (local X axis).</summary>
 		public bool IsClosedInU
 		{
 			get { return this.flags.HasFlag(PolylineTypeFlags.ClosedPolylineOrClosedPolygonMeshInM); }
@@ -202,9 +182,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets if the polygon mesh is closed along the V direction (local Y axis).
-		/// </summary>
+		/// <summary>Gets or sets if the polygon mesh is closed along the V direction (local Y axis).</summary>
 		public bool IsClosedInV
 		{
 			get { return this.flags.HasFlag(PolylineTypeFlags.ClosedPolygonMeshInN); }
@@ -221,11 +199,9 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the polyline smooth type.
-		/// </summary>
+		/// <summary>Gets or sets the polyline smooth type.</summary>
 		/// <remarks>
-		/// The additional polygon meshes vertexes corresponding to the SplineFit will be created when writing the DXF file.
+		/// The additional polygon meshes vertexes corresponding to the SplineFit will be created when writing the <b>DXF</b> file.
 		/// </remarks>
 		public PolylineSmoothType SmoothType
 		{
@@ -244,11 +220,9 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets if the default SurfU value.
-		/// </summary>
+		/// <summary>Gets or sets if the default SurfU value.</summary>
 		/// <remarks>
-		/// This value is used by smoothed polygon meshes when they not belong to a DXF document and the density values are left at the default 0.<br/>
+		/// This value is used by smoothed polygon meshes when they not belong to a <b>DXF</b> document and the density values are left at the default 0.<br/>
 		/// The minimum vertexes generated for smoothed polygon meshes is 3.
 		/// </remarks>
 		public static short DefaultSurfU
@@ -264,11 +238,9 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets if the default SurfV value.
-		/// </summary>
+		/// <summary>Gets or sets if the default SurfV value.</summary>
 		/// <remarks>
-		/// This value is used by smoothed polygon meshes when they not belong to a DXF document and the density values are left at the default 0.<br/>
+		/// This value is used by smoothed polygon meshes when they not belong to a <b>DXF</b> document and the density values are left at the default 0.<br/>
 		/// The minimum vertexes generated for smoothed polygon meshes is 3.
 		/// </remarks>
 		public static short DefaultSurfV
@@ -288,9 +260,7 @@ namespace netDxf.Entities
 
 		#region internal properties
 
-		/// <summary>
-		/// Gets the polygon mesh flags.
-		/// </summary>
+		/// <summary>Gets the polygon mesh flags.</summary>
 		internal PolylineTypeFlags Flags
 		{
 			get { return this.flags; }
@@ -301,9 +271,7 @@ namespace netDxf.Entities
 
 		#region public methods
 
-		/// <summary>
-		/// Obtains a list of vertexes that represent the polygon mesh approximating the surface faces as necessary.
-		/// </summary>
+		/// <summary>Obtains a list of vertexes that represent the polygon mesh approximating the surface faces as necessary.</summary>
 		/// <returns>A list of vertexes that represent the mesh.</returns>
 		/// <remarks>
 		/// The minimum vertexes generated for smoothed polygon meshes is 3 in each direction.
@@ -325,9 +293,7 @@ namespace netDxf.Entities
 			return this.MeshVertexes(precisionU, precisionV);
 		}
 
-		/// <summary>
-		/// Obtains a list of vertexes that represent the polygon mesh approximating the surface faces as necessary.
-		/// </summary>
+		/// <summary>Obtains a list of vertexes that represent the polygon mesh approximating the surface faces as necessary.</summary>
 		/// <param name="precisionU">Number of vertexes created along the U direction.</param>
 		/// <param name="precisionV">Number of vertexes created along the V direction.</param>
 		/// <returns>A list of vertexes that represent the mesh.</returns>
@@ -454,9 +420,7 @@ namespace netDxf.Entities
 			return ocsVertexes;
 		}
 
-		/// <summary>
-		/// Converts the actual polygon mesh into a mesh entity approximating the surface faces as necessary.
-		/// </summary>
+		/// <summary>Converts the actual polygon mesh into a mesh entity approximating the surface faces as necessary.</summary>
 		/// <returns>A <see cref="Mesh">Mesh entity</see>.</returns>
 		public Mesh ToMesh()
 		{
@@ -466,9 +430,7 @@ namespace netDxf.Entities
 			return this.ToMesh(precisionU, precisionV);
 		}
 
-		/// <summary>
-		/// Converts the actual polygon mesh into a mesh entity approximating the surface faces as necessary.
-		/// </summary>
+		/// <summary>Converts the actual polygon mesh into a mesh entity approximating the surface faces as necessary.</summary>
 		/// <param name="precisionU">Number of vertexes created along the U direction.</param>
 		/// <param name="precisionV">Number of vertexes created along the V direction.</param>
 		/// <returns>A <see cref="Mesh">Mesh entity</see>.</returns>
@@ -537,9 +499,7 @@ namespace netDxf.Entities
 			return new Mesh(meshVertexes, faces);
 		}
 
-		/// <summary>
-		/// Decompose the actual polygon mesh into <see cref="Face3D">faces 3D</see>.
-		/// </summary>
+		/// <summary>Decompose the actual polygon mesh into <see cref="Face3D">faces 3D</see>.</summary>
 		/// <returns>A list of <see cref="Face3D">faces 3D</see> that made up the polygon mesh.</returns>
 		public List<Face3D> Explode()
 		{
@@ -606,12 +566,7 @@ namespace netDxf.Entities
 
 		#region overrides
 
-		/// <summary>
-		/// Moves, scales, and/or rotates the current entity given a 3x3 transformation matrix and a translation vector.
-		/// </summary>
-		/// <param name="transformation">Transformation matrix.</param>
-		/// <param name="translation">Translation vector.</param>
-		/// <remarks>Matrix3 adopts the convention of using column vectors to represent a transformation matrix.</remarks>
+		/// <inheritdoc/>
 		public override void TransformBy(Matrix3 transformation, Vector3 translation)
 		{
 			for (int i = 0; i < this.vertexes.Length; i++)
@@ -627,10 +582,7 @@ namespace netDxf.Entities
 			this.Normal = newNormal;
 		}
 
-		/// <summary>
-		/// Creates a new PolygonMesh that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new PolygonMesh that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override object Clone()
 		{
 			PolygonMesh entity = new PolygonMesh(this.u, this.v, this.vertexes)

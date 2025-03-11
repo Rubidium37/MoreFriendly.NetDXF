@@ -119,6 +119,7 @@ namespace netDxf.Collections
 
 		#region public properties
 
+		/// <inheritdoc/>
 		public TValue this[TKey key]
 		{
 			get { return this.innerDictionary[key]; }
@@ -143,21 +144,25 @@ namespace netDxf.Collections
 			}
 		}
 
+		/// <inheritdoc/>
 		public ICollection<TKey> Keys
 		{
 			get { return this.innerDictionary.Keys; }
 		}
 
+		/// <inheritdoc/>
 		public ICollection<TValue> Values
 		{
 			get { return this.innerDictionary.Values; }
 		}
 
+		/// <inheritdoc/>
 		public int Count
 		{
 			get { return this.innerDictionary.Count; }
 		}
 
+		/// <inheritdoc/>
 		public bool IsReadOnly
 		{
 			get { return false; }
@@ -167,6 +172,7 @@ namespace netDxf.Collections
 
 		#region public methods
 
+		/// <inheritdoc/>
 		public void Add(TKey key, TValue value)
 		{
 			KeyValuePair<TKey, TValue> add = new KeyValuePair<TKey, TValue>(key, value);
@@ -183,6 +189,7 @@ namespace netDxf.Collections
 			this.Add(item.Key, item.Value);
 		}
 
+		/// <inheritdoc/>
 		public bool Remove(TKey key)
 		{
 			if (!this.innerDictionary.ContainsKey(key))
@@ -212,6 +219,7 @@ namespace netDxf.Collections
 			return this.Remove(item.Key);
 		}
 
+		/// <inheritdoc/>
 		public void Clear()
 		{
 			TKey[] keys = new TKey[this.innerDictionary.Count];
@@ -227,6 +235,7 @@ namespace netDxf.Collections
 			return ((IDictionary<TKey, TValue>)this.innerDictionary).Contains(item);
 		}
 
+		/// <inheritdoc/>
 		public bool ContainsKey(TKey key)
 		{
 			return this.innerDictionary.ContainsKey(key);
@@ -237,6 +246,7 @@ namespace netDxf.Collections
 			return this.innerDictionary.ContainsValue(value);
 		}
 
+		/// <inheritdoc/>
 		public bool TryGetValue(TKey key, out TValue value)
 		{
 			return this.innerDictionary.TryGetValue(key, out value);
@@ -247,6 +257,7 @@ namespace netDxf.Collections
 			((IDictionary<TKey, TValue>)this.innerDictionary).CopyTo(array, arrayIndex);
 		}
 
+		/// <inheritdoc/>
 		public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
 		{
 			return this.innerDictionary.GetEnumerator();

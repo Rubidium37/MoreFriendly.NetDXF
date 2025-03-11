@@ -27,9 +27,7 @@ using System;
 
 namespace netDxf.Tables
 {
-	/// <summary>
-	/// Represents a shape linetype segment.
-	/// </summary>
+	/// <summary>Represents a shape linetype segment.</summary>
 	public class LinetypeShapeSegment :
 		LinetypeSegment
 	{
@@ -64,40 +62,34 @@ namespace netDxf.Tables
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of the <c>LinetypeShapeSegment</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="name">Shape name of the linetype segment.</param>
 		/// <param name="style">File where the shape of the linetype segment is defined.</param>
 		/// <remarks>
 		/// The shape must be defined in the .shx shape definitions file.<br />
-		/// The DXF instead of saving the shape name, as the Shape entity or the shape linetype segments definition in a .lin file,
-		/// it stores the shape number. Therefore when saving a DXF file the shape number will be obtained reading the .shp file.<br />
+		/// The <b>DXF</b> instead of saving the shape name, as the Shape entity or the shape linetype segments definition in a .lin file,
+		/// it stores the shape number. Therefore when saving a <b>DXF</b> file the shape number will be obtained reading the .shp file.<br />
 		/// It is required that the equivalent .shp file to be also present in the same folder or one of the support folders defined in the DxfDocument.
 		/// </remarks>
 		public LinetypeShapeSegment(string name, ShapeStyle style) : this(name, style, 1.0, Vector2.Zero, LinetypeSegmentRotationType.Relative, 0.0, 1.0)
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>LinetypeShapeSegment</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="name">Shape name of the linetype segment.</param>
 		/// <param name="style">File where the shape of the linetype segment is defined.</param>
 		/// <param name="length">Dash, dot, or space length of the linetype segment.</param>
 		/// <remarks>
 		/// The shape must be defined in the .shx shape definitions file.<br />
-		/// The DXF instead of saving the shape name, as the Shape entity or the shape linetype segments definition in a .lin file,
-		/// it stores the shape number. Therefore when saving a DXF file the shape number will be obtained reading the .shp file.<br />
+		/// The <b>DXF</b> instead of saving the shape name, as the Shape entity or the shape linetype segments definition in a .lin file,
+		/// it stores the shape number. Therefore when saving a <b>DXF</b> file the shape number will be obtained reading the .shp file.<br />
 		/// It is required that the equivalent .shp file to be also present in the same folder or one of the support folders defined in the DxfDocument.
 		/// </remarks>
 		public LinetypeShapeSegment(string name, ShapeStyle style, double length) : this(name, style, length, Vector2.Zero, LinetypeSegmentRotationType.Relative, 0.0, 1.0)
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>LinetypeShapeSegment</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="name">Shape name of the linetype segment.</param>
 		/// <param name="style">File where the shape of the linetype segment is defined.</param>
 		/// <param name="length">Dash, dot, or space length of the linetype segment.</param>
@@ -107,8 +99,8 @@ namespace netDxf.Tables
 		/// <param name="scale">Scale of the shape.</param>
 		/// <remarks>
 		/// The shape must be defined in the .shx shape definitions file.<br />
-		/// The DXF instead of saving the shape name, as the Shape entity or the shape linetype segments definition in a .lin file,
-		/// it stores the shape number. Therefore when saving a DXF file the shape number will be obtained reading the .shp file.<br />
+		/// The <b>DXF</b> instead of saving the shape name, as the Shape entity or the shape linetype segments definition in a .lin file,
+		/// it stores the shape number. Therefore when saving a <b>DXF</b> file the shape number will be obtained reading the .shp file.<br />
 		/// It is required that the equivalent .shp file to be also present in the same folder or one of the support folders defined in the DxfDocument.
 		/// </remarks>
 		public LinetypeShapeSegment(string name, ShapeStyle style, double length, Vector2 offset, LinetypeSegmentRotationType rotationType, double rotation, double scale)
@@ -130,13 +122,11 @@ namespace netDxf.Tables
 
 		#region public properties
 
-		/// <summary>
-		/// Gets or sets the name of the shape.
-		/// </summary>
+		/// <summary>Gets or sets the name of the shape.</summary>
 		/// <remarks>
 		/// The shape must be defined in the .shx shape definitions file.<br />
-		/// The DXF instead of saving the shape name, as the Shape entity or the shape linetype segments definition in a .lin file,
-		/// it stores the shape number. Therefore when saving a DXF file the shape number will be obtained reading the .shx file.
+		/// The <b>DXF</b> instead of saving the shape name, as the Shape entity or the shape linetype segments definition in a .lin file,
+		/// it stores the shape number. Therefore when saving a <b>DXF</b> file the shape number will be obtained reading the .shx file.
 		/// </remarks>
 		public string Name
 		{
@@ -151,9 +141,7 @@ namespace netDxf.Tables
 			}
 		}
 
-		/// <summary>
-		/// Gets the shape style.
-		/// </summary>
+		/// <summary>Gets the shape style.</summary>
 		/// <remarks>
 		/// It is required that the equivalent .shp file to be also present in the same folder or one of the support folders defined in the DxfDocument.
 		/// </remarks>
@@ -170,36 +158,28 @@ namespace netDxf.Tables
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the shift of the shape along the line.
-		/// </summary>
+		/// <summary>Gets or sets the shift of the shape along the line.</summary>
 		public Vector2 Offset
 		{
 			get { return this.offset; }
 			set { this.offset = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the type of rotation defined by the rotation value upright, relative, or absolute.
-		/// </summary>
+		/// <summary>Gets or sets the type of rotation defined by the rotation value upright, relative, or absolute.</summary>
 		public LinetypeSegmentRotationType RotationType
 		{
 			get { return this.rotationType; }
 			set { this.rotationType = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the angle in degrees of the shape.
-		/// </summary>
+		/// <summary>Gets or sets the angle in degrees of the shape.</summary>
 		public double Rotation
 		{
 			get { return this.rotation; }
 			set { this.rotation = MathHelper.NormalizeAngle(value); }
 		}
 
-		/// <summary>
-		/// Gets or sets the scale of the shape relative to the scale of the line type.
-		/// </summary>
+		/// <summary>Gets or sets the scale of the shape relative to the scale of the line type.</summary>
 		public double Scale
 		{
 			get { return this.scale; }
@@ -210,10 +190,7 @@ namespace netDxf.Tables
 
 		#region overrides
 
-		/// <summary>
-		/// Creates a new <c>LinetypeShapeSegment</c> that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new <c>LinetypeShapeSegment</c> that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override object Clone()
 		{
 			return new LinetypeShapeSegment(this.name, (ShapeStyle)this.style.Clone(), this.Length)

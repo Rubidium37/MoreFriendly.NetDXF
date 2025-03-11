@@ -29,9 +29,7 @@ using netDxf.Tables;
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Represents a shape entity.
-	/// </summary>
+	/// <summary>Represents a shape entity.</summary>
 	public class Shape :
 		EntityObject
 	{
@@ -68,9 +66,7 @@ namespace netDxf.Entities
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Shape</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="name">Name of the shape which geometry is defined in the shape <see cref="ShapeStyle">style</see>.</param>
 		/// <param name="style">Shape <see cref="ShapeStyle">style</see>.</param>
 		public Shape(string name, ShapeStyle style)
@@ -78,9 +74,7 @@ namespace netDxf.Entities
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Shape</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="name">Name of the shape which geometry is defined in the shape <see cref="ShapeStyle">style</see>.</param>
 		/// <param name="style">Shape <see cref="ShapeStyle">style</see>.</param>
 		/// <param name="position">Shape insertion point.</param>
@@ -111,9 +105,7 @@ namespace netDxf.Entities
 
 		#region public properties
 
-		/// <summary>
-		/// Gets the shape name.
-		/// </summary>
+		/// <summary>Gets the shape name.</summary>
 		public string Name
 		{
 			get { return this.name; }
@@ -128,9 +120,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets the <see cref="ShapeStyle">shape style</see>.
-		/// </summary>
+		/// <summary>Gets the <see cref="ShapeStyle">shape style</see>.</summary>
 		public ShapeStyle Style
 		{
 			get { return this.style; }
@@ -144,22 +134,18 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the shape <see cref="Vector3">insertion point</see> in world coordinates.
-		/// </summary>
+		/// <summary>Gets or sets the shape <see cref="Vector3">insertion point</see> in world coordinates.</summary>
 		public Vector3 Position
 		{
 			get { return this.position; }
 			set { this.position = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the size of the shape.
-		/// </summary>
+		/// <summary>Gets or sets the size of the shape.</summary>
 		/// <remarks>
 		/// The shape size is relative to the actual size of the shape definition.
 		/// The size value works as an scale value applied to the dimensions of the shape definition.
-		/// The DXF allows for negative values but that is the same as rotating the shape 180 degrees.<br />
+		/// The <b>DXF</b> allows for negative values but that is the same as rotating the shape 180 degrees.<br />
 		/// Size values must be greater than zero. Default: 1.0.
 		/// </remarks>
 		public double Size
@@ -175,27 +161,21 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the shape rotation in degrees.
-		/// </summary>
+		/// <summary>Gets or sets the shape rotation in degrees.</summary>
 		public double Rotation
 		{
 			get { return this.rotation; }
 			set { this.rotation = MathHelper.NormalizeAngle(value); }
 		}
 
-		/// <summary>
-		/// Gets or sets the shape oblique angle in degrees.
-		/// </summary>
+		/// <summary>Gets or sets the shape oblique angle in degrees.</summary>
 		public double ObliqueAngle
 		{
 			get { return this.obliqueAngle; }
 			set { this.obliqueAngle = MathHelper.NormalizeAngle(value); }
 		}
 
-		/// <summary>
-		/// Gets or sets the shape width factor.
-		/// </summary>
+		/// <summary>Gets or sets the shape width factor.</summary>
 		/// <remarks>Width factor values cannot be zero. Default: 1.0.</remarks>
 		public double WidthFactor
 		{
@@ -210,9 +190,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or set the shape thickness.
-		/// </summary>
+		/// <summary>Gets or set the shape thickness.</summary>
 		public double Thickness
 		{
 			get { return this.thickness; }
@@ -223,12 +201,7 @@ namespace netDxf.Entities
 
 		#region overrides
 
-		/// <summary>
-		/// Moves, scales, and/or rotates the current entity given a 3x3 transformation matrix and a translation vector.
-		/// </summary>
-		/// <param name="transformation">Transformation matrix.</param>
-		/// <param name="translation">Translation vector.</param>
-		/// <remarks>Matrix3 adopts the convention of using column vectors to represent a transformation matrix.</remarks>
+		/// <inheritdoc/>
 		public override void TransformBy(Matrix3 transformation, Vector3 translation)
 		{
 			bool mirrorShape;
@@ -322,10 +295,7 @@ namespace netDxf.Entities
 			this.ObliqueAngle = mirrorShape ? -newObliqueAngle : newObliqueAngle;
 		}
 
-		/// <summary>
-		/// Creates a new Shape that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new Shape that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override object Clone()
 		{
 			Shape entity = new Shape(this.name, (ShapeStyle)this.style.Clone())

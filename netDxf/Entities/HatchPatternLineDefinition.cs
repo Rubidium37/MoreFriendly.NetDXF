@@ -29,9 +29,7 @@ using netDxf.Tables;
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Defines a single line thats is part of a <see cref="HatchPattern">hatch pattern</see>.
-	/// </summary>
+	/// <summary>Defines a single line thats is part of a <see cref="HatchPattern">hatch pattern</see>.</summary>
 	public class HatchPatternLineDefinition :
 		ICloneable
 	{
@@ -46,9 +44,7 @@ namespace netDxf.Entities
 
 		#region constructor
 
-		/// <summary>
-		/// Initializes a new instance of the <c>HatchPatternLineDefinition</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		public HatchPatternLineDefinition()
 		{
 			this.angle = 0.0;
@@ -61,27 +57,21 @@ namespace netDxf.Entities
 
 		#region public properties
 
-		/// <summary>
-		/// Gets or sets the angle of the line.
-		/// </summary>
+		/// <summary>Gets or sets the angle of the line.</summary>
 		public double Angle
 		{
 			get { return this.angle; }
 			set { this.angle = MathHelper.NormalizeAngle(value); }
 		}
 
-		/// <summary>
-		/// Gets or sets the origin of the line.
-		/// </summary>
+		/// <summary>Gets or sets the origin of the line.</summary>
 		public Vector2 Origin
 		{
 			get { return this.origin; }
 			set { this.origin = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the local displacements between lines of the same family.
-		/// </summary>
+		/// <summary>Gets or sets the local displacements between lines of the same family.</summary>
 		/// <remarks>
 		/// The Delta.X value indicates the displacement between members of the family in the direction of the line. It is used only for dashed lines.
 		/// The Delta.Y value indicates the spacing between members of the family; that is, it is measured perpendicular to the lines.
@@ -92,9 +82,7 @@ namespace netDxf.Entities
 			set { this.delta = value; }
 		}
 
-		/// <summary>
-		/// Gets he dash pattern of the line it is equivalent as the segments of a <see cref="Linetype">Linetype</see>.
-		/// </summary>
+		/// <summary>Gets he dash pattern of the line it is equivalent as the segments of a <see cref="Linetype"/>.</summary>
 		/// <remarks>
 		/// Positive values means solid segments and negative values means spaces (one entry per element).
 		/// </remarks>
@@ -107,10 +95,7 @@ namespace netDxf.Entities
 
 		#region overrides
 
-		/// <summary>
-		/// Creates a new HatchPatternLineDefinition that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new HatchPatternLineDefinition that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public object Clone()
 		{
 			HatchPatternLineDefinition copy = new HatchPatternLineDefinition

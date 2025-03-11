@@ -27,9 +27,7 @@ using netDxf.Tables;
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Represents a line <see cref="EntityObject">entity</see>.
-	/// </summary>
+	/// <summary>Represents a line <see cref="EntityObject">entity</see>.</summary>
 	public class Line :
 		EntityObject
 	{
@@ -43,17 +41,13 @@ namespace netDxf.Entities
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Line</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		public Line()
 			: this(Vector3.Zero, Vector3.Zero)
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Line</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="startPoint">Line <see cref="Vector2">start point.</see></param>
 		/// <param name="endPoint">Line <see cref="Vector2">end point.</see></param>
 		public Line(Vector2 startPoint, Vector2 endPoint)
@@ -61,9 +55,7 @@ namespace netDxf.Entities
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Line</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="startPoint">Line start <see cref="Vector3">point.</see></param>
 		/// <param name="endPoint">Line end <see cref="Vector3">point.</see></param>
 		public Line(Vector3 startPoint, Vector3 endPoint)
@@ -78,35 +70,27 @@ namespace netDxf.Entities
 
 		#region public properties
 
-		/// <summary>
-		/// Gets or sets the line <see cref="Vector3">start point</see>.
-		/// </summary>
+		/// <summary>Gets or sets the line <see cref="Vector3">start point</see>.</summary>
 		public Vector3 StartPoint
 		{
 			get { return this.start; }
 			set { this.start = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the line <see cref="Vector3">end point</see>.
-		/// </summary>
+		/// <summary>Gets or sets the line <see cref="Vector3">end point</see>.</summary>
 		public Vector3 EndPoint
 		{
 			get { return this.end; }
 			set { this.end = value; }
 		}
 
-		/// <summary>
-		/// Gets the direction of the line.
-		/// </summary>
+		/// <summary>Gets the direction of the line.</summary>
 		public Vector3 Direction
 		{
 			get { return this.end - this.start; }
 		}
 
-		/// <summary>
-		/// Gets or sets the line thickness.
-		/// </summary>
+		/// <summary>Gets or sets the line thickness.</summary>
 		public double Thickness
 		{
 			get { return this.thickness; }
@@ -117,9 +101,7 @@ namespace netDxf.Entities
 
 		#region public properties
 
-		/// <summary>
-		/// Switch the line direction.
-		/// </summary>
+		/// <summary>Switch the line direction.</summary>
 		public void Reverse()
 		{
 			Vector3 tmp = this.start;
@@ -131,12 +113,7 @@ namespace netDxf.Entities
 
 		#region overrides
 
-		/// <summary>
-		/// Moves, scales, and/or rotates the current entity given a 3x3 transformation matrix and a translation vector.
-		/// </summary>
-		/// <param name="transformation">Transformation matrix.</param>
-		/// <param name="translation">Translation vector.</param>
-		/// <remarks>Matrix3 adopts the convention of using column vectors to represent a transformation matrix.</remarks>
+		/// <inheritdoc/>
 		public override void TransformBy(Matrix3 transformation, Vector3 translation)
 		{
 			Vector3 newNormal = transformation * this.Normal;
@@ -150,10 +127,7 @@ namespace netDxf.Entities
 			this.Normal = newNormal;
 		}
 
-		/// <summary>
-		/// Creates a new Line that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new Line that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override object Clone()
 		{
 			Line entity = new Line

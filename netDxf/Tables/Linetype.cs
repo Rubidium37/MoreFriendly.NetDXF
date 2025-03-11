@@ -34,9 +34,7 @@ using netDxf.Collections;
 
 namespace netDxf.Tables
 {
-	/// <summary>
-	/// Represents a line type. Simple and complex line types are supported.
-	/// </summary>
+	/// <summary>Represents a line type. Simple and complex line types are supported.</summary>
 	public class Linetype :
 		TableObject
 	{
@@ -103,48 +101,34 @@ namespace netDxf.Tables
 
 		#region constants
 
-		/// <summary>
-		/// ByLayer line type name.
-		/// </summary>
+		/// <summary>ByLayer line type name.</summary>
 		public const string ByLayerName = "ByLayer";
 
-		/// <summary>
-		/// ByBlock line type name.
-		/// </summary>
+		/// <summary>ByBlock line type name.</summary>
 		public const string ByBlockName = "ByBlock";
 
-		/// <summary>
-		/// Default line type name.
-		/// </summary>
+		/// <summary>Default line type name.</summary>
 		public const string DefaultName = "Continuous";
 
-		/// <summary>
-		/// Gets the ByLayer line type.
-		/// </summary>
+		/// <summary>Gets the <b>ByLayer</b> line type.</summary>
 		public static Linetype ByLayer
 		{
 			get { return new Linetype(ByLayerName); }
 		}
 
-		/// <summary>
-		/// Gets the ByBlock line type.
-		/// </summary>
+		/// <summary>Gets the <b>ByBlock</b> line type.</summary>
 		public static Linetype ByBlock
 		{
 			get { return new Linetype(ByBlockName); }
 		}
 
-		/// <summary>
-		/// Gets the predefined continuous line.
-		/// </summary>
+		/// <summary>Gets the predefined continuous line.</summary>
 		public static Linetype Continuous
 		{
 			get { return new Linetype(DefaultName, "Solid line"); }
 		}
 
-		/// <summary>
-		/// Gets a predefined center line.
-		/// </summary>
+		/// <summary>Gets a predefined center line.</summary>
 		public static Linetype Center
 		{
 			get
@@ -161,9 +145,7 @@ namespace netDxf.Tables
 			}
 		}
 
-		/// <summary>
-		/// Gets a predefined dash dot line.
-		/// </summary>
+		/// <summary>Gets a predefined dash dot line.</summary>
 		public static Linetype DashDot
 		{
 			get
@@ -180,9 +162,7 @@ namespace netDxf.Tables
 			}
 		}
 
-		/// <summary>
-		/// Gets a predefined dashed line
-		/// </summary>
+		/// <summary>Gets a predefined dashed line</summary>
 		public static Linetype Dashed
 		{
 			get
@@ -197,9 +177,7 @@ namespace netDxf.Tables
 			}
 		}
 
-		/// <summary>
-		/// Gets a predefined dot line
-		/// </summary>
+		/// <summary>Gets a predefined dot line</summary>
 		public static Linetype Dot
 		{
 			get
@@ -218,18 +196,14 @@ namespace netDxf.Tables
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Linetype</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="name">Line type name.</param>
 		public Linetype(string name)
 			: this(name, null, string.Empty, true)
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Linetype</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="name">Line type name.</param>
 		/// <param name="description">Line type description.</param>
 		public Linetype(string name, string description)
@@ -237,9 +211,7 @@ namespace netDxf.Tables
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Linetype</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="name">Line type name.</param>
 		/// <param name="segments">List of linetype segments.</param>
 		public Linetype(string name, IEnumerable<LinetypeSegment> segments)
@@ -247,9 +219,7 @@ namespace netDxf.Tables
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Linetype</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="name">Line type name.</param>
 		/// <param name="segments">List of linetype segments.</param>
 		/// <param name="description">Line type description.</param>
@@ -286,25 +256,19 @@ namespace netDxf.Tables
 
 		#region public properties
 
-		/// <summary>
-		/// Defines if the line type is defined by layer.
-		/// </summary>
+		/// <summary>Defines if the line type is defined by layer.</summary>
 		public bool IsByLayer
 		{
 			get { return this.Name.Equals(ByLayerName, StringComparison.InvariantCultureIgnoreCase); }
 		}
 
-		/// <summary>
-		/// Defines if the line type is defined by block.
-		/// </summary>
+		/// <summary>Defines if the line type is defined by block.</summary>
 		public bool IsByBlock
 		{
 			get { return this.Name.Equals(ByBlockName, StringComparison.InvariantCultureIgnoreCase); }
 		}
 
-		/// <summary>
-		/// Gets or sets the line type description.
-		/// </summary>
+		/// <summary>Gets or sets the line type description.</summary>
 		/// <remarks>
 		/// New line characters are not allowed.
 		/// </remarks>
@@ -314,17 +278,13 @@ namespace netDxf.Tables
 			set { this.description = string.IsNullOrEmpty(value) ? string.Empty : value; }
 		}
 
-		/// <summary>
-		/// Gets the list of line type segments.
-		/// </summary>
+		/// <summary>Gets the list of line type segments.</summary>
 		public ObservableCollection<LinetypeSegment> Segments
 		{
 			get { return this.segments; }
 		}
 
-		/// <summary>
-		/// Gets the owner of the actual DXF object.
-		/// </summary>
+		/// <summary>Gets the owner of the actual <b>DXF</b> object.</summary>
 		public new Linetypes Owner
 		{
 			get { return (Linetypes)base.Owner; }
@@ -335,9 +295,7 @@ namespace netDxf.Tables
 
 		#region public methods
 
-		/// <summary>
-		/// Gets the total length of the line type.
-		/// </summary>
+		/// <summary>Gets the total length of the line type.</summary>
 		public double Length()
 		{
 			double result = 0.0;
@@ -348,11 +306,9 @@ namespace netDxf.Tables
 			return result;
 		}
 
-		/// <summary>
-		/// Gets the list of linetype names defined in a LIN file.
-		/// </summary>
+		/// <summary>Gets the list of linetype names defined in a <b>LIN</b> file.</summary>
 		/// <param name="file">Linetype definitions file.</param>
-		/// <returns>List of linetype names contained in the specified LIN file.</returns>
+		/// <returns>List of linetype names contained in the specified <b>LIN</b> file.</returns>
 		public static List<string> NamesFromFile(string file)
 		{
 			if (string.IsNullOrEmpty(file))
@@ -392,12 +348,10 @@ namespace netDxf.Tables
 			return names;
 		}
 
-		/// <summary>
-		/// Creates a new line type from the definition in a LIN file.
-		/// </summary>
+		/// <summary>Creates a new line type from the definition in a <b>LIN</b> file.</summary>
 		/// <param name="file">Lin file where the definition is located.</param>
 		/// <param name="linetypeName">Name of the line type definition to read (ignore case).</param>
-		/// <returns>The linetype defined in the LIN file with the specified name, null if the linetype has not been found in the linetype definitions file.</returns>
+		/// <returns>The linetype defined in the <b>LIN</b> file with the specified name, <see langword="null"/> if the linetype has not been found in the linetype definitions file.</returns>
 		public static Linetype Load(string file, string linetypeName)
 		{
 
@@ -513,9 +467,7 @@ namespace netDxf.Tables
 			return linetype;
 		}
 
-		/// <summary>
-		/// Saves the current linetype to the specified file, if the file does not exist it creates a new one.
-		/// </summary>
+		/// <summary>Saves the current linetype to the specified file, if the file does not exist it creates a new one.</summary>
 		/// <param name="file">File where the current linetype will be saved.</param>
 		public void Save(string file)
 		{
@@ -701,41 +653,19 @@ namespace netDxf.Tables
 
 		#region overrides
 
-		/// <summary>
-		/// Checks if this instance has been referenced by other DxfObjects.
-		/// </summary>
-		/// <returns>
-		/// Returns true if this instance has been referenced by other DxfObjects, false otherwise.
-		/// It will always return false if this instance does not belong to a document.
-		/// </returns>
-		/// <remarks>
-		/// This method returns the same value as the HasReferences method that can be found in the TableObjects class.
-		/// </remarks>
+		/// <inheritdoc/>
 		public override bool HasReferences()
 		{
 			return this.Owner != null && this.Owner.HasReferences(this.Name);
 		}
 
-		/// <summary>
-		/// Gets the list of DxfObjects referenced by this instance.
-		/// </summary>
-		/// <returns>
-		/// A list of DxfObjectReference that contains the DxfObject referenced by this instance and the number of times it does.
-		/// It will return null if this instance does not belong to a document.
-		/// </returns>
-		/// <remarks>
-		/// This method returns the same list as the GetReferences method that can be found in the TableObjects class.
-		/// </remarks>
+		/// <inheritdoc/>
 		public override List<DxfObjectReference> GetReferences()
 		{
 			return this.Owner?.GetReferences(this.Name);
 		}
 
-		/// <summary>
-		/// Creates a new Linetype that is a copy of the current instance.
-		/// </summary>
-		/// <param name="newName">Linetype name of the copy.</param>
-		/// <returns>A new Linetype that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override TableObject Clone(string newName)
 		{
 			List<LinetypeSegment> items = new List<LinetypeSegment>(this.segments.Count);
@@ -754,10 +684,7 @@ namespace netDxf.Tables
 			return copy;
 		}
 
-		/// <summary>
-		/// Creates a new Linetype that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new Linetype that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override object Clone()
 		{
 			return this.Clone(this.Name);

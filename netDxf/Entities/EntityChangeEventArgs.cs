@@ -27,9 +27,7 @@ using System;
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Represents the arguments thrown when the reference of an entity is added ore removed from another entity.
-	/// </summary>
+	/// <summary>Represents the arguments thrown when the reference of an entity is added ore removed from another entity.</summary>
 	public class EntityChangeEventArgs :
 		EventArgs
 	{
@@ -41,9 +39,7 @@ namespace netDxf.Entities
 
 		#region constructor
 
-		/// <summary>
-		/// Initializes a new instance of <c>EntityChangeEventArgs</c>.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="item">The entity that is being added or removed from another entity.</param>
 		public EntityChangeEventArgs(EntityObject item)
 		{
@@ -54,9 +50,7 @@ namespace netDxf.Entities
 
 		#region public properties
 
-		/// <summary>
-		/// Gets the entity that is being added or removed.
-		/// </summary>
+		/// <summary>Gets the entity that is being added or removed.</summary>
 		public EntityObject Item
 		{
 			get { return this.item; }

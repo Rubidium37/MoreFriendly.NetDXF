@@ -27,115 +27,71 @@ using System;
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// viewport status flags
-	/// </summary>
+	/// <summary>viewport status flags</summary>
 	[Flags]
 	public enum ViewportStatusFlags
 	{
-		/// <summary>
-		/// Enables perspective mode.
-		/// </summary>
+		/// <summary>Enables perspective mode.</summary>
 		PerspectiveMode = 1,
 
-		/// <summary>
-		/// Enables front clipping.
-		/// </summary>
+		/// <summary>Enables front clipping.</summary>
 		FrontClipping = 2,
 
-		/// <summary>
-		/// Enables back clipping.
-		/// </summary>
+		/// <summary>Enables back clipping.</summary>
 		BackClipping = 4,
 
-		/// <summary>
-		/// Enables UCS follow.
-		/// </summary>
+		/// <summary>Enables <b>UCS</b> follow.</summary>
 		UcsFollow = 8,
 
-		/// <summary>
-		/// Enables front clip not at eye.
-		/// </summary>
+		/// <summary>Enables front clip not at eye.</summary>
 		FrontClipNotAtEye = 16,
 
-		/// <summary>
-		/// Enables UCS icon visibility.
-		/// </summary>
+		/// <summary>Enables <b>UCS</b> icon visibility.</summary>
 		UcsIconVisibility = 32,
 
-		/// <summary>
-		/// Enables UCS icon at origin.
-		/// </summary>
+		/// <summary>Enables <b>UCS</b> icon at origin.</summary>
 		UcsIconAtOrigin = 64,
 
-		/// <summary>
-		/// Enables fast zoom.
-		/// </summary>
+		/// <summary>Enables fast zoom.</summary>
 		FastZoom = 128,
 
-		/// <summary>
-		/// Enables snap mode.
-		/// </summary>
+		/// <summary>Enables snap mode.</summary>
 		SnapMode = 256,
 
-		/// <summary>
-		/// Enables grid mode.
-		/// </summary>
+		/// <summary>Enables grid mode.</summary>
 		GridMode = 512,
 
-		/// <summary>
-		/// Enables isometric snap style.
-		/// </summary>
+		/// <summary>Enables isometric snap style.</summary>
 		IsometricSnapStyle = 1024,
 
-		/// <summary>
-		/// Enables hide plot mode.
-		/// </summary>
+		/// <summary>Enables hide plot mode.</summary>
 		HidePlotMode = 2048,
 
-		/// <summary>
-		/// If set and IsoPairRight is not set, then isopair top is enabled. If both IsoPairTop and IsoPairRight are set, then isopair left is enabled
-		/// </summary>
+		/// <summary>If set and IsoPairRight is not set, then isopair top is enabled. If both IsoPairTop and IsoPairRight are set, then isopair left is enabled</summary>
 		IsoPairTop = 4096,
 
-		/// <summary>
-		/// If set and IsoPairTop is not set, then isopair right is enabled.
-		/// </summary>
+		/// <summary>If set and IsoPairTop is not set, then isopair right is enabled.</summary>
 		IsoPairRight = 8192,
 
-		/// <summary>
-		/// Enables viewport zoom locking.
-		/// </summary>
+		/// <summary>Enables viewport zoom locking.</summary>
 		ViewportZoomLocking = 16384,
 
-		/// <summary>
-		/// Currently always enabled.
-		/// </summary>
+		/// <summary>Currently always enabled.</summary>
 		CurrentlyAlwaysEnabled = 32768,
 
-		/// <summary>
-		/// Enables non-rectangular clipping.
-		/// </summary>
+		/// <summary>Enables non-rectangular clipping.</summary>
 		NonRectangularClipping = 65536,
 
-		/// <summary>
-		/// Turns the viewport off.
-		/// </summary>
+		/// <summary>Turns the viewport off.</summary>
 		ViewportOff = 131072,
 
-		/// <summary>
-		/// Enables the display of the grid beyond the drawing limits.
-		/// </summary>
+		/// <summary>Enables the display of the grid beyond the drawing limits.</summary>
 		DisplayGridBeyondDrawingLimits = 262144,
 
-		/// <summary>
-		/// Enable adaptive grid display.
-		/// </summary>
+		/// <summary>Enable adaptive grid display.</summary>
 		AdaptiveGridDisplay = 524288,
 
-		/// <summary>
-		/// Enables subdivision of the grid below the set grid spacing when the grid display is adaptive.
-		/// </summary>
+		/// <summary>Enables subdivision of the grid below the set grid spacing when the grid display is adaptive.</summary>
 		SubdivisionGridBelowSpacing = 1048576
 	}
 }

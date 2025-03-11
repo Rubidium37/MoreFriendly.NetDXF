@@ -27,9 +27,7 @@ using System;
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Represents an entry in a tolerance entity.
-	/// </summary>
+	/// <summary>Represents an entry in a tolerance entity.</summary>
 	/// <remarks>
 	/// Each entry can be made of up to two tolerance values and three datum references, plus a symbol that represents the geometric characteristics.
 	/// </remarks>
@@ -49,9 +47,7 @@ namespace netDxf.Entities
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of the <c>ToleranceEntry</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		public ToleranceEntry()
 		{
 			this.geometricSymbol = ToleranceGeometricSymbol.None;
@@ -66,54 +62,42 @@ namespace netDxf.Entities
 
 		#region public properties
 
-		/// <summary>
-		/// Gets or sets the geometric characteristics symbol.
-		/// </summary>
+		/// <summary>Gets or sets the geometric characteristics symbol.</summary>
 		public ToleranceGeometricSymbol GeometricSymbol
 		{
 			get { return this.geometricSymbol; }
 			set { this.geometricSymbol = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the first tolerance value.
-		/// </summary>
+		/// <summary>Gets or sets the first tolerance value.</summary>
 		public ToleranceValue Tolerance1
 		{
 			get { return this.tolerance1; }
 			set { this.tolerance1 = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the second tolerance value.
-		/// </summary>
+		/// <summary>Gets or sets the second tolerance value.</summary>
 		public ToleranceValue Tolerance2
 		{
 			get { return this.tolerance2; }
 			set { this.tolerance2 = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the first datum reference value.
-		/// </summary>
+		/// <summary>Gets or sets the first datum reference value.</summary>
 		public DatumReferenceValue Datum1
 		{
 			get { return this.datum1; }
 			set { this.datum1 = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the second datum reference value.
-		/// </summary>
+		/// <summary>Gets or sets the second datum reference value.</summary>
 		public DatumReferenceValue Datum2
 		{
 			get { return this.datum2; }
 			set { this.datum2 = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the third datum reference value.
-		/// </summary>
+		/// <summary>Gets or sets the third datum reference value.</summary>
 		public DatumReferenceValue Datum3
 		{
 			get { return this.datum3; }
@@ -124,10 +108,7 @@ namespace netDxf.Entities
 
 		#region ICloneable
 
-		/// <summary>
-		/// Creates a new ToleranceEntry that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new ToleranceEntry that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public object Clone()
 		{
 			return new ToleranceEntry

@@ -32,9 +32,7 @@ using netDxf.Units;
 
 namespace netDxf.Objects
 {
-	/// <summary>
-	/// Represents an image definition.
-	/// </summary>
+	/// <summary>Represents an image definition.</summary>
 	public class ImageDefinition :
 		TableObject
 	{
@@ -51,9 +49,7 @@ namespace netDxf.Objects
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of the <c>ImageDefinition</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="file">Image file name with full or relative path.</param>
 		/// <param name="width">Image width in pixels.</param>
 		/// <param name="horizontalResolution">Image horizontal resolution in pixels.</param>
@@ -65,13 +61,13 @@ namespace netDxf.Objects
 		/// The name of the file without extension will be used as the name of the image definition.
 		/// </para>
 		/// <para>
-		/// This is a generic constructor for all image formats supported by AutoCAD, note that not all AutoCAD versions support the same image formats.
+		/// This is a generic constructor for all image formats supported by <b>AutoCAD</b>, note that not all <b>AutoCAD</b> versions support the same image formats.
 		/// </para>
 		/// <para>
-		/// Note (this is from the ACAD docs): AutoCAD 2000, AutoCAD LT 2000, and later releases do not support LZW-compressed TIFF files,
-		/// with the exception of English language versions sold in the US and Canada.<br />
-		/// If you have TIFF files that were created using LZW compression and want to insert them into a drawing
-		/// you must save the TIFF files with LZW compression disabled.
+		/// Note (this is from the <b>AutoCAD</b> docs): <b>AutoCAD 2000</b>, <b>AutoCAD LT 2000</b>, and later releases do not support LZW-compressed <b>TIFF</b> files,
+		/// with the exception of English language versions sold in the <b>US</b> and Canada.<br />
+		/// If you have <b>TIFF</b> files that were created using <b>LZW</b> compression and want to insert them into a drawing
+		/// you must save the <b>TIFF</b> files with <b>LZW</b> compression disabled.
 		/// </para>
 		/// </remarks>
 		public ImageDefinition(string file, int width, double horizontalResolution, int height, double verticalResolution, ImageResolutionUnits units)
@@ -79,9 +75,7 @@ namespace netDxf.Objects
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>ImageDefinition</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="name">Image definition name.</param>
 		/// <param name="file">Image file name with full or relative path.</param>
 		/// <param name="width">Image width in pixels.</param>
@@ -94,13 +88,13 @@ namespace netDxf.Objects
 		/// The name assigned to the image definition must be unique.
 		/// </para>
 		/// <para>
-		/// This is a generic constructor for all image formats supported by AutoCAD, note that not all AutoCAD versions support the same image formats.
+		/// This is a generic constructor for all image formats supported by <b>AutoCAD</b>, note that not all <b>AutoCAD</b> versions support the same image formats.
 		/// </para>
 		/// <para>
-		/// Note (this is from the ACAD docs): AutoCAD 2000, AutoCAD LT 2000, and later releases do not support LZW-compressed TIFF files,
-		/// with the exception of English language versions sold in the US and Canada.<br />
-		/// If you have TIFF files that were created using LZW compression and want to insert them into a drawing
-		/// you must save the TIFF files with LZW compression disabled.
+		/// Note (this is from the <b>AutoCAD</b> docs): <b>AutoCAD 2000</b>, <b>AutoCAD LT 2000</b>, and later releases do not support LZW-compressed <b>TIFF</b> files,
+		/// with the exception of English language versions sold in the <b>US</b> and Canada.<br />
+		/// If you have <b>TIFF</b> files that were created using <b>LZW</b> compression and want to insert them into a drawing
+		/// you must save the <b>TIFF</b> files with <b>LZW</b> compression disabled.
 		/// </para>
 		/// </remarks>
 		public ImageDefinition(string name, string file, int width, double horizontalResolution, int height, double verticalResolution, ImageResolutionUnits units)
@@ -148,24 +142,22 @@ namespace netDxf.Objects
 
 #if NET4X
 
-		/// <summary>
-		/// Initializes a new instance of the <c>ImageDefinition</c> class. Only available for Net Framework 4.5 builds.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class. Only available for Net Framework 4.5 builds.</summary>
 		/// <param name="file">Image file name with full or relative path.</param>
 		/// <remarks>
 		/// <para>
 		/// The name of the file without extension will be used as the name of the image definition.
 		/// </para>
 		/// <para>
-		/// Supported image formats: BMP, JPG, PNG, TIFF.<br />
-		/// Even thought AutoCAD supports more image formats, this constructor is restricted to the ones the net framework supports in common with AutoCAD.
+		/// Supported image formats: <b>BMP</b>, <b>JPG</b>, <b>PNG</b>, <b>TIFF</b>.<br />
+		/// Even thought <b>AutoCAD</b> supports more image formats, this constructor is restricted to the ones the net framework supports in common with AutoCAD.
 		/// Use the generic constructor instead.
 		/// </para>
 		/// <para>
-		/// Note (this is from the ACAD docs): AutoCAD 2000, AutoCAD LT 2000, and later releases do not support LZW-compressed TIFF files,
-		/// with the exception of English language versions sold in the US and Canada.<br />
-		/// If you have TIFF files that were created using LZW compression and want to insert them into a drawing
-		/// you must save the TIFF files with LZW compression disabled.
+		/// Note (this is from the <b>AutoCAD</b> docs): <b>AutoCAD 2000</b>, <b>AutoCAD LT 2000</b>, and later releases do not support LZW-compressed <b>TIFF</b> files,
+		/// with the exception of English language versions sold in the <b>US</b> and Canada.<br />
+		/// If you have <b>TIFF</b> files that were created using <b>LZW</b> compression and want to insert them into a drawing
+		/// you must save the <b>TIFF</b> files with <b>LZW</b> compression disabled.
 		/// </para>
 		/// </remarks>
 		public ImageDefinition(string file)
@@ -173,9 +165,7 @@ namespace netDxf.Objects
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>ImageDefinition</c> class. Only available for Net Framework 4.5 builds.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class. Only available for Net Framework 4.5 builds.</summary>
 		/// <param name="name">Image definition name.</param>
 		/// <param name="file">Image file name with full or relative path.</param>
 		/// <remarks>
@@ -183,15 +173,15 @@ namespace netDxf.Objects
 		/// The name assigned to the image definition must be unique.
 		/// </para>
 		/// <para>
-		/// Supported image formats: BMP, JPG, PNG, TIFF.<br />
-		/// Even thought AutoCAD supports more image formats, this constructor is restricted to the ones the .net library supports in common with AutoCAD.
+		/// Supported image formats: <b>BMP</b>, <b>JPG</b>, <b>PNG</b>, <b>TIFF</b>.<br />
+		/// Even thought <b>AutoCAD</b> supports more image formats, this constructor is restricted to the ones the .net library supports in common with AutoCAD.
 		/// Use the generic constructor instead.
 		/// </para>
 		/// <para>
-		/// Note (this is from the ACAD docs): AutoCAD 2000, AutoCAD LT 2000, and later releases do not support LZW-compressed TIFF files,
-		/// with the exception of English language versions sold in the US and Canada.<br />
-		/// If you have TIFF files that were created using LZW compression and want to insert them into a drawing
-		/// you must save the TIFF files with LZW compression disabled.
+		/// Note (this is from the <b>AutoCAD</b> docs): <b>AutoCAD 2000</b>, <b>AutoCAD LT 2000</b>, and later releases do not support LZW-compressed <b>TIFF</b> files,
+		/// with the exception of English language versions sold in the <b>US</b> and Canada.<br />
+		/// If you have <b>TIFF</b> files that were created using <b>LZW</b> compression and want to insert them into a drawing
+		/// you must save the <b>TIFF</b> files with <b>LZW</b> compression disabled.
 		/// </para>
 		/// </remarks>
 		public ImageDefinition(string name, string file)
@@ -235,9 +225,7 @@ namespace netDxf.Objects
 
 		#region public properties
 
-		/// <summary>
-		/// Gets or sets the image file.
-		/// </summary>
+		/// <summary>Gets or sets the image file.</summary>
 		/// <remarks>
 		/// When changing the image file the other properties should also be modified accordingly to avoid distortions in the final image.
 		/// </remarks>
@@ -260,9 +248,7 @@ namespace netDxf.Objects
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the image width in pixels.
-		/// </summary>
+		/// <summary>Gets or sets the image width in pixels.</summary>
 		public int Width
 		{
 			get { return this.width; }
@@ -277,9 +263,7 @@ namespace netDxf.Objects
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the image height in pixels.
-		/// </summary>
+		/// <summary>Gets or sets the image height in pixels.</summary>
 		public int Height
 		{
 			get { return this.height; }
@@ -294,9 +278,7 @@ namespace netDxf.Objects
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the image horizontal resolution in pixels per unit.
-		/// </summary>
+		/// <summary>Gets or sets the image horizontal resolution in pixels per unit.</summary>
 		public double HorizontalResolution
 		{
 			get { return this.horizontalResolution; }
@@ -311,9 +293,7 @@ namespace netDxf.Objects
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the image vertical resolution in pixels per unit.
-		/// </summary>
+		/// <summary>Gets or sets the image vertical resolution in pixels per unit.</summary>
 		public double VerticalResolution
 		{
 			get { return this.verticalResolution; }
@@ -328,9 +308,7 @@ namespace netDxf.Objects
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the image resolution units.
-		/// </summary>
+		/// <summary>Gets or sets the image resolution units.</summary>
 		public ImageResolutionUnits ResolutionUnits
 		{
 			get { return this.resolutionUnits; }
@@ -357,9 +335,7 @@ namespace netDxf.Objects
 		}
 
 
-		/// <summary>
-		/// Gets the owner of the actual image definition.
-		/// </summary>
+		/// <summary>Gets the owner of the actual image definition.</summary>
 		public new ImageDefinitions Owner
 		{
 			get { return (ImageDefinitions)base.Owner; }
@@ -370,31 +346,13 @@ namespace netDxf.Objects
 
 		#region overrides
 
-		/// <summary>
-		/// Checks if this instance has been referenced by other DxfObjects.
-		/// </summary>
-		/// <returns>
-		/// Returns true if this instance has been referenced by other DxfObjects, false otherwise.
-		/// It will always return false if this instance does not belong to a document.
-		/// </returns>
-		/// <remarks>
-		/// This method returns the same value as the HasReferences method that can be found in the TableObjects class.
-		/// </remarks>
+		/// <inheritdoc/>
 		public override bool HasReferences()
 		{
 			return this.Owner != null && this.Owner.HasReferences(this.Name);
 		}
 
-		/// <summary>
-		/// Gets the list of DxfObjects referenced by this instance.
-		/// </summary>
-		/// <returns>
-		/// A list of DxfObjectReference that contains the DxfObject referenced by this instance and the number of times it does.
-		/// It will return null if this instance does not belong to a document.
-		/// </returns>
-		/// <remarks>
-		/// This method returns the same list as the GetReferences method that can be found in the TableObjects class.
-		/// </remarks>
+		/// <inheritdoc/>
 		public override List<DxfObjectReference> GetReferences()
 		{
 			if (this.Owner == null)
@@ -405,11 +363,7 @@ namespace netDxf.Objects
 			return this.Owner.GetReferences(this.Name);
 		}
 
-		/// <summary>
-		/// Creates a new ImageDefinition that is a copy of the current instance.
-		/// </summary>
-		/// <param name="newName">ImageDefinition name of the copy.</param>
-		/// <returns>A new ImageDefinition that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override TableObject Clone(string newName)
 		{
 			ImageDefinition copy = new ImageDefinition(newName, this.file, this.width, this.horizontalResolution, this.height, this.verticalResolution, this.resolutionUnits);
@@ -422,10 +376,7 @@ namespace netDxf.Objects
 			return copy;
 		}
 
-		/// <summary>
-		/// Creates a new ImageDefinition that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new ImageDefinition that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override object Clone()
 		{
 			return this.Clone(this.Name);

@@ -28,9 +28,7 @@ using netDxf.Tables;
 
 namespace netDxf.Collections
 {
-	/// <summary>
-	/// Represents a collection of viewports.
-	/// </summary>
+	/// <summary>Represents a collection of viewports.</summary>
 	/// <remarks>
 	/// Multiple Model viewports are not supported, there can be only one called "*Active".
 	/// </remarks>
@@ -61,37 +59,18 @@ namespace netDxf.Collections
 
 		#region override methods
 
-		/// <summary>
-		/// Adds an viewports to the list.
-		/// </summary>
-		/// <param name="vport"><see cref="VPort">VPort</see> to add to the list.</param>
-		/// <param name="assignHandle">Specifies if a handle needs to be generated for the viewport parameter.</param>
-		/// <returns>
-		/// If a viewports already exists with the same name as the instance that is being added the method returns the existing viewports,
-		/// if not it will return the new viewports.
-		/// </returns>
+		/// <inheritdoc/>
 		internal override VPort Add(VPort vport, bool assignHandle)
 		{
 			throw new ArgumentException("VPorts cannot be added to the collection. There is only one VPort in the list the \"*Active\".", nameof(vport));
 		}
 
-		/// <summary>
-		/// Removes a viewports.
-		/// </summary>
-		/// <param name="name"><see cref="VPort">VPort</see> name to remove from the document.</param>
-		/// <returns>True if the viewports has been successfully removed, or false otherwise.</returns>
-		/// <remarks>Reserved viewports or any other referenced by objects cannot be removed.</remarks>
+		/// <inheritdoc/>
 		public override bool Remove(string name)
 		{
 			throw new ArgumentException("VPorts cannot be removed from the collection.", nameof(name));
 		}
-
-		/// <summary>
-		/// Removes a viewports.
-		/// </summary>
-		/// <param name="item"><see cref="VPort">VPort</see> to remove from the document.</param>
-		/// <returns>True if the viewports has been successfully removed, or false otherwise.</returns>
-		/// <remarks>Reserved viewports or any other referenced by objects cannot be removed.</remarks>
+		/// <inheritdoc/>
 		public override bool Remove(VPort item)
 		{
 			throw new ArgumentException("VPorts cannot be removed from the collection.", nameof(item));

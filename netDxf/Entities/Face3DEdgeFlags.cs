@@ -27,35 +27,23 @@ using System;
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Defines the Face3D hidden edges.
-	/// </summary>
+	/// <summary>Defines the <see cref="Face3D"/> hidden edges.</summary>
 	[Flags]
 	public enum Face3DEdgeFlags
 	{
-		/// <summary>
-		/// No flags equivalent to all edges are visible.
-		/// </summary>
+		/// <summary>No flags equivalent to all edges are visible.</summary>
 		None = 0,
 
-		/// <summary>
-		/// First edge is invisible.
-		/// </summary>
+		/// <summary>First edge is invisible.</summary>
 		First = 1,
 
-		/// <summary>
-		/// Second edge is invisible.
-		/// </summary>
+		/// <summary>Second edge is invisible.</summary>
 		Second = 2,
 
-		/// <summary>
-		/// Third edge is invisible.
-		/// </summary>
+		/// <summary>Third edge is invisible.</summary>
 		Third = 4,
 
-		/// <summary>
-		/// Fourth edge is invisible.
-		/// </summary>
+		/// <summary>Fourth edge is invisible.</summary>
 		Fourth = 8
 	}
 }

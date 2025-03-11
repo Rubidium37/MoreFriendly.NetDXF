@@ -30,9 +30,7 @@ using netDxf.Tables;
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Represents a raster image <see cref="EntityObject">entity</see>.
-	/// </summary>
+	/// <summary>Represents a raster image <see cref="EntityObject">entity</see>.</summary>
 	public class Image :
 		EntityObject
 	{
@@ -78,9 +76,7 @@ namespace netDxf.Entities
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Image</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="imageDefinition">Image definition.</param>
 		/// <param name="position">Image <see cref="Vector2">position</see> in world coordinates.</param>
 		/// <param name="size">Image <see cref="Vector2">size</see> in world coordinates.</param>
@@ -89,9 +85,7 @@ namespace netDxf.Entities
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Image</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="imageDefinition">Image definition.</param>
 		/// <param name="position">Image <see cref="Vector3">position</see> in world coordinates.</param>
 		/// <param name="size">Image <see cref="Vector2">size</see> in world coordinates.</param>
@@ -100,9 +94,7 @@ namespace netDxf.Entities
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Image</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="imageDefinition">Image definition.</param>
 		/// <param name="position">Image <see cref="Vector2">position</see> in world coordinates.</param>
 		/// <param name="width">Image width in world coordinates.</param>
@@ -112,9 +104,7 @@ namespace netDxf.Entities
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Image</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="imageDefinition">Image definition.</param>
 		/// <param name="position">Image <see cref="Vector3">position</see> in world coordinates.</param>
 		/// <param name="width">Image width in world coordinates.</param>
@@ -148,18 +138,14 @@ namespace netDxf.Entities
 
 		#region public properties
 
-		/// <summary>
-		/// Gets or sets the image <see cref="Vector3">position</see> in world coordinates.
-		/// </summary>
+		/// <summary>Gets or sets the image <see cref="Vector3">position</see> in world coordinates.</summary>
 		public Vector3 Position
 		{
 			get { return this.position; }
 			set { this.position = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the image <see cref="Vector2">U-vector</see>.
-		/// </summary>
+		/// <summary>Gets or sets the image <see cref="Vector2">U-vector</see>.</summary>
 		public Vector2 Uvector
 		{
 			get { return this.uvector; }
@@ -174,9 +160,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the image <see cref="Vector2">V-vector</see>.
-		/// </summary>
+		/// <summary>Gets or sets the image <see cref="Vector2">V-vector</see>.</summary>
 		public Vector2 Vvector
 		{
 			get { return this.vvector; }
@@ -191,9 +175,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the height of the image in drawing units.
-		/// </summary>
+		/// <summary>Gets or sets the height of the image in drawing units.</summary>
 		public double Height
 		{
 			get { return this.height; }
@@ -207,9 +189,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the width of the image in drawing units.
-		/// </summary>
+		/// <summary>Gets or sets the width of the image in drawing units.</summary>
 		public double Width
 		{
 			get { return this.width; }
@@ -223,9 +203,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the image rotation in degrees.
-		/// </summary>
+		/// <summary>Gets or sets the image rotation in degrees.</summary>
 		/// <remarks>The image rotation is the angle of the U-vector.</remarks>
 		public double Rotation
 		{
@@ -243,9 +221,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets the <see cref="ImageDefinition">image definition</see>.
-		/// </summary>
+		/// <summary>Gets the <see cref="ImageDefinition">image definition</see>.</summary>
 		public ImageDefinition Definition
 		{
 			get { return this.imageDefinition; }
@@ -259,18 +235,14 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the clipping state: false = off, true = on.
-		/// </summary>
+		/// <summary>Gets or sets the clipping state: <see langword="false"/> = off, <see langword="true"/> = on.</summary>
 		public bool Clipping
 		{
 			get { return this.clipping; }
 			set { this.clipping = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the brightness value (0-100; default = 50)
-		/// </summary>
+		/// <summary>Gets or sets the brightness value (0-100; default = 50)</summary>
 		public short Brightness
 		{
 			get { return this.brightness; }
@@ -284,9 +256,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the contrast value (0-100; default = 50)
-		/// </summary>
+		/// <summary>Gets or sets the contrast value (0-100; default = 50)</summary>
 		public short Contrast
 		{
 			get { return this.contrast; }
@@ -300,9 +270,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the fade value (0-100; default = 0)
-		/// </summary>
+		/// <summary>Gets or sets the fade value (0-100; default = 0)</summary>
 		public short Fade
 		{
 			get { return this.fade; }
@@ -316,21 +284,17 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the image display options.
-		/// </summary>
+		/// <summary>Gets or sets the image display options.</summary>
 		public ImageDisplayFlags DisplayOptions
 		{
 			get { return this.displayOptions; }
 			set { this.displayOptions = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the image clipping boundary.
-		/// </summary>
+		/// <summary>Gets or sets the image clipping boundary.</summary>
 		/// <remarks>
 		/// The vertexes coordinates of the clipping boundary are expressed in local coordinates of the image in pixels.
-		/// Set as null to restore the default clipping boundary, full image.
+		/// Set as <see langword="null"/> to restore the default clipping boundary, full image.
 		/// </remarks>
 		public ClippingBoundary ClippingBoundary
 		{
@@ -342,12 +306,7 @@ namespace netDxf.Entities
 
 		#region overrides
 
-		/// <summary>
-		/// Moves, scales, and/or rotates the current entity given a 3x3 transformation matrix and a translation vector.
-		/// </summary>
-		/// <param name="transformation">Transformation matrix.</param>
-		/// <param name="translation">Translation vector.</param>
-		/// <remarks>Matrix3 adopts the convention of using column vectors to represent a transformation matrix.</remarks>
+		/// <inheritdoc/>
 		public override void TransformBy(Matrix3 transformation, Vector3 translation)
 		{
 			Vector3 newPosition = transformation * this.Position + translation;
@@ -403,10 +362,7 @@ namespace netDxf.Entities
 			this.Height = newHeight;
 		}
 
-		/// <summary>
-		/// Creates a new Image that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new Image that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override object Clone()
 		{
 			Image entity = new Image

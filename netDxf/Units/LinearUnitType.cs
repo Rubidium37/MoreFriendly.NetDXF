@@ -25,39 +25,25 @@
 
 namespace netDxf.Units
 {
-	/// <summary>
-	/// Linear units format for creating objects.
-	/// </summary>
+	/// <summary>Linear units format for creating objects.</summary>
 	public enum LinearUnitType
 	{
-		/// <summary>
-		/// Scientific.
-		/// </summary>
+		/// <summary>Scientific.</summary>
 		Scientific = 1,
 
-		/// <summary>
-		/// Decimal.
-		/// </summary>
+		/// <summary>Decimal.</summary>
 		Decimal = 2,
 
-		/// <summary>
-		/// Engineering.
-		/// </summary>
+		/// <summary>Engineering.</summary>
 		Engineering = 3,
 
-		/// <summary>
-		/// Architectural.
-		/// </summary>
+		/// <summary>Architectural.</summary>
 		Architectural = 4,
 
-		/// <summary>
-		/// Fractional.
-		/// </summary>
+		/// <summary>Fractional.</summary>
 		Fractional = 5,
 
-		/// <summary>
-		/// Microsoft Windows Desktop (decimal format using Control Panel settings for decimal separator and number grouping symbols).
-		/// </summary>
+		/// <summary>Microsoft Windows Desktop (decimal format using Control Panel settings for decimal separator and number grouping symbols).</summary>
 		WindowsDesktop = 6
 	}
 }

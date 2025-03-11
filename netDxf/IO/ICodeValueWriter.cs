@@ -27,19 +27,13 @@ namespace netDxf.IO
 {
 	internal interface ICodeValueWriter
 	{
-		/// <summary>
-		/// Gets the DXF code.
-		/// </summary>
+		/// <summary>Gets the <b>DXF</b> code.</summary>
 		short Code { get; }
 
-		/// <summary>
-		/// Gets the value.
-		/// </summary>
+		/// <summary>Gets the value.</summary>
 		object Value { get; }
 
-		/// <summary>
-		/// Gets the line that has been written.
-		/// </summary>
+		/// <summary>Gets the line that has been written.</summary>
 		long CurrentPosition { get; }
 
 		void Write(short code, object value);

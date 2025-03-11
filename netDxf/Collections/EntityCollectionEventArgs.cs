@@ -28,9 +28,7 @@ using netDxf.Entities;
 
 namespace netDxf.Collections
 {
-	/// <summary>
-	/// Represents the arguments thrown by the <c>EntityCollection</c> events.
-	/// </summary>
+	/// <summary>Represents the arguments thrown by the <see cref="EntityCollection"/> events.</summary>
 	public class EntityCollectionEventArgs :
 		EventArgs
 	{
@@ -43,9 +41,7 @@ namespace netDxf.Collections
 
 		#region constructor
 
-		/// <summary>
-		/// Initializes a new instance of <c>EntityCollectionEventArgs</c>.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="item">Item that is being added or removed from the collection.</param>
 		public EntityCollectionEventArgs(EntityObject item)
 		{
@@ -57,18 +53,14 @@ namespace netDxf.Collections
 
 		#region public properties
 
-		/// <summary>
-		/// Get the item that is being added or removed from the collection.
-		/// </summary>
+		/// <summary>Get the item that is being added or removed from the collection.</summary>
 		public EntityObject Item
 		{
 			get { return this.item; }
 		}
 
-		/// <summary>
-		/// Gets or sets if the operation must be canceled.
-		/// </summary>
-		/// <remarks>This property is used by the OnBeforeAdd and OnBeforeRemove events to cancel the add or remove operation.</remarks>
+		/// <summary>Gets or sets if the operation must be canceled.</summary>
+		/// <remarks>This property is used by the <see cref="EntityCollection.BeforeAddItem"/> and <see cref="EntityCollection.BeforeRemoveItem"/> events to cancel the add or remove operation.</remarks>
 		public bool Cancel
 		{
 			get { return this.cancel; }

@@ -31,29 +31,19 @@ namespace netDxf.Entities
 	[Flags]
 	public enum AttributeFlags
 	{
-		/// <summary>
-		/// No flags equivalent to Visible/Not constant/Not verify/Not Predefined.
-		/// </summary>
+		/// <summary>No flags equivalent to Visible/Not constant/Not verify/Not Predefined.</summary>
 		None = 0,
 
-		/// <summary>
-		/// Attribute is invisible (does not appear).
-		/// </summary>
+		/// <summary>Attribute is invisible (does not appear).</summary>
 		Hidden = 1,
 
-		/// <summary>
-		/// This is a constant attribute.
-		/// </summary>
+		/// <summary>This is a constant attribute.</summary>
 		Constant = 2,
 
-		/// <summary>
-		/// Verification is required on input of this attribute.
-		/// </summary>
+		/// <summary>Verification is required on input of this attribute.</summary>
 		Verify = 4,
 
-		/// <summary>
-		/// Attribute is preset (no prompt during insertion).
-		/// </summary>
+		/// <summary>Attribute is preset (no prompt during insertion).</summary>
 		Predefined = 8
 	}
 }

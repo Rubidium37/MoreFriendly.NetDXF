@@ -30,9 +30,7 @@ using netDxf.Collections;
 
 namespace netDxf.Tables
 {
-	/// <summary>
-	/// Represents a text style.
-	/// </summary>
+	/// <summary>Represents a text style.</summary>
 	public class TextStyle :
 		TableObject
 	{
@@ -53,19 +51,13 @@ namespace netDxf.Tables
 
 		#region constants
 
-		/// <summary>
-		/// Default text style name.
-		/// </summary>
+		/// <summary>Default text style name.</summary>
 		public const string DefaultName = "Standard";
 
-		/// <summary>
-		/// Default text style font.
-		/// </summary>
+		/// <summary>Default text style font.</summary>
 		public const string DefaultFont = "simplex.shx";
 
-		/// <summary>
-		/// Gets the default text style.
-		/// </summary>
+		/// <summary>Gets the default text style.</summary>
 		public static TextStyle Default
 		{
 			get { return new TextStyle(DefaultName, DefaultFont); }
@@ -75,9 +67,7 @@ namespace netDxf.Tables
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of the <c>TextStyle</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="name">Text style name.</param>
 		/// <param name="font">Text style font file name with full or relative path.</param>
 		public TextStyle(string name, string font)
@@ -85,9 +75,7 @@ namespace netDxf.Tables
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>TextStyle</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="name">Text style name.</param>
 		/// <param name="font">Text style font file name with full or relative path.</param>
 		/// <param name="checkName">Specifies if the style name has to be checked.</param>
@@ -123,26 +111,22 @@ namespace netDxf.Tables
 			this.fontStyle = FontStyle.Regular;
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>TextStyle</c> class exclusively to be used with true type fonts.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class exclusively to be used with <see langword="true"/> type fonts.</summary>
 		/// <param name="name">Text style name.</param>
-		/// <param name="fontFamily">True type font family name.</param>
-		/// <param name="fontStyle">True type font style.</param>
-		/// <remarks>This constructor is to be use only with true type fonts.</remarks>
+		/// <param name="fontFamily"><see langword="true"/> type font family name.</param>
+		/// <param name="fontStyle"><see langword="true"/> type font style.</param>
+		/// <remarks>This constructor is to be use only with <see langword="true"/> type fonts.</remarks>
 		public TextStyle(string name, string fontFamily, FontStyle fontStyle)
 			: this(name, fontFamily, fontStyle, true)
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>TextStyle</c> class exclusively to be used with true type fonts.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class exclusively to be used with <see langword="true"/> type fonts.</summary>
 		/// <param name="name">Text style name.</param>
-		/// <param name="fontFamily">True type font family name.</param>
-		/// <param name="fontStyle">True type font style</param>
+		/// <param name="fontFamily"><see langword="true"/> type font family name.</param>
+		/// <param name="fontStyle"><see langword="true"/> type font style</param>
 		/// <param name="checkName">Specifies if the style name has to be checked.</param>
-		/// <remarks>This constructor is to be use only with true type fonts.</remarks>
+		/// <remarks>This constructor is to be use only with <see langword="true"/> type fonts.</remarks>
 		internal TextStyle(string name, string fontFamily, FontStyle fontStyle, bool checkName)
 			: base(name, DxfObjectCode.TextStyle, checkName)
 		{
@@ -166,13 +150,11 @@ namespace netDxf.Tables
 
 		#region public properties
 
-		/// <summary>
-		/// Gets or sets the text style font file name.
-		/// </summary>
+		/// <summary>Gets or sets the text style font file name.</summary>
 		/// <remarks>
-		/// When this value is used for true type fonts should be present in the Font system folder.<br />
+		/// When this value is used for <see langword="true"/> type fonts should be present in the Font system folder.<br />
 		/// When the style does not contain any information for the file the font information will be saved in the extended data when saved to a DXF,
-		/// this is only applicable for true type fonts.
+		/// this is only applicable for <see langword="true"/> type fonts.
 		/// </remarks>
 		public string FontFile
 		{
@@ -197,10 +179,8 @@ namespace netDxf.Tables
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets an Asian-language Big Font file.
-		/// </summary>
-		/// <remarks>Only ACAD compiled shape SHX fonts are valid for creating Big Fonts.</remarks>
+		/// <summary>Gets or sets an <b>Asian</b>-language Big Font file.</summary>
+		/// <remarks>Only <b>AutoCAD</b> compiled shape <b>SHX</b> fonts are valid for creating Big Fonts.</remarks>
 		public string BigFont
 		{
 			get { return this.bigFont; }
@@ -232,14 +212,12 @@ namespace netDxf.Tables
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the true type font family name.
-		/// </summary>
+		/// <summary>Gets or sets the <see langword="true"/> type font family name.</summary>
 		/// <remarks>
 		/// When the font family name is manually specified the file font will not be used and it will be set to empty,
 		/// the font style will also we set to FontStyle.Regular.
 		/// In this case the font information will be stored in the style extended data when saved to a DXF.<br />
-		/// This value is only applicable for true type fonts.
+		/// This value is only applicable for <see langword="true"/> type fonts.
 		/// </remarks>
 		public string FontFamilyName
 		{
@@ -257,9 +235,7 @@ namespace netDxf.Tables
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the true type font style.
-		/// </summary>
+		/// <summary>Gets or sets the <see langword="true"/> type font style.</summary>
 		/// <remarks>
 		/// The font style value is ignored and will always return FontStyle.Regular when a font file has been specified.<br />
 		/// All styles may not be available for the current font family.
@@ -276,9 +252,7 @@ namespace netDxf.Tables
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the text height.
-		/// </summary>
+		/// <summary>Gets or sets the text height.</summary>
 		/// <remarks>Fixed text height; 0 if not fixed.</remarks>
 		public double Height
 		{
@@ -293,9 +267,7 @@ namespace netDxf.Tables
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the text width factor.
-		/// </summary>
+		/// <summary>Gets or sets the text width factor.</summary>
 		/// <remarks>Valid values range from 0.01 to 100. Default: 1.0.</remarks>
 		public double WidthFactor
 		{
@@ -310,9 +282,7 @@ namespace netDxf.Tables
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the font oblique angle in degrees.
-		/// </summary>
+		/// <summary>Gets or sets the font oblique angle in degrees.</summary>
 		/// <remarks>Valid values range from -85 to 85. Default: 0.0.</remarks>
 		public double ObliqueAngle
 		{
@@ -327,36 +297,28 @@ namespace netDxf.Tables
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the text is vertical.
-		/// </summary>
+		/// <summary>Gets or sets the text is vertical.</summary>
 		public bool IsVertical
 		{
 			get { return this.isVertical; }
 			set { this.isVertical = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets if the text is backward (mirrored in X).
-		/// </summary>
+		/// <summary>Gets or sets if the text is backward (mirrored in X).</summary>
 		public bool IsBackward
 		{
 			get { return this.isBackward; }
 			set { this.isBackward = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets if the text is upside down (mirrored in Y).
-		/// </summary>
+		/// <summary>Gets or sets if the text is upside down (mirrored in Y).</summary>
 		public bool IsUpsideDown
 		{
 			get { return this.isUpsideDown; }
 			set { this.isUpsideDown = value; }
 		}
 
-		/// <summary>
-		/// Gets the owner of the actual text style.
-		/// </summary>
+		/// <summary>Gets the owner of the actual text style.</summary>
 		public new TextStyles Owner
 		{
 			get { return (TextStyles)base.Owner; }
@@ -369,12 +331,10 @@ namespace netDxf.Tables
 
 #if NET4X
 
-		/// <summary>
-		/// Find the font family name of an specified TTF font file. Only available for Net Framework 4.5 builds.
-		/// </summary>
+		/// <summary>Find the font family name of an specified <b>TTF</b> font file. Only available for Net Framework 4.5 builds.</summary>
 		/// <param name="ttfFont">TTF font file.</param>
-		/// <returns>The font family name of the specified TTF font file.</returns>
-		/// <remarks>This method will return an empty string if the specified font is not found in its path or the system font folder or if it is not a valid TTF font.</remarks>
+		/// <returns>The font family name of the specified <b>TTF</b> font file.</returns>
+		/// <remarks>This method will return an empty string if the specified font is not found in its path or the system font folder or if it is not a valid <b>TTF</b> font.</remarks>
 		public static string TrueTypeFontFamilyName(string ttfFont)
 		{
 			if (string.IsNullOrEmpty(ttfFont))
@@ -415,41 +375,19 @@ namespace netDxf.Tables
 
 		#region overrides
 
-		/// <summary>
-		/// Checks if this instance has been referenced by other DxfObjects.
-		/// </summary>
-		/// <returns>
-		/// Returns true if this instance has been referenced by other DxfObjects, false otherwise.
-		/// It will always return false if this instance does not belong to a document.
-		/// </returns>
-		/// <remarks>
-		/// This method returns the same value as the HasReferences method that can be found in the TableObjects class.
-		/// </remarks>
+		/// <inheritdoc/>
 		public override bool HasReferences()
 		{
 			return this.Owner != null && this.Owner.HasReferences(this.Name);
 		}
 
-		/// <summary>
-		/// Gets the list of DxfObjects referenced by this instance.
-		/// </summary>
-		/// <returns>
-		/// A list of DxfObjectReference that contains the DxfObject referenced by this instance and the number of times it does.
-		/// It will return null if this instance does not belong to a document.
-		/// </returns>
-		/// <remarks>
-		/// This method returns the same list as the GetReferences method that can be found in the TableObjects class.
-		/// </remarks>
+		/// <inheritdoc/>
 		public override List<DxfObjectReference> GetReferences()
 		{
 			return this.Owner?.GetReferences(this.Name);
 		}
 
-		/// <summary>
-		/// Creates a new TextStyle that is a copy of the current instance.
-		/// </summary>
-		/// <param name="newName">TextStyle name of the copy.</param>
-		/// <returns>A new TextStyle that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override TableObject Clone(string newName)
 		{
 			TextStyle copy;
@@ -487,10 +425,7 @@ namespace netDxf.Tables
 			return copy;
 		}
 
-		/// <summary>
-		/// Creates a new TextStyle that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new TextStyle that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override object Clone()
 		{
 			return this.Clone(this.Name);

@@ -25,25 +25,17 @@
 
 namespace netDxf.Tables
 {
-	/// <summary>
-	/// Define the type of rotation specified by the rotation value of the text or shape linetype segment.
-	/// </summary>
+	/// <summary>Define the type of rotation specified by the rotation value of the text or shape linetype segment.</summary>
 	public enum LinetypeSegmentRotationType
 	{
-		/// <summary>
-		/// Specifies upright or easy-to-read text.
-		/// </summary>
+		/// <summary>Specifies upright or easy-to-read text.</summary>
 		/// <remarks>The dxf seems to store the rotation value only as relative or absolute, therefore upright and relative will be considered equivalent.</remarks>
 		Upright,
 
-		/// <summary>
-		/// Specifies relative or tangential rotation with respect to the line.
-		/// </summary>
+		/// <summary>Specifies relative or tangential rotation with respect to the line.</summary>
 		Relative,
 
-		/// <summary>
-		/// Specifies absolute rotation of the text with respect to the origin; that is, all text has the same rotation regardless of its position relative to the line.
-		/// </summary>
+		/// <summary>Specifies absolute rotation of the text with respect to the origin; that is, all text has the same rotation regardless of its position relative to the line.</summary>
 		Absolute
 	}
 }

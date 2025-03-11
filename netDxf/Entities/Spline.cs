@@ -30,9 +30,7 @@ using netDxf.Tables;
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Represents a spline curve <see cref="EntityObject">entity</see> (NURBS Non-Uniform Rational B-Splines).
-	/// </summary>
+	/// <summary>Represents a spline curve <see cref="EntityObject">entity</see> (NURBS Non-Uniform Rational B-Splines).</summary>
 	public class Spline :
 		EntityObject
 	{
@@ -59,9 +57,7 @@ namespace netDxf.Entities
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Spline</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="fitPoints">Spline fit points.</param>
 		/// <remarks>
 		/// The resulting spline curve will be created from a list of cubic bezier curves that passes through the specified fit points.
@@ -73,18 +69,14 @@ namespace netDxf.Entities
 			this.fitPoints = fitPoints.ToArray();
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Spline</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="curves">List of cubic bezier curves.</param>
 		public Spline(IEnumerable<BezierCurveQuadratic> curves)
 			: this(curves, 2)
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Spline</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="curves">List of cubic bezier curves.</param>
 		public Spline(IEnumerable<BezierCurveCubic> curves)
 			: this(curves, 3)
@@ -116,34 +108,28 @@ namespace netDxf.Entities
 			this.knots = ÇreateBezierKnotVector(this.controlPoints.Length, this.degree);
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Spline</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="controlPoints">Spline control points.</param>
-		/// <param name="weights">Spline control weights. Pass null to set the default weights as 1.0.</param>
+		/// <param name="weights">Spline control weights. Pass <see langword="null"/> to set the default weights as 1.0.</param>
 		/// <remarks>By default the degree of the spline is equal three.</remarks>
 		public Spline(IEnumerable<Vector3> controlPoints, IEnumerable<double> weights)
 			: this(controlPoints, weights, 3, false)
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Spline</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="controlPoints">Spline control points.</param>
-		/// <param name="weights">Spline control weights. Pass null to set the default weights as 1.0.</param>
+		/// <param name="weights">Spline control weights. Pass <see langword="null"/> to set the default weights as 1.0.</param>
 		/// <param name="degree">Degree of the spline curve. Valid values are 1 (linear), degree 2 (quadratic), degree 3 (cubic), and so on up to degree 10.</param>
 		public Spline(IEnumerable<Vector3> controlPoints, IEnumerable<double> weights, short degree)
 			: this(controlPoints, weights, degree, false)
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Spline</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="controlPoints">Spline control points.</param>
-		/// <param name="weights">Spline control weights. If null the weights vector will be automatically initialized with 1.0.</param>
-		/// <param name="closedPeriodic">Sets if the spline as periodic closed (default false).</param>
+		/// <param name="weights">Spline control weights. If <see langword="null"/> the weights vector will be automatically initialized with 1.0.</param>
+		/// <param name="closedPeriodic">Sets if the spline as periodic closed (default: <see langword="false"/>).</param>
 		/// <remarks>By default the degree of the spline is equal three.</remarks>
 		public Spline(IEnumerable<Vector3> controlPoints, IEnumerable<double> weights, bool closedPeriodic)
 			: this(controlPoints, weights, 3, closedPeriodic)
@@ -151,13 +137,11 @@ namespace netDxf.Entities
 		}
 
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Spline</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="controlPoints">Spline control points.</param>
-		/// <param name="weights">Spline control weights. If null the weights vector will be automatically initialized with 1.0.</param>
+		/// <param name="weights">Spline control weights. If <see langword="null"/> the weights vector will be automatically initialized with 1.0.</param>
 		/// <param name="degree">Degree of the spline curve. Valid values are 1 (linear), degree 2 (quadratic), degree 3 (cubic), and so on up to degree 10.</param>
-		/// <param name="closedPeriodic">Sets if the spline as periodic closed (default false).</param>
+		/// <param name="closedPeriodic">Sets if the spline as periodic closed (default: <see langword="false"/>).</param>
 		public Spline(IEnumerable<Vector3> controlPoints, IEnumerable<double> weights, short degree, bool closedPeriodic)
 			: base(EntityType.Spline, DxfObjectCode.Spline)
 		{
@@ -210,29 +194,25 @@ namespace netDxf.Entities
 			this.knots = CreateKnotVector(this.controlPoints.Length, this.degree, this.isClosedPeriodic);
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Spline</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="controlPoints">Spline control points.</param>
-		/// <param name="weigths">Spline control weights. If null the weights vector will be automatically initialized with 1.0.</param>
+		/// <param name="weigths">Spline control weights. If <see langword="null"/> the weights vector will be automatically initialized with 1.0.</param>
 		/// <param name="knots">Spline knot vector.</param>
 		/// <param name="degree">Degree of the spline curve. Valid values are 1 (linear), degree 2 (quadratic), degree 3 (cubic), and so on up to degree 10.</param>
-		/// <param name="closedPeriodic">Sets if the spline as periodic closed (default false).</param>
+		/// <param name="closedPeriodic">Sets if the spline as periodic closed (default: <see langword="false"/>).</param>
 		public Spline(IEnumerable<Vector3> controlPoints, IEnumerable<double> weigths, IEnumerable<double> knots, short degree, bool closedPeriodic)
 			: this(controlPoints, weigths, knots, degree, null, SplineCreationMethod.ControlPoints, closedPeriodic)
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Spline</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="controlPoints">Spline control points.</param>
-		/// <param name="weights">Spline control weights. If null the weights vector will be automatically initialized with 1.0.</param>
+		/// <param name="weights">Spline control weights. If <see langword="null"/> the weights vector will be automatically initialized with 1.0.</param>
 		/// <param name="knots">Spline knot vector.</param>
 		/// <param name="degree">Degree of the spline curve. Valid values are 1 (linear), degree 2 (quadratic), degree 3 (cubic), and so on up to degree 10.</param>
 		/// <param name="fitPoints">Spine fit points.</param>
 		/// <param name="method">Spline creation method.</param>
-		/// <param name="closedPeriodic">Sets if the spline as periodic closed (default false).</param>
+		/// <param name="closedPeriodic">Sets if the spline as periodic closed (default: <see langword="false"/>).</param>
 		internal Spline(IEnumerable<Vector3> controlPoints, IEnumerable<double> weights, IEnumerable<double> knots, short degree, IEnumerable<Vector3> fitPoints, SplineCreationMethod method, bool closedPeriodic)
 			: base(EntityType.Spline, DxfObjectCode.Spline)
 		{
@@ -331,17 +311,13 @@ namespace netDxf.Entities
 
 		#region public properties
 
-		/// <summary>
-		/// Gets the spline <see cref="Vector3">fit points</see> list.
-		/// </summary>
+		/// <summary>Gets the spline <see cref="Vector3">fit points</see> list.</summary>
 		public IReadOnlyList<Vector3> FitPoints
 		{
 			get { return this.fitPoints; }
 		}
 
-		/// <summary>
-		/// Gets or sets the spline curve start tangent.
-		/// </summary>
+		/// <summary>Gets or sets the spline curve start tangent.</summary>
 		/// <remarks>Only applicable to splines created with fit points.</remarks>
 		public Vector3? StartTangent
 		{
@@ -349,9 +325,7 @@ namespace netDxf.Entities
 			set { this.startTangent = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the spline curve end tangent.
-		/// </summary>
+		/// <summary>Gets or sets the spline curve end tangent.</summary>
 		/// <remarks>Only applicable to splines created with fit points.</remarks>
 		public Vector3? EndTangent
 		{
@@ -359,12 +333,10 @@ namespace netDxf.Entities
 			set { this.endTangent = value; }
 		}
 
-		/// <summary>
-		/// Gets or set the knot parameterization computational method.
-		/// </summary>
+		/// <summary>Gets or set the knot parameterization computational method.</summary>
 		/// <remarks>
 		/// Not usable. When initializing a Spline through a set of fit points, the resulting spline is approximated creating a list of cubic bezier curves.
-		/// It is only informative for splines that has been loaded from a DXF file.
+		/// It is only informative for splines that has been loaded from a <b>DXF</b> file.
 		/// </remarks>
 		public SplineKnotParameterization KnotParameterization
 		{
@@ -372,17 +344,13 @@ namespace netDxf.Entities
 			set { this.knotParameterization = value; }
 		}
 
-		/// <summary>
-		/// Gets the spline creation method.
-		/// </summary>
+		/// <summary>Gets the spline creation method.</summary>
 		public SplineCreationMethod CreationMethod
 		{
 			get { return this.creationMethod; }
 		}
 
-		/// <summary>
-		/// Gets or sets the knot tolerance.
-		/// </summary>
+		/// <summary>Gets or sets the knot tolerance.</summary>
 		public double KnotTolerance
 		{
 			get { return this.knotTolerance; }
@@ -397,9 +365,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the control point tolerance.
-		/// </summary>
+		/// <summary>Gets or sets the control point tolerance.</summary>
 		public double CtrlPointTolerance
 		{
 			get { return this.ctrlPointTolerance; }
@@ -414,9 +380,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the fit point tolerance.
-		/// </summary>
+		/// <summary>Gets or sets the fit point tolerance.</summary>
 		public double FitTolerance
 		{
 			get { return this.fitTolerance; }
@@ -431,9 +395,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the polynomial degree of the resulting spline.
-		/// </summary>
+		/// <summary>Gets or sets the polynomial degree of the resulting spline.</summary>
 		/// <remarks>
 		/// Valid values are 1 (linear), degree 2 (quadratic), degree 3 (cubic), and so on up to degree 10.
 		/// </remarks>
@@ -442,9 +404,7 @@ namespace netDxf.Entities
 			get { return this.degree; }
 		}
 
-		/// <summary>
-		/// Gets if the spline is closed.
-		/// </summary>
+		/// <summary>Gets if the spline is closed.</summary>
 		/// <remarks>
 		/// An Spline is closed when the start and end control points are the same.
 		/// </remarks>
@@ -456,9 +416,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets if the spline is closed and periodic.
-		/// </summary>
+		/// <summary>Gets or sets if the spline is closed and periodic.</summary>
 		/// <remarks>
 		/// A periodic spline is always closed creating a smooth continuity at the end points. <br />
 		/// Changing the property will rebuild the knot vector.
@@ -473,25 +431,19 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets the spline <see cref="Vector3">control points</see> list.
-		/// </summary>
+		/// <summary>Gets the spline <see cref="Vector3">control points</see> list.</summary>
 		public Vector3[] ControlPoints
 		{
 			get { return this.controlPoints; }
 		}
 
-		/// <summary>
-		/// Gets the spline control points weights list.
-		/// </summary>
+		/// <summary>Gets the spline control points weights list.</summary>
 		public double[] Weights
 		{
 			get { return this.weights; }
 		}
 
-		/// <summary>
-		/// Gets the spline knot vector.
-		/// </summary>
+		/// <summary>Gets the spline knot vector.</summary>
 		/// <remarks>By default a uniform knot vector is created.</remarks>
 		public double[] Knots
 		{
@@ -502,9 +454,7 @@ namespace netDxf.Entities
 
 		#region public methods
 
-		/// <summary>
-		/// Switch the spline direction.
-		/// </summary>
+		/// <summary>Switch the spline direction.</summary>
 		public void Reverse()
 		{
 			Array.Reverse(this.fitPoints);
@@ -515,9 +465,7 @@ namespace netDxf.Entities
 			this.endTangent = -tmp;
 		}
 
-		/// <summary>
-		/// Sets all control point weights to the specified number.
-		/// </summary>
+		/// <summary>Sets all control point weights to the specified number.</summary>
 		/// <param name="weight">Control point weight.</param>
 		public void SetUniformWeights(double weight)
 		{
@@ -527,9 +475,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Converts the spline in a list of vertexes.
-		/// </summary>
+		/// <summary>Converts the spline in a list of vertexes.</summary>
 		/// <param name="precision">Number of vertexes generated.</param>
 		/// <returns>A list vertexes that represents the spline.</returns>
 		public List<Vector3> PolygonalVertexes(int precision)
@@ -537,11 +483,9 @@ namespace netDxf.Entities
 			return NurbsEvaluator(this.controlPoints.ToArray(), this.weights.ToArray(), this.knots, this.degree, this.IsClosed, this.isClosedPeriodic, precision);
 		}
 
-		/// <summary>
-		/// Converts the spline in a Polyline3D.
-		/// </summary>
+		/// <summary>Converts the spline in a Polyline3D.</summary>
 		/// <param name="precision">Number of vertexes generated.</param>
-		/// <returns>A new instance of <see cref="Polyline3D">Polyline3D</see> that represents the spline.</returns>
+		/// <returns>A new instance of <see cref="Polyline3D"/> that represents the spline.</returns>
 		public Polyline3D ToPolyline3D(int precision)
 		{
 			IEnumerable<Vector3> vertexes = this.PolygonalVertexes(precision);
@@ -561,11 +505,9 @@ namespace netDxf.Entities
 			return poly;
 		}
 
-		/// <summary>
-		/// Converts the spline in a Polyline2D.
-		/// </summary>
+		/// <summary>Converts the spline in a Polyline2D.</summary>
 		/// <param name="precision">Number of vertexes generated.</param>
-		/// <returns>A new instance of <see cref="Polyline2D">Polyline2D</see> that represents the spline.</returns>
+		/// <returns>A new instance of <see cref="Polyline2D"/> that represents the spline.</returns>
 		/// <remarks>
 		/// The resulting polyline will be a projection of the actual spline into the plane defined by its normal vector.
 		/// </remarks>
@@ -589,12 +531,10 @@ namespace netDxf.Entities
 			return polyline2D;
 		}
 
-		/// <summary>
-		/// Calculate points along a NURBS curve.
-		/// </summary>
+		/// <summary>Calculate points along a <b>NURBS</b> curve.</summary>
 		/// <param name="controls">List of spline control points.</param>
-		/// <param name="weights">Spline control weights. If null the weights vector will be automatically initialized with 1.0.</param>
-		/// <param name="knots">List of spline knot points. If null the knot vector will be automatically generated.</param>
+		/// <param name="weights">Spline control weights. If <see langword="null"/> the weights vector will be automatically initialized with 1.0.</param>
+		/// <param name="knots">List of spline knot points. If <see langword="null"/> the knot vector will be automatically generated.</param>
 		/// <param name="degree">Spline degree.</param>
 		/// <param name="isClosed">Specifies if the spline is closed.</param>
 		/// <param name="isClosedPeriodic">Specifies if the spline is closed and periodic.</param>
@@ -858,12 +798,7 @@ namespace netDxf.Entities
 
 		#region overrides
 
-		/// <summary>
-		/// Moves, scales, and/or rotates the current entity given a 3x3 transformation matrix and a translation vector.
-		/// </summary>
-		/// <param name="transformation">Transformation matrix.</param>
-		/// <param name="translation">Translation vector.</param>
-		/// <remarks>Matrix3 adopts the convention of using column vectors to represent a transformation matrix.</remarks>
+		/// <inheritdoc/>
 		public override void TransformBy(Matrix3 transformation, Vector3 translation)
 		{
 			for (int i = 0; i < this.controlPoints.Length; i++)
@@ -884,10 +819,7 @@ namespace netDxf.Entities
 			this.Normal = newNormal;
 		}
 
-		/// <summary>
-		/// Creates a new Spline that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new Spline that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override object Clone()
 		{
 			Spline entity;

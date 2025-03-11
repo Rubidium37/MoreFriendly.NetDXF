@@ -29,9 +29,7 @@ using netDxf.Tables;
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Represents a Text <see cref="EntityObject">entity</see>.
-	/// </summary>
+	/// <summary>Represents a Text <see cref="EntityObject">entity</see>.</summary>
 	public class Text :
 		EntityObject
 	{
@@ -71,26 +69,20 @@ namespace netDxf.Entities
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Text</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		public Text()
 			: this(string.Empty, Vector3.Zero, 1.0, TextStyle.Default)
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Text</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="text">Text string.</param>
 		public Text(string text)
 			: this(text, Vector2.Zero, 1.0, TextStyle.Default)
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Text</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="text">Text string.</param>
 		/// <param name="position">Text <see cref="Vector2">position</see> in world coordinates.</param>
 		/// <param name="height">Text height.</param>
@@ -99,9 +91,7 @@ namespace netDxf.Entities
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Text</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="text">Text string.</param>
 		/// <param name="position">Text <see cref="Vector3">position</see> in world coordinates.</param>
 		/// <param name="height">Text height.</param>
@@ -111,9 +101,7 @@ namespace netDxf.Entities
 		}
 
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Text</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="text">Text string.</param>
 		/// <param name="position">Text <see cref="Vector2">position</see> in world coordinates.</param>
 		/// <param name="height">Text height.</param>
@@ -123,9 +111,7 @@ namespace netDxf.Entities
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Text</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="text">Text string.</param>
 		/// <param name="position">Text <see cref="Vector3">position</see> in world coordinates.</param>
 		/// <param name="height">Text height.</param>
@@ -155,36 +141,28 @@ namespace netDxf.Entities
 
 		#region public properties
 
-		/// <summary>
-		/// Gets or sets if the text will be mirrored when a symmetry is performed, when the current Text entity does not belong to a DXF document.
-		/// </summary>
+		/// <summary>Gets or sets if the text will be mirrored when a symmetry is performed, when the current Text entity does not belong to a <b>DXF</b> document.</summary>
 		public static bool DefaultMirrText
 		{
 			get;
 			set;
 		}
 
-		/// <summary>
-		/// Gets or sets Text <see cref="Vector3">position</see> in world coordinates.
-		/// </summary>
+		/// <summary>Gets or sets Text <see cref="Vector3">position</see> in world coordinates.</summary>
 		public Vector3 Position
 		{
 			get { return this.position; }
 			set { this.position = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the text rotation in degrees.
-		/// </summary>
+		/// <summary>Gets or sets the text rotation in degrees.</summary>
 		public double Rotation
 		{
 			get { return this.rotation; }
 			set { this.rotation = MathHelper.NormalizeAngle(value); }
 		}
 
-		/// <summary>
-		/// Gets or sets the text height.
-		/// </summary>
+		/// <summary>Gets or sets the text height.</summary>
 		/// <remarks>
 		/// Valid values must be greater than zero. Default: 1.0.<br />
 		/// When Alignment.Aligned is used this value is not applicable, it will be automatically adjusted so the text will fit in the specified width.
@@ -202,9 +180,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the text width, only applicable for text Alignment.Fit and Alignment.Align.
-		/// </summary>
+		/// <summary>Gets or sets the text width, only applicable for text Alignment.Fit and Alignment.Align.</summary>
 		/// <remarks>Valid values must be greater than zero. Default: 1.0.</remarks>
 		public double Width
 		{
@@ -219,9 +195,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the width factor.
-		/// </summary>
+		/// <summary>Gets or sets the width factor.</summary>
 		/// <remarks>
 		/// Valid values range from 0.01 to 100. Default: 1.0.<br />
 		/// When Alignment.Fit is used this value is not applicable, it will be automatically adjusted so the text will fit in the specified width.
@@ -239,9 +213,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the font oblique angle.
-		/// </summary>
+		/// <summary>Gets or sets the font oblique angle.</summary>
 		/// <remarks>Valid values range from -85 to 85. Default: 0.0.</remarks>
 		public double ObliqueAngle
 		{
@@ -256,18 +228,14 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the text alignment.
-		/// </summary>
+		/// <summary>Gets or sets the text alignment.</summary>
 		public TextAlignment Alignment
 		{
 			get { return this.alignment; }
 			set { this.alignment = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the <see cref="TextStyle">text style</see>.
-		/// </summary>
+		/// <summary>Gets or sets the <see cref="TextStyle">text style</see>.</summary>
 		public TextStyle Style
 		{
 			get { return this.style; }
@@ -281,27 +249,21 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the text string.
-		/// </summary>
+		/// <summary>Gets or sets the text string.</summary>
 		public string Value
 		{
 			get { return this.text; }
 			set { this.text = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets if the text is backward (mirrored in X).
-		/// </summary>
+		/// <summary>Gets or sets if the text is backward (mirrored in X).</summary>
 		public bool IsBackward
 		{
 			get { return this.isBackward; }
 			set { this.isBackward = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets if the text is upside down (mirrored in Y).
-		/// </summary>
+		/// <summary>Gets or sets if the text is upside down (mirrored in Y).</summary>
 		public bool IsUpsideDown
 		{
 			get { return this.isUpsideDown; }
@@ -312,13 +274,9 @@ namespace netDxf.Entities
 
 		#region overrides
 
-		/// <summary>
-		/// Moves, scales, and/or rotates the current entity given a 3x3 transformation matrix and a translation vector.
-		/// </summary>
-		/// <param name="transformation">Transformation matrix.</param>
-		/// <param name="translation">Translation vector.</param>
+		/// <inheritdoc/>
 		/// <remarks>
-		/// When the current Text entity does not belong to a DXF document, the text will use the DefaultMirrText when a symmetry is performed;
+		/// When the current Text entity does not belong to a <b>DXF</b> document, the text will use the DefaultMirrText when a symmetry is performed;
 		/// otherwise, the drawing variable MirrText will be used.<br />
 		/// A symmetry around the X axis when the text uses an Alignment.BaseLineLeft, Alignment.BaseLineCenter, Alignment.BaseLineRight, Alignment.Fit or an Alignment.Aligned.
 		/// A symmetry around the Y axis when the text uses an Alignment.Fit or an Alignment.Aligned.<br />
@@ -485,10 +443,7 @@ namespace netDxf.Entities
 			this.ObliqueAngle = newObliqueAngle;
 		}
 
-		/// <summary>
-		/// Creates a new Text that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new Text that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override object Clone()
 		{
 			Text entity = new Text

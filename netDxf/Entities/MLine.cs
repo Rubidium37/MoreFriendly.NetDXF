@@ -30,9 +30,7 @@ using netDxf.Tables;
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Represents a multiline <see cref="EntityObject">entity</see>.
-	/// </summary>
+	/// <summary>Represents a multiline <see cref="EntityObject">entity</see>.</summary>
 	public class MLine :
 		EntityObject
 	{
@@ -67,36 +65,28 @@ namespace netDxf.Entities
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of the <c>MLine</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		public MLine()
 			: this(new List<Vector2>())
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>MLine</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="vertexes">Multiline <see cref="Vector2">vertex</see> location list in object coordinates.</param>
 		public MLine(IEnumerable<Vector2> vertexes)
 			: this(vertexes, MLineStyle.Default, 1.0, false)
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>MLine</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="vertexes">Multiline <see cref="Vector2">vertex</see> location list in object coordinates.</param>
-		/// <param name="isClosed">Sets if the multiline is closed (default: false).</param>
+		/// <param name="isClosed">Sets if the multiline is closed (default: <see langword="false"/>).</param>
 		public MLine(IEnumerable<Vector2> vertexes, bool isClosed)
 			: this(vertexes, MLineStyle.Default, 1.0, isClosed)
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>MLine</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="vertexes">Multiline <see cref="Vector2">vertex</see> location list in object coordinates.</param>
 		/// <param name="scale">Multiline scale.</param>
 		public MLine(IEnumerable<Vector2> vertexes, double scale)
@@ -104,20 +94,16 @@ namespace netDxf.Entities
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>MLine</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="vertexes">Multiline <see cref="Vector2">vertex</see> location list in object coordinates.</param>
 		/// <param name="scale">Multiline scale.</param>
-		/// <param name="isClosed">Sets if the multiline is closed (default: false).</param>
+		/// <param name="isClosed">Sets if the multiline is closed (default: <see langword="false"/>).</param>
 		public MLine(IEnumerable<Vector2> vertexes, double scale, bool isClosed)
 			: this(vertexes, MLineStyle.Default, scale, isClosed)
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>MLine</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="vertexes">MLine <see cref="Vector2">vertex</see> location list in object coordinates.</param>
 		/// <param name="style">MLine <see cref="MLineStyle">style.</see></param>
 		/// <param name="scale">MLine scale.</param>
@@ -126,13 +112,11 @@ namespace netDxf.Entities
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>MLine</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="vertexes">MLine <see cref="Vector2">vertex</see> location list in object coordinates.</param>
 		/// <param name="style">MLine <see cref="MLineStyle">style.</see></param>
 		/// <param name="scale">MLine scale.</param>
-		/// <param name="isClosed">Sets if the multiline is closed (default: false).</param>
+		/// <param name="isClosed">Sets if the multiline is closed (default: <see langword="false"/>).</param>
 		public MLine(IEnumerable<Vector2> vertexes, MLineStyle style, double scale, bool isClosed)
 			: base(EntityType.MLine, DxfObjectCode.MLine)
 		{
@@ -170,35 +154,27 @@ namespace netDxf.Entities
 
 		#region public properties
 
-		/// <summary>
-		/// Gets the multiline <see cref="MLineVertex">vertexes</see> list.
-		/// </summary>
+		/// <summary>Gets the multiline <see cref="MLineVertex">vertexes</see> list.</summary>
 		public List<MLineVertex> Vertexes
 		{
 			get { return this.vertexes; }
 		}
 
-		/// <summary>
-		/// Gets or sets the multiline elevation.
-		/// </summary>
+		/// <summary>Gets or sets the multiline elevation.</summary>
 		public double Elevation
 		{
 			get { return this.elevation; }
 			set { this.elevation = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the multiline scale.
-		/// </summary>
+		/// <summary>Gets or sets the multiline scale.</summary>
 		public double Scale
 		{
 			get { return this.scale; }
 			set { this.scale = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets if the multiline is closed.
-		/// </summary>
+		/// <summary>Gets or sets if the multiline is closed.</summary>
 		public bool IsClosed
 		{
 			get { return this.flags.HasFlag(MLineFlags.Closed); }
@@ -215,9 +191,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the suppression of start caps.
-		/// </summary>
+		/// <summary>Gets or sets the suppression of start caps.</summary>
 		public bool NoStartCaps
 		{
 			get { return this.flags.HasFlag(MLineFlags.NoStartCaps); }
@@ -234,9 +208,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the suppression of end caps.
-		/// </summary>
+		/// <summary>Gets or sets the suppression of end caps.</summary>
 		public bool NoEndCaps
 		{
 			get { return this.flags.HasFlag(MLineFlags.NoEndCaps); }
@@ -253,18 +225,14 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the multiline justification.
-		/// </summary>
+		/// <summary>Gets or sets the multiline justification.</summary>
 		public MLineJustification Justification
 		{
 			get { return this.justification; }
 			set { this.justification = value; }
 		}
 
-		/// <summary>
-		/// Gets or set the multiline style.
-		/// </summary>
+		/// <summary>Gets or set the multiline style.</summary>
 		public MLineStyle Style
 		{
 			get { return this.style; }
@@ -282,9 +250,7 @@ namespace netDxf.Entities
 
 		#region internal properties
 
-		/// <summary>
-		/// MLine flags.
-		/// </summary>
+		/// <summary>MLine flags.</summary>
 		internal MLineFlags Flags
 		{
 			get { return this.flags; }
@@ -385,9 +351,7 @@ namespace netDxf.Entities
 
 		#region public methods
 
-		/// <summary>
-		/// Calculates the internal information of the multiline vertexes.
-		/// </summary>
+		/// <summary>Calculates the internal information of the multiline vertexes.</summary>
 		/// <remarks>
 		/// <para>
 		/// This function needs to be called manually when any modification is done that affects the final shape of the multiline.
@@ -514,9 +478,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Decompose the actual multiline in its internal entities, <see cref="Line">lines</see> and <see cref="Arc">arcs</see>.
-		/// </summary>
+		/// <summary>Decompose the actual multiline in its internal entities, <see cref="Line">lines</see> and <see cref="Arc">arcs</see>.</summary>
 		/// <returns>A list of <see cref="Line">lines</see> and <see cref="Arc">arcs</see> that made up the multiline.</returns>
 		public List<EntityObject> Explode()
 		{
@@ -712,16 +674,7 @@ namespace netDxf.Entities
 
 		#region overrides
 
-		/// <summary>
-		/// Moves, scales, and/or rotates the current entity given a 3x3 transformation matrix and a translation vector.
-		/// </summary>
-		/// <param name="transformation">Transformation matrix.</param>
-		/// <param name="translation">Translation vector.</param>
-		/// <remarks>
-		/// Non-uniform scaling is not supported for multilines.
-		/// Explode the entity and, in case round end caps has been applied, convert the arcs into ellipse arcs and transform them instead.<br />
-		/// Matrix3 adopts the convention of using column vectors to represent a transformation matrix.
-		/// </remarks>
+		/// <inheritdoc/>
 		public override void TransformBy(Matrix3 transformation, Vector3 translation)
 		{
 			Vector3 newNormal = transformation * this.Normal;
@@ -781,10 +734,7 @@ namespace netDxf.Entities
 			this.Scale *= newScale;
 		}
 
-		/// <summary>
-		/// Creates a new MLine that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new MLine that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override object Clone()
 		{
 			MLine entity = new MLine

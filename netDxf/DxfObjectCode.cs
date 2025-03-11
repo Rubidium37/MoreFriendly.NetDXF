@@ -25,479 +25,289 @@
 
 namespace netDxf
 {
-	/// <summary>
-	/// DXF string codes.
-	/// </summary>
+	/// <summary>DXF string codes.</summary>
 	public static class DxfObjectCode
 	{
-		/// <summary>
-		/// Not defined.
-		/// </summary>
+		/// <summary>Not defined.</summary>
 		public const string Unknown = "";
 
-		/// <summary>
-		/// Header section.
-		/// </summary>
+		/// <summary>Header section.</summary>
 		public const string HeaderSection = "HEADER";
 
-		/// <summary>
-		/// Classes section.
-		/// </summary>
+		/// <summary>Classes section.</summary>
 		public const string ClassesSection = "CLASSES";
 
-		/// <summary>
-		/// Class entry.
-		/// </summary>
+		/// <summary>Class entry.</summary>
 		public const string Class = "CLASS";
 
-		/// <summary>
-		/// Tables section.
-		/// </summary>
+		/// <summary>Tables section.</summary>
 		public const string TablesSection = "TABLES";
 
-		/// <summary>
-		/// Blocks section.
-		/// </summary>
+		/// <summary>Blocks section.</summary>
 		public const string BlocksSection = "BLOCKS";
 
-		/// <summary>
-		/// Entities section.
-		/// </summary>
+		/// <summary>Entities section.</summary>
 		public const string EntitiesSection = "ENTITIES";
 
-		/// <summary>
-		/// Objects section.
-		/// </summary>
+		/// <summary>Objects section.</summary>
 		public const string ObjectsSection = "OBJECTS";
 
-		/// <summary>
-		/// Thumbnail section.
-		/// </summary>
+		/// <summary>Thumbnail section.</summary>
 		public const string ThumbnailImageSection = "THUMBNAILIMAGE";
 
-		/// <summary>
-		/// AcdsData section. Currently it is used for storing the data for solids, regions, surfaces, and the preview image.
-		/// </summary>
+		/// <summary>AcdsData section. Currently it is used for storing the data for solids, regions, surfaces, and the preview image.</summary>
 		public const string AcdsDataSection = "ACDSDATA";
 
-		/// <summary>
-		/// Begin section code.
-		/// </summary>
+		/// <summary>Begin section code.</summary>
 		public const string BeginSection = "SECTION";
 
-		/// <summary>
-		/// End section code.
-		/// </summary>
+		/// <summary>End section code.</summary>
 		public const string EndSection = "ENDSEC";
 
-		/// <summary>
-		/// Layers table.
-		/// </summary>
+		/// <summary>Layers table.</summary>
 		public const string LayerTable = "LAYER";
 
-		/// <summary>
-		/// Viewports table.
-		/// </summary>
+		/// <summary>Viewports table.</summary>
 		public const string VportTable = "VPORT";
 
-		/// <summary>
-		/// Views table.
-		/// </summary>
+		/// <summary>Views table.</summary>
 		public const string ViewTable = "VIEW";
 
-		/// <summary>
-		/// User coordinate system table.
-		/// </summary>
+		/// <summary>User coordinate system table.</summary>
 		public const string UcsTable = "UCS";
 
-		/// <summary>
-		/// Block records table.
-		/// </summary>
+		/// <summary>Block records table.</summary>
 		public const string BlockRecordTable = "BLOCK_RECORD";
 
-		/// <summary>
-		/// Line types table.
-		/// </summary>
+		/// <summary>Line types table.</summary>
 		public const string LinetypeTable = "LTYPE";
 
-		/// <summary>
-		/// Text styles table.
-		/// </summary>
+		/// <summary>Text styles table.</summary>
 		public const string TextStyleTable = "STYLE";
 
-		/// <summary>
-		/// Dimension styles table.
-		/// </summary>
+		/// <summary>Dimension styles table.</summary>
 		public const string DimensionStyleTable = "DIMSTYLE";
 
-		/// <summary>
-		/// Extended data application registries table.
-		/// </summary>
+		/// <summary>Extended data application registries table.</summary>
 		public const string ApplicationIdTable = "APPID";
 
-		/// <summary>
-		/// Begin table code.
-		/// </summary>
+		/// <summary>Begin table code.</summary>
 		public const string Table = "TABLE";
 
-		/// <summary>
-		/// End table code.
-		/// </summary>
+		/// <summary>End table code.</summary>
 		public const string EndTable = "ENDTAB";
 
-		/// <summary>
-		/// Begin block code.
-		/// </summary>
+		/// <summary>Begin block code.</summary>
 		public const string BeginBlock = "BLOCK";
 
-		/// <summary>
-		/// End block code.
-		/// </summary>
+		/// <summary>End block code.</summary>
 		public const string EndBlock = "ENDBLK";
 
-		/// <summary>
-		/// Group dictionary.
-		/// </summary>
+		/// <summary>Group dictionary.</summary>
 		public const string GroupDictionary = "ACAD_GROUP";
 
-		/// <summary>
-		/// Layouts dictionary.
-		/// </summary>
+		/// <summary>Layouts dictionary.</summary>
 		public const string LayoutDictionary = "ACAD_LAYOUT";
 
-		/// <summary>
-		/// Multiline styles dictionary.
-		/// </summary>
+		/// <summary>Multiline styles dictionary.</summary>
 		public const string MLineStyleDictionary = "ACAD_MLINESTYLE";
 
-		/// <summary>
-		/// Multiline styles dictionary.
-		/// </summary>
+		/// <summary>Multiline styles dictionary.</summary>
 		public const string ImageDefDictionary = "ACAD_IMAGE_DICT";
 
-		/// <summary>
-		/// MLine styles dictionary.
-		/// </summary>
+		/// <summary>MLine styles dictionary.</summary>
 		public const string ImageVarsDictionary = "ACAD_IMAGE_VARS";
 
-		/// <summary>
-		/// DGN underlay definition dictionary.
-		/// </summary>
+		/// <summary>DGN underlay definition dictionary.</summary>
 		public const string UnderlayDgnDefinitionDictionary = "ACAD_DGNDEFINITIONS";
 
-		/// <summary>
-		/// DWF underlay definition styles dictionary.
-		/// </summary>
+		/// <summary>DWF underlay definition styles dictionary.</summary>
 		public const string UnderlayDwfDefinitionDictionary = "ACAD_DWFDEFINITIONS";
 
-		/// <summary>
-		/// PDF underlay definition styles dictionary.
-		/// </summary>
+		/// <summary>PDF underlay definition styles dictionary.</summary>
 		public const string UnderlayPdfDefinitionDictionary = "ACAD_PDFDEFINITIONS";
 
-		/// <summary>
-		/// Layer states dictionary.
-		/// </summary>
+		/// <summary>Layer states dictionary.</summary>
 		public const string LayerStates = "ACAD_LAYERSTATES";
 
-		/// <summary>
-		/// End of file.
-		/// </summary>
+		/// <summary>End of file.</summary>
 		public const string EndOfFile = "EOF";
 
-		/// <summary>
-		/// Application registry.
-		/// </summary>
+		/// <summary>Application registry.</summary>
 		public const string AppId = "APPID";
 
-		/// <summary>
-		/// Dimension style.
-		/// </summary>
+		/// <summary>Dimension style.</summary>
 		public const string DimStyle = "DIMSTYLE";
 
-		/// <summary>
-		/// Block record.
-		/// </summary>
+		/// <summary>Block record.</summary>
 		public const string BlockRecord = "BLOCK_RECORD";
 
-		/// <summary>
-		/// Line type.
-		/// </summary>
+		/// <summary>Line type.</summary>
 		public const string Linetype = "LTYPE";
 
-		/// <summary>
-		/// Layer.
-		/// </summary>
+		/// <summary>Layer.</summary>
 		public const string Layer = "LAYER";
 
-		/// <summary>
-		/// Viewport table object.
-		/// </summary>
+		/// <summary>Viewport table object.</summary>
 		public const string VPort = "VPORT";
 
-		/// <summary>
-		/// Text style.
-		/// </summary>
+		/// <summary>Text style.</summary>
 		public const string TextStyle = "STYLE";
 
-		/// <summary>
-		/// Multiline style.
-		/// </summary>
+		/// <summary>Multiline style.</summary>
 		public const string MLineStyle = "MLINESTYLE";
 
-		/// <summary>
-		/// View.
-		/// </summary>
+		/// <summary>View.</summary>
 		public const string View = "VIEW";
 
-		/// <summary>
-		/// User coordinate system.
-		/// </summary>
+		/// <summary>User coordinate system.</summary>
 		public const string Ucs = "UCS";
 
-		/// <summary>
-		/// Block.
-		/// </summary>
+		/// <summary>Block.</summary>
 		public const string Block = "BLOCK";
 
-		/// <summary>
-		/// End block.
-		/// </summary>
+		/// <summary>End block.</summary>
 		public const string BlockEnd = "ENDBLK";
 
-		/// <summary>
-		/// Line.
-		/// </summary>
+		/// <summary>Line.</summary>
 		public const string Line = "LINE";
 
-		/// <summary>
-		/// Ray.
-		/// </summary>
+		/// <summary>Ray.</summary>
 		public const string Ray = "RAY";
 
-		/// <summary>
-		/// XLine.
-		/// </summary>
+		/// <summary>XLine.</summary>
 		public const string XLine = "XLINE";
 
-		/// <summary>
-		/// Ellipse.
-		/// </summary>
+		/// <summary>Ellipse.</summary>
 		public const string Ellipse = "ELLIPSE";
 
-		/// <summary>
-		/// Polyline.
-		/// </summary>
+		/// <summary>Polyline.</summary>
 		public const string Polyline = "POLYLINE";
 
-		/// <summary>
-		/// Lightweight polyline.
-		/// </summary>
+		/// <summary>Lightweight polyline.</summary>
 		public const string LwPolyline = "LWPOLYLINE";
 
-		/// <summary>
-		/// Circle.
-		/// </summary>
+		/// <summary>Circle.</summary>
 		public const string Circle = "CIRCLE";
 
-		/// <summary>
-		/// Point.
-		/// </summary>
+		/// <summary>Point.</summary>
 		public const string Point = "POINT";
 
-		/// <summary>
-		/// Arc.
-		/// </summary>
+		/// <summary>Arc.</summary>
 		public const string Arc = "ARC";
 
-		/// <summary>
-		/// Shape
-		/// </summary>
+		/// <summary>Shape</summary>
 		public const string Shape = "SHAPE";
 
-		/// <summary>
-		/// Spline (nonuniform rational B-splines, NURBS).
-		/// </summary>
+		/// <summary>Spline (nonuniform rational B-splines, NURBS).</summary>
 		public const string Spline = "SPLINE";
 
-		/// <summary>
-		/// Solid.
-		/// </summary>
+		/// <summary>Solid.</summary>
 		public const string Solid = "SOLID";
 
-		/// <summary>
-		/// Table made of rows and columns.
-		/// </summary>
+		/// <summary>Table made of rows and columns.</summary>
 		public const string AcadTable = "ACAD_TABLE";
 
-		/// <summary>
-		/// Trace.
-		/// </summary>
+		/// <summary>Trace.</summary>
 		public const string Trace = "TRACE";
 
-		/// <summary>
-		/// Text string.
-		/// </summary>
+		/// <summary>Text string.</summary>
 		public const string Text = "TEXT";
 
-		/// <summary>
-		/// Mesh.
-		/// </summary>
+		/// <summary>Mesh.</summary>
 		public const string Mesh = "MESH";
 
-		/// <summary>
-		/// Multiline text string.
-		/// </summary>
+		/// <summary>Multiline text string.</summary>
 		public const string MText = "MTEXT";
 
-		/// <summary>
-		/// MLine.
-		/// </summary>
+		/// <summary>MLine.</summary>
 		public const string MLine = "MLINE";
 
-		/// <summary>
-		/// 3d face.
-		/// </summary>
+		/// <summary>3d face.</summary>
 		public const string Face3d = "3DFACE";
 
-		/// <summary>
-		/// Block insertion.
-		/// </summary>
+		/// <summary>Block insertion.</summary>
 		public const string Insert = "INSERT";
 
-		/// <summary>
-		/// Hatch.
-		/// </summary>
+		/// <summary>Hatch.</summary>
 		public const string Hatch = "HATCH";
 
-		/// <summary>
-		/// Leader.
-		/// </summary>
+		/// <summary>Leader.</summary>
 		public const string Leader = "LEADER";
 
-		/// <summary>
-		/// Tolerance.
-		/// </summary>
+		/// <summary>Tolerance.</summary>
 		public const string Tolerance = "TOLERANCE";
 
-		/// <summary>
-		/// Wipeout.
-		/// </summary>
+		/// <summary>Wipeout.</summary>
 		public const string Wipeout = "WIPEOUT";
 
-		/// <summary>
-		/// Underlay.
-		/// </summary>
+		/// <summary>Underlay.</summary>
 		public const string Underlay = "UNDERLAY";
 
-		/// <summary>
-		/// PDF underlay.
-		/// </summary>
+		/// <summary>PDF underlay.</summary>
 		public const string UnderlayPdf = "PDFUNDERLAY";
 
-		/// <summary>
-		/// DWF underlay.
-		/// </summary>
+		/// <summary>DWF underlay.</summary>
 		public const string UnderlayDwf = "DWFUNDERLAY";
 
-		/// <summary>
-		/// DGN underlay.
-		/// </summary>
+		/// <summary>DGN underlay.</summary>
 		public const string UnderlayDgn = "DGNUNDERLAY";
 
-		/// <summary>
-		/// Underlay definition.
-		/// </summary>
+		/// <summary>Underlay definition.</summary>
 		public const string UnderlayDefinition = "UNDERLAYDEFINITION";
 
-		/// <summary>
-		/// PDF underlay definition.
-		/// </summary>
+		/// <summary>PDF underlay definition.</summary>
 		public const string UnderlayPdfDefinition = "PDFDEFINITION";
 
-		/// <summary>
-		/// DWF underlay definition.
-		/// </summary>
+		/// <summary>DWF underlay definition.</summary>
 		public const string UnderlayDwfDefinition = "DWFDEFINITION";
 
-		/// <summary>
-		/// DGN underlay definition.
-		/// </summary>
+		/// <summary>DGN underlay definition.</summary>
 		public const string UnderlayDgnDefinition = "DGNDEFINITION";
 
-		/// <summary>
-		/// Attribute definition.
-		/// </summary>
+		/// <summary>Attribute definition.</summary>
 		public const string AttributeDefinition = "ATTDEF";
 
-		/// <summary>
-		/// Attribute.
-		/// </summary>
+		/// <summary>Attribute.</summary>
 		public const string Attribute = "ATTRIB";
 
-		/// <summary>
-		/// Vertex.
-		/// </summary>
+		/// <summary>Vertex.</summary>
 		public const string Vertex = "VERTEX";
 
-		/// <summary>
-		/// End sequence.
-		/// </summary>
+		/// <summary>End sequence.</summary>
 		public const string EndSequence = "SEQEND";
 
-		/// <summary>
-		/// Dimension.
-		/// </summary>
+		/// <summary>Dimension.</summary>
 		public const string Dimension = "DIMENSION";
 
-		/// <summary>
-		/// Arc Length Dimension.
-		/// </summary>
+		/// <summary>Arc Length Dimension.</summary>
 		public const string ArcDimension = "ARC_DIMENSION";
 
-		/// <summary>
-		/// Dictionary.
-		/// </summary>
+		/// <summary>Dictionary.</summary>
 		public const string Dictionary = "DICTIONARY";
 
-		/// <summary>
-		/// XRecord.
-		/// </summary>
+		/// <summary>XRecord.</summary>
 		public const string XRecord = "XRECORD";
 
-		/// <summary>
-		/// Raster image.
-		/// </summary>
+		/// <summary>Raster image.</summary>
 		public const string Image = "IMAGE";
 
-		/// <summary>
-		/// Viewport entity.
-		/// </summary>
+		/// <summary>Viewport entity.</summary>
 		public const string Viewport = "VIEWPORT";
 
-		/// <summary>
-		/// Image definition.
-		/// </summary>
+		/// <summary>Image definition.</summary>
 		public const string ImageDef = "IMAGEDEF";
 
-		/// <summary>
-		/// Image definition reactor.
-		/// </summary>
+		/// <summary>Image definition reactor.</summary>
 		public const string ImageDefReactor = "IMAGEDEF_REACTOR";
 
-		/// <summary>
-		/// Raster variables.
-		/// </summary>
+		/// <summary>Raster variables.</summary>
 		public const string RasterVariables = "RASTERVARIABLES";
 
-		/// <summary>
-		/// Groups.
-		/// </summary>
+		/// <summary>Groups.</summary>
 		public const string Group = "GROUP";
 
-		/// <summary>
-		/// Layouts.
-		/// </summary>
+		/// <summary>Layouts.</summary>
 		public const string Layout = "LAYOUT";
 	}
 }

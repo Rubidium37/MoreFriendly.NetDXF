@@ -29,9 +29,7 @@ using netDxf.Tables;
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Represents a circle <see cref="EntityObject">entity</see>.
-	/// </summary>
+	/// <summary>Represents a circle <see cref="EntityObject">entity</see>.</summary>
 	public class Circle :
 		EntityObject
 	{
@@ -45,17 +43,13 @@ namespace netDxf.Entities
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Circle</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		public Circle()
 			: this(Vector3.Zero, 1.0)
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Circle</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="center">Circle <see cref="Vector3">center</see> in world coordinates.</param>
 		/// <param name="radius">Circle radius.</param>
 		public Circle(Vector3 center, double radius)
@@ -70,9 +64,7 @@ namespace netDxf.Entities
 			this.thickness = 0.0;
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Circle</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="center">Circle <see cref="Vector2">center</see> in world coordinates.</param>
 		/// <param name="radius">Circle radius.</param>
 		public Circle(Vector2 center, double radius)
@@ -84,18 +76,14 @@ namespace netDxf.Entities
 
 		#region public properties
 
-		/// <summary>
-		/// Gets or sets the circle <see cref="Vector3">center</see> in world coordinates.
-		/// </summary>
+		/// <summary>Gets or sets the circle <see cref="Vector3">center</see> in world coordinates.</summary>
 		public Vector3 Center
 		{
 			get { return this.center; }
 			set { this.center = value; }
 		}
 
-		/// <summary>
-		/// Gets or set the circle radius.
-		/// </summary>
+		/// <summary>Gets or set the circle radius.</summary>
 		public double Radius
 		{
 			get { return this.radius; }
@@ -109,9 +97,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the circle thickness.
-		/// </summary>
+		/// <summary>Gets or sets the circle thickness.</summary>
 		public double Thickness
 		{
 			get { return this.thickness; }
@@ -122,9 +108,7 @@ namespace netDxf.Entities
 
 		#region public methods
 
-		/// <summary>
-		/// Converts the circle in a list of vertexes.
-		/// </summary>
+		/// <summary>Converts the circle in a list of vertexes.</summary>
 		/// <param name="precision">Number of vertexes generated.</param>
 		/// <returns>A list vertexes that represents the circle expressed in object coordinate system.</returns>
 		public List<Vector2> PolygonalVertexes(int precision)
@@ -148,11 +132,9 @@ namespace netDxf.Entities
 			return ocsVertexes;
 		}
 
-		/// <summary>
-		/// Converts the circle in a Polyline2D.
-		/// </summary>
+		/// <summary>Converts the circle in a Polyline2D.</summary>
 		/// <param name="precision">Number of vertexes generated.</param>
-		/// <returns>A new instance of <see cref="Polyline2D">Polyline2D</see> that represents the circle.</returns>
+		/// <returns>A new instance of <see cref="Polyline2D"/> that represents the circle.</returns>
 		public Polyline2D ToPolyline2D(int precision)
 		{
 			IEnumerable<Vector2> vertexes = this.PolygonalVertexes(precision);
@@ -182,15 +164,7 @@ namespace netDxf.Entities
 
 		#region overrides
 
-		/// <summary>
-		/// Moves, scales, and/or rotates the current entity given a 3x3 transformation matrix and a translation vector.
-		/// </summary>
-		/// <param name="transformation">Transformation matrix.</param>
-		/// <param name="translation">Translation vector.</param>
-		/// <remarks>
-		/// Non-uniform scaling is not supported, create an ellipse from the circle data and transform that instead.<br />
-		/// Matrix3 adopts the convention of using column vectors to represent a transformation matrix.
-		/// </remarks>
+		/// <inheritdoc/>
 		public override void TransformBy(Matrix3 transformation, Vector3 translation)
 		{
 			Vector3 newCenter = transformation * this.Center + translation;
@@ -218,10 +192,7 @@ namespace netDxf.Entities
 			this.Radius = newRadius;
 		}
 
-		/// <summary>
-		/// Creates a new Circle that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new Circle that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override object Clone()
 		{
 			Circle entity = new Circle

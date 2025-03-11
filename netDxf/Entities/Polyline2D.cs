@@ -29,9 +29,7 @@ using netDxf.Tables;
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Represents a two dimensional polyline <see cref="EntityObject">entity</see>.
-	/// </summary>
+	/// <summary>Represents a two dimensional polyline <see cref="EntityObject">entity</see>.</summary>
 	/// <remarks>
 	/// Two dimensional polylines can hold information about the width of the lines and arcs that compose them.
 	/// </remarks>
@@ -51,26 +49,20 @@ namespace netDxf.Entities
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Polyline2D</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		public Polyline2D()
 			: this(new List<Polyline2DVertex>())
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Polyline2D</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="vertexes">Polyline2D <see cref="Vector2">vertex</see> list in object coordinates.</param>
 		public Polyline2D(IEnumerable<Vector2> vertexes)
 			: this(vertexes, false)
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Polyline2D</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="vertexes">Polyline2D <see cref="Vector2">vertex</see> list in object coordinates.</param>
 		/// <param name="isClosed">Sets if the polyline is closed, by default it will create an open polyline.</param>
 		public Polyline2D(IEnumerable<Vector2> vertexes, bool isClosed)
@@ -93,20 +85,16 @@ namespace netDxf.Entities
 			this.smoothType = PolylineSmoothType.NoSmooth;
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Polyline2D</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="vertexes">Polyline2D <see cref="Polyline2DVertex">vertex</see> list in object coordinates.</param>
 		public Polyline2D(IEnumerable<Polyline2DVertex> vertexes)
 			: this(vertexes, false)
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Polyline2D</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="vertexes">Polyline2D <see cref="Polyline2DVertex">vertex</see> list in object coordinates.</param>
-		/// <param name="isClosed">Sets if the polyline is closed (default: false).</param>
+		/// <param name="isClosed">Sets if the polyline is closed (default: <see langword="false"/>).</param>
 		public Polyline2D(IEnumerable<Polyline2DVertex> vertexes, bool isClosed)
 			: base(EntityType.Polyline2D, DxfObjectCode.LwPolyline)
 		{
@@ -126,11 +114,9 @@ namespace netDxf.Entities
 
 		#region public properties
 
-		/// <summary>
-		/// Gets or sets if the default SplineSegs value.
-		/// </summary>
+		/// <summary>Gets or sets if the default SplineSegs value.</summary>
 		/// <remarks>
-		/// This value is used by the Explode method when the current Polyline2D does not belong to a DXF document.
+		/// This value is used by the Explode method when the current <see cref="Polyline2D"/> does not belong to a <b>DXF</b> document.
 		/// </remarks>
 		public static short DefaultSplineSegs
 		{
@@ -145,17 +131,13 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the polyline <see cref="Polyline2DVertex">vertex</see> list.
-		/// </summary>
+		/// <summary>Gets or sets the polyline <see cref="Polyline2DVertex">vertex</see> list.</summary>
 		public List<Polyline2DVertex> Vertexes
 		{
 			get { return this.vertexes; }
 		}
 
-		/// <summary>
-		/// Gets or sets if the polyline is closed.
-		/// </summary>
+		/// <summary>Gets or sets if the polyline is closed.</summary>
 		public bool IsClosed
 		{
 			get { return this.flags.HasFlag(PolylineTypeFlags.ClosedPolylineOrClosedPolygonMeshInM); }
@@ -172,18 +154,14 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the polyline thickness.
-		/// </summary>
+		/// <summary>Gets or sets the polyline thickness.</summary>
 		public double Thickness
 		{
 			get { return this.thickness; }
 			set { this.thickness = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the polyline elevation.
-		/// </summary>
+		/// <summary>Gets or sets the polyline elevation.</summary>
 		/// <remarks>This is the distance from the origin to the plane of the light weight polyline.</remarks>
 		public double Elevation
 		{
@@ -191,9 +169,7 @@ namespace netDxf.Entities
 			set { this.elevation = value; }
 		}
 
-		/// <summary>
-		/// Enable or disable if the linetype pattern is generated continuously around the vertexes of the polyline.
-		/// </summary>
+		/// <summary>Enable or disable if the linetype pattern is generated continuously around the vertexes of the polyline.</summary>
 		public bool LinetypeGeneration
 		{
 			get { return this.flags.HasFlag(PolylineTypeFlags.ContinuousLinetypePattern); }
@@ -210,11 +186,9 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the polyline smooth type.
-		/// </summary>
+		/// <summary>Gets or sets the polyline smooth type.</summary>
 		/// <remarks>
-		/// The additional polyline vertexes corresponding to the SplineFit will be created when writing the DXF file.
+		/// The additional polyline vertexes corresponding to the SplineFit will be created when writing the <b>DXF</b> file.
 		/// </remarks>
 		public PolylineSmoothType SmoothType
 		{
@@ -239,9 +213,7 @@ namespace netDxf.Entities
 
 		#region internal properties
 
-		/// <summary>
-		/// Gets the polyline flags.
-		/// </summary>
+		/// <summary>Gets the polyline flags.</summary>
 		internal PolylineTypeFlags Flags
 		{
 			get { return this.flags; }
@@ -252,9 +224,7 @@ namespace netDxf.Entities
 
 		#region public methods
 
-		/// <summary>
-		/// Switch the polyline direction.
-		/// </summary>
+		/// <summary>Switch the polyline direction.</summary>
 		public void Reverse()
 		{
 			if (this.vertexes.Count < 2)
@@ -274,9 +244,7 @@ namespace netDxf.Entities
 			this.vertexes[this.vertexes.Count - 1].Bulge = -firstBulge;
 		}
 
-		/// <summary>
-		/// Sets a constant width for all the polyline segments.
-		/// </summary>
+		/// <summary>Sets a constant width for all the polyline segments.</summary>
 		/// <param name="width">Polyline width.</param>
 		/// <remarks>
 		/// Smoothed polylines can only have a constant width, the start width of the first vertex will be used.
@@ -290,9 +258,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Decompose the actual polyline in its internal entities, <see cref="Line">lines</see> and <see cref="Arc">arcs</see>.
-		/// </summary>
+		/// <summary>Decompose the actual polyline in its internal entities, <see cref="Line">lines</see> and <see cref="Arc">arcs</see>.</summary>
 		/// <returns>A list of <see cref="Line">lines</see> and <see cref="Arc">arcs</see> that made up the polyline.</returns>
 		public List<EntityObject> Explode()
 		{
@@ -460,9 +426,7 @@ namespace netDxf.Entities
 			return entities;
 		}
 
-		/// <summary>
-		/// Obtains a list of vertexes that represent the polyline approximating the curve segments as necessary.
-		/// </summary>
+		/// <summary>Obtains a list of vertexes that represent the polyline approximating the curve segments as necessary.</summary>
 		/// <param name="precision">The number of vertexes created for curve segments.</param>
 		/// <returns>A list of vertexes expressed in object coordinate system.</returns>
 		/// <remarks>
@@ -476,9 +440,7 @@ namespace netDxf.Entities
 			return this.PolygonalVertexes(precision, MathHelper.Epsilon, MathHelper.Epsilon);
 		}
 
-		/// <summary>
-		/// Obtains a list of vertexes that represent the polyline approximating the curve segments as necessary.
-		/// </summary>
+		/// <summary>Obtains a list of vertexes that represent the polyline approximating the curve segments as necessary.</summary>
 		/// <param name="precision">The number of vertexes created for curve segments.</param>
 		/// <param name="weldThreshold">Tolerance to consider if two new generated vertexes are equal.</param>
 		/// <param name="bulgeThreshold">Minimum distance from which approximate curved segments of the polyline.</param>
@@ -604,16 +566,7 @@ namespace netDxf.Entities
 
 		#region overrides
 
-		/// <summary>
-		/// Moves, scales, and/or rotates the current entity given a 3x3 transformation matrix and a translation vector.
-		/// </summary>
-		/// <param name="transformation">Transformation matrix.</param>
-		/// <param name="translation">Translation vector.</param>
-		/// <remarks>
-		/// Non-uniform scaling is not supported if a bulge different than zero is applied to any of the Polyline2D vertexes,
-		/// a non-uniform scaling cannot be applied to the arc segments. Explode the entity and convert the arcs into ellipse arcs and transform them instead.<br />
-		/// Matrix3 adopts the convention of using column vectors to represent a transformation matrix.
-		/// </remarks>
+		/// <inheritdoc/>
 		public override void TransformBy(Matrix3 transformation, Vector3 translation)
 		{
 			double newElevation = this.Elevation;
@@ -638,10 +591,7 @@ namespace netDxf.Entities
 			this.Normal = newNormal;
 		}
 
-		/// <summary>
-		/// Creates a new Polyline2D that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new Polyline2D that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override object Clone()
 		{
 			Polyline2D entity = new Polyline2D

@@ -25,15 +25,11 @@
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Represents the terminator element of a vertex sequence in polylines or attributes in a block reference.
-	/// </summary>
+	/// <summary>Represents the terminator element of a vertex sequence in polylines or attributes in a block reference.</summary>
 	internal class EndSequence :
 		DxfObject
 	{
-		/// <summary>
-		/// Initializes a new instance of the <c>EndSequence</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		public EndSequence()
 			: base(DxfObjectCode.EndSequence)
 		{

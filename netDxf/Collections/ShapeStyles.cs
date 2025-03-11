@@ -29,9 +29,7 @@ using netDxf.Tables;
 
 namespace netDxf.Collections
 {
-	/// <summary>
-	/// Represents a collection of shape styles.
-	/// </summary>
+	/// <summary>Represents a collection of shape styles.</summary>
 	public class ShapeStyles :
 		TableObjects<ShapeStyle>
 	{
@@ -51,11 +49,9 @@ namespace netDxf.Collections
 
 		#region public methods
 
-		/// <summary>
-		/// Looks for a shape style that contains a shape with the specified name.
-		/// </summary>
+		/// <summary>Looks for a shape style that contains a shape with the specified name.</summary>
 		/// <param name="name">Shape name.</param>
-		/// <returns>The shape style that contains a shape with the specified name, null otherwise.</returns>
+		/// <returns>The shape style that contains a shape with the specified name, <see langword="null"/> otherwise.</returns>
 		public ShapeStyle ContainsShapeName(string name)
 		{
 			foreach (ShapeStyle style in this.Items)
@@ -70,15 +66,7 @@ namespace netDxf.Collections
 
 		#region override methods
 
-		/// <summary>
-		/// Adds a shape style to the list.
-		/// </summary>
-		/// <param name="style"><see cref="ShapeStyle">ShapeStyle</see> to add to the list.</param>
-		/// <param name="assignHandle">Specifies if a handle needs to be generated for the shape style parameter.</param>
-		/// <returns>
-		/// If a shape style already exists with the same name as the instance that is being added the method returns the existing shape style,
-		/// if not it will return the new text style.
-		/// </returns>
+		/// <inheritdoc/>
 		internal override ShapeStyle Add(ShapeStyle style, bool assignHandle)
 		{
 			if (style == null)
@@ -108,23 +96,12 @@ namespace netDxf.Collections
 			return style;
 		}
 
-		/// <summary>
-		/// Removes a shape style.
-		/// </summary>
-		/// <param name="name"><see cref="ShapeStyle">ShapeStyle</see> name to remove from the document.</param>
-		/// <returns>True if the shape style has been successfully removed, or false otherwise.</returns>
-		/// <remarks>Reserved shape styles or any other referenced by objects cannot be removed.</remarks>
+		/// <inheritdoc/>
 		public override bool Remove(string name)
 		{
 			return this.Remove(this[name]);
 		}
-
-		/// <summary>
-		/// Removes a shape style.
-		/// </summary>
-		/// <param name="item"><see cref="ShapeStyle">ShapeStyle</see> to remove from the document.</param>
-		/// <returns>True if the shape style has been successfully removed, or false otherwise.</returns>
-		/// <remarks>Reserved shape styles or any other referenced by objects cannot be removed.</remarks>
+		/// <inheritdoc/>
 		public override bool Remove(ShapeStyle item)
 		{
 			if (item == null)

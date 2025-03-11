@@ -25,24 +25,16 @@
 
 namespace netDxf.Units
 {
-	/// <summary>
-	/// Defines the fraction format when DIMLUNIT is set to 4 (Architectural) or 5 (Fractional).
-	/// </summary>
+	/// <summary>Defines the fraction format when <b>DIMLUNIT</b> is set to 4 (Architectural) or 5 (Fractional).</summary>
 	public enum FractionFormatType
 	{
-		/// <summary>
-		/// Horizontal stacking.
-		/// </summary>
+		/// <summary>Horizontal stacking.</summary>
 		Horizontal = 0,
 
-		/// <summary>
-		/// Diagonal stacking.
-		/// </summary>
+		/// <summary>Diagonal stacking.</summary>
 		Diagonal = 1,
 
-		/// <summary>
-		/// Not stacked (for example, 1/2).
-		/// </summary>
+		/// <summary>Not stacked (for example, 1/2).</summary>
 		NotStacked = 2
 	}
 }

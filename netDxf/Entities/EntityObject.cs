@@ -30,9 +30,7 @@ using netDxf.Tables;
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Represents a generic entity.
-	/// </summary>
+	/// <summary>Represents a generic entity.</summary>
 	public abstract class EntityObject :
 		DxfObject,
 		ICloneable
@@ -105,25 +103,19 @@ namespace netDxf.Entities
 
 		#region public properties
 
-		/// <summary>
-		/// Gets the list of DXF objects that has been attached to this entity.
-		/// </summary>
+		/// <summary>Gets the list of <b>DXF</b> objects that has been attached to this entity.</summary>
 		public IReadOnlyList<DxfObject> Reactors
 		{
 			get { return this.reactors; }
 		}
 
-		/// <summary>
-		/// Gets the entity <see cref="EntityType">type</see>.
-		/// </summary>
+		/// <summary>Gets the entity <see cref="EntityType">type</see>.</summary>
 		public EntityType Type
 		{
 			get { return this.type; }
 		}
 
-		/// <summary>
-		/// Gets or sets the entity <see cref="AciColor">color</see>.
-		/// </summary>
+		/// <summary>Gets or sets the entity <see cref="AciColor">color</see>.</summary>
 		public AciColor Color
 		{
 			get { return this.color; }
@@ -133,9 +125,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the entity <see cref="Layer">layer</see>.
-		/// </summary>
+		/// <summary>Gets or sets the entity <see cref="Layer">layer</see>.</summary>
 		public Layer Layer
 		{
 			get { return this.layer; }
@@ -149,9 +139,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the entity <see cref="Linetype">line type</see>.
-		/// </summary>
+		/// <summary>Gets or sets the entity <see cref="Linetype">line type</see>.</summary>
 		public Linetype Linetype
 		{
 			get { return this.linetype; }
@@ -165,18 +153,14 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the entity <see cref="Lineweight">line weight</see>, one unit is always 1/100 mm (default = ByLayer).
-		/// </summary>
+		/// <summary>Gets or sets the entity <see cref="Lineweight">line weight</see>, one unit is always 1/100 mm (default = ByLayer).</summary>
 		public Lineweight Lineweight
 		{
 			get { return this.lineweight; }
 			set { this.lineweight = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets layer <see cref="Transparency">transparency</see> (default: ByLayer).
-		/// </summary>
+		/// <summary>Gets or sets layer <see cref="Transparency">transparency</see> (default: ByLayer).</summary>
 		public Transparency Transparency
 		{
 			get { return this.transparency; }
@@ -186,9 +170,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the entity line type scale.
-		/// </summary>
+		/// <summary>Gets or sets the entity line type scale.</summary>
 		public double LinetypeScale
 		{
 			get { return this.linetypeScale; }
@@ -202,18 +184,14 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or set the entity visibility.
-		/// </summary>
+		/// <summary>Gets or set the entity visibility.</summary>
 		public bool IsVisible
 		{
 			get { return this.isVisible; }
 			set { this.isVisible = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the entity <see cref="Vector3">normal</see>.
-		/// </summary>
+		/// <summary>Gets or sets the entity <see cref="Vector3">normal</see>.</summary>
 		public Vector3 Normal
 		{
 			get { return this.normal; }
@@ -227,9 +205,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets the owner of the actual DXF object.
-		/// </summary>
+		/// <summary>Gets the owner of the actual <b>DXF</b> object.</summary>
 		public new Block Owner
 		{
 			get { return (Block)base.Owner; }
@@ -254,17 +230,13 @@ namespace netDxf.Entities
 
 		#region public methods
 
-		/// <summary>
-		/// Moves, scales, and/or rotates the current entity given a 3x3 transformation matrix and a translation vector.
-		/// </summary>
+		/// <summary>Moves, scales, and/or rotates the current entity given a 3x3 transformation matrix and a translation vector.</summary>
 		/// <param name="transformation">Transformation matrix.</param>
 		/// <param name="translation">Translation vector.</param>
 		/// <remarks>Matrix3 adopts the convention of using column vectors to represent a transformation matrix.</remarks>
 		public abstract void TransformBy(Matrix3 transformation, Vector3 translation);
 
-		/// <summary>
-		/// Moves, scales, and/or rotates the current entity given a 4x4 transformation matrix.
-		/// </summary>
+		/// <summary>Moves, scales, and/or rotates the current entity given a 4x4 transformation matrix.</summary>
 		/// <param name="transformation">Transformation matrix.</param>
 		/// <remarks>Matrix4 adopts the convention of using column vectors to represent a transformation matrix.</remarks>
 		public void TransformBy(Matrix4 transformation)
@@ -281,10 +253,7 @@ namespace netDxf.Entities
 
 		#region overrides
 
-		/// <summary>
-		/// Converts the value of this instance to its equivalent string representation.
-		/// </summary>
-		/// <returns>The string representation.</returns>
+		/// <inheritdoc/>
 		public override string ToString()
 		{
 			return this.type.ToString();
@@ -294,10 +263,7 @@ namespace netDxf.Entities
 
 		#region ICloneable
 
-		/// <summary>
-		/// Creates a new entity that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new entity that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public abstract object Clone();
 
 		#endregion

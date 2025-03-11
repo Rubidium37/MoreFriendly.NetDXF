@@ -29,12 +29,10 @@ using netDxf.Tables;
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Represents a wipeout <see cref="EntityObject">entity</see>.
-	/// </summary>
+	/// <summary>Represents a wipeout <see cref="EntityObject">entity</see>.</summary>
 	/// <remarks>
-	/// The Wipeout DXF definition includes three variables for brightness, contrast, and fade but those variables have no effect; in AutoCad you cannot even change them.<br/>
-	/// The Wipeout entity is related with the system variable WIPEOUTFRAME but this variable is not saved in a DXF.
+	/// The Wipeout <b>DXF</b> definition includes three variables for brightness, contrast, and fade but those variables have no effect; in <b>AutoCAD</b> you cannot even change them.<br/>
+	/// The Wipeout entity is related with the system variable <b>WIPEOUTFRAME</b> but this variable is not saved in a DXF.
 	/// </remarks>
 	public class Wipeout :
 		EntityObject
@@ -48,9 +46,7 @@ namespace netDxf.Entities
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Wipeout</c> class as a rectangular wipeout.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class as a rectangular wipeout.</summary>
 		/// <param name="x">Rectangle x-coordinate of the bottom-left corner in local coordinates.</param>
 		/// <param name="y">Rectangle y-coordinate of the bottom-left corner in local coordinates.</param>
 		/// <param name="width">Rectangle width in local coordinates.</param>
@@ -60,9 +56,7 @@ namespace netDxf.Entities
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Wipeout</c> class as a rectangular wipeout from two opposite corners.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class as a rectangular wipeout from two opposite corners.</summary>
 		/// <param name="firstCorner">Rectangle firstCorner in local coordinates.</param>
 		/// <param name="secondCorner">Rectangle secondCorner in local coordinates.</param>
 		public Wipeout(Vector2 firstCorner, Vector2 secondCorner)
@@ -70,18 +64,14 @@ namespace netDxf.Entities
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Wipeout</c> class as a polygonal wipeout.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class as a polygonal wipeout.</summary>
 		/// <param name="vertexes">The list of vertexes of the wipeout.</param>
 		public Wipeout(IEnumerable<Vector2> vertexes)
 			: this(new ClippingBoundary(vertexes))
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Wipeout</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="clippingBoundary">The wipeout clipping boundary.</param>
 		public Wipeout(ClippingBoundary clippingBoundary)
 			: base(EntityType.Wipeout, DxfObjectCode.Wipeout)
@@ -94,9 +84,7 @@ namespace netDxf.Entities
 
 		#region public properties
 
-		/// <summary>
-		/// Gets or sets the wipeout clipping boundary.
-		/// </summary>
+		/// <summary>Gets or sets the wipeout clipping boundary.</summary>
 		public ClippingBoundary ClippingBoundary
 		{
 			get { return this.clippingBoundary; }
@@ -106,9 +94,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the wipeout elevation.
-		/// </summary>
+		/// <summary>Gets or sets the wipeout elevation.</summary>
 		/// <remarks>This is the distance from the origin to the plane of the wipeout boundary.</remarks>
 		public double Elevation
 		{
@@ -120,12 +106,7 @@ namespace netDxf.Entities
 
 		#region overrides
 
-		/// <summary>
-		/// Moves, scales, and/or rotates the current entity given a 3x3 transformation matrix and a translation vector.
-		/// </summary>
-		/// <param name="transformation">Transformation matrix.</param>
-		/// <param name="translation">Translation vector.</param>
-		/// <remarks>Matrix3 adopts the convention of using column vectors to represent a transformation matrix.</remarks>
+		/// <inheritdoc/>
 		public override void TransformBy(Matrix3 transformation, Vector3 translation)
 		{
 			double newElevation = this.Elevation;
@@ -159,10 +140,7 @@ namespace netDxf.Entities
 			this.ClippingBoundary = newClipping;
 		}
 
-		/// <summary>
-		/// Creates a new Wipeout that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new Wipeout that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override object Clone()
 		{
 			Wipeout entity = new Wipeout((ClippingBoundary)this.ClippingBoundary.Clone())

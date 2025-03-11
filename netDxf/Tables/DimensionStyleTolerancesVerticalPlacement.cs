@@ -25,24 +25,16 @@
 
 namespace netDxf.Tables
 {
-	/// <summary>
-	/// Controls text justification for symmetrical and deviation tolerances.
-	/// </summary>
+	/// <summary>Controls text justification for symmetrical and deviation tolerances.</summary>
 	public enum DimensionStyleTolerancesVerticalPlacement
 	{
-		/// <summary>
-		/// Aligns the tolerance text with the bottom of the main dimension text.
-		/// </summary>
+		/// <summary>Aligns the tolerance text with the bottom of the main dimension text.</summary>
 		Bottom = 0,
 
-		/// <summary>
-		/// Aligns the tolerance text with the middle of the main dimension text.
-		/// </summary>
+		/// <summary>Aligns the tolerance text with the middle of the main dimension text.</summary>
 		Middle = 1,
 
-		/// <summary>
-		/// Aligns the tolerance text with the top of the main dimension text.
-		/// </summary>
+		/// <summary>Aligns the tolerance text with the top of the main dimension text.</summary>
 		Top = 2
 	}
 }

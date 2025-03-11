@@ -28,9 +28,7 @@ using netDxf.Tables;
 
 namespace netDxf.Collections
 {
-	/// <summary>
-	/// Represents the arguments thrown by the <see cref="DimensionStyleOverrideDictionary">DimensionStyleOverrideDictionary</see> events.
-	/// </summary>
+	/// <summary>Represents the arguments thrown by the <see cref="DimensionStyleOverrideDictionary"/> events.</summary>
 	public class DimensionStyleOverrideDictionaryEventArgs :
 		EventArgs
 	{
@@ -43,9 +41,7 @@ namespace netDxf.Collections
 
 		#region constructor
 
-		/// <summary>
-		/// Initializes a new instance of <c>DimensionStyleOverrideDictionaryEventArgs</c>.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="item">Item that is being added or removed from the dictionary.</param>
 		public DimensionStyleOverrideDictionaryEventArgs(DimensionStyleOverride item)
 		{
@@ -57,18 +53,14 @@ namespace netDxf.Collections
 
 		#region public properties
 
-		/// <summary>
-		/// Get the item that is being added to or removed from the dictionary.
-		/// </summary>
+		/// <summary>Get the item that is being added to or removed from the dictionary.</summary>
 		public DimensionStyleOverride Item
 		{
 			get { return this.item; }
 		}
 
-		/// <summary>
-		/// Gets or sets if the operation must be canceled.
-		/// </summary>
-		/// <remarks>This property is used by the BeforeAddItem and BeforeRemoveItem events to cancel the add or remove operations.</remarks>
+		/// <summary>Gets or sets if the operation must be canceled.</summary>
+		/// <remarks>This property is used by the <see cref="DimensionStyleOverrideDictionary.BeforeAddItem"/> and <see cref="DimensionStyleOverrideDictionary.BeforeRemoveItem"/> events to cancel the add or remove operations.</remarks>
 		public bool Cancel
 		{
 			get { return this.cancel; }

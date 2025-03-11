@@ -25,134 +25,82 @@
 
 namespace netDxf.Units
 {
-	/// <summary>
-	/// Default drawing units for AutoCAD DesignCenter blocks.
-	/// </summary>
+	/// <summary>Default drawing units for <b>AutoCAD</b> DesignCenter blocks.</summary>
 	public enum DrawingUnits
 	{
-		/// <summary>
-		/// Unitless.
-		/// </summary>
+		/// <summary>Unitless.</summary>
 		Unitless = 0,
 
-		/// <summary>
-		/// Inches.
-		/// </summary>
+		/// <summary>Inches.</summary>
 		Inches = 1,
 
-		/// <summary>
-		/// Feet.
-		/// </summary>
+		/// <summary>Feet.</summary>
 		Feet = 2,
 
-		/// <summary>
-		/// Miles.
-		/// </summary>
+		/// <summary>Miles.</summary>
 		Miles = 3,
 
-		/// <summary>
-		/// Millimeters.
-		/// </summary>
+		/// <summary>Millimeters.</summary>
 		Millimeters = 4,
 
-		/// <summary>
-		/// Centimeters.
-		/// </summary>
+		/// <summary>Centimeters.</summary>
 		Centimeters = 5,
 
-		/// <summary>
-		/// Meters.
-		/// </summary>
+		/// <summary>Meters.</summary>
 		Meters = 6,
 
-		/// <summary>
-		/// Kilometers.
-		/// </summary>
+		/// <summary>Kilometers.</summary>
 		Kilometers = 7,
 
-		/// <summary>
-		/// Microinches.
-		/// </summary>
+		/// <summary>Microinches.</summary>
 		Microinches = 8,
 
-		/// <summary>
-		/// Mils (a thousandth of an inch).
-		/// </summary>
+		/// <summary>Mils (a thousandth of an inch).</summary>
 		Mils = 9,
 
-		/// <summary>
-		/// Yards.
-		/// </summary>
+		/// <summary>Yards.</summary>
 		Yards = 10,
 
-		/// <summary>
-		/// Angstroms.
-		/// </summary>
+		/// <summary>Angstroms.</summary>
 		Angstroms = 11,
 
-		/// <summary>
-		/// Nanometers.
-		/// </summary>
+		/// <summary>Nanometers.</summary>
 		Nanometers = 12,
 
-		/// <summary>
-		/// Microns.
-		/// </summary>
+		/// <summary>Microns.</summary>
 		Microns = 13,
 
-		/// <summary>
-		/// Decimeters.
-		/// </summary>
+		/// <summary>Decimeters.</summary>
 		Decimeters = 14,
 
-		/// <summary>
-		/// Decameters
-		/// </summary>
+		/// <summary>Decameters</summary>
 		Decameters = 15,
 
-		/// <summary>
-		/// Hectometers.
-		/// </summary>
+		/// <summary>Hectometers.</summary>
 		Hectometers = 16,
 
-		/// <summary>
-		/// Gigameters.
-		/// </summary>
+		/// <summary>Gigameters.</summary>
 		Gigameters = 17,
 
-		/// <summary>
-		/// AstronomicalUnits.
-		/// </summary>
+		/// <summary>AstronomicalUnits.</summary>
 		AstronomicalUnits = 18,
 
-		/// <summary>
-		/// LightYears.
-		/// </summary>
+		/// <summary>LightYears.</summary>
 		LightYears = 19,
 
-		/// <summary>
-		/// Parsecs.
-		/// </summary>
+		/// <summary>Parsecs.</summary>
 		Parsecs = 20,
 
-		/// <summary>
-		/// US Survey Feet
-		/// </summary>
+		/// <summary>US Survey Feet</summary>
 		USSurveyFeet = 21,
 
-		/// <summary>
-		/// US Survey Inches
-		/// </summary>
+		/// <summary>US Survey Inches</summary>
 		USSurveyInches = 22,
 
-		/// <summary>
-		/// US Survey Yards
-		/// </summary>
+		/// <summary>US Survey Yards</summary>
 		USSurveyYards = 23,
 
-		/// <summary>
-		/// US Survey Miles
-		/// </summary>
+		/// <summary>US Survey Miles</summary>
 		USSurveyMiles = 24
 	}
 }

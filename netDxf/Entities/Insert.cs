@@ -32,9 +32,7 @@ using netDxf.Units;
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Represents a block insertion <see cref="EntityObject">entity</see>.
-	/// </summary>
+	/// <summary>Represents a block insertion <see cref="EntityObject">entity</see>.</summary>
 	public class Insert :
 		EntityObject
 	{
@@ -114,18 +112,14 @@ namespace netDxf.Entities
 			this.rotation = 0.0;
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Insert</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="block">Insert <see cref="Block">block definition</see>.</param>
 		public Insert(Block block)
 			: this(block, Vector3.Zero)
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Insert</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="block">Insert block definition.</param>
 		/// <param name="position">Insert <see cref="Vector2">position</see> in world coordinates.</param>
 		public Insert(Block block, Vector2 position)
@@ -133,9 +127,7 @@ namespace netDxf.Entities
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Insert</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="block">Insert block definition.</param>
 		/// <param name="position">Insert <see cref="Vector3">point</see> in world coordinates.</param>
 		public Insert(Block block, Vector3 position)
@@ -164,26 +156,20 @@ namespace netDxf.Entities
 
 		#region public properties
 
-		/// <summary>
-		/// Gets or sets the default drawing units to obtain the Insert transformation matrix, when the current Insert entity does not belong to a DXF document.
-		/// </summary>
+		/// <summary>Gets or sets the default drawing units to obtain the Insert transformation matrix, when the current Insert entity does not belong to a <b>DXF</b> document.</summary>
 		public static DrawingUnits DefaultInsUnits
 		{
 			get;
 			set;
 		}
 
-		/// <summary>
-		/// Gets the insert list of <see cref="Attribute">attributes</see>.
-		/// </summary>
+		/// <summary>Gets the insert list of <see cref="Attribute">attributes</see>.</summary>
 		public AttributeCollection Attributes
 		{
 			get { return this.attributes; }
 		}
 
-		/// <summary>
-		/// Gets the insert <see cref="Block">block definition</see>.
-		/// </summary>
+		/// <summary>Gets the insert <see cref="Block">block definition</see>.</summary>
 		public Block Block
 		{
 			get { return this.block; }
@@ -214,18 +200,14 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the <see cref="Vector3">position</see> in world coordinates.
-		/// </summary>
+		/// <summary>Gets or sets the <see cref="Vector3">position</see> in world coordinates.</summary>
 		public Vector3 Position
 		{
 			get { return this.position; }
 			set { this.position = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the insert <see cref="Vector3">scale</see>.
-		/// </summary>
+		/// <summary>Gets or sets the insert <see cref="Vector3">scale</see>.</summary>
 		/// <remarks>None of the vector scale components can be zero.</remarks>
 		public Vector3 Scale
 		{
@@ -241,9 +223,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the insert rotation along the normal vector in degrees.
-		/// </summary>
+		/// <summary>Gets or sets the insert rotation along the normal vector in degrees.</summary>
 		public double Rotation
 		{
 			get { return this.rotation; }
@@ -254,9 +234,7 @@ namespace netDxf.Entities
 
 		#region public methods
 
-		/// <summary>
-		/// Updates the attribute list of the actual insert with the attribute definition list of the referenced block. This does not affect any value assigned to the Value property.
-		/// </summary>
+		/// <summary>Updates the attribute list of the actual insert with the attribute definition list of the referenced block. This does not affect any value assigned to the Value property.</summary>
 		/// <remarks>
 		/// This method will automatically call the TransformAttributes method, to keep all attributes position and orientation up to date.<br />
 		/// This method will does not change the values assigned to attributes in the actual insert, besides the ones modified by the TransformAttributes() method;
@@ -301,9 +279,7 @@ namespace netDxf.Entities
 			this.TransformAttributes();
 		}
 
-		/// <summary>
-		/// Gets the insert transformation matrix.
-		/// </summary>
+		/// <summary>Gets the insert transformation matrix.</summary>
 		/// <returns>The insert transformation matrix.</returns>
 		/// <remarks>
 		/// This method uses the DefaultInsUnits defined by the Insert class to obtain the scale between the drawing and the block units.
@@ -330,9 +306,7 @@ namespace netDxf.Entities
 			return trans;
 		}
 
-		/// <summary>
-		/// Calculates the insertion rotation matrix.
-		/// </summary>
+		/// <summary>Calculates the insertion rotation matrix.</summary>
 		/// <param name="insertionUnits">The insertion units.</param>
 		/// <returns>The insert transformation matrix.</returns>
 		public Matrix3 GetTransformation(DrawingUnits insertionUnits)
@@ -345,9 +319,7 @@ namespace netDxf.Entities
 			return trans;
 		}
 
-		/// <summary>
-		/// Recalculate the attributes position, normal, rotation, height, width, width factor, oblique angle, backwards, and upside down properties from the transformation state of the insertion.
-		/// </summary>
+		/// <summary>Recalculate the attributes position, normal, rotation, height, width, width factor, oblique angle, backwards, and upside down properties from the transformation state of the insertion.</summary>
 		/// <remarks>
 		/// Making changes to the insert position, rotation, normal, and/or scale;
 		/// when changing the block origin and/or units; or even the document insertion units will require this method to be called manually.<br />
@@ -355,7 +327,7 @@ namespace netDxf.Entities
 		/// if required this method will calculate the proper values according to the ones defined by the attribute definition.<br />
 		/// All the attribute values can be changed manually independently to its definition,
 		/// but, usually, you will want them to be transformed with the insert based on the local values defined by the attribute definition.<br />
-		/// This method only applies to attributes that have a definition, some DXF files might generate attributes that have no definition in the block.
+		/// This method only applies to attributes that have a definition, some <b>DXF</b> files might generate attributes that have no definition in the block.
 		/// </remarks>
 		public void TransformAttributes()
 		{
@@ -393,9 +365,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Explodes the current insert.
-		/// </summary>
+		/// <summary>Explodes the current insert.</summary>
 		/// <returns>A list of entities.</returns>
 		public List<EntityObject> Explode()
 		{
@@ -588,15 +558,7 @@ namespace netDxf.Entities
 
 		#region overrides
 
-		/// <summary>
-		/// Moves, scales, and/or rotates the current entity given a 3x3 transformation matrix and a translation vector.
-		/// </summary>
-		/// <param name="transformation">Transformation matrix.</param>
-		/// <param name="translation">Translation vector.</param>
-		/// <remarks>
-		/// Matrix3 adopts the convention of using column vectors to represent a transformation matrix.<br />
-		/// The transformation will also be applied to the insert attributes.
-		/// </remarks>
+		/// <inheritdoc/>
 		public override void TransformBy(Matrix3 transformation, Vector3 translation)
 		{
 			Vector3 newPosition = transformation * this.Position + translation;
@@ -638,15 +600,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Assigns a handle to the object based in a integer counter.
-		/// </summary>
-		/// <param name="entityNumber">Number to assign.</param>
-		/// <returns>Next available entity number.</returns>
-		/// <remarks>
-		/// Some objects might consume more than one, is, for example, the case of polylines that will assign
-		/// automatically a handle to its vertexes. The entity number will be converted to an hexadecimal number.
-		/// </remarks>
+		/// <inheritdoc/>
 		internal override long AssignHandle(long entityNumber)
 		{
 			foreach (Attribute attrib in this.attributes)
@@ -656,11 +610,7 @@ namespace netDxf.Entities
 			return base.AssignHandle(entityNumber);
 		}
 
-
-		/// <summary>
-		/// Creates a new Insert that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new Insert that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override object Clone()
 		{
 			// copy attributes

@@ -32,12 +32,10 @@ using netDxf.Tables;
 
 namespace netDxf.Collections
 {
-	/// <summary>
-	/// Represents a collection of layouts.
-	/// </summary>
+	/// <summary>Represents a collection of layouts.</summary>
 	/// <remarks>
 	/// You can add a maximum of 255 layouts to your drawing, the "Model" layout is always present, that limits the maximum number of layouts to 256.
-	/// Even though this limit is imposed through the AutoCad UI, it can import larger numbers, but exceeding this limit might make it to crash.
+	/// Even though this limit is imposed through the <b>AutoCAD</b> UI, it can import larger numbers, but exceeding this limit might make it to crash.
 	/// </remarks>
 	public sealed class Layouts :
 		TableObjects<Layout>
@@ -45,9 +43,7 @@ namespace netDxf.Collections
 
 		#region private fields
 
-		/// <summary>
-		/// Maximum number of layouts that can be added to the document.
-		/// </summary>
+		/// <summary>Maximum number of layouts that can be added to the document.</summary>
 		public const short MaxCapacity = 256;
 
 		#endregion
@@ -72,7 +68,7 @@ namespace netDxf.Collections
 		///// Gets the <see cref="DxfObject">dxf objects</see> referenced by a T.
 		///// </summary>
 		///// <param name="name">Table object name.</param>
-		///// <returns>The list of DxfObjects that reference the specified table object.</returns>
+		///// <returns>The list of <see cref="DxfObject"/>s that reference the specified table object.</returns>
 		//public new List<DxfObjectReference> GetReferences(string name)
 		//{
 		//	if (!this.Contains(name))
@@ -86,7 +82,7 @@ namespace netDxf.Collections
 		///// Gets the <see cref="DxfObject">dxf objects</see> referenced by a T.
 		///// </summary>
 		///// <param name="item">Table object.</param>
-		///// <returns>The list of DxfObjects that reference the specified table object.</returns>
+		///// <returns>The list of <see cref="DxfObject"/>s that reference the specified table object.</returns>
 		//public new List<DxfObjectReference> GetReferences(Layout item)
 		//{
 		//	if (item == null)
@@ -107,15 +103,7 @@ namespace netDxf.Collections
 		//	return refs;
 		//}
 
-		/// <summary>
-		/// Adds a layout to the list.
-		/// </summary>
-		/// <param name="layout"><see cref="Layout">Layout</see> to add to the list.</param>
-		/// <param name="assignHandle">Specifies if a handle needs to be generated for the layout parameter.</param>
-		/// <returns>
-		/// You can add a maximum of 255 layouts to your drawing, the "Model" layout is always present what limits the maximum number of layouts to 256.
-		/// If a layout already exists with the same name as the instance that is being added the method returns the existing layout.
-		/// </returns>
+		/// <inheritdoc/>
 		internal override Layout Add(Layout layout, bool assignHandle)
 		{
 			if (this.List.Count >= MaxCapacity)
@@ -176,30 +164,12 @@ namespace netDxf.Collections
 			return layout;
 		}
 
-		/// <summary>
-		/// Deletes a layout and removes the layout entities from the document.
-		/// </summary>
-		/// <param name="name"><see cref="Layout">Layout</see> name to remove from the document.</param>
-		/// <returns>True if the layout has been successfully removed, or false otherwise.</returns>
-		/// <remarks>
-		/// The ModelSpace layout cannot be removed. If all PaperSpace layouts have been removed a default PaperSpace will be created since it is required by the DXF implementation.<br />
-		/// When a Layout is deleted all entities that has been added to it will also be removed.<br />
-		/// Removing a Layout will rebuild the PaperSpace block names, to follow the naming rule: Paper_Space, Paper_Space0, Paper_Space1, ...
-		/// </remarks>
+		/// <inheritdoc/>
 		public override bool Remove(string name)
 		{
 			return this.Remove(this[name]);
 		}
-
-		/// <summary>
-		/// Deletes a layout and removes the layout entities from the document.
-		/// </summary>
-		/// <param name="item"><see cref="Layout">Layout</see> to remove from the document.</param>
-		/// <returns>True if the layout has been successfully removed, or false otherwise.</returns>
-		/// <remarks>
-		/// Removing a layout will also remove all entities and attribute definition that may contain.
-		/// Reserved layouts cannot be removed.
-		/// </remarks>
+		/// <inheritdoc/>
 		public override bool Remove(Layout item)
 		{
 			if (item == null)

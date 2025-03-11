@@ -44,9 +44,7 @@ using Trace = netDxf.Entities.Trace;
 
 namespace netDxf.IO
 {
-	/// <summary>
-	/// Low level DXF reader
-	/// </summary>
+	/// <summary>Low level <b>DXF</b> reader</summary>
 	internal sealed class DxfReader
 	{
 		#region private fields
@@ -142,9 +140,7 @@ namespace netDxf.IO
 
 		#region public methods
 
-		/// <summary>
-		/// Reads the whole stream.
-		/// </summary>
+		/// <summary>Reads the whole stream.</summary>
 		/// <param name="stream">Stream.</param>
 		/// <param name="supportFolders">List of the document support folders.</param>
 		public DxfDocument Read(Stream stream, SupportFolders supportFolders)
@@ -2428,7 +2424,7 @@ namespace netDxf.IO
 						{
 							color = AciColor.FromCadIndex(index);
 						}
-						// layer color cannot be ByLayer or ByBlock
+						// layer color cannot be <b>ByLayer</b> or <b>ByBlock</b>
 						if (color.IsByLayer || color.IsByBlock)
 						{
 							color = AciColor.Default;
@@ -2442,7 +2438,7 @@ namespace netDxf.IO
 					case 6:
 						string linetypeName = this.DecodeEncodedNonAsciiCharacters(this.chunk.ReadString());
 						linetype = this.GetLinetype(linetypeName);
-						// layer linetype cannot be ByLayer or ByBlock
+						// layer linetype cannot be <b>ByLayer</b> or <b>ByBlock</b>
 						if (linetype.IsByLayer || linetype.IsByBlock)
 						{
 							linetype = Linetype.Continuous;
@@ -2455,7 +2451,7 @@ namespace netDxf.IO
 						break;
 					case 370:
 						lineweight = (Lineweight)this.chunk.ReadShort();
-						// layer lineweight cannot be ByLayer or ByBlock
+						// layer lineweight cannot be <b>ByLayer</b> or <b>ByBlock</b>
 						if (lineweight == Lineweight.ByLayer || lineweight == Lineweight.ByBlock)
 						{
 							lineweight = Lineweight.Default;

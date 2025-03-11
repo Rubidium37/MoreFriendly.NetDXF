@@ -29,16 +29,12 @@ using netDxf.Units;
 
 namespace netDxf.Tables
 {
-	/// <summary>
-	/// Represents a dimension style value that overrides a property of the style associated with a dimension.
-	/// </summary>
+	/// <summary>Represents a dimension style value that overrides a property of the style associated with a dimension.</summary>
 	public class DimensionStyleOverride
 	{
 		#region constructor
 
-		/// <summary>
-		/// Initializes a new instance of <c>DimensionStyleOverride</c>.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="type">Type of the dimension style to override.</param>
 		/// <param name="value">Value of the dimension style to override.</param>
 		public DimensionStyleOverride(DimensionStyleOverrideType type, object value)
@@ -721,10 +717,7 @@ namespace netDxf.Tables
 
 		#region overrides
 
-		/// <summary>
-		/// Obtains a string that represents the actual dimension style override.
-		/// </summary>
-		/// <returns>A string text.</returns>
+		/// <inheritdoc/>
 		public override string ToString()
 		{
 			return string.Format("{0} : {1}", this.type, this.value);
@@ -741,17 +734,13 @@ namespace netDxf.Tables
 
 		#region public properties
 
-		/// <summary>
-		/// Gets the type of the dimension style to override.
-		/// </summary>
+		/// <summary>Gets the type of the dimension style to override.</summary>
 		public DimensionStyleOverrideType Type
 		{
 			get { return this.type; }
 		}
 
-		/// <summary>
-		/// Gets the value of the dimension style to override.
-		/// </summary>
+		/// <summary>Gets the value of the dimension style to override.</summary>
 		public object Value
 		{
 			get { return this.value; }

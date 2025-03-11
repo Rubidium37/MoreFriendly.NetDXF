@@ -30,9 +30,7 @@ using netDxf.Tables;
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Represents a dimension <see cref="EntityObject">entity</see> that is aligned the reference line.
-	/// </summary>
+	/// <summary>Represents a dimension <see cref="EntityObject">entity</see> that is aligned the reference line.</summary>
 	public class AlignedDimension :
 		Dimension
 	{
@@ -46,17 +44,13 @@ namespace netDxf.Entities
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of the <c>AlignedDimension</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		public AlignedDimension()
 			: this(Vector2.Zero, Vector2.UnitX, 0.1)
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>AlignedDimension</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="referenceLine">Reference <see cref="Line">line</see> of the dimension.</param>
 		/// <param name="offset">Distance between the reference line and the dimension line.</param>
 		/// <remarks>The reference points define the distance to be measure.</remarks>
@@ -65,9 +59,7 @@ namespace netDxf.Entities
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>AlignedDimension</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="referenceLine">Reference <see cref="Line">line</see> of the dimension.</param>
 		/// <param name="offset">Distance between the reference line and the dimension line.</param>
 		/// <param name="style">The <see cref="DimensionStyle">style</see> to use with the dimension.</param>
@@ -77,9 +69,7 @@ namespace netDxf.Entities
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>AlignedDimension</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="referenceLine">Reference <see cref="Line">line</see> of the dimension.</param>
 		/// <param name="offset">Distance between the reference line and the dimension line.</param>
 		/// <param name="normal">Normal vector of the plane where the dimension is defined.</param>
@@ -89,9 +79,7 @@ namespace netDxf.Entities
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>AlignedDimension</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="referenceLine">Reference <see cref="Line">line</see> of the dimension.</param>
 		/// <param name="offset">Distance between the reference line and the dimension line.</param>
 		/// <param name="normal">Normal vector of the plane where the dimension is defined.</param>
@@ -119,9 +107,7 @@ namespace netDxf.Entities
 			this.Update();
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>AlignedDimension</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="firstPoint">First reference <see cref="Vector2">point</see> of the dimension.</param>
 		/// <param name="secondPoint">Second reference <see cref="Vector2">point</see> of the dimension.</param>
 		/// <param name="offset">Distance between the reference line and the dimension line.</param>
@@ -131,9 +117,7 @@ namespace netDxf.Entities
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>AlignedDimension</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="firstPoint">First reference <see cref="Vector2">point</see> of the dimension.</param>
 		/// <param name="secondPoint">Second reference <see cref="Vector2">point</see> of the dimension.</param>
 		/// <param name="offset">Distance between the reference line and the dimension line.</param>
@@ -154,35 +138,27 @@ namespace netDxf.Entities
 
 		#region public properties
 
-		/// <summary>
-		/// Gets or sets the first definition point of the dimension in OCS (object coordinate system).
-		/// </summary>
+		/// <summary>Gets or sets the first definition point of the dimension in <b>OCS</b> (object coordinate system).</summary>
 		public Vector2 FirstReferencePoint
 		{
 			get { return this.firstRefPoint; }
 			set { this.firstRefPoint = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the second definition point of the dimension in OCS (object coordinate system).
-		/// </summary>
+		/// <summary>Gets or sets the second definition point of the dimension in <b>OCS</b> (object coordinate system).</summary>
 		public Vector2 SecondReferencePoint
 		{
 			get { return this.secondRefPoint; }
 			set { this.secondRefPoint = value; }
 		}
 
-		/// <summary>
-		/// Gets the location of the dimension line.
-		/// </summary>
+		/// <summary>Gets the location of the dimension line.</summary>
 		public Vector2 DimLinePosition
 		{
 			get { return this.defPoint; }
 		}
 
-		/// <summary>
-		/// Gets or sets the distance between the reference line and the dimension line.
-		/// </summary>
+		/// <summary>Gets or sets the distance between the reference line and the dimension line.</summary>
 		/// <remarks>
 		/// The positive side at which the dimension line is drawn depends of the direction of its reference line.
 		/// </remarks>
@@ -192,9 +168,7 @@ namespace netDxf.Entities
 			set { this.offset = value; }
 		}
 
-		/// <summary>
-		/// Actual measurement.
-		/// </summary>
+		/// <inheritdoc/>
 		public override double Measurement
 		{
 			get { return Vector2.Distance(this.firstRefPoint, this.secondRefPoint); }
@@ -204,9 +178,7 @@ namespace netDxf.Entities
 
 		#region public methods
 
-		/// <summary>
-		/// Calculates the dimension offset from a point along the dimension line.
-		/// </summary>
+		/// <summary>Calculates the dimension offset from a point along the dimension line.</summary>
 		/// <param name="point">Point along the dimension line.</param>
 		public void SetDimensionLinePosition(Vector2 point)
 		{
@@ -243,12 +215,7 @@ namespace netDxf.Entities
 
 		#region overrides
 
-		/// <summary>
-		/// Moves, scales, and/or rotates the current entity given a 3x3 transformation matrix and a translation vector.
-		/// </summary>
-		/// <param name="transformation">Transformation matrix.</param>
-		/// <param name="translation">Translation vector.</param>
-		/// <remarks>Matrix3 adopts the convention of using column vectors to represent a transformation matrix.</remarks>
+		/// <inheritdoc/>
 		public override void TransformBy(Matrix3 transformation, Vector3 translation)
 		{
 			Vector3 newNormal = transformation * this.Normal;
@@ -291,9 +258,7 @@ namespace netDxf.Entities
 			this.SetDimensionLinePosition(this.defPoint);
 		}
 
-		/// <summary>
-		/// Calculate the dimension reference points.
-		/// </summary>
+		/// <inheritdoc/>
 		protected override void CalculateReferencePoints()
 		{
 			DimensionStyleOverride styleOverride;
@@ -339,20 +304,13 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets the block that contains the entities that make up the dimension picture.
-		/// </summary>
-		/// <param name="name">Name to be assigned to the generated block.</param>
-		/// <returns>The block that represents the actual dimension.</returns>
+		/// <inheritdoc/>
 		protected override Block BuildBlock(string name)
 		{
 			return DimensionBlock.Build(this, name);
 		}
 
-		/// <summary>
-		/// Creates a new AlignedDimension that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new AlignedDimension that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override object Clone()
 		{
 			AlignedDimension entity = new AlignedDimension

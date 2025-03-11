@@ -30,9 +30,7 @@ using netDxf.Tables;
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Represents an underlay <see cref="EntityObject">entity</see>.
-	/// </summary>
+	/// <summary>Represents an underlay <see cref="EntityObject">entity</see>.</summary>
 	public class Underlay :
 		EntityObject
 	{
@@ -74,18 +72,14 @@ namespace netDxf.Entities
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Underlay</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="definition"><see cref="UnderlayDefinition">Underlay definition</see>.</param>
 		public Underlay(UnderlayDefinition definition)
 			: this(definition, Vector3.Zero, 1.0)
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Underlay</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="definition"><see cref="UnderlayDefinition">Underlay definition</see>.</param>
 		/// <param name="position">Underlay <see cref="Vector3">position</see> in world coordinates.</param>
 		public Underlay(UnderlayDefinition definition, Vector3 position)
@@ -93,9 +87,7 @@ namespace netDxf.Entities
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Underlay</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="definition"><see cref="UnderlayDefinition">Underlay definition</see>.</param>
 		/// <param name="position">Underlay <see cref="Vector3">position</see> in world coordinates.</param>
 		/// <param name="scale">Underlay scale.</param>
@@ -131,9 +123,7 @@ namespace netDxf.Entities
 
 		#region public properties
 
-		/// <summary>
-		/// Gets the underlay definition.
-		/// </summary>
+		/// <summary>Gets the underlay definition.</summary>
 		public UnderlayDefinition Definition
 		{
 			get { return this.definition; }
@@ -161,23 +151,19 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the underlay position in world coordinates.
-		/// </summary>
+		/// <summary>Gets or sets the underlay position in world coordinates.</summary>
 		public Vector3 Position
 		{
 			get { return this.position; }
 			set { this.position = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the underlay scale.
-		/// </summary>
+		/// <summary>Gets or sets the underlay scale.</summary>
 		/// <remarks>
 		/// Any of the vector scale components cannot be zero.<br />
-		/// Even thought the DXF has a code for the Z scale it seems that it has no use.
-		/// The X and Y components multiplied by the original size of the PDF page represent the width and height of the final underlay.
-		/// The Z component even thought it is present in the DXF it seems it has no use.
+		/// Even thought the <b>DXF</b> has a code for the Z scale it seems that it has no use.
+		/// The X and Y components multiplied by the original size of the <b>PDF</b> page represent the width and height of the final underlay.
+		/// The Z component even thought it is present in the <b>DXF</b> it seems it has no use.
 		/// </remarks>
 		public Vector2 Scale
 		{
@@ -192,18 +178,14 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the underlay rotation around its normal.
-		/// </summary>
+		/// <summary>Gets or sets the underlay rotation around its normal.</summary>
 		public double Rotation
 		{
 			get { return this.rotation; }
 			set { this.rotation = MathHelper.NormalizeAngle(value); }
 		}
 
-		/// <summary>
-		/// Gets or sets the underlay contrast.
-		/// </summary>
+		/// <summary>Gets or sets the underlay contrast.</summary>
 		/// <remarks>Valid values range from 20 to 100.</remarks>
 		public short Contrast
 		{
@@ -218,9 +200,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the underlay fade.
-		/// </summary>
+		/// <summary>Gets or sets the underlay fade.</summary>
 		/// <remarks>Valid values range from 0 to 80.</remarks>
 		public short Fade
 		{
@@ -235,20 +215,16 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the underlay display options.
-		/// </summary>
+		/// <summary>Gets or sets the underlay display options.</summary>
 		public UnderlayDisplayFlags DisplayOptions
 		{
 			get { return this.displayOptions; }
 			set { this.displayOptions = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the underlay clipping boundary.
-		/// </summary>
+		/// <summary>Gets or sets the underlay clipping boundary.</summary>
 		/// <remarks>
-		/// Set as null to restore the default clipping boundary, show the full underlay without clipping.
+		/// Set as <see langword="null"/> to restore the default clipping boundary, show the full underlay without clipping.
 		/// </remarks>
 		public ClippingBoundary ClippingBoundary
 		{
@@ -260,14 +236,10 @@ namespace netDxf.Entities
 
 		#region overrides
 
-		/// <summary>
-		/// Moves, scales, and/or rotates the current entity given a 3x3 transformation matrix and a translation vector.
-		/// </summary>
-		/// <param name="transformation">Transformation matrix.</param>
-		/// <param name="translation">Translation vector.</param>
+		/// <inheritdoc/>
 		/// <remarks>
 		/// Non-uniform scaling for rotated underlays is not supported.
-		/// This is not a limitation of the code but the DXF format, unlike the Image there is no way to define the local UV vectors.<br />
+		/// This is not a limitation of the code but the <b>DXF</b> format, unlike the Image there is no way to define the local <b>UV</b> vectors.<br />
 		/// Matrix3 adopts the convention of using column vectors to represent a transformation matrix.
 		/// </remarks>
 		public override void TransformBy(Matrix3 transformation, Vector3 translation)
@@ -320,10 +292,7 @@ namespace netDxf.Entities
 			this.Scale = newScale;
 		}
 
-		/// <summary>
-		/// Creates a new Underlay that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new Underlay that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override object Clone()
 		{
 			Underlay entity = new Underlay

@@ -31,9 +31,7 @@ using netDxf.Tables;
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Represents a leader <see cref="EntityObject">entity</see>.
-	/// </summary>
+	/// <summary>Represents a leader <see cref="EntityObject">entity</see>.</summary>
 	public class Leader :
 		EntityObject
 	{
@@ -113,18 +111,14 @@ namespace netDxf.Entities
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Leader</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="vertexes">List of leader vertexes in local coordinates.</param>
 		public Leader(IEnumerable<Vector2> vertexes)
 			: this(vertexes, DimensionStyle.Default)
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Leader</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="vertexes">List of leader vertexes in local coordinates.</param>
 		/// <param name="style">Leader style.</param>
 		public Leader(IEnumerable<Vector2> vertexes, DimensionStyle style)
@@ -162,9 +156,7 @@ namespace netDxf.Entities
 			this.styleOverrides.RemoveItem += this.StyleOverrides_RemoveItem;
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Leader</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="text">Leader text annotation.</param>
 		/// <param name="vertexes">List of leader vertexes in local coordinates.</param>
 		public Leader(string text, IEnumerable<Vector2> vertexes)
@@ -172,9 +164,7 @@ namespace netDxf.Entities
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Leader</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="text">Leader text annotation.</param>
 		/// <param name="vertexes">List of leader vertexes in local coordinates.</param>
 		/// <param name="style">Leader style.</param>
@@ -186,9 +176,7 @@ namespace netDxf.Entities
 
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Leader</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="tolerance">Leader tolerance annotation.</param>
 		/// <param name="vertexes">List of leader vertexes in local coordinates.</param>
 		public Leader(ToleranceEntry tolerance, IEnumerable<Vector2> vertexes)
@@ -196,9 +184,7 @@ namespace netDxf.Entities
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Leader</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="tolerance">Leader tolerance annotation.</param>
 		/// <param name="vertexes">List of leader vertexes in local coordinates.</param>
 		/// <param name="style">Leader style.</param>
@@ -208,9 +194,7 @@ namespace netDxf.Entities
 			this.Annotation = this.BuildAnnotation(tolerance);
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Leader</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="block">Leader block annotation.</param>
 		/// <param name="vertexes">List of leader vertexes in local coordinates.</param>
 		public Leader(Block block, IEnumerable<Vector2> vertexes)
@@ -218,9 +202,7 @@ namespace netDxf.Entities
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Leader</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="block">Leader block annotation.</param>
 		/// <param name="vertexes">List of leader vertexes in local coordinates.</param>
 		/// <param name="style">Leader style.</param>
@@ -234,9 +216,7 @@ namespace netDxf.Entities
 
 		#region public properties
 
-		/// <summary>
-		/// Gets or sets the leader style.
-		/// </summary>
+		/// <summary>Gets or sets the leader style.</summary>
 		public DimensionStyle Style
 		{
 			get { return this.style; }
@@ -251,9 +231,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets the dimension style overrides list.
-		/// </summary>
+		/// <summary>Gets the dimension style overrides list.</summary>
 		/// <remarks>
 		/// Any dimension style value stored in this list will override its corresponding value in the assigned style.
 		/// </remarks>
@@ -262,27 +240,21 @@ namespace netDxf.Entities
 			get { return this.styleOverrides; }
 		}
 
-		/// <summary>
-		/// Gets or sets if the arrowhead is drawn.
-		/// </summary>
+		/// <summary>Gets or sets if the arrowhead is drawn.</summary>
 		public bool ShowArrowhead
 		{
 			get { return this.showArrowhead; }
 			set { this.showArrowhead = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the way the leader is drawn.
-		/// </summary>
+		/// <summary>Gets or sets the way the leader is drawn.</summary>
 		public LeaderPathType PathType
 		{
 			get { return this.pathType; }
 			set { this.pathType = value; }
 		}
 
-		/// <summary>
-		/// Gets the leader vertexes list in local coordinates.
-		/// </summary>
+		/// <summary>Gets the leader vertexes list in local coordinates.</summary>
 		/// <remarks>
 		/// The leader vertexes list must have at least two points.
 		/// </remarks>
@@ -291,14 +263,12 @@ namespace netDxf.Entities
 			get { return this.vertexes; }
 		}
 
-		/// <summary>
-		/// Gets or sets the leader annotation entity.
-		/// </summary>
+		/// <summary>Gets or sets the leader annotation entity.</summary>
 		/// <remarks>
 		/// Only MText, Text, Tolerance, and Insert entities are supported as a leader annotation.
-		/// Even if AutoCad allows a Text entity to be part of a Leader it is not recommended, always use a MText entity instead.
+		/// Even if <b>AutoCAD</b> allows a Text entity to be part of a Leader it is not recommended, always use a MText entity instead.
 		/// <br />
-		/// Set the annotation property to null to create a Leader without annotation.
+		/// Set the annotation property to <see langword="null"/> to create a Leader without annotation.
 		/// </remarks>
 		public EntityObject Annotation
 		{
@@ -340,9 +310,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the leader hook position (last leader vertex).
-		/// </summary>
+		/// <summary>Gets or sets the leader hook position (last leader vertex).</summary>
 		/// <remarks>
 		/// This property allows easy access to the last leader vertex, aka leader hook position.
 		/// </remarks>
@@ -352,11 +320,9 @@ namespace netDxf.Entities
 			set { this.vertexes[this.vertexes.Count - 1] = value; }
 		}
 
-		/// <summary>
-		/// Gets if the leader has a hook line.
-		/// </summary>
+		/// <summary>Gets if the leader has a hook line.</summary>
 		/// <remarks>
-		/// If set to true an additional vertex point (StartHookLine) will be created before the leader end point (hook).
+		/// If set to <see langword="true"/> an additional vertex point (StartHookLine) will be created before the leader end point (hook).
 		/// By default, only leaders with text annotation have hook lines.
 		/// </remarks>
 		public bool HasHookline
@@ -384,9 +350,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the leader line color if the style parameter DIMCLRD is set as BYBLOCK.
-		/// </summary>
+		/// <summary>Gets or sets the leader line color if the style parameter <b>DIMCLRD</b> is set as BYBLOCK.</summary>
 		public AciColor LineColor
 		{
 			get { return this.lineColor; }
@@ -396,18 +360,14 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the entity <see cref="Vector3">normal</see>.
-		/// </summary>
+		/// <summary>Gets or sets the entity <see cref="Vector3">normal</see>.</summary>
 		public new Vector3 Normal
 		{
 			get { return base.Normal; }
 			set { base.Normal = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the leader elevation.
-		/// </summary>
+		/// <summary>Gets or sets the leader elevation.</summary>
 		/// <remarks>This is the distance from the origin to the plane of the leader.</remarks>
 		public double Elevation
 		{
@@ -415,18 +375,14 @@ namespace netDxf.Entities
 			set { this.elevation = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the offset from the last leader vertex (hook) to the annotation position.
-		/// </summary>
+		/// <summary>Gets or sets the offset from the last leader vertex (hook) to the annotation position.</summary>
 		public Vector2 Offset
 		{
 			get { return this.offset; }
 			set { this.offset = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the leader annotation direction.
-		/// </summary>
+		/// <summary>Gets or sets the leader annotation direction.</summary>
 		public Vector2 Direction
 		{
 			get { return this.direction; }
@@ -437,11 +393,9 @@ namespace netDxf.Entities
 
 		#region public methods
 
-		/// <summary>
-		/// Updates the leader entity to reflect the latest changes made to its properties.
-		/// </summary>
+		/// <summary>Updates the leader entity to reflect the latest changes made to its properties.</summary>
 		/// <param name="resetAnnotationPosition">
-		/// If true the annotation position will be modified according to the position of the leader hook (last leader vertex),
+		/// If <see langword="true"/> the annotation position will be modified according to the position of the leader hook (last leader vertex),
 		/// otherwise the leader hook will be moved according to the actual annotation position.
 		/// </param>
 		/// <remarks>
@@ -546,9 +500,7 @@ namespace netDxf.Entities
 			return this.Hook - this.Direction * arrowSize * dimScale;
 		}
 
-		/// <summary>
-		/// Resets the leader hook position according to the annotation position.
-		/// </summary>
+		/// <summary>Resets the leader hook position according to the annotation position.</summary>
 		private void ResetHookPosition()
 		{
 			DimensionStyleOverride styleOverride;
@@ -712,9 +664,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Resets the annotation position according to the leader hook.
-		/// </summary>
+		/// <summary>Resets the annotation position according to the leader hook.</summary>
 		private void ResetAnnotationPosition()
 		{
 			DimensionStyleOverride styleOverride;
@@ -931,12 +881,7 @@ namespace netDxf.Entities
 
 		#region overrides
 
-		/// <summary>
-		/// Moves, scales, and/or rotates the current entity given a 3x3 transformation matrix and a translation vector.
-		/// </summary>
-		/// <param name="transformation">Transformation matrix.</param>
-		/// <param name="translation">Translation vector.</param>
-		/// <remarks>Matrix3 adopts the convention of using column vectors to represent a transformation matrix.</remarks>
+		/// <inheritdoc/>
 		public override void TransformBy(Matrix3 transformation, Vector3 translation)
 		{
 			Vector3 newNormal = transformation * this.Normal;
@@ -969,10 +914,7 @@ namespace netDxf.Entities
 			this.annotation?.TransformBy(transformation, translation);
 		}
 
-		/// <summary>
-		/// Creates a new Leader that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new Leader that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override object Clone()
 		{
 			Leader entity = new Leader(this.vertexes)

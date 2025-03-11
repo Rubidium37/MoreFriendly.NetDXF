@@ -27,9 +27,7 @@ using System;
 
 namespace netDxf.Objects
 {
-	/// <summary>
-	/// Represents the plot settings of a layout.
-	/// </summary>
+	/// <summary>Represents the plot settings of a layout.</summary>
 	public class PlotSettings :
 		ICloneable
 	{
@@ -65,9 +63,7 @@ namespace netDxf.Objects
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of <c>PlotSettings</c>.
-		/// </summary>
+		/// <summary>6Initializes a new instance of <see cref="PlotSettings"/>.</summary>
 		public PlotSettings()
 		{
 			this.pageSetupName = string.Empty;
@@ -102,101 +98,79 @@ namespace netDxf.Objects
 
 		#region public properties
 
-		/// <summary>
-		/// Gets or sets the page setup name.
-		/// </summary>
+		/// <summary>Gets or sets the page setup name.</summary>
 		public string PageSetupName
 		{
 			get { return this.pageSetupName; }
 			set { this.pageSetupName = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the name of system printer or plot configuration file.
-		/// </summary>
+		/// <summary>Gets or sets the name of system printer or plot configuration file.</summary>
 		public string PlotterName
 		{
 			get { return this.plotterName; }
 			set { this.plotterName = value; }
 		}
 
-		/// <summary>
-		/// Gets or set the paper size name.
-		/// </summary>
+		/// <summary>Gets or set the paper size name.</summary>
 		public string PaperSizeName
 		{
 			get { return this.paperSizeName; }
 			set { this.paperSizeName = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the plot view name.
-		/// </summary>
+		/// <summary>Gets or sets the plot view name.</summary>
 		public string ViewName
 		{
 			get { return this.viewName; }
 			set { this.viewName = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the current style sheet name.
-		/// </summary>
+		/// <summary>Gets or sets the current style sheet name.</summary>
 		public string CurrentStyleSheet
 		{
 			get { return this.currentStyleSheet; }
 			set { this.currentStyleSheet = value; }
 		}
 
-		/// <summary>
-		/// Gets or set the size, in millimeters, of unprintable margins of paper.
-		/// </summary>
+		/// <summary>Gets or set the size, in millimeters, of unprintable margins of paper.</summary>
 		public PaperMargin PaperMargin
 		{
 			get { return this.paperMargin; }
 			set { this.paperMargin = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the plot paper size: physical paper width and height in millimeters.
-		/// </summary>
+		/// <summary>Gets or sets the plot paper size: physical paper width and height in millimeters.</summary>
 		public Vector2 PaperSize
 		{
 			get { return this.paperSize; }
 			set { this.paperSize = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the plot origin in millimeters.
-		/// </summary>
+		/// <summary>Gets or sets the plot origin in millimeters.</summary>
 		public Vector2 Origin
 		{
 			get { return this.origin; }
 			set { this.origin = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the plot upper-right window corner.
-		/// </summary>
+		/// <summary>Gets or sets the plot upper-right window corner.</summary>
 		public Vector2 WindowUpRight
 		{
 			get { return this.windowUpRight; }
 			set { this.windowUpRight = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the plot lower-left window corner.
-		/// </summary>
+		/// <summary>Gets or sets the plot lower-left window corner.</summary>
 		public Vector2 WindowBottomLeft
 		{
 			get { return this.windowBottomLeft; }
 			set { this.windowBottomLeft = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets if the plot scale will be automatically computed show the drawing fits the media.
-		/// </summary>
+		/// <summary>Gets or sets if the plot scale will be automatically computed show the drawing fits the media.</summary>
 		/// <remarks>
-		/// If <c>ScaleToFit</c> is set to false the values specified by <c>PrintScaleNumerator</c> and <c>PrintScaleDenomiator</c> will be used.
+		/// If <see cref="ScaleToFit"/> is set to <see langword="false"/> the values specified by <see cref="PrintScaleNumerator"/> and <see cref="PrintScaleDenominator"/> will be used.
 		/// </remarks>
 		public bool ScaleToFit
 		{
@@ -204,11 +178,9 @@ namespace netDxf.Objects
 			set { this.scaleToFit = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the numerator of custom print scale: real world paper units.
-		/// </summary>
+		/// <summary>Gets or sets the numerator of custom print scale: real world paper units.</summary>
 		/// <remarks>
-		/// The paper units used are specified by the <c>PaperUnits</c> value.
+		/// The paper units used are specified by the <see cref="PaperUnits"/> value.
 		/// </remarks>
 		public double PrintScaleNumerator
 		{
@@ -223,9 +195,7 @@ namespace netDxf.Objects
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the denominator of custom print scale: drawing units.
-		/// </summary>
+		/// <summary>Gets or sets the denominator of custom print scale: drawing units.</summary>
 		public double PrintScaleDenominator
 		{
 			get { return this.denominatorScale; }
@@ -239,65 +209,51 @@ namespace netDxf.Objects
 			}
 		}
 
-		/// <summary>
-		/// Gets the scale factor.
-		/// </summary>
+		/// <summary>Gets the scale factor.</summary>
 		public double PrintScale
 		{
 			get { return this.numeratorScale / this.denominatorScale; }
 		}
 
-		/// <summary>
-		/// Gets or sets the plot layout flags.
-		/// </summary>
+		/// <summary>Gets or sets the plot layout flags.</summary>
 		public PlotFlags Flags
 		{
 			get { return this.flags; }
 			set { this.flags = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the portion of paper space to output to the media.
-		/// </summary>
+		/// <summary>Gets or sets the portion of paper space to output to the media.</summary>
 		public PlotType PlotType
 		{
 			get { return this.plotType; }
 			set { this.plotType = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the paper units.
-		/// </summary>
-		/// <remarks>This value is only applicable to the scale parameter <c>PrintScaleNumerator</c>.</remarks>
+		/// <summary>Gets or sets the paper units.</summary>
+		/// <remarks>This value is only applicable to the scale parameter <see cref="PrintScaleNumerator"/>.</remarks>
 		public PlotPaperUnits PaperUnits
 		{
 			get { return this.paperUnits; }
 			set { this.paperUnits = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the paper rotation.
-		/// </summary>
+		/// <summary>Gets or sets the paper rotation.</summary>
 		public PlotRotation PaperRotation
 		{
 			get { return this.rotation; }
 			set { this.rotation = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the shade plot mode.
-		/// </summary>
+		/// <summary>Gets or sets the shade plot mode.</summary>
 		public ShadePlotMode ShadePlotMode
 		{
 			get { return this.shadePlotMode; }
 			set { this.shadePlotMode = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the plot resolution mode.
-		/// </summary>
+		/// <summary>Gets or sets the plot resolution mode.</summary>
 		/// <remarks>
-		/// if the <c>ShadePlotResolutionMode</c> is set to Custom the value specified by the <c>ShadPloDPI</c> will be used.
+		/// if the <see cref="ShadePlotResolutionMode"/> is set to Custom the value specified by the <see cref="ShadePlotDPI"/> will be used.
 		/// </remarks>
 		public ShadePlotResolutionMode ShadePlotResolutionMode
 		{
@@ -305,9 +261,7 @@ namespace netDxf.Objects
 			set { this.shadePlotResolutionMode = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the shade plot custom DPI.
-		/// </summary>
+		/// <summary>Gets or sets the shade plot custom DPI.</summary>
 		public short ShadePlotDPI
 		{
 			get { return this.shadePlotDPI; }
@@ -321,9 +275,7 @@ namespace netDxf.Objects
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the paper image origin.
-		/// </summary>
+		/// <summary>Gets or sets the paper image origin.</summary>
 		public Vector2 PaperImageOrigin
 		{
 			get { return this.paperImageOrigin; }
@@ -334,10 +286,7 @@ namespace netDxf.Objects
 
 		#region implements ICloneable
 
-		/// <summary>
-		/// Creates a new plot settings that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new plot settings that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public object Clone()
 		{
 			return new PlotSettings

@@ -30,9 +30,7 @@ using netDxf.Tables;
 
 namespace netDxf.Objects
 {
-	/// <summary>
-	/// Represents a group of entities.
-	/// </summary>
+	/// <summary>Represents a group of entities.</summary>
 	public class Group :
 		TableObject
 	{
@@ -69,9 +67,7 @@ namespace netDxf.Objects
 
 		#region constructor
 
-		/// <summary>
-		/// Initialized a new unnamed empty group.
-		/// </summary>
+		/// <summary>Initialized a new unnamed empty group.</summary>
 		/// <remarks>
 		/// A unique name will be generated when the group is added to the document.
 		/// </remarks>
@@ -80,21 +76,17 @@ namespace netDxf.Objects
 		{
 		}
 
-		/// <summary>
-		/// Initialized a new empty group.
-		/// </summary>
+		/// <summary>Initialized a new empty group.</summary>
 		/// <param name="name">Group name.</param>
 		/// <remarks>
-		/// If the name is set to null or empty, a unique name will be generated when the group is added to the document.
+		/// If the name is set to <see langword="null"/> or empty, a unique name will be generated when the group is added to the document.
 		/// </remarks>
 		public Group(string name)
 			: this(name, null)
 		{
 		}
 
-		/// <summary>
-		/// Initialized a new group with the specified entities.
-		/// </summary>
+		/// <summary>Initialized a new group with the specified entities.</summary>
 		/// <param name="entities">The list of entities contained in the group.</param>
 		/// <remarks>
 		/// A unique name will be generated when the group is added to the document.
@@ -104,13 +96,11 @@ namespace netDxf.Objects
 		{
 		}
 
-		/// <summary>
-		/// Initialized a new group with the specified entities.
-		/// </summary>
+		/// <summary>Initialized a new group with the specified entities.</summary>
 		/// <param name="name">Group name (optional).</param>
 		/// <param name="entities">The list of entities contained in the group.</param>
 		/// <remarks>
-		/// If the name is set to null or empty, a unique name will be generated when the group is added to the document.
+		/// If the name is set to <see langword="null"/> or empty, a unique name will be generated when the group is added to the document.
 		/// </remarks>
 		public Group(string name, IEnumerable<EntityObject> entities)
 			: base(name, DxfObjectCode.Group, !string.IsNullOrEmpty(name))
@@ -146,9 +136,7 @@ namespace netDxf.Objects
 
 		#region public properties
 
-		/// <summary>
-		/// Gets the name of the table object.
-		/// </summary>
+		/// <summary>Gets the name of the table object.</summary>
 		/// <remarks>Table object names are case insensitive.</remarks>
 		public new string Name
 		{
@@ -160,36 +148,28 @@ namespace netDxf.Objects
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the description of the group.
-		/// </summary>
+		/// <summary>Gets or sets the description of the group.</summary>
 		public string Description
 		{
 			get { return this.description; }
 			set { this.description = value; }
 		}
 
-		/// <summary>
-		/// Gets if the group has an automatic generated name.
-		/// </summary>
+		/// <summary>Gets if the group has an automatic generated name.</summary>
 		public bool IsUnnamed
 		{
 			get { return this.isUnnamed; }
 			internal set { this.isUnnamed = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets if the group is selectable.
-		/// </summary>
+		/// <summary>Gets or sets if the group is selectable.</summary>
 		public bool IsSelectable
 		{
 			get { return this.isSelectable; }
 			set { this.isSelectable = value; }
 		}
 
-		/// <summary>
-		/// Gets the list of entities contained in the group.
-		/// </summary>
+		/// <summary>Gets the list of entities contained in the group.</summary>
 		/// <remarks>
 		/// When the group is added to the document the entities in it will be automatically added too.<br/>
 		/// An entity may be contained in different groups.
@@ -199,9 +179,7 @@ namespace netDxf.Objects
 			get { return this.entities; }
 		}
 
-		/// <summary>
-		/// Gets the owner of the actual DXF object.
-		/// </summary>
+		/// <summary>Gets the owner of the actual <b>DXF</b> object.</summary>
 		public new Groups Owner
 		{
 			get { return (Groups)base.Owner; }
@@ -212,31 +190,13 @@ namespace netDxf.Objects
 
 		#region overrides
 
-		/// <summary>
-		/// Checks if this instance has been referenced by other DxfObjects.
-		/// </summary>
-		/// <returns>
-		/// Returns true if this instance has been referenced by other DxfObjects, false otherwise.
-		/// It will always return false if this instance does not belong to a document.
-		/// </returns>
-		/// <remarks>
-		/// This method returns the same value as the HasReferences method that can be found in the TableObjects class.
-		/// </remarks>
+		/// <inheritdoc/>
 		public override bool HasReferences()
 		{
 			return this.Owner != null && this.Owner.HasReferences(this.Name);
 		}
 
-		/// <summary>
-		/// Gets the list of DxfObjects referenced by this instance.
-		/// </summary>
-		/// <returns>
-		/// A list of DxfObjectReference that contains the DxfObject referenced by this instance and the number of times it does.
-		/// It will return null if this instance does not belong to a document.
-		/// </returns>
-		/// <remarks>
-		/// This method returns the same list as the GetReferences method that can be found in the TableObjects class.
-		/// </remarks>
+		/// <inheritdoc/>
 		public override List<DxfObjectReference> GetReferences()
 		{
 			if (this.Owner == null)
@@ -247,12 +207,7 @@ namespace netDxf.Objects
 			return this.Owner.GetReferences(this.Name);
 		}
 
-		/// <summary>
-		/// Creates a new Group that is a copy of the current instance.
-		/// </summary>
-		/// <param name="newName">Group name of the copy.</param>
-		/// <returns>A new Group that is a copy of this instance.</returns>
-		/// <remarks>The entities that belong to the group will also be cloned.</remarks>
+		/// <inheritdoc/>
 		public override TableObject Clone(string newName)
 		{
 			EntityObject[] refs = new EntityObject[this.entities.Count];
@@ -275,10 +230,7 @@ namespace netDxf.Objects
 			return copy;
 		}
 
-		/// <summary>
-		/// Creates a new Group that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new Group that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override object Clone()
 		{
 			return this.Clone(this.IsUnnamed ? string.Empty : this.Name);

@@ -28,9 +28,7 @@ using netDxf.Entities;
 
 namespace netDxf.Blocks
 {
-	/// <summary>
-	/// Represents the arguments thrown when an entity is added ore removed from a <see cref="Block">Block</see>.
-	/// </summary>
+	/// <summary>Represents the arguments thrown when an entity is added ore removed from a <see cref="Block"/>.</summary>
 	public class BlockEntityChangeEventArgs :
 		EventArgs
 	{
@@ -42,9 +40,7 @@ namespace netDxf.Blocks
 
 		#region constructor
 
-		/// <summary>
-		/// Initializes a new instance of <c>BlockEntityChangeEventArgs</c>.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="item">The entity that is being added or removed from the block.</param>
 		public BlockEntityChangeEventArgs(EntityObject item)
 		{
@@ -55,9 +51,7 @@ namespace netDxf.Blocks
 
 		#region public properties
 
-		/// <summary>
-		/// Gets the entity that is being added or removed.
-		/// </summary>
+		/// <summary>Gets the entity that is being added or removed.</summary>
 		public EntityObject Item
 		{
 			get { return this.item; }

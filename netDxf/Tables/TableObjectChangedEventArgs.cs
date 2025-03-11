@@ -27,9 +27,7 @@ using System;
 
 namespace netDxf.Tables
 {
-	/// <summary>
-	/// Event data for changes or substitutions of table objects in entities or other tables.
-	/// </summary>
+	/// <summary>Event data for changes or substitutions of table objects in entities or other tables.</summary>
 	/// <typeparam name="T">A table object</typeparam>
 	public class TableObjectChangedEventArgs<T> :
 		EventArgs
@@ -43,9 +41,7 @@ namespace netDxf.Tables
 
 		#region constructor
 
-		/// <summary>
-		/// Initializes a new instance of <c>TableObjectModifiedEventArgs</c>.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="oldTable">The previous table object.</param>
 		/// <param name="newTable">The new table object.</param>
 		public TableObjectChangedEventArgs(T oldTable, T newTable)
@@ -58,17 +54,13 @@ namespace netDxf.Tables
 
 		#region public properties
 
-		/// <summary>
-		/// Gets the previous property value.
-		/// </summary>
+		/// <summary>Gets the previous property value.</summary>
 		public T OldValue
 		{
 			get { return this.oldValue; }
 		}
 
-		/// <summary>
-		/// Gets or sets the new property value.
-		/// </summary>
+		/// <summary>Gets or sets the new property value.</summary>
 		public T NewValue
 		{
 			get { return this.newValue; }

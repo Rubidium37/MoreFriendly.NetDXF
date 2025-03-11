@@ -25,38 +25,28 @@
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// MText line spacing style.
-	/// </summary>
+	/// <summary>MText line spacing style.</summary>
 	public enum MTextLineSpacingStyle
 	{
-		/// <summary>
-		/// Default (only applicable in MTextParagraphOptions).
-		/// </summary>
+		/// <summary>Default (only applicable in MTextParagraphOptions).</summary>
 		/// <remarks>
-		/// The default value defined by the MText property will be applied.
+		/// The default value defined by the <see cref="MText"/> property will be applied.
 		/// </remarks>
 		Default = 0,
 
-		/// <summary>
-		/// At least (taller characters will override)
-		/// </summary>
+		/// <summary>At least (taller characters will override)</summary>
 		/// <remarks>
 		/// Takes both the user specified arbitrary value and the text height to determine spacing.
 		/// </remarks>
 		AtLeast = 1,
 
-		/// <summary>
-		/// Exact (taller characters will not override)
-		/// </summary>
+		/// <summary>Exact (taller characters will not override)</summary>
 		/// <remarks>
 		/// Defines the space with an arbitrary unit value the user specifies. Changing text height will not affect line spacing.
 		/// </remarks>
 		Exact = 2,
 
-		/// <summary>
-		/// Multiple (only applicable in MTextParagraphOptions).
-		/// </summary>
+		/// <summary>Multiple (only applicable in MTextParagraphOptions).</summary>
 		/// <remarks>
 		/// Instead of assigning a value to line spacing, you specify spacing according to text height.
 		/// </remarks>

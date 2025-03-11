@@ -31,9 +31,7 @@ using netDxf.Units;
 
 namespace netDxf.Tables
 {
-	/// <summary>
-	/// Represents a dimension style.
-	/// </summary>
+	/// <summary>Represents a dimension style.</summary>
 	public class DimensionStyle :
 		TableObject
 	{
@@ -161,22 +159,16 @@ namespace netDxf.Tables
 
 		#region constants
 
-		/// <summary>
-		/// Default dimension style name.
-		/// </summary>
+		/// <summary>Default dimension style name.</summary>
 		public const string DefaultName = "Standard";
 
-		/// <summary>
-		/// Gets the default dimension style.
-		/// </summary>
+		/// <summary>Gets the default dimension style.</summary>
 		public static DimensionStyle Default
 		{
 			get { return new DimensionStyle(DefaultName); }
 		}
 
-		/// <summary>
-		/// Gets the ISO-25 dimension style as defined in AutoCad.
-		/// </summary>
+		/// <summary>Gets the ISO-25 dimension style as defined in AutoCad.</summary>
 		public static DimensionStyle Iso25
 		{
 			get
@@ -218,9 +210,7 @@ namespace netDxf.Tables
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of the <c>DimensionStyle</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="name">The dimension style name.</param>
 		public DimensionStyle(string name)
 			: this(name, true)
@@ -316,12 +306,10 @@ namespace netDxf.Tables
 
 		#region dimension and extension lines
 
-		/// <summary>
-		/// Gets or set the color assigned to dimension lines, arrowheads, and dimension leader lines. (DIMCLRD)
-		/// </summary>
+		/// <summary>Gets or set the color assigned to dimension lines, arrowheads, and dimension leader lines. (<b>DIMCLRD</b>)</summary>
 		/// <remarks>
 		/// Default: ByBlock<br />
-		/// Only indexed AciColors are supported.
+		/// Only indexed <see cref="AciColor"/>s are supported.
 		/// </remarks>
 		public AciColor DimLineColor
 		{
@@ -332,9 +320,7 @@ namespace netDxf.Tables
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the line type of the dimension line. (DIMLTYPE)
-		/// </summary>
+		/// <summary>Gets or sets the line type of the dimension line. (<b>DIMLTYPE</b>)</summary>
 		/// <remarks>
 		/// Default: ByBlock
 		/// </remarks>
@@ -351,9 +337,7 @@ namespace netDxf.Tables
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the line weight to dimension lines. (DIMLWD)
-		/// </summary>
+		/// <summary>Gets or sets the line weight to dimension lines. (<b>DIMLWD</b>)</summary>
 		/// <remarks>
 		/// Default: ByBlock
 		/// </remarks>
@@ -363,12 +347,10 @@ namespace netDxf.Tables
 			set { this.dimlwd = value; }
 		}
 
-		/// <summary>
-		/// Suppresses display of the first dimension line. (DIMSD1)
-		/// </summary>
+		/// <summary>Suppresses display of the first dimension line. (DIMSD1)</summary>
 		/// <remarks>
-		/// Default: false<br />
-		/// To completely suppress the dimension line set both <c>DimLine1Off</c> and <c>DimLine2Off</c> to false.
+		/// Default: <see langword="false"/><br />
+		/// To completely suppress the dimension line set both <see cref="DimLine1Off"/> and <see cref="DimLine2Off"/> to <see langword="false"/>.
 		/// </remarks>
 		public bool DimLine1Off
 		{
@@ -376,12 +358,10 @@ namespace netDxf.Tables
 			set { this.dimsd1 = value; }
 		}
 
-		/// <summary>
-		/// Suppresses display of the second dimension line. (DIMSD2)
-		/// </summary>
+		/// <summary>Suppresses display of the second dimension line. (DIMSD2)</summary>
 		/// <remarks>
-		/// Default: false<br />
-		/// To completely suppress the dimension line set both <c>DimLine1Off</c> and <c>DimLine2Off</c> to false.
+		/// Default: <see langword="false"/><br />
+		/// To completely suppress the dimension line set both <see cref="DimLine1Off"/> and <see cref="DimLine2Off"/> to <see langword="false"/>.
 		/// </remarks>
 		public bool DimLine2Off
 		{
@@ -391,7 +371,7 @@ namespace netDxf.Tables
 
 		/// <summary>
 		/// Gets or sets the distance the dimension line extends beyond the extension line when
-		/// oblique, architectural tick, integral, or no marks are drawn for arrowheads. (DIMDLE)
+		/// oblique, architectural tick, integral, or no marks are drawn for arrowheads. (<b>DIMDLE</b>)
 		/// </summary>
 		/// <remarks>
 		/// Default: 0.0
@@ -409,13 +389,11 @@ namespace netDxf.Tables
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the spacing of the dimension lines in baseline dimensions. (DIMDLI)
-		/// </summary>
+		/// <summary>Gets or sets the spacing of the dimension lines in baseline dimensions. (<b>DIMDLI</b>)</summary>
 		/// <remarks>
 		/// Default: 0.38<br />
 		/// This value is stored only for information purposes.
-		/// Base dimensions are a compound entity made of several dimensions, there is no actual DXF entity that represents that.
+		/// Base dimensions are a compound entity made of several dimensions, there is no actual <b>DXF</b> entity that represents that.
 		/// </remarks>
 		public double DimBaselineSpacing
 		{
@@ -430,12 +408,10 @@ namespace netDxf.Tables
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the color assigned to extension lines, center marks, and centerlines. (DIMCLRE)
-		/// </summary>
+		/// <summary>Gets or sets the color assigned to extension lines, center marks, and centerlines. (<b>DIMCLRE</b>)</summary>
 		/// <remarks>
 		/// Default: ByBlock<br />
-		/// Only indexed AciColors are supported.
+		/// Only indexed <see cref="AciColor"/>s are supported.
 		/// </remarks>
 		public AciColor ExtLineColor
 		{
@@ -446,9 +422,7 @@ namespace netDxf.Tables
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the line type of the first extension line. (DIMLTEX1)
-		/// </summary>
+		/// <summary>Gets or sets the line type of the first extension line. (DIMLTEX1)</summary>
 		/// <remarks>
 		/// Default: ByBlock
 		/// </remarks>
@@ -465,9 +439,7 @@ namespace netDxf.Tables
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the line type of the second extension line. (DIMLTEX2)
-		/// </summary>
+		/// <summary>Gets or sets the line type of the second extension line. (DIMLTEX2)</summary>
 		/// <remarks>
 		/// Default: ByBlock
 		/// </remarks>
@@ -484,9 +456,7 @@ namespace netDxf.Tables
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets line weight of extension lines. (DIMLWE)
-		/// </summary>
+		/// <summary>Gets or sets line weight of extension lines. (<b>DIMLWE</b>)</summary>
 		/// <remarks>
 		/// Default: ByBlock
 		/// </remarks>
@@ -496,11 +466,9 @@ namespace netDxf.Tables
 			set { this.dimlwe = value; }
 		}
 
-		/// <summary>
-		/// Suppresses display of the first extension line. (DIMSE1)
-		/// </summary>
+		/// <summary>Suppresses display of the first extension line. (DIMSE1)</summary>
 		/// <remarks>
-		/// Default: false
+		/// Default: <see langword="false"/>
 		/// </remarks>
 		public bool ExtLine1Off
 		{
@@ -508,11 +476,9 @@ namespace netDxf.Tables
 			set { this.dimse1 = value; }
 		}
 
-		/// <summary>
-		/// Suppresses display of the second extension line. (DIMSE2)
-		/// </summary>
+		/// <summary>Suppresses display of the second extension line. (DIMSE2)</summary>
 		/// <remarks>
-		/// Default: false
+		/// Default: <see langword="false"/>
 		/// </remarks>
 		public bool ExtLine2Off
 		{
@@ -520,9 +486,7 @@ namespace netDxf.Tables
 			set { this.dimse2 = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets how far extension lines are offset from origin points. (DIMEXO)
-		/// </summary>
+		/// <summary>Gets or sets how far extension lines are offset from origin points. (<b>DIMEXO</b>)</summary>
 		/// <remarks>
 		/// Default: 0.0625
 		/// </remarks>
@@ -539,9 +503,7 @@ namespace netDxf.Tables
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets how far to extend the extension line beyond the dimension line. (DIMEXE)
-		/// </summary>
+		/// <summary>Gets or sets how far to extend the extension line beyond the dimension line. (<b>DIMEXE</b>)</summary>
 		/// <remarks>
 		/// Default: 0.18
 		/// </remarks>
@@ -558,11 +520,9 @@ namespace netDxf.Tables
 			}
 		}
 
-		/// <summary>
-		/// Enables fixed length extension lines. (DIMFXLON)
-		/// </summary>
+		/// <summary>Enables fixed length extension lines. (<b>DIMFXLON</b>)</summary>
 		/// <remarks>
-		/// Default: false
+		/// Default: <see langword="false"/>
 		/// </remarks>
 		public bool ExtLineFixed
 		{
@@ -570,9 +530,7 @@ namespace netDxf.Tables
 			set { this.dimfxlon = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the total length of the extension lines starting from the dimension line toward the dimension origin. (DIMFXL)
-		/// </summary>
+		/// <summary>Gets or sets the total length of the extension lines starting from the dimension line toward the dimension origin. (<b>DIMFXL</b>)</summary>
 		/// <remarks>
 		/// Default: 1.0
 		/// </remarks>
@@ -593,11 +551,9 @@ namespace netDxf.Tables
 
 		#region symbols and arrows
 
-		/// <summary>
-		/// Gets or sets the arrowhead block for the first end of the dimension line. (DIMBLK1)
-		/// </summary>
+		/// <summary>Gets or sets the arrowhead block for the first end of the dimension line. (DIMBLK1)</summary>
 		/// <remarks>
-		/// Default: null. Closed filled.
+		/// Default: <see langword="null"/>. Closed filled.
 		/// </remarks>
 		public Block DimArrow1
 		{
@@ -605,11 +561,9 @@ namespace netDxf.Tables
 			set { this.dimblk1 = value == null ? null : this.OnBlockChangedEvent(this.dimblk1, value); }
 		}
 
-		/// <summary>
-		/// Gets or sets the arrowhead block for the second end of the dimension line. (DIMBLK2)
-		/// </summary>
+		/// <summary>Gets or sets the arrowhead block for the second end of the dimension line. (DIMBLK2)</summary>
 		/// <remarks>
-		/// Default: null. Closed filled.
+		/// Default: <see langword="null"/>. Closed filled.
 		/// </remarks>
 		public Block DimArrow2
 		{
@@ -617,11 +571,9 @@ namespace netDxf.Tables
 			set { this.dimblk2 = value == null ? null : this.OnBlockChangedEvent(this.dimblk2, value); }
 		}
 
-		/// <summary>
-		/// Gets or sets the arrowhead block for leaders. (DIMLDRBLK)
-		/// </summary>
+		/// <summary>Gets or sets the arrowhead block for leaders. (<b>DIMLDRBLK</b>)</summary>
 		/// <remarks>
-		/// Default: null. Closed filled.
+		/// Default: <see langword="null"/>. Closed filled.
 		/// </remarks>
 		public Block LeaderArrow
 		{
@@ -629,9 +581,7 @@ namespace netDxf.Tables
 			set { this.dimldrblk = value == null ? null : this.OnBlockChangedEvent(this.dimldrblk, value); }
 		}
 
-		/// <summary>
-		/// Controls the size of dimension line and leader line arrowheads. Also controls the size of hook lines. (DIMASZ)
-		/// </summary>
+		/// <summary>Controls the size of dimension line and leader line arrowheads. Also controls the size of hook lines. (<b>DIMASZ</b>)</summary>
 		/// <remarks>
 		/// Default: 0.18
 		/// </remarks>
@@ -648,9 +598,7 @@ namespace netDxf.Tables
 			}
 		}
 
-		/// <summary>
-		/// Controls the drawing of circle or arc center marks and centerlines. (DIMCEN)
-		/// </summary>
+		/// <summary>Controls the drawing of circle or arc center marks and centerlines. (<b>DIMCEN</b>)</summary>
 		/// <remarks>
 		/// Default: 0.09<br/>
 		/// 0 - No center marks or lines are drawn.<br />
@@ -671,9 +619,7 @@ namespace netDxf.Tables
 
 		#region text appearance
 
-		/// <summary>
-		/// Gets or sets the text style of the dimension. (DIMTXTSTY)
-		/// </summary>
+		/// <summary>Gets or sets the text style of the dimension. (<b>DIMTXTSTY</b>)</summary>
 		/// <remarks>
 		/// Default: Standard
 		/// </remarks>
@@ -690,12 +636,10 @@ namespace netDxf.Tables
 			}
 		}
 
-		/// <summary>
-		/// Gets or set the color of dimension text. (DIMCLRT)
-		/// </summary>
+		/// <summary>Gets or set the color of dimension text. (<b>DIMCLRT</b>)</summary>
 		/// <remarks>
 		/// Default: ByBlock<br />
-		/// Only indexed AciColors are supported.
+		/// Only indexed <see cref="AciColor"/>s are supported.
 		/// </remarks>
 		public AciColor TextColor
 		{
@@ -706,12 +650,10 @@ namespace netDxf.Tables
 			}
 		}
 
-		/// <summary>
-		/// Gets or set the background color of dimension text. Set to null to specify no color. (DIMTFILLCLR)
-		/// </summary>
+		/// <summary>Gets or set the background color of dimension text. Set to <see langword="null"/> to specify no color. (<b>DIMTFILLCLR</b>)</summary>
 		/// <remarks>
-		/// Default: null<br />
-		/// Only indexed AciColors are supported.
+		/// Default: <see langword="null"/><br />
+		/// Only indexed <see cref="AciColor"/>s are supported.
 		/// </remarks>
 		public AciColor TextFillColor
 		{
@@ -719,9 +661,7 @@ namespace netDxf.Tables
 			set { this.dimtfillclr = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the height of dimension text, unless the current text style has a fixed height. (DIMTXT)
-		/// </summary>
+		/// <summary>Gets or sets the height of dimension text, unless the current text style has a fixed height. (<b>DIMTXT</b>)</summary>
 		/// <remarks>
 		/// Default: 0.18
 		/// </remarks>
@@ -738,9 +678,7 @@ namespace netDxf.Tables
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the horizontal positioning of dimension text. (DIMJUST)
-		/// </summary>
+		/// <summary>Gets or sets the horizontal positioning of dimension text. (<b>DIMJUST</b>)</summary>
 		/// <remarks>
 		/// Default: Centered
 		/// </remarks>
@@ -750,9 +688,7 @@ namespace netDxf.Tables
 			set { this.dimjust = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the vertical position of text in relation to the dimension line. (DIMTAD)
-		/// </summary>
+		/// <summary>Gets or sets the vertical position of text in relation to the dimension line. (<b>DIMTAD</b>)</summary>
 		/// <remarks>
 		/// Default: Centered
 		/// </remarks>
@@ -762,9 +698,7 @@ namespace netDxf.Tables
 			set { this.dimtad = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the distance around the dimension text when the dimension line breaks to accommodate dimension text. (DIMGAP)
-		/// </summary>
+		/// <summary>Gets or sets the distance around the dimension text when the dimension line breaks to accommodate dimension text. (<b>DIMGAP</b>)</summary>
 		/// <remarks>
 		/// Default: 0.09<br />
 		/// Displays a rectangular frame around the dimension text when negative values are used.
@@ -775,11 +709,9 @@ namespace netDxf.Tables
 			set { this.dimgap = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets if the dimension text is placed horizontally when inside extension lines. (DIMTIH)
-		/// </summary>
+		/// <summary>Gets or sets if the dimension text is placed horizontally when inside extension lines. (<b>DIMTIH</b>)</summary>
 		/// <remarks>
-		/// Default: false
+		/// Default: <see langword="false"/>
 		/// </remarks>
 		public bool TextInsideAlign
 		{
@@ -787,11 +719,9 @@ namespace netDxf.Tables
 			set { this.dimtih = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets if the dimension text is placed horizontally when outside extension lines. (DIMTOH)
-		/// </summary>
+		/// <summary>Gets or sets if the dimension text is placed horizontally when outside extension lines. (<b>DIMTOH</b>)</summary>
 		/// <remarks>
-		/// Default: false
+		/// Default: <see langword="false"/>
 		/// </remarks>
 		public bool TextOutsideAlign
 		{
@@ -799,9 +729,7 @@ namespace netDxf.Tables
 			set { this.dimtoh = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the direction of the dimension text. (DIMTXTDIRECTION)
-		/// </summary>
+		/// <summary>Gets or sets the direction of the dimension text. (<b>DIMTXTDIRECTION</b>)</summary>
 		/// <remarks>
 		/// Default: LeftToRight
 		/// </remarks>
@@ -811,12 +739,10 @@ namespace netDxf.Tables
 			set { this.dimtxtdirection = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the scale of fractions relative to dimension text height. (DIMTFAC)
-		/// </summary>
+		/// <summary>Gets or sets the scale of fractions relative to dimension text height. (<b>DIMTFAC</b>)</summary>
 		/// <remarks>
 		/// Default: 1.0<br />
-		/// This value is only applicable to Architectural and Fractional units, and also
+		/// This value is only applicable to <see cref="LinearUnitType.Architectural"/> and <see cref="LinearUnitType.Fractional"/> units, and also
 		/// controls the height factor applied to the tolerance text in relation with the dimension text height.
 		/// </remarks>
 		public double TextFractionHeightScale
@@ -836,11 +762,9 @@ namespace netDxf.Tables
 
 		#region fit
 
-		/// <summary>
-		/// Gets or sets the drawing of a dimension line between the extension lines even when the text is placed outside the extension lines. (DIMTOFL)
-		/// </summary>
+		/// <summary>Gets or sets the drawing of a dimension line between the extension lines even when the text is placed outside the extension lines. (<b>DIMTOFL</b>)</summary>
 		/// <remarks>
-		/// Default: false
+		/// Default: <see langword="false"/>
 		/// </remarks>
 		public bool FitDimLineForce
 		{
@@ -848,14 +772,12 @@ namespace netDxf.Tables
 			set { this.dimtofl = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the drawing of the dimension line and arrowheads even if not enough space is available inside the extension lines. (DIMSOXD)
-		/// </summary>
+		/// <summary>Gets or sets the drawing of the dimension line and arrowheads even if not enough space is available inside the extension lines. (<b>DIMSOXD</b>)</summary>
 		/// <remarks>
-		/// Default: true<br />
-		/// If not enough space is available inside the extension lines and FitTextInside is true,
-		/// setting FitDimLineInside to false suppresses the arrowheads. If FitDimLineInside is false,
-		/// FitDimLineInside has no effect.
+		/// Default: <see langword="true"/><br />
+		/// If not enough space is available inside the extension lines and <see cref="FitTextInside"/> is <see langword="true"/>,
+		/// setting <see cref="FitDimLineInside"/> to false suppresses the arrowheads. If <see cref="FitDimLineInside"/> is <see langword="false"/>,
+		/// <see cref="FitDimLineInside"/> has no effect.
 		/// </remarks>
 		public bool FitDimLineInside
 		{
@@ -863,13 +785,11 @@ namespace netDxf.Tables
 			set { this.dimsoxd = value; }
 		}
 
-		/// <summary>
-		/// Get or set the overall scale factor applied to dimensioning variables that specify sizes, distances, or offsets. (DIMSCALE)
-		/// </summary>
+		/// <summary>Get or set the overall scale factor applied to dimensioning variables that specify sizes, distances, or offsets. (<b>DIMSCALE</b>)</summary>
 		/// <remarks>
 		/// Default: 1.0<br/>
-		/// DIMSCALE does not affect measured lengths, coordinates, or angles.<br/>
-		/// DIMSCALE values of zero are not supported, any imported drawing with a zero value will set the scale to the default 1.0.
+		/// <b>DIMSCALE</b> does not affect measured lengths, coordinates, or angles.<br/>
+		/// <b>DIMSCALE</b> values of zero are not supported, any imported drawing with a zero value will set the scale to the default 1.0.
 		/// </remarks>
 		public double DimScaleOverall
 		{
@@ -884,9 +804,7 @@ namespace netDxf.Tables
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the placement of text and arrowheads based on the space available between the extension lines. (DIMATFIT)
-		/// </summary>
+		/// <summary>Gets or sets the placement of text and arrowheads based on the space available between the extension lines. (<b>DIMATFIT</b>)</summary>
 		/// <remarks>
 		/// Default: BestFit<br/>
 		/// Not implemented in the dimension drawing.
@@ -897,11 +815,9 @@ namespace netDxf.Tables
 			set { this.dimatfit = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the drawing of text between the extension lines. (DIMTIX)
-		/// </summary>
+		/// <summary>Gets or sets the drawing of text between the extension lines. (<b>DIMTIX</b>)</summary>
 		/// <remarks>
-		/// Default: false
+		/// Default: <see langword="false"/>
 		/// </remarks>
 		public bool FitTextInside
 		{
@@ -909,9 +825,7 @@ namespace netDxf.Tables
 			set { this.dimtix = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the position of the text when it's moved either manually or automatically. (DIMTMOVE)
-		/// </summary>
+		/// <summary>Gets or sets the position of the text when it's moved either manually or automatically. (<b>DIMTMOVE</b>)</summary>
 		/// <remarks>
 		/// Default: BesideDimLine
 		/// </remarks>
@@ -925,9 +839,7 @@ namespace netDxf.Tables
 
 		#region primary units
 
-		/// <summary>
-		/// Gets or sets the number of precision places displayed in angular dimensions. (DIMADEC)
-		/// </summary>
+		/// <summary>Gets or sets the number of precision places displayed in angular dimensions. (<b>DIMADEC</b>)</summary>
 		/// <remarks>
 		/// Default: 0<br/>
 		/// If set to -1 angular dimensions display the number of decimal places specified by LengthPrecision.
@@ -946,9 +858,7 @@ namespace netDxf.Tables
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the number of decimal places displayed for the primary units of a dimension. (DIMDEC)
-		/// </summary>
+		/// <summary>Gets or sets the number of decimal places displayed for the primary units of a dimension. (<b>DIMDEC</b>)</summary>
 		/// <remarks>
 		/// Default: 2<br/>
 		/// It is recommended to use values in the range 0 to 8.<br/>
@@ -967,9 +877,7 @@ namespace netDxf.Tables
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the text prefix for the dimension. (DIMPOST)
-		/// </summary>
+		/// <summary>Gets or sets the text prefix for the dimension. (<b>DIMPOST</b>)</summary>
 		/// <remarks>
 		/// Default: string.Empty
 		/// </remarks>
@@ -979,9 +887,7 @@ namespace netDxf.Tables
 			set { this.dimPrefix = value ?? string.Empty; }
 		}
 
-		/// <summary>
-		/// Gets or sets the text suffix for the dimension. (DIMPOST)
-		/// </summary>
+		/// <summary>Gets or sets the text suffix for the dimension. (<b>DIMPOST</b>)</summary>
 		/// <remarks>
 		/// Default: string.Empty
 		/// </remarks>
@@ -991,9 +897,7 @@ namespace netDxf.Tables
 			set { this.dimSuffix = value ?? string.Empty; }
 		}
 
-		/// <summary>
-		/// Gets or sets a single-character decimal separator to use when creating dimensions whose unit format is decimal. (DIMDSEP)
-		/// </summary>
+		/// <summary>Gets or sets a single-character decimal separator to use when creating dimensions whose unit format is decimal. (<b>DIMDSEP</b>)</summary>
 		/// <remarks>
 		/// Default: "."
 		/// </remarks>
@@ -1003,9 +907,7 @@ namespace netDxf.Tables
 			set { this.dimdsep = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets a scale factor for linear dimension measurements. (DIMLFAC)
-		/// </summary>
+		/// <summary>Gets or sets a scale factor for linear dimension measurements. (<b>DIMLFAC</b>)</summary>
 		/// <remarks>
 		/// All linear dimension distances, including radii, diameters, and coordinates, are multiplied by DimScaleLinear before being converted to dimension text.<br />
 		/// Positive values of DimScaleLinear are applied to dimensions in both model space and paper space; negative values are applied to paper space only.<br />
@@ -1024,9 +926,7 @@ namespace netDxf.Tables
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the units for all dimension types except angular. (DIMLUNIT)
-		/// </summary>
+		/// <summary>Gets or sets the units for all dimension types except angular. (<b>DIMLUNIT</b>)</summary>
 		/// <remarks>
 		/// Scientific<br/>
 		/// Decimal<br/>
@@ -1040,9 +940,7 @@ namespace netDxf.Tables
 			set { this.dimlunit = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the units format for angular dimensions. (DIMAUNIT)
-		/// </summary>
+		/// <summary>Gets or sets the units format for angular dimensions. (<b>DIMAUNIT</b>)</summary>
 		/// <remarks>
 		/// Decimal degrees<br/>
 		/// Degrees/minutes/seconds<br/>
@@ -1062,9 +960,7 @@ namespace netDxf.Tables
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the fraction format when DIMLUNIT is set to Architectural or Fractional. (DIMFRAC)
-		/// </summary>
+		/// <summary>Gets or sets the fraction format when <b>DIMLUNIT</b> is set to <see cref="LinearUnitType.Architectural"/> or <see cref="LinearUnitType.Fractional"/>. (<b>DIMFRAC</b>)</summary>
 		/// <remarks>
 		/// Horizontal stacking<br/>
 		/// Diagonal stacking<br/>
@@ -1076,11 +972,9 @@ namespace netDxf.Tables
 			set { this.dimfrac = value; }
 		}
 
-		/// <summary>
-		/// Suppresses leading zeros in linear decimal dimensions; for example, 0.5000 becomes .5000. (DIMZIN)
-		/// </summary>
+		/// <summary>Suppresses leading zeros in linear decimal dimensions; for example, 0.5000 becomes .5000. (<b>DIMZIN</b>)</summary>
 		/// <remarks>
-		/// This value is part of the DIMZIN variable.
+		/// This value is part of the <b>DIMZIN</b> variable.
 		/// </remarks>
 		public bool SuppressLinearLeadingZeros
 		{
@@ -1088,11 +982,9 @@ namespace netDxf.Tables
 			set { this.suppressLinearLeadingZeros = value; }
 		}
 
-		/// <summary>
-		/// Suppresses trailing zeros in linear decimal dimensions. (DIMZIN)
-		/// </summary>
+		/// <summary>Suppresses trailing zeros in linear decimal dimensions. (<b>DIMZIN</b>)</summary>
 		/// <remarks>
-		/// This value is part of the DIMZIN variable.
+		/// This value is part of the <b>DIMZIN</b> variable.
 		/// </remarks>
 		public bool SuppressLinearTrailingZeros
 		{
@@ -1100,11 +992,9 @@ namespace netDxf.Tables
 			set { this.suppressLinearTrailingZeros = value; }
 		}
 
-		/// <summary>
-		/// Suppresses zero feet in architectural dimensions. (DIMZIN)
-		/// </summary>
+		/// <summary>Suppresses zero feet in architectural dimensions. (<b>DIMZIN</b>)</summary>
 		/// <remarks>
-		/// This value is part of the DIMZIN variable.
+		/// This value is part of the <b>DIMZIN</b> variable.
 		/// </remarks>
 		public bool SuppressZeroFeet
 		{
@@ -1112,11 +1002,9 @@ namespace netDxf.Tables
 			set { this.suppressZeroFeet = value; }
 		}
 
-		/// <summary>
-		/// Suppresses zero inches in architectural dimensions. (DIMZIN)
-		/// </summary>
+		/// <summary>Suppresses zero inches in architectural dimensions. (<b>DIMZIN</b>)</summary>
 		/// <remarks>
-		/// This value is part of the DIMZIN variable.
+		/// This value is part of the <b>DIMZIN</b> variable.
 		/// </remarks>
 		public bool SuppressZeroInches
 		{
@@ -1124,11 +1012,9 @@ namespace netDxf.Tables
 			set { this.suppressZeroInches = value; }
 		}
 
-		/// <summary>
-		/// Suppresses leading zeros in angular decimal dimensions. (DIMZIN)
-		/// </summary>
+		/// <summary>Suppresses leading zeros in angular decimal dimensions. (<b>DIMZIN</b>)</summary>
 		/// <remarks>
-		/// This value is part of the DIMAZIN variable.
+		/// This value is part of the <b>DIMAZIN</b> variable.
 		/// </remarks>
 		public bool SuppressAngularLeadingZeros
 		{
@@ -1136,11 +1022,9 @@ namespace netDxf.Tables
 			set { this.suppressAngularLeadingZeros = value; }
 		}
 
-		/// <summary>
-		/// Suppresses trailing zeros in angular decimal dimensions. (DIMZIN)
-		/// </summary>
+		/// <summary>Suppresses trailing zeros in angular decimal dimensions. (<b>DIMZIN</b>)</summary>
 		/// <remarks>
-		/// This value is part of the DIMAZIN variable.
+		/// This value is part of the <b>DIMAZIN</b> variable.
 		/// </remarks>
 		public bool SuppressAngularTrailingZeros
 		{
@@ -1148,15 +1032,13 @@ namespace netDxf.Tables
 			set { this.suppressAngularTrailingZeros = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the value to round all dimensioning distances. (DIMRND)
-		/// </summary>
+		/// <summary>Gets or sets the value to round all dimensioning distances. (<b>DIMRND</b>)</summary>
 		/// <remarks>
 		/// Default: 0 (no rounding off).<br/>
-		/// If DIMRND is set to 0.25, all distances round to the nearest 0.25 unit.
-		/// If you set DIMRND to 1.0, all distances round to the nearest integer.
+		/// If <b>DIMRND</b> is set to 0.25, all distances round to the nearest 0.25 unit.
+		/// If you set <b>DIMRND</b> to 1.0, all distances round to the nearest integer.
 		/// Note that the number of digits edited after the decimal point depends on the precision set by DIMDEC.
-		/// DIMRND does not apply to angular dimensions.
+		/// <b>DIMRND</b> does not apply to angular dimensions.
 		/// </remarks>
 		public double DimRoundoff
 		{
@@ -1175,9 +1057,7 @@ namespace netDxf.Tables
 
 		#region alternate units
 
-		/// <summary>
-		/// Gets or sets the alternate units format for dimensions.
-		/// </summary>
+		/// <summary>Gets or sets the alternate units format for dimensions.</summary>
 		/// <remarks>Alternative units are not applicable for angular dimensions.</remarks>
 		public DimensionStyleAlternateUnits AlternateUnits
 		{
@@ -1192,9 +1072,7 @@ namespace netDxf.Tables
 
 		#region tolerances
 
-		/// <summary>
-		/// Gets or sets the tolerances format for dimensions.
-		/// </summary>
+		/// <summary>Gets or sets the tolerances format for dimensions.</summary>
 		public DimensionStyleTolerances Tolerances
 		{
 			get { return this.tolerances; }
@@ -1206,9 +1084,7 @@ namespace netDxf.Tables
 
 		#endregion
 
-		/// <summary>
-		/// Gets the owner of the actual dimension style.
-		/// </summary>
+		/// <summary>Gets the owner of the actual dimension style.</summary>
 		public new DimensionStyles Owner
 		{
 			get { return (DimensionStyles)base.Owner; }
@@ -1219,41 +1095,19 @@ namespace netDxf.Tables
 
 		#region overrides
 
-		/// <summary>
-		/// Checks if this instance has been referenced by other DxfObjects.
-		/// </summary>
-		/// <returns>
-		/// Returns true if this instance has been referenced by other DxfObjects, false otherwise.
-		/// It will always return false if this instance does not belong to a document.
-		/// </returns>
-		/// <remarks>
-		/// This method returns the same value as the HasReferences method that can be found in the TableObjects class.
-		/// </remarks>
+		/// <inheritdoc/>
 		public override bool HasReferences()
 		{
 			return this.Owner != null && this.Owner.HasReferences(this.Name);
 		}
 
-		/// <summary>
-		/// Gets the list of DxfObjects referenced by this instance.
-		/// </summary>
-		/// <returns>
-		/// A list of DxfObjectReference that contains the DxfObject referenced by this instance and the number of times it does.
-		/// It will return null if this instance does not belong to a document.
-		/// </returns>
-		/// <remarks>
-		/// This method returns the same list as the GetReferences method that can be found in the TableObjects class.
-		/// </remarks>
+		/// <inheritdoc/>
 		public override List<DxfObjectReference> GetReferences()
 		{
 			return this.Owner?.GetReferences(this.Name);
 		}
 
-		/// <summary>
-		/// Creates a new DimensionStyle that is a copy of the current instance.
-		/// </summary>
-		/// <param name="newName">DimensionStyle name of the copy.</param>
-		/// <returns>A new DimensionStyle that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override TableObject Clone(string newName)
 		{
 			DimensionStyle copy = new DimensionStyle(newName)
@@ -1335,10 +1189,7 @@ namespace netDxf.Tables
 			return copy;
 		}
 
-		/// <summary>
-		/// Creates a new DimensionStyle that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new DimensionStyle that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override object Clone()
 		{
 			return this.Clone(this.Name);

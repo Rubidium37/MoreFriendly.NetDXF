@@ -25,24 +25,16 @@
 
 namespace netDxf.Tables
 {
-	/// <summary>
-	/// Controls the placement of dimension text when it is moved from the default position, that is, the position defined by the dimension style.
-	/// </summary>
+	/// <summary>Controls the placement of dimension text when it is moved from the default position, that is, the position defined by the dimension style.</summary>
 	public enum DimensionStyleFitTextMove
 	{
-		/// <summary>
-		/// Moves the dimension line with dimension text.
-		/// </summary>
+		/// <summary>Moves the dimension line with dimension text.</summary>
 		BesideDimLine = 0,
 
-		/// <summary>
-		/// Adds a leader when dimension text is moved.
-		/// </summary>
+		/// <summary>Adds a leader when dimension text is moved.</summary>
 		OverDimLineWithLeader = 1,
 
-		/// <summary>
-		/// Allows text to be moved freely without a leader.
-		/// </summary>
+		/// <summary>Allows text to be moved freely without a leader.</summary>
 		OverDimLineWithoutLeader = 2
 	}
 }

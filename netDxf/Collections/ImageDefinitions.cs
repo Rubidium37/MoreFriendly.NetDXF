@@ -30,9 +30,7 @@ using netDxf.Tables;
 
 namespace netDxf.Collections
 {
-	/// <summary>
-	/// Represents a collection of image definitions.
-	/// </summary>
+	/// <summary>Represents a collection of image definitions.</summary>
 	public sealed class ImageDefinitions :
 		TableObjects<ImageDefinition>
 	{
@@ -52,15 +50,7 @@ namespace netDxf.Collections
 
 		#region override methods
 
-		/// <summary>
-		/// Adds an image definition to the list.
-		/// </summary>
-		/// <param name="imageDefinition"><see cref="ImageDefinition">ImageDefinition</see> to add to the list.</param>
-		/// <param name="assignHandle">Specifies if a handle needs to be generated for the image definition parameter.</param>
-		/// <returns>
-		/// If an image definition already exists with the same name as the instance that is being added the method returns the existing image definition,
-		/// if not it will return the new image definition.
-		/// </returns>
+		/// <inheritdoc/>
 		internal override ImageDefinition Add(ImageDefinition imageDefinition, bool assignHandle)
 		{
 			if (imageDefinition == null)
@@ -90,23 +80,12 @@ namespace netDxf.Collections
 			return imageDefinition;
 		}
 
-		/// <summary>
-		/// Removes an image definition.
-		/// </summary>
-		/// <param name="name"><see cref="ImageDefinition">ImageDefinition</see> name to remove from the document.</param>
-		/// <returns>True if the image definition has been successfully removed, or false otherwise.</returns>
-		/// <remarks>Any image definition referenced by objects cannot be removed.</remarks>
+		/// <inheritdoc/>
 		public override bool Remove(string name)
 		{
 			return this.Remove(this[name]);
 		}
-
-		/// <summary>
-		/// Removes an image definition.
-		/// </summary>
-		/// <param name="item"><see cref="ImageDefinition">ImageDefinition</see> to remove from the document.</param>
-		/// <returns>True if the image definition has been successfully removed, or false otherwise.</returns>
-		/// <remarks>Any image definition referenced by objects cannot be removed.</remarks>
+		/// <inheritdoc/>
 		public override bool Remove(ImageDefinition item)
 		{
 			if (item == null)

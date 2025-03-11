@@ -28,9 +28,7 @@ using System.Threading;
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Represents an edge of a <see cref="EntityObject">mesh</see> entity.
-	/// </summary>
+	/// <summary>Represents an edge of a <see cref="EntityObject">mesh</see> entity.</summary>
 	public class MeshEdge :
 		ICloneable
 	{
@@ -44,9 +42,7 @@ namespace netDxf.Entities
 
 		#region constructor
 
-		/// <summary>
-		/// Initializes a new instance of the <c>MeshEdge</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="startVertexIndex">The edge start vertex index.</param>
 		/// <param name="endVertexIndex">The edge end vertex index.</param>
 		public MeshEdge(int startVertexIndex, int endVertexIndex)
@@ -54,9 +50,7 @@ namespace netDxf.Entities
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>MeshEdge</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="startVertexIndex">The edge start vertex index.</param>
 		/// <param name="endVertexIndex">The edge end vertex index.</param>
 		/// <param name="crease">The highest smoothing level at which the crease is retained (default: 0.0).</param>
@@ -76,9 +70,7 @@ namespace netDxf.Entities
 
 		#region public properties
 
-		/// <summary>
-		/// Gets or sets the edge start vertex index.
-		/// </summary>
+		/// <summary>Gets or sets the edge start vertex index.</summary>
 		/// <remarks>
 		/// This value must be positive represent the position of the vertex in the mesh vertex list.
 		/// </remarks>
@@ -93,9 +85,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the edge end vertex index.
-		/// </summary>
+		/// <summary>Gets or sets the edge end vertex index.</summary>
 		public int EndVertexIndex
 		{
 			get { return this.endVertexIndex; }
@@ -107,9 +97,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Get or set the highest smoothing level at which the crease is retained. If the smoothing level exceeds this value, the crease is also smoothed.
-		/// </summary>
+		/// <summary>Get or set the highest smoothing level at which the crease is retained. If the smoothing level exceeds this value, the crease is also smoothed.</summary>
 		/// <remarks>
 		/// Enter a value of 0 to remove an existing crease (no edge sharpening).<br/>
 		/// Enter a value of -1 (any negative number will be reset to -1) to specify that the crease is always retained, even if the object or sub-object is smoothed or refined.
@@ -124,29 +112,21 @@ namespace netDxf.Entities
 
 		#region overrides
 
-		/// <summary>
-		/// Obtains a string that represents the mesh edge.
-		/// </summary>
-		/// <returns>A string text.</returns>
+		/// <inheritdoc/>
 		public override string ToString()
 		{
 			return string.Format("{0}: ({1}{4} {2}) crease={3}", "SplineVertex", this.startVertexIndex, this.endVertexIndex, this.crease, Thread.CurrentThread.CurrentCulture.TextInfo.ListSeparator);
 		}
 
-		/// <summary>
-		/// Obtains a string that represents the mesh edge.
-		/// </summary>
-		/// <param name="provider">An IFormatProvider interface implementation that supplies culture-specific formatting information. </param>
+		/// <summary>Obtains a string that represents the mesh edge.</summary>
+		/// <param name="provider">An <see cref="IFormatProvider"/> object implementation that supplies culture-specific formatting information. </param>
 		/// <returns>A string text.</returns>
 		public string ToString(IFormatProvider provider)
 		{
 			return string.Format("{0}: ({1}{4} {2}) crease={3}", "SplineVertex", this.startVertexIndex.ToString(provider), this.endVertexIndex.ToString(provider), this.crease.ToString(provider), Thread.CurrentThread.CurrentCulture.TextInfo.ListSeparator);
 		}
 
-		/// <summary>
-		/// Creates a new MeshEdge that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new MeshEdge that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public object Clone()
 		{
 			return new MeshEdge(this.startVertexIndex, this.endVertexIndex, this.crease);

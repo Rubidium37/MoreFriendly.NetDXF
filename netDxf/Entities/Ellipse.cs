@@ -30,9 +30,7 @@ using netDxf.Tables;
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Represents an ellipse <see cref="EntityObject">entity</see>.
-	/// </summary>
+	/// <summary>Represents an ellipse <see cref="EntityObject">entity</see>.</summary>
 	public class Ellipse :
 		EntityObject
 	{
@@ -203,17 +201,13 @@ namespace netDxf.Entities
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Ellipse</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		public Ellipse()
 			: this(Vector3.Zero, 1.0, 0.5)
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Ellipse</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="center">Ellipse <see cref="Vector2">center</see> in object coordinates.</param>
 		/// <param name="majorAxis">Ellipse major axis.</param>
 		/// <param name="minorAxis">Ellipse minor axis.</param>
@@ -227,9 +221,7 @@ namespace netDxf.Entities
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Ellipse</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="center">Ellipse <see cref="Vector3">center</see> in object coordinates.</param>
 		/// <param name="majorAxis">Ellipse major axis.</param>
 		/// <param name="minorAxis">Ellipse minor axis.</param>
@@ -270,45 +262,35 @@ namespace netDxf.Entities
 
 		#region public properties
 
-		/// <summary>
-		/// Gets or sets the ellipse <see cref="Vector3">center</see> in world coordinates.
-		/// </summary>
+		/// <summary>Gets or sets the ellipse <see cref="Vector3">center</see> in world coordinates.</summary>
 		public Vector3 Center
 		{
 			get { return this.center; }
 			set { this.center = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the ellipse mayor axis.
-		/// </summary>
+		/// <summary>Gets or sets the ellipse mayor axis.</summary>
 		/// <remarks>The major axis is always measured along the ellipse local X axis.</remarks>
 		public double MajorAxis
 		{
 			get { return this.majorAxis; }
 		}
 
-		/// <summary>
-		/// Gets or sets the ellipse minor axis.
-		/// </summary>
+		/// <summary>Gets or sets the ellipse minor axis.</summary>
 		/// <remarks>The minor axis is always measured along the ellipse local Y axis.</remarks>
 		public double MinorAxis
 		{
 			get { return this.minorAxis; }
 		}
 
-		/// <summary>
-		/// Gets or sets the ellipse local rotation in degrees along its normal.
-		/// </summary>
+		/// <summary>Gets or sets the ellipse local rotation in degrees along its normal.</summary>
 		public double Rotation
 		{
 			get { return this.rotation; }
 			set { this.rotation = MathHelper.NormalizeAngle(value); }
 		}
 
-		/// <summary>
-		/// Gets or sets the ellipse start angle in degrees.
-		/// </summary>
+		/// <summary>Gets or sets the ellipse start angle in degrees.</summary>
 		/// <remarks>To get a full ellipse set the start angle equal to the end angle.</remarks>
 		public double StartAngle
 		{
@@ -316,9 +298,7 @@ namespace netDxf.Entities
 			set { this.startAngle = MathHelper.NormalizeAngle(value); }
 		}
 
-		/// <summary>
-		/// Gets or sets the ellipse end angle in degrees.
-		/// </summary>
+		/// <summary>Gets or sets the ellipse end angle in degrees.</summary>
 		/// <remarks>To get a full ellipse set the end angle equal to the start angle.</remarks>
 		public double EndAngle
 		{
@@ -326,18 +306,14 @@ namespace netDxf.Entities
 			set { this.endAngle = MathHelper.NormalizeAngle(value); }
 		}
 
-		/// <summary>
-		/// Gets or sets the ellipse thickness.
-		/// </summary>
+		/// <summary>Gets or sets the ellipse thickness.</summary>
 		public double Thickness
 		{
 			get { return this.thickness; }
 			set { this.thickness = value; }
 		}
 
-		/// <summary>
-		/// Checks if the actual instance is a full ellipse.
-		/// </summary>
+		/// <summary>Checks if the actual instance is a full ellipse.</summary>
 		/// <remarks>An ellipse is considered full when its start and end angles are equal.</remarks>
 		public bool IsFullEllipse
 		{
@@ -348,9 +324,7 @@ namespace netDxf.Entities
 
 		#region public methods
 
-		/// <summary>
-		/// Sets the ellipse major and minor axis from the two parameters.
-		/// </summary>
+		/// <summary>Sets the ellipse major and minor axis from the two parameters.</summary>
 		/// <param name="axis1">Ellipse axis.</param>
 		/// <param name="axis2">Ellipse axis.</param>
 		/// <remarks>
@@ -380,9 +354,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Calculate the local point on the ellipse for a given angle relative to the center.
-		/// </summary>
+		/// <summary>Calculate the local point on the ellipse for a given angle relative to the center.</summary>
 		/// <param name="angle">Angle in degrees.</param>
 		/// <returns>A local point on the ellipse for the given angle relative to the center.</returns>
 		public Vector2 PolarCoordinateRelativeToCenter(double angle)
@@ -400,9 +372,7 @@ namespace netDxf.Entities
 			return new Vector2(radius * Math.Cos(radians), radius * Math.Sin(radians));
 		}
 
-		/// <summary>
-		/// Converts the ellipse in a list of vertexes.
-		/// </summary>
+		/// <summary>Converts the ellipse in a list of vertexes.</summary>
 		/// <param name="precision">Number of vertexes generated.</param>
 		/// <returns>A list vertexes that represents the ellipse expressed in object coordinate system.</returns>
 		public List<Vector2> PolygonalVertexes(int precision)
@@ -459,11 +429,9 @@ namespace netDxf.Entities
 			return points;
 		}
 
-		/// <summary>
-		/// Converts the ellipse in a Polyline2D.
-		/// </summary>
+		/// <summary>Converts the ellipse in a Polyline2D.</summary>
 		/// <param name="precision">Number of vertexes generated.</param>
-		/// <returns>A new instance of <see cref="Polyline2D">Polyline2D</see> that represents the ellipse.</returns>
+		/// <returns>A new instance of <see cref="Polyline2D"/> that represents the ellipse.</returns>
 		public Polyline2D ToPolyline2D(int precision)
 		{
 			List<Vector2> vertexes = this.PolygonalVertexes(precision);
@@ -494,12 +462,7 @@ namespace netDxf.Entities
 
 		#region overrides
 
-		/// <summary>
-		/// Moves, scales, and/or rotates the current entity given a 3x3 transformation matrix and a translation vector.
-		/// </summary>
-		/// <param name="transformation">Transformation matrix.</param>
-		/// <param name="translation">Translation vector.</param>
-		/// <remarks>Matrix3 adopts the convention of using column vectors to represent a transformation matrix.</remarks>
+		/// <inheritdoc/>
 		public override void TransformBy(Matrix3 transformation, Vector3 translation)
 		{
 			// NOTE: this is a generic implementation of the ellipse transformation,
@@ -626,10 +589,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Creates a new Ellipse that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new Ellipse that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override object Clone()
 		{
 			Ellipse entity = new Ellipse

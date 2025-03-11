@@ -31,9 +31,7 @@ using netDxf.Tables;
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Represents a 3 point angular dimension <see cref="EntityObject">entity</see>.
-	/// </summary>
+	/// <summary>Represents a 3 point angular dimension <see cref="EntityObject">entity</see>.</summary>
 	public class Angular2LineDimension :
 		Dimension
 	{
@@ -50,17 +48,13 @@ namespace netDxf.Entities
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Angular2LineDimension</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		public Angular2LineDimension()
 			: this(Vector2.Zero, Vector2.UnitX, Vector2.Zero, Vector2.UnitY, 0.1)
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Angular2LineDimension</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="firstLine">First <see cref="Line">line</see> that defines the angle to measure.</param>
 		/// <param name="secondLine">Second <see cref="Line">line</see> that defines the angle to measure.</param>
 		/// <param name="offset">Distance between the center point and the dimension line.</param>
@@ -69,9 +63,7 @@ namespace netDxf.Entities
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Angular2LineDimension</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="firstLine">First <see cref="Line">line</see> that defines the angle to measure.</param>
 		/// <param name="secondLine">Second <see cref="Line">line</see> that defines the angle to measure.</param>
 		/// <param name="offset">Distance between the center point and the dimension line.</param>
@@ -81,9 +73,7 @@ namespace netDxf.Entities
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Angular2LineDimension</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="firstLine">First <see cref="Line">line</see> that defines the angle to measure.</param>
 		/// <param name="secondLine">Second <see cref="Line">line</see> that defines the angle to measure.</param>
 		/// <param name="offset">Distance between the center point and the dimension line.</param>
@@ -93,9 +83,7 @@ namespace netDxf.Entities
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Angular2LineDimension</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="firstLine">First <see cref="Line">line</see> that defines the angle to measure.</param>
 		/// <param name="secondLine">Second <see cref="Line">line</see> that defines the angle to measure.</param>
 		/// <param name="offset">Distance between the center point and the dimension line.</param>
@@ -145,9 +133,7 @@ namespace netDxf.Entities
 			this.Update();
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Angular2LineDimension</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="startFirstLine">Start <see cref="Vector2">point</see> of the first line that defines the angle to measure.</param>
 		/// <param name="endFirstLine">End <see cref="Vector2">point</see> of the first line that defines the angle to measure.</param>
 		/// <param name="startSecondLine">Start <see cref="Vector2">point</see> of the second line that defines the angle to measure.</param>
@@ -158,9 +144,7 @@ namespace netDxf.Entities
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Angular2LineDimension</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="startFirstLine">Start <see cref="Vector2">point</see> of the first line that defines the angle to measure.</param>
 		/// <param name="endFirstLine">End <see cref="Vector2">point</see> of the first line that defines the angle to measure.</param>
 		/// <param name="startSecondLine">Start <see cref="Vector2">point</see> of the second line that defines the angle to measure.</param>
@@ -196,9 +180,7 @@ namespace netDxf.Entities
 
 		#region public properties
 
-		/// <summary>
-		/// Gets the center <see cref="Vector2">point</see> of the measured arc in local coordinates.
-		/// </summary>
+		/// <summary>Gets the center <see cref="Vector2">point</see> of the measured arc in local coordinates.</summary>
 		public Vector2 CenterPoint
 		{
 			get
@@ -209,54 +191,42 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Start <see cref="Vector2">point</see> of the first line that defines the angle to measure in local coordinates.
-		/// </summary>
+		/// <summary>Start <see cref="Vector2">point</see> of the first line that defines the angle to measure in local coordinates.</summary>
 		public Vector2 StartFirstLine
 		{
 			get { return this.startFirstLine; }
 			set { this.startFirstLine = value; }
 		}
 
-		/// <summary>
-		/// End <see cref="Vector2">point</see> of the first line that defines the angle to measure in local coordinates.
-		/// </summary>
+		/// <summary>End <see cref="Vector2">point</see> of the first line that defines the angle to measure in local coordinates.</summary>
 		public Vector2 EndFirstLine
 		{
 			get { return this.endFirstLine; }
 			set { this.endFirstLine = value; }
 		}
 
-		/// <summary>
-		/// Start <see cref="Vector2">point</see> of the second line that defines the angle to measure in OCS (object coordinate system).
-		/// </summary>
+		/// <summary>Start <see cref="Vector2">point</see> of the second line that defines the angle to measure in <b>OCS</b> (object coordinate system).</summary>
 		public Vector2 StartSecondLine
 		{
 			get { return this.startSecondLine; }
 			set { this.startSecondLine = value; }
 		}
 
-		/// <summary>
-		/// End <see cref="Vector2">point</see> of the second line that defines the angle to measure in OCS (object coordinate system).
-		/// </summary>
+		/// <summary>End <see cref="Vector2">point</see> of the second line that defines the angle to measure in <b>OCS</b> (object coordinate system).</summary>
 		public Vector2 EndSecondLine
 		{
 			get { return this.endSecondLine; }
 			set { this.endSecondLine = value; }
 		}
 
-		/// <summary>
-		/// Gets the location of the dimension line arc.
-		/// </summary>
+		/// <summary>Gets the location of the dimension line arc.</summary>
 		public Vector2 ArcDefinitionPoint
 		{
 			get { return this.arcDefinitionPoint; }
 			internal set { this.arcDefinitionPoint = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the distance between the center point and the dimension line.
-		/// </summary>
+		/// <summary>Gets or sets the distance between the center point and the dimension line.</summary>
 		/// <remarks>
 		/// Offset values cannot be negative and, even thought, zero values are allowed, they are not recommended.
 		/// </remarks>
@@ -273,9 +243,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Actual measurement.
-		/// </summary>
+		/// <inheritdoc/>
 		public override double Measurement
 		{
 			get
@@ -290,9 +258,7 @@ namespace netDxf.Entities
 
 		#region public methods
 
-		/// <summary>
-		/// Calculates the dimension offset from a point along the dimension line.
-		/// </summary>
+		/// <summary>Calculates the dimension offset from a point along the dimension line.</summary>
 		/// <param name="point">Point along the dimension line.</param>
 		/// <remarks>
 		/// The start and end points of the reference lines will be modified,
@@ -398,16 +364,7 @@ namespace netDxf.Entities
 
 		#region overrides
 
-		/// <summary>
-		/// Moves, scales, and/or rotates the current entity given a 3x3 transformation matrix and a translation vector.
-		/// </summary>
-		/// <param name="transformation">Transformation matrix.</param>
-		/// <param name="translation">Translation vector.</param>
-		/// <remarks>
-		/// Non-uniform and zero scaling local to the dimension entity are not supported.<br />
-		/// The transformation will not be applied if the resulting reference lines are parallel.<br />
-		/// Matrix3 adopts the convention of using column vectors to represent a transformation matrix.
-		/// </remarks>
+		/// <inheritdoc/>
 		public override void TransformBy(Matrix3 transformation, Vector3 translation)
 		{
 			Vector3 newNormal = transformation * this.Normal;
@@ -474,9 +431,7 @@ namespace netDxf.Entities
 			this.SetDimensionLinePosition(newArcDefPoint);
 		}
 
-		/// <summary>
-		/// Calculate the dimension reference points.
-		/// </summary>
+		/// <inheritdoc/>
 		protected override void CalculateReferencePoints()
 		{
 			Vector2 dir1 = this.endFirstLine - this.startFirstLine;
@@ -529,20 +484,13 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets the block that contains the entities that make up the dimension picture.
-		/// </summary>
-		/// <param name="name">Name to be assigned to the generated block.</param>
-		/// <returns>The block that represents the actual dimension.</returns>
+		/// <inheritdoc/>
 		protected override Block BuildBlock(string name)
 		{
 			return DimensionBlock.Build(this, name);
 		}
 
-		/// <summary>
-		/// Creates a new Angular2LineDimension that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new Angular2LineDimension that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override object Clone()
 		{
 			Angular2LineDimension entity = new Angular2LineDimension

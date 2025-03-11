@@ -27,82 +27,54 @@ using System;
 
 namespace netDxf.Objects
 {
-	/// <summary>
-	/// Layer properties to update when restoring the LayerState to the Layers list and vice versa.
-	/// </summary>
+	/// <summary>Layer properties to update when restoring the LayerState to the Layers list and vice versa.</summary>
 	[Flags]
 	public enum LayerPropertiesRestoreFlags
 	{
-		/// <summary>
-		/// No flags, do not restore anything.
-		/// </summary>
+		/// <summary>No flags, do not restore anything.</summary>
 		None = 0,
 
-		/// <summary>
-		/// Layer visibility flag On/Off.
-		/// </summary>
+		/// <summary>Layer visibility flag On/Off.</summary>
 		Hidden = 1,
 
-		/// <summary>
-		/// Layer freeze flag Frozen/Thawed.
-		/// </summary>
+		/// <summary>Layer freeze flag Frozen/Thawed.</summary>
 		Frozen = 2,
 
-		/// <summary>
-		/// Layer lock flag Locked/Unlocked.
-		/// </summary>
+		/// <summary>Layer lock flag Locked/Unlocked.</summary>
 		Locked = 4,
 
-		/// <summary>
-		/// Layer plot flag Plot/NoPlot.
-		/// </summary>
+		/// <summary>Layer plot flag Plot/NoPlot.</summary>
 		Plot = 8,
 
-		/// <summary>
-		/// Freeze layer in newly created viewports.
-		/// </summary>
+		/// <summary>Freeze layer in newly created viewports.</summary>
 		/// <remarks>
 		/// Not implemented. To freeze a layer in a viewport add it to its FrozenLayers list.
 		/// </remarks>
 		NewVpFrozen = 16,
 
-		/// <summary>
-		/// Freeze layer in current viewport.
-		/// </summary>
+		/// <summary>Freeze layer in current viewport.</summary>
 		/// <remarks>
 		/// Not implemented. To freeze a layer in a viewport add it to its FrozenLayers list.
 		/// </remarks>
 		VpFrozen = 32,
 
-		/// <summary>
-		/// Layer color.
-		/// </summary>
+		/// <summary>Layer color.</summary>
 		Color = 64,
 
-		/// <summary>
-		/// Layer linetype.
-		/// </summary>
+		/// <summary>Layer linetype.</summary>
 		Linetype = 128,
 
-		/// <summary>
-		/// Layer lineweight.
-		/// </summary>
+		/// <summary>Layer lineweight.</summary>
 		Lineweight = 256,
 
-		/// <summary>
-		/// Layer transparency.
-		/// </summary>
+		/// <summary>Layer transparency.</summary>
 		Transparency = 512,
 
-		/// <summary>
-		/// Layer plot style.
-		/// </summary>
+		/// <summary>Layer plot style.</summary>
 		/// <remarks>Not implemented.</remarks>
 		PlotStyle = 1024,
 
-		/// <summary>
-		/// All flags, restore all layer properties.
-		/// </summary>
+		/// <summary>All flags, restore all layer properties.</summary>
 		All = Hidden | Frozen | Locked | Plot | NewVpFrozen | VpFrozen | Color | Linetype | Lineweight | Transparency | PlotStyle
 	}
 }

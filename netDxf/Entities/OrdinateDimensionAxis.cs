@@ -25,19 +25,13 @@
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Defines the axis that measures the ordinate dimension.
-	/// </summary>
+	/// <summary>Defines the axis that measures the ordinate dimension.</summary>
 	public enum OrdinateDimensionAxis
 	{
-		/// <summary>
-		/// The ordinate dimension measure the X distance and the dimension line is aligned to the Y axis.
-		/// </summary>
+		/// <summary>The ordinate dimension measure the X distance and the dimension line is aligned to the Y axis.</summary>
 		X,
 
-		/// <summary>
-		/// The ordinate dimension measure the Y distance and the dimension line is aligned to the X axis.
-		/// </summary>
+		/// <summary>The ordinate dimension measure the Y distance and the dimension line is aligned to the X axis.</summary>
 		Y
 	}
 }

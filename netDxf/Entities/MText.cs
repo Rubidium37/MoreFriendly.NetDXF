@@ -32,9 +32,7 @@ using netDxf.Units;
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Represents a multiline text <see cref="EntityObject">entity</see>.
-	/// </summary>
+	/// <summary>Represents a multiline text <see cref="EntityObject">entity</see>.</summary>
 	/// <remarks>
 	/// Formatting codes for MText, you can use them directly while setting the text value or use the Write() and EndParagraph() methods.<br />
 	/// \L Start underline<br />
@@ -125,26 +123,20 @@ namespace netDxf.Entities
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of the <c>MText</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		public MText()
 			: this(string.Empty, Vector3.Zero, 1.0, 0.0, TextStyle.Default)
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>MText</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="text">Text string.</param>
 		public MText(string text)
 			: this(text, Vector3.Zero, 1.0, 0.0, TextStyle.Default)
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>MText</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="position">Text <see cref="Vector2">position</see> in world coordinates.</param>
 		/// <param name="height">Text height.</param>
 		public MText(Vector2 position, double height)
@@ -152,9 +144,7 @@ namespace netDxf.Entities
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>MText</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="position">Text <see cref="Vector2">position</see> in world coordinates.</param>
 		/// <param name="height">Text height.</param>
 		public MText(Vector3 position, double height)
@@ -162,9 +152,7 @@ namespace netDxf.Entities
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>MText</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="position">Text <see cref="Vector2">position</see> in world coordinates.</param>
 		/// <param name="height">Text height.</param>
 		/// <param name="rectangleWidth">Reference rectangle width.</param>
@@ -173,9 +161,7 @@ namespace netDxf.Entities
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>MText</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="position">Text <see cref="Vector2">position</see> in world coordinates.</param>
 		/// <param name="height">Text height.</param>
 		/// <param name="rectangleWidth">Reference rectangle width.</param>
@@ -184,9 +170,7 @@ namespace netDxf.Entities
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>MText</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="position">Text <see cref="Vector2">position</see> in world coordinates.</param>
 		/// <param name="height">Text height.</param>
 		/// <param name="rectangleWidth">Reference rectangle width.</param>
@@ -196,9 +180,7 @@ namespace netDxf.Entities
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>MText</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="position">Text <see cref="Vector2">position</see> in world coordinates.</param>
 		/// <param name="height">Text height.</param>
 		/// <param name="rectangleWidth">Reference rectangle width.</param>
@@ -208,9 +190,7 @@ namespace netDxf.Entities
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>MText</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="text">Text string.</param>
 		/// <param name="position">Text <see cref="Vector2">position</see> in world coordinates.</param>
 		/// <param name="height">Text height.</param>
@@ -219,9 +199,7 @@ namespace netDxf.Entities
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>MText</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="text">Text string.</param>
 		/// <param name="position">Text <see cref="Vector2">position</see> in world coordinates.</param>
 		/// <param name="height">Text height.</param>
@@ -230,9 +208,7 @@ namespace netDxf.Entities
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>MText</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="text">Text string.</param>
 		/// <param name="position">Text <see cref="Vector2">position</see> in world coordinates.</param>
 		/// <param name="height">Text height.</param>
@@ -242,9 +218,7 @@ namespace netDxf.Entities
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>MText</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="text">Text string.</param>
 		/// <param name="position">Text <see cref="Vector2">position</see> in world coordinates.</param>
 		/// <param name="height">Text height.</param>
@@ -254,9 +228,7 @@ namespace netDxf.Entities
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>MText</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="text">Text string.</param>
 		/// <param name="position">Text <see cref="Vector2">position</see> in world coordinates.</param>
 		/// <param name="height">Text height.</param>
@@ -267,9 +239,7 @@ namespace netDxf.Entities
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>MText</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="text">Text string.</param>
 		/// <param name="position">Text <see cref="Vector2">position</see> in world coordinates.</param>
 		/// <param name="height">Text height.</param>
@@ -298,27 +268,21 @@ namespace netDxf.Entities
 
 		#region public properties
 
-		/// <summary>
-		/// Gets or sets if the text will be mirrored when a symmetry is performed, when the current MText entity does not belong to a DXF document.
-		/// </summary>
+		/// <summary>Gets or sets if the text will be mirrored when a symmetry is performed, when the current MText entity does not belong to a <b>DXF</b> document.</summary>
 		public static bool DefaultMirrText
 		{
 			get;
 			set;
 		}
 
-		/// <summary>
-		/// Gets or sets the text rotation in degrees.
-		/// </summary>
+		/// <summary>Gets or sets the text rotation in degrees.</summary>
 		public double Rotation
 		{
 			get { return this.rotation; }
 			set { this.rotation = MathHelper.NormalizeAngle(value); }
 		}
 
-		/// <summary>
-		/// Gets or sets the text height.
-		/// </summary>
+		/// <summary>Gets or sets the text height.</summary>
 		public double Height
 		{
 			get { return this.height; }
@@ -332,9 +296,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the line spacing factor.
-		/// </summary>
+		/// <summary>Gets or sets the line spacing factor.</summary>
 		/// <remarks>
 		/// Percentage of default line spacing to be applied. Valid values range from 0.25 to 4.0, the default value 1.0.
 		/// </remarks>
@@ -352,11 +314,9 @@ namespace netDxf.Entities
 		}
 
 
-		/// <summary>
-		/// Get or sets the <see cref="MTextLineSpacingStyle">line spacing style</see>.
-		/// </summary>
+		/// <summary>Get or sets the <see cref="MTextLineSpacingStyle">line spacing style</see>.</summary>
 		/// <remarks>
-		/// The only available options are AtLeast and Exact, Default and Multiple are only applicable to MTextParagraphOptions objects.
+		/// The only available options are <see cref="MTextLineSpacingStyle.AtLeast"/> and <see cref="MTextLineSpacingStyle.Exact"/>, <see cref="MTextLineSpacingStyle.Default"/> and <see cref="MTextLineSpacingStyle.Multiple"/> are only applicable to <see cref="MTextParagraphOptions"/> objects.
 		/// </remarks>
 		public MTextLineSpacingStyle LineSpacingStyle
 		{
@@ -371,18 +331,14 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Get or sets the <see cref="MTextDrawingDirection">text drawing direction</see>.
-		/// </summary>
+		/// <summary>Get or sets the <see cref="MTextDrawingDirection">text drawing direction</see>.</summary>
 		public MTextDrawingDirection DrawingDirection
 		{
 			get { return this.drawingDirection; }
 			set { this.drawingDirection = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the text reference rectangle width.
-		/// </summary>
+		/// <summary>Gets or sets the text reference rectangle width.</summary>
 		/// <remarks>
 		/// This value defines the width of the box where the text will fit.<br/>
 		/// If a paragraph width is longer than the rectangle width it will be broken in several lines, using the word spaces as breaking points.<br/>
@@ -401,18 +357,14 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the text <see cref="MTextAttachmentPoint">attachment point</see>.
-		/// </summary>
+		/// <summary>Gets or sets the text <see cref="MTextAttachmentPoint">attachment point</see>.</summary>
 		public MTextAttachmentPoint AttachmentPoint
 		{
 			get { return this.attachmentPoint; }
 			set { this.attachmentPoint = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the <see cref="TextStyle">text style</see>.
-		/// </summary>
+		/// <summary>Gets or sets the <see cref="TextStyle">text style</see>.</summary>
 		public TextStyle Style
 		{
 			get { return this.style; }
@@ -426,18 +378,14 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the Text <see cref="Vector3">position</see> in world coordinates.
-		/// </summary>
+		/// <summary>Gets or sets the Text <see cref="Vector3">position</see> in world coordinates.</summary>
 		public Vector3 Position
 		{
 			get { return this.position; }
 			set { this.position = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the raw text string.
-		/// </summary>
+		/// <summary>Gets or sets the raw text string.</summary>
 		public string Value
 		{
 			get { return this.text; }
@@ -448,9 +396,7 @@ namespace netDxf.Entities
 
 		#region public methods
 
-		/// <summary>
-		/// Formats a text string to represent a fraction.
-		/// </summary>
+		/// <summary>Formats a text string to represent a fraction.</summary>
 		/// <param name="numerator">Fraction numerator.</param>
 		/// <param name="denominator">Fraction denominator.</param>
 		/// <param name="fractionType">Style of the fraction.</param>
@@ -463,9 +409,7 @@ namespace netDxf.Entities
 			this.WriteFraction(numerator, denominator, fractionType, null);
 		}
 
-		/// <summary>
-		/// Formats a text string to represent a fraction.
-		/// </summary>
+		/// <summary>Formats a text string to represent a fraction.</summary>
 		/// <param name="numerator">Fraction numerator.</param>
 		/// <param name="denominator">Fraction denominator.</param>
 		/// <param name="fractionType">Style of the fraction.</param>
@@ -494,18 +438,14 @@ namespace netDxf.Entities
 			this.Write(txt, options);
 		}
 
-		/// <summary>
-		/// Adds the text to the current paragraph.
-		/// </summary>
+		/// <summary>Adds the text to the current paragraph.</summary>
 		/// <param name="txt">Text string.</param>
 		public void Write(string txt)
 		{
 			this.Write(txt, null);
 		}
 
-		/// <summary>
-		/// Adds the text to the current paragraph.
-		/// </summary>
+		/// <summary>Adds the text to the current paragraph.</summary>
 		/// <param name="txt">Text string.</param>
 		/// <param name="options">Text formatting options.</param>
 		public void Write(string txt, MTextFormattingOptions options)
@@ -604,17 +544,13 @@ namespace netDxf.Entities
 			this.text += "{" + formattedText + "}";
 		}
 
-		/// <summary>
-		/// Ends the current paragraph.
-		/// </summary>
+		/// <summary>Ends the current paragraph.</summary>
 		public void EndParagraph()
 		{
 			this.text += "\\P";
 		}
 
-		/// <summary>
-		/// Starts a new paragraph.
-		/// </summary>
+		/// <summary>Starts a new paragraph.</summary>
 		/// <remarks>
 		/// When no paragraph options are used, strictly speaking, there is no need to call this method, the previous paragraph options will be inherited.<br />
 		/// When there is no need to change the paragraph options from the previous, it is no necessary to pass again the same instance,
@@ -626,9 +562,7 @@ namespace netDxf.Entities
 			this.StartParagraph(null);
 
 		}
-		/// <summary>
-		/// Starts a new paragraph.
-		/// </summary>
+		/// <summary>Starts a new paragraph.</summary>
 		/// <param name="options">Paragraph options.</param>
 		/// <remarks>
 		/// When no paragraph options are used, strictly speaking, there is no need to call this method, the previous paragraph options will be inherited.<br />
@@ -814,17 +748,7 @@ namespace netDxf.Entities
 
 		#region overrides
 
-		/// <summary>
-		/// Moves, scales, and/or rotates the current entity given a 3x3 transformation matrix and a translation vector.
-		/// </summary>
-		/// <param name="transformation">Transformation matrix.</param>
-		/// <param name="translation">Translation vector.</param>
-		/// <remarks>
-		/// Non-uniform scaling is not supported, it would require to decompose each line into independent Text entities.
-		/// When the current Text entity does not belong to a DXF document, the text will use the DefaultMirrText when a symmetry is performed;
-		/// otherwise, the drawing variable MirrText will be used.<br />
-		/// Matrix3 adopts the convention of using column vectors to represent a transformation matrix.
-		/// </remarks>
+		/// <inheritdoc/>
 		public override void TransformBy(Matrix3 transformation, Vector3 translation)
 		{
 			bool mirrText = this.Owner == null ? DefaultMirrText : this.Owner.Record.Owner.Owner.DrawingVariables.MirrText;
@@ -941,10 +865,7 @@ namespace netDxf.Entities
 
 		}
 
-		/// <summary>
-		/// Creates a new MText that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new MText that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override object Clone()
 		{
 			MText entity = new MText

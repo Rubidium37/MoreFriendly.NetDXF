@@ -28,10 +28,8 @@ using System;
 
 namespace netDxf.IO
 {
-	/// <summary>
-	/// Represents an error that occur when trying to load a DXF file which <see cref="DxfVersion">version</see> is not supported.
-	/// </summary>
-	/// <remarks>netDxf only supports DXF file versions AutoCad2000 and higher.</remarks>
+	/// <summary>Represents an error that occur when trying to load a <b>DXF</b> file which <see cref="DxfVersion">version</see> is not supported.</summary>
+	/// <remarks>netDxf only supports <b>DXF</b> file versions <b>AutoCad2000</b> and higher.</remarks>
 	public class DxfVersionNotSupportedException :
 		Exception
 	{
@@ -43,18 +41,14 @@ namespace netDxf.IO
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of <c>DxfVersionNotSupportedException</c>
-		/// </summary>
+		/// <summary>Initializes a new instance of <see cref="DxfVersionNotSupportedException"/></summary>
 		/// <param name="version">DXF file version.</param>
 		public DxfVersionNotSupportedException(DxfVersion version)
 		{
 			this.version = version;
 		}
 
-		/// <summary>
-		/// Initializes a new instance of <c>DxfVersionNotSupportedException</c>
-		/// </summary>
+		/// <summary>Initializes a new instance of <see cref="DxfVersionNotSupportedException"/></summary>
 		/// <param name="message">Exception message.</param>
 		/// <param name="version">DXF file version.</param>
 		public DxfVersionNotSupportedException(string message, DxfVersion version)
@@ -68,9 +62,7 @@ namespace netDxf.IO
 
 		#region public properties
 
-		/// <summary>
-		/// Gets the DXF file version that generated the exception.
-		/// </summary>
+		/// <summary>Gets the <b>DXF</b> file version that generated the exception.</summary>
 		public DxfVersion Version
 		{
 			get { return this.version; }

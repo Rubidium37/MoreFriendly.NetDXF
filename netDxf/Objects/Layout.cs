@@ -32,9 +32,7 @@ using netDxf.Tables;
 
 namespace netDxf.Objects
 {
-	/// <summary>
-	/// Represents a layout.
-	/// </summary>
+	/// <summary>Represents a layout.</summary>
 	public class Layout :
 		TableObject,
 		IComparable<Layout>
@@ -60,14 +58,10 @@ namespace netDxf.Objects
 
 		#region constants
 
-		/// <summary>
-		/// Layout ModelSpace name.
-		/// </summary>
+		/// <summary>Layout <see cref="ModelSpace"/> name.</summary>
 		public const string ModelSpaceName = "Model";
 
-		/// <summary>
-		/// Gets the ModelSpace layout.
-		/// </summary>
+		/// <summary>Gets the <see cref="ModelSpace"/> layout.</summary>
 		/// <remarks>
 		/// There can be only one model space layout and it is always called "Model".
 		/// </remarks>
@@ -80,9 +74,7 @@ namespace netDxf.Objects
 
 		#region constructor
 
-		/// <summary>
-		/// Initializes a new layout.
-		/// </summary>
+		/// <summary>Initializes a new layout.</summary>
 		/// <param name="name">Layout name.</param>
 		public Layout(string name)
 			: this(name, null, new PlotSettings())
@@ -136,12 +128,10 @@ namespace netDxf.Objects
 
 		#region public properties
 
-		/// <summary>
-		/// Gets or sets the tab order.
-		/// </summary>
+		/// <summary>Gets or sets the tab order.</summary>
 		/// <remarks>
 		/// This number is an ordinal indicating this layout's ordering in the tab control that is
-		/// attached to the AutoCAD drawing frame window. Note that the "Model" tab always appears
+		/// attached to the <b>AutoCAD</b> drawing frame window. Note that the "Model" tab always appears
 		/// as the first tab regardless of its tab order (always zero).
 		/// </remarks>
 		public short TabOrder
@@ -157,99 +147,77 @@ namespace netDxf.Objects
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the plot settings
-		/// </summary>
+		/// <summary>Gets or sets the plot settings</summary>
 		public PlotSettings PlotSettings
 		{
 			get { return this.plot; }
 			set { this.plot = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the minimum limits for this layout.
-		/// </summary>
+		/// <summary>Gets or sets the minimum limits for this layout.</summary>
 		public Vector2 MinLimit
 		{
 			get { return this.minLimit; }
 			set { this.minLimit = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the maximum limits for this layout.
-		/// </summary>
+		/// <summary>Gets or sets the maximum limits for this layout.</summary>
 		public Vector2 MaxLimit
 		{
 			get { return this.maxLimit; }
 			set { this.maxLimit = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the maximum extents for this layout.
-		/// </summary>
+		/// <summary>Gets or sets the maximum extents for this layout.</summary>
 		public Vector3 MinExtents
 		{
 			get { return this.minExtents; }
 			set { this.minExtents = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the maximum extents for this layout.
-		/// </summary>
+		/// <summary>Gets or sets the maximum extents for this layout.</summary>
 		public Vector3 MaxExtents
 		{
 			get { return this.maxExtents; }
 			set { this.maxExtents = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the insertion base point for this layout.
-		/// </summary>
+		/// <summary>Gets or sets the insertion base point for this layout.</summary>
 		public Vector3 BasePoint
 		{
 			get { return this.basePoint; }
 			set { this.basePoint = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the elevation.
-		/// </summary>
+		/// <summary>Gets or sets the elevation.</summary>
 		public double Elevation
 		{
 			get { return this.elevation; }
 			set { this.elevation = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the UCS origin.
-		/// </summary>
+		/// <summary>Gets or sets the <b>UCS</b> origin.</summary>
 		public Vector3 UcsOrigin
 		{
 			get { return this.origin; }
 			set { this.origin = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the UCS X axis.
-		/// </summary>
+		/// <summary>Gets or sets the <b>UCS</b> X axis.</summary>
 		public Vector3 UcsXAxis
 		{
 			get { return this.xAxis; }
 			set { this.xAxis = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the UCS Y axis.
-		/// </summary>
+		/// <summary>Gets or sets the <b>UCS</b> Y axis.</summary>
 		public Vector3 UcsYAxis
 		{
 			get { return this.yAxis; }
 			set { this.yAxis = value; }
 		}
 
-		/// <summary>
-		/// Defines if this layout is a paper space.
-		/// </summary>
+		/// <summary>Defines if this layout is a paper space.</summary>
 		public bool IsPaperSpace
 		{
 			get { return this.isPaperSpace; }
@@ -259,25 +227,22 @@ namespace netDxf.Objects
 		/// Gets the viewport associated with this layout. This is the viewport with Id 1 that represents the paper space itself,
 		/// it has no graphical representation, and does not show the model.
 		/// </summary>
-		/// <remarks>The ModelSpace layout does not require a viewport and it will always return null.</remarks>
+		/// <remarks>The <see cref="ModelSpace"/> layout does not require a viewport and it will always return <see langword="null"/>.</remarks>
 		public Viewport Viewport
 		{
 			get { return this.viewport; }
 			internal set { this.viewport = value; }
 		}
 
-		/// <summary>
-		/// Gets the owner of the actual layout.
-		/// </summary>
+		/// <summary>Gets the owner of the actual layout.</summary>
 		public new Layouts Owner
 		{
 			get { return (Layouts)base.Owner; }
 			internal set { base.Owner = value; }
 		}
 
-		/// <summary>
-		/// Gets the associated ModelSpace or PaperSpace block.
-		/// </summary>
+		/// <summary>Gets the associated <see cref="ModelSpace"/> or PaperSp
+		/// ace block.</summary>
 		public Block AssociatedBlock
 		{
 			get { return this.associatedBlock; }
@@ -288,45 +253,19 @@ namespace netDxf.Objects
 
 		#region overrides
 
-		/// <summary>
-		/// Checks if this instance has been referenced by other DxfObjects.
-		/// </summary>
-		/// <returns>
-		/// Returns true if this instance has been referenced by other DxfObjects, false otherwise.
-		/// It will always return false if this instance does not belong to a document.
-		/// </returns>
-		/// <remarks>
-		/// This method returns the same value as the HasReferences method that can be found in the TableObjects class.
-		/// </remarks>
+		/// <inheritdoc/>
 		public override bool HasReferences()
 		{
 			return this.Owner != null && this.Owner.HasReferences(this.Name);
 		}
 
-		/// <summary>
-		/// Gets the list of DxfObjects referenced by this instance.
-		/// </summary>
-		/// <returns>
-		/// A list of DxfObjectReference that contains the DxfObject referenced by this instance and the number of times it does.
-		/// It will return null if this instance does not belong to a document.
-		/// </returns>
-		/// <remarks>
-		/// This method returns the same list as the GetReferences method that can be found in the TableObjects class.
-		/// </remarks>
+		/// <inheritdoc/>
 		public override List<DxfObjectReference> GetReferences()
 		{
 			return this.Owner?.GetReferences(this.Name);
 		}
 
-		/// <summary>
-		/// Creates a new Layout that is a copy of the current instance.
-		/// </summary>
-		/// <param name="newName">Layout name of the copy.</param>
-		/// <returns>A new Layout that is a copy of this instance.</returns>
-		/// <remarks>
-		/// The Model Layout cannot be cloned.<br />
-		/// When cloning a PaperSpace layout the contents of the layout will not be cloned.
-		/// </remarks>
+		/// <inheritdoc/>
 		public override TableObject Clone(string newName)
 		{
 			if (!this.IsPaperSpace)
@@ -362,28 +301,13 @@ namespace netDxf.Objects
 			return copy;
 		}
 
-		/// <summary>
-		/// Creates a new Layout that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new Layout that is a copy of this instance.</returns>
-		/// <remarks>
-		/// The Model Layout cannot be cloned.<br />
-		/// When cloning a PaperSpace layout the contents of the layout will not be cloned.
-		/// </remarks>
+		/// <inheritdoc/>
 		public override object Clone()
 		{
 			return this.Clone(this.Name);
 		}
 
-		/// <summary>
-		/// Assigns a handle to the object based in a integer counter.
-		/// </summary>
-		/// <param name="entityNumber">Number to assign.</param>
-		/// <returns>Next available entity number.</returns>
-		/// <remarks>
-		/// Some objects might consume more than one, is, for example, the case of polylines that will assign
-		/// automatically a handle to its vertexes. The entity number will be converted to an hexadecimal number.
-		/// </remarks>
+		/// <inheritdoc/>
 		internal override long AssignHandle(long entityNumber)
 		{
 			entityNumber = this.Owner.AssignHandle(entityNumber);
@@ -398,15 +322,7 @@ namespace netDxf.Objects
 
 		#region implements IComparable
 
-		/// <summary>
-		/// Compares the current object with another object of the same type.
-		/// </summary>
-		/// <param name="other">An object to compare with this object.</param>
-		/// <returns>
-		/// A 32-bit signed integer that indicates the relative order of the objects being compared.
-		/// The return value has the following meanings: Value Meaning Less than zero This object is less than the other parameter.
-		/// Zero This object is equal to other. Greater than zero This object is greater than other.
-		/// </returns>
+		/// <inheritdoc/>
 		public int CompareTo(Layout other)
 		{
 			if (other == null)

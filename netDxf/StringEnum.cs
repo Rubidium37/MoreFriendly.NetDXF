@@ -30,9 +30,7 @@ using System.Reflection;
 
 namespace netDxf
 {
-	/// <summary>
-	/// Helper class for working with 'extended' enums using <see cref="StringValueAttribute"/> attributes.
-	/// </summary>
+	/// <summary>Helper class for working with 'extended' enums using <see cref="StringValueAttribute"/> attributes.</summary>
 	public class StringEnum<T> where T : Enum
 	{
 		#region private fields
@@ -43,9 +41,7 @@ namespace netDxf
 
 		#region constructors
 
-		/// <summary>
-		/// Creates a new <see cref="StringEnum{T}"/> instance.
-		/// </summary>
+		/// <summary>Creates a new <see cref="StringEnum{T}"/> instance.</summary>
 		public StringEnum()
 		{
 			this.enumType = typeof(T);
@@ -55,9 +51,7 @@ namespace netDxf
 
 		#region public properties
 
-		/// <summary>
-		/// Gets the underlying enum type for this instance.
-		/// </summary>
+		/// <summary>Gets the underlying enum type for this instance.</summary>
 		/// <value></value>
 		public Type EnumType
 		{
@@ -68,9 +62,7 @@ namespace netDxf
 
 		#region public methods
 
-		/// <summary>
-		/// Gets the string values associated with the enum.
-		/// </summary>
+		/// <summary>Gets the string values associated with the enum.</summary>
 		/// <returns>String value array</returns>
 		public List<string> GetStringValues()
 		{
@@ -94,9 +86,7 @@ namespace netDxf
 			return values;
 		}
 
-		/// <summary>
-		/// Gets the enum entry and string value pairs.
-		/// </summary>
+		/// <summary>Gets the enum entry and string value pairs.</summary>
 		/// <returns>A dictionary containing each enum entry with its corresponding string value.</returns>
 		public Dictionary<T, string> GetValues()
 		{
@@ -125,9 +115,7 @@ namespace netDxf
 
 		#region static methods
 
-		/// <summary>
-		/// Return the existence of the given string value within the enum.
-		/// </summary>
+		/// <summary>Return the existence of the given string value within the enum.</summary>
 		/// <param name="value">String value.</param>
 		/// <returns>Existence of the string value</returns>
 		public static bool IsStringDefined(string value)
@@ -135,9 +123,7 @@ namespace netDxf
 			return IsStringDefined(value, StringComparison.CurrentCulture);
 		}
 
-		/// <summary>
-		/// Return the existence of the given string value within the enum.
-		/// </summary>
+		/// <summary>Return the existence of the given string value within the enum.</summary>
 		/// <param name="value">String value.</param>
 		/// <param name="comparisonType">Specifies how to conduct a case-insensitive match on the supplied string value</param>
 		/// <returns>Existence of the string value</returns>
@@ -152,11 +138,9 @@ namespace netDxf
 			return false;
 		}
 
-		/// <summary>
-		/// Gets a string value for a particular enum value.
-		/// </summary>
+		/// <summary>Gets a string value for a particular enum value.</summary>
 		/// <param name="value">Value.</param>
-		/// <returns>String Value associated via a <see cref="StringValueAttribute"/> attribute, or null if not found.</returns>
+		/// <returns>String Value associated via a <see cref="StringValueAttribute"/> attribute, or <see langword="null"/> if not found.</returns>
 		public static string GetStringValue(T value)
 		{
 			string output = null;
@@ -190,9 +174,7 @@ namespace netDxf
 			return output;
 		}
 
-		/// <summary>
-		/// Parses the supplied enum and string value to find an associated enum value.
-		/// </summary>
+		/// <summary>Parses the supplied enum and string value to find an associated enum value.</summary>
 		/// <param name="value">String value.</param>
 		/// <returns>Enum value associated with the string value, if not found the default enum will be returned.</returns>
 		public static T Parse(string value)
@@ -200,9 +182,7 @@ namespace netDxf
 			return Parse(value, StringComparison.CurrentCulture);
 		}
 
-		/// <summary>
-		/// Parses the supplied enum and string value to find an associated enum value.
-		/// </summary>
+		/// <summary>Parses the supplied enum and string value to find an associated enum value.</summary>
 		/// <param name="value">String value.</param>
 		/// <param name="comparisonType">Specifies how to conduct a case-insensitive match on the supplied string value.</param>
 		/// <returns>Enum value associated with the string value, if not found the default enum will be returned.</returns>
@@ -243,26 +223,20 @@ namespace netDxf
 
 	#region Class StringValueAttribute
 
-	/// <summary>
-	/// Simple attribute class for storing String Values
-	/// </summary>
+	/// <summary>Simple attribute class for storing <see cref="String"/> Values</summary>
 	[AttributeUsage(AttributeTargets.Field)]
 	public sealed class StringValueAttribute : Attribute
 	{
 		private readonly string value;
 
-		/// <summary>
-		/// Creates a new <see cref="StringValueAttribute"/> instance.
-		/// </summary>
+		/// <summary>Creates a new <see cref="StringValueAttribute"/> instance.</summary>
 		/// <param name="value">Value.</param>
 		public StringValueAttribute(string value)
 		{
 			this.value = value;
 		}
 
-		/// <summary>
-		/// Gets the value.
-		/// </summary>
+		/// <summary>Gets the value.</summary>
 		public string Value
 		{
 			get { return this.value; }

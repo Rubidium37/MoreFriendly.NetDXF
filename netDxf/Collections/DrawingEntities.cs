@@ -36,7 +36,7 @@ namespace netDxf.Collections
 	/// <summary>
 	/// Gives direct access to operations related with the entities in a drawing.
 	/// These are no more than shortcuts to the real place where the entities are stored in a document (drawing.Layouts[layoutName].AssociatedBlock.Entities).
-	/// The layout where the operations are performed is defined by the ActiveLayout property, by default the active layout is the Model.
+	/// The layout where the operations are performed is defined by the <see cref="ActiveLayout"/> property, by default the active layout is the Model.
 	/// </summary>
 	public sealed class DrawingEntities
 	{
@@ -59,9 +59,7 @@ namespace netDxf.Collections
 
 		#region public properties
 
-		/// <summary>
-		/// Gets or sets the name of the active layout.
-		/// </summary>
+		/// <summary>Gets or sets the name of the active layout.</summary>
 		public string ActiveLayout
 		{
 			get { return this.activeLayout; }
@@ -75,241 +73,181 @@ namespace netDxf.Collections
 			}
 		}
 
-		/// <summary>
-		/// Gets the complete list <see cref="EntityObject">entities</see> contained in the active layout.
-		/// </summary>
+		/// <summary>Gets the complete list <see cref="EntityObject">entities</see> contained in the active layout.</summary>
 		public IEnumerable<EntityObject> All
 		{
 			get { return this.document.Layouts[this.activeLayout].AssociatedBlock.Entities; }
 		}
 
-		/// <summary>
-		/// Gets the list of <see cref="Arc">arcs</see> contained in the active layout.
-		/// </summary>
+		/// <summary>Gets the list of <see cref="Arc">arcs</see> contained in the active layout.</summary>
 		public IEnumerable<Arc> Arcs
 		{
 			get { return this.document.Layouts[this.activeLayout].AssociatedBlock.Entities.OfType<Arc>(); }
 		}
 
-		/// <summary>
-		/// Gets the list of <see cref="Ellipse">ellipses</see> in the active layout.
-		/// </summary>
+		/// <summary>Gets the list of <see cref="Ellipse">ellipses</see> in the active layout.</summary>
 		public IEnumerable<Ellipse> Ellipses
 		{
 			get { return this.document.Layouts[this.activeLayout].AssociatedBlock.Entities.OfType<Ellipse>(); }
 		}
 
-		/// <summary>
-		/// Gets the list of <see cref="Circle">circles</see> in the active layout.
-		/// </summary>
+		/// <summary>Gets the list of <see cref="Circle">circles</see> in the active layout.</summary>
 		public IEnumerable<Circle> Circles
 		{
 			get { return this.document.Layouts[this.activeLayout].AssociatedBlock.Entities.OfType<Circle>(); }
 		}
 
-		/// <summary>
-		/// Gets the list of <see cref="Face3D">3d faces</see> in the active layout.
-		/// </summary>
+		/// <summary>Gets the list of <see cref="Face3D">3d faces</see> in the active layout.</summary>
 		public IEnumerable<Face3D> Faces3D
 		{
 			get { return this.document.Layouts[this.activeLayout].AssociatedBlock.Entities.OfType<Face3D>(); }
 		}
 
-		/// <summary>
-		/// Gets the list of <see cref="Solid">solids</see> in the active layout.
-		/// </summary>
+		/// <summary>Gets the list of <see cref="Solid">solids</see> in the active layout.</summary>
 		public IEnumerable<Solid> Solids
 		{
 			get { return this.document.Layouts[this.activeLayout].AssociatedBlock.Entities.OfType<Solid>(); }
 		}
 
-		/// <summary>
-		/// Gets the list of <see cref="Entities.Trace">traces</see> in the active layout.
-		/// </summary>
+		/// <summary>Gets the list of <see cref="Entities.Trace">traces</see> in the active layout.</summary>
 		public IEnumerable<Trace> Traces
 		{
 			get { return this.document.Layouts[this.activeLayout].AssociatedBlock.Entities.OfType<Trace>(); }
 		}
 
-		/// <summary>
-		/// Gets the list of <see cref="Insert">inserts</see> in the active layout.
-		/// </summary>
+		/// <summary>Gets the list of <see cref="Insert">inserts</see> in the active layout.</summary>
 		public IEnumerable<Insert> Inserts
 		{
 			get { return this.document.Layouts[this.activeLayout].AssociatedBlock.Entities.OfType<Insert>(); }
 		}
 
-		/// <summary>
-		/// Gets the list of <see cref="Line">lines</see> in the active layout.
-		/// </summary>
+		/// <summary>Gets the list of <see cref="Line">lines</see> in the active layout.</summary>
 		public IEnumerable<Line> Lines
 		{
 			get { return this.document.Layouts[this.activeLayout].AssociatedBlock.Entities.OfType<Line>(); }
 		}
 
-		/// <summary>
-		/// Gets the list of <see cref="Shape">shapes</see> in the active layout.
-		/// </summary>
+		/// <summary>Gets the list of <see cref="Shape">shapes</see> in the active layout.</summary>
 		public IEnumerable<Shape> Shapes
 		{
 			get { return this.document.Layouts[this.activeLayout].AssociatedBlock.Entities.OfType<Shape>(); }
 		}
 
-		/// <summary>
-		/// Gets the list of <see cref="Polyline2D">polylines</see> in the active layout.
-		/// </summary>
+		/// <summary>Gets the list of <see cref="Polyline2D">polylines</see> in the active layout.</summary>
 		public IEnumerable<Polyline2D> Polylines2D
 		{
 			get { return this.document.Layouts[this.activeLayout].AssociatedBlock.Entities.OfType<Polyline2D>(); }
 		}
 
-		/// <summary>
-		/// Gets the list of <see cref="Polyline3D">polylines</see> in the active layout.
-		/// </summary>
+		/// <summary>Gets the list of <see cref="Polyline3D">polylines</see> in the active layout.</summary>
 		public IEnumerable<Polyline3D> Polylines3D
 		{
 			get { return this.document.Layouts[this.activeLayout].AssociatedBlock.Entities.OfType<Polyline3D>(); }
 		}
 
-		/// <summary>
-		/// Gets the list of <see cref="PolyfaceMeshes">polyface meshes</see> in the active layout.
-		/// </summary>
+		/// <summary>Gets the list of <see cref="PolyfaceMeshes">polyface meshes</see> in the active layout.</summary>
 		public IEnumerable<PolyfaceMesh> PolyfaceMeshes
 		{
 			get { return this.document.Layouts[this.activeLayout].AssociatedBlock.Entities.OfType<PolyfaceMesh>(); }
 		}
 
-		/// <summary>
-		/// Gets the list of <see cref="PolygonMeshes">polygon meshes</see> in the active layout.
-		/// </summary>
+		/// <summary>Gets the list of <see cref="PolygonMeshes">polygon meshes</see> in the active layout.</summary>
 		public IEnumerable<PolygonMesh> PolygonMeshes
 		{
 			get { return this.document.Layouts[this.activeLayout].AssociatedBlock.Entities.OfType<PolygonMesh>(); }
 		}
 
-		/// <summary>
-		/// Gets the list of <see cref="Point">points</see> in the active layout.
-		/// </summary>
+		/// <summary>Gets the list of <see cref="Point">points</see> in the active layout.</summary>
 		public IEnumerable<Point> Points
 		{
 			get { return this.document.Layouts[this.activeLayout].AssociatedBlock.Entities.OfType<Point>(); }
 		}
 
-		/// <summary>
-		/// Gets the list of <see cref="Text">texts</see> in the active layout.
-		/// </summary>
+		/// <summary>Gets the list of <see cref="Text">texts</see> in the active layout.</summary>
 		public IEnumerable<Text> Texts
 		{
 			get { return this.document.Layouts[this.activeLayout].AssociatedBlock.Entities.OfType<Text>(); }
 		}
 
-		/// <summary>
-		/// Gets the list of <see cref="MText">multiline texts</see> in the active layout.
-		/// </summary>
+		/// <summary>Gets the list of <see cref="MText">multiline texts</see> in the active layout.</summary>
 		public IEnumerable<MText> MTexts
 		{
 			get { return this.document.Layouts[this.activeLayout].AssociatedBlock.Entities.OfType<MText>(); }
 		}
 
-		/// <summary>
-		/// Gets the list of <see cref="Hatch">hatches</see> in the active layout.
-		/// </summary>
+		/// <summary>Gets the list of <see cref="Hatch">hatches</see> in the active layout.</summary>
 		public IEnumerable<Hatch> Hatches
 		{
 			get { return this.document.Layouts[this.activeLayout].AssociatedBlock.Entities.OfType<Hatch>(); }
 		}
 
-		/// <summary>
-		/// Gets the list of <see cref="Image">images</see> in the active layout.
-		/// </summary>
+		/// <summary>Gets the list of <see cref="Image">images</see> in the active layout.</summary>
 		public IEnumerable<Image> Images
 		{
 			get { return this.document.Layouts[this.activeLayout].AssociatedBlock.Entities.OfType<Image>(); }
 		}
 
-		/// <summary>
-		/// Gets the list of <see cref="Mesh">mesh</see> in the active layout.
-		/// </summary>
+		/// <summary>Gets the list of <see cref="Mesh">mesh</see> in the active layout.</summary>
 		public IEnumerable<Mesh> Meshes
 		{
 			get { return this.document.Layouts[this.activeLayout].AssociatedBlock.Entities.OfType<Mesh>(); }
 		}
 
-		/// <summary>
-		/// Gets the list of <see cref="Leader">leader</see> in the active layout.
-		/// </summary>
+		/// <summary>Gets the list of <see cref="Leader">leader</see> in the active layout.</summary>
 		public IEnumerable<Leader> Leaders
 		{
 			get { return this.document.Layouts[this.activeLayout].AssociatedBlock.Entities.OfType<Leader>(); }
 		}
 
-		/// <summary>
-		/// Gets the list of <see cref="Tolerance">tolerance</see> in the active layout.
-		/// </summary>
+		/// <summary>Gets the list of <see cref="Tolerance">tolerance</see> in the active layout.</summary>
 		public IEnumerable<Tolerance> Tolerances
 		{
 			get { return this.document.Layouts[this.activeLayout].AssociatedBlock.Entities.OfType<Tolerance>(); }
 		}
 
-		/// <summary>
-		/// Gets the list of <see cref="Underlay">underlay</see> in the active layout.
-		/// </summary>
+		/// <summary>Gets the list of <see cref="Underlay">underlay</see> in the active layout.</summary>
 		public IEnumerable<Underlay> Underlays
 		{
 			get { return this.document.Layouts[this.activeLayout].AssociatedBlock.Entities.OfType<Underlay>(); }
 		}
 
-		/// <summary>
-		/// Gets the list of <see cref="MLine">multilines</see> in the active layout.
-		/// </summary>
+		/// <summary>Gets the list of <see cref="MLine">multilines</see> in the active layout.</summary>
 		public IEnumerable<MLine> MLines
 		{
 			get { return this.document.Layouts[this.activeLayout].AssociatedBlock.Entities.OfType<MLine>(); }
 		}
 
-		/// <summary>
-		/// Gets the list of <see cref="Dimension">dimensions</see> in the active layout.
-		/// </summary>
+		/// <summary>Gets the list of <see cref="Dimension">dimensions</see> in the active layout.</summary>
 		public IEnumerable<Dimension> Dimensions
 		{
 			get { return this.document.Layouts[this.activeLayout].AssociatedBlock.Entities.OfType<Dimension>(); }
 		}
 
-		/// <summary>
-		/// Gets the list of <see cref="Spline">splines</see> in the active layout.
-		/// </summary>
+		/// <summary>Gets the list of <see cref="Spline">splines</see> in the active layout.</summary>
 		public IEnumerable<Spline> Splines
 		{
 			get { return this.document.Layouts[this.activeLayout].AssociatedBlock.Entities.OfType<Spline>(); }
 		}
 
-		/// <summary>
-		/// Gets the list of <see cref="Ray">rays</see> in the active layout.
-		/// </summary>
+		/// <summary>Gets the list of <see cref="Ray">rays</see> in the active layout.</summary>
 		public IEnumerable<Ray> Rays
 		{
 			get { return this.document.Layouts[this.activeLayout].AssociatedBlock.Entities.OfType<Ray>(); }
 		}
 
-		/// <summary>
-		/// Gets the list of <see cref="Viewport">viewports</see> in the active layout.
-		/// </summary>
+		/// <summary>Gets the list of <see cref="Viewport">viewports</see> in the active layout.</summary>
 		public IEnumerable<Viewport> Viewports
 		{
 			get { return this.document.Layouts[this.activeLayout].AssociatedBlock.Entities.OfType<Viewport>(); }
 		}
 
-		/// <summary>
-		/// Gets the list of <see cref="XLine">extension lines</see> in the active layout.
-		/// </summary>
+		/// <summary>Gets the list of <see cref="XLine">extension lines</see> in the active layout.</summary>
 		public IEnumerable<XLine> XLines
 		{
 			get { return this.document.Layouts[this.activeLayout].AssociatedBlock.Entities.OfType<XLine>(); }
 		}
 
-		/// <summary>
-		/// Gets the list of <see cref="Wipeout">wipeouts</see> in the active layout.
-		/// </summary>
+		/// <summary>Gets the list of <see cref="Wipeout">wipeouts</see> in the active layout.</summary>
 		public IEnumerable<Wipeout> Wipeouts
 		{
 			get { return this.document.Layouts[this.activeLayout].AssociatedBlock.Entities.OfType<Wipeout>(); }
@@ -327,9 +265,7 @@ namespace netDxf.Collections
 
 		#region public methods
 
-		/// <summary>
-		/// Adds a list of <see cref="EntityObject">entities</see> to the active layout of the document.
-		/// </summary>
+		/// <summary>Adds a list of <see cref="EntityObject">entities</see> to the active layout of the document.</summary>
 		/// <param name="entities">A list of <see cref="EntityObject">entities</see> to add to the document.</param>
 		public void Add(IEnumerable<EntityObject> entities)
 		{
@@ -344,9 +280,7 @@ namespace netDxf.Collections
 			}
 		}
 
-		/// <summary>
-		/// Adds an <see cref="EntityObject">entity</see> to the active layout of the document.
-		/// </summary>
+		/// <summary>Adds an <see cref="EntityObject">entity</see> to the active layout of the document.</summary>
 		/// <param name="entity">An <see cref="EntityObject">entity</see> to add to the document.</param>
 		public void Add(EntityObject entity)
 		{
@@ -359,9 +293,7 @@ namespace netDxf.Collections
 			this.document.Blocks[this.document.Layouts[this.activeLayout].AssociatedBlock.Name].Entities.Add(entity);
 		}
 
-		/// <summary>
-		/// Removes a list of <see cref="EntityObject">entities</see> from the document.
-		/// </summary>
+		/// <summary>Removes a list of <see cref="EntityObject">entities</see> from the document.</summary>
 		/// <param name="entities">A list of <see cref="EntityObject">entities</see> to remove from the document.</param>
 		/// <remarks>
 		/// This function will not remove other tables objects that might be not in use as result from the elimination of the entity.<br />
@@ -381,11 +313,9 @@ namespace netDxf.Collections
 			}
 		}
 
-		/// <summary>
-		/// Removes an <see cref="EntityObject">entity</see> from the document.
-		/// </summary>
+		/// <summary>Removes an <see cref="EntityObject">entity</see> from the document.</summary>
 		/// <param name="entity">The <see cref="EntityObject">entity</see> to remove from the document.</param>
-		/// <returns>True if item is successfully removed; otherwise, false.</returns>
+		/// <returns><see langword="true"/> if item is successfully removed; otherwise, <see langword="false"/>.</returns>
 		/// <remarks>
 		/// This function will not remove other tables objects that might be not in use as result from the elimination of the entity.<br />
 		/// This includes empty layers, blocks not referenced anymore, line types, text styles, dimension styles, multiline styles, groups, and application registries.<br />

@@ -29,9 +29,7 @@ using netDxf.Tables;
 
 namespace netDxf.Collections
 {
-	/// <summary>
-	/// Represents a collection of views.
-	/// </summary>
+	/// <summary>Represents a collection of views.</summary>
 	public sealed class Views :
 		TableObjects<View>
 	{
@@ -51,15 +49,7 @@ namespace netDxf.Collections
 
 		#region override methods
 
-		/// <summary>
-		/// Adds a view to the list.
-		/// </summary>
-		/// <param name="view"><see cref="View">View</see> to add to the list.</param>
-		/// <param name="assignHandle">Specifies if a handle needs to be generated for the view parameter.</param>
-		/// <returns>
-		/// If a view already exists with the same name as the instance that is being added the method returns the existing view,
-		/// if not it will return the new view.
-		/// </returns>
+		/// <inheritdoc/>
 		internal override View Add(View view, bool assignHandle)
 		{
 			if (view == null)
@@ -89,23 +79,12 @@ namespace netDxf.Collections
 			return view;
 		}
 
-		/// <summary>
-		/// Removes view.
-		/// </summary>
-		/// <param name="name"><see cref="View">View</see> name to remove from the document.</param>
-		/// <returns>True if the view has been successfully removed, or false otherwise.</returns>
-		/// <remarks>Reserved views or any other referenced by objects cannot be removed.</remarks>
+		/// <inheritdoc/>
 		public override bool Remove(string name)
 		{
 			return this.Remove(this[name]);
 		}
-
-		/// <summary>
-		/// Removes a view.
-		/// </summary>
-		/// <param name="item"><see cref="View">View</see> to remove from the document.</param>
-		/// <returns>True if the view has been successfully removed, or false otherwise.</returns>
-		/// <remarks>Reserved views or any other referenced by objects cannot be removed.</remarks>
+		/// <inheritdoc/>
 		public override bool Remove(View item)
 		{
 			if (item == null)

@@ -52,9 +52,7 @@ namespace netDxf.Tables
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of the <c>View</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		public View(string name)
 			: this(name, true)
 		{
@@ -138,9 +136,7 @@ namespace netDxf.Tables
 			set { this.backClippingPlane = value; }
 		}
 
-		/// <summary>
-		/// Gets the owner of the actual view.
-		/// </summary>
+		/// <summary>Gets the owner of the actual view.</summary>
 		public new Views Owner
 		{
 			get { return (Views)base.Owner; }
@@ -151,41 +147,19 @@ namespace netDxf.Tables
 
 		#region overrides
 
-		/// <summary>
-		/// Checks if this instance has been referenced by other DxfObjects.
-		/// </summary>
-		/// <returns>
-		/// Returns true if this instance has been referenced by other DxfObjects, false otherwise.
-		/// It will always return false if this instance does not belong to a document.
-		/// </returns>
-		/// <remarks>
-		/// This method returns the same value as the HasReferences method that can be found in the TableObjects class.
-		/// </remarks>
+		/// <inheritdoc/>
 		public override bool HasReferences()
 		{
 			return this.Owner != null && this.Owner.HasReferences(this.Name);
 		}
 
-		/// <summary>
-		/// Gets the list of DxfObjects referenced by this instance.
-		/// </summary>
-		/// <returns>
-		/// A list of DxfObjectReference that contains the DxfObject referenced by this instance and the number of times it does.
-		/// It will return null if this instance does not belong to a document.
-		/// </returns>
-		/// <remarks>
-		/// This method returns the same list as the GetReferences method that can be found in the TableObjects class.
-		/// </remarks>
+		/// <inheritdoc/>
 		public override List<DxfObjectReference> GetReferences()
 		{
 			return this.Owner?.GetReferences(this.Name);
 		}
 
-		/// <summary>
-		/// Creates a new View that is a copy of the current instance.
-		/// </summary>
-		/// <param name="newName">View name of the copy.</param>
-		/// <returns>A new View that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override TableObject Clone(string newName)
 		{
 			View copy = new View(newName)
@@ -209,10 +183,7 @@ namespace netDxf.Tables
 			return copy;
 		}
 
-		/// <summary>
-		/// Creates a new View that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new View that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override object Clone()
 		{
 			return this.Clone(this.Name);

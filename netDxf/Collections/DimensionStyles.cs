@@ -30,9 +30,7 @@ using netDxf.Tables;
 
 namespace netDxf.Collections
 {
-	/// <summary>
-	/// Represents a collection of dimension styles.
-	/// </summary>
+	/// <summary>Represents a collection of dimension styles.</summary>
 	public sealed class DimensionStyles :
 		TableObjects<DimensionStyle>
 	{
@@ -52,15 +50,7 @@ namespace netDxf.Collections
 
 		#region override methods
 
-		/// <summary>
-		/// Adds a dimension style to the list.
-		/// </summary>
-		/// <param name="item"><see cref="DimensionStyle">DimensionStyle</see> to add to the list.</param>
-		/// <param name="assignHandle">Specifies if a handle needs to be generated for the dimension style parameter.</param>
-		/// <returns>
-		/// If a dimension style already exists with the same name as the instance that is being added the method returns the existing dimension style,
-		/// if not it will return the new dimension style.
-		/// </returns>
+		/// <inheritdoc/>
 		internal override DimensionStyle Add(DimensionStyle item, bool assignHandle)
 		{
 			if (item == null)
@@ -124,23 +114,12 @@ namespace netDxf.Collections
 			return item;
 		}
 
-		/// <summary>
-		/// Removes a dimension style.
-		/// </summary>
-		/// <param name="name"><see cref="DimensionStyle">DimensionStyle</see> name to remove from the document.</param>
-		/// <returns>True if the dimension style has been successfully removed, or false otherwise.</returns>
-		/// <remarks>Reserved dimension styles or any other referenced by objects cannot be removed.</remarks>
+		/// <inheritdoc/>
 		public override bool Remove(string name)
 		{
 			return this.Remove(this[name]);
 		}
-
-		/// <summary>
-		/// Removes a dimension style.
-		/// </summary>
-		/// <param name="item"><see cref="DimensionStyle">DimensionStyle</see> to remove from the document.</param>
-		/// <returns>True if the dimension style has been successfully removed, or false otherwise.</returns>
-		/// <remarks>Reserved dimension styles or any other referenced by objects cannot be removed.</remarks>
+		/// <inheritdoc/>
 		public override bool Remove(DimensionStyle item)
 		{
 			if (item == null)

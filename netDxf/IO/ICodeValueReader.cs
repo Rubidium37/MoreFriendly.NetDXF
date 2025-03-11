@@ -27,19 +27,13 @@ namespace netDxf.IO
 {
 	internal interface ICodeValueReader
 	{
-		/// <summary>
-		/// Gets the DXF code.
-		/// </summary>
+		/// <summary>Gets the <b>DXF</b> code.</summary>
 		short Code { get; }
 
-		/// <summary>
-		/// Gets the value.
-		/// </summary>
+		/// <summary>Gets the value.</summary>
 		object Value { get; }
 
-		/// <summary>
-		/// Gets the line that has been read.
-		/// </summary>
+		/// <summary>Gets the line that has been read.</summary>
 		long CurrentPosition { get; }
 
 		void Next();

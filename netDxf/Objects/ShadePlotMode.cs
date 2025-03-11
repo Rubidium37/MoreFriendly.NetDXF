@@ -25,29 +25,19 @@
 
 namespace netDxf.Objects
 {
-	/// <summary>
-	/// Defines the shade plot mode
-	/// </summary>
+	/// <summary>Defines the shade plot mode</summary>
 	public enum ShadePlotMode
 	{
-		/// <summary>
-		/// As displayed.
-		/// </summary>
+		/// <summary>As displayed.</summary>
 		AsDisplayed = 0,
 
-		/// <summary>
-		/// Wireframe.
-		/// </summary>
+		/// <summary>Wireframe.</summary>
 		Wireframe = 1,
 
-		/// <summary>
-		/// Hidden.
-		/// </summary>
+		/// <summary>Hidden.</summary>
 		Hidden = 2,
 
-		/// <summary>
-		/// Rendered.
-		/// </summary>
+		/// <summary>Rendered.</summary>
 		Rendered = 3
 	}
 }

@@ -29,9 +29,7 @@ using netDxf.Tables;
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Represents an ordinate dimension <see cref="EntityObject">entity</see>.
-	/// </summary>
+	/// <summary>Represents an ordinate dimension <see cref="EntityObject">entity</see>.</summary>
 	public class OrdinateDimension :
 		Dimension
 	{
@@ -46,17 +44,13 @@ namespace netDxf.Entities
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of the <c>OrdinateDimension</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		public OrdinateDimension()
 			: this(Vector2.Zero, new Vector2(0.5, 0), new Vector2(1.0, 0), OrdinateDimensionAxis.Y, DimensionStyle.Default)
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>OrdinateDimension</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="origin">Origin <see cref="Vector2">point</see> in local coordinates of the ordinate dimension.</param>
 		/// <param name="featurePoint">Base location <see cref="Vector2">point</see> in local coordinates of the ordinate dimension.</param>
 		/// <param name="leaderEndPoint">Leader end <see cref="Vector2">point</see> in local coordinates of the ordinate dimension</param>
@@ -69,9 +63,7 @@ namespace netDxf.Entities
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>OrdinateDimension</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="origin">Origin <see cref="Vector2">point</see> in local coordinates of the ordinate dimension.</param>
 		/// <param name="featurePoint">Base location <see cref="Vector2">point</see> in local coordinates of the ordinate dimension.</param>
 		/// <param name="leaderEndPoint">Leader end <see cref="Vector2">point</see> in local coordinates of the ordinate dimension</param>
@@ -93,9 +85,7 @@ namespace netDxf.Entities
 			this.Style = style ?? throw new ArgumentNullException(nameof(style));
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>OrdinateDimension</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="origin">Origin <see cref="Vector2">point</see> in local coordinates of the ordinate dimension.</param>
 		/// <param name="featurePoint">Base location <see cref="Vector2">point</see> in local coordinates of the ordinate dimension.</param>
 		/// <param name="leaderEndPoint">Leader end <see cref="Vector2">point</see> in local coordinates of the ordinate dimension</param>
@@ -113,9 +103,7 @@ namespace netDxf.Entities
 			this.Style = style ?? throw new ArgumentNullException(nameof(style));
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>OrdinateDimension</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="origin">Origin <see cref="Vector2">point</see> of the ordinate dimension.</param>
 		/// <param name="featurePoint">Base location <see cref="Vector2">point</see> in local coordinates of the ordinate dimension.</param>
 		/// <param name="length">Length of the dimension line.</param>
@@ -126,9 +114,7 @@ namespace netDxf.Entities
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>OrdinateDimension</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="origin">Origin <see cref="Vector2">point</see> of the ordinate dimension.</param>
 		/// <param name="featurePoint">Base location <see cref="Vector2">point</see> in local coordinates of the ordinate dimension.</param>
 		/// <param name="length">Length of the dimension line.</param>
@@ -140,9 +126,7 @@ namespace netDxf.Entities
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>OrdinateDimension</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="origin">Origin <see cref="Vector2">point</see> of the ordinate dimension.</param>
 		/// <param name="featurePoint">Base location <see cref="Vector2">point</see> in local coordinates of the ordinate dimension.</param>
 		/// <param name="length">Length of the dimension line.</param>
@@ -154,9 +138,7 @@ namespace netDxf.Entities
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>OrdinateDimension</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="origin">Origin <see cref="Vector3">point</see> in world coordinates of the ordinate dimension.</param>
 		/// <param name="featurePoint">Base location <see cref="Vector2">point</see> in local coordinates of the ordinate dimension.</param>
 		/// <param name="length">Length of the dimension line.</param>
@@ -188,54 +170,42 @@ namespace netDxf.Entities
 
 		#region public properties
 
-		/// <summary>
-		/// Gets or sets the origin <see cref="Vector2">point</see> in local coordinates.
-		/// </summary>
+		/// <summary>Gets or sets the origin <see cref="Vector2">point</see> in local coordinates.</summary>
 		public Vector2 Origin
 		{
 			get { return this.defPoint; }
 			set { this.defPoint = value; }
 		}
 
-		/// <summary>
-		/// Gets or set the base <see cref="Vector2">point</see> in local coordinates, a point on a feature such as an endpoint, intersection, or center of an object.
-		/// </summary>
+		/// <summary>Gets or set the base <see cref="Vector2">point</see> in local coordinates, a point on a feature such as an endpoint, intersection, or center of an object.</summary>
 		public Vector2 FeaturePoint
 		{
 			get { return this.firstPoint; }
 			set { this.firstPoint = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the leader end <see cref="Vector2">point</see> in local coordinates
-		/// </summary>
+		/// <summary>Gets or sets the leader end <see cref="Vector2">point</see> in local coordinates</summary>
 		public Vector2 LeaderEndPoint
 		{
 			get { return this.secondPoint; }
 			set { this.secondPoint = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the angle of rotation in degrees of the ordinate dimension local coordinate system.
-		/// </summary>
+		/// <summary>Gets or sets the angle of rotation in degrees of the ordinate dimension local coordinate system.</summary>
 		public double Rotation
 		{
 			get { return this.rotation; }
 			set { MathHelper.NormalizeAngle(this.rotation = value); }
 		}
 
-		/// <summary>
-		/// Gets or sets the local axis that measures the ordinate dimension.
-		/// </summary>
+		/// <summary>Gets or sets the local axis that measures the ordinate dimension.</summary>
 		public OrdinateDimensionAxis Axis
 		{
 			get { return this.axis; }
 			set { this.axis = value; }
 		}
 
-		/// <summary>
-		/// Actual measurement.
-		/// </summary>
+		/// <inheritdoc/>
 		public override double Measurement
 		{
 			get
@@ -249,12 +219,7 @@ namespace netDxf.Entities
 
 		#region overrides
 
-		/// <summary>
-		/// Moves, scales, and/or rotates the current entity given a 3x3 transformation matrix and a translation vector.
-		/// </summary>
-		/// <param name="transformation">Transformation matrix.</param>
-		/// <param name="translation">Translation vector.</param>
-		/// <remarks>Matrix3 adopts the convention of using column vectors to represent a transformation matrix.</remarks>
+		/// <inheritdoc/>
 		public override void TransformBy(Matrix3 transformation, Vector3 translation)
 		{
 			Vector3 newNormal = transformation * this.Normal;
@@ -299,9 +264,7 @@ namespace netDxf.Entities
 			this.Normal = newNormal;
 		}
 
-		/// <summary>
-		/// Calculate the dimension reference points.
-		/// </summary>
+		/// <inheritdoc/>
 		protected override void CalculateReferencePoints()
 		{
 			if (this.TextPositionManuallySet)
@@ -324,20 +287,13 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets the block that contains the entities that make up the dimension picture.
-		/// </summary>
-		/// <param name="name">Name to be assigned to the generated block.</param>
-		/// <returns>The block that represents the actual dimension.</returns>
+		/// <inheritdoc/>
 		protected override Block BuildBlock(string name)
 		{
 			return DimensionBlock.Build(this, name);
 		}
 
-		/// <summary>
-		/// Creates a new OrdinateDimension that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new OrdinateDimension that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override object Clone()
 		{
 			OrdinateDimension entity = new OrdinateDimension

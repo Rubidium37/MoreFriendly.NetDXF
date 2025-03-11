@@ -53,26 +53,20 @@ namespace netDxf.Objects
 
 		#region public properties
 
-		/// <summary>
-		/// Gets the entries dictionary (key: owner entry handle, value: name)
-		/// </summary>
+		/// <summary>Gets the entries dictionary (key: owner entry handle, value: name)</summary>
 		public Dictionary<string, string> Entries
 		{
 			get { return this.entries; }
 		}
 
-		/// <summary>
-		/// Gets or sets if the dictionary object is hard owner.
-		/// </summary>
+		/// <summary>Gets or sets if the dictionary object is hard owner.</summary>
 		public bool IsHardOwner
 		{
 			get { return this.isHardOwner; }
 			set { this.isHardOwner = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the dictionary object cloning flags.
-		/// </summary>
+		/// <summary>Gets or sets the dictionary object cloning flags.</summary>
 		public DictionaryCloningFlags Cloning
 		{
 			get { return this.cloning; }

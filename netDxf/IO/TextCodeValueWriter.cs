@@ -57,16 +57,19 @@ namespace netDxf.IO
 
 		#region public properties
 
+		/// <inheritdoc/>
 		public short Code
 		{
 			get { return this.dxfCode; }
 		}
 
+		/// <inheritdoc/>
 		public object Value
 		{
 			get { return this.dxfValue; }
 		}
 
+		/// <inheritdoc/>
 		public long CurrentPosition
 		{
 			get { return this.currentPosition; }
@@ -76,6 +79,7 @@ namespace netDxf.IO
 
 		#region public methods
 
+		/// <inheritdoc/>
 		public void Write(short code, object value)
 		{
 			this.dxfCode = code;
@@ -301,11 +305,13 @@ namespace netDxf.IO
 			this.currentPosition += 1;
 		}
 
+		/// <inheritdoc/>
 		public void WriteByte(byte value)
 		{
 			this.writer.WriteLine(value.ToString(CultureInfo.InvariantCulture));
 		}
 
+		/// <inheritdoc/>
 		public void WriteBytes(byte[] value)
 		{
 			StringBuilder sb = new StringBuilder();
@@ -316,42 +322,50 @@ namespace netDxf.IO
 			this.writer.WriteLine(sb.ToString());
 		}
 
+		/// <inheritdoc/>
 		public void WriteShort(short value)
 		{
 			this.writer.WriteLine(value.ToString(CultureInfo.InvariantCulture));
 		}
 
+		/// <inheritdoc/>
 		public void WriteInt(int value)
 		{
 			this.writer.WriteLine(value.ToString(CultureInfo.InvariantCulture));
 		}
 
+		/// <inheritdoc/>
 		public void WriteLong(long value)
 		{
 			this.writer.WriteLine(value.ToString(CultureInfo.InvariantCulture));
 		}
 
+		/// <inheritdoc/>
 		public void WriteBool(bool value)
 		{
 			this.writer.WriteLine(value ? 1 : 0);
 		}
 
+		/// <inheritdoc/>
 		public void WriteDouble(double value)
 		{
 			// float values always use the dot as the decimal separator
 			this.writer.WriteLine(value.ToString("0.0###############", CultureInfo.InvariantCulture));
 		}
 
-		public void Flush()
-		{
-			this.writer.Flush();
-		}
-
+		/// <inheritdoc/>
 		public void WriteString(string value)
 		{
 			this.writer.WriteLine(value);
 		}
 
+		/// <inheritdoc/>
+		public void Flush()
+		{
+			this.writer.Flush();
+		}
+
+		/// <inheritdoc/>
 		public override string ToString()
 		{
 			return string.Format("{0}:{1}", this.dxfCode, this.dxfValue);

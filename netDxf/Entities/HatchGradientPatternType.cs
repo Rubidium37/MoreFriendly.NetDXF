@@ -25,62 +25,42 @@
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Gradient pattern types.
-	/// </summary>
+	/// <summary>Gradient pattern types.</summary>
 	public enum HatchGradientPatternType
 	{
-		/// <summary>
-		/// Linear.
-		/// </summary>
+		/// <summary>Linear.</summary>
 		[StringValue("LINEAR")]
 		Linear = 0,
 
-		/// <summary>
-		/// Cylinder.
-		/// </summary>
+		/// <summary>Cylinder.</summary>
 		[StringValue("CYLINDER")]
 		Cylinder = 1,
 
-		/// <summary>
-		/// Inverse cylinder.
-		/// </summary>
+		/// <summary>Inverse cylinder.</summary>
 		[StringValue("INVCYLINDER")]
 		InvCylinder = 2,
 
-		/// <summary>
-		/// Spherical.
-		/// </summary>
+		/// <summary>Spherical.</summary>
 		[StringValue("SPHERICAL")]
 		Spherical = 3,
 
-		/// <summary>
-		/// Inverse spherical.
-		/// </summary>
+		/// <summary>Inverse spherical.</summary>
 		[StringValue("INVSPHERICAL")]
 		InvSpherical = 4,
 
-		/// <summary>
-		/// Hemispherical.
-		/// </summary>
+		/// <summary>Hemispherical.</summary>
 		[StringValue("HEMISPHERICAL")]
 		Hemispherical = 5,
 
-		/// <summary>
-		/// Inverse hemispherical.
-		/// </summary>
+		/// <summary>Inverse hemispherical.</summary>
 		[StringValue("INVHEMISPHERICAL")]
 		InvHemispherical = 6,
 
-		/// <summary>
-		/// Curved.
-		/// </summary>
+		/// <summary>Curved.</summary>
 		[StringValue("CURVED")]
 		Curved = 7,
 
-		/// <summary>
-		/// Inverse curved.
-		/// </summary>
+		/// <summary>Inverse curved.</summary>
 		[StringValue("INVCURVED")]
 		InvCurved = 8
 	}

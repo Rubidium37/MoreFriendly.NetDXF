@@ -31,9 +31,7 @@ using netDxf.Tables;
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Represents a tolerance <see cref="EntityObject">entity</see>.
-	/// </summary>
+	/// <summary>Represents a tolerance <see cref="EntityObject">entity</see>.</summary>
 	public class Tolerance :
 		EntityObject
 	{
@@ -72,26 +70,20 @@ namespace netDxf.Entities
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Tolerance</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		public Tolerance()
 			: this(null, Vector3.Zero)
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Tolerance</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="tolerance"></param>
 		public Tolerance(ToleranceEntry tolerance)
 			: this(tolerance, Vector3.Zero)
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Tolerance</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="tolerance"></param>
 		/// <param name="position"></param>
 		public Tolerance(ToleranceEntry tolerance, Vector2 position)
@@ -99,9 +91,7 @@ namespace netDxf.Entities
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Tolerance</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="tolerance"></param>
 		/// <param name="position"></param>
 		public Tolerance(ToleranceEntry tolerance, Vector3 position)
@@ -123,30 +113,24 @@ namespace netDxf.Entities
 
 		#region public properties
 
-		/// <summary>
-		/// Gets or sets the first tolerance entry.
-		/// </summary>
+		/// <summary>Gets or sets the first tolerance entry.</summary>
 		public ToleranceEntry Entry1
 		{
 			get { return this.entry1; }
 			set { this.entry1 = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the second tolerance entry.
-		/// </summary>
+		/// <summary>Gets or sets the second tolerance entry.</summary>
 		public ToleranceEntry Entry2
 		{
 			get { return this.entry2; }
 			set { this.entry2 = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the text height.
-		/// </summary>
+		/// <summary>Gets or sets the text height.</summary>
 		/// <remarks>
 		/// Valid values must be greater than zero.
-		/// By default it initially uses the text height defined in the style, when saved in the DXF this value is stored as extended data information.
+		/// By default it initially uses the text height defined in the style, when saved in the <b>DXF</b> this value is stored as extended data information.
 		/// </remarks>
 		public double TextHeight
 		{
@@ -161,9 +145,7 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the projected tolerance zone value.
-		/// </summary>
+		/// <summary>Gets or sets the projected tolerance zone value.</summary>
 		/// <remarks>
 		/// A projected tolerance zone controls the variation in height of the extended portion of a fixed perpendicular part
 		/// and refines the tolerance to that specified by positional tolerances.
@@ -174,18 +156,14 @@ namespace netDxf.Entities
 			set { this.projectedToleranceZoneValue = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets if the projected tolerance zone symbol will be shown after the projected tolerance zone value.
-		/// </summary>
+		/// <summary>Gets or sets if the projected tolerance zone symbol will be shown after the projected tolerance zone value.</summary>
 		public bool ShowProjectedToleranceZoneSymbol
 		{
 			get { return this.showProjectedToleranceZoneSymbol; }
 			set { this.showProjectedToleranceZoneSymbol = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the datum identifying symbol.
-		/// </summary>
+		/// <summary>Gets or sets the datum identifying symbol.</summary>
 		/// <remarks>
 		/// A datum is a theoretically exact geometric reference from which you can establish the location and tolerance zones of other features.
 		/// A point, line, plane, cylinder, or other geometry can serve as a datum.
@@ -196,9 +174,7 @@ namespace netDxf.Entities
 			set { this.datumIdentifier = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the <see cref="DimensionStyle">leader style</see>.
-		/// </summary>
+		/// <summary>Gets or sets the <see cref="DimensionStyle">leader style</see>.</summary>
 		public DimensionStyle Style
 		{
 			get { return this.style; }
@@ -212,18 +188,14 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the leader <see cref="Vector3">position</see> in world coordinates.
-		/// </summary>
+		/// <summary>Gets or sets the leader <see cref="Vector3">position</see> in world coordinates.</summary>
 		public Vector3 Position
 		{
 			get { return this.position; }
 			set { this.position = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the leader rotation in degrees.
-		/// </summary>
+		/// <summary>Gets or sets the leader rotation in degrees.</summary>
 		public double Rotation
 		{
 			get { return this.rotation; }
@@ -234,9 +206,7 @@ namespace netDxf.Entities
 
 		#region public methods
 
-		/// <summary>
-		/// Converts the actual tolerance to its string representation.
-		/// </summary>
+		/// <summary>Converts the actual tolerance to its string representation.</summary>
 		/// <returns>The tolerance string representation.</returns>
 		public string ToStringRepresentation()
 		{
@@ -280,9 +250,7 @@ namespace netDxf.Entities
 			return value.ToString();
 		}
 
-		/// <summary>
-		/// Converts the string representation of a tolerance to its tolerance entity equivalent.
-		/// </summary>
+		/// <summary>Converts the string representation of a tolerance to its tolerance entity equivalent.</summary>
 		/// <param name="s">A string that represents a tolerance to convert.</param>
 		/// <returns>The Tolerance entity equivalent to the tolerance contained in s.</returns>
 		public static Tolerance ParseStringRepresentation(string s)
@@ -357,8 +325,8 @@ namespace netDxf.Entities
 		/// A return value indicates whether the conversion succeeded or failed.
 		/// </summary>
 		/// <param name="s">A string that represents the tolerance to convert.</param>
-		/// <param name="result">If the conversion has been successful, it contains the tolerance entity equivalent to the string representation; otherwise, null.</param>
-		/// <returns>True if the string was converted successfully; otherwise, false.</returns>
+		/// <param name="result">If the conversion has been successful, it contains the tolerance entity equivalent to the string representation; otherwise, <see langword="null"/>.</param>
+		/// <returns><see langword="true"/> if the string was converted successfully; otherwise, <see langword="false"/>.</returns>
 		public static bool TryParseStringRepresentation(string s, out Tolerance result)
 		{
 			try
@@ -744,11 +712,7 @@ namespace netDxf.Entities
 
 		#region overrides
 
-		/// <summary>
-		/// Moves, scales, and/or rotates the current entity given a 3x3 transformation matrix and a translation vector.
-		/// </summary>
-		/// <param name="transformation">Transformation matrix.</param>
-		/// <param name="translation">Translation vector.</param>
+		/// <inheritdoc/>
 		/// <remarks>
 		/// Non-uniform scaling is not supported, also is not possible to make a symmetry of a Tolerance.<br />
 		/// Matrix3 adopts the convention of using column vectors to represent a transformation matrix.
@@ -787,6 +751,7 @@ namespace netDxf.Entities
 			this.Normal = newNormal;
 		}
 
+		/// <inheritdoc/>
 		public override object Clone()
 		{
 			Tolerance entity = new Tolerance

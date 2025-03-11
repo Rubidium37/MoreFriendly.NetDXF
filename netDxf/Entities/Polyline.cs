@@ -28,11 +28,9 @@ using netDxf.Tables;
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Represents a DXF Polyline.
-	/// </summary>
+	/// <summary>Represents a <b>DXF</b> Polyline.</summary>
 	/// <remarks>
-	/// Under the POLYLINE data the DXF stores information about smoothed Polylines2D (non-smoothed Polylines2D are stored as LWPOLYLINE,
+	/// Under the <b>POLYLINE</b> data the <b>DXF</b> stores information about smoothed Polylines2D (non-smoothed Polylines2D are stored as <b>LWPOLYLINE</b>,
 	/// Polylines3D (smoothed and non-smoothed), and PolyfaceMeshes.<br />
 	/// For internal use only.
 	/// </remarks>
@@ -62,9 +60,7 @@ namespace netDxf.Entities
 
 		#region constructor
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Polyline</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		public Polyline()
 			: base(DxfObjectCode.Polyline)
 		{
@@ -75,126 +71,98 @@ namespace netDxf.Entities
 
 		#region properties
 
-		/// <summary>
-		/// Gets or sets the polyline subclass marker.
-		/// </summary>
+		/// <summary>Gets or sets the polyline subclass marker.</summary>
 		public string SubclassMarker
 		{
 			get { return this.subclassMarker; }
 			set { this.subclassMarker = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the polyline layer.
-		/// </summary>
+		/// <summary>Gets or sets the polyline layer.</summary>
 		public Layer Layer
 		{
 			get { return this.layer; }
 			set { this.layer = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the polyline thickness.
-		/// </summary>
+		/// <summary>Gets or sets the polyline thickness.</summary>
 		public double Thickness
 		{
 			get { return this.thickness; }
 			set { this.thickness = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the polyline elevation.
-		/// </summary>
+		/// <summary>Gets or sets the polyline elevation.</summary>
 		public double Elevation
 		{
 			get { return this.elevation; }
 			set { this.elevation = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the polyline normal.
-		/// </summary>
+		/// <summary>Gets or sets the polyline normal.</summary>
 		public Vector3 Normal
 		{
 			get { return this.normal; }
 			set { this.normal = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the polyline color.
-		/// </summary>
+		/// <summary>Gets or sets the polyline color.</summary>
 		public AciColor Color
 		{
 			get { return this.color; }
 			set { this.color = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the polyline EndSequence object.
-		/// </summary>
+		/// <summary>Gets or sets the polyline <see cref="EndSequence"/> object.</summary>
 		public EndSequence EndSequence
 		{
 			get { return this.endSequence; }
 			set { this.endSequence = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the polyline vertexes list.
-		/// </summary>
+		/// <summary>Gets or sets the polyline vertexes list.</summary>
 		public List<Vertex> Vertexes
 		{
 			get { return this.vertexes; }
 			set { this.vertexes = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the polyline flags.
-		/// </summary>
+		/// <summary>Gets or sets the polyline flags.</summary>
 		public PolylineTypeFlags Flags
 		{
 			get { return this.flags; }
 			set { this.flags = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the polyline smooth type.
-		/// </summary>
+		/// <summary>Gets or sets the polyline smooth type.</summary>
 		public PolylineSmoothType SmoothType
 		{
 			get { return this.smoothType; }
 			set { this.smoothType = value; }
 		}
 
-		/// <summary>
-		/// Polygon mesh M vertex count.
-		/// </summary>
+		/// <summary>Polygon mesh M vertex count.</summary>
 		public short M
 		{
 			get { return this.m; }
 			set { this.m = value; }
 		}
 
-		/// <summary>
-		/// Polygon mesh N vertex count.
-		/// </summary>
+		/// <summary>Polygon mesh N vertex count.</summary>
 		public short N
 		{
 			get { return this.n; }
 			set { this.n = value; }
 		}
 
-		/// <summary>
-		/// Polygon mesh smooth surface M density.
-		/// </summary>
+		/// <summary>Polygon mesh smooth surface M density.</summary>
 		public short DensityM
 		{
 			get { return this.densityM; }
 			set { this.densityM = value; }
 		}
 
-		/// <summary>
-		/// Polygon mesh smooth surface N density.
-		/// </summary>
+		/// <summary>Polygon mesh smooth surface N density.</summary>
 		public short DensityN
 		{
 			get { return this.densityN; }

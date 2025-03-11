@@ -29,9 +29,7 @@ using netDxf.Tables;
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Represents a 3 point angular dimension <see cref="EntityObject">entity</see>.
-	/// </summary>
+	/// <summary>Represents a 3 point angular dimension <see cref="EntityObject">entity</see>.</summary>
 	public class Angular3PointDimension :
 		Dimension
 	{
@@ -46,27 +44,21 @@ namespace netDxf.Entities
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Angular3PointDimension</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		public Angular3PointDimension()
 			: this(Vector2.Zero, Vector2.UnitX, Vector2.UnitY, 0.1)
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Angular3PointDimension</c> class.
-		/// </summary>
-		/// <param name="arc"><see cref="Arc">Arc</see> to measure.</param>
+		/// <summary>Initializes a new instance of the class.</summary>
+		/// <param name="arc"><see cref="Arc"/> to measure.</param>
 		/// <param name="offset">Distance between the center of the arc and the dimension line.</param>
 		public Angular3PointDimension(Arc arc, double offset)
 			: this(arc, offset, DimensionStyle.Default)
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Angular3PointDimension</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="arc">Angle <see cref="Arc">arc</see> to measure.</param>
 		/// <param name="offset">Distance between the center of the arc and the dimension line.</param>
 		/// <param name="style">The <see cref="DimensionStyle">style</see> to use with the dimension.</param>
@@ -89,9 +81,7 @@ namespace netDxf.Entities
 			this.Update();
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Angular3PointDimension</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="centerPoint">Center of the angle arc to measure.</param>
 		/// <param name="startPoint">Angle start point.</param>
 		/// <param name="endPoint">Angle end point.</param>
@@ -101,9 +91,7 @@ namespace netDxf.Entities
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Angular3PointDimension</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="centerPoint">Center of the angle arc to measure.</param>
 		/// <param name="startPoint">Angle start point.</param>
 		/// <param name="endPoint">Angle end point.</param>
@@ -124,44 +112,34 @@ namespace netDxf.Entities
 
 		#region public properties
 
-		/// <summary>
-		/// Gets or sets the center <see cref="Vector2">point</see> of the arc in OCS (object coordinate system).
-		/// </summary>
+		/// <summary>Gets or sets the center <see cref="Vector2">point</see> of the arc in <b>OCS</b> (object coordinate system).</summary>
 		public Vector2 CenterPoint
 		{
 			get { return this.center; }
 			set { this.center = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the angle start <see cref="Vector2">point</see> of the dimension in OCS (object coordinate system).
-		/// </summary>
+		/// <summary>Gets or sets the angle start <see cref="Vector2">point</see> of the dimension in <b>OCS</b> (object coordinate system).</summary>
 		public Vector2 StartPoint
 		{
 			get { return this.start; }
 			set { this.start = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the angle end <see cref="Vector2">point</see> of the dimension in OCS (object coordinate system).
-		/// </summary>
+		/// <summary>Gets or sets the angle end <see cref="Vector2">point</see> of the dimension in <b>OCS</b> (object coordinate system).</summary>
 		public Vector2 EndPoint
 		{
 			get { return this.end; }
 			set { this.end = value; }
 		}
 
-		/// <summary>
-		/// Gets the location of the dimension line arc.
-		/// </summary>
+		/// <summary>Gets the location of the dimension line arc.</summary>
 		public Vector2 ArcDefinitionPoint
 		{
 			get { return this.defPoint; }
 		}
 
-		/// <summary>
-		/// Gets or sets the distance between the center point and the dimension line.
-		/// </summary>
+		/// <summary>Gets or sets the distance between the center point and the dimension line.</summary>
 		/// <remarks>
 		/// Positive values will measure the angle between the start point and the end point while negative values will measure the opposite arc angle.
 		/// Even thought, zero values are allowed, they are not recommended.
@@ -172,9 +150,7 @@ namespace netDxf.Entities
 			set { this.offset = value; }
 		}
 
-		/// <summary>
-		/// Actual measurement.
-		/// </summary>
+		/// <inheritdoc/>
 		public override double Measurement
 		{
 			get
@@ -205,9 +181,7 @@ namespace netDxf.Entities
 
 		#region public methods
 
-		/// <summary>
-		/// Calculates the dimension offset from a point along the dimension line.
-		/// </summary>
+		/// <summary>Calculates the dimension offset from a point along the dimension line.</summary>
 		/// <param name="point">Point along the dimension line.</param>
 		public void SetDimensionLinePosition(Vector2 point)
 		{
@@ -251,16 +225,7 @@ namespace netDxf.Entities
 
 		#region overrides
 
-		/// <summary>
-		/// Moves, scales, and/or rotates the current entity given a 3x3 transformation matrix and a translation vector.
-		/// </summary>
-		/// <param name="transformation">Transformation matrix.</param>
-		/// <param name="translation">Translation vector.</param>
-		/// <remarks>
-		/// Non-uniform and zero scaling local to the dimension entity are not supported.<br />
-		/// The transformation will not be applied if the resulting reference lines are parallel.<br />
-		/// Matrix3 adopts the convention of using column vectors to represent a transformation matrix.
-		/// </remarks>
+		/// <inheritdoc/>
 		public override void TransformBy(Matrix3 transformation, Vector3 translation)
 		{
 			Vector3 newNormal = transformation * this.Normal;
@@ -310,9 +275,7 @@ namespace netDxf.Entities
 			this.SetDimensionLinePosition(this.defPoint);
 		}
 
-		/// <summary>
-		/// Calculate the dimension reference points.
-		/// </summary>
+		/// <inheritdoc/>
 		protected override void CalculateReferencePoints()
 		{
 			DimensionStyleOverride styleOverride;
@@ -353,20 +316,13 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Gets the block that contains the entities that make up the dimension picture.
-		/// </summary>
-		/// <param name="name">Name to be assigned to the generated block.</param>
-		/// <returns>The block that represents the actual dimension.</returns>
+		/// <inheritdoc/>
 		protected override Block BuildBlock(string name)
 		{
 			return DimensionBlock.Build(this, name);
 		}
 
-		/// <summary>
-		/// Creates a new Angular3PointDimension that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new Angular3PointDimension that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override object Clone()
 		{
 			Angular3PointDimension entity = new Angular3PointDimension

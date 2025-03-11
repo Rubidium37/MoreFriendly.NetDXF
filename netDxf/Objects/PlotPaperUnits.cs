@@ -25,24 +25,16 @@
 
 namespace netDxf.Objects
 {
-	/// <summary>
-	/// Plot paper units.
-	/// </summary>
+	/// <summary>Plot paper units.</summary>
 	public enum PlotPaperUnits
 	{
-		/// <summary>
-		/// Inches.
-		/// </summary>
+		/// <summary>Inches.</summary>
 		Inches = 0,
 
-		/// <summary>
-		/// Millimeters.
-		/// </summary>
+		/// <summary>Millimeters.</summary>
 		Milimeters = 1,
 
-		/// <summary>
-		/// Pixels, only applicable for raster outputs.
-		/// </summary>
+		/// <summary>Pixels, only applicable for raster outputs.</summary>
 		Pixels = 2
 	}
 }

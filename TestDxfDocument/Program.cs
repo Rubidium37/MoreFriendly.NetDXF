@@ -22,9 +22,7 @@ using Trace = netDxf.Entities.Trace;
 
 namespace TestDxfDocument
 {
-	/// <summary>
-	/// This is just a simple test of work in progress for the netDxf library.
-	/// </summary>
+	/// <summary>This is just a simple test of work in progress for the netDxf library.</summary>
 	public class Program
 	{
 
@@ -2801,7 +2799,7 @@ namespace TestDxfDocument
 			doc.Save("test.dxf");
 
 			//DxfDocument dxf = DxfDocument.Load("test.dxf");
-			////dxf.Dimensions[0].Block = null;
+			////dxf.Dimensions[0].Block = <see langword="null"/>;
 			//dxf.Save("test compare.dxf");
 		}
 
@@ -4721,7 +4719,7 @@ namespace TestDxfDocument
 			DimensionStyle style = new DimensionStyle("MyStyle")
 			{
 				// DIMDEC defines the number of decimal places.
-				// For Architectural and Fractional units the minimum fraction is defined by 1/2^DIMDEC.
+				// For <see cref="LinearUnitType.Architectural"/> and <see cref="LinearUnitType.Fractional"/> units the minimum fraction is defined by 1/2^DIMDEC.
 				LengthPrecision = 4,
 				FractionType = FractionFormatType.Horizontal,
 				DimLengthUnits = LinearUnitType.Engineering,
@@ -5742,7 +5740,7 @@ namespace TestDxfDocument
 			layer.Color = new AciColor(Color.MediumVioletRed);
 			// the transparency is expressed in percentage. Initially all Transparency values are initialized as ByLayer.
 			layer.Transparency.Value = 50;
-			// You cannot use the reserved values 0 and 100 that represents ByLayer and ByBlock. Use Transparency.ByLayer and Transparency.ByBlock
+			// You cannot use the reserved values 0 and 100 that represents <b>ByLayer</b> and <b>ByBlock</b>. Use Transparency.ByLayer and Transparency.ByBlock
 			// this behavior is similar to the index in AciColor or the weight in Lineweight
 			// this is wrong and will rise and exception
 			//layer.Transparency.Value = 0;

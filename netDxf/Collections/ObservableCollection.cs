@@ -29,9 +29,7 @@ using System.Collections.Generic;
 
 namespace netDxf.Collections
 {
-	/// <summary>
-	/// Represent a collection of items that fire events when it is modified.
-	/// </summary>
+	/// <summary>Represent a collection of items that fire events when it is modified.</summary>
 	/// <typeparam name="T">Type of items.</typeparam>
 	public class ObservableCollection<T> :
 		IList<T>
@@ -103,17 +101,13 @@ namespace netDxf.Collections
 
 		#region constructor
 
-		/// <summary>
-		/// Initializes a new instance of <c>ObservableCollection</c>.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		public ObservableCollection()
 		{
 			this.innerArray = new List<T>();
 		}
 
-		/// <summary>
-		/// Initializes a new instance of <c>ObservableCollection</c> and has the specified initial capacity.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class and has the specified initial capacity.</summary>
 		/// <param name="capacity">The number of items the collection can initially store.</param>
 		public ObservableCollection(int capacity)
 		{
@@ -128,11 +122,7 @@ namespace netDxf.Collections
 
 		#region public properties
 
-		/// <summary>
-		/// Gets or sets the object at the specified index.
-		/// </summary>
-		/// <param name="index"> The zero-based index of the element to get or set.</param>
-		/// <returns>The object at the specified index.</returns>
+		/// <inheritdoc/>
 		public T this[int index]
 		{
 			get { return this.innerArray[index]; }
@@ -157,17 +147,13 @@ namespace netDxf.Collections
 			}
 		}
 
-		/// <summary>
-		/// Gets the number of object contained in the collection.
-		/// </summary>
+		/// <inheritdoc/>
 		public int Count
 		{
 			get { return this.innerArray.Count; }
 		}
 
-		/// <summary>
-		/// Gets a value indicating whether the collection is read-only.
-		/// </summary>
+		/// <inheritdoc/>
 		public virtual bool IsReadOnly
 		{
 			get { return false; }
@@ -177,56 +163,44 @@ namespace netDxf.Collections
 
 		#region public methods
 
-		/// <summary>
-		/// Reverses the order of the elements in the entire list.
-		/// </summary>
+		/// <summary>Reverses the order of the elements in the entire list.</summary>
 		public void Reverse()
 		{
 			this.innerArray.Reverse();
 		}
 
-		/// <summary>
-		/// Sorts the elements in the entire System.Collections.Generic.List&lt;T&gt; using the specified System.Comparison&lt;T&gt;.
-		/// </summary>
+		/// <summary>Sorts the elements in the entire System.Collections.Generic.List&lt;T&gt; using the specified System.Comparison&lt;T&gt;.</summary>
 		/// <param name="comparision">The System.Comparison&lt;T&gt; to use when comparing elements.</param>
 		public void Sort(Comparison<T> comparision)
 		{
 			this.innerArray.Sort(comparision);
 		}
 
-		/// <summary>
-		/// Sorts the elements in a range of elements in System.Collections.Generic.List&lt;T&gt; using the specified comparer.
-		/// </summary>
+		/// <summary>Sorts the elements in a range of elements in System.Collections.Generic.List&lt;T&gt; using the specified comparer.</summary>
 		/// <param name="index">The zero-based starting index of the range to sort.</param>
 		/// <param name="count">The length of the range to sort.</param>
-		/// <param name="comparer">The System.Collections.Generic.IComparer&lt;T&gt; implementation to use when comparing elements, or null to use the default comparer System.Collections.Generic.Comparer&lt;T&gt;.Default.</param>
+		/// <param name="comparer">The System.Collections.Generic.IComparer&lt;T&gt; implementation to use when comparing elements, or <see langword="null"/> to use the default comparer System.Collections.Generic.Comparer&lt;T&gt;.Default.</param>
 		public void Sort(int index, int count, IComparer<T> comparer)
 		{
 			this.innerArray.Sort(index, count, comparer);
 		}
 
-		/// <summary>
-		/// Sorts the elements in a range of elements in System.Collections.Generic.List&lt;T&gt; using the specified comparer.
-		/// </summary>
-		/// <param name="comparer">The System.Collections.Generic.IComparer&lt;T&gt; implementation to use when comparing elements, or null to use the default comparer System.Collections.Generic.Comparer&lt;T&gt;.Default.</param>
+		/// <summary>Sorts the elements in a range of elements in System.Collections.Generic.List&lt;T&gt; using the specified comparer.</summary>
+		/// <param name="comparer">The System.Collections.Generic.IComparer&lt;T&gt; implementation to use when comparing elements, or <see langword="null"/> to use the default comparer System.Collections.Generic.Comparer&lt;T&gt;.Default.</param>
 		public void Sort(IComparer<T> comparer)
 		{
 			this.innerArray.Sort(comparer);
 		}
 
-		/// <summary>
-		/// Sorts the elements in the entire System.Collections.Generic.List&lt;T&gt; using the default comparer.
-		/// </summary>
+		/// <summary>Sorts the elements in the entire System.Collections.Generic.List&lt;T&gt; using the default comparer.</summary>
 		public void Sort()
 		{
 			this.innerArray.Sort();
 		}
 
-		/// <summary>
-		/// Adds an object to the collection.
-		/// </summary>
-		/// <param name="item"> The object to add to the collection.</param>
-		/// <returns>True if the object has been added to the collection, or false otherwise.</returns>
+		/// <summary>Adds an object to the collection.</summary>
+		/// <param name="item">The object to add to the collection.</param>
+		/// <returns><see langword="true"/> if the object has been added to the collection; otherwise, <see langword="false"/>.</returns>
 		public void Add(T item)
 		{
 			if (this.OnBeforeAddItemEvent(item))
@@ -237,9 +211,7 @@ namespace netDxf.Collections
 			this.OnAddItemEvent(item);
 		}
 
-		/// <summary>
-		/// Adds an object list to the end of the collection.
-		/// </summary>
+		/// <summary>Adds an object list to the end of the collection.</summary>
 		/// <param name="collection">The collection whose elements should be added.</param>
 		public void AddRange(IEnumerable<T> collection)
 		{
@@ -254,12 +226,10 @@ namespace netDxf.Collections
 			}
 		}
 
-		/// <summary>
-		/// Inserts an object into the collection at the specified index.
-		/// </summary>
+		/// <summary>Inserts an object into the collection at the specified index.</summary>
 		/// <param name="index">The zero-based index at which item should be inserted.</param>
-		/// <param name="item">The object to insert. The value can not be null.</param>
-		/// <returns>True if the object has been inserted to the collection; otherwise, false.</returns>
+		/// <param name="item">The object to insert. The value can not be <see langword="null"/>.</param>
+		/// <returns><see langword="true"/> if the object has been inserted to the collection; otherwise, <see langword="false"/>.</returns>
 		public void Insert(int index, T item)
 		{
 			if (index < 0 || index >= this.innerArray.Count)
@@ -282,11 +252,7 @@ namespace netDxf.Collections
 			this.OnAddItemEvent(item);
 		}
 
-		/// <summary>
-		/// Removes the first occurrence of a specific object from the collection
-		/// </summary>
-		/// <param name="item">The object to remove from the collection.</param>
-		/// <returns>True if object is successfully removed; otherwise, false.</returns>
+		/// <inheritdoc/>
 		public bool Remove(T item)
 		{
 			if (!this.innerArray.Contains(item))
@@ -304,9 +270,7 @@ namespace netDxf.Collections
 			return true;
 		}
 
-		/// <summary>
-		/// Removes the first occurrence of a specific object from the collection
-		/// </summary>
+		/// <summary>Removes the first occurrence of a specific object from the collection</summary>
 		/// <param name="items">The list of objects to remove from the collection.</param>
 		public void Remove(IEnumerable<T> items)
 		{
@@ -321,10 +285,7 @@ namespace netDxf.Collections
 			}
 		}
 
-		/// <summary>
-		/// Removes the object at the specified index of the collection.
-		/// </summary>
-		/// <param name="index">The zero-based index of the object to remove.</param>
+		/// <inheritdoc/>
 		public void RemoveAt(int index)
 		{
 			if (index < 0 || index >= this.innerArray.Count)
@@ -342,9 +303,7 @@ namespace netDxf.Collections
 			this.OnRemoveItemEvent(remove);
 		}
 
-		/// <summary>
-		/// Removes all object from the collection.
-		/// </summary>
+		/// <inheritdoc/>
 		public void Clear()
 		{
 			T[] items = new T[this.innerArray.Count];
@@ -355,40 +314,25 @@ namespace netDxf.Collections
 			}
 		}
 
-		/// <summary>
-		/// Searches for the specified object and returns the zero-based index of the first occurrence within the entire collection.
-		/// </summary>
-		/// <param name="item">The object to locate in the collection.</param>
-		/// <returns>The zero-based index of the first occurrence of item within the entire collection, if found; otherwise, –1.</returns>
+		/// <inheritdoc/>
 		public int IndexOf(T item)
 		{
 			return this.innerArray.IndexOf(item);
 		}
 
-		/// <summary>
-		/// Determines whether an object is in the collection.
-		/// </summary>
-		/// <param name="item">The object to locate in the collection.</param>
-		/// <returns>True if item is found in the collection; otherwise, false.</returns>
+		/// <inheritdoc/>
 		public bool Contains(T item)
 		{
 			return this.innerArray.Contains(item);
 		}
 
-		/// <summary>
-		/// Copies the entire collection to a compatible one-dimensional array, starting at the specified index of the target array.
-		/// </summary>
-		/// <param name="array"> The one-dimensional System.Array that is the destination of the elements copied from the collection. The System.Array must have zero-based indexing.</param>
-		/// <param name="arrayIndex">The zero-based index in array at which copying begins.</param>
+		/// <inheritdoc/>
 		public void CopyTo(T[] array, int arrayIndex)
 		{
 			this.innerArray.CopyTo(array, arrayIndex);
 		}
 
-		/// <summary>
-		/// Returns an enumerator that iterates through the collection.
-		/// </summary>
-		/// <returns>An enumerator that can be used to iterate through the collection.</returns>
+		/// <inheritdoc/>
 		public IEnumerator<T> GetEnumerator()
 		{
 			return this.innerArray.GetEnumerator();

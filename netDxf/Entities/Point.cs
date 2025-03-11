@@ -27,9 +27,7 @@ using netDxf.Tables;
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Represents a point <see cref="EntityObject">entity</see>.
-	/// </summary>
+	/// <summary>Represents a point <see cref="EntityObject">entity</see>.</summary>
 	public class Point :
 		EntityObject
 	{
@@ -43,9 +41,7 @@ namespace netDxf.Entities
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Point</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="position">Point <see cref="Vector3">position</see>.</param>
 		public Point(Vector3 position)
 			: base(EntityType.Point, DxfObjectCode.Point)
@@ -55,18 +51,14 @@ namespace netDxf.Entities
 			this.rotation = 0.0;
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Point</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="position">Point <see cref="Vector2">position</see>.</param>
 		public Point(Vector2 position)
 			: this(new Vector3(position.X, position.Y, 0.0))
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Point</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="x">X coordinate.</param>
 		/// <param name="y">Y coordinate.</param>
 		/// <param name="z">Z coordinate.</param>
@@ -75,9 +67,7 @@ namespace netDxf.Entities
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Point</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		public Point()
 			: this(Vector3.Zero)
 		{
@@ -87,27 +77,21 @@ namespace netDxf.Entities
 
 		#region public properties
 
-		/// <summary>
-		/// Gets or sets the point <see cref="Vector3">position</see>.
-		/// </summary>
+		/// <summary>Gets or sets the point <see cref="Vector3">position</see>.</summary>
 		public Vector3 Position
 		{
 			get { return this.position; }
 			set { this.position = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the point thickness.
-		/// </summary>
+		/// <summary>Gets or sets the point thickness.</summary>
 		public double Thickness
 		{
 			get { return this.thickness; }
 			set { this.thickness = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the point local rotation in degrees along its normal.
-		/// </summary>
+		/// <summary>Gets or sets the point local rotation in degrees along its normal.</summary>
 		public double Rotation
 		{
 			get { return this.rotation; }
@@ -118,12 +102,7 @@ namespace netDxf.Entities
 
 		#region overrides
 
-		/// <summary>
-		/// Moves, scales, and/or rotates the current entity given a 3x3 transformation matrix and a translation vector.
-		/// </summary>
-		/// <param name="transformation">Transformation matrix.</param>
-		/// <param name="translation">Translation vector.</param>
-		/// <remarks>Matrix3 adopts the convention of using column vectors to represent a transformation matrix.</remarks>
+		/// <inheritdoc/>
 		public override void TransformBy(Matrix3 transformation, Vector3 translation)
 		{
 			Vector3 newPosition = transformation * this.Position + translation;
@@ -147,10 +126,7 @@ namespace netDxf.Entities
 			this.Normal = newNormal;
 		}
 
-		/// <summary>
-		/// Creates a new Point that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new Point that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override object Clone()
 		{
 			Point entity = new Point

@@ -700,6 +700,17 @@ namespace netDxf.GTE
 			}
 		}
 
+		/// <inheritdoc/>
+		public override bool Equals(object obj)
+		{
+			if (obj == null)
+			{
+				return false;
+			}
+
+			return obj.GetType() == this.GetType() && this.Equals((GMatrix)obj);
+		}
+		/// <inheritdoc/>
 		public bool Equals(GMatrix other)
 		{
 			if (other == null)
@@ -710,16 +721,7 @@ namespace netDxf.GTE
 			return this == other;
 		}
 
-		public override bool Equals(object obj)
-		{
-			if (obj == null)
-			{
-				return false;
-			}
-
-			return obj.GetType() == this.GetType() && this.Equals((GMatrix)obj);
-		}
-
+		/// <inheritdoc/>
 		public override int GetHashCode()
 		{
 			return this.elements.GetHashCode();

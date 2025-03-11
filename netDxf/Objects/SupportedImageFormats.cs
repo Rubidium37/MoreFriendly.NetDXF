@@ -25,32 +25,22 @@
 
 namespace netDxf.Objects
 {
-	/// <summary>
-	/// Supported image formats.
-	/// </summary>
+	/// <summary>Supported image formats.</summary>
 	/// <remarks>
 	/// These are the image formats in common between the net framework and AutoCAD.
 	/// </remarks>
 	public enum SupportedImageFormats
 	{
-		/// <summary>
-		/// BMP image format.
-		/// </summary>
+		/// <summary>BMP image format.</summary>
 		Bmp,
 
-		/// <summary>
-		/// JPG image format.
-		/// </summary>
+		/// <summary>JPG image format.</summary>
 		Jpeg,
 
-		/// <summary>
-		/// PNG image format.
-		/// </summary>
+		/// <summary>PNG image format.</summary>
 		Png,
 
-		/// <summary>
-		/// Tiff image format.
-		/// </summary>
+		/// <summary>Tiff image format.</summary>
 		Tiff
 	}
 }

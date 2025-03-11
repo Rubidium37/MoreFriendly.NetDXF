@@ -30,10 +30,8 @@ using netDxf.Tables;
 
 namespace netDxf.Collections
 {
-	/// <summary>
-	/// Represents a list of table objects
-	/// </summary>
-	/// <typeparam name="T"><see cref="TableObject">TableObject</see>.</typeparam>
+	/// <summary>Represents a list of table objects</summary>
+	/// <typeparam name="T"><see cref="TableObject"/>.</typeparam>
 	public abstract class TableObjects<T> :
 		DxfObject,
 		IEnumerable<T> where T : TableObject
@@ -47,9 +45,7 @@ namespace netDxf.Collections
 
 		#region constructor
 
-		/// <summary>
-		/// Initializes a new instance of the <c>TableObjects</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="document">DxfDocument associated with this instance.</param>
 		/// <param name="codeName">DxfCode assigned to this instance.</param>
 		/// <param name="handle">Handle assigned to this instance.</param>
@@ -76,9 +72,7 @@ namespace netDxf.Collections
 
 		#region public properties
 
-		/// <summary>
-		/// Gets a table object from the list by name.
-		/// </summary>
+		/// <summary>Gets a table object from the list by name.</summary>
 		/// <param name="name">Table object name.</param>
 		/// <returns>The table object with the specified name.</returns>
 		/// <remarks>Table object names are case insensitive.</remarks>
@@ -87,33 +81,25 @@ namespace netDxf.Collections
 			get { return this.list.TryGetValue(name, out T item) ? item : null; }
 		}
 
-		/// <summary>
-		/// Gets the table object list.
-		/// </summary>
+		/// <summary>Gets the table object list.</summary>
 		public ICollection<T> Items
 		{
 			get { return this.list.Values; }
 		}
 
-		/// <summary>
-		/// Gets the ObjectTable names.
-		/// </summary>
+		/// <summary>Gets the <b>ObjectTable</b> names.</summary>
 		public ICollection<string> Names
 		{
 			get { return this.list.Keys; }
 		}
 
-		/// <summary>
-		/// Gets the number of table objects.
-		/// </summary>
+		/// <summary>Gets the number of table objects.</summary>
 		public int Count
 		{
 			get { return this.list.Count; }
 		}
 
-		/// <summary>
-		/// Gets the owner of the actual DXF object.
-		/// </summary>
+		/// <summary>Gets the owner of the actual <b>DXF</b> object.</summary>
 		public new DxfDocument Owner
 		{
 			get { return (DxfDocument)base.Owner; }
@@ -138,93 +124,77 @@ namespace netDxf.Collections
 
 		#region public methods
 
-		/// <summary>
-		/// Checks if the specified TableObject has been referenced by other DxfObjects.
-		/// </summary>
+		/// <summary>Checks if the specified TableObject has been referenced by other <see cref="DxfObject"/>s.</summary>
 		/// <param name="name">Table object name.</param>
 		/// <returns>
-		/// Returns true if the specified TableObject has been referenced by other DxfObjects, false otherwise.
+		/// Returns <see langword="true"/> if the specified TableObject has been referenced by other <see cref="DxfObject"/>s; otherwise, <see langword="false"/>.
 		/// </returns>
 		public bool HasReferences(string name)
 		{
 			return !this.references[name].IsEmpty();
 		}
 
-		/// <summary>
-		/// Checks if the specified TableObject has been referenced by other DxfObjects.
-		/// </summary>
+		/// <summary>Checks if the specified TableObject has been referenced by other <see cref="DxfObject"/>s.</summary>
 		/// <param name="item">Table object.</param>
 		/// <returns>
-		/// Returns true if the specified TableObject has been referenced by other DxfObjects, false otherwise.
+		/// Returns <see langword="true"/> if the specified TableObject has been referenced by other <see cref="DxfObject"/>s; otherwise, <see langword="false"/>.
 		/// </returns>
 		public bool HasReferences(T item)
 		{
 			return !this.references[item.Name].IsEmpty();
 		}
 
-		/// <summary>
-		/// Gets the <see cref="DxfObject">dxf objects</see> referenced by a T.
-		/// </summary>
+		/// <summary>Gets the <see cref="DxfObject">dxf objects</see> referenced by a T.</summary>
 		/// <param name="name">Table object name.</param>
-		/// <returns>The list of DxfObjects that reference the specified table object.</returns>
+		/// <returns>The list of <see cref="DxfObject"/>s that reference the specified table object.</returns>
 		/// <remarks>
 		/// If there is no table object with the specified name in the list the method an empty list.<br />
-		/// The Groups collection method GetReferences will always return an empty list since there are no DxfObjects that references them.
+		/// The Groups collection method GetReferences will always return an empty list since there are no <see cref="DxfObject"/>s that references them.
 		/// </remarks>
 		public List<DxfObjectReference> GetReferences(string name)
 		{
 			return this.references[name].ToList();
 		}
 
-		/// <summary>
-		/// Gets the <see cref="DxfObject">dxf objects</see> referenced by a T.
-		/// </summary>
+		/// <summary>Gets the <see cref="DxfObject">dxf objects</see> referenced by a T.</summary>
 		/// <param name="item">Table object.</param>
-		/// <returns>The list of DxfObjects that reference the specified table object.</returns>
+		/// <returns>The list of <see cref="DxfObject"/>s that reference the specified table object.</returns>
 		/// <remarks>
 		/// If there is no table object with the specified name in the list the method an empty list.<br />
-		/// The Groups collection method GetReferences will always return an empty list since there are no DxfObjects that references them.
+		/// The Groups collection method GetReferences will always return an empty list since there are no <see cref="DxfObject"/>s that references them.
 		/// </remarks>
 		public List<DxfObjectReference> GetReferences(T item)
 		{
 			return this.references[item.Name].ToList();
 		}
 
-		/// <summary>
-		/// Checks if a table object already exists in the list.
-		/// </summary>
+		/// <summary>Checks if a table object already exists in the list.</summary>
 		/// <param name="name">Table object name.</param>
-		/// <returns>True is a table object exists with the specified name, false otherwise.</returns>
+		/// <returns><see langword="true"/> is a table object exists with the specified name; otherwise, <see langword="false"/>.</returns>
 		public bool Contains(string name)
 		{
 			return this.list.ContainsKey(name);
 		}
 
-		/// <summary>
-		/// Checks if a table object already exists in the list.
-		/// </summary>
+		/// <summary>Checks if a table object already exists in the list.</summary>
 		/// <param name="item">Table object.</param>
-		/// <returns>True is a table object exists, false otherwise.</returns>
+		/// <returns><see langword="true"/> is a table object exists; otherwise, <see langword="false"/>.</returns>
 		public bool Contains(T item)
 		{
 			return this.list.ContainsValue(item);
 		}
 
-		/// <summary>
-		/// Gets the table object associated with the specified name.
-		/// </summary>
-		/// <param name="name"> The name of the table object to get.</param>
+		/// <summary>Gets the table object associated with the specified name.</summary>
+		/// <param name="name">The name of the table object to get.</param>
 		/// <param name="item">When this method returns, contains the table object associated with the specified name, if the key is found;
 		/// otherwise, the default value for the type of the value parameter. This parameter is passed uninitialized.</param>
-		/// <returns>True if the table contains an element with the specified name; otherwise, false.</returns>
+		/// <returns><see langword="true"/> if the table contains an element with the specified name; otherwise, <see langword="false"/>.</returns>
 		public bool TryGetValue(string name, out T item)
 		{
 			return this.list.TryGetValue(name, out item);
 		}
 
-		/// <summary>
-		/// Adds a table object to the list.
-		/// </summary>
+		/// <summary>Adds a table object to the list.</summary>
 		/// <param name="item"><see cref="TableObject">Table object</see> to add to the list.</param>
 		/// <returns>
 		/// If a table object already exists with the same name as the instance that is being added the method returns the existing table object,
@@ -242,25 +212,19 @@ namespace netDxf.Collections
 
 		internal abstract T Add(T item, bool assignHandle);
 
-		/// <summary>
-		/// Removes a table object.
-		/// </summary>
+		/// <summary>Removes a table object.</summary>
 		/// <param name="name">Table object name to remove from the document.</param>
-		/// <returns>True is the table object has been successfully removed, or false otherwise.</returns>
+		/// <returns><see langword="true"/> is the table object has been successfully removed; otherwise, <see langword="false"/>.</returns>
 		/// <remarks>Reserved table objects or any other referenced by objects cannot be removed.</remarks>
 		public abstract bool Remove(string name);
 
-		/// <summary>
-		/// Removes a table object.
-		/// </summary>
+		/// <summary>Removes a table object.</summary>
 		/// <param name="item"><see cref="TableObject">Table object</see> to remove from the document.</param>
-		/// <returns>True is the table object has been successfully removed, or false otherwise.</returns>
+		/// <returns><see langword="true"/> is the table object has been successfully removed; otherwise, <see langword="false"/>.</returns>
 		/// <remarks>Reserved table objects or any other referenced by objects cannot be removed.</remarks>
 		public abstract bool Remove(T item);
 
-		/// <summary>
-		/// Removes all table objects that are not reserved and have no references.
-		/// </summary>
+		/// <summary>Removes all table objects that are not reserved and have no references.</summary>
 		public void Clear()
 		{
 			string[] names = new string[this.list.Count];
@@ -275,18 +239,13 @@ namespace netDxf.Collections
 
 		#region implements IEnumerator<T>
 
-		/// <summary>
-		/// Returns an enumerator that iterates through the table object collection.
-		/// </summary>
-		/// <returns>An enumerator for the table object collection.</returns>
+		/// <inheritdoc/>
 		public IEnumerator<T> GetEnumerator()
 		{
 			return this.list.Values.GetEnumerator();
 		}
 
-		/// <summary>
-		/// Returns an enumerator that iterates through the table object collection.
-		/// </summary>
+		/// <summary>Returns an enumerator that iterates through the table object collection.</summary>
 		/// <returns>An enumerator for the table object collection.</returns>
 		IEnumerator IEnumerable.GetEnumerator()
 		{

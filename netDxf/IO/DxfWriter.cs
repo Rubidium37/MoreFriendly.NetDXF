@@ -44,9 +44,7 @@ using Trace = netDxf.Entities.Trace;
 
 namespace netDxf.IO
 {
-	/// <summary>
-	/// Low level DXF writer.
-	/// </summary>
+	/// <summary>Low level <b>DXF</b> writer.</summary>
 	internal sealed class DxfWriter
 	{
 		#region private fields
@@ -497,18 +495,14 @@ namespace netDxf.IO
 
 		#region private methods
 
-		/// <summary>
-		/// Closes the DXF writer.
-		/// </summary>
+		/// <summary>Closes the <b>DXF</b> writer.</summary>
 		private void Close()
 		{
 			this.chunk.Write(0, DxfObjectCode.EndOfFile);
 			this.chunk.Flush();
 		}
 
-		/// <summary>
-		/// Opens a new section.
-		/// </summary>
+		/// <summary>Opens a new section.</summary>
 		/// <param name="section">Section type to open.</param>
 		/// <remarks>There can be only one type section.</remarks>
 		private void BeginSection(string section)
@@ -520,9 +514,7 @@ namespace netDxf.IO
 			this.activeSection = section;
 		}
 
-		/// <summary>
-		/// Closes the active section.
-		/// </summary>
+		/// <summary>Closes the active section.</summary>
 		private void EndSection()
 		{
 			Debug.Assert(this.activeSection != DxfObjectCode.Unknown);
@@ -531,9 +523,7 @@ namespace netDxf.IO
 			this.activeSection = DxfObjectCode.Unknown;
 		}
 
-		/// <summary>
-		/// Opens a new table.
-		/// </summary>
+		/// <summary>Opens a new table.</summary>
 		/// <param name="table">Table type to open.</param>
 		/// <param name="handle">Handle assigned to this table</param>
 		/// <param name="numEntries">Number of entries in the table (obsolete).</param>
@@ -566,9 +556,7 @@ namespace netDxf.IO
 			this.activeTable = table;
 		}
 
-		/// <summary>
-		/// Closes the active table.
-		/// </summary>
+		/// <summary>Closes the active table.</summary>
 		private void EndTable()
 		{
 			Debug.Assert(this.activeSection != DxfObjectCode.Unknown);
@@ -1184,9 +1172,7 @@ namespace netDxf.IO
 
 		#region methods for Table section
 
-		/// <summary>
-		/// Writes a new extended data application registry to the table section.
-		/// </summary>
+		/// <summary>Writes a new extended data application registry to the table section.</summary>
 		/// <param name="appReg">Name of the application registry.</param>
 		private void WriteApplicationRegistry(ApplicationRegistry appReg)
 		{
@@ -1206,9 +1192,7 @@ namespace netDxf.IO
 			this.WriteXData(appReg.XData);
 		}
 
-		/// <summary>
-		/// Writes a new viewport to the table section.
-		/// </summary>
+		/// <summary>Writes a new viewport to the table section.</summary>
 		/// <param name="vp">viewport.</param>
 		private void WriteVPort(VPort vp)
 		{
@@ -1261,9 +1245,7 @@ namespace netDxf.IO
 			this.WriteXData(vp.XData);
 		}
 
-		/// <summary>
-		/// Writes a new dimension style to the table section.
-		/// </summary>
+		/// <summary>Writes a new dimension style to the table section.</summary>
 		/// <param name="style">DimensionStyle.</param>
 		private void WriteDimensionStyle(DimensionStyle style)
 		{
@@ -1475,9 +1457,7 @@ namespace netDxf.IO
 			this.WriteXData(style.XData);
 		}
 
-		/// <summary>
-		/// Writes a new block record to the table section.
-		/// </summary>
+		/// <summary>Writes a new block record to the table section.</summary>
 		/// <param name="blockRecord">Block.</param>
 		private void WriteBlockRecord(BlockRecord blockRecord)
 		{
@@ -1534,9 +1514,7 @@ namespace netDxf.IO
 			xdataEntry.XDataRecord.Add(XDataRecord.CloseControlString);
 		}
 
-		/// <summary>
-		/// Writes a new line type to the table section.
-		/// </summary>
+		/// <summary>Writes a new line type to the table section.</summary>
 		/// <param name="linetype">Line type.</param>
 		private void WriteLinetype(Linetype linetype)
 		{
@@ -1614,9 +1592,7 @@ namespace netDxf.IO
 			this.WriteXData(linetype.XData);
 		}
 
-		/// <summary>
-		/// Writes a new layer to the table section.
-		/// </summary>
+		/// <summary>Writes a new layer to the table section.</summary>
 		/// <param name="layer">Layer.</param>
 		private void WriteLayer(Layer layer)
 		{
@@ -1718,9 +1694,7 @@ namespace netDxf.IO
 			xdataEntry.XDataRecord.Add(new XDataRecord(XDataCode.Int32, alpha));
 		}
 
-		/// <summary>
-		/// Writes a new text style to the table section.
-		/// </summary>
+		/// <summary>Writes a new text style to the table section.</summary>
 		/// <param name="style">TextStyle.</param>
 		private void WriteTextStyle(TextStyle style)
 		{
@@ -1795,9 +1769,7 @@ namespace netDxf.IO
 			xdataEntry.XDataRecord.Add(new XDataRecord(XDataCode.Int32, BitConverter.ToInt32(st, 0)));
 		}
 
-		/// <summary>
-		/// Writes a new shape style to the table section.
-		/// </summary>
+		/// <summary>Writes a new shape style to the table section.</summary>
 		/// <param name="style">ShapeStyle.</param>
 		private void WriteShapeStyle(ShapeStyle style)
 		{
@@ -1823,9 +1795,7 @@ namespace netDxf.IO
 			this.WriteXData(style.XData);
 		}
 
-		/// <summary>
-		/// Writes a new user coordinate system to the table section.
-		/// </summary>
+		/// <summary>Writes a new user coordinate system to the table section.</summary>
 		/// <param name="ucs">UCS.</param>
 		private void WriteUCS(UCS ucs)
 		{

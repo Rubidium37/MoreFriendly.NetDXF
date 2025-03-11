@@ -28,16 +28,12 @@ using System.Globalization;
 
 namespace netDxf.Units
 {
-	/// <summary>
-	/// Utility methods to format a decimal number to its different string representations.
-	/// </summary>
+	/// <summary>Utility methods to format a decimal number to its different string representations.</summary>
 	public static class LinearUnitFormat
 	{
 		#region public methods
 
-		/// <summary>
-		/// Converts a length value into its scientific string representation.
-		/// </summary>
+		/// <summary>Converts a length value into its scientific string representation.</summary>
 		/// <param name="length">The length value.</param>
 		/// <param name="format">The unit style format.</param>
 		/// <returns>A string that represents the length in scientific units.</returns>
@@ -56,9 +52,7 @@ namespace netDxf.Units
 			return length.ToString(DecimalNumberFormat(format) + "E+00", numberFormat);
 		}
 
-		/// <summary>
-		/// Converts a length value into its decimal string representation.
-		/// </summary>
+		/// <summary>Converts a length value into its decimal string representation.</summary>
 		/// <param name="length">The length value.</param>
 		/// <param name="format">The unit style format.</param>
 		/// <returns>A string that represents the length in decimal units.</returns>
@@ -77,9 +71,7 @@ namespace netDxf.Units
 			return length.ToString(DecimalNumberFormat(format), numberFormat);
 		}
 
-		/// <summary>
-		/// Converts a length value into its feet and fractional inches string representation.
-		/// </summary>
+		/// <summary>Converts a length value into its feet and fractional inches string representation.</summary>
 		/// <param name="length">The length value.</param>
 		/// <param name="format">The unit style format.</param>
 		/// <returns>A string that represents the length in feet and fractional inches.</returns>
@@ -186,9 +178,7 @@ namespace netDxf.Units
 			return text;
 		}
 
-		/// <summary>
-		/// Converts a length value into its feet and decimal inches string representation.
-		/// </summary>
+		/// <summary>Converts a length value into its feet and decimal inches string representation.</summary>
 		/// <param name="length">The length value.</param>
 		/// <param name="format">The unit style format.</param>
 		/// <returns>A string that represents the length in feet and decimal inches.</returns>
@@ -244,9 +234,7 @@ namespace netDxf.Units
 			return string.Format("{0}{1}{2}{3}{4}", feet, format.FeetSymbol, format.FeetInchesSeparator, inchesDec, format.InchesSymbol);
 		}
 
-		/// <summary>
-		/// Converts a length value into its fractional string representation.
-		/// </summary>
+		/// <summary>Converts a length value into its fractional string representation.</summary>
 		/// <param name="length">The length value.</param>
 		/// <param name="format">The unit style format.</param>
 		/// <returns>A string that represents the length in fractional units.</returns>

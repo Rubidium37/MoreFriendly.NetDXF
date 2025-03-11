@@ -30,9 +30,7 @@ using netDxf.Tables;
 
 namespace netDxf.Collections
 {
-	/// <summary>
-	/// Represents a dictionary of <see cref="XData">XData</see>.
-	/// </summary>
+	/// <summary>Represents a dictionary of <see cref="XData"/>.</summary>
 	public sealed class XDataDictionary :
 		IDictionary<string, XData>
 	{
@@ -66,17 +64,13 @@ namespace netDxf.Collections
 
 		#region constructor
 
-		/// <summary>
-		/// Initializes a new instance of <c>XDataDictionary</c>.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		public XDataDictionary()
 		{
 			this.innerDictionary = new Dictionary<string, XData>(StringComparer.OrdinalIgnoreCase);
 		}
 
-		/// <summary>
-		/// Initializes a new instance of <c>XDataDictionary</c> and has the specified items.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class and has the specified items.</summary>
 		/// <param name="items">The list of <see cref="XData">extended data</see> items initially stored.</param>
 		public XDataDictionary(IEnumerable<XData> items)
 		{
@@ -84,9 +78,7 @@ namespace netDxf.Collections
 			this.AddRange(items);
 		}
 
-		/// <summary>
-		/// Initializes a new instance of <c>XDataDictionary</c> and has the specified initial capacity.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class and has the specified initial capacity.</summary>
 		/// <param name="capacity">The number of items the collection can initially store.</param>
 		public XDataDictionary(int capacity)
 		{
@@ -97,11 +89,7 @@ namespace netDxf.Collections
 
 		#region public properties
 
-		/// <summary>
-		/// Gets or sets the <see cref="XData">extended data</see> with the specified application registry name.
-		/// </summary>
-		/// <param name="appId">The application registry name to get or set.</param>
-		/// <returns>The <see cref="XData">extended data</see> of the application registry.</returns>
+		/// <inheritdoc/>
 		public XData this[string appId]
 		{
 			get { return this.innerDictionary[appId]; }
@@ -121,33 +109,25 @@ namespace netDxf.Collections
 			}
 		}
 
-		/// <summary>
-		/// Gets an ICollection containing the application registry names of the current dictionary.
-		/// </summary>
+		/// <summary>Gets a collection containing the application registry names of the current dictionary.</summary>
 		public ICollection<string> AppIds
 		{
 			get { return this.innerDictionary.Keys; }
 		}
 
-		/// <summary>
-		/// Gets an ICollection containing the <see cref="XData">extended data</see> list of the current dictionary.
-		/// </summary>
+		/// <inheritdoc/>
 		public ICollection<XData> Values
 		{
 			get { return this.innerDictionary.Values; }
 		}
 
-		/// <summary>
-		/// Gets the number of <see cref="XData">extended data</see> contained in the current dictionary.
-		/// </summary>
+		/// <inheritdoc/>
 		public int Count
 		{
 			get { return this.innerDictionary.Count; }
 		}
 
-		/// <summary>
-		/// Gets a value indicating whether the actual dictionary is read-only.
-		/// </summary>
+		/// <inheritdoc/>
 		public bool IsReadOnly
 		{
 			get { return false; }
@@ -157,9 +137,7 @@ namespace netDxf.Collections
 
 		#region public methods
 
-		/// <summary>
-		/// Adds an <see cref="XData">extended data</see> to the current dictionary.
-		/// </summary>
+		/// <summary>Adds an <see cref="XData">extended data</see> to the current dictionary.</summary>
 		/// <param name="item">The <see cref="XData">extended data</see> to add.</param>
 		/// <remarks>
 		/// If the current dictionary already contains an appId equals to the extended data that is being added
@@ -184,9 +162,7 @@ namespace netDxf.Collections
 			}
 		}
 
-		/// <summary>
-		/// Adds a list of <see cref="XData">extended data</see> to the current dictionary.
-		/// </summary>
+		/// <summary>Adds a list of <see cref="XData">extended data</see> to the current dictionary.</summary>
 		/// <param name="items">The list of <see cref="XData">extended data</see> to add.</param>
 		public void AddRange(IEnumerable<XData> items)
 		{
@@ -201,11 +177,7 @@ namespace netDxf.Collections
 			}
 		}
 
-		/// <summary>
-		/// Removes an <see cref="XData">extended data</see> with the specified application registry name from the current dictionary.
-		/// </summary>
-		/// <param name="appId">The application registry name of the <see cref="XData">extended data</see> to remove.</param>
-		/// <returns>True if the <see cref="XData">extended data</see> is successfully removed; otherwise, false.</returns>
+		/// <inheritdoc/>
 		public bool Remove(string appId)
 		{
 			if (!this.innerDictionary.ContainsKey(appId))
@@ -220,9 +192,7 @@ namespace netDxf.Collections
 			return true;
 		}
 
-		/// <summary>
-		/// Removes all <see cref="XData">extended data</see> from the current dictionary.
-		/// </summary>
+		/// <inheritdoc/>
 		public void Clear()
 		{
 			string[] ids = new string[this.innerDictionary.Count];
@@ -233,42 +203,29 @@ namespace netDxf.Collections
 			}
 		}
 
-		/// <summary>
-		/// Determines whether current dictionary contains an <see cref="XData">extended data</see> with the specified application registry name.
-		/// </summary>
+		/// <summary>Determines whether current dictionary contains an <see cref="XData">extended data</see> with the specified application registry name.</summary>
 		/// <param name="appId">The application registry name to locate in the current dictionary.</param>
-		/// <returns>True if the current dictionary contains an <see cref="XData">extended data</see> with the application registry name; otherwise, false.</returns>
+		/// <returns><see langword="true"/> if the current dictionary contains an <see cref="XData">extended data</see> with the application registry name; otherwise, <see langword="false"/>.</returns>
 		public bool ContainsAppId(string appId)
 		{
 			return this.innerDictionary.ContainsKey(appId);
 		}
 
-		/// <summary>
-		/// Determines whether current dictionary contains a specified <see cref="XData">extended data</see>.
-		/// </summary>
+		/// <summary>Determines whether current dictionary contains a specified <see cref="XData">extended data</see>.</summary>
 		/// <param name="value">The <see cref="XData">extended data</see> to locate in the current dictionary.</param>
-		/// <returns>True if the current dictionary contains the <see cref="XData">extended data</see>; otherwise, false.</returns>
+		/// <returns><see langword="true"/> if the current dictionary contains the <see cref="XData">extended data</see>; otherwise, <see langword="false"/>.</returns>
 		public bool ContainsValue(XData value)
 		{
 			return this.innerDictionary.ContainsValue(value);
 		}
 
-		/// <summary>
-		/// Gets the <see cref="XData">extended data</see> associated with the specified application registry name.
-		/// </summary>
-		/// <param name="appId">The application registry name whose value to get.</param>
-		/// <param name="value">When this method returns, the <see cref="XData">extended data</see> associated with the specified application registry name,
-		/// if the application registry name is found; otherwise, null. This parameter is passed uninitialized.</param>
-		/// <returns>True if the current dictionary contains an <see cref="XData">extended data</see> with the specified application registry name; otherwise, false.</returns>
+		/// <inheritdoc/>
 		public bool TryGetValue(string appId, out XData value)
 		{
 			return this.innerDictionary.TryGetValue(appId, out value);
 		}
 
-		/// <summary>
-		/// Returns an enumerator that iterates through the dictionary.
-		/// </summary>
-		/// <returns>An enumerator that can be used to iterate through the dictionary.</returns>
+		/// <inheritdoc/>
 		public IEnumerator<KeyValuePair<string, XData>> GetEnumerator()
 		{
 			return this.innerDictionary.GetEnumerator();

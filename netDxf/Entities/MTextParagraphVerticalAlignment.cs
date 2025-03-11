@@ -25,24 +25,16 @@
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Paragraph text vertical alignment.
-	/// </summary>
+	/// <summary>Paragraph text vertical alignment.</summary>
 	public enum MTextParagraphVerticalAlignment
 	{
-		/// <summary>
-		/// Bottom.
-		/// </summary>
+		/// <summary>Bottom.</summary>
 		Bottom = 0,
 
-		/// <summary>
-		/// Center.
-		/// </summary>
+		/// <summary>Center.</summary>
 		Center = 1,
 
-		/// <summary>
-		/// Top.
-		/// </summary>
+		/// <summary>Top.</summary>
 		Top = 2
 	}
 }

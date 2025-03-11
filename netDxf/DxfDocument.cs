@@ -37,12 +37,10 @@ using Attribute = netDxf.Entities.Attribute;
 
 namespace netDxf
 {
-	/// <summary>
-	/// Represents a document to read and write DXF files.
-	/// </summary>
+	/// <summary>Represents a document to read and write <b>DXF</b> files.</summary>
 	/// <remarks>
-	/// The DxfDocument class derives from DxfObject for convenience of this library not because of the DXF structure.
-	/// It can contain external data (XData) information, but it is not saved in the DXF.
+	/// The <see cref="DxfDocument"/> class derives from <see cref="DxfObject"/> for convenience of this library not because of the <b>DXF</b> structure.
+	/// It can contain external data (<see cref="XData"/>) information, but it is not saved in the <b>DXF</b>.
 	/// </remarks>
 	public sealed class DxfDocument :
 		DxfObject
@@ -96,18 +94,14 @@ namespace netDxf
 
 		#region constructor
 
-		/// <summary>
-		/// Initializes a new instance of the <c>DxfDocument</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <remarks>The default <see cref="HeaderVariables">drawing variables</see> of the document will be used.</remarks>
 		public DxfDocument()
 			: this(new HeaderVariables())
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>DxfDocument</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="supportFolders">List of the document support folders.</param>
 		/// <remarks>The default <see cref="HeaderVariables">drawing variables</see> of the document will be used.</remarks>
 		public DxfDocument(IEnumerable<string> supportFolders)
@@ -115,18 +109,14 @@ namespace netDxf
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>DxfDocument</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="version">AutoCAD drawing database version number.</param>
 		public DxfDocument(DxfVersion version)
 			: this(new HeaderVariables { AcadVer = version })
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>DxfDocument</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="version">AutoCAD drawing database version number.</param>
 		/// <param name="supportFolders">List of the document support folders.</param>
 		public DxfDocument(DxfVersion version, IEnumerable<string> supportFolders)
@@ -134,18 +124,14 @@ namespace netDxf
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>DxfDocument</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="drawingVariables"><see cref="HeaderVariables">Drawing variables</see> of the document.</param>
 		public DxfDocument(HeaderVariables drawingVariables)
 			: this(drawingVariables, new List<string>())
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>DxfDocument</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="drawingVariables"><see cref="HeaderVariables">Drawing variables</see> of the document.</param>
 		/// <param name="supportFolders">List of the document support folders.</param>
 		public DxfDocument(HeaderVariables drawingVariables, IEnumerable<string> supportFolders)
@@ -153,9 +139,7 @@ namespace netDxf
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>DxfDocument</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="drawingVariables"><see cref="HeaderVariables">Drawing variables</see> of the document.</param>
 		/// <param name="createDefaultObjects">Check if the default objects need to be created.</param>
 		/// <param name="supportFolders">List of the document support folders.</param>
@@ -189,9 +173,7 @@ namespace netDxf
 
 		#region internal properties
 
-		/// <summary>
-		/// Gets or sets the number of handles generated, this value is saved as an hexadecimal in the drawing variables HandleSeed property.
-		/// </summary>
+		/// <summary>Gets or sets the number of handles generated, this value is saved as an hexadecimal in the drawing variables HandleSeed property.</summary>
 		internal long NumHandles
 		{
 			get { return this.numHandles; }
@@ -206,9 +188,7 @@ namespace netDxf
 
 		#region public properties
 
-		/// <summary>
-		/// Gets the list of folders where the drawing support files are present.
-		/// </summary>
+		/// <summary>Gets the list of folders where the drawing support files are present.</summary>
 		/// <remarks>
 		/// When shape linetype segments are used, the shape number will be obtained reading the .shp file equivalent to the .shx file,
 		/// that file will be looked for in the same folder as the .shx file or one of the document support folders.
@@ -222,13 +202,13 @@ namespace netDxf
 		//// Gets or sets if the blocks that represents dimension entities will be created when added to the document.
 		//// </summary>
 		/// <remarks>
-		/// By default this value is set to false, no dimension blocks will be generated when adding dimension entities to the document.
-		/// It will be the responsibility of the program importing the DXF to generate the drawing that represent the dimensions.<br />
-		/// When set to true the block that represents the dimension will be generated,
+		/// By default this value is set to <see langword="false"/>, no dimension blocks will be generated when adding dimension entities to the document.
+		/// It will be the responsibility of the program importing the <b>DXF</b> to generate the drawing that represent the dimensions.<br />
+		/// When set to <see langword="true"/> the block that represents the dimension will be generated,
 		/// keep in mind that this process is limited and not all options available in the dimension style will be reflected in the final result.<br />
 		/// When importing a file if the dimension block is present it will be read, regardless of this value.
 		/// If, later, the dimension is modified all updates will be done with the limited dimension drawing capabilities of the library,
-		/// in this case, if you want that the new modifications to be reflected when the file is saved again you can set the dimension block to null,
+		/// in this case, if you want that the new modifications to be reflected when the file is saved again you can set the dimension block to <see langword="null"/>,
 		/// and the program reading the resulting file will regenerate the block with the new modifications.
 		/// </remarks>
 		public bool BuildDimensionBlocks
@@ -237,20 +217,16 @@ namespace netDxf
 			set { this.buildDimensionBlocks = value; }
 		}
 
-		/// <summary>
-		/// Gets the document viewport.
-		/// </summary>
+		/// <summary>Gets the document viewport.</summary>
 		/// <remarks>
-		/// This is the same as the *Active VPort in the VPorts list, it describes the current viewport.
+		/// This is the same as the <b>*Active VPort</b> in the <see cref="VPorts"/> list, it describes the current viewport.
 		/// </remarks>
 		public VPort Viewport
 		{
 			get { return this.vports["*Active"]; }
 		}
 
-		/// <summary>
-		/// Gets or sets the <see cref="RasterVariables">RasterVariables</see> applied to image entities.
-		/// </summary>
+		/// <summary>Gets or sets the <see cref="RasterVariables"/> applied to image entities.</summary>
 		public RasterVariables RasterVariables
 		{
 			get { return this.rasterVariables; }
@@ -272,25 +248,19 @@ namespace netDxf
 
 		#region header
 
-		/// <summary>
-		/// Gets or sets the name of the document, once a file is saved or loaded this field is equals the file name without extension.
-		/// </summary>
+		/// <summary>Gets or sets the name of the document, once a file is saved or loaded this field is equals the file name without extension.</summary>
 		public List<string> Comments
 		{
 			get { return this.comments; }
 		}
 
-		/// <summary>
-		/// Gets the DXF <see cref="HeaderVariables">drawing variables</see>.
-		/// </summary>
+		/// <summary>Gets the <b>DXF</b> <see cref="HeaderVariables">drawing variables</see>.</summary>
 		public HeaderVariables DrawingVariables
 		{
 			get { return this.drawingVariables; }
 		}
 
-		/// <summary>
-		/// Gets or sets the name of the document.
-		/// </summary>
+		/// <summary>Gets or sets the name of the document.</summary>
 		/// <remarks>
 		/// When a file is loaded this field is equals the file name without extension.
 		/// </remarks>
@@ -304,47 +274,37 @@ namespace netDxf
 
 		#region public collection properties
 
-		/// <summary>
-		/// Gets the <see cref="ApplicationRegistries">application registries</see> collection.
-		/// </summary>
+		/// <summary>Gets the <see cref="ApplicationRegistries">application registries</see> collection.</summary>
 		public ApplicationRegistries ApplicationRegistries
 		{
 			get { return this.appRegistries; }
 			internal set { this.appRegistries = value; }
 		}
 
-		/// <summary>
-		/// Gets the <see cref="Layers">layers</see> collection.
-		/// </summary>
+		/// <summary>Gets the <see cref="Layers">layers</see> collection.</summary>
 		public Layers Layers
 		{
 			get { return this.layers; }
 			internal set { this.layers = value; }
 		}
 
-		/// <summary>
-		/// Gets the <see cref="Linetypes">line types</see> collection.
-		/// </summary>
+		/// <summary>Gets the <see cref="Linetypes">line types</see> collection.</summary>
 		public Linetypes Linetypes
 		{
 			get { return this.linetypes; }
 			internal set { this.linetypes = value; }
 		}
 
-		/// <summary>
-		/// Gets the <see cref="TextStyles">text styles</see> collection.
-		/// </summary>
+		/// <summary>Gets the <see cref="TextStyles">text styles</see> collection.</summary>
 		public TextStyles TextStyles
 		{
 			get { return this.textStyles; }
 			internal set { this.textStyles = value; }
 		}
 
-		/// <summary>
-		/// Gets the <see cref="ShapeStyles">shape styles</see> collection.
-		/// </summary>
+		/// <summary>Gets the <see cref="ShapeStyles">shape styles</see> collection.</summary>
 		/// <remarks>
-		/// The DXF stores the TextStyles and ShapeStyles in the same table list, here, they are separated since they serve a different role.
+		/// The <b>DXF</b> stores the <see cref="TextStyles"/> and <see cref="ShapeStyles"/> in the same table list, here, they are separated since they serve a different role.
 		/// Under normal circumstances you should not need to access this list.
 		/// </remarks>
 		public ShapeStyles ShapeStyles
@@ -353,117 +313,91 @@ namespace netDxf
 			internal set { this.shapeStyles = value; }
 		}
 
-		/// <summary>
-		/// Gets the <see cref="DimensionStyles">dimension styles</see> collection.
-		/// </summary>
+		/// <summary>Gets the <see cref="DimensionStyles">dimension styles</see> collection.</summary>
 		public DimensionStyles DimensionStyles
 		{
 			get { return this.dimStyles; }
 			internal set { this.dimStyles = value; }
 		}
 
-		/// <summary>
-		/// Gets the <see cref="MLineStyles">MLine styles</see> collection.
-		/// </summary>
+		/// <summary>Gets the <see cref="MLineStyles">MLine styles</see> collection.</summary>
 		public MLineStyles MlineStyles
 		{
 			get { return this.mlineStyles; }
 			internal set { this.mlineStyles = value; }
 		}
 
-		/// <summary>
-		/// Gets the <see cref="UCSs">User coordinate systems</see> collection.
-		/// </summary>
+		/// <summary>Gets the <see cref="UCSs">User coordinate systems</see> collection.</summary>
 		public UCSs UCSs
 		{
 			get { return this.ucss; }
 			internal set { this.ucss = value; }
 		}
 
-		/// <summary>
-		/// Gets the <see cref="BlockRecords">block</see> collection.
-		/// </summary>
+		/// <summary>Gets the <see cref="BlockRecords">block</see> collection.</summary>
 		public BlockRecords Blocks
 		{
 			get { return this.blocks; }
 			internal set { this.blocks = value; }
 		}
 
-		/// <summary>
-		/// Gets the <see cref="ImageDefinitions">image definitions</see> collection.
-		/// </summary>
+		/// <summary>Gets the <see cref="ImageDefinitions">image definitions</see> collection.</summary>
 		public ImageDefinitions ImageDefinitions
 		{
 			get { return this.imageDefs; }
 			internal set { this.imageDefs = value; }
 		}
 
-		/// <summary>
-		/// Gets the <see cref="UnderlayDgnDefinitions">dgn underlay definitions</see> collection.
-		/// </summary>
+		/// <summary>Gets the <see cref="UnderlayDgnDefinitions">dgn underlay definitions</see> collection.</summary>
 		public UnderlayDgnDefinitions UnderlayDgnDefinitions
 		{
 			get { return this.underlayDgnDefs; }
 			internal set { this.underlayDgnDefs = value; }
 		}
 
-		/// <summary>
-		/// Gets the <see cref="UnderlayDwfDefinitions">dwf underlay definitions</see> collection.
-		/// </summary>
+		/// <summary>Gets the <see cref="UnderlayDwfDefinitions">dwf underlay definitions</see> collection.</summary>
 		public UnderlayDwfDefinitions UnderlayDwfDefinitions
 		{
 			get { return this.underlayDwfDefs; }
 			internal set { this.underlayDwfDefs = value; }
 		}
 
-		/// <summary>
-		/// Gets the <see cref="UnderlayPdfDefinitions">pdf underlay definitions</see> collection.
-		/// </summary>
+		/// <summary>Gets the <see cref="UnderlayPdfDefinitions">pdf underlay definitions</see> collection.</summary>
 		public UnderlayPdfDefinitions UnderlayPdfDefinitions
 		{
 			get { return this.underlayPdfDefs; }
 			internal set { this.underlayPdfDefs = value; }
 		}
 
-		/// <summary>
-		/// Gets the <see cref="Groups">groups</see> collection.
-		/// </summary>
+		/// <summary>Gets the <see cref="Groups">groups</see> collection.</summary>
 		public Groups Groups
 		{
 			get { return this.groups; }
 			internal set { this.groups = value; }
 		}
 
-		/// <summary>
-		/// Gets the <see cref="Layouts">layouts</see> collection.
-		/// </summary>
+		/// <summary>Gets the <see cref="Layouts">layouts</see> collection.</summary>
 		public Layouts Layouts
 		{
 			get { return this.layouts; }
 			internal set { this.layouts = value; }
 		}
 
-		/// <summary>
-		/// Gets the <see cref="VPorts">viewports</see> collection.
-		/// </summary>
+		/// <summary>Gets the <see cref="VPorts">viewports</see> collection.</summary>
 		public VPorts VPorts
 		{
 			get { return this.vports; }
 			internal set { this.vports = value; }
 		}
 
-		/// <summary>
-		/// Gets the <see cref="Views">views</see> collection.
-		/// </summary>
+		/// <summary>Gets the <see cref="Views">views</see> collection.</summary>
 		internal Views Views
 		{
 			get { return this.views; }
 			set { this.views = value; }
 		}
 
-		/// <summary>
-		/// Gets the <see cref="DrawingEntities">entities</see> shortcuts.
-		/// </summary>
+		/// <summary>Gets the <see cref="DrawingEntities">entities</see> shortcuts.</summary>
 		public DrawingEntities Entities
 		{
 			get { return this.entities; }
@@ -475,15 +409,13 @@ namespace netDxf
 
 		#region public methods
 
-		/// <summary>
-		/// Loads a DXF file.
-		/// </summary>
+		/// <summary>Loads a <b>DXF</b> file.</summary>
 		/// <param name="file">File name.</param>
-		/// <returns>Returns a DxfDocument. It will return null if the file has not been able to load.</returns>
+		/// <returns>Returns a <see cref="DxfDocument"/>. It will return <see langword="null"/> if the file has not been able to load.</returns>
 		/// <exception cref="DxfVersionNotSupportedException"></exception>
 		/// <remarks>
-		/// Loading DXF files prior to AutoCad 2000 is not supported.<br />
-		/// The Load method will still raise an exception if they are unable to create the FileStream.<br />
+		/// Loading <b>DXF</b> files prior to <b>AutoCAD</b> 2000 is not supported.<br />
+		/// The Load method will still raise an exception if they are unable to create the <see cref="FileStream"/>.<br />
 		/// On Debug mode it will raise any exception that might occur during the whole process.
 		/// </remarks>
 		public static DxfDocument Load(string file)
@@ -491,16 +423,14 @@ namespace netDxf
 			return Load(file, new List<string>());
 		}
 
-		/// <summary>
-		/// Loads a DXF file.
-		/// </summary>
+		/// <summary>Loads a <b>DXF</b> file.</summary>
 		/// <param name="file">File name.</param>
 		/// <param name="supportFolders">List of the document support folders.</param>
-		/// <returns>Returns a DxfDocument. It will return null if the file has not been able to load.</returns>
+		/// <returns>Returns a <see cref="DxfDocument"/>. It will return <see langword="null"/> if the file has not been able to load.</returns>
 		/// <exception cref="DxfVersionNotSupportedException"></exception>
 		/// <remarks>
-		/// Loading DXF files prior to AutoCad 2000 is not supported.<br />
-		/// The Load method will still raise an exception if they are unable to create the FileStream.<br />
+		/// Loading <b>DXF</b> files prior to <b>AutoCAD</b> 2000 is not supported.<br />
+		/// The Load method will still raise an exception if they are unable to create the <see cref="FileStream"/>.<br />
 		/// On Debug mode it will raise any exception that might occur during the whole process.
 		/// </remarks>
 		public static DxfDocument Load(string file, IEnumerable<string> supportFolders)
@@ -539,14 +469,12 @@ namespace netDxf
 			return document;
 		}
 
-		/// <summary>
-		/// Loads a DXF file.
-		/// </summary>
+		/// <summary>Loads a <b>DXF</b> file.</summary>
 		/// <param name="stream">Stream.</param>
-		/// <returns>Returns a DxfDocument. It will return null if the file has not been able to load.</returns>
+		/// <returns>Returns a <see cref="DxfDocument"/>. It will return <see langword="null"/> if the file has not been able to load.</returns>
 		/// <exception cref="DxfVersionNotSupportedException"></exception>
 		/// <remarks>
-		/// Loading DXF files prior to AutoCad 2000 is not supported.<br />
+		/// Loading <b>DXF</b> files prior to <b>AutoCAD</b> 2000 is not supported.<br />
 		/// On Debug mode it will raise any exception that might occur during the whole process.<br />
 		/// The caller will be responsible of closing the stream.
 		/// </remarks>
@@ -555,15 +483,13 @@ namespace netDxf
 			return Load(stream, new List<string>());
 		}
 
-		/// <summary>
-		/// Loads a DXF file.
-		/// </summary>
+		/// <summary>Loads a <b>DXF</b> file.</summary>
 		/// <param name="stream">Stream.</param>
 		/// <param name="supportFolders">List of the document support folders.</param>
-		/// <returns>Returns a DxfDocument. It will return null if the file has not been able to load.</returns>
+		/// <returns>Returns a <see cref="DxfDocument"/>. It will return <see langword="null"/> if the file has not been able to load.</returns>
 		/// <exception cref="DxfVersionNotSupportedException"></exception>
 		/// <remarks>
-		/// Loading DXF files prior to AutoCad 2000 is not supported.<br />
+		/// Loading <b>DXF</b> files prior to <b>AutoCAD</b> 2000 is not supported.<br />
 		/// On Debug mode it will raise any exception that might occur during the whole process.<br />
 		/// The caller will be responsible of closing the stream.
 		/// </remarks>
@@ -592,15 +518,13 @@ namespace netDxf
 			return document;
 		}
 
-		/// <summary>
-		/// Saves the database of the actual DxfDocument to a text DXF file.
-		/// </summary>
+		/// <summary>Saves the database of the actual <see cref="DxfDocument"/> to a text <b>DXF</b> file.</summary>
 		/// <param name="file">File name.</param>
-		/// <returns>Return true if the file has been successfully save, false otherwise.</returns>
+		/// <returns>Return <see langword="true"/> if the file has been successfully save; otherwise, <see langword="false"/>.</returns>
 		/// <exception cref="DxfVersionNotSupportedException"></exception>
 		/// <remarks>
 		/// If the file already exists it will be overwritten.<br />
-		/// The Save method will still raise an exception if they are unable to create the FileStream.<br />
+		/// The Save method will still raise an exception if they are unable to create the <see cref="FileStream"/>.<br />
 		/// On Debug mode they will raise any exception that might occur during the whole process.
 		/// </remarks>
 		public bool Save(string file)
@@ -608,16 +532,14 @@ namespace netDxf
 			return this.Save(file, false);
 		}
 
-		/// <summary>
-		/// Saves the database of the actual DxfDocument to a DXF file.
-		/// </summary>
+		/// <summary>Saves the database of the actual <see cref="DxfDocument"/> to a <b>DXF</b> file.</summary>
 		/// <param name="file">File name.</param>
 		/// <param name="isBinary">Defines if the file will be saved as binary.</param>
-		/// <returns>Returns true if the file has been successfully saved, false otherwise.</returns>
+		/// <returns>Returns <see langword="true"/> if the file has been successfully saved; otherwise, <see langword="false"/>.</returns>
 		/// <exception cref="DxfVersionNotSupportedException"></exception>
 		/// <remarks>
 		/// If the file already exists it will be overwritten.<br />
-		/// The Save method will still raise an exception if they are unable to create the FileStream.<br />
+		/// The Save method will still raise an exception if they are unable to create the <see cref="FileStream"/>.<br />
 		/// On Debug mode they will raise any exception that might occur during the whole process.
 		/// </remarks>
 		public bool Save(string file, bool isBinary)
@@ -661,11 +583,9 @@ namespace netDxf
 			return true;
 		}
 
-		/// <summary>
-		/// Saves the database of the actual DxfDocument to a text stream.
-		/// </summary>
+		/// <summary>Saves the database of the actual <see cref="DxfDocument"/> to a text stream.</summary>
 		/// <param name="stream">Stream.</param>
-		/// <returns>Return true if the stream has been successfully saved, false otherwise.</returns>
+		/// <returns>Return <see langword="true"/> if the stream has been successfully saved; otherwise, <see langword="false"/>.</returns>
 		/// <exception cref="DxfVersionNotSupportedException"></exception>
 		/// <remarks>
 		/// On Debug mode it will raise any exception that might occur during the whole process.<br />
@@ -676,12 +596,10 @@ namespace netDxf
 			return this.Save(stream, false);
 		}
 
-		/// <summary>
-		/// Saves the database of the actual DxfDocument to a stream.
-		/// </summary>
+		/// <summary>Saves the database of the actual <see cref="DxfDocument"/> to a stream.</summary>
 		/// <param name="stream">Stream.</param>
 		/// <param name="isBinary">Defines if the file will be saved as binary.</param>
-		/// <returns>Return true if the stream has been successfully saved, false otherwise.</returns>
+		/// <returns>Return <see langword="true"/> if the stream has been successfully saved; otherwise, <see langword="false"/>.</returns>
 		/// <exception cref="DxfVersionNotSupportedException"></exception>
 		/// <remarks>
 		/// On Debug mode it will raise any exception that might occur during the whole process.<br />
@@ -711,22 +629,18 @@ namespace netDxf
 			return true;
 		}
 
-		/// <summary>
-		/// Checks the AutoCAD DXF file database version.
-		/// </summary>
+		/// <summary>Checks the <b>AutoCAD</b> <b>DXF</b> file database version.</summary>
 		/// <param name="file">File name.</param>
-		/// <returns>String that represents the DXF file version.</returns>
+		/// <returns>String that represents the <b>DXF</b> file version.</returns>
 		public static DxfVersion CheckDxfFileVersion(string file)
 		{
 			return CheckDxfFileVersion(file, out bool _);
 		}
 
-		/// <summary>
-		/// Checks the AutoCAD DXF file database version.
-		/// </summary>
+		/// <summary>Checks the <b>AutoCAD</b> <b>DXF</b> file database version.</summary>
 		/// <param name="file">File name.</param>
-		/// <param name="isBinary">Returns true if the DXF is a binary file.</param>
-		/// <returns>String that represents the DXF file version.</returns>
+		/// <param name="isBinary">Returns <see langword="true"/> if the <b>DXF</b> is a binary file.</param>
+		/// <returns>String that represents the <b>DXF</b> file version.</returns>
 		public static DxfVersion CheckDxfFileVersion(string file, out bool isBinary)
 		{
 			Stream stream = File.Open(file, FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
@@ -735,23 +649,19 @@ namespace netDxf
 			return version;
 		}
 
-		/// <summary>
-		/// Checks the AutoCAD DXF file database version.
-		/// </summary>
+		/// <summary>Checks the <b>AutoCAD</b> <b>DXF</b> file database version.</summary>
 		/// <param name="stream">Stream</param>
-		/// <returns>String that represents the DXF file version.</returns>
+		/// <returns>String that represents the <b>DXF</b> file version.</returns>
 		/// <remarks>The caller will be responsible of closing the stream.</remarks>
 		public static DxfVersion CheckDxfFileVersion(Stream stream)
 		{
 			return CheckDxfFileVersion(stream, out bool _);
 		}
 
-		/// <summary>
-		/// Checks the AutoCAD DXF file database version.
-		/// </summary>
+		/// <summary>Checks the <b>AutoCAD</b> <b>DXF</b> file database version.</summary>
 		/// <param name="stream">Stream</param>
-		/// <param name="isBinary">Returns true if the DXF is a binary file.</param>
-		/// <returns>String that represents the DXF file version.</returns>
+		/// <param name="isBinary">Returns <see langword="true"/> if the <b>DXF</b> is a binary file.</param>
+		/// <returns>String that represents the <b>DXF</b> file version.</returns>
 		/// <remarks>The caller will be responsible of closing the stream.</remarks>
 		public static DxfVersion CheckDxfFileVersion(Stream stream, out bool isBinary)
 		{
@@ -770,11 +680,9 @@ namespace netDxf
 			return StringEnum<DxfVersion>.Parse(value, StringComparison.OrdinalIgnoreCase);
 		}
 
-		/// <summary>
-		/// Gets a DXF object by its handle.
-		/// </summary>
+		/// <summary>Gets a <b>DXF</b> object by its handle.</summary>
 		/// <param name="objectHandle">DxfObject handle.</param>
-		/// <returns>The DxfObject that has the provided handle, null otherwise.</returns>
+		/// <returns>The DxfObject that has the provided handle, <see langword="null"/> otherwise.</returns>
 		public DxfObject GetObjectByHandle(string objectHandle)
 		{
 			if (string.IsNullOrEmpty(objectHandle))

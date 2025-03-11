@@ -25,24 +25,16 @@
 
 namespace netDxf.Header
 {
-	/// <summary>
-	/// Defines the attribute visibility.
-	/// </summary>
+	/// <summary>Defines the attribute visibility.</summary>
 	public enum AttMode
 	{
-		/// <summary>
-		/// None.
-		/// </summary>
+		/// <summary>None.</summary>
 		None = 0,
 
-		/// <summary>
-		/// Normal.
-		/// </summary>
+		/// <summary>Normal.</summary>
 		Normal = 1,
 
-		/// <summary>
-		/// All.
-		/// </summary>
+		/// <summary>All.</summary>
 		All = 2
 	}
 }

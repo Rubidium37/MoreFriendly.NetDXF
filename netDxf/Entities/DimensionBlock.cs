@@ -33,9 +33,7 @@ using netDxf.Units;
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Holds methods to build the dimension blocks.
-	/// </summary>
+	/// <summary>Holds methods to build the dimension blocks.</summary>
 	public static class DimensionBlock
 	{
 		#region private methods
@@ -642,10 +640,8 @@ namespace netDxf.Entities
 
 		#region public methods
 
-		/// <summary>
-		/// Creates a block that represents the drawing of the specified dimension.
-		/// </summary>
-		/// <param name="dim"><see cref="Dimension">Dimension</see> from which the block will be created.</param>
+		/// <summary>Creates a block that represents the drawing of the specified dimension.</summary>
+		/// <param name="dim"><see cref="Dimension"/> from which the block will be created.</param>
 		/// <returns>A block that represents the specified dimension.</returns>
 		/// <remarks>
 		/// By the fault the block will have the name "DimBlock". The block's name is irrelevant when the dimension belongs to a document,
@@ -658,10 +654,8 @@ namespace netDxf.Entities
 			return Build(dim, "DimBlock");
 		}
 
-		/// <summary>
-		/// Creates a block that represents the drawing of the specified dimension.
-		/// </summary>
-		/// <param name="dim"><see cref="Dimension">Dimension</see> from which the block will be created.</param>
+		/// <summary>Creates a block that represents the drawing of the specified dimension.</summary>
+		/// <param name="dim"><see cref="Dimension"/> from which the block will be created.</param>
 		/// <param name="name">The blocks name.</param>
 		/// <returns>A block that represents the specified dimension.</returns>
 		/// <remarks>
@@ -707,10 +701,8 @@ namespace netDxf.Entities
 			return block;
 		}
 
-		/// <summary>
-		/// Creates a block that represents the drawing of the specified dimension.
-		/// </summary>
-		/// <param name="dim"><see cref="AlignedDimension">AlignedDimension</see> from which the block will be created.</param>
+		/// <summary>Creates a block that represents the drawing of the specified dimension.</summary>
+		/// <param name="dim"><see cref="AlignedDimension"/> from which the block will be created.</param>
 		/// <param name="name">The blocks name.</param>
 		/// <returns>A block that represents the specified dimension.</returns>
 		/// <remarks>
@@ -797,10 +789,8 @@ namespace netDxf.Entities
 			return new Block(name, entities, null, false) { Flags = BlockTypeFlags.AnonymousBlock };
 		}
 
-		/// <summary>
-		/// Creates a block that represents the drawing of the specified dimension.
-		/// </summary>
-		/// <param name="dim"><see cref="LinearDimension">LinearDimension</see> from which the block will be created.</param>
+		/// <summary>Creates a block that represents the drawing of the specified dimension.</summary>
+		/// <param name="dim"><see cref="LinearDimension"/> from which the block will be created.</param>
 		/// <param name="name">The blocks name.</param>
 		/// <returns>A block that represents the specified dimension.</returns>
 		/// <remarks>
@@ -896,10 +886,8 @@ namespace netDxf.Entities
 			return new Block(name, entities, null, false) { Flags = BlockTypeFlags.AnonymousBlock };
 		}
 
-		/// <summary>
-		/// Creates a block that represents the drawing of the specified dimension.
-		/// </summary>
-		/// <param name="dim"><see cref="Angular2LineDimension">Angular2LineDimension</see> from which the block will be created.</param>
+		/// <summary>Creates a block that represents the drawing of the specified dimension.</summary>
+		/// <param name="dim"><see cref="Angular2LineDimension"/> from which the block will be created.</param>
 		/// <param name="name">The blocks name.</param>
 		/// <returns>A block that represents the specified dimension.</returns>
 		/// <remarks>
@@ -1009,10 +997,8 @@ namespace netDxf.Entities
 			return new Block(name, entities, null, false) { Flags = BlockTypeFlags.AnonymousBlock };
 		}
 
-		/// <summary>
-		/// Creates a block that represents the drawing of the specified dimension.
-		/// </summary>
-		/// <param name="dim"><see cref="Angular3PointDimension">Angular3PointDimension</see> from which the block will be created.</param>
+		/// <summary>Creates a block that represents the drawing of the specified dimension.</summary>
+		/// <param name="dim"><see cref="Angular3PointDimension"/> from which the block will be created.</param>
 		/// <param name="name">The blocks name.</param>
 		/// <returns>A block that represents the specified dimension.</returns>
 		/// <remarks>
@@ -1123,10 +1109,8 @@ namespace netDxf.Entities
 			return new Block(name, entities, null, false) { Flags = BlockTypeFlags.AnonymousBlock };
 		}
 
-		/// <summary>
-		/// Creates a block that represents the drawing of the specified dimension.
-		/// </summary>
-		/// <param name="dim"><see cref="DiametricDimension">DiametricDimension</see> from which the block will be created.</param>
+		/// <summary>Creates a block that represents the drawing of the specified dimension.</summary>
+		/// <param name="dim"><see cref="DiametricDimension"/> from which the block will be created.</param>
 		/// <param name="name">The blocks name.</param>
 		/// <returns>A block that represents the specified dimension.</returns>
 		/// <remarks>
@@ -1241,10 +1225,8 @@ namespace netDxf.Entities
 			return new Block(name, entities, null, false) { Flags = BlockTypeFlags.AnonymousBlock };
 		}
 
-		/// <summary>
-		/// Creates a block that represents the drawing of the specified dimension.
-		/// </summary>
-		/// <param name="dim"><see cref="RadialDimension">RadialDimension</see> from which the block will be created.</param>
+		/// <summary>Creates a block that represents the drawing of the specified dimension.</summary>
+		/// <param name="dim"><see cref="RadialDimension"/> from which the block will be created.</param>
 		/// <param name="name">The blocks name.</param>
 		/// <returns>A block that represents the specified dimension.</returns>
 		/// <remarks>
@@ -1353,10 +1335,8 @@ namespace netDxf.Entities
 
 		}
 
-		/// <summary>
-		/// Creates a block that represents the drawing of the specified dimension.
-		/// </summary>
-		/// <param name="dim"><see cref="OrdinateDimension">OrdinateDimension</see> from which the block will be created.</param>
+		/// <summary>Creates a block that represents the drawing of the specified dimension.</summary>
+		/// <param name="dim"><see cref="OrdinateDimension"/> from which the block will be created.</param>
 		/// <param name="name">The blocks name.</param>
 		/// <returns>A block that represents the specified dimension.</returns>
 		/// <remarks>
@@ -1456,10 +1436,8 @@ namespace netDxf.Entities
 			return new Block(name, entities, null, false) { Flags = BlockTypeFlags.AnonymousBlock };
 		}
 
-		/// <summary>
-		/// Creates a block that represents the drawing of the specified dimension.
-		/// </summary>
-		/// <param name="dim"><see cref="ArcLengthDimension">ArcLengthDimension</see> from which the block will be created.</param>
+		/// <summary>Creates a block that represents the drawing of the specified dimension.</summary>
+		/// <param name="dim"><see cref="ArcLengthDimension"/> from which the block will be created.</param>
 		/// <param name="name">The blocks name.</param>
 		/// <returns>A block that represents the specified dimension.</returns>
 		/// <remarks>

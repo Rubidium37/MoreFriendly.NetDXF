@@ -30,9 +30,7 @@ using System.IO;
 
 namespace netDxf.Collections
 {
-	/// <summary>
-	/// Represents a list of support folders for the document.
-	/// </summary>
+	/// <summary>Represents a list of support folders for the document.</summary>
 	public class SupportFolders :
 		IList<string>
 	{
@@ -45,19 +43,15 @@ namespace netDxf.Collections
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of <c>SupportFolders</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		public SupportFolders()
 		{
 			this.folders = new List<string>();
 			this.workingFolder = Environment.CurrentDirectory;
 		}
 
-		/// <summary>
-		/// Initializes a new instance of <c>SupportFolders</c> class.
-		/// </summary>
-		/// <param name="folders">The collection whose elements should be added to the list. The items in the collection cannot be null.</param>
+		/// <summary>Initializes a new instance of the class.</summary>
+		/// <param name="folders">The collection whose elements should be added to the list. The items in the collection cannot be <see langword="null"/>.</param>
 		public SupportFolders(IEnumerable<string> folders)
 		{
 			if (folders == null)
@@ -72,10 +66,8 @@ namespace netDxf.Collections
 
 		#region public properties
 
-		/// <summary>
-		/// Gets or sets the base folder to resolver relative paths of external references.
-		/// </summary>
-		/// <remarks>By default it points to the current System.Environment.CurrentDirectory when the DxfDocument was created.</remarks>
+		/// <summary>Gets or sets the base folder to resolver relative paths of external references.</summary>
+		/// <remarks>By default it points to the current <see cref="System.Environment.CurrentDirectory"/> when the <see cref="DxfDocument"/> was created.</remarks>
 		public string WorkingFolder
 		{
 			get { return this.workingFolder; }
@@ -86,9 +78,7 @@ namespace netDxf.Collections
 
 		#region public methods
 
-		/// <summary>
-		/// Looks for a file in one of the support folders.
-		/// </summary>
+		/// <summary>Looks for a file in one of the support folders.</summary>
 		/// <param name="file">File name to find in one of the support folders.</param>
 		/// <returns>The path to the file found in one of the support folders. It includes both the path and the specified file name.</returns>
 		/// <remarks>If the specified file already exists it return the same value, if neither it cannot be found in any of the support folders it will return an empty string.</remarks>
@@ -123,13 +113,7 @@ namespace netDxf.Collections
 
 		#region implements IList<string>
 
-		/// <summary>
-		/// Gets or sets the element at the specified index.
-		/// </summary>
-		/// <returns>
-		/// The element at the specified index.
-		/// </returns>
-		/// <param name="index">The zero-based index of the element to get or set.</param>
+		/// <inheritdoc/>
 		public string this[int index]
 		{
 			get { return this.folders[index]; }
@@ -143,46 +127,32 @@ namespace netDxf.Collections
 			}
 		}
 
-		/// <summary>
-		/// Gets the number of elements contained in the list.
-		/// </summary>
-		/// <returns>The number of elements contained in the list.</returns>
+		/// <inheritdoc/>
 		public int Count
 		{
 			get { return this.folders.Count; }
 		}
 
-		/// <summary>
-		/// Returns if the list is read only.
-		/// </summary>
-		/// <returns>Return always true.</returns>
+		/// <inheritdoc/>
 		public bool IsReadOnly
 		{
 			get { return false; }
 		}
 
-		/// <summary>
-		/// Returns an enumerator that iterates through the list.
-		/// </summary>
-		/// <returns>The enumerator for the list.</returns>
+		/// <inheritdoc/>
 		public IEnumerator<string> GetEnumerator()
 		{
 			return this.folders.GetEnumerator();
 		}
 
-		/// <summary>
-		/// Returns an enumerator that iterates through the list.
-		/// </summary>
+		/// <summary>Returns an enumerator that iterates through the list.</summary>
 		/// <returns>The enumerator for the list.</returns>
 		IEnumerator IEnumerable.GetEnumerator()
 		{
 			return this.folders.GetEnumerator();
 		}
 
-		/// <summary>
-		/// Adds an item to the list.
-		/// </summary>
-		/// <param name="item">Folder path to add to the list. The item cannot be null.</param>
+		/// <inheritdoc/>
 		public void Add(string item)
 		{
 			if (string.IsNullOrEmpty(item))
@@ -192,10 +162,8 @@ namespace netDxf.Collections
 			this.folders.Add(item);
 		}
 
-		/// <summary>
-		/// Adds the elements of the collection to the list.
-		/// </summary>
-		/// <param name="collection">The collection whose elements should be added to the end of the list. The items in the collection cannot be null.</param>
+		/// <summary>Adds the elements of the collection to the list.</summary>
+		/// <param name="collection">The collection whose elements should be added to the end of the list. The items in the collection cannot be <see langword="null"/>.</param>
 		public void AddRange(IEnumerable<string> collection)
 		{
 			if (collection == null)
@@ -208,19 +176,13 @@ namespace netDxf.Collections
 			}
 		}
 
-		/// <summary>
-		/// Removes all elements from the list.
-		/// </summary>
+		/// <inheritdoc/>
 		public void Clear()
 		{
 			this.folders.Clear();
 		}
 
-		/// <summary>
-		/// Determines whether an element is in the list.
-		/// </summary>
-		/// <param name="item">The object to locate in the list. The value cannot be null.</param>
-		/// <returns>True if the item is found in the list; otherwise, false.</returns>
+		/// <inheritdoc/>
 		public bool Contains(string item)
 		{
 			if (string.IsNullOrEmpty(item))
@@ -230,21 +192,13 @@ namespace netDxf.Collections
 			return this.folders.Contains(item);
 		}
 
-		/// <summary>
-		/// Copies the entire list to a compatible one-dimensional array, starting at the specified index of the target array.
-		/// </summary>
-		/// <param name="array">The one-dimensional array that is the destination of the elements copied from list. The array must have zero-based indexing.</param>
-		/// <param name="arrayIndex">The zero-based index in the array at which copying begins.</param>
+		/// <inheritdoc/>
 		public void CopyTo(string[] array, int arrayIndex)
 		{
 			this.folders.CopyTo(array, arrayIndex);
 		}
 
-		/// <summary>
-		/// Removes the first occurrence of a specific object from the list.
-		/// </summary>
-		/// <param name="item">The object to remove from the list. The value cannot be null.</param>
-		/// <returns>True if the item is successfully removed; otherwise, false. This method also returns false the item was not found in the list.</returns>
+		/// <inheritdoc/>
 		public bool Remove(string item)
 		{
 			if (string.IsNullOrEmpty(item))
@@ -254,21 +208,13 @@ namespace netDxf.Collections
 			return this.folders.Remove(item);
 		}
 
-		/// <summary>
-		/// Determines the index of a specific item in the list.
-		/// </summary>
-		/// <param name="item">The object to locate in the list.</param>
-		/// <returns>The index of <paramref name="item"/> if found in the list; otherwise, -1.</returns>
+		/// <inheritdoc/>
 		public int IndexOf(string item)
 		{
 			return this.folders.IndexOf(item);
 		}
 
-		/// <summary>
-		/// Inserts an item to the list at the specified index.
-		/// </summary>
-		/// <param name="index">The zero-based index at which the item should be inserted.</param>
-		/// <param name="item">The object to insert into the list.</param>
+		/// <inheritdoc/>
 		public void Insert(int index, string item)
 		{
 			if (string.IsNullOrEmpty(item))
@@ -278,10 +224,7 @@ namespace netDxf.Collections
 			this.folders.Insert(index, item);
 		}
 
-		/// <summary>
-		/// Removes the item at the specified index from the list.
-		/// </summary>
-		/// <param name="index">The zero-based index of the item to remove.</param>
+		/// <inheritdoc/>
 		public void RemoveAt(int index)
 		{
 			this.folders.RemoveAt(index);

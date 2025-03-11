@@ -29,9 +29,7 @@ using netDxf.Collections;
 
 namespace netDxf.Tables
 {
-	/// <summary>
-	/// Represents a document viewport.
-	/// </summary>
+	/// <summary>Represents a document viewport.</summary>
 	public class VPort :
 		TableObject
 	{
@@ -52,14 +50,10 @@ namespace netDxf.Tables
 
 		#region constants
 
-		/// <summary>
-		/// Default VPort name.
-		/// </summary>
+		/// <summary>Default <b>VPort</b> name.</summary>
 		public const string DefaultName = "*Active";
 
-		/// <summary>
-		/// Gets the active viewport.
-		/// </summary>
+		/// <summary>Gets the active viewport.</summary>
 		public static VPort Active
 		{
 			get { return new VPort(DefaultName, false); }
@@ -69,9 +63,7 @@ namespace netDxf.Tables
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of the <c>VPort</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		public VPort(string name)
 			: this(name, true)
 		{
@@ -102,45 +94,35 @@ namespace netDxf.Tables
 
 		#region public properties
 
-		/// <summary>
-		/// Gets or sets the view center point in DCS (Display Coordinate System)
-		/// </summary>
+		/// <summary>Gets or sets the view center point in <b>DCS</b> (Display Coordinate System)</summary>
 		public Vector2 ViewCenter
 		{
 			get { return this.center; }
 			set { this.center = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the snap base point in DCS (Display Coordinate System)
-		/// </summary>
+		/// <summary>Gets or sets the snap base point in <b>DCS</b> (Display Coordinate System)</summary>
 		public Vector2 SnapBasePoint
 		{
 			get { return this.snapBasePoint; }
 			set { this.snapBasePoint = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the snap spacing X and Y.
-		/// </summary>
+		/// <summary>Gets or sets the snap spacing X and Y.</summary>
 		public Vector2 SnapSpacing
 		{
 			get { return this.snapSpacing; }
 			set { this.snapSpacing = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the grid spacing X and Y.
-		/// </summary>
+		/// <summary>Gets or sets the grid spacing X and Y.</summary>
 		public Vector2 GridSpacing
 		{
 			get { return this.gridSpacing; }
 			set { this.gridSpacing = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the view direction from target point in WCS (World Coordinate System).
-		/// </summary>
+		/// <summary>Gets or sets the view direction from target point in <b>WCS</b> (World Coordinate System).</summary>
 		public Vector3 ViewDirection
 		{
 			get { return this.direction; }
@@ -154,27 +136,21 @@ namespace netDxf.Tables
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the view target point in WCS (World Coordinate System).
-		/// </summary>
+		/// <summary>Gets or sets the view target point in <b>WCS</b> (World Coordinate System).</summary>
 		public Vector3 ViewTarget
 		{
 			get { return this.target; }
 			set { this.target = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the view height.
-		/// </summary>
+		/// <summary>Gets or sets the view height.</summary>
 		public double ViewHeight
 		{
 			get { return this.height; }
 			set { this.height = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the view aspect ratio (view width/view height).
-		/// </summary>
+		/// <summary>Gets or sets the view aspect ratio (view width/view height).</summary>
 		public double ViewAspectRatio
 		{
 			get { return this.aspectRatio; }
@@ -188,27 +164,21 @@ namespace netDxf.Tables
 			}
 		}
 
-		/// <summary>
-		/// Gets or sets the grid on/off.
-		/// </summary>
+		/// <summary>Gets or sets the grid on/off.</summary>
 		public bool ShowGrid
 		{
 			get { return this.showGrid; }
 			set { this.showGrid = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the snap mode on/off.
-		/// </summary>
+		/// <summary>Gets or sets the snap mode on/off.</summary>
 		public bool SnapMode
 		{
 			get { return this.snapMode; }
 			set { this.snapMode = value; }
 		}
 
-		/// <summary>
-		/// Gets the owner of the actual viewport.
-		/// </summary>
+		/// <summary>Gets the owner of the actual viewport.</summary>
 		public new VPorts Owner
 		{
 			get { return (VPorts)base.Owner; }
@@ -219,41 +189,19 @@ namespace netDxf.Tables
 
 		#region overrides
 
-		/// <summary>
-		/// Checks if this instance has been referenced by other DxfObjects.
-		/// </summary>
-		/// <returns>
-		/// Returns true if this instance has been referenced by other DxfObjects, false otherwise.
-		/// It will always return false if this instance does not belong to a document.
-		/// </returns>
-		/// <remarks>
-		/// This method returns the same value as the HasReferences method that can be found in the TableObjects class.
-		/// </remarks>
+		/// <inheritdoc/>
 		public override bool HasReferences()
 		{
 			return this.Owner != null && this.Owner.HasReferences(this.Name);
 		}
 
-		/// <summary>
-		/// Gets the list of DxfObjects referenced by this instance.
-		/// </summary>
-		/// <returns>
-		/// A list of DxfObjectReference that contains the DxfObject referenced by this instance and the number of times it does.
-		/// It will return null if this instance does not belong to a document.
-		/// </returns>
-		/// <remarks>
-		/// This method returns the same list as the GetReferences method that can be found in the TableObjects class.
-		/// </remarks>
+		/// <inheritdoc/>
 		public override List<DxfObjectReference> GetReferences()
 		{
 			return this.Owner?.GetReferences(this.Name);
 		}
 
-		/// <summary>
-		/// Creates a new VPort that is a copy of the current instance.
-		/// </summary>
-		/// <param name="newName">VPort name of the copy.</param>
-		/// <returns>A new VPort that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override TableObject Clone(string newName)
 		{
 			VPort copy = new VPort(newName)
@@ -277,10 +225,7 @@ namespace netDxf.Tables
 			return copy;
 		}
 
-		/// <summary>
-		/// Creates a new VPort that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new VPort that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override object Clone()
 		{
 			return this.Clone(this.Name);

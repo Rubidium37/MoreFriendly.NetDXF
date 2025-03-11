@@ -29,11 +29,9 @@ using netDxf.Tables;
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Represents a mesh <see cref="EntityObject">entity</see>.
-	/// </summary>
+	/// <summary>Represents a mesh <see cref="EntityObject">entity</see>.</summary>
 	/// <remarks>
-	/// Use this entity to overcome the limitations of the PolyfaceMesh, but, keep in mind that this entity was first introduced in AutoCad 2010.<br/>
+	/// Use this entity to overcome the limitations of the PolyfaceMesh, but, keep in mind that this entity was first introduced in <b>AutoCAD</b> 2010.<br/>
 	/// The maximum number of faces a mesh can have is 16000000 (16 millions).
 	/// </remarks>
 	public class Mesh :
@@ -51,9 +49,7 @@ namespace netDxf.Entities
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Mesh</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="vertexes">Mesh vertex list.</param>
 		/// <param name="faces">Mesh faces list.</param>
 		public Mesh(IEnumerable<Vector3> vertexes, IEnumerable<int[]> faces)
@@ -61,9 +57,7 @@ namespace netDxf.Entities
 		{
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Mesh</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="vertexes">Mesh vertex list.</param>
 		/// <param name="faces">Mesh faces list.</param>
 		/// <param name="edges">Mesh edges list, this parameter is only really useful when it is required to assign creases values to edges.</param>
@@ -92,33 +86,25 @@ namespace netDxf.Entities
 
 		#region public properties
 
-		/// <summary>
-		/// Gets the mesh vertexes list.
-		/// </summary>
+		/// <summary>Gets the mesh vertexes list.</summary>
 		public List<Vector3> Vertexes
 		{
 			get { return this.vertexes; }
 		}
 
-		/// <summary>
-		/// Gets the mesh faces list.
-		/// </summary>
+		/// <summary>Gets the mesh faces list.</summary>
 		public List<int[]> Faces
 		{
 			get { return this.faces; }
 		}
 
-		/// <summary>
-		/// Gets the mesh edges list.
-		/// </summary>
+		/// <summary>Gets the mesh edges list.</summary>
 		public List<MeshEdge> Edges
 		{
 			get { return this.edges; }
 		}
 
-		/// <summary>
-		/// Gets or sets the mesh subdivision level.
-		/// </summary>
+		/// <summary>Gets or sets the mesh subdivision level.</summary>
 		/// <remarks>
 		/// The valid range is from 0 to 255. The recommended range is 0-5 to prevent creating extremely dense meshes.
 		/// </remarks>
@@ -154,12 +140,7 @@ namespace netDxf.Entities
 
 		#region overrides
 
-		/// <summary>
-		/// Moves, scales, and/or rotates the current entity given a 3x3 transformation matrix and a translation vector.
-		/// </summary>
-		/// <param name="transformation">Transformation matrix.</param>
-		/// <param name="translation">Translation vector.</param>
-		/// <remarks>Matrix3 adopts the convention of using column vectors to represent a transformation matrix.</remarks>
+		/// <inheritdoc/>
 		public override void TransformBy(Matrix3 transformation, Vector3 translation)
 		{
 			for (int i = 0; i < this.Vertexes.Count; i++)
@@ -172,10 +153,7 @@ namespace netDxf.Entities
 			this.Normal = newNormal;
 		}
 
-		/// <summary>
-		/// Creates a new Mesh that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new Mesh that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public override object Clone()
 		{
 			List<Vector3> copyVertexes = new List<Vector3>(this.vertexes.Count);

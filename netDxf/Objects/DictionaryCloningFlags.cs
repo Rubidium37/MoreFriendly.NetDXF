@@ -25,39 +25,25 @@
 
 namespace netDxf.Objects
 {
-	/// <summary>
-	/// Duplicate record cloning flag (determines how to merge duplicate entries).
-	/// </summary>
+	/// <summary>Duplicate record cloning flag (determines how to merge duplicate entries).</summary>
 	public enum DictionaryCloningFlags
 	{
-		/// <summary>
-		/// Not applicable.
-		/// </summary>
+		/// <summary>Not applicable.</summary>
 		NotApplicable = 0,
 
-		/// <summary>
-		/// Keep existing.
-		/// </summary>
+		/// <summary>Keep existing.</summary>
 		KeepExisting = 1,
 
-		/// <summary>
-		/// Use clone.
-		/// </summary>
+		/// <summary>Use clone.</summary>
 		UseClone = 2,
 
-		/// <summary>
-		/// External reference name.
-		/// </summary>
+		/// <summary>External reference name.</summary>
 		XrefName = 3,
 
-		/// <summary>
-		/// Name.
-		/// </summary>
+		/// <summary>Name.</summary>
 		Name = 4,
 
-		/// <summary>
-		/// Unmangle name.
-		/// </summary>
+		/// <summary>Unmangle name.</summary>
 		UnmangleName = 5
 	}
 }

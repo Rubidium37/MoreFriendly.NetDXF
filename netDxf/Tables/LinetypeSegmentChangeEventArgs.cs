@@ -38,9 +38,7 @@ namespace netDxf.Tables
 
 		#region constructor
 
-		/// <summary>
-		/// Initializes a new instance of <c>LinetypeSegmentChangeEventArgs</c>.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="item">The item that is being added or removed from the line type segment list.</param>
 		public LinetypeSegmentChangeEventArgs(LinetypeSegment item)
 		{
@@ -51,9 +49,7 @@ namespace netDxf.Tables
 
 		#region public properties
 
-		/// <summary>
-		/// Gets the item that is being added or removed from the line type segment list.
-		/// </summary>
+		/// <summary>Gets the item that is being added or removed from the line type segment list.</summary>
 		public LinetypeSegment Item
 		{
 			get { return this.item; }

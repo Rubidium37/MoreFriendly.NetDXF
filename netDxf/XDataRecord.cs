@@ -28,9 +28,7 @@ using System.Globalization;
 
 namespace netDxf
 {
-	/// <summary>
-	/// Represents an entry in the extended data of an entity.
-	/// </summary>
+	/// <summary>Represents an entry in the extended data of an entity.</summary>
 	public class XDataRecord
 	{
 		#region private fields
@@ -66,9 +64,7 @@ namespace netDxf
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new XDataRecord.
-		/// </summary>
+		/// <summary>Initializes a new XDataRecord.</summary>
 		/// <param name="code">XData code.</param>
 		/// <param name="value">XData value.</param>
 		public XDataRecord(XDataCode code, object value)
@@ -165,18 +161,14 @@ namespace netDxf
 
 		#region public properties
 
-		/// <summary>
-		/// Gets the XData code.
-		/// </summary>
-		/// <remarks>The only valid values are the ones defined in the <see cref="XDataCode">XDataCode</see> class.</remarks>
+		/// <summary>Gets the <see cref="XData"/> code.</summary>
+		/// <remarks>The only valid values are the ones defined in the <see cref="XDataCode"/> class.</remarks>
 		public XDataCode Code
 		{
 			get { return this.code; }
 		}
 
-		/// <summary>
-		/// Gets the XData value.
-		/// </summary>
+		/// <summary>Gets the <see cref="XData"/> value.</summary>
 		public object Value
 		{
 			get { return this.value; }
@@ -186,10 +178,7 @@ namespace netDxf
 
 		#region overrides
 
-		/// <summary>
-		/// Obtains a string that represents the XDataRecord.
-		/// </summary>
-		/// <returns>A string text.</returns>
+		/// <inheritdoc/>
 		public override string ToString()
 		{
 			return string.Format("{0} - {1}", this.code, this.value);

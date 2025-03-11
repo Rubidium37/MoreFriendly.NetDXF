@@ -25,84 +25,52 @@
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Defines the geometric characteristic symbols for location, orientation, form, profile, and runout.
-	/// </summary>
+	/// <summary>Defines the geometric characteristic symbols for location, orientation, form, profile, and runout.</summary>
 	public enum ToleranceGeometricSymbol
 	{
-		/// <summary>
-		/// No geometric symbol.
-		/// </summary>
+		/// <summary>No geometric symbol.</summary>
 		None,
 
-		/// <summary>
-		/// Position, type location.
-		/// </summary>
+		/// <summary>Position, type location.</summary>
 		Position,
 
-		/// <summary>
-		/// Concentricity or coaxiality, type location.
-		/// </summary>
+		/// <summary>Concentricity or coaxiality, type location.</summary>
 		Concentricity,
 
-		/// <summary>
-		/// Symmetry, type location.
-		/// </summary>
+		/// <summary>Symmetry, type location.</summary>
 		Symmetry,
 
-		/// <summary>
-		/// Parallelism, type orientation.
-		/// </summary>
+		/// <summary>Parallelism, type orientation.</summary>
 		Parallelism,
 
-		/// <summary>
-		/// Perpendicularity, type orientation.
-		/// </summary>
+		/// <summary>Perpendicularity, type orientation.</summary>
 		Perpendicularity,
 
-		/// <summary>
-		/// Angularity, type orientation.
-		/// </summary>
+		/// <summary>Angularity, type orientation.</summary>
 		Angularity,
 
-		/// <summary>
-		/// Cylindricity, type form.
-		/// </summary>
+		/// <summary>Cylindricity, type form.</summary>
 		Cylindricity,
 
-		/// <summary>
-		/// Flatness, type form.
-		/// </summary>
+		/// <summary>Flatness, type form.</summary>
 		Flatness,
 
-		/// <summary>
-		/// Circularity or roundness, type form.
-		/// </summary>
+		/// <summary>Circularity or roundness, type form.</summary>
 		Roundness,
 
-		/// <summary>
-		/// Straightness, type form.
-		/// </summary>
+		/// <summary>Straightness, type form.</summary>
 		Straightness,
 
-		/// <summary>
-		/// Profile of a surface, type profile.
-		/// </summary>
+		/// <summary>Profile of a surface, type profile.</summary>
 		ProfileSurface,
 
-		/// <summary>
-		/// Profile of a line, type profile.
-		/// </summary>
+		/// <summary>Profile of a line, type profile.</summary>
 		ProfileLine,
 
-		/// <summary>
-		/// Circular runout, type runout.
-		/// </summary>
+		/// <summary>Circular runout, type runout.</summary>
 		CircularRunout,
 
-		/// <summary>
-		/// Total runout, type runout.
-		/// </summary>
+		/// <summary>Total runout, type runout.</summary>
 		TotalRunOut
 	}
 }

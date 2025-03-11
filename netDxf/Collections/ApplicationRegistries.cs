@@ -30,9 +30,7 @@ using netDxf.Tables;
 
 namespace netDxf.Collections
 {
-	/// <summary>
-	/// Represents a collection of application registries.
-	/// </summary>
+	/// <summary>Represents a collection of application registries.</summary>
 	public sealed class ApplicationRegistries :
 		TableObjects<ApplicationRegistry>
 	{
@@ -52,15 +50,7 @@ namespace netDxf.Collections
 
 		#region override methods
 
-		/// <summary>
-		/// Adds an application registry to the list.
-		/// </summary>
-		/// <param name="appReg"><see cref="ApplicationRegistry">ApplicationRegistry</see> to add to the list.</param>
-		/// <param name="assignHandle">Checks if the appReg parameter requires a handle.</param>
-		/// <returns>
-		/// If a an application registry already exists with the same name as the instance that is being added the method returns the existing application registry,
-		/// if not it will return the new application registry.
-		/// </returns>
+		/// <inheritdoc/>
 		internal override ApplicationRegistry Add(ApplicationRegistry appReg, bool assignHandle)
 		{
 			if (appReg == null)
@@ -91,23 +81,12 @@ namespace netDxf.Collections
 			return appReg;
 		}
 
-		/// <summary>
-		/// Removes an application registry.
-		/// </summary>
-		/// <param name="name"><see cref="ApplicationRegistry">ApplicationRegistry</see> name to remove from the document.</param>
-		/// <returns>True if the application registry has been successfully removed, or false otherwise.</returns>
-		/// <remarks>Reserved application registries or any other referenced by objects cannot be removed.</remarks>
+		/// <inheritdoc/>
 		public override bool Remove(string name)
 		{
 			return this.Remove(this[name]);
 		}
-
-		/// <summary>
-		/// Removes an application registry.
-		/// </summary>
-		/// <param name="item"><see cref="ApplicationRegistry">ApplicationRegistry</see> to remove from the document.</param>
-		/// <returns>True if the application registry has been successfully removed, or false otherwise.</returns>
-		/// <remarks>Reserved application registries or any other referenced by objects cannot be removed.</remarks>
+		/// <inheritdoc/>
 		public override bool Remove(ApplicationRegistry item)
 		{
 			if (item == null)

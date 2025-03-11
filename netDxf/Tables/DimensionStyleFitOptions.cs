@@ -25,29 +25,19 @@
 
 namespace netDxf.Tables
 {
-	/// <summary>
-	/// Controls dimension text and arrow placement when space is not sufficient to place both within the extension lines.
-	/// </summary>
+	/// <summary>Controls dimension text and arrow placement when space is not sufficient to place both within the extension lines.</summary>
 	public enum DimensionStyleFitOptions
 	{
-		/// <summary>
-		/// Places both text and arrows outside extension lines.
-		/// </summary>
+		/// <summary>Places both text and arrows outside extension lines.</summary>
 		TextAndArrows = 0,
 
-		/// <summary>
-		/// Moves arrows first, then text.
-		/// </summary>
+		/// <summary>Moves arrows first, then text.</summary>
 		Arrows = 1,
 
-		/// <summary>
-		/// Moves text first, then arrows.
-		/// </summary>
+		/// <summary>Moves text first, then arrows.</summary>
 		Text = 2,
 
-		/// <summary>
-		/// Moves either text or arrows, whichever fits best.
-		/// </summary>
+		/// <summary>Moves either text or arrows, whichever fits best.</summary>
 		BestFit = 3
 	}
 }

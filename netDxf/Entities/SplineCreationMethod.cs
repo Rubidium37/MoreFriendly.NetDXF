@@ -25,19 +25,13 @@
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Defines how the spline entity was created.
-	/// </summary>
+	/// <summary>Defines how the spline entity was created.</summary>
 	public enum SplineCreationMethod
 	{
-		/// <summary>
-		/// Creates a degree 3 (cubic) B-spline by specifying fit points that the spline must pass through.
-		/// </summary>
+		/// <summary>Creates a degree 3 (cubic) B-spline by specifying fit points that the spline must pass through.</summary>
 		FitPoints,
 
-		/// <summary>
-		/// Creates a spline by specifying control points.
-		/// </summary>
+		/// <summary>Creates a spline by specifying control points.</summary>
 		ControlPoints
 	}
 }

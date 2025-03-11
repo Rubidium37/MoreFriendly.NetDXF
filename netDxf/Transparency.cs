@@ -28,12 +28,10 @@ using System.Globalization;
 
 namespace netDxf
 {
-	/// <summary>
-	/// Represents the transparency of a layer or an entity.
-	/// </summary>
+	/// <summary>Represents the transparency of a layer or an entity.</summary>
 	/// <remarks>
-	/// When the transparency of an entity is ByLayer the code 440 will not appear in the dxf,
-	/// but for comparison purposes the ByLayer transparency is assigned a value of -1.
+	/// When the transparency of an entity is <b>ByLayer</b> the code 440 will not appear in the dxf,
+	/// but for comparison purposes the <b>ByLayer</b> transparency is assigned a value of -1.
 	/// </remarks>
 	public class Transparency :
 		ICloneable,
@@ -47,17 +45,13 @@ namespace netDxf
 
 		#region constants
 
-		/// <summary>
-		/// Gets the ByLayer transparency.
-		/// </summary>
+		/// <summary>Gets the <b>ByLayer</b> transparency.</summary>
 		public static Transparency ByLayer
 		{
 			get { return new Transparency { transparency = -1 }; }
 		}
 
-		/// <summary>
-		/// Gets the ByBlock transparency.
-		/// </summary>
+		/// <summary>Gets the <b>ByBlock</b> transparency.</summary>
 		public static Transparency ByBlock
 		{
 			get { return new Transparency { transparency = 100 }; }
@@ -67,20 +61,16 @@ namespace netDxf
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Transparency</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		public Transparency()
 		{
 			this.transparency = -1;
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>Transparency</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="value">Alpha value range from 0 to 90.</param>
 		/// <remarks>
-		/// Accepted transparency values range from 0 (opaque) to 90 (almost transparent), the reserved values -1 and 100 represents ByLayer and ByBlock transparency.
+		/// Accepted transparency values range from 0 (opaque) to 90 (almost transparent), the reserved values -1 and 100 represents <b>ByLayer</b> and <b>ByBlock</b> transparency.
 		/// </remarks>
 		public Transparency(short value)
 		{
@@ -95,27 +85,21 @@ namespace netDxf
 
 		#region public properties
 
-		/// <summary>
-		/// Defines if the transparency is defined by layer.
-		/// </summary>
+		/// <summary>Defines if the transparency is defined by layer.</summary>
 		public bool IsByLayer
 		{
 			get { return this.transparency == -1; }
 		}
 
-		/// <summary>
-		/// Defines if the transparency is defined by block.
-		/// </summary>
+		/// <summary>Defines if the transparency is defined by block.</summary>
 		public bool IsByBlock
 		{
 			get { return this.transparency == 100; }
 		}
 
-		/// <summary>
-		/// Gets or sets the transparency value range from 0 to 90.
-		/// </summary>
+		/// <summary>Gets or sets the transparency value range from 0 to 90.</summary>
 		/// <remarks>
-		/// Accepted transparency values range from 0 to 90, the reserved values -1 and 100 represents ByLayer and ByBlock.
+		/// Accepted transparency values range from 0 to 90, the reserved values -1 and 100 represents <b>ByLayer</b> and <b>ByBlock</b>.
 		/// </remarks>
 		public short Value
 		{
@@ -134,9 +118,7 @@ namespace netDxf
 
 		#region public methods
 
-		/// <summary>
-		/// Gets the transparency value from a <see cref="Transparency">transparency</see> object.
-		/// </summary>
+		/// <summary>Gets the transparency value from a <see cref="Transparency">transparency</see> object.</summary>
 		/// <param name="transparency">A <see cref="Transparency">transparency</see>.</param>
 		/// <returns>A transparency value.</returns>
 		public static int ToAlphaValue(Transparency transparency)
@@ -151,9 +133,7 @@ namespace netDxf
 			return BitConverter.ToInt32(bytes, 0);
 		}
 
-		/// <summary>
-		/// Gets the <see cref="Transparency">transparency</see> object from a transparency value.
-		/// </summary>
+		/// <summary>Gets the <see cref="Transparency">transparency</see> object from a transparency value.</summary>
 		/// <param name="value">A transparency value.</param>
 		/// <returns>A <see cref="Transparency">transparency</see></returns>
 		public static Transparency FromAlphaValue(int value)
@@ -189,10 +169,7 @@ namespace netDxf
 
 		#region implements ICloneable
 
-		/// <summary>
-		/// Creates a new transparency that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new transparency that is a copy of this instance.</returns>
+		/// <inheritdoc/>
 		public object Clone()
 		{
 			return FromCadIndex(this.transparency);
@@ -202,11 +179,7 @@ namespace netDxf
 
 		#region implements IEquatable
 
-		/// <summary>
-		/// Check if the components of two transparencies are equal.
-		/// </summary>
-		/// <param name="other">Another transparency to compare to.</param>
-		/// <returns>True if their indexes are equal or false in any other case.</returns>
+		/// <inheritdoc/>
 		public bool Equals(Transparency other)
 		{
 			if (other == null)
@@ -221,10 +194,7 @@ namespace netDxf
 
 		#region overrides
 
-		/// <summary>
-		/// Converts the value of this instance to its equivalent string representation.
-		/// </summary>
-		/// <returns>The string representation.</returns>
+		/// <inheritdoc/>
 		public override string ToString()
 		{
 			if (this.transparency == -1)

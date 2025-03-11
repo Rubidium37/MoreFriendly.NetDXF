@@ -29,10 +29,8 @@ using netDxf.Tables;
 
 namespace netDxf.Collections
 {
-	/// <summary>
-	/// Represents a collection of user coordinate systems.
-	/// </summary>
-	/// <remarks>The UCSs collection method GetReferences will always return an empty list since there are no DxfObjects that references them.</remarks>
+	/// <summary>Represents a collection of user coordinate systems.</summary>
+	/// <remarks>The <b>UCS</b>s collection method <see cref="UCS.GetReferences"/> will always return an empty list since there are no <see cref="DxfObject"/>s that references them.</remarks>
 	public sealed class UCSs :
 		TableObjects<UCS>
 	{
@@ -52,15 +50,7 @@ namespace netDxf.Collections
 
 		#region override methods
 
-		/// <summary>
-		/// Adds a user coordinate system to the list.
-		/// </summary>
-		/// <param name="ucs"><see cref="UCS">User coordinate system</see> to add to the list.</param>
-		/// <param name="assignHandle">Specifies if a handle needs to be generated for the user coordinate system parameter.</param>
-		/// <returns>
-		/// If a user coordinate system already exists with the same name as the instance that is being added the method returns the existing user coordinate system,
-		/// if not it will return the new user coordinate system.
-		/// </returns>
+		/// <inheritdoc/>
 		internal override UCS Add(UCS ucs, bool assignHandle)
 		{
 			if (ucs == null)
@@ -90,23 +80,12 @@ namespace netDxf.Collections
 			return ucs;
 		}
 
-		/// <summary>
-		/// Removes a user coordinate system.
-		/// </summary>
-		/// <param name="name"><see cref="UCS">User coordinate system</see> name to remove from the document.</param>
-		/// <returns>True if the user coordinate system has been successfully removed, or false otherwise.</returns>
-		/// <remarks>Reserved user coordinate system or any other referenced by objects cannot be removed.</remarks>
+		/// <inheritdoc/>
 		public override bool Remove(string name)
 		{
 			return this.Remove(this[name]);
 		}
-
-		/// <summary>
-		/// Removes a user coordinate system.
-		/// </summary>
-		/// <param name="item"><see cref="UCS">User coordinate system</see> to remove from the document.</param>
-		/// <returns>True if the user coordinate system has been successfully removed, or false otherwise.</returns>
-		/// <remarks>Reserved user coordinate system or any other referenced by objects cannot be removed.</remarks>
+		/// <inheritdoc/>
 		public override bool Remove(UCS item)
 		{
 			if (item == null)

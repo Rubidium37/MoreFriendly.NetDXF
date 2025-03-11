@@ -30,9 +30,7 @@ using netDxf.Units;
 
 namespace netDxf.Blocks
 {
-	/// <summary>
-	/// Represent the record of a block in the tables section.
-	/// </summary>
+	/// <summary>Represent the record of a block in the tables section.</summary>
 	public class BlockRecord :
 		DxfObject
 	{
@@ -49,9 +47,7 @@ namespace netDxf.Blocks
 
 		#region constructors
 
-		/// <summary>
-		/// Initializes a new instance of the <c>BlockRecord</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="name">Block definition name.</param>
 		internal BlockRecord(string name)
 			: base(DxfObjectCode.BlockRecord)
@@ -71,9 +67,7 @@ namespace netDxf.Blocks
 
 		#region public properties
 
-		/// <summary>
-		/// Gets the name of the block record.
-		/// </summary>
+		/// <summary>Gets the name of the block record.</summary>
 		/// <remarks>
 		/// Block record names are case insensitive.<br />
 		/// The block which name starts with "*" are for internal purpose only.
@@ -84,27 +78,21 @@ namespace netDxf.Blocks
 			internal set { this.name = value; }
 		}
 
-		/// <summary>
-		/// Gets the associated Layout.
-		/// </summary>
+		/// <summary>Gets the associated Layout.</summary>
 		public Layout Layout
 		{
 			get { return this.layout; }
 			internal set { this.layout = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the block insertion units.
-		/// </summary>
+		/// <summary>Gets or sets the block insertion units.</summary>
 		public DrawingUnits Units
 		{
 			get { return this.units; }
 			set { this.units = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets the default block units.
-		/// </summary>
+		/// <summary>Gets or sets the default block units.</summary>
 		/// <remarks>These are the units that all new blocks will use as default.</remarks>
 		public static DrawingUnits DefaultUnits
 		{
@@ -112,11 +100,9 @@ namespace netDxf.Blocks
 			set { defaultUnits = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets if the block can be exploded.
-		/// </summary>
+		/// <summary>Gets or sets if the block can be exploded.</summary>
 		/// <remarks>
-		/// This property is only compatible with DXF version AutoCad2007 and upwards.
+		/// This property is only compatible with <b>DXF</b> version <b>AutoCad2007</b> and upwards.
 		/// </remarks>
 		public bool AllowExploding
 		{
@@ -124,11 +110,9 @@ namespace netDxf.Blocks
 			set { this.allowExploding = value; }
 		}
 
-		/// <summary>
-		/// Gets or sets if the block must be scaled uniformly.
-		/// </summary>
+		/// <summary>Gets or sets if the block must be scaled uniformly.</summary>
 		/// <remarks>
-		/// This property is only compatible with DXF version AutoCad2007 and upwards.
+		/// This property is only compatible with <b>DXF</b> version <b>AutoCad2007</b> and upwards.
 		/// </remarks>
 		public bool ScaleUniformly
 		{
@@ -136,18 +120,14 @@ namespace netDxf.Blocks
 			set { this.scaleUniformly = value; }
 		}
 
-		/// <summary>
-		/// Gets the owner of the actual DXF object.
-		/// </summary>
+		/// <summary>Gets the owner of the actual <b>DXF</b> object.</summary>
 		public new BlockRecords Owner
 		{
 			get { return (BlockRecords)base.Owner; }
 			internal set { base.Owner = value; }
 		}
 
-		/// <summary>
-		/// Gets if the block record is for internal use only.
-		/// </summary>
+		/// <summary>Gets if the block record is for internal use only.</summary>
 		/// <remarks>
 		/// All blocks which name starts with "*" are for internal use and should not be modified.
 		/// </remarks>
@@ -160,10 +140,7 @@ namespace netDxf.Blocks
 
 		#region overrides
 
-		/// <summary>
-		/// Converts the value of this instance to its equivalent string representation.
-		/// </summary>
-		/// <returns>The string representation.</returns>
+		/// <inheritdoc/>
 		public override string ToString()
 		{
 			return this.Name;

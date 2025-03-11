@@ -29,15 +29,13 @@ using System.Linq;
 
 namespace netDxf.Entities
 {
-	/// <summary>
-	/// Represent a loop of a <see cref="Hatch">hatch</see> boundaries.
-	/// </summary>
+	/// <summary>Represent a loop of a <see cref="Hatch">hatch</see> boundaries.</summary>
 	/// <remarks>
 	/// The entities that make a loop can be any combination of lines, light weight polylines, polylines, circles, arcs, ellipses, and splines.<br />
 	/// The entities that define a loop should define a closed path, they have to be on the same plane as the hatch, and with the same normal;
 	/// if these conditions are not met the result might be unpredictable. <br />
 	/// Entities expressed in 3d coordinates like lines, polylines, and splines will be projected into its local plane.
-	/// All edges that make a HatchBoundaryPath are 2d objects, only have X and Y coordinates.
+	/// All edges that make a <see cref="HatchBoundaryPath"/> are 2d objects, only have X and Y coordinates.
 	/// This is why to avoid unexpected results, it is important that all entities that define the paths have the same normal, same reference plane.
 	/// </remarks>
 	public class HatchBoundaryPath :
@@ -45,9 +43,7 @@ namespace netDxf.Entities
 	{
 		#region Hatch boundary path edge classes
 
-		/// <summary>
-		/// Specifies the type of HatchBoundaryPath.Edge.
-		/// </summary>
+		/// <summary>Specifies the type of HatchBoundaryPath.Edge.</summary>
 		public enum EdgeType
 		{
 			Polyline = 0,
@@ -57,15 +53,11 @@ namespace netDxf.Entities
 			Spline = 4
 		}
 
-		/// <summary>
-		/// Base class for all types of HatchBoundaryPath edges.
-		/// </summary>
+		/// <summary>Base class for all types of <see cref="HatchBoundaryPath"/> edges.</summary>
 		public abstract class Edge :
 			ICloneable
 		{
-			/// <summary>
-			/// Gets the HatchBoundaryPath edge type
-			/// </summary>
+			/// <summary>Gets the <see cref="HatchBoundaryPath"/> edge type</summary>
 			public readonly EdgeType Type;
 
 			protected Edge(EdgeType type)
@@ -73,49 +65,34 @@ namespace netDxf.Entities
 				this.Type = type;
 			}
 
-			/// <summary>
-			/// Converts the actual edge to its entity equivalent.
-			/// </summary>
-			/// <returns>An EntityObject equivalent to the actual edge.</returns>
+			/// <summary>Converts the actual edge to its entity equivalent.</summary>
+			/// <returns>An <see cref="EntityObject"/> equivalent to the actual edge.</returns>
 			public abstract EntityObject ConvertTo();
 
-			/// <summary>
-			/// Clones the actual edge.
-			/// </summary>
-			/// <returns>A copy of the actual edge.</returns>
+			/// <inheritdoc/>
 			public abstract object Clone();
 		}
 
-		/// <summary>
-		/// Represents a polyline edge of a HatchBoundaryPath.
-		/// </summary>
+		/// <summary>Represents a polyline edge of a HatchBoundaryPath.</summary>
 		public class Polyline :
 			Edge
 		{
-			/// <summary>
-			/// Gets or sets the list of polyline vertexes.
-			/// </summary>
+			/// <summary>Gets or sets the list of polyline vertexes.</summary>
 			/// <remarks>
 			/// The position of the vertex is defined by the X and Y coordinates, the Z value represents the bulge at that vertex.
 			/// </remarks>
 			public Vector3[] Vertexes;
 
-			/// <summary>
-			/// Gets if the polyline is closed.
-			/// </summary>
+			/// <summary>Gets if the polyline is closed.</summary>
 			public bool IsClosed;
 
-			/// <summary>
-			/// Initializes a new instance of the <c>HatchBoundaryPath.Polyline</c> class.
-			/// </summary>
+			/// <summary>Initializes a new instance of the <see cref="HatchBoundaryPath.Polyline"/> class.</summary>
 			public Polyline()
 				: base(EdgeType.Polyline)
 			{
 			}
 
-			/// <summary>
-			/// Initializes a new instance of the <c>HatchBoundaryPath.Polyline</c> class.
-			/// </summary>
+			/// <summary>Initializes a new instance of the <see cref="HatchBoundaryPath.Polyline"/> class.</summary>
 			/// <param name="entity"><see cref="EntityObject">Entity</see> that represents the edge.</param>
 			public Polyline(EntityObject entity)
 				: base(EdgeType.Polyline)
@@ -152,9 +129,7 @@ namespace netDxf.Entities
 					throw new ArgumentException("The entity is not a Polyline2D or a Polyline3D", nameof(entity));
 			}
 
-			/// <summary>
-			/// Decompose the actual polyline in its internal entities, <see cref="HatchBoundaryPath.Line">lines</see> and <see cref="HatchBoundaryPath.Arc">arcs</see>.
-			/// </summary>
+			/// <summary>Decompose the actual polyline in its internal entities, <see cref="HatchBoundaryPath.Line">lines</see> and <see cref="HatchBoundaryPath.Arc">arcs</see>.</summary>
 			/// <returns>A list of <see cref="HatchBoundaryPath.Line">lines</see> and <see cref="HatchBoundaryPath.Arc">arcs</see> that made up the polyline.</returns>
 			public List<HatchBoundaryPath.Edge> Explode()
 			{
@@ -231,19 +206,14 @@ namespace netDxf.Entities
 				return edges;
 			}
 
-			/// <summary>
-			/// Initializes a new instance of the <c>HatchBoundaryPath.Polyline</c> class.
-			/// </summary>
+			/// <summary>Initializes a new instance of the <see cref="HatchBoundaryPath.Polyline"/> class.</summary>
 			/// <param name="entity"><see cref="EntityObject">Entity</see> that represents the edge.</param>
 			public static Polyline ConvertFrom(EntityObject entity)
 			{
 				return new Polyline(entity);
 			}
 
-			/// <summary>
-			/// Converts the actual edge to its entity equivalent.
-			/// </summary>
-			/// <returns>An <see cref="EntityObject">entity</see> equivalent to the actual edge.</returns>
+			/// <inheritdoc/>
 			public override EntityObject ConvertTo()
 			{
 				List<Polyline2DVertex> points = new List<Polyline2DVertex>(this.Vertexes.Length);
@@ -254,10 +224,7 @@ namespace netDxf.Entities
 				return new Entities.Polyline2D(points, this.IsClosed);
 			}
 
-			/// <summary>
-			/// Clones the actual edge.
-			/// </summary>
-			/// <returns>A copy of the actual edge.</returns>
+			/// <inheritdoc/>
 			public override object Clone()
 			{
 				Polyline copy = new Polyline
@@ -273,33 +240,23 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Represents a line edge of a HatchBoundaryPath.
-		/// </summary>
+		/// <summary>Represents a line edge of a HatchBoundaryPath.</summary>
 		public class Line :
 			Edge
 		{
-			/// <summary>
-			/// Gets or sets the start point of the line.
-			/// </summary>
+			/// <summary>Gets or sets the start point of the line.</summary>
 			public Vector2 Start;
 
-			/// <summary>
-			/// Gets or sets the end point of the line.
-			/// </summary>
+			/// <summary>Gets or sets the end point of the line.</summary>
 			public Vector2 End;
 
-			/// <summary>
-			/// Initializes a new instance of the <c>HatchBoundaryPath.Line</c> class.
-			/// </summary>
+			/// <summary>Initializes a new instance of the <see cref="HatchBoundaryPath.Line"/> class.</summary>
 			public Line()
 				: base(EdgeType.Line)
 			{
 			}
 
-			/// <summary>
-			/// Initializes a new instance of the <c>HatchBoundaryPath.Line</c> class.
-			/// </summary>
+			/// <summary>Initializes a new instance of the <see cref="HatchBoundaryPath.Line"/> class.</summary>
 			/// <param name="entity"><see cref="EntityObject">Entity</see> that represents the edge.</param>
 			public Line(EntityObject entity)
 				: base(EdgeType.Line)
@@ -320,29 +277,21 @@ namespace netDxf.Entities
 				this.End = new Vector2(point.X, point.Y);
 			}
 
-			/// <summary>
-			/// Creates a BoundaryBoundaryPath from an <see cref="EntityObject">entity</see>.
-			/// </summary>
+			/// <summary>Creates a BoundaryBoundaryPath from an <see cref="EntityObject">entity</see>.</summary>
 			/// <param name="entity">An <see cref="EntityObject">entity</see>.</param>
-			/// <returns>A HatchBoundaryPath line.</returns>
+			/// <returns>A <see cref="HatchBoundaryPath"/> line.</returns>
 			public static Line ConvertFrom(EntityObject entity)
 			{
 				return new Line(entity);
 			}
 
-			/// <summary>
-			/// Converts the actual edge to its entity equivalent.
-			/// </summary>
-			/// <returns>An <see cref="EntityObject">entity</see> equivalent to the actual edge.</returns>
+			/// <inheritdoc/>
 			public override EntityObject ConvertTo()
 			{
 				return new Entities.Line(this.Start, this.End);
 			}
 
-			/// <summary>
-			/// Clones the actual edge.
-			/// </summary>
-			/// <returns>A copy of the actual edge.</returns>
+			/// <inheritdoc/>
 			public override object Clone()
 			{
 				Line copy = new Line
@@ -355,48 +304,32 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Represents an arc edge of a HatchBoundaryPath.
-		/// </summary>
+		/// <summary>Represents an arc edge of a HatchBoundaryPath.</summary>
 		public class Arc :
 			Edge
 		{
-			/// <summary>
-			/// Gets or set the center of the arc.
-			/// </summary>
+			/// <summary>Gets or set the center of the arc.</summary>
 			public Vector2 Center;
 
-			/// <summary>
-			/// Gets or sets the radius of the arc.
-			/// </summary>
+			/// <summary>Gets or sets the radius of the arc.</summary>
 			public double Radius;
 
-			/// <summary>
-			/// Gets or sets the start angle of the arc.
-			/// </summary>
+			/// <summary>Gets or sets the start angle of the arc.</summary>
 			public double StartAngle;
 
-			/// <summary>
-			/// Gets or sets the end angle of the arc.
-			/// </summary>
+			/// <summary>Gets or sets the end angle of the arc.</summary>
 			public double EndAngle;
 
-			/// <summary>
-			/// Gets or sets if the arc is counter clockwise.
-			/// </summary>
+			/// <summary>Gets or sets if the arc is counter clockwise.</summary>
 			public bool IsCounterclockwise;
 
-			/// <summary>
-			/// Initializes a new instance of the <c>HatchBoundaryPath.Arc</c> class.
-			/// </summary>
+			/// <summary>Initializes a new instance of the <see cref="HatchBoundaryPath.Arc"/> class.</summary>
 			public Arc()
 				: base(EdgeType.Arc)
 			{
 			}
 
-			/// <summary>
-			/// Initializes a new instance of the <c>HatchBoundaryPath.Arc</c> class.
-			/// </summary>
+			/// <summary>Initializes a new instance of the <see cref="HatchBoundaryPath.Arc"/> class.</summary>
 			/// <param name="entity"><see cref="EntityObject">Entity</see> that represents the edge.</param>
 			public Arc(EntityObject entity)
 				: base(EdgeType.Arc)
@@ -430,19 +363,14 @@ namespace netDxf.Entities
 				}
 			}
 
-			/// <summary>
-			/// Initializes a new instance of the <c>HatchBoundaryPath.Arc</c> class.
-			/// </summary>
+			/// <summary>Initializes a new instance of the <see cref="HatchBoundaryPath.Arc"/> class.</summary>
 			/// <param name="entity"><see cref="EntityObject">Entity</see> that represents the edge.</param>
 			public static Arc ConvertFrom(EntityObject entity)
 			{
 				return new Arc(entity);
 			}
 
-			/// <summary>
-			/// Converts the actual edge to its entity equivalent.
-			/// </summary>
-			/// <returns>An <see cref="EntityObject">entity</see> equivalent to the actual edge.</returns>
+			/// <inheritdoc/>
 			public override EntityObject ConvertTo()
 			{
 				if (MathHelper.IsEqual(MathHelper.NormalizeAngle(this.StartAngle), MathHelper.NormalizeAngle(this.EndAngle)))
@@ -458,10 +386,7 @@ namespace netDxf.Entities
 				return new Entities.Arc(this.Center, this.Radius, 360 - this.EndAngle, 360 - this.StartAngle);
 			}
 
-			/// <summary>
-			/// Clones the actual edge.
-			/// </summary>
-			/// <returns>A copy of the actual edge.</returns>
+			/// <inheritdoc/>
 			public override object Clone()
 			{
 				Arc copy = new Arc
@@ -477,53 +402,35 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Represents a ellipse edge of a HatchBoundaryPath.
-		/// </summary>
+		/// <summary>Represents a ellipse edge of a HatchBoundaryPath.</summary>
 		public class Ellipse :
 			Edge
 		{
-			/// <summary>
-			/// Gets or sets the center of the ellipse.
-			/// </summary>
+			/// <summary>Gets or sets the center of the ellipse.</summary>
 			public Vector2 Center;
 
-			/// <summary>
-			/// Gets or sets the position of the end of the major axis.
-			/// </summary>
+			/// <summary>Gets or sets the position of the end of the major axis.</summary>
 			public Vector2 EndMajorAxis;
 
-			/// <summary>
-			/// Gets or sets the scale of the minor axis in respect of the major axis.
-			/// </summary>
+			/// <summary>Gets or sets the scale of the minor axis in respect of the major axis.</summary>
 			public double MinorRatio;
 
-			/// <summary>
-			/// Gets or sets the start angle of the ellipse.
-			/// </summary>
+			/// <summary>Gets or sets the start angle of the ellipse.</summary>
 			public double StartAngle;
 
-			/// <summary>
-			/// Gets or sets the end angle of the ellipse.
-			/// </summary>
+			/// <summary>Gets or sets the end angle of the ellipse.</summary>
 			public double EndAngle;
 
-			/// <summary>
-			/// Gets or sets if the ellipse is counter clockwise.
-			/// </summary>
+			/// <summary>Gets or sets if the ellipse is counter clockwise.</summary>
 			public bool IsCounterclockwise;
 
-			/// <summary>
-			/// Initializes a new instance of the <c>HatchBoundaryPath.Ellipse</c> class.
-			/// </summary>
+			/// <summary>Initializes a new instance of the <see cref="HatchBoundaryPath.Ellipse"/> class.</summary>
 			public Ellipse()
 				: base(EdgeType.Ellipse)
 			{
 			}
 
-			/// <summary>
-			/// Initializes a new instance of the <c>HatchBoundaryPath.Ellipse</c> class.
-			/// </summary>
+			/// <summary>Initializes a new instance of the <see cref="HatchBoundaryPath.Ellipse"/> class.</summary>
 			/// <param name="entity"><see cref="EntityObject">Entity</see> that represents the edge.</param>
 			public Ellipse(EntityObject entity)
 				: base(EdgeType.Ellipse)
@@ -557,19 +464,14 @@ namespace netDxf.Entities
 				this.IsCounterclockwise = true;
 			}
 
-			/// <summary>
-			/// Initializes a new instance of the <c>HatchBoundaryPath.Ellipse</c> class.
-			/// </summary>
+			/// <summary>Initializes a new instance of the <see cref="HatchBoundaryPath.Ellipse"/> class.</summary>
 			/// <param name="entity"><see cref="EntityObject">Entity</see> that represents the edge.</param>
 			public static Ellipse ConvertFrom(EntityObject entity)
 			{
 				return new Ellipse(entity);
 			}
 
-			/// <summary>
-			/// Converts the actual edge to its entity equivalent.
-			/// </summary>
-			/// <returns>An <see cref="EntityObject">entity</see> equivalent to the actual edge.</returns>
+			/// <inheritdoc/>
 			public override EntityObject ConvertTo()
 			{
 				Vector3 center = new Vector3(this.Center.X, this.Center.Y, 0.0);
@@ -588,10 +490,7 @@ namespace netDxf.Entities
 				};
 			}
 
-			/// <summary>
-			/// Clones the actual edge.
-			/// </summary>
-			/// <returns>A copy of the actual edge.</returns>
+			/// <inheritdoc/>
 			public override object Clone()
 			{
 				Ellipse copy = new Ellipse
@@ -608,51 +507,35 @@ namespace netDxf.Entities
 			}
 		}
 
-		/// <summary>
-		/// Represents a spline edge of a HatchBoundaryPath.
-		/// </summary>
+		/// <summary>Represents a spline edge of a HatchBoundaryPath.</summary>
 		public class Spline :
 			Edge
 		{
-			/// <summary>
-			/// Gets or sets the degree of the spline
-			/// </summary>
+			/// <summary>Gets or sets the degree of the spline</summary>
 			public short Degree;
 
-			/// <summary>
-			/// Gets or sets if the spline is rational.
-			/// </summary>
+			/// <summary>Gets or sets if the spline is rational.</summary>
 			public bool IsRational;
 
-			/// <summary>
-			/// Gets or sets if the spline is periodic.
-			/// </summary>
+			/// <summary>Gets or sets if the spline is periodic.</summary>
 			public bool IsPeriodic;
 
-			/// <summary>
-			/// Gets or sets the list of knots of the spline.
-			/// </summary>
+			/// <summary>Gets or sets the list of knots of the spline.</summary>
 			public double[] Knots;
 
-			/// <summary>
-			/// Gets or sets the list of control points of the spline.
-			/// </summary>
+			/// <summary>Gets or sets the list of control points of the spline.</summary>
 			/// <remarks>
 			/// The position of the control point is defined by the X and Y coordinates, the Z value represents its weight.
 			/// </remarks>
 			public Vector3[] ControlPoints; // location: (x, y) weight: z
 
-			/// <summary>
-			/// Initializes a new instance of the <c>HatchBoundaryPath.Spline</c> class.
-			/// </summary>
+			/// <summary>Initializes a new instance of the <see cref="HatchBoundaryPath.Spline"/> class.</summary>
 			public Spline()
 				: base(EdgeType.Spline)
 			{
 			}
 
-			/// <summary>
-			/// Initializes a new instance of the <c>HatchBoundaryPath.Spline</c> class.
-			/// </summary>
+			/// <summary>Initializes a new instance of the <see cref="HatchBoundaryPath.Spline"/> class.</summary>
 			/// <param name="entity"><see cref="EntityObject">Entity</see> that represents the edge.</param>
 			public Spline(EntityObject entity)
 				: base(EdgeType.Spline)
@@ -692,19 +575,14 @@ namespace netDxf.Entities
 				}
 			}
 
-			/// <summary>
-			/// Initializes a new instance of the <c>HatchBoundaryPath.Spline</c> class.
-			/// </summary>
+			/// <summary>Initializes a new instance of the <see cref="HatchBoundaryPath.Spline"/> class.</summary>
 			/// <param name="entity"><see cref="EntityObject">Entity</see> that represents the edge.</param>
 			public static Spline ConvertFrom(EntityObject entity)
 			{
 				return new Spline(entity);
 			}
 
-			/// <summary>
-			/// Converts the actual edge to its entity equivalent.
-			/// </summary>
-			/// <returns>An <see cref="EntityObject">entity</see> equivalent to the actual edge.</returns>
+			/// <inheritdoc/>
 			public override EntityObject ConvertTo()
 			{
 				List<Vector3> ctrl = new List<Vector3>();
@@ -719,10 +597,7 @@ namespace netDxf.Entities
 				return new Entities.Spline(ctrl, weights, knots, this.Degree, this.IsPeriodic);
 			}
 
-			/// <summary>
-			/// Clones the actual edge.
-			/// </summary>
-			/// <returns>A copy of the actual edge.</returns>
+			/// <inheritdoc/>
 			public override object Clone()
 			{
 				Spline copy = new Spline
@@ -757,9 +632,7 @@ namespace netDxf.Entities
 
 		#region constructor
 
-		/// <summary>
-		/// Initializes a new instance of the <c>HatchBoundaryPath</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="edges">List of entities that makes a loop for the hatch boundary paths.</param>
 		public HatchBoundaryPath(IEnumerable<EntityObject> edges)
 		{
@@ -773,9 +646,7 @@ namespace netDxf.Entities
 			this.Update();
 		}
 
-		/// <summary>
-		/// Initializes a new instance of the <c>HatchBoundaryPath</c> class.
-		/// </summary>
+		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="edges">List of edges that makes a loop for the hatch boundary paths.</param>
 		public HatchBoundaryPath(IEnumerable<Edge> edges)
 		{
@@ -813,26 +684,20 @@ namespace netDxf.Entities
 
 		#region public properties
 
-		/// <summary>
-		/// Gets the list of edges that makes a loop for the hatch boundary path.
-		/// </summary>
+		/// <summary>Gets the list of edges that makes a loop for the hatch boundary path.</summary>
 		public IReadOnlyList<Edge> Edges
 		{
 			get { return this.edges; }
 		}
 
-		/// <summary>
-		/// Gets the boundary path type flag.
-		/// </summary>
+		/// <summary>Gets the boundary path type flag.</summary>
 		public HatchBoundaryPathTypeFlags PathType
 		{
 			get { return this.pathType; }
 			internal set { this.pathType = value; }
 		}
 
-		/// <summary>
-		/// Gets the list of entities that makes the boundary.
-		/// </summary>
+		/// <summary>Gets the list of entities that makes the boundary.</summary>
 		/// <remarks>If the boundary path belongs to a non-associative hatch this list will contain zero entities.</remarks>
 		public IReadOnlyList<EntityObject> Entities
 		{
@@ -862,9 +727,7 @@ namespace netDxf.Entities
 
 		#region public methods
 
-		/// <summary>
-		/// Updates the internal HatchBoundaryPath data.
-		/// </summary>
+		/// <summary>Updates the internal HatchBoundaryPath data.</summary>
 		/// <remarks>
 		/// It is necessary to manually call this method when changes to the boundary entities are made. This is only applicable to associative hatches,
 		/// non-associative hatches has no associated boundary entities.
@@ -953,11 +816,7 @@ namespace netDxf.Entities
 
 		#region ICloneable
 
-		/// <summary>
-		/// Creates a new HatchBoundaryPath that is a copy of the current instance.
-		/// </summary>
-		/// <returns>A new HatchBoundaryPath that is a copy of this instance.</returns>
-		/// <remarks>When cloning a HatchBoundaryPath, if it has entities that defines its contour, they will not be cloned.</remarks>
+		/// <inheritdoc/>
 		public object Clone()
 		{
 			List<Edge> copyEdges = new List<Edge>();
