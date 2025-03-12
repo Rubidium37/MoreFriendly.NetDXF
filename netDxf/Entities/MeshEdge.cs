@@ -76,7 +76,7 @@ namespace netDxf.Entities
 		/// </remarks>
 		public int StartVertexIndex
 		{
-			get { return this.startVertexIndex; }
+			get => this.startVertexIndex;
 			set
 			{
 				if (value < 0)
@@ -88,7 +88,7 @@ namespace netDxf.Entities
 		/// <summary>Gets or sets the edge end vertex index.</summary>
 		public int EndVertexIndex
 		{
-			get { return this.endVertexIndex; }
+			get => this.endVertexIndex;
 			set
 			{
 				if (value < 0)
@@ -104,8 +104,8 @@ namespace netDxf.Entities
 		/// </remarks>
 		public double Crease
 		{
-			get { return this.crease; }
-			set { this.crease = value < 0 ? -1 : value; }
+			get => this.crease;
+			set => this.crease = value < 0 ? -1 : value;
 		}
 
 		#endregion
@@ -114,23 +114,17 @@ namespace netDxf.Entities
 
 		/// <inheritdoc/>
 		public override string ToString()
-		{
-			return string.Format("{0}: ({1}{4} {2}) crease={3}", "SplineVertex", this.startVertexIndex, this.endVertexIndex, this.crease, Thread.CurrentThread.CurrentCulture.TextInfo.ListSeparator);
-		}
+			=> string.Format("{0}: ({1}{4} {2}) crease={3}", "SplineVertex", this.startVertexIndex, this.endVertexIndex, this.crease, Thread.CurrentThread.CurrentCulture.TextInfo.ListSeparator);
 
 		/// <summary>Obtains a string that represents the mesh edge.</summary>
 		/// <param name="provider">An <see cref="IFormatProvider"/> object implementation that supplies culture-specific formatting information. </param>
 		/// <returns>A string text.</returns>
 		public string ToString(IFormatProvider provider)
-		{
-			return string.Format("{0}: ({1}{4} {2}) crease={3}", "SplineVertex", this.startVertexIndex.ToString(provider), this.endVertexIndex.ToString(provider), this.crease.ToString(provider), Thread.CurrentThread.CurrentCulture.TextInfo.ListSeparator);
-		}
+			=> string.Format("{0}: ({1}{4} {2}) crease={3}", "SplineVertex", this.startVertexIndex.ToString(provider), this.endVertexIndex.ToString(provider), this.crease.ToString(provider), Thread.CurrentThread.CurrentCulture.TextInfo.ListSeparator);
 
 		/// <inheritdoc/>
 		public object Clone()
-		{
-			return new MeshEdge(this.startVertexIndex, this.endVertexIndex, this.crease);
-		}
+			=> new MeshEdge(this.startVertexIndex, this.endVertexIndex, this.crease);
 
 		#endregion
 	}

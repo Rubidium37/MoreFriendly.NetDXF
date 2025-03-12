@@ -33,15 +33,6 @@ namespace netDxf.Tables
 	public class UCS :
 		TableObject
 	{
-		#region private fields
-
-		private Vector3 origin;
-		private Vector3 xAxis;
-		private Vector3 yAxis;
-		private Vector3 zAxis;
-
-		#endregion
-
 		#region constructors
 
 		/// <summary>Initializes a new instance of the class.</summary>
@@ -59,10 +50,10 @@ namespace netDxf.Tables
 				throw new ArgumentNullException(nameof(name), "The UCS name should be at least one character long.");
 			}
 
-			this.origin = Vector3.Zero;
-			this.xAxis = Vector3.UnitX;
-			this.yAxis = Vector3.UnitY;
-			this.zAxis = Vector3.UnitZ;
+			this.Origin = Vector3.Zero;
+			this.XAxis = Vector3.UnitX;
+			this.YAxis = Vector3.UnitY;
+			this.ZAxis = Vector3.UnitZ;
 		}
 
 		/// <summary>Initializes a new instance of the class.</summary>
@@ -86,12 +77,12 @@ namespace netDxf.Tables
 				throw new ArgumentException("X-axis direction and Y-axis direction must be perpendicular.");
 			}
 
-			this.origin = origin;
-			this.xAxis = xDirection;
-			this.xAxis.Normalize();
-			this.yAxis = yDirection;
-			this.yAxis.Normalize();
-			this.zAxis = Vector3.CrossProduct(this.xAxis, this.yAxis);
+			this.Origin = origin;
+			this.XAxis = xDirection;
+			this.XAxis.Normalize();
+			this.YAxis = yDirection;
+			this.YAxis.Normalize();
+			this.ZAxis = Vector3.CrossProduct(this.XAxis, this.YAxis);
 		}
 
 		#endregion
@@ -99,35 +90,22 @@ namespace netDxf.Tables
 		#region public properties
 
 		/// <summary>Gets or sets the user coordinate system origin in WCS.</summary>
-		public Vector3 Origin
-		{
-			get { return this.origin; }
-			set { this.origin = value; }
-		}
+		public Vector3 Origin { get; set; }
 
 		/// <summary>Gets the user coordinate system x-axis direction in WCS.</summary>
-		public Vector3 XAxis
-		{
-			get { return this.xAxis; }
-		}
+		public Vector3 XAxis { get; private set; }
 
 		/// <summary>Gets the user coordinate system y-axis direction in WCS.</summary>
-		public Vector3 YAxis
-		{
-			get { return this.yAxis; }
-		}
+		public Vector3 YAxis { get; private set; }
 
 		/// <summary>Gets the user coordinate system z-axis direction in WCS.</summary>
-		public Vector3 ZAxis
-		{
-			get { return this.zAxis; }
-		}
+		public Vector3 ZAxis { get; private set; }
 
 		/// <summary>Gets the owner of the actual user coordinate system.</summary>
 		public new UCSs Owner
 		{
-			get { return (UCSs)base.Owner; }
-			internal set { base.Owner = value; }
+			get => (UCSs)base.Owner;
+			internal set => base.Owner = value;
 		}
 
 		#endregion
@@ -143,11 +121,11 @@ namespace netDxf.Tables
 			{
 				throw new ArgumentException("X-axis direction and Y-axis direction must be perpendicular.");
 			}
-			this.xAxis = xDirection;
-			this.xAxis.Normalize();
-			this.yAxis = yDirection;
-			this.yAxis.Normalize();
-			this.zAxis = Vector3.CrossProduct(this.xAxis, this.yAxis);
+			this.XAxis = xDirection;
+			this.XAxis.Normalize();
+			this.YAxis = yDirection;
+			this.YAxis.Normalize();
+			this.ZAxis = Vector3.CrossProduct(this.XAxis, this.YAxis);
 		}
 
 		/// <summary>Creates a new user coordinate system from the x-axis and a point on <b>XY</b> plane.</summary>
@@ -159,12 +137,12 @@ namespace netDxf.Tables
 		public static UCS FromXAxisAndPointOnXYplane(string name, Vector3 origin, Vector3 xDirection, Vector3 pointOnPlaneXY)
 		{
 			UCS ucs = new UCS(name);
-			ucs.origin = origin;
-			ucs.xAxis = xDirection;
-			ucs.xAxis.Normalize();
-			ucs.zAxis = Vector3.CrossProduct(xDirection, pointOnPlaneXY);
-			ucs.zAxis.Normalize();
-			ucs.yAxis = Vector3.CrossProduct(ucs.zAxis, ucs.xAxis);
+			ucs.Origin = origin;
+			ucs.XAxis = xDirection;
+			ucs.XAxis.Normalize();
+			ucs.ZAxis = Vector3.CrossProduct(xDirection, pointOnPlaneXY);
+			ucs.ZAxis.Normalize();
+			ucs.YAxis = Vector3.CrossProduct(ucs.ZAxis, ucs.XAxis);
 			return ucs;
 		}
 
@@ -178,10 +156,10 @@ namespace netDxf.Tables
 		{
 			Matrix3 mat = MathHelper.ArbitraryAxis(normal);
 			UCS ucs = new UCS(name);
-			ucs.origin = origin;
-			ucs.xAxis = new Vector3(mat.M11, mat.M21, mat.M31);
-			ucs.yAxis = new Vector3(mat.M12, mat.M22, mat.M32);
-			ucs.zAxis = new Vector3(mat.M13, mat.M23, mat.M33);
+			ucs.Origin = origin;
+			ucs.XAxis = new Vector3(mat.M11, mat.M21, mat.M31);
+			ucs.YAxis = new Vector3(mat.M12, mat.M22, mat.M32);
+			ucs.ZAxis = new Vector3(mat.M13, mat.M23, mat.M33);
 			return ucs;
 		}
 
@@ -198,21 +176,22 @@ namespace netDxf.Tables
 			Matrix3 rot = Matrix3.RotationZ(rotation);
 			mat *= rot;
 			UCS ucs = new UCS(name);
-			ucs.origin = origin;
-			ucs.xAxis = new Vector3(mat.M11, mat.M21, mat.M31);
-			ucs.yAxis = new Vector3(mat.M12, mat.M22, mat.M32);
-			ucs.zAxis = new Vector3(mat.M13, mat.M23, mat.M33);
+			ucs.Origin = origin;
+			ucs.XAxis = new Vector3(mat.M11, mat.M21, mat.M31);
+			ucs.YAxis = new Vector3(mat.M12, mat.M22, mat.M32);
+			ucs.ZAxis = new Vector3(mat.M13, mat.M23, mat.M33);
 			return ucs;
 		}
 
 		/// <summary>Gets the user coordinate system rotation matrix.</summary>
 		/// <returns>A Matrix3.</returns>
 		public Matrix3 GetTransformation()
-		{
-			return new Matrix3(this.xAxis.X, this.yAxis.X, this.zAxis.X,
-								this.xAxis.Y, this.yAxis.Y, this.zAxis.Y,
-								this.xAxis.Z, this.yAxis.Z, this.zAxis.Z);
-		}
+			=> new Matrix3
+			(
+				this.XAxis.X, this.YAxis.X, this.ZAxis.X,
+				this.XAxis.Y, this.YAxis.Y, this.ZAxis.Y,
+				this.XAxis.Z, this.YAxis.Z, this.ZAxis.Z
+			);
 
 		/// <summary>Transforms a point between coordinate systems.</summary>
 		/// <param name="point">Point to transform.</param>
@@ -222,7 +201,7 @@ namespace netDxf.Tables
 		public Vector3 Transform(Vector3 point, CoordinateSystem from, CoordinateSystem to)
 		{
 			Matrix3 transformation = this.GetTransformation();
-			Vector3 translation = this.origin;
+			Vector3 translation = this.Origin;
 
 			switch (from)
 			{
@@ -253,7 +232,7 @@ namespace netDxf.Tables
 			}
 
 			Matrix3 transformation = this.GetTransformation();
-			Vector3 translation = this.origin;
+			Vector3 translation = this.Origin;
 			List<Vector3> transPoints;
 
 			switch (from)
@@ -288,26 +267,20 @@ namespace netDxf.Tables
 		#region overrides
 
 		/// <inheritdoc/>
-		public override bool HasReferences()
-		{
-			return this.Owner != null && this.Owner.HasReferences(this.Name);
-		}
+		public override bool HasReferences() => this.Owner != null && this.Owner.HasReferences(this.Name);
 
 		/// <inheritdoc/>
-		public override List<DxfObjectReference> GetReferences()
-		{
-			return this.Owner?.GetReferences(this.Name);
-		}
+		public override List<DxfObjectReference> GetReferences() => this.Owner?.GetReferences(this.Name);
 
 		/// <inheritdoc/>
 		public override TableObject Clone(string newName)
 		{
 			UCS copy = new UCS(newName)
 			{
-				Origin = this.origin,
-				xAxis = this.xAxis,
-				yAxis = this.yAxis,
-				zAxis = this.zAxis,
+				Origin = this.Origin,
+				XAxis = this.XAxis,
+				YAxis = this.YAxis,
+				ZAxis = this.ZAxis,
 			};
 
 			foreach (XData data in this.XData.Values)
@@ -317,12 +290,8 @@ namespace netDxf.Tables
 
 			return copy;
 		}
-
 		/// <inheritdoc/>
-		public override object Clone()
-		{
-			return this.Clone(this.Name);
-		}
+		public override object Clone() => this.Clone(this.Name);
 
 		#endregion
 	}

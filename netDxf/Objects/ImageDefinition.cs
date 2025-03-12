@@ -231,7 +231,7 @@ namespace netDxf.Objects
 		/// </remarks>
 		public string File
 		{
-			get { return this.file; }
+			get => this.file;
 			set
 			{
 				if (string.IsNullOrEmpty(value))
@@ -251,7 +251,7 @@ namespace netDxf.Objects
 		/// <summary>Gets or sets the image width in pixels.</summary>
 		public int Width
 		{
-			get { return this.width; }
+			get => this.width;
 			set
 			{
 				if (value <= 0)
@@ -266,7 +266,7 @@ namespace netDxf.Objects
 		/// <summary>Gets or sets the image height in pixels.</summary>
 		public int Height
 		{
-			get { return this.height; }
+			get => this.height;
 			set
 			{
 				if (value <= 0)
@@ -281,7 +281,7 @@ namespace netDxf.Objects
 		/// <summary>Gets or sets the image horizontal resolution in pixels per unit.</summary>
 		public double HorizontalResolution
 		{
-			get { return this.horizontalResolution; }
+			get => this.horizontalResolution;
 			set
 			{
 				if (value <= 0)
@@ -296,7 +296,7 @@ namespace netDxf.Objects
 		/// <summary>Gets or sets the image vertical resolution in pixels per unit.</summary>
 		public double VerticalResolution
 		{
-			get { return this.verticalResolution; }
+			get => this.verticalResolution;
 			set
 			{
 				if (value <= 0)
@@ -311,7 +311,7 @@ namespace netDxf.Objects
 		/// <summary>Gets or sets the image resolution units.</summary>
 		public ImageResolutionUnits ResolutionUnits
 		{
-			get { return this.resolutionUnits; }
+			get => this.resolutionUnits;
 			set
 			{
 				if (this.resolutionUnits != value)
@@ -338,8 +338,8 @@ namespace netDxf.Objects
 		/// <summary>Gets the owner of the actual image definition.</summary>
 		public new ImageDefinitions Owner
 		{
-			get { return (ImageDefinitions)base.Owner; }
-			internal set { base.Owner = value; }
+			get => (ImageDefinitions)base.Owner;
+			internal set => base.Owner = value;
 		}
 
 		#endregion
@@ -347,10 +347,7 @@ namespace netDxf.Objects
 		#region overrides
 
 		/// <inheritdoc/>
-		public override bool HasReferences()
-		{
-			return this.Owner != null && this.Owner.HasReferences(this.Name);
-		}
+		public override bool HasReferences() => this.Owner != null && this.Owner.HasReferences(this.Name);
 
 		/// <inheritdoc/>
 		public override List<DxfObjectReference> GetReferences()
@@ -375,12 +372,8 @@ namespace netDxf.Objects
 
 			return copy;
 		}
-
 		/// <inheritdoc/>
-		public override object Clone()
-		{
-			return this.Clone(this.Name);
-		}
+		public override object Clone() => this.Clone(this.Name);
 
 		#endregion
 	}

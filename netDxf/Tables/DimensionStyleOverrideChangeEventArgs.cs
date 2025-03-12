@@ -30,19 +30,13 @@ namespace netDxf.Tables
 	public class DimensionStyleOverrideChangeEventArgs :
 		EventArgs
 	{
-		#region private fields
-
-		private readonly DimensionStyleOverride item;
-
-		#endregion
-
 		#region constructor
 
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="item">The <see cref="DimensionStyleOverride"/> that is being added or removed from the insert.</param>
 		public DimensionStyleOverrideChangeEventArgs(DimensionStyleOverride item)
 		{
-			this.item = item;
+			this.Item = item;
 		}
 
 		#endregion
@@ -50,10 +44,7 @@ namespace netDxf.Tables
 		#region public properties
 
 		/// <summary>Gets the <see cref="DimensionStyleOverride"/> that is being added or removed.</summary>
-		public DimensionStyleOverride Item
-		{
-			get { return this.item; }
-		}
+		public DimensionStyleOverride Item { get; }
 
 		#endregion
 	}

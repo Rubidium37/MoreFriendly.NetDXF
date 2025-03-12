@@ -62,8 +62,6 @@ namespace netDxf.Entities
 
 		#region private fields
 
-		private readonly short[] vertexIndexes;
-		private AciColor color;
 		private Layer layer;
 
 		#endregion
@@ -87,13 +85,13 @@ namespace netDxf.Entities
 			{
 				throw new ArgumentNullException(nameof(vertexIndexes));
 			}
-			this.vertexIndexes = vertexIndexes.ToArray();
-			if (this.vertexIndexes.Length < 1 || this.vertexIndexes.Length > 4)
+			this.VertexIndexes = vertexIndexes.ToArray();
+			if (this.VertexIndexes.Length < 1 || this.VertexIndexes.Length > 4)
 			{
 				throw new ArgumentOutOfRangeException(nameof(vertexIndexes), "The number of indexes per faces must be greater than 0, and a maximum of 4.");
 			}
 
-			this.color = null;
+			this.Color = null;
 			this.layer = null;
 		}
 
@@ -102,23 +100,16 @@ namespace netDxf.Entities
 		#region public properties
 
 		/// <summary>Gets the list of indexes to the vertex list of a polyface mesh that makes up the face.</summary>
-		public short[] VertexIndexes
-		{
-			get { return this.vertexIndexes; }
-		}
+		public short[] VertexIndexes { get; }
 
 		/// <summary>Gets or sets the face color. Set to <see langword="null"/> to inherit from its parent polyface mesh.</summary>
-		public AciColor Color
-		{
-			get { return this.color; }
-			set { this.color = value; }
-		}
+		public AciColor Color { get; set; }
 
 		/// <summary>Gets or sets the face layer. Set to <see langword="null"/> to inherit from its parent polyface mesh.</summary>
 		public Layer Layer
 		{
-			get { return this.layer; }
-			set { this.layer = this.OnLayerChangedEvent(this.layer, value); }
+			get => this.layer;
+			set => this.layer = this.OnLayerChangedEvent(this.layer, value);
 		}
 
 		#endregion
@@ -126,21 +117,15 @@ namespace netDxf.Entities
 		#region overrides
 
 		/// <inheritdoc/>
-		public override string ToString()
-		{
-			return "PolyfaceMeshFace";
-		}
+		public override string ToString() => "PolyfaceMeshFace";
 
 		/// <inheritdoc/>
 		public object Clone()
-		{
-			return new PolyfaceMeshFace(this.vertexIndexes)
+			=> new PolyfaceMeshFace(this.VertexIndexes)
 			{
 				Layer = (Layer)this.layer.Clone(),
-				Color = (AciColor)this.color.Clone()
-
+				Color = (AciColor)this.Color.Clone()
 			};
-		}
 
 		#endregion
 	}

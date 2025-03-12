@@ -66,29 +66,29 @@ namespace netDxf
 		/// <summary>Gets or sets the curve start point.</summary>
 		public Vector3 StartPoint
 		{
-			get { return this.controlPoints[0]; }
-			set { this.controlPoints[0] = value; }
+			get => this.ControlPoints[0];
+			set => this.ControlPoints[0] = value;
 		}
 
 		/// <summary>Gets or sets the first control point.</summary>
 		public Vector3 FirstControlPoint
 		{
-			get { return this.controlPoints[1]; }
-			set { this.controlPoints[1] = value; }
+			get => this.ControlPoints[1];
+			set => this.ControlPoints[1] = value;
 		}
 
 		/// <summary>Gets or sets the second control point.</summary>
 		public Vector3 SecondControlPoint
 		{
-			get { return this.controlPoints[2]; }
-			set { this.controlPoints[2] = value; }
+			get => this.ControlPoints[2];
+			set => this.ControlPoints[2] = value;
 		}
 
 		/// <summary>Gets or sets the curve end point.</summary>
 		public Vector3 EndPoint
 		{
-			get { return this.controlPoints[3]; }
-			set { this.controlPoints[3] = value; }
+			get => this.ControlPoints[3];
+			set => this.ControlPoints[3] = value;
 		}
 
 		#endregion
@@ -146,10 +146,7 @@ namespace netDxf
 		}
 
 		/// <summary>Switch the bezier curve direction.</summary>
-		public void Reverse()
-		{
-			Array.Reverse(this.controlPoints);
-		}
+		public void Reverse() => Array.Reverse(this.ControlPoints);
 
 		/// <summary>Converts the bezier curve in a list of vertexes.</summary>
 		/// <param name="precision">Number of vertexes generated.</param>

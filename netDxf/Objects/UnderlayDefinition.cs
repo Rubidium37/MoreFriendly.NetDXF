@@ -35,7 +35,6 @@ namespace netDxf.Objects
 	{
 		#region private fields
 
-		private readonly UnderlayType type;
 		private string file;
 
 		#endregion
@@ -90,7 +89,7 @@ namespace netDxf.Objects
 			}
 
 			this.file = file;
-			this.type = type;
+			this.Type = type;
 		}
 
 		#endregion
@@ -98,10 +97,7 @@ namespace netDxf.Objects
 		#region public properties
 
 		/// <summary>Get the underlay type.</summary>
-		public UnderlayType Type
-		{
-			get { return this.type; }
-		}
+		public UnderlayType Type { get; }
 
 		/// <summary>Gets or sets the underlay file.</summary>
 		/// <remarks>
@@ -109,7 +105,7 @@ namespace netDxf.Objects
 		/// </remarks>
 		public string File
 		{
-			get { return this.file; }
+			get => this.file;
 			set
 			{
 				if (string.IsNullOrEmpty(value))
@@ -124,7 +120,7 @@ namespace netDxf.Objects
 
 				string ext = Path.GetExtension(value);
 
-				switch (this.type)
+				switch (this.Type)
 				{
 					case UnderlayType.DGN:
 						if (!ext.Equals(".DGN", StringComparison.OrdinalIgnoreCase))

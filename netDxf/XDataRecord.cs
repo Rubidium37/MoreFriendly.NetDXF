@@ -31,13 +31,6 @@ namespace netDxf
 	/// <summary>Represents an entry in the extended data of an entity.</summary>
 	public class XDataRecord
 	{
-		#region private fields
-
-		private readonly XDataCode code;
-		private readonly object value;
-
-		#endregion
-
 		#region constants
 
 		/// <summary>
@@ -45,20 +38,14 @@ namespace netDxf
 		/// These braces enable applications to organize their data by subdividing the data into lists.
 		/// The left brace begins a list, and the right brace terminates the most recent list. Lists can be nested.
 		/// </summary>
-		public static XDataRecord OpenControlString
-		{
-			get { return new XDataRecord(XDataCode.ControlString, "{"); }
-		}
+		public static XDataRecord OpenControlString => new XDataRecord(XDataCode.ControlString, "{");
 
 		/// <summary>
 		/// An extended data control string can be either "{" or "}".
 		/// These braces enable applications to organize their data by subdividing the data into lists.
 		/// The left brace begins a list, and the right brace terminates the most recent list. Lists can be nested.
 		/// </summary>
-		public static XDataRecord CloseControlString
-		{
-			get { return new XDataRecord(XDataCode.ControlString, "}"); }
-		}
+		public static XDataRecord CloseControlString => new XDataRecord(XDataCode.ControlString, "}");
 
 		#endregion
 
@@ -153,8 +140,8 @@ namespace netDxf
 
 					break;
 			}
-			this.code = code;
-			this.value = value;
+			this.Code = code;
+			this.Value = value;
 		}
 
 		#endregion
@@ -163,16 +150,10 @@ namespace netDxf
 
 		/// <summary>Gets the <see cref="XData"/> code.</summary>
 		/// <remarks>The only valid values are the ones defined in the <see cref="XDataCode"/> class.</remarks>
-		public XDataCode Code
-		{
-			get { return this.code; }
-		}
+		public XDataCode Code { get; }
 
 		/// <summary>Gets the <see cref="XData"/> value.</summary>
-		public object Value
-		{
-			get { return this.value; }
-		}
+		public object Value { get; }
 
 		#endregion
 
@@ -180,9 +161,7 @@ namespace netDxf
 
 		/// <inheritdoc/>
 		public override string ToString()
-		{
-			return string.Format("{0} - {1}", this.code, this.value);
-		}
+			=> string.Format("{0} - {1}", this.Code, this.Value);
 
 		#endregion
 	}

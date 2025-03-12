@@ -30,19 +30,13 @@ namespace netDxf.Objects
 	public class MLineStyleElementChangeEventArgs :
 		EventArgs
 	{
-		#region private fields
-
-		private readonly MLineStyleElement item;
-
-		#endregion
-
 		#region constructor
 
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="item">The item that is being added or removed from the <see cref="MLineStyle"/> elements list.</param>
 		public MLineStyleElementChangeEventArgs(MLineStyleElement item)
 		{
-			this.item = item;
+			this.Item = item;
 		}
 
 		#endregion
@@ -50,10 +44,7 @@ namespace netDxf.Objects
 		#region public properties
 
 		/// <summary>Gets the item that is being added or removed from the <see cref="MLineStyle"/> elements list.</summary>
-		public MLineStyleElement Item
-		{
-			get { return this.item; }
-		}
+		public MLineStyleElement Item { get; }
 
 		#endregion
 	}

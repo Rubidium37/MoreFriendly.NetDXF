@@ -105,10 +105,7 @@ namespace netDxf.Collections
 		}
 
 		/// <inheritdoc/>
-		public override bool Remove(string name)
-		{
-			return this.Remove(this[name]);
-		}
+		public override bool Remove(string name) => this.Remove(this[name]);
 
 		/// <inheritdoc/>
 		public override bool Remove(Block item)
@@ -197,24 +194,16 @@ namespace netDxf.Collections
 		}
 
 		private void Block_EntityAdded(TableObject sender, BlockEntityChangeEventArgs e)
-		{
-			this.Owner.AddEntityToDocument(e.Item, string.IsNullOrEmpty(e.Item.Handle));
-		}
+			=> this.Owner.AddEntityToDocument(e.Item, string.IsNullOrEmpty(e.Item.Handle));
 
 		private void Block_EntityRemoved(TableObject sender, BlockEntityChangeEventArgs e)
-		{
-			this.Owner.RemoveEntityFromDocument(e.Item);
-		}
+			=> this.Owner.RemoveEntityFromDocument(e.Item);
 
 		private void Block_AttributeDefinitionAdded(Block sender, BlockAttributeDefinitionChangeEventArgs e)
-		{
-			this.Owner.AddAttributeDefinitionToDocument(e.Item, string.IsNullOrEmpty(e.Item.Handle));
-		}
+			=> this.Owner.AddAttributeDefinitionToDocument(e.Item, string.IsNullOrEmpty(e.Item.Handle));
 
 		private void Block_AttributeDefinitionRemoved(Block sender, BlockAttributeDefinitionChangeEventArgs e)
-		{
-			this.Owner.RemoveAttributeDefinitionFromDocument(e.Item);
-		}
+			=> this.Owner.RemoveAttributeDefinitionFromDocument(e.Item);
 
 		#endregion
 	}

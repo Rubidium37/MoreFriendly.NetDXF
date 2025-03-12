@@ -33,9 +33,7 @@ namespace netDxf.Entities
 	{
 		#region private fields
 
-		private bool showDiameterSymbol;
 		private string tolerance;
-		private ToleranceMaterialCondition materialCondition;
 
 		#endregion
 
@@ -44,9 +42,9 @@ namespace netDxf.Entities
 		/// <summary>Initializes a new instance of the class.</summary>
 		public ToleranceValue()
 		{
-			this.showDiameterSymbol = false;
+			this.ShowDiameterSymbol = false;
 			this.tolerance = string.Empty;
-			this.materialCondition = ToleranceMaterialCondition.None;
+			this.MaterialCondition = ToleranceMaterialCondition.None;
 		}
 
 		/// <summary>Initializes a new instance of the class.</summary>
@@ -55,9 +53,9 @@ namespace netDxf.Entities
 		/// <param name="materialCondition">Tolerance material condition.</param>
 		public ToleranceValue(bool showDiameterSymbol, string value, ToleranceMaterialCondition materialCondition)
 		{
-			this.showDiameterSymbol = showDiameterSymbol;
+			this.ShowDiameterSymbol = showDiameterSymbol;
 			this.tolerance = string.IsNullOrEmpty(value) ? string.Empty : value;
-			this.materialCondition = materialCondition;
+			this.MaterialCondition = materialCondition;
 		}
 
 		#endregion
@@ -65,25 +63,17 @@ namespace netDxf.Entities
 		#region public properties
 
 		/// <summary>Gets or sets if the tolerance diameter symbol will be shown.</summary>
-		public bool ShowDiameterSymbol
-		{
-			get { return this.showDiameterSymbol; }
-			set { this.showDiameterSymbol = value; }
-		}
+		public bool ShowDiameterSymbol { get; set; }
 
 		/// <summary>Gets or sets the tolerance value.</summary>
 		public string Value
 		{
-			get { return this.tolerance; }
-			set { this.tolerance = string.IsNullOrEmpty(value) ? string.Empty : value; }
+			get => this.tolerance;
+			set => this.tolerance = string.IsNullOrEmpty(value) ? string.Empty : value;
 		}
 
 		/// <summary>Gets or sets the tolerance material condition.</summary>
-		public ToleranceMaterialCondition MaterialCondition
-		{
-			get { return this.materialCondition; }
-			set { this.materialCondition = value; }
-		}
+		public ToleranceMaterialCondition MaterialCondition { get; set; }
 
 		#endregion
 
@@ -91,14 +81,12 @@ namespace netDxf.Entities
 
 		/// <inheritdoc/>
 		public object Clone()
-		{
-			return new ToleranceValue
+			=> new ToleranceValue
 			{
-				ShowDiameterSymbol = this.showDiameterSymbol,
+				ShowDiameterSymbol = this.ShowDiameterSymbol,
 				Value = this.tolerance,
-				MaterialCondition = this.materialCondition
+				MaterialCondition = this.MaterialCondition
 			};
-		}
 
 		#endregion
 	}

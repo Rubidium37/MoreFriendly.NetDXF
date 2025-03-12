@@ -37,9 +37,6 @@ namespace netDxf.IO
 		#region private fields
 
 		private readonly TextWriter writer;
-		private long currentPosition;
-		private short dxfCode;
-		private object dxfValue;
 
 		#endregion
 
@@ -48,9 +45,9 @@ namespace netDxf.IO
 		public TextCodeValueWriter(TextWriter writer)
 		{
 			this.writer = writer;
-			this.currentPosition = 0;
-			this.dxfCode = 0;
-			this.dxfValue = null;
+			this.CurrentPosition = 0;
+			this.Code = 0;
+			this.Value = null;
 		}
 
 		#endregion
@@ -58,22 +55,13 @@ namespace netDxf.IO
 		#region public properties
 
 		/// <inheritdoc/>
-		public short Code
-		{
-			get { return this.dxfCode; }
-		}
+		public short Code { get; private set; }
 
 		/// <inheritdoc/>
-		public object Value
-		{
-			get { return this.dxfValue; }
-		}
+		public object Value { get; private set; }
 
 		/// <inheritdoc/>
-		public long CurrentPosition
-		{
-			get { return this.currentPosition; }
-		}
+		public long CurrentPosition { get; private set; }
 
 		#endregion
 
@@ -82,9 +70,9 @@ namespace netDxf.IO
 		/// <inheritdoc/>
 		public void Write(short code, object value)
 		{
-			this.dxfCode = code;
+			this.Code = code;
 			this.writer.WriteLine(code);
-			this.currentPosition += 1;
+			this.CurrentPosition += 1;
 
 			if (code >= 0 && code <= 9) // string
 			{
@@ -298,18 +286,15 @@ namespace netDxf.IO
 			}
 			else
 			{
-				throw new Exception(string.Format("Code {0} not valid at line {1}", this.dxfCode, this.currentPosition));
+				throw new Exception(string.Format("Code {0} not valid at line {1}", this.Code, this.CurrentPosition));
 			}
 
-			this.dxfValue = value;
-			this.currentPosition += 1;
+			this.Value = value;
+			this.CurrentPosition += 1;
 		}
 
 		/// <inheritdoc/>
-		public void WriteByte(byte value)
-		{
-			this.writer.WriteLine(value.ToString(CultureInfo.InvariantCulture));
-		}
+		public void WriteByte(byte value) => this.writer.WriteLine(value.ToString(CultureInfo.InvariantCulture));
 
 		/// <inheritdoc/>
 		public void WriteBytes(byte[] value)
@@ -323,28 +308,16 @@ namespace netDxf.IO
 		}
 
 		/// <inheritdoc/>
-		public void WriteShort(short value)
-		{
-			this.writer.WriteLine(value.ToString(CultureInfo.InvariantCulture));
-		}
+		public void WriteShort(short value) => this.writer.WriteLine(value.ToString(CultureInfo.InvariantCulture));
 
 		/// <inheritdoc/>
-		public void WriteInt(int value)
-		{
-			this.writer.WriteLine(value.ToString(CultureInfo.InvariantCulture));
-		}
+		public void WriteInt(int value) => this.writer.WriteLine(value.ToString(CultureInfo.InvariantCulture));
 
 		/// <inheritdoc/>
-		public void WriteLong(long value)
-		{
-			this.writer.WriteLine(value.ToString(CultureInfo.InvariantCulture));
-		}
+		public void WriteLong(long value) => this.writer.WriteLine(value.ToString(CultureInfo.InvariantCulture));
 
 		/// <inheritdoc/>
-		public void WriteBool(bool value)
-		{
-			this.writer.WriteLine(value ? 1 : 0);
-		}
+		public void WriteBool(bool value) => this.writer.WriteLine(value ? 1 : 0);
 
 		/// <inheritdoc/>
 		public void WriteDouble(double value)
@@ -354,22 +327,14 @@ namespace netDxf.IO
 		}
 
 		/// <inheritdoc/>
-		public void WriteString(string value)
-		{
-			this.writer.WriteLine(value);
-		}
+		public void WriteString(string value) => this.writer.WriteLine(value);
 
 		/// <inheritdoc/>
-		public void Flush()
-		{
-			this.writer.Flush();
-		}
+		public void Flush() => this.writer.Flush();
 
 		/// <inheritdoc/>
 		public override string ToString()
-		{
-			return string.Format("{0}:{1}", this.dxfCode, this.dxfValue);
-		}
+			=> string.Format("{0}:{1}", this.Code, this.Value);
 
 		#endregion
 	}

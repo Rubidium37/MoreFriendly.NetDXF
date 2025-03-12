@@ -31,16 +31,6 @@ namespace netDxf.Entities
 	public class Face3D :
 		EntityObject
 	{
-		#region private fields
-
-		private Vector3 firstVertex;
-		private Vector3 secondVertex;
-		private Vector3 thirdVertex;
-		private Vector3 fourthVertex;
-		private Face3DEdgeFlags edgeFlags;
-
-		#endregion
-
 		#region constructors
 
 		/// <summary>Initializes a new instance of the class.</summary>
@@ -91,11 +81,11 @@ namespace netDxf.Entities
 		public Face3D(Vector3 firstVertex, Vector3 secondVertex, Vector3 thirdVertex, Vector3 fourthVertex)
 			: base(EntityType.Face3D, DxfObjectCode.Face3d)
 		{
-			this.firstVertex = firstVertex;
-			this.secondVertex = secondVertex;
-			this.thirdVertex = thirdVertex;
-			this.fourthVertex = fourthVertex;
-			this.edgeFlags = Face3DEdgeFlags.None;
+			this.FirstVertex = firstVertex;
+			this.SecondVertex = secondVertex;
+			this.ThirdVertex = thirdVertex;
+			this.FourthVertex = fourthVertex;
+			this.EdgeFlags = Face3DEdgeFlags.None;
 		}
 
 		#endregion
@@ -103,39 +93,19 @@ namespace netDxf.Entities
 		#region public properties
 
 		/// <summary>Gets or sets the first <b>Face3D</b> <see cref="Vector3">vertex</see>.</summary>
-		public Vector3 FirstVertex
-		{
-			get { return this.firstVertex; }
-			set { this.firstVertex = value; }
-		}
+		public Vector3 FirstVertex { get; set; }
 
 		/// <summary>Gets or sets the second <b>Face3D</b> <see cref="Vector3">vertex</see>.</summary>
-		public Vector3 SecondVertex
-		{
-			get { return this.secondVertex; }
-			set { this.secondVertex = value; }
-		}
+		public Vector3 SecondVertex { get; set; }
 
 		/// <summary>Gets or sets the third <b>Face3D</b> <see cref="Vector3">vertex</see>.</summary>
-		public Vector3 ThirdVertex
-		{
-			get { return this.thirdVertex; }
-			set { this.thirdVertex = value; }
-		}
+		public Vector3 ThirdVertex { get; set; }
 
 		/// <summary>Gets or sets the fourth <b>Face3D</b> <see cref="Vector3">vertex</see>.</summary>
-		public Vector3 FourthVertex
-		{
-			get { return this.fourthVertex; }
-			set { this.fourthVertex = value; }
-		}
+		public Vector3 FourthVertex { get; set; }
 
 		/// <summary>Gets or sets the <b>Face3D</b> edge visibility.</summary>
-		public Face3DEdgeFlags EdgeFlags
-		{
-			get { return this.edgeFlags; }
-			set { this.edgeFlags = value; }
-		}
+		public Face3DEdgeFlags EdgeFlags { get; set; }
 
 		#endregion
 
@@ -144,10 +114,10 @@ namespace netDxf.Entities
 		/// <inheritdoc/>
 		public override void TransformBy(Matrix3 transformation, Vector3 translation)
 		{
-			this.firstVertex = transformation * this.firstVertex + translation;
-			this.secondVertex = transformation * this.secondVertex + translation;
-			this.thirdVertex = transformation * this.thirdVertex + translation;
-			this.fourthVertex = transformation * this.fourthVertex + translation;
+			this.FirstVertex = transformation * this.FirstVertex + translation;
+			this.SecondVertex = transformation * this.SecondVertex + translation;
+			this.ThirdVertex = transformation * this.ThirdVertex + translation;
+			this.FourthVertex = transformation * this.FourthVertex + translation;
 
 			Vector3 newNormal = transformation * this.Normal;
 			if (Vector3.Equals(Vector3.Zero, newNormal))
@@ -172,11 +142,11 @@ namespace netDxf.Entities
 				Normal = this.Normal,
 				IsVisible = this.IsVisible,
 				//Face3d properties
-				FirstVertex = this.firstVertex,
-				SecondVertex = this.secondVertex,
-				ThirdVertex = this.thirdVertex,
-				FourthVertex = this.fourthVertex,
-				EdgeFlags = this.edgeFlags
+				FirstVertex = this.FirstVertex,
+				SecondVertex = this.SecondVertex,
+				ThirdVertex = this.ThirdVertex,
+				FourthVertex = this.FourthVertex,
+				EdgeFlags = this.EdgeFlags
 			};
 
 			foreach (XData data in this.XData.Values)

@@ -35,9 +35,7 @@ namespace netDxf.Entities
 	{
 		#region private fields
 
-		private Vector3 center;
 		private double radius;
-		private double thickness;
 
 		#endregion
 
@@ -55,13 +53,13 @@ namespace netDxf.Entities
 		public Circle(Vector3 center, double radius)
 			: base(EntityType.Circle, DxfObjectCode.Circle)
 		{
-			this.center = center;
+			this.Center = center;
 			if (radius <= 0)
 			{
 				throw new ArgumentOutOfRangeException(nameof(radius), radius, "The circle radius must be greater than zero.");
 			}
 			this.radius = radius;
-			this.thickness = 0.0;
+			this.Thickness = 0.0;
 		}
 
 		/// <summary>Initializes a new instance of the class.</summary>
@@ -77,16 +75,12 @@ namespace netDxf.Entities
 		#region public properties
 
 		/// <summary>Gets or sets the circle <see cref="Vector3">center</see> in world coordinates.</summary>
-		public Vector3 Center
-		{
-			get { return this.center; }
-			set { this.center = value; }
-		}
+		public Vector3 Center { get; set; }
 
 		/// <summary>Gets or set the circle radius.</summary>
 		public double Radius
 		{
-			get { return this.radius; }
+			get => this.radius;
 			set
 			{
 				if (value <= 0)
@@ -98,11 +92,7 @@ namespace netDxf.Entities
 		}
 
 		/// <summary>Gets or sets the circle thickness.</summary>
-		public double Thickness
-		{
-			get { return this.thickness; }
-			set { this.thickness = value; }
-		}
+		public double Thickness { get; set; }
 
 		#endregion
 
@@ -150,7 +140,7 @@ namespace netDxf.Entities
 				LinetypeScale = this.LinetypeScale,
 				Normal = this.Normal,
 				Elevation = ocsCenter.Z,
-				Thickness = this.thickness,
+				Thickness = this.Thickness,
 				IsClosed = true
 			};
 			foreach (Vector2 v in vertexes)
@@ -207,9 +197,9 @@ namespace netDxf.Entities
 				Normal = this.Normal,
 				IsVisible = this.IsVisible,
 				//Circle properties
-				Center = this.center,
+				Center = this.Center,
 				Radius = this.radius,
-				Thickness = this.thickness
+				Thickness = this.Thickness
 			};
 
 			foreach (XData data in this.XData.Values)

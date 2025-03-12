@@ -42,12 +42,10 @@ namespace netDxf.GTE
 		protected const int DEFAULT_MAX_BISECTIONS = 1024;
 		protected const int SUP_ORDER = 4;
 
-		protected readonly double[] times;
 		protected readonly double[] segmentLength;
 		protected readonly double[] acumulatedLength;
 		protected int rombergOrder;
 		protected int maxBisections;
-		protected bool isConstructed;
 
 		// Abstract base class for a parameterized curve X(t), where t is the
 		// parameter in [tmin,tmax] and X is an N-tuple position.  The first
@@ -57,46 +55,30 @@ namespace netDxf.GTE
 			this(1, new[] { tmin, tmax })
 		{
 		}
-
 		protected ParametricCurve(int numSegments, double[] times)
 		{
-			this.times = new double[numSegments + 1];
-			times.CopyTo(this.times, 0);
+			this.Times = new double[numSegments + 1];
+			times.CopyTo(this.Times, 0);
 			this.segmentLength = new double[numSegments];
 			this.acumulatedLength = new double[numSegments];
 			this.rombergOrder = DEFAULT_ROMBERG_ORDER;
 			this.maxBisections = DEFAULT_MAX_BISECTIONS;
-			this.isConstructed = false;
+			this.IsConstructed = false;
 		}
 
 		// To validate construction, create an object as shown:
 		// DerivedClassCurve<N, Real> curve(parameters);
 		// if (!curve) { <constructor failed, handle accordingly>; }
-		public bool IsConstructed
-		{
-			get { return this.isConstructed; }
-		}
+		public bool IsConstructed { get; protected init; }
 
 		// Member access.
-		public double TMin
-		{
-			get { return this.times[0]; }
-		}
+		public double TMin => this.Times[0];
 
-		public double TMax
-		{
-			get { return this.times[this.times.Length - 1]; }
-		}
+		public double TMax => this.Times[this.Times.Length - 1];
 
-		public int NumSegments
-		{
-			get { return this.segmentLength.Length; }
-		}
+		public int NumSegments => this.segmentLength.Length;
 
-		public double[] Times
-		{
-			get { return this.times; }
-		}
+		public double[] Times { get; protected set; }
 
 		// Parameters used in GetLength(...), GetTotalLength() and
 		// GetTime(...).
@@ -104,25 +86,25 @@ namespace netDxf.GTE
 		// The default value is 8.
 		public int RombergOrder
 		{
-			get { return this.rombergOrder; }
-			set { this.rombergOrder = Math.Max(value, 1); }
+			get => this.rombergOrder;
+			set => this.rombergOrder = Math.Max(value, 1);
 		}
 
 		// The default value is 1024.
 		public int MaxBisections
 		{
-			get { return this.maxBisections; }
-			set { this.maxBisections = Math.Max(value, 1); }
+			get => this.maxBisections;
+			set => this.maxBisections = Math.Max(value, 1);
 		}
 
 		// This function applies only when the first constructor is used(two
 		// times rather than a sequence of three or more times).
 		public void SetTimeInterval(double tmin, double tmax)
 		{
-			if (this.times.Length == 2)
+			if (this.Times.Length == 2)
 			{
-				this.times[0] = tmin;
-				this.times[1] = tmax;
+				this.Times[0] = tmin;
+				this.Times[1] = tmax;
 			}
 		}
 
@@ -172,9 +154,7 @@ namespace netDxf.GTE
 			}
 
 			double speed(double t)
-			{
-				return this.GetSpeed(t);
-			}
+				=> this.GetSpeed(t);
 
 			if (Math.Abs(this.segmentLength[0]) < double.Epsilon)
 			{
@@ -183,7 +163,7 @@ namespace netDxf.GTE
 				double accumulated = 0;
 				for (int i = 0, ip1 = 1; i < numSegments; ++i, ++ip1)
 				{
-					this.segmentLength[i] = Integration.Romberg(this.rombergOrder, this.times[i], this.times[ip1], speed);
+					this.segmentLength[i] = Integration.Romberg(this.rombergOrder, this.Times[i], this.Times[ip1], speed);
 					accumulated += this.segmentLength[i];
 					this.acumulatedLength[i] = accumulated;
 				}
@@ -192,10 +172,10 @@ namespace netDxf.GTE
 			t0 = Math.Max(t0, this.TMin);
 			t1 = Math.Min(t1, this.TMax);
 
-			double iter0 = LowerBound(this.times, 0, this.times.Length, t0);
-			int index0 = (int)(iter0 - this.times[0]);
-			double iter1 = LowerBound(this.times, 0, this.times.Length, t1);
-			int index1 = (int)(iter1 - this.times[0]);
+			double iter0 = LowerBound(this.Times, 0, this.Times.Length, t0);
+			int index0 = (int)(iter0 - this.Times[0]);
+			double iter1 = LowerBound(this.Times, 0, this.Times.Length, t1);
+			int index1 = (int)(iter1 - this.Times[0]);
 
 			double length;
 			if (index0 < index1)
@@ -203,13 +183,13 @@ namespace netDxf.GTE
 				length = 0;
 				if (t0 < iter0)
 				{
-					length += Integration.Romberg(this.rombergOrder, t0, this.times[index0], speed);
+					length += Integration.Romberg(this.rombergOrder, t0, this.Times[index0], speed);
 				}
 
 				int isup;
 				if (t1 < iter1)
 				{
-					length += Integration.Romberg(this.rombergOrder, this.times[index1 - 1], t1, speed);
+					length += Integration.Romberg(this.rombergOrder, this.Times[index1 - 1], t1, speed);
 					isup = index1 - 1;
 				}
 				else
@@ -258,11 +238,9 @@ namespace netDxf.GTE
 					double F(double t)
 					{
 						double speed(double z)
-						{
-							return this.GetSpeed(z);
-						}
+							=> this.GetSpeed(z);
 
-						return Integration.Romberg(this.rombergOrder, this.times[0], t, speed) - length;
+						return Integration.Romberg(this.rombergOrder, this.Times[0], t, speed) - length;
 					}
 
 					// We know that F(tmin) < 0 and F(tmax) > 0, which allows us to
@@ -270,24 +248,24 @@ namespace netDxf.GTE
 					// narrow it down with a reasonable initial guess.
 					double ratio = length / this.GetTotalLength();
 					double omratio = 1.0 - ratio;
-					double tmid = omratio * this.times[0] + ratio * this.times[this.times.Length - 1];
+					double tmid = omratio * this.Times[0] + ratio * this.Times[this.Times.Length - 1];
 					double fmid = F(tmid);
 					if (fmid > 0)
 					{
-						RootsBisection.Find(F, this.times[0], tmid, -1.0, 1.0, this.maxBisections, out tmid);
+						RootsBisection.Find(F, this.Times[0], tmid, -1.0, 1.0, this.maxBisections, out tmid);
 					}
 					else if (fmid < 0)
 					{
-						RootsBisection.Find(F, tmid, this.times[this.times.Length - 1], -1.0, 1.0, this.maxBisections, out tmid);
+						RootsBisection.Find(F, tmid, this.Times[this.Times.Length - 1], -1.0, 1.0, this.maxBisections, out tmid);
 					}
 
 					return tmid;
 				}
 
-				return this.times[this.times.Length - 1];
+				return this.Times[this.Times.Length - 1];
 			}
 
-			return this.times[0];
+			return this.Times[0];
 		}
 
 		// Compute a subset of curve points according to the specified attribute.
@@ -297,10 +275,10 @@ namespace netDxf.GTE
 		{
 			Vector3[] points = new Vector3[numPoints];
 			ts = new double[numPoints];
-			double delta = (this.times[this.times.Length - 1] - this.times[0]) / (numPoints - 1.0);
+			double delta = (this.Times[this.Times.Length - 1] - this.Times[0]) / (numPoints - 1.0);
 			for (int i = 0; i < numPoints; ++i)
 			{
-				double t = this.times[0] + delta * i;
+				double t = this.Times[0] + delta * i;
 				points[i] = this.GetPosition(t);
 				ts[i] = t;
 			}

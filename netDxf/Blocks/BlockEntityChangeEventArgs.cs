@@ -32,19 +32,13 @@ namespace netDxf.Blocks
 	public class BlockEntityChangeEventArgs :
 		EventArgs
 	{
-		#region private fields
-
-		private readonly EntityObject item;
-
-		#endregion
-
 		#region constructor
 
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="item">The entity that is being added or removed from the block.</param>
 		public BlockEntityChangeEventArgs(EntityObject item)
 		{
-			this.item = item;
+			this.Item = item;
 		}
 
 		#endregion
@@ -52,10 +46,7 @@ namespace netDxf.Blocks
 		#region public properties
 
 		/// <summary>Gets the entity that is being added or removed.</summary>
-		public EntityObject Item
-		{
-			get { return this.item; }
-		}
+		public EntityObject Item { get; }
 
 		#endregion
 	}

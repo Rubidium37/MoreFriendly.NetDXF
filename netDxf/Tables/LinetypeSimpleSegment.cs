@@ -56,9 +56,7 @@ namespace netDxf.Tables
 
 		/// <inheritdoc/>
 		public override object Clone()
-		{
-			return new LinetypeSimpleSegment(this.Length);
-		}
+			=> new LinetypeSimpleSegment(this.Length);
 
 		#endregion
 	}

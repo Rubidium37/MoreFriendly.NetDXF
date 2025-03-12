@@ -39,9 +39,7 @@ namespace netDxf.GTE
 	public class BezierCurve :
 		ParametricCurve
 	{
-		private readonly int degree;
-		private readonly int numControls;
-		private readonly Vector3[][] controls;
+		private readonly Vector3[][] controls = new Vector3[SUP_ORDER][];
 		private readonly double[][] choose;
 
 		// Construction and destruction.  The number of control points must be
@@ -54,25 +52,24 @@ namespace netDxf.GTE
 		{
 			Debug.Assert(degree >= 2 && controls != null, "Invalid input.");
 
-			this.degree = degree;
-			this.numControls = degree + 1;
+			this.Degree = degree;
+			this.NumControls = degree + 1;
 			this.choose = new double[this.NumControls][];
 
 			// Copy the controls.
-			this.controls = new Vector3[SUP_ORDER][];
 			this.controls[0] = new Vector3[this.NumControls];
 			controls.CopyTo(this.controls[0], 0);
 
 			// Compute first-order differences.
-			this.controls[1] = new Vector3[this.numControls - 1];
-			for (int i = 0, ip1 = 1; ip1 < this.numControls; i++, ip1++)
+			this.controls[1] = new Vector3[this.NumControls - 1];
+			for (int i = 0, ip1 = 1; ip1 < this.NumControls; i++, ip1++)
 			{
 				this.controls[1][i] = this.controls[0][ip1] - this.controls[0][i];
 			}
 
 			// Compute second-order differences.
-			this.controls[2] = new Vector3[this.numControls - 2];
-			for (int i = 0, ip1 = 1, ip2 = 2; ip2 < this.numControls; i++, ip1++, ip2++)
+			this.controls[2] = new Vector3[this.NumControls - 2];
+			for (int i = 0, ip1 = 1, ip2 = 2; ip2 < this.NumControls; i++, ip1++, ip2++)
 			{
 				this.controls[2][i] = this.controls[1][ip1] - this.controls[1][i];
 			}
@@ -80,8 +77,8 @@ namespace netDxf.GTE
 			// Compute third-order differences.
 			if (degree >= 3)
 			{
-				this.controls[3] = new Vector3[this.numControls - 3];
-				for (int i = 0, ip1 = 1, ip3 = 3; ip3 < this.numControls; i++, ip1++, ip3++)
+				this.controls[3] = new Vector3[this.NumControls - 3];
+				for (int i = 0, ip1 = 1, ip3 = 3; ip3 < this.NumControls; i++, ip1++, ip3++)
 				{
 					this.controls[3][i] = this.controls[2][ip1] - this.controls[2][i];
 				}
@@ -92,7 +89,7 @@ namespace netDxf.GTE
 			// the entries for r >= c.
 			this.choose[0] = new[] { 1.0 };
 			this.choose[1] = new[] { 1.0, 1.0 };
-			for (int i = 2; i <= this.degree; i++)
+			for (int i = 2; i <= this.Degree; i++)
 			{
 				this.choose[i] = new double[i + 1];
 				this.choose[i][0] = 1.0;
@@ -103,24 +100,15 @@ namespace netDxf.GTE
 				}
 			}
 
-			this.isConstructed = true;
+			this.IsConstructed = true;
 		}
 
 		// Member access.
-		public int Degree
-		{
-			get { return this.degree; }
-		}
+		public int Degree { get; }
 
-		public int NumControls
-		{
-			get { return this.numControls; }
-		}
+		public int NumControls { get; }
 
-		public Vector3[] Controls
-		{
-			get { return this.controls[0]; }
-		}
+		public Vector3[] Controls => this.controls[0];
 
 		// Evaluation of the curve.  The function supports derivative
 		// calculation through order 3; that is, order <= 3 is required.  If
@@ -135,7 +123,7 @@ namespace netDxf.GTE
 			const int supOrder = SUP_ORDER;
 			jet = new Vector3[supOrder];
 
-			if (!this.isConstructed || order >= SUP_ORDER)
+			if (!this.IsConstructed || order >= SUP_ORDER)
 			{
 				// Return a zero-valued jet for invalid state.
 				return;
@@ -155,7 +143,7 @@ namespace netDxf.GTE
 					if (order >= 3)
 					{
 						// Compute third derivative.
-						if (this.degree >= 3)
+						if (this.Degree >= 3)
 						{
 							jet[3] = this.Compute(t, omt, 3);
 						}
@@ -174,7 +162,7 @@ namespace netDxf.GTE
 			Vector3 result = omt * this.controls[order][0];
 
 			double tpow = t;
-			int isup = this.degree - order;
+			int isup = this.Degree - order;
 			for (int i = 1; i < isup; i++)
 			{
 				double c = this.choose[isup][i] * tpow;
@@ -186,7 +174,7 @@ namespace netDxf.GTE
 			int multiplier = 1;
 			for (int i = 0; i < order; i++)
 			{
-				multiplier *= this.degree - i;
+				multiplier *= this.Degree - i;
 			}
 			result *= multiplier;
 

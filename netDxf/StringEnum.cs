@@ -33,18 +33,12 @@ namespace netDxf
 	/// <summary>Helper class for working with 'extended' enums using <see cref="StringValueAttribute"/> attributes.</summary>
 	public class StringEnum<T> where T : Enum
 	{
-		#region private fields
-
-		private readonly Type enumType;
-
-		#endregion
-
 		#region constructors
 
 		/// <summary>Creates a new <see cref="StringEnum{T}"/> instance.</summary>
 		public StringEnum()
 		{
-			this.enumType = typeof(T);
+			this.EnumType = typeof(T);
 		}
 
 		#endregion
@@ -53,10 +47,7 @@ namespace netDxf
 
 		/// <summary>Gets the underlying enum type for this instance.</summary>
 		/// <value></value>
-		public Type EnumType
-		{
-			get { return this.enumType; }
-		}
+		public Type EnumType { get; }
 
 		#endregion
 
@@ -68,7 +59,7 @@ namespace netDxf
 		{
 			List<string> values = new List<string>();
 			//Look for our string value associated with fields in this enum
-			foreach (FieldInfo fi in this.enumType.GetFields())
+			foreach (FieldInfo fi in this.EnumType.GetFields())
 			{
 				//Check for our custom attribute
 				StringValueAttribute[] attrs = fi.GetCustomAttributes(typeof(StringValueAttribute), false) as StringValueAttribute[];
@@ -92,7 +83,7 @@ namespace netDxf
 		{
 			Dictionary<T, string> values = new Dictionary<T, string>();
 			//Look for our string value associated with fields in this enum
-			foreach (FieldInfo fi in this.enumType.GetFields())
+			foreach (FieldInfo fi in this.EnumType.GetFields())
 			{
 				//Check for our custom attribute
 				StringValueAttribute[] attrs = fi.GetCustomAttributes(typeof(StringValueAttribute), false) as StringValueAttribute[];
@@ -103,7 +94,7 @@ namespace netDxf
 
 				if (attrs.Length > 0)
 				{
-					object str = Enum.Parse(this.enumType, fi.Name);
+					object str = Enum.Parse(this.EnumType, fi.Name);
 					values.Add((T)str, attrs[0].Value);
 				}
 			}
@@ -118,11 +109,7 @@ namespace netDxf
 		/// <summary>Return the existence of the given string value within the enum.</summary>
 		/// <param name="value">String value.</param>
 		/// <returns>Existence of the string value</returns>
-		public static bool IsStringDefined(string value)
-		{
-			return IsStringDefined(value, StringComparison.CurrentCulture);
-		}
-
+		public static bool IsStringDefined(string value) => IsStringDefined(value, StringComparison.CurrentCulture);
 		/// <summary>Return the existence of the given string value within the enum.</summary>
 		/// <param name="value">String value.</param>
 		/// <param name="comparisonType">Specifies how to conduct a case-insensitive match on the supplied string value</param>
@@ -177,11 +164,7 @@ namespace netDxf
 		/// <summary>Parses the supplied enum and string value to find an associated enum value.</summary>
 		/// <param name="value">String value.</param>
 		/// <returns>Enum value associated with the string value, if not found the default enum will be returned.</returns>
-		public static T Parse(string value)
-		{
-			return Parse(value, StringComparison.CurrentCulture);
-		}
-
+		public static T Parse(string value) => Parse(value, StringComparison.CurrentCulture);
 		/// <summary>Parses the supplied enum and string value to find an associated enum value.</summary>
 		/// <param name="value">String value.</param>
 		/// <param name="comparisonType">Specifies how to conduct a case-insensitive match on the supplied string value.</param>
@@ -227,20 +210,15 @@ namespace netDxf
 	[AttributeUsage(AttributeTargets.Field)]
 	public sealed class StringValueAttribute : Attribute
 	{
-		private readonly string value;
-
 		/// <summary>Creates a new <see cref="StringValueAttribute"/> instance.</summary>
 		/// <param name="value">Value.</param>
 		public StringValueAttribute(string value)
 		{
-			this.value = value;
+			this.Value = value;
 		}
 
 		/// <summary>Gets the value.</summary>
-		public string Value
-		{
-			get { return this.value; }
-		}
+		public string Value { get; }
 	}
 
 	#endregion

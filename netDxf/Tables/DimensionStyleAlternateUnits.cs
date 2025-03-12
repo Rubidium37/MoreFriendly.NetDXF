@@ -35,18 +35,11 @@ namespace netDxf.Tables
 	{
 		#region private fields
 
-		private bool dimalt;
-		private LinearUnitType dimaltu;
-		private bool stackedUnits;
 		private short dimaltd;
 		private double dimaltf;
 		private double dimaltrnd;
 		private string dimPrefix;
 		private string dimSuffix;
-		private bool suppressLinearLeadingZeros;
-		private bool suppressLinearTrailingZeros;
-		private bool suppressZeroFeet;
-		private bool suppressZeroInches;
 
 		#endregion
 
@@ -55,17 +48,17 @@ namespace netDxf.Tables
 		/// <summary>Initializes a new instance of the class.</summary>
 		public DimensionStyleAlternateUnits()
 		{
-			this.dimalt = false;
+			this.Enabled = false;
 			this.dimaltd = 2;
 			this.dimPrefix = string.Empty;
 			this.dimSuffix = string.Empty;
 			this.dimaltf = 25.4;
-			this.dimaltu = LinearUnitType.Decimal;
-			this.stackedUnits = false;
-			this.suppressLinearLeadingZeros = false;
-			this.suppressLinearTrailingZeros = false;
-			this.suppressZeroFeet = true;
-			this.suppressZeroInches = true;
+			this.LengthUnits = LinearUnitType.Decimal;
+			this.StackUnits = false;
+			this.SuppressLinearLeadingZeros = false;
+			this.SuppressLinearTrailingZeros = false;
+			this.SuppressZeroFeet = true;
+			this.SuppressZeroInches = true;
 			this.dimaltrnd = 0.0;
 		}
 
@@ -74,11 +67,7 @@ namespace netDxf.Tables
 		#region public properties
 
 		/// <summary>Gets or sets if the alternate measurement units are added to the dimension text. (<b>DIMALT</b>)</summary>
-		public bool Enabled
-		{
-			get { return this.dimalt; }
-			set { this.dimalt = value; }
-		}
+		public bool Enabled { get; set; }
 
 		/// <summary>Sets the number of decimal places displayed for the alternate units of a dimension. (<b>DIMALTD</b>)</summary>
 		/// <remarks>
@@ -88,7 +77,7 @@ namespace netDxf.Tables
 		/// </remarks>
 		public short LengthPrecision
 		{
-			get { return this.dimaltd; }
+			get => this.dimaltd;
 			set
 			{
 				if (value < 0)
@@ -102,15 +91,15 @@ namespace netDxf.Tables
 		/// <summary>Specifies the text prefix for the dimension. (<b>DIMAPOST</b>)</summary>
 		public string Prefix
 		{
-			get { return this.dimPrefix; }
-			set { this.dimPrefix = value ?? string.Empty; }
+			get => this.dimPrefix;
+			set => this.dimPrefix = value ?? string.Empty;
 		}
 
 		/// <summary>Specifies the text suffix for the dimension. (<b>DIMAPOST</b>)</summary>
 		public string Suffix
 		{
-			get { return this.dimSuffix; }
-			set { this.dimSuffix = value ?? string.Empty; }
+			get => this.dimSuffix;
+			set => this.dimSuffix = value ?? string.Empty;
 		}
 
 		/// <summary>Gets or sets the multiplier used as the conversion factor between primary and alternate units. (<b>DIMALTF</b>)</summary>
@@ -120,7 +109,7 @@ namespace netDxf.Tables
 		/// </remarks>
 		public double Multiplier
 		{
-			get { return this.dimaltf; }
+			get => this.dimaltf;
 			set
 			{
 				if (value <= 0.0)
@@ -139,54 +128,30 @@ namespace netDxf.Tables
 		/// Architectural<br/>
 		/// Fractional
 		/// </remarks>
-		public LinearUnitType LengthUnits
-		{
-			get { return this.dimaltu; }
-			set { this.dimaltu = value; }
-		}
+		public LinearUnitType LengthUnits { get; set; }
 
 		/// <summary>Gets or set if the <see cref="LinearUnitType.Architectural"/> or <see cref="LinearUnitType.Fractional"/> linear units will be shown stacked or not. (<b>DIMALTU</b>)</summary>
 		/// <remarks>
 		/// This value only is applicable if the <see cref="LengthUnits"/> property has been set to <see cref="LinearUnitType.Architectural"/> or <see cref="LinearUnitType.Fractional"/>,
 		/// for any other value this parameter is not applicable.
 		/// </remarks>
-		public bool StackUnits
-		{
-			get { return this.stackedUnits; }
-			set { this.stackedUnits = value; }
-		}
+		public bool StackUnits { get; set; }
 
 		/// <summary>Suppresses leading zeros in linear decimal alternate units. (<b>DIMALTZ</b>)</summary>
 		/// <remarks>This value is part of the <b>DIMALTZ</b> variable.</remarks>
-		public bool SuppressLinearLeadingZeros
-		{
-			get { return this.suppressLinearLeadingZeros; }
-			set { this.suppressLinearLeadingZeros = value; }
-		}
+		public bool SuppressLinearLeadingZeros { get; set; }
 
 		/// <summary>Suppresses trailing zeros in linear decimal alternate units. (<b>DIMALTZ</b>)</summary>
 		/// <remarks>This value is part of the <b>DIMALTZ</b> variable.</remarks>
-		public bool SuppressLinearTrailingZeros
-		{
-			get { return this.suppressLinearTrailingZeros; }
-			set { this.suppressLinearTrailingZeros = value; }
-		}
+		public bool SuppressLinearTrailingZeros { get; set; }
 
 		/// <summary>Suppresses zero feet in architectural alternate units. (<b>DIMALTZ</b>)</summary>
 		/// <remarks>This value is part of the <b>DIMALTZ</b> variable.</remarks>
-		public bool SuppressZeroFeet
-		{
-			get { return this.suppressZeroFeet; }
-			set { this.suppressZeroFeet = value; }
-		}
+		public bool SuppressZeroFeet { get; set; }
 
 		/// <summary>Suppresses zero inches in architectural alternate units. (<b>DIMALTZ</b>)</summary>
 		/// <remarks>This value is part of the <b>DIMALTZ</b> variable.</remarks>
-		public bool SuppressZeroInches
-		{
-			get { return this.suppressZeroInches; }
-			set { this.suppressZeroInches = value; }
-		}
+		public bool SuppressZeroInches { get; set; }
 
 		/// <summary>Gets or sets the value to round all dimensioning distances. (<b>DIMALTRND</b>)</summary>
 		/// <remarks>
@@ -198,7 +163,7 @@ namespace netDxf.Tables
 		/// </remarks>
 		public double Roundoff
 		{
-			get { return this.dimaltrnd; }
+			get => this.dimaltrnd;
 			set
 			{
 				if (value < 0.000001 && !MathHelper.IsZero(value, double.Epsilon))
@@ -218,18 +183,18 @@ namespace netDxf.Tables
 		{
 			DimensionStyleAlternateUnits copy = new DimensionStyleAlternateUnits()
 			{
-				Enabled = this.dimalt,
-				LengthUnits = this.dimaltu,
-				StackUnits = this.stackedUnits,
+				Enabled = this.Enabled,
+				LengthUnits = this.LengthUnits,
+				StackUnits = this.StackUnits,
 				LengthPrecision = this.dimaltd,
 				Multiplier = this.dimaltf,
 				Roundoff = this.dimaltrnd,
 				Prefix = this.dimPrefix,
 				Suffix = this.dimSuffix,
-				SuppressLinearLeadingZeros = this.suppressLinearLeadingZeros,
-				SuppressLinearTrailingZeros = this.suppressLinearTrailingZeros,
-				SuppressZeroFeet = this.suppressZeroFeet,
-				SuppressZeroInches = this.suppressZeroInches
+				SuppressLinearLeadingZeros = this.SuppressLinearLeadingZeros,
+				SuppressLinearTrailingZeros = this.SuppressLinearTrailingZeros,
+				SuppressZeroFeet = this.SuppressZeroFeet,
+				SuppressZeroInches = this.SuppressZeroInches
 			};
 
 			return copy;

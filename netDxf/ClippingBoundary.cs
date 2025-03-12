@@ -38,13 +38,6 @@ namespace netDxf
 	public class ClippingBoundary :
 		ICloneable
 	{
-		#region private fields
-
-		private readonly ClippingBoundaryType type;
-		private readonly IReadOnlyList<Vector2> vertexes;
-
-		#endregion
-
 		#region constructors
 
 		/// <summary>Initializes a new instance of the class as a rectangular clipping boundary.</summary>
@@ -54,8 +47,8 @@ namespace netDxf
 		/// <param name="height">Rectangle height.</param>
 		public ClippingBoundary(double x, double y, double width, double height)
 		{
-			this.type = ClippingBoundaryType.Rectangular;
-			this.vertexes = new List<Vector2> { new Vector2(x, y), new Vector2(x + width, y + height) };
+			this.Type = ClippingBoundaryType.Rectangular;
+			this.Vertexes = new List<Vector2> { new Vector2(x, y), new Vector2(x + width, y + height) };
 		}
 
 		/// <summary>Initializes a new instance of the class as a rectangular clipping boundary from two opposite corners.</summary>
@@ -63,19 +56,19 @@ namespace netDxf
 		/// <param name="secondCorner">Rectangle second corner.</param>
 		public ClippingBoundary(Vector2 firstCorner, Vector2 secondCorner)
 		{
-			this.type = ClippingBoundaryType.Rectangular;
-			this.vertexes = new List<Vector2> { firstCorner, secondCorner };
+			this.Type = ClippingBoundaryType.Rectangular;
+			this.Vertexes = new List<Vector2> { firstCorner, secondCorner };
 		}
 
 		/// <summary>Initializes a new instance of the class as a polygonal clipping boundary.</summary>
 		/// <param name="vertexes">The list of vertexes of the polygonal boundary.</param>
 		public ClippingBoundary(IEnumerable<Vector2> vertexes)
 		{
-			this.type = ClippingBoundaryType.Polygonal;
-			this.vertexes = new List<Vector2>(vertexes);
-			if (this.vertexes.Count < 3)
+			this.Type = ClippingBoundaryType.Polygonal;
+			this.Vertexes = new List<Vector2>(vertexes);
+			if (this.Vertexes.Count < 3)
 			{
-				throw new ArgumentOutOfRangeException(nameof(vertexes), this.vertexes.Count, "The number of vertexes for the polygonal clipping boundary must be equal or greater than three.");
+				throw new ArgumentOutOfRangeException(nameof(vertexes), this.Vertexes.Count, "The number of vertexes for the polygonal clipping boundary must be equal or greater than three.");
 			}
 		}
 
@@ -84,16 +77,10 @@ namespace netDxf
 		#region public properties
 
 		/// <summary>Gets the clipping boundary type, rectangular or polygonal.</summary>
-		public ClippingBoundaryType Type
-		{
-			get { return this.type; }
-		}
+		public ClippingBoundaryType Type { get; }
 
 		/// <summary>Gets the list of vertexes of the polygonal boundary, or the opposite vertexes if the boundary is rectangular.</summary>
-		public IReadOnlyList<Vector2> Vertexes
-		{
-			get { return this.vertexes; }
-		}
+		public IReadOnlyList<Vector2> Vertexes { get; }
 
 		#endregion
 
@@ -102,9 +89,9 @@ namespace netDxf
 		/// <inheritdoc/>
 		public object Clone()
 		{
-			return this.type == ClippingBoundaryType.Rectangular
-				? new ClippingBoundary(this.vertexes[0], this.vertexes[1])
-				: new ClippingBoundary(this.vertexes);
+			return this.Type == ClippingBoundaryType.Rectangular
+				? new ClippingBoundary(this.Vertexes[0], this.Vertexes[1])
+				: new ClippingBoundary(this.Vertexes);
 		}
 
 		#endregion

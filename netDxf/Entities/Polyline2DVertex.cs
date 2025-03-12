@@ -33,10 +33,8 @@ namespace netDxf.Entities
 	{
 		#region private fields
 
-		private Vector2 position;
 		private double startWidth;
 		private double endWidth;
-		private double bulge;
 
 		#endregion
 
@@ -77,8 +75,8 @@ namespace netDxf.Entities
 		/// <param name="bulge">Vertex bulge (default: 0.0).</param>
 		public Polyline2DVertex(Vector2 position, double bulge)
 		{
-			this.position = position;
-			this.bulge = bulge;
+			this.Position = position;
+			this.Bulge = bulge;
 			this.startWidth = 0.0;
 			this.endWidth = 0.0;
 		}
@@ -87,8 +85,8 @@ namespace netDxf.Entities
 		/// <param name="vertex">A <see cref="Polyline2D"/> vertex.</param>
 		public Polyline2DVertex(Polyline2DVertex vertex)
 		{
-			this.position = vertex.Position;
-			this.bulge = vertex.Bulge;
+			this.Position = vertex.Position;
+			this.Bulge = vertex.Bulge;
 			this.startWidth = vertex.startWidth;
 			this.endWidth = vertex.EndWidth;
 		}
@@ -98,17 +96,13 @@ namespace netDxf.Entities
 		#region public properties
 
 		/// <summary>Gets or sets the polyline 2D vertex <see cref="Vector2">position</see>.</summary>
-		public Vector2 Position
-		{
-			get { return this.position; }
-			set { this.position = value; }
-		}
+		public Vector2 Position { get; set; }
 
 		/// <summary>Gets or sets the polyline 2D vertex start segment width.</summary>
 		/// <remarks>Widths greater than zero produce wide lines.</remarks>
 		public double StartWidth
 		{
-			get { return this.startWidth; }
+			get => this.startWidth;
 			set
 			{
 				if (value < 0)
@@ -123,7 +117,7 @@ namespace netDxf.Entities
 		/// <remarks>Widths greater than zero produce wide lines.</remarks>
 		public double EndWidth
 		{
-			get { return this.endWidth; }
+			get => this.endWidth;
 			set
 			{
 				if (value < 0)
@@ -138,11 +132,7 @@ namespace netDxf.Entities
 		/// made negative if the arc goes clockwise from the start point to the endpoint.
 		/// A bulge of 0 indicates a straight segment, and a bulge of 1 is a semicircle.
 		/// </remarks>
-		public double Bulge
-		{
-			get { return this.bulge; }
-			set { this.bulge = value; }
-		}
+		public double Bulge { get; set; }
 
 		#endregion
 
@@ -150,15 +140,11 @@ namespace netDxf.Entities
 
 		/// <inheritdoc/>
 		public override string ToString()
-		{
-			return string.Format("{0}: ({1})", "Polyline2DVertex", this.position);
-		}
+			=> string.Format("{0}: ({1})", "Polyline2DVertex", this.Position);
 
 		/// <inheritdoc/>
 		public object Clone()
-		{
-			return new Polyline2DVertex(this);
-		}
+			=> new Polyline2DVertex(this);
 
 		#endregion
 	}

@@ -36,9 +36,6 @@ namespace netDxf.Entities
 		#region private fields
 
 		private double angle;
-		private Vector2 origin;
-		private Vector2 delta;
-		private readonly List<double> dashPattern;
 
 		#endregion
 
@@ -48,9 +45,9 @@ namespace netDxf.Entities
 		public HatchPatternLineDefinition()
 		{
 			this.angle = 0.0;
-			this.origin = Vector2.Zero;
-			this.delta = Vector2.Zero;
-			this.dashPattern = new List<double>();
+			this.Origin = Vector2.Zero;
+			this.Delta = Vector2.Zero;
+			this.DashPattern = new List<double>();
 		}
 
 		#endregion
@@ -60,36 +57,25 @@ namespace netDxf.Entities
 		/// <summary>Gets or sets the angle of the line.</summary>
 		public double Angle
 		{
-			get { return this.angle; }
-			set { this.angle = MathHelper.NormalizeAngle(value); }
+			get => this.angle;
+			set => this.angle = MathHelper.NormalizeAngle(value);
 		}
 
 		/// <summary>Gets or sets the origin of the line.</summary>
-		public Vector2 Origin
-		{
-			get { return this.origin; }
-			set { this.origin = value; }
-		}
+		public Vector2 Origin { get; set; }
 
 		/// <summary>Gets or sets the local displacements between lines of the same family.</summary>
 		/// <remarks>
 		/// The Delta.X value indicates the displacement between members of the family in the direction of the line. It is used only for dashed lines.
 		/// The Delta.Y value indicates the spacing between members of the family; that is, it is measured perpendicular to the lines.
 		/// </remarks>
-		public Vector2 Delta
-		{
-			get { return this.delta; }
-			set { this.delta = value; }
-		}
+		public Vector2 Delta { get; set; }
 
 		/// <summary>Gets he dash pattern of the line it is equivalent as the segments of a <see cref="Linetype"/>.</summary>
 		/// <remarks>
 		/// Positive values means solid segments and negative values means spaces (one entry per element).
 		/// </remarks>
-		public List<double> DashPattern
-		{
-			get { return this.dashPattern; }
-		}
+		public List<double> DashPattern { get; }
 
 		#endregion
 
@@ -101,11 +87,11 @@ namespace netDxf.Entities
 			HatchPatternLineDefinition copy = new HatchPatternLineDefinition
 			{
 				Angle = this.angle,
-				Origin = this.origin,
-				Delta = this.delta,
+				Origin = this.Origin,
+				Delta = this.Delta,
 			};
 
-			foreach (double dash in this.dashPattern)
+			foreach (double dash in this.DashPattern)
 				copy.DashPattern.Add(dash);
 
 			return copy;

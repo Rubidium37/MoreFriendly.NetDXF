@@ -29,17 +29,13 @@ namespace netDxf.Collections
 {
 	internal class DxfObjectReferences
 	{
-		private readonly Dictionary<DxfObject, int> references;
+		private readonly Dictionary<DxfObject, int> references = new Dictionary<DxfObject, int>();
 
 		public DxfObjectReferences()
 		{
-			this.references = new Dictionary<DxfObject, int>();
 		}
 
-		public bool IsEmpty()
-		{
-			return this.references.Count == 0;
-		}
+		public bool IsEmpty() => this.references.Count == 0;
 
 		public void Add(DxfObject item)
 		{

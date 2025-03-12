@@ -61,20 +61,14 @@ namespace netDxf.Collections
 
 		/// <inheritdoc/>
 		internal override VPort Add(VPort vport, bool assignHandle)
-		{
-			throw new ArgumentException("VPorts cannot be added to the collection. There is only one VPort in the list the \"*Active\".", nameof(vport));
-		}
+			=> throw new ArgumentException("VPorts cannot be added to the collection. There is only one VPort in the list the \"*Active\".", nameof(vport));
 
 		/// <inheritdoc/>
 		public override bool Remove(string name)
-		{
-			throw new ArgumentException("VPorts cannot be removed from the collection.", nameof(name));
-		}
+			=> throw new ArgumentException("VPorts cannot be removed from the collection.", nameof(name));
 		/// <inheritdoc/>
 		public override bool Remove(VPort item)
-		{
-			throw new ArgumentException("VPorts cannot be removed from the collection.", nameof(item));
-		}
+			=> throw new ArgumentException("VPorts cannot be removed from the collection.", nameof(item));
 
 		#endregion
 	}

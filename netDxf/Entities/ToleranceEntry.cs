@@ -34,28 +34,17 @@ namespace netDxf.Entities
 	public class ToleranceEntry :
 		ICloneable
 	{
-		#region private fields
-
-		private ToleranceGeometricSymbol geometricSymbol;
-		private ToleranceValue tolerance1;
-		private ToleranceValue tolerance2;
-		private DatumReferenceValue datum1;
-		private DatumReferenceValue datum2;
-		private DatumReferenceValue datum3;
-
-		#endregion
-
 		#region constructors
 
 		/// <summary>Initializes a new instance of the class.</summary>
 		public ToleranceEntry()
 		{
-			this.geometricSymbol = ToleranceGeometricSymbol.None;
-			this.tolerance1 = null;
-			this.tolerance2 = null;
-			this.datum1 = null;
-			this.datum2 = null;
-			this.datum3 = null;
+			this.GeometricSymbol = ToleranceGeometricSymbol.None;
+			this.Tolerance1 = null;
+			this.Tolerance2 = null;
+			this.Datum1 = null;
+			this.Datum2 = null;
+			this.Datum3 = null;
 		}
 
 		#endregion
@@ -63,46 +52,22 @@ namespace netDxf.Entities
 		#region public properties
 
 		/// <summary>Gets or sets the geometric characteristics symbol.</summary>
-		public ToleranceGeometricSymbol GeometricSymbol
-		{
-			get { return this.geometricSymbol; }
-			set { this.geometricSymbol = value; }
-		}
+		public ToleranceGeometricSymbol GeometricSymbol { get; set; }
 
 		/// <summary>Gets or sets the first tolerance value.</summary>
-		public ToleranceValue Tolerance1
-		{
-			get { return this.tolerance1; }
-			set { this.tolerance1 = value; }
-		}
+		public ToleranceValue Tolerance1 { get; set; }
 
 		/// <summary>Gets or sets the second tolerance value.</summary>
-		public ToleranceValue Tolerance2
-		{
-			get { return this.tolerance2; }
-			set { this.tolerance2 = value; }
-		}
+		public ToleranceValue Tolerance2 { get; set; }
 
 		/// <summary>Gets or sets the first datum reference value.</summary>
-		public DatumReferenceValue Datum1
-		{
-			get { return this.datum1; }
-			set { this.datum1 = value; }
-		}
+		public DatumReferenceValue Datum1 { get; set; }
 
 		/// <summary>Gets or sets the second datum reference value.</summary>
-		public DatumReferenceValue Datum2
-		{
-			get { return this.datum2; }
-			set { this.datum2 = value; }
-		}
+		public DatumReferenceValue Datum2 { get; set; }
 
 		/// <summary>Gets or sets the third datum reference value.</summary>
-		public DatumReferenceValue Datum3
-		{
-			get { return this.datum3; }
-			set { this.datum3 = value; }
-		}
+		public DatumReferenceValue Datum3 { get; set; }
 
 		#endregion
 
@@ -110,17 +75,15 @@ namespace netDxf.Entities
 
 		/// <inheritdoc/>
 		public object Clone()
-		{
-			return new ToleranceEntry
+			=> new ToleranceEntry
 			{
-				GeometricSymbol = this.geometricSymbol,
-				Tolerance1 = (ToleranceValue)this.tolerance1?.Clone(),
-				Tolerance2 = (ToleranceValue)this.tolerance2?.Clone(),
-				Datum1 = (DatumReferenceValue)this.datum1?.Clone(),
-				Datum2 = (DatumReferenceValue)this.datum2?.Clone(),
-				Datum3 = (DatumReferenceValue)this.datum3?.Clone(),
+				GeometricSymbol = this.GeometricSymbol,
+				Tolerance1 = (ToleranceValue)this.Tolerance1?.Clone(),
+				Tolerance2 = (ToleranceValue)this.Tolerance2?.Clone(),
+				Datum1 = (DatumReferenceValue)this.Datum1?.Clone(),
+				Datum2 = (DatumReferenceValue)this.Datum2?.Clone(),
+				Datum3 = (DatumReferenceValue)this.Datum3?.Clone(),
 			};
-		}
 
 		#endregion
 	}

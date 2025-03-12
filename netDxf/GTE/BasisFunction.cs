@@ -39,90 +39,48 @@ namespace netDxf.GTE
 {
 	public struct UniqueKnot
 	{
-		private double t;
-		private int multiplicity;
-
 		public UniqueKnot(double t, int multiplicity)
 		{
-			this.t = t;
-			this.multiplicity = multiplicity;
+			this.T = t;
+			this.Multiplicity = multiplicity;
 		}
 
-		public double T
-		{
-			get { return this.t; }
-			set { this.t = value; }
-		}
+		public double T { get; set; }
 
-		public int Multiplicity
-		{
-			get { return this.multiplicity; }
-			set { this.multiplicity = value; }
-		}
+		public int Multiplicity { get; set; }
 	}
 
 	public struct BasisFunctionInput
 	{
-		private int numControls;
-		private int degree;
-		private bool uniform;
-		private bool periodic;
-		private int numUniqueKnots;
-		private UniqueKnot[] uniqueKnots;
-
 		// Construct an open uniform curve with t in [0,1].
 		public BasisFunctionInput(int inNumControls, int inDegree)
 		{
-			this.numControls = inNumControls;
-			this.degree = inDegree;
-			this.uniform = true;
-			this.periodic = false;
-			this.numUniqueKnots = this.numControls - this.degree + 1;
-			this.uniqueKnots = new UniqueKnot[this.numUniqueKnots];
-			this.uniqueKnots[0] = new UniqueKnot(0, this.degree + 1);
-			for (int i = 1; i <= this.numUniqueKnots - 2; i++)
+			this.NumControls = inNumControls;
+			this.Degree = inDegree;
+			this.Uniform = true;
+			this.Periodic = false;
+			this.NumUniqueKnots = this.NumControls - this.Degree + 1;
+			this.UniqueKnots = new UniqueKnot[this.NumUniqueKnots];
+			this.UniqueKnots[0] = new UniqueKnot(0, this.Degree + 1);
+			for (int i = 1; i <= this.NumUniqueKnots - 2; i++)
 			{
-				this.uniqueKnots[i] = new UniqueKnot(i / (this.numUniqueKnots - 1.0), 1);
+				this.UniqueKnots[i] = new UniqueKnot(i / (this.NumUniqueKnots - 1.0), 1);
 			}
 
-			this.uniqueKnots[this.uniqueKnots.Length - 1] = new UniqueKnot(1, this.degree + 1);
+			this.UniqueKnots[this.UniqueKnots.Length - 1] = new UniqueKnot(1, this.Degree + 1);
 		}
 
-		public int NumControls
-		{
-			get { return this.numControls; }
-			set { this.numControls = value; }
-		}
+		public int NumControls { get; set; }
 
-		public int Degree
-		{
-			get { return this.degree; }
-			set { this.degree = value; }
-		}
+		public int Degree { get; set; }
 
-		public bool Uniform
-		{
-			get { return this.uniform; }
-			set { this.uniform = value; }
-		}
+		public bool Uniform { get; set; }
 
-		public bool Periodic
-		{
-			get { return this.periodic; }
-			set { this.periodic = value; }
-		}
+		public bool Periodic { get; set; }
 
-		public int NumUniqueKnots
-		{
-			get { return this.numUniqueKnots; }
-			set { this.numUniqueKnots = value; }
-		}
+		public int NumUniqueKnots { get; set; }
 
-		public UniqueKnot[] UniqueKnots
-		{
-			get { return this.uniqueKnots; }
-			set { this.uniqueKnots = value; }
-		}
+		public UniqueKnot[] UniqueKnots { get; set; }
 	}
 
 	// Let n be the number of control points. Let d be the degree, where
@@ -168,37 +126,20 @@ namespace netDxf.GTE
 	{
 		private readonly struct Key
 		{
-			private readonly double knotValue;
-			private readonly int knotIndex;
-
 			public Key(double knotValue, int knotIndex)
 			{
-				this.knotValue = knotValue;
-				this.knotIndex = knotIndex;
+				this.KnotValue = knotValue;
+				this.KnotIndex = knotIndex;
 			}
 
-			public double KnotValue
-			{
-				get { return this.knotValue; }
-			}
+			public double KnotValue { get; }
 
-			public int KnotIndex
-			{
-				get { return this.knotIndex; }
-			}
+			public int KnotIndex { get; }
 		}
 
 
 		// Constructor inputs and values derived from them.
-		private int numControls;
-		private int degree;
-		private double tMin, tMax, tLength;
-		private bool open;
-		private bool uniform;
-		private bool periodic;
-		private UniqueKnot[] uniqueKnots;
-		private double[] knots;
-
+		private double tLength;
 		// Lookup information for the GetIndex() function.  The first element
 		// of the pair is a unique knot value.  The second element is the
 		// index in mKnots[] for the last occurrence of that knot value.
@@ -230,63 +171,63 @@ namespace netDxf.GTE
 			Debug.Assert(1 <= input.Degree && input.Degree < input.NumControls, "Invalid degree.");
 			Debug.Assert(input.NumUniqueKnots >= 2, "Invalid number of unique knots.");
 
-			this.numControls = input.Periodic ? input.NumControls + input.Degree : input.NumControls;
-			this.degree = input.Degree;
-			this.tMin = 0;
-			this.tMax = 0;
+			this.NumControls = input.Periodic ? input.NumControls + input.Degree : input.NumControls;
+			this.Degree = input.Degree;
+			this.MinDomain = 0;
+			this.MaxDomain = 0;
 			this.tLength = 0;
-			this.open = false;
-			this.uniform = input.Uniform;
-			this.periodic = input.Periodic;
+			this.IsOpen = false;
+			this.IsUniform = input.Uniform;
+			this.IsPeriodic = input.Periodic;
 			this.jet = new double[4][][];
 
-			this.uniqueKnots = new UniqueKnot[input.UniqueKnots.Length];
-			input.UniqueKnots.CopyTo(this.uniqueKnots, 0);
+			this.UniqueKnots = new UniqueKnot[input.UniqueKnots.Length];
+			input.UniqueKnots.CopyTo(this.UniqueKnots, 0);
 
-			double u = this.uniqueKnots[0].T;
+			double u = this.UniqueKnots[0].T;
 			for (int i = 1; i < input.NumUniqueKnots - 1; i++)
 			{
-				double uNext = this.uniqueKnots[i].T;
+				double uNext = this.UniqueKnots[i].T;
 				Debug.Assert(u < uNext, "Unique knots are not strictly increasing.");
 				u = uNext;
 			}
 
-			int mult0 = this.uniqueKnots[0].Multiplicity;
-			Debug.Assert(mult0 >= 1 && mult0 <= this.degree + 1, "Invalid first multiplicity.");
+			int mult0 = this.UniqueKnots[0].Multiplicity;
+			Debug.Assert(mult0 >= 1 && mult0 <= this.Degree + 1, "Invalid first multiplicity.");
 
-			int mult1 = this.uniqueKnots[this.uniqueKnots.Length - 1].Multiplicity;
-			Debug.Assert(mult1 >= 1 && mult1 <= this.degree + 1, "Invalid last multiplicity.");
+			int mult1 = this.UniqueKnots[this.UniqueKnots.Length - 1].Multiplicity;
+			Debug.Assert(mult1 >= 1 && mult1 <= this.Degree + 1, "Invalid last multiplicity.");
 
 			for (int i = 1; i <= input.NumUniqueKnots - 2; i++)
 			{
-				int mult = this.uniqueKnots[i].Multiplicity;
-				Debug.Assert(mult >= 1 && mult <= this.degree + 1, "Invalid interior multiplicity.");
+				int mult = this.UniqueKnots[i].Multiplicity;
+				Debug.Assert(mult >= 1 && mult <= this.Degree + 1, "Invalid interior multiplicity.");
 			}
 
-			this.open = mult0 == mult1 && mult0 == this.degree + 1;
+			this.IsOpen = mult0 == mult1 && mult0 == this.Degree + 1;
 
-			this.knots = new double[this.numControls + this.degree + 1];
+			this.Knots = new double[this.NumControls + this.Degree + 1];
 			this.keys = new Key[input.NumUniqueKnots];
 			int sum = 0;
 			for (int i = 0, j = 0; i < input.NumUniqueKnots; i++)
 			{
-				double tCommon = this.uniqueKnots[i].T;
-				int mult = this.uniqueKnots[i].Multiplicity;
+				double tCommon = this.UniqueKnots[i].T;
+				int mult = this.UniqueKnots[i].Multiplicity;
 				for (int k = 0; k < mult; k++, j++)
 				{
-					this.knots[j] = tCommon;
+					this.Knots[j] = tCommon;
 				}
 
 				this.keys[i] = new Key(tCommon, sum - 1);
 				sum += mult;
 			}
 
-			this.tMin = this.knots[this.degree];
-			this.tMax = this.knots[this.numControls];
-			this.tLength = this.tMax - this.tMin;
+			this.MinDomain = this.Knots[this.Degree];
+			this.MaxDomain = this.Knots[this.NumControls];
+			this.tLength = this.MaxDomain - this.MinDomain;
 
-			int numRows = this.degree + 1;
-			int numCols = this.numControls + this.degree;
+			int numRows = this.Degree + 1;
+			int numCols = this.NumControls + this.Degree;
 			for (int i = 0; i < 4; ++i)
 			{
 				this.jet[i] = new double[numRows][];
@@ -298,60 +239,27 @@ namespace netDxf.GTE
 		}
 
 		// Member access.
-		public int NumControls
-		{
-			get { return this.numControls; }
-		}
+		public int NumControls { get; private set; }
 
-		public int Degree
-		{
-			get { return this.degree; }
-		}
+		public int Degree { get; private set; }
 
-		public int NumUniqueKnots
-		{
-			get { return this.uniqueKnots.Length; }
-		}
+		public int NumUniqueKnots => this.UniqueKnots.Length;
 
-		public int NumKnots
-		{
-			get { return this.knots.Length; }
-		}
+		public int NumKnots => this.Knots.Length;
 
-		public double MinDomain
-		{
-			get { return this.tMin; }
-		}
+		public double MinDomain { get; private set; }
 
-		public double MaxDomain
-		{
-			get { return this.tMax; }
-		}
+		public double MaxDomain { get; private set; }
 
-		public bool IsOpen
-		{
-			get { return this.open; }
-		}
+		public bool IsOpen { get; private set; }
 
-		public bool IsUniform
-		{
-			get { return this.uniform; }
-		}
+		public bool IsUniform { get; private set; }
 
-		public bool IsPeriodic
-		{
-			get { return this.periodic; }
-		}
+		public bool IsPeriodic { get; private set; }
 
-		public UniqueKnot[] UniqueKnots
-		{
-			get { return this.uniqueKnots; }
-		}
+		public UniqueKnot[] UniqueKnots { get; private set; }
 
-		public double[] Knots
-		{
-			get { return this.knots; }
-		}
+		public double[] Knots { get; private set; }
 
 		// Evaluation of the basis function and its derivatives through
 		// order 3.  For the function value only, pass order 0.  For the
@@ -376,13 +284,13 @@ namespace netDxf.GTE
 				}
 			}
 
-			double n0 = t - this.knots[i], n1 = this.knots[i + 1] - t;
+			double n0 = t - this.Knots[i], n1 = this.Knots[i + 1] - t;
 			double e0, e1, d0, d1, invD0, invD1;
 			int j;
-			for (j = 1; j <= this.degree; j++)
+			for (j = 1; j <= this.Degree; j++)
 			{
-				d0 = this.knots[i + j] - this.knots[i];
-				d1 = this.knots[i + 1] - this.knots[i - j + 1];
+				d0 = this.Knots[i + j] - this.Knots[i];
+				d1 = this.Knots[i + 1] - this.Knots[i - j + 1];
 				invD0 = d0 > 0.0 ? 1.0 / d0 : 0.0;
 				invD1 = d1 > 0.0 ? 1.0 / d1 : 0.0;
 
@@ -416,14 +324,14 @@ namespace netDxf.GTE
 				}
 			}
 
-			for (j = 2; j <= this.degree; j++)
+			for (j = 2; j <= this.Degree; j++)
 			{
 				for (int k = i - j + 1; k < i; k++)
 				{
-					n0 = t - this.knots[k];
-					n1 = this.knots[k + j + 1] - t;
-					d0 = this.knots[k + j] - this.knots[k];
-					d1 = this.knots[k + j + 1] - this.knots[k + 1];
+					n0 = t - this.Knots[k];
+					n1 = this.Knots[k + j + 1] - t;
+					d0 = this.Knots[k + j] - this.Knots[k];
+					d1 = this.Knots[k + j + 1] - this.Knots[k + 1];
 					invD0 = d0 > 0 ? 1 / d0 : 0;
 					invD1 = d1 > 0 ? 1 / d1 : 0;
 
@@ -454,7 +362,7 @@ namespace netDxf.GTE
 				}
 			}
 
-			minIndex = i - this.degree;
+			minIndex = i - this.Degree;
 			maxIndex = i;
 		}
 
@@ -467,9 +375,9 @@ namespace netDxf.GTE
 		{
 			if (order < 4)
 			{
-				if (0 <= i && i < this.numControls + this.degree)
+				if (0 <= i && i < this.NumControls + this.Degree)
 				{
-					return this.jet[order][this.degree][i];
+					return this.jet[order][this.Degree][i];
 				}
 
 				throw new ArgumentException("Invalid index.", nameof(i));
@@ -484,30 +392,30 @@ namespace netDxf.GTE
 		private int GetIndex(ref double t)
 		{
 			// Find the index i for which knot[i] <= t < knot[i+1].
-			if (this.periodic)
+			if (this.IsPeriodic)
 			{
 				// Wrap to [tmin,tmax].
-				double r = (t - this.tMin) % this.tLength;
+				double r = (t - this.MinDomain) % this.tLength;
 				if (r < 0.0)
 				{
 					r += this.tLength;
 				}
 
-				t = this.tMin + r;
+				t = this.MinDomain + r;
 			}
 
 			// Clamp to [tmin,tmax]. For the periodic case, this handles
 			// small numerical rounding errors near the domain endpoints.
-			if (t <= this.tMin)
+			if (t <= this.MinDomain)
 			{
-				t = this.tMin;
-				return this.degree;
+				t = this.MinDomain;
+				return this.Degree;
 			}
 
-			if (t >= this.tMax)
+			if (t >= this.MaxDomain)
 			{
-				t = this.tMax;
-				return this.numControls - 1;
+				t = this.MaxDomain;
+				return this.NumControls - 1;
 			}
 
 			// At this point, tmin < t < tmax.

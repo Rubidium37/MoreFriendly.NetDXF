@@ -33,8 +33,6 @@ namespace netDxf.Entities
 	{
 		#region private fields
 
-		private Vector3 position;
-		private double thickness;
 		private double rotation;
 
 		#endregion
@@ -46,8 +44,8 @@ namespace netDxf.Entities
 		public Point(Vector3 position)
 			: base(EntityType.Point, DxfObjectCode.Point)
 		{
-			this.position = position;
-			this.thickness = 0.0f;
+			this.Position = position;
+			this.Thickness = 0.0f;
 			this.rotation = 0.0;
 		}
 
@@ -78,24 +76,16 @@ namespace netDxf.Entities
 		#region public properties
 
 		/// <summary>Gets or sets the point <see cref="Vector3">position</see>.</summary>
-		public Vector3 Position
-		{
-			get { return this.position; }
-			set { this.position = value; }
-		}
+		public Vector3 Position { get; set; }
 
 		/// <summary>Gets or sets the point thickness.</summary>
-		public double Thickness
-		{
-			get { return this.thickness; }
-			set { this.thickness = value; }
-		}
+		public double Thickness { get; set; }
 
 		/// <summary>Gets or sets the point local rotation in degrees along its normal.</summary>
 		public double Rotation
 		{
-			get { return this.rotation; }
-			set { this.rotation = MathHelper.NormalizeAngle(value); }
+			get => this.rotation;
+			set => this.rotation = MathHelper.NormalizeAngle(value);
 		}
 
 		#endregion
@@ -141,9 +131,9 @@ namespace netDxf.Entities
 				Normal = this.Normal,
 				IsVisible = this.IsVisible,
 				//Point properties
-				Position = this.position,
+				Position = this.Position,
 				Rotation = this.rotation,
-				Thickness = this.thickness
+				Thickness = this.Thickness
 			};
 
 			foreach (XData data in this.XData.Values)

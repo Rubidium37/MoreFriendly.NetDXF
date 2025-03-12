@@ -55,15 +55,8 @@ namespace netDxf.Entities
 
 		#region private fields
 
-		private ToleranceEntry entry1;
-		private ToleranceEntry entry2;
-		private string projectedToleranceZoneValue;
-		private bool showProjectedToleranceZoneSymbol;
-		private string datumIdentifier;
-
 		private DimensionStyle style;
 		private double textHeight;
-		private Vector3 position;
 		private double rotation;
 
 		#endregion
@@ -97,15 +90,15 @@ namespace netDxf.Entities
 		public Tolerance(ToleranceEntry tolerance, Vector3 position)
 			: base(EntityType.Tolerance, DxfObjectCode.Tolerance)
 		{
-			this.entry1 = tolerance;
-			this.entry2 = null;
-			this.projectedToleranceZoneValue = string.Empty;
-			this.showProjectedToleranceZoneSymbol = false;
-			this.datumIdentifier = string.Empty;
+			this.Entry1 = tolerance;
+			this.Entry2 = null;
+			this.ProjectedToleranceZoneValue = string.Empty;
+			this.ShowProjectedToleranceZoneSymbol = false;
+			this.DatumIdentifier = string.Empty;
 
 			this.style = DimensionStyle.Default;
 			this.textHeight = this.style.TextHeight;
-			this.position = position;
+			this.Position = position;
 			this.rotation = 0.0;
 		}
 
@@ -114,18 +107,10 @@ namespace netDxf.Entities
 		#region public properties
 
 		/// <summary>Gets or sets the first tolerance entry.</summary>
-		public ToleranceEntry Entry1
-		{
-			get { return this.entry1; }
-			set { this.entry1 = value; }
-		}
+		public ToleranceEntry Entry1 { get; set; }
 
 		/// <summary>Gets or sets the second tolerance entry.</summary>
-		public ToleranceEntry Entry2
-		{
-			get { return this.entry2; }
-			set { this.entry2 = value; }
-		}
+		public ToleranceEntry Entry2 { get; set; }
 
 		/// <summary>Gets or sets the text height.</summary>
 		/// <remarks>
@@ -134,7 +119,7 @@ namespace netDxf.Entities
 		/// </remarks>
 		public double TextHeight
 		{
-			get { return this.textHeight; }
+			get => this.textHeight;
 			set
 			{
 				if (value <= 0)
@@ -150,34 +135,22 @@ namespace netDxf.Entities
 		/// A projected tolerance zone controls the variation in height of the extended portion of a fixed perpendicular part
 		/// and refines the tolerance to that specified by positional tolerances.
 		/// </remarks>
-		public string ProjectedToleranceZoneValue
-		{
-			get { return this.projectedToleranceZoneValue; }
-			set { this.projectedToleranceZoneValue = value; }
-		}
+		public string ProjectedToleranceZoneValue { get; set; }
 
 		/// <summary>Gets or sets if the projected tolerance zone symbol will be shown after the projected tolerance zone value.</summary>
-		public bool ShowProjectedToleranceZoneSymbol
-		{
-			get { return this.showProjectedToleranceZoneSymbol; }
-			set { this.showProjectedToleranceZoneSymbol = value; }
-		}
+		public bool ShowProjectedToleranceZoneSymbol { get; set; }
 
 		/// <summary>Gets or sets the datum identifying symbol.</summary>
 		/// <remarks>
 		/// A datum is a theoretically exact geometric reference from which you can establish the location and tolerance zones of other features.
 		/// A point, line, plane, cylinder, or other geometry can serve as a datum.
 		/// </remarks>
-		public string DatumIdentifier
-		{
-			get { return this.datumIdentifier; }
-			set { this.datumIdentifier = value; }
-		}
+		public string DatumIdentifier { get; set; }
 
 		/// <summary>Gets or sets the <see cref="DimensionStyle">leader style</see>.</summary>
 		public DimensionStyle Style
 		{
-			get { return this.style; }
+			get => this.style;
 			set
 			{
 				if (value == null)
@@ -189,17 +162,13 @@ namespace netDxf.Entities
 		}
 
 		/// <summary>Gets or sets the leader <see cref="Vector3">position</see> in world coordinates.</summary>
-		public Vector3 Position
-		{
-			get { return this.position; }
-			set { this.position = value; }
-		}
+		public Vector3 Position { get; set; }
 
 		/// <summary>Gets or sets the leader rotation in degrees.</summary>
 		public double Rotation
 		{
-			get { return this.rotation; }
-			set { this.rotation = MathHelper.NormalizeAngle(value); }
+			get => this.rotation;
+			set => this.rotation = MathHelper.NormalizeAngle(value);
 		}
 
 		#endregion
@@ -213,38 +182,38 @@ namespace netDxf.Entities
 			StringBuilder value = new StringBuilder();
 			bool newLine = false;
 
-			if (this.entry1 != null)
+			if (this.Entry1 != null)
 			{
-				value.Append(ToleranceEntryToString(this.entry1));
+				value.Append(ToleranceEntryToString(this.Entry1));
 				newLine = true;
 			}
 
-			if (this.entry2 != null)
+			if (this.Entry2 != null)
 			{
 				if (newLine)
 					value.Append("^J");
 
-				value.Append(ToleranceEntryToString(this.entry2));
+				value.Append(ToleranceEntryToString(this.Entry2));
 				newLine = true;
 			}
 
-			if (!(string.IsNullOrEmpty(this.projectedToleranceZoneValue) && !this.showProjectedToleranceZoneSymbol))
+			if (!(string.IsNullOrEmpty(this.ProjectedToleranceZoneValue) && !this.ShowProjectedToleranceZoneSymbol))
 			{
 				if (newLine)
 					value.Append("^J");
 
-				value.Append(this.projectedToleranceZoneValue);
-				if (this.showProjectedToleranceZoneSymbol)
+				value.Append(this.ProjectedToleranceZoneValue);
+				if (this.ShowProjectedToleranceZoneSymbol)
 					value.Append("{\\Fgdt;p}");
 				newLine = true;
 			}
 
-			if (!string.IsNullOrEmpty(this.datumIdentifier))
+			if (!string.IsNullOrEmpty(this.DatumIdentifier))
 			{
 				if (newLine)
 					value.Append("^J");
 
-				value.Append(this.datumIdentifier);
+				value.Append(this.DatumIdentifier);
 			}
 
 			return value.ToString();
@@ -766,14 +735,14 @@ namespace netDxf.Entities
 				Normal = this.Normal,
 				IsVisible = this.IsVisible,
 				//Tolerance properties
-				Entry1 = (ToleranceEntry)this.entry1?.Clone(),
-				Entry2 = (ToleranceEntry)this.entry2?.Clone(),
-				ProjectedToleranceZoneValue = this.projectedToleranceZoneValue,
-				ShowProjectedToleranceZoneSymbol = this.showProjectedToleranceZoneSymbol,
-				DatumIdentifier = this.datumIdentifier,
+				Entry1 = (ToleranceEntry)this.Entry1?.Clone(),
+				Entry2 = (ToleranceEntry)this.Entry2?.Clone(),
+				ProjectedToleranceZoneValue = this.ProjectedToleranceZoneValue,
+				ShowProjectedToleranceZoneSymbol = this.ShowProjectedToleranceZoneSymbol,
+				DatumIdentifier = this.DatumIdentifier,
 				Style = (DimensionStyle)this.style.Clone(),
 				TextHeight = this.textHeight,
-				Position = this.position,
+				Position = this.Position,
 				Rotation = this.rotation
 			};
 

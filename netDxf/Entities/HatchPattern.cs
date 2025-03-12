@@ -37,15 +37,8 @@ namespace netDxf.Entities
 	{
 		#region private fields
 
-		private readonly string name;
-		private readonly List<HatchPatternLineDefinition> lineDefinitions;
-		private HatchStyle style;
-		private HatchFillType fill;
-		private HatchType type;
-		private Vector2 origin;
 		private double angle;
 		private double scale;
-		private string description;
 
 		#endregion
 
@@ -80,15 +73,15 @@ namespace netDxf.Entities
 		/// <param name="description">Description of the pattern (optional, this information is not saved in the <b>DXF</b> file). By default it will use the supplied name.</param>
 		public HatchPattern(string name, IEnumerable<HatchPatternLineDefinition> lineDefinitions, string description)
 		{
-			this.name = string.IsNullOrEmpty(name) ? string.Empty : name;
-			this.description = string.IsNullOrEmpty(description) ? string.Empty : description;
-			this.style = HatchStyle.Normal;
-			this.fill = this.name == "SOLID" ? HatchFillType.SolidFill : HatchFillType.PatternFill;
-			this.type = HatchType.UserDefined;
-			this.origin = Vector2.Zero;
+			this.Name = string.IsNullOrEmpty(name) ? string.Empty : name;
+			this.Description = string.IsNullOrEmpty(description) ? string.Empty : description;
+			this.Style = HatchStyle.Normal;
+			this.Fill = this.Name == "SOLID" ? HatchFillType.SolidFill : HatchFillType.PatternFill;
+			this.Type = HatchType.UserDefined;
+			this.Origin = Vector2.Zero;
 			this.angle = 0.0;
 			this.scale = 1.0;
-			this.lineDefinitions = lineDefinitions == null ? new List<HatchPatternLineDefinition>() : new List<HatchPatternLineDefinition>(lineDefinitions);
+			this.LineDefinitions = lineDefinitions == null ? new List<HatchPatternLineDefinition>() : new List<HatchPatternLineDefinition>(lineDefinitions);
 		}
 
 		#endregion
@@ -101,7 +94,7 @@ namespace netDxf.Entities
 		{
 			get
 			{
-				HatchPattern pattern = new HatchPattern("SOLID", "Solid fill") { type = HatchType.Predefined };
+				HatchPattern pattern = new HatchPattern("SOLID", "Solid fill") { Type = HatchType.Predefined };
 				// this is the pattern line definition for solid fills as defined in the acad.pat, but it is not needed
 				//HatchPatternLineDefinition lineDefinition = new HatchPatternLineDefinition
 				//{
@@ -128,7 +121,7 @@ namespace netDxf.Entities
 					Delta = new Vector2(0.0, 0.125)
 				};
 				pattern.LineDefinitions.Add(lineDefinition);
-				pattern.type = HatchType.Predefined;
+				pattern.Type = HatchType.Predefined;
 				return pattern;
 			}
 		}
@@ -156,7 +149,7 @@ namespace netDxf.Entities
 					Delta = new Vector2(0.0, 0.125)
 				};
 				pattern.LineDefinitions.Add(lineDefinition);
-				pattern.type = HatchType.Predefined;
+				pattern.Type = HatchType.Predefined;
 				return pattern;
 			}
 		}
@@ -176,7 +169,7 @@ namespace netDxf.Entities
 				};
 				lineDefinition.DashPattern.AddRange(new[] { 0, -0.0625 });
 				pattern.LineDefinitions.Add(lineDefinition);
-				pattern.type = HatchType.Predefined;
+				pattern.Type = HatchType.Predefined;
 				return pattern;
 			}
 		}
@@ -186,58 +179,35 @@ namespace netDxf.Entities
 		#region public properties
 
 		/// <summary>Gets or sets the hatch pattern name.</summary>
-		public string Name
-		{
-			get { return this.name; }
-		}
+		public string Name { get; }
 
 		/// <summary>Gets or sets the hatch description (optional, this information is not saved in the <b>DXF</b> file).</summary>
-		public string Description
-		{
-			get { return this.description; }
-			set { this.description = value; }
-		}
+		public string Description { get; set; }
 
 		/// <summary>Gets the hatch style.</summary>
 		/// <remarks>Only normal style is implemented.</remarks>
-		public HatchStyle Style
-		{
-			get { return this.style; }
-			internal set { this.style = value; }
-		}
+		public HatchStyle Style { get; internal set; }
 
 		/// <summary>Gets or sets the hatch pattern type.</summary>
-		public HatchType Type
-		{
-			get { return this.type; }
-			set { this.type = value; }
-		}
+		public HatchType Type { get; set; }
 
 		/// <summary>Gets the solid fill flag.</summary>
-		public HatchFillType Fill
-		{
-			get { return this.fill; }
-			internal set { this.fill = value; }
-		}
+		public HatchFillType Fill { get; internal set; }
 
 		/// <summary>Gets or sets the pattern origin.</summary>
-		public Vector2 Origin
-		{
-			get { return this.origin; }
-			set { this.origin = value; }
-		}
+		public Vector2 Origin { get; set; }
 
 		/// <summary>Gets or sets the pattern angle in degrees.</summary>
 		public double Angle
 		{
-			get { return this.angle; }
-			set { this.angle = MathHelper.NormalizeAngle(value); }
+			get => this.angle;
+			set => this.angle = MathHelper.NormalizeAngle(value);
 		}
 
 		/// <summary>Gets or sets the pattern scale (not applicable in Solid fills).</summary>
 		public double Scale
 		{
-			get { return this.scale; }
+			get => this.scale;
 			set
 			{
 				if (value <= 0)
@@ -247,10 +217,7 @@ namespace netDxf.Entities
 		}
 
 		/// <summary>Gets the definition of the lines that make up the pattern (not applicable in Solid fills).</summary>
-		public List<HatchPatternLineDefinition> LineDefinitions
-		{
-			get { return this.lineDefinitions; }
-		}
+		public List<HatchPatternLineDefinition> LineDefinitions { get; }
 
 		#endregion
 
@@ -388,9 +355,9 @@ namespace netDxf.Entities
 		{
 			StringBuilder sb = new StringBuilder();
 
-			sb.AppendLine(string.Format("*{0},{1}", this.Name, this.description));
+			sb.AppendLine(string.Format("*{0},{1}", this.Name, this.Description));
 
-			foreach (HatchPatternLineDefinition def in this.lineDefinitions)
+			foreach (HatchPatternLineDefinition def in this.LineDefinitions)
 			{
 				sb.Append(string.Format("{0},{1},{2},{3},{4}",
 					def.Angle.ToString(CultureInfo.InvariantCulture),
@@ -415,17 +382,17 @@ namespace netDxf.Entities
 		/// <inheritdoc/>
 		public virtual object Clone()
 		{
-			HatchPattern copy = new HatchPattern(this.name, this.description)
+			HatchPattern copy = new HatchPattern(this.Name, this.Description)
 			{
-				Style = this.style,
-				Fill = this.fill,
-				Type = this.type,
-				Origin = this.origin,
+				Style = this.Style,
+				Fill = this.Fill,
+				Type = this.Type,
+				Origin = this.Origin,
 				Angle = this.angle,
 				Scale = this.scale,
 			};
 
-			foreach (HatchPatternLineDefinition def in this.lineDefinitions)
+			foreach (HatchPatternLineDefinition def in this.LineDefinitions)
 				copy.LineDefinitions.Add((HatchPatternLineDefinition)def.Clone());
 
 			return copy;

@@ -27,9 +27,6 @@ namespace netDxf.Objects
 {
 	internal sealed class XRecordEntry
 	{
-		private readonly int code;
-		private readonly object value;
-
 		public XRecordEntry(int code, object value)
 		{
 			// Autodesk doesn't know how to keep its own crap together. This is what the OFFICIAL documentation says about the code entries in a XRecord
@@ -51,19 +48,13 @@ namespace netDxf.Objects
 			//	throw new ArgumentException("Incorrect value type for the specified code", nameof(value));
 			//}
 
-			this.code = code;
-			this.value = value;
+			this.Code = code;
+			this.Value = value;
 		}
 
-		public int Code
-		{
-			get { return this.code; }
-		}
+		public int Code { get; }
 
-		public object Value
-		{
-			get { return this.value; }
-		}
+		public object Value { get; }
 
 		//private static bool CheckCodeValuePair(int code, object value)
 		//{

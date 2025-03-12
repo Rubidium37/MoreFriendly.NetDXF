@@ -209,10 +209,7 @@ namespace netDxf.Collections
 		}
 
 		/// <inheritdoc/>
-		public override bool Remove(string name)
-		{
-			return this.Remove(this[name]);
-		}
+		public override bool Remove(string name) => this.Remove(this[name]);
 		/// <inheritdoc/>
 		public override bool Remove(Linetype item)
 		{

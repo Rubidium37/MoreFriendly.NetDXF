@@ -31,20 +31,13 @@ namespace netDxf.Entities
 	public class DatumReferenceValue :
 		ICloneable
 	{
-		#region private fields
-
-		private string datum;
-		private ToleranceMaterialCondition materialCondition;
-
-		#endregion
-
 		#region constructors
 
 		/// <summary>Initializes a new instance of the class.</summary>
 		public DatumReferenceValue()
 		{
-			this.datum = string.Empty;
-			this.materialCondition = ToleranceMaterialCondition.None;
+			this.Value = string.Empty;
+			this.MaterialCondition = ToleranceMaterialCondition.None;
 		}
 
 		/// <summary>Initializes a new instance of the class.</summary>
@@ -52,8 +45,8 @@ namespace netDxf.Entities
 		/// <param name="materialCondition">Datum material condition.</param>
 		public DatumReferenceValue(string value, ToleranceMaterialCondition materialCondition)
 		{
-			this.datum = value;
-			this.materialCondition = materialCondition;
+			this.Value = value;
+			this.MaterialCondition = materialCondition;
 		}
 
 		#endregion
@@ -61,18 +54,10 @@ namespace netDxf.Entities
 		#region public properties
 
 		/// <summary>Gets or sets the datum value.</summary>
-		public string Value
-		{
-			get { return this.datum; }
-			set { this.datum = value; }
-		}
+		public string Value { get; set; }
 
 		/// <summary>Gets or sets the datum material condition.</summary>
-		public ToleranceMaterialCondition MaterialCondition
-		{
-			get { return this.materialCondition; }
-			set { this.materialCondition = value; }
-		}
+		public ToleranceMaterialCondition MaterialCondition { get; set; }
 
 		#endregion
 
@@ -80,13 +65,11 @@ namespace netDxf.Entities
 
 		/// <inheritdoc/>
 		public object Clone()
-		{
-			return new DatumReferenceValue
+			=> new DatumReferenceValue
 			{
-				Value = this.datum,
-				MaterialCondition = this.materialCondition
+				Value = this.Value,
+				MaterialCondition = this.MaterialCondition
 			};
-		}
 
 		#endregion
 	}

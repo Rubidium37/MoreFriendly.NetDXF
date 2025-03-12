@@ -37,34 +37,13 @@ namespace netDxf.Entities
 	internal class Polyline :
 		DxfObject
 	{
-		#region private fields
-
-		private string subclassMarker;
-		private Layer layer;
-		private double thickness;
-		private double elevation;
-		private Vector3 normal;
-		private AciColor color;
-		private EndSequence endSequence;
-		private List<Vertex> vertexes;
-		private PolylineTypeFlags flags;
-		private PolylineSmoothType smoothType;
-
-		// polygon mesh
-		private short m;
-		private short n;
-		private short densityM;
-		private short densityN;
-
-		#endregion
-
 		#region constructor
 
 		/// <summary>Initializes a new instance of the class.</summary>
 		public Polyline()
 			: base(DxfObjectCode.Polyline)
 		{
-			this.subclassMarker = netDxf.SubclassMarker.Polyline;
+			this.SubclassMarker = netDxf.SubclassMarker.Polyline;
 		}
 
 		#endregion
@@ -72,102 +51,46 @@ namespace netDxf.Entities
 		#region properties
 
 		/// <summary>Gets or sets the polyline subclass marker.</summary>
-		public string SubclassMarker
-		{
-			get { return this.subclassMarker; }
-			set { this.subclassMarker = value; }
-		}
+		public string SubclassMarker { get; set; }
 
 		/// <summary>Gets or sets the polyline layer.</summary>
-		public Layer Layer
-		{
-			get { return this.layer; }
-			set { this.layer = value; }
-		}
+		public Layer Layer { get; set; }
 
 		/// <summary>Gets or sets the polyline thickness.</summary>
-		public double Thickness
-		{
-			get { return this.thickness; }
-			set { this.thickness = value; }
-		}
+		public double Thickness { get; set; }
 
 		/// <summary>Gets or sets the polyline elevation.</summary>
-		public double Elevation
-		{
-			get { return this.elevation; }
-			set { this.elevation = value; }
-		}
+		public double Elevation { get; set; }
 
 		/// <summary>Gets or sets the polyline normal.</summary>
-		public Vector3 Normal
-		{
-			get { return this.normal; }
-			set { this.normal = value; }
-		}
+		public Vector3 Normal { get; set; }
 
 		/// <summary>Gets or sets the polyline color.</summary>
-		public AciColor Color
-		{
-			get { return this.color; }
-			set { this.color = value; }
-		}
+		public AciColor Color { get; set; }
 
 		/// <summary>Gets or sets the polyline <see cref="EndSequence"/> object.</summary>
-		public EndSequence EndSequence
-		{
-			get { return this.endSequence; }
-			set { this.endSequence = value; }
-		}
+		public EndSequence EndSequence { get; set; }
 
 		/// <summary>Gets or sets the polyline vertexes list.</summary>
-		public List<Vertex> Vertexes
-		{
-			get { return this.vertexes; }
-			set { this.vertexes = value; }
-		}
+		public List<Vertex> Vertexes { get; set; }
 
 		/// <summary>Gets or sets the polyline flags.</summary>
-		public PolylineTypeFlags Flags
-		{
-			get { return this.flags; }
-			set { this.flags = value; }
-		}
+		public PolylineTypeFlags Flags { get; set; }
 
 		/// <summary>Gets or sets the polyline smooth type.</summary>
-		public PolylineSmoothType SmoothType
-		{
-			get { return this.smoothType; }
-			set { this.smoothType = value; }
-		}
+		public PolylineSmoothType SmoothType { get; set; }
 
 		/// <summary>Polygon mesh M vertex count.</summary>
-		public short M
-		{
-			get { return this.m; }
-			set { this.m = value; }
-		}
+		public short M { get; set; }
 
 		/// <summary>Polygon mesh N vertex count.</summary>
-		public short N
-		{
-			get { return this.n; }
-			set { this.n = value; }
-		}
+		public short N { get; set; }
 
 		/// <summary>Polygon mesh smooth surface M density.</summary>
-		public short DensityM
-		{
-			get { return this.densityM; }
-			set { this.densityM = value; }
-		}
+		public short DensityM { get; set; }
 
 		/// <summary>Polygon mesh smooth surface N density.</summary>
-		public short DensityN
-		{
-			get { return this.densityN; }
-			set { this.densityN = value; }
-		}
+		public short DensityN { get; set; }
 
 		#endregion
 	}

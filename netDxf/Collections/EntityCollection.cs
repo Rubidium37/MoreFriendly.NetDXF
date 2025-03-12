@@ -101,7 +101,6 @@ namespace netDxf.Collections
 		{
 			this.innerArray = new List<EntityObject>();
 		}
-
 		/// <summary>Initializes a new instance of the class and has the specified initial capacity.</summary>
 		/// <param name="capacity">The number of items the collection can initially store.</param>
 		public EntityCollection(int capacity)
@@ -120,7 +119,7 @@ namespace netDxf.Collections
 		/// <inheritdoc/>
 		public EntityObject this[int index]
 		{
-			get { return this.innerArray[index]; }
+			get => this.innerArray[index];
 			set
 			{
 				if (value == null)
@@ -147,16 +146,10 @@ namespace netDxf.Collections
 		}
 
 		/// <inheritdoc/>
-		public int Count
-		{
-			get { return this.innerArray.Count; }
-		}
+		public int Count => this.innerArray.Count;
 
 		/// <inheritdoc/>
-		public virtual bool IsReadOnly
-		{
-			get { return false; }
-		}
+		public virtual bool IsReadOnly => false;
 
 		#endregion
 
@@ -278,47 +271,26 @@ namespace netDxf.Collections
 		}
 
 		/// <inheritdoc/>
-		public int IndexOf(EntityObject item)
-		{
-			return this.innerArray.IndexOf(item);
-		}
+		public int IndexOf(EntityObject item) => this.innerArray.IndexOf(item);
 
 		/// <inheritdoc/>
-		public bool Contains(EntityObject item)
-		{
-			return this.innerArray.Contains(item);
-		}
+		public bool Contains(EntityObject item) => this.innerArray.Contains(item);
 
 		/// <inheritdoc/>
-		public void CopyTo(EntityObject[] array, int arrayIndex)
-		{
-			this.innerArray.CopyTo(array, arrayIndex);
-		}
+		public void CopyTo(EntityObject[] array, int arrayIndex) => this.innerArray.CopyTo(array, arrayIndex);
 
 		/// <inheritdoc/>
-		public IEnumerator<EntityObject> GetEnumerator()
-		{
-			return this.innerArray.GetEnumerator();
-		}
+		public IEnumerator<EntityObject> GetEnumerator() => this.innerArray.GetEnumerator();
 
 		#endregion
 
 		#region private methods
 
-		void ICollection<EntityObject>.Add(EntityObject item)
-		{
-			this.Add(item);
-		}
+		void ICollection<EntityObject>.Add(EntityObject item) => this.Add(item);
 
-		void IList<EntityObject>.Insert(int index, EntityObject item)
-		{
-			this.Insert(index, item);
-		}
+		void IList<EntityObject>.Insert(int index, EntityObject item) => this.Insert(index, item);
 
-		IEnumerator IEnumerable.GetEnumerator()
-		{
-			return this.GetEnumerator();
-		}
+		IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 
 		#endregion
 	}

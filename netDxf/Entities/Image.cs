@@ -54,17 +54,14 @@ namespace netDxf.Entities
 
 		#region private fields
 
-		private Vector3 position;
 		private Vector2 uvector;
 		private Vector2 vvector;
 		private double width;
 		private double height;
 		private ImageDefinition imageDefinition;
-		private bool clipping;
 		private short brightness;
 		private short contrast;
 		private short fade;
-		private ImageDisplayFlags displayOptions;
 		private ClippingBoundary clippingBoundary;
 
 		#endregion
@@ -113,7 +110,7 @@ namespace netDxf.Entities
 			: base(EntityType.Image, DxfObjectCode.Image)
 		{
 			this.imageDefinition = imageDefinition ?? throw new ArgumentNullException(nameof(imageDefinition));
-			this.position = position;
+			this.Position = position;
 			this.uvector = Vector2.UnitX;
 			this.vvector = Vector2.UnitY;
 			if (width <= 0)
@@ -126,11 +123,11 @@ namespace netDxf.Entities
 				throw new ArgumentOutOfRangeException(nameof(height), height, "The Image height must be greater than zero.");
 			}
 			this.height = height;
-			this.clipping = false;
+			this.Clipping = false;
 			this.brightness = 50;
 			this.contrast = 50;
 			this.fade = 0;
-			this.displayOptions = ImageDisplayFlags.ShowImage | ImageDisplayFlags.ShowImageWhenNotAlignedWithScreen | ImageDisplayFlags.UseClippingBoundary;
+			this.DisplayOptions = ImageDisplayFlags.ShowImage | ImageDisplayFlags.ShowImageWhenNotAlignedWithScreen | ImageDisplayFlags.UseClippingBoundary;
 			this.clippingBoundary = new ClippingBoundary(0, 0, imageDefinition.Width, imageDefinition.Height);
 		}
 
@@ -139,16 +136,12 @@ namespace netDxf.Entities
 		#region public properties
 
 		/// <summary>Gets or sets the image <see cref="Vector3">position</see> in world coordinates.</summary>
-		public Vector3 Position
-		{
-			get { return this.position; }
-			set { this.position = value; }
-		}
+		public Vector3 Position { get; set; }
 
 		/// <summary>Gets or sets the image <see cref="Vector2">U-vector</see>.</summary>
 		public Vector2 Uvector
 		{
-			get { return this.uvector; }
+			get => this.uvector;
 			set
 			{
 				if (Vector2.Equals(Vector2.Zero, value))
@@ -163,7 +156,7 @@ namespace netDxf.Entities
 		/// <summary>Gets or sets the image <see cref="Vector2">V-vector</see>.</summary>
 		public Vector2 Vvector
 		{
-			get { return this.vvector; }
+			get => this.vvector;
 			set
 			{
 				if (Vector2.Equals(Vector2.Zero, value))
@@ -178,7 +171,7 @@ namespace netDxf.Entities
 		/// <summary>Gets or sets the height of the image in drawing units.</summary>
 		public double Height
 		{
-			get { return this.height; }
+			get => this.height;
 			set
 			{
 				if (value <= 0)
@@ -192,7 +185,7 @@ namespace netDxf.Entities
 		/// <summary>Gets or sets the width of the image in drawing units.</summary>
 		public double Width
 		{
-			get { return this.width; }
+			get => this.width;
 			set
 			{
 				if (value <= 0)
@@ -224,7 +217,7 @@ namespace netDxf.Entities
 		/// <summary>Gets the <see cref="ImageDefinition">image definition</see>.</summary>
 		public ImageDefinition Definition
 		{
-			get { return this.imageDefinition; }
+			get => this.imageDefinition;
 			set
 			{
 				if (value == null)
@@ -236,16 +229,12 @@ namespace netDxf.Entities
 		}
 
 		/// <summary>Gets or sets the clipping state: <see langword="false"/> = off, <see langword="true"/> = on.</summary>
-		public bool Clipping
-		{
-			get { return this.clipping; }
-			set { this.clipping = value; }
-		}
+		public bool Clipping { get; set; }
 
 		/// <summary>Gets or sets the brightness value (0-100; default = 50)</summary>
 		public short Brightness
 		{
-			get { return this.brightness; }
+			get => this.brightness;
 			set
 			{
 				if (value < 0 || value > 100)
@@ -259,7 +248,7 @@ namespace netDxf.Entities
 		/// <summary>Gets or sets the contrast value (0-100; default = 50)</summary>
 		public short Contrast
 		{
-			get { return this.contrast; }
+			get => this.contrast;
 			set
 			{
 				if (value < 0 || value > 100)
@@ -273,7 +262,7 @@ namespace netDxf.Entities
 		/// <summary>Gets or sets the fade value (0-100; default = 0)</summary>
 		public short Fade
 		{
-			get { return this.fade; }
+			get => this.fade;
 			set
 			{
 				if (value < 0 || value > 100)
@@ -285,11 +274,7 @@ namespace netDxf.Entities
 		}
 
 		/// <summary>Gets or sets the image display options.</summary>
-		public ImageDisplayFlags DisplayOptions
-		{
-			get { return this.displayOptions; }
-			set { this.displayOptions = value; }
-		}
+		public ImageDisplayFlags DisplayOptions { get; set; }
 
 		/// <summary>Gets or sets the image clipping boundary.</summary>
 		/// <remarks>
@@ -298,8 +283,8 @@ namespace netDxf.Entities
 		/// </remarks>
 		public ClippingBoundary ClippingBoundary
 		{
-			get { return this.clippingBoundary; }
-			set { this.clippingBoundary = value ?? new ClippingBoundary(0, 0, this.Definition.Width, this.Definition.Height); }
+			get => this.clippingBoundary;
+			set => this.clippingBoundary = value ?? new ClippingBoundary(0, 0, this.Definition.Width, this.Definition.Height);
 		}
 
 		#endregion
@@ -377,18 +362,18 @@ namespace netDxf.Entities
 				Normal = this.Normal,
 				IsVisible = this.IsVisible,
 				//Image properties
-				Position = this.position,
+				Position = this.Position,
 				Height = this.height,
 				Width = this.width,
 				Uvector = this.uvector,
 				Vvector = this.vvector,
 				//Rotation = this.rotation,
 				Definition = (ImageDefinition)this.imageDefinition.Clone(),
-				Clipping = this.clipping,
+				Clipping = this.Clipping,
 				Brightness = this.brightness,
 				Contrast = this.contrast,
 				Fade = this.fade,
-				DisplayOptions = this.displayOptions,
+				DisplayOptions = this.DisplayOptions,
 				ClippingBoundary = (ClippingBoundary)this.clippingBoundary.Clone()
 			};
 

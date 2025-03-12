@@ -32,20 +32,6 @@ namespace netDxf.Tables
 	public class View :
 		TableObject
 	{
-		#region private fields
-
-		private Vector3 target;
-		private Vector3 camera;
-		private double height;
-		private double width;
-		private double rotation;
-		private ViewModeFlags viewmode;
-		private double fov;
-		private double frontClippingPlane;
-		private double backClippingPlane;
-
-		#endregion
-
 		#region constants
 
 		#endregion
@@ -67,80 +53,44 @@ namespace netDxf.Tables
 			}
 
 			this.IsReserved = false;
-			this.target = Vector3.Zero;
-			this.camera = Vector3.UnitZ;
-			this.height = 1.0;
-			this.width = 1.0;
-			this.rotation = 0.0;
-			this.viewmode = ViewModeFlags.Off;
-			this.fov = 40.0;
-			this.frontClippingPlane = 0.0;
-			this.backClippingPlane = 0.0;
+			this.Target = Vector3.Zero;
+			this.Camera = Vector3.UnitZ;
+			this.Height = 1.0;
+			this.Width = 1.0;
+			this.Rotation = 0.0;
+			this.Viewmode = ViewModeFlags.Off;
+			this.Fov = 40.0;
+			this.FrontClippingPlane = 0.0;
+			this.BackClippingPlane = 0.0;
 		}
 
 		#endregion
 
 		#region public properties
 
-		public Vector3 Target
-		{
-			get { return this.target; }
-			set { this.target = value; }
-		}
+		public Vector3 Target { get; set; }
 
-		public Vector3 Camera
-		{
-			get { return this.camera; }
-			set { this.camera = value; }
-		}
+		public Vector3 Camera { get; set; }
 
-		public double Height
-		{
-			get { return this.height; }
-			set { this.height = value; }
-		}
+		public double Height { get; set; }
 
-		public double Width
-		{
-			get { return this.width; }
-			set { this.width = value; }
-		}
+		public double Width { get; set; }
 
-		public double Rotation
-		{
-			get { return this.rotation; }
-			set { this.rotation = value; }
-		}
+		public double Rotation { get; set; }
 
-		public ViewModeFlags Viewmode
-		{
-			get { return this.viewmode; }
-			set { this.viewmode = value; }
-		}
+		public ViewModeFlags Viewmode { get; set; }
 
-		public double Fov
-		{
-			get { return this.fov; }
-			set { this.fov = value; }
-		}
+		public double Fov { get; set; }
 
-		public double FrontClippingPlane
-		{
-			get { return this.frontClippingPlane; }
-			set { this.frontClippingPlane = value; }
-		}
+		public double FrontClippingPlane { get; set; }
 
-		public double BackClippingPlane
-		{
-			get { return this.backClippingPlane; }
-			set { this.backClippingPlane = value; }
-		}
+		public double BackClippingPlane { get; set; }
 
 		/// <summary>Gets the owner of the actual view.</summary>
 		public new Views Owner
 		{
-			get { return (Views)base.Owner; }
-			internal set { base.Owner = value; }
+			get => (Views)base.Owner;
+			internal set => base.Owner = value;
 		}
 
 		#endregion
@@ -148,31 +98,25 @@ namespace netDxf.Tables
 		#region overrides
 
 		/// <inheritdoc/>
-		public override bool HasReferences()
-		{
-			return this.Owner != null && this.Owner.HasReferences(this.Name);
-		}
+		public override bool HasReferences() => this.Owner != null && this.Owner.HasReferences(this.Name);
 
 		/// <inheritdoc/>
-		public override List<DxfObjectReference> GetReferences()
-		{
-			return this.Owner?.GetReferences(this.Name);
-		}
+		public override List<DxfObjectReference> GetReferences() => this.Owner?.GetReferences(this.Name);
 
 		/// <inheritdoc/>
 		public override TableObject Clone(string newName)
 		{
 			View copy = new View(newName)
 			{
-				Target = this.target,
-				Camera = this.camera,
-				Height = this.height,
-				Width = this.width,
-				Rotation = this.rotation,
-				Viewmode = this.viewmode,
-				Fov = this.fov,
-				FrontClippingPlane = this.frontClippingPlane,
-				BackClippingPlane = this.backClippingPlane
+				Target = this.Target,
+				Camera = this.Camera,
+				Height = this.Height,
+				Width = this.Width,
+				Rotation = this.Rotation,
+				Viewmode = this.Viewmode,
+				Fov = this.Fov,
+				FrontClippingPlane = this.FrontClippingPlane,
+				BackClippingPlane = this.BackClippingPlane
 			};
 
 			foreach (XData data in this.XData.Values)
@@ -182,12 +126,8 @@ namespace netDxf.Tables
 
 			return copy;
 		}
-
 		/// <inheritdoc/>
-		public override object Clone()
-		{
-			return this.Clone(this.Name);
-		}
+		public override object Clone() => this.Clone(this.Name);
 
 		#endregion
 	}

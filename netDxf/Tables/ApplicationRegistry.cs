@@ -43,10 +43,7 @@ namespace netDxf.Tables
 		public const string DefaultName = "ACAD";
 
 		/// <summary>Gets the default application registry.</summary>
-		public static ApplicationRegistry Default
-		{
-			get { return new ApplicationRegistry(DefaultName); }
-		}
+		public static ApplicationRegistry Default => new ApplicationRegistry(DefaultName);
 
 		#endregion
 
@@ -84,8 +81,8 @@ namespace netDxf.Tables
 		/// <summary>Gets the owner of the actual <b>DXF</b> object.</summary>
 		public new ApplicationRegistries Owner
 		{
-			get { return (ApplicationRegistries)base.Owner; }
-			internal set { base.Owner = value; }
+			get => (ApplicationRegistries)base.Owner;
+			internal set => base.Owner = value;
 		}
 
 		#endregion
@@ -93,16 +90,10 @@ namespace netDxf.Tables
 		#region overrides
 
 		/// <inheritdoc/>
-		public override bool HasReferences()
-		{
-			return this.Owner != null && this.Owner.HasReferences(this.Name);
-		}
+		public override bool HasReferences() => this.Owner != null && this.Owner.HasReferences(this.Name);
 
 		/// <inheritdoc/>
-		public override List<DxfObjectReference> GetReferences()
-		{
-			return this.Owner?.GetReferences(this.Name);
-		}
+		public override List<DxfObjectReference> GetReferences() => this.Owner?.GetReferences(this.Name);
 
 		/// <inheritdoc/>
 		public override TableObject Clone(string newName)
@@ -134,12 +125,8 @@ namespace netDxf.Tables
 
 			return copy;
 		}
-
 		/// <inheritdoc/>
-		public override object Clone()
-		{
-			return this.Clone(this.Name);
-		}
+		public override object Clone() => this.Clone(this.Name);
 
 		#endregion
 	}

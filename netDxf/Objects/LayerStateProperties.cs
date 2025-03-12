@@ -34,13 +34,7 @@ namespace netDxf.Objects
 	{
 		#region private fields
 
-		private readonly string name;
-		private LayerPropertiesFlags flags;
 		private string linetype;
-		private AciColor color;
-		private Lineweight lineweight;
-		private Transparency transparency;
-		//private string plotStyle;
 
 		#endregion
 
@@ -54,12 +48,12 @@ namespace netDxf.Objects
 			{
 				throw new ArgumentNullException(nameof(name));
 			}
-			this.name = name;
-			this.flags = LayerPropertiesFlags.Plot;
+			this.Name = name;
+			this.Flags = LayerPropertiesFlags.Plot;
 			this.linetype = Linetype.DefaultName;
-			this.color = AciColor.Default;
-			this.lineweight = Lineweight.Default;
-			this.transparency = new Transparency(0);
+			this.Color = AciColor.Default;
+			this.Lineweight = Lineweight.Default;
+			this.Transparency = new Transparency(0);
 			//this.plotStyle = "Color_7";
 		}
 
@@ -67,15 +61,15 @@ namespace netDxf.Objects
 		/// <param name="layer">Layer from which copy the properties.</param>
 		public LayerStateProperties(Layer layer)
 		{
-			this.name = layer.Name;
-			if (!layer.IsVisible) this.flags |= LayerPropertiesFlags.Hidden;
-			if (layer.IsFrozen) this.flags |= LayerPropertiesFlags.Frozen;
-			if (layer.IsLocked) this.flags |= LayerPropertiesFlags.Locked;
-			if (layer.Plot) this.flags |= LayerPropertiesFlags.Plot;
+			this.Name = layer.Name;
+			if (!layer.IsVisible) this.Flags |= LayerPropertiesFlags.Hidden;
+			if (layer.IsFrozen) this.Flags |= LayerPropertiesFlags.Frozen;
+			if (layer.IsLocked) this.Flags |= LayerPropertiesFlags.Locked;
+			if (layer.Plot) this.Flags |= LayerPropertiesFlags.Plot;
 			this.linetype = layer.Linetype.Name;
-			this.color = (AciColor)layer.Color.Clone();
-			this.lineweight = layer.Lineweight;
-			this.transparency = (Transparency)layer.Transparency.Clone();
+			this.Color = (AciColor)layer.Color.Clone();
+			this.Lineweight = layer.Lineweight;
+			this.Transparency = (Transparency)layer.Transparency.Clone();
 			//this.plotStyle = "Color_" + layer.Color.Index;
 		}
 
@@ -84,22 +78,15 @@ namespace netDxf.Objects
 		#region public properties
 
 		/// <summary>Gets the layer properties name.</summary>
-		public string Name
-		{
-			get { return this.name; }
-		}
+		public string Name { get; }
 
 		/// <summary>Layer properties flags.</summary>
-		public LayerPropertiesFlags Flags
-		{
-			get { return this.flags; }
-			set { this.flags = value; }
-		}
+		public LayerPropertiesFlags Flags { get; set; }
 
 		/// <summary>Layer properties linetype name.</summary>
 		public string LinetypeName
 		{
-			get { return this.linetype; }
+			get => this.linetype;
 			set
 			{
 				if (string.IsNullOrEmpty(value))
@@ -111,34 +98,18 @@ namespace netDxf.Objects
 		}
 
 		/// <summary>Layer properties color.</summary>
-		public AciColor Color
-		{
-			get { return this.color; }
-			set { this.color = value; }
-		}
+		public AciColor Color { get; set; }
 
 		/// <summary>Layer properties lineweight.</summary>
-		public Lineweight Lineweight
-		{
-			get { return this.lineweight; }
-			set { this.lineweight = value; }
-		}
+		public Lineweight Lineweight { get; set; }
 
 		/// <summary>Layer properties transparency.</summary>
-		public Transparency Transparency
-		{
-			get { return this.transparency; }
-			set { this.transparency = value; }
-		}
+		public Transparency Transparency { get; set; }
 
 		///// <summary>
 		///// Layer properties plot style name.
 		///// </summary>
-		//public string PlotStyleName
-		//{
-		//	get { return this.plotStyle; }
-		//	set { this.plotStyle = value; }
-		//}
+		//public string PlotStyleName { get; set; }
 
 		#endregion
 
@@ -149,28 +120,28 @@ namespace netDxf.Objects
 		/// <param name="options">Layer properties to copy.</param>
 		public void CopyFrom(Layer layer, LayerPropertiesRestoreFlags options)
 		{
-			if (!string.Equals(this.name, layer.Name, StringComparison.OrdinalIgnoreCase))
+			if (!string.Equals(this.Name, layer.Name, StringComparison.OrdinalIgnoreCase))
 			{
 				throw new ArgumentException("Only a layer with the same name can be copied.", nameof(layer));
 			}
 
-			this.flags = LayerPropertiesFlags.None;
+			this.Flags = LayerPropertiesFlags.None;
 
 			if (options.HasFlag(LayerPropertiesRestoreFlags.Hidden))
 			{
-				if (!layer.IsVisible) this.flags |= LayerPropertiesFlags.Hidden;
+				if (!layer.IsVisible) this.Flags |= LayerPropertiesFlags.Hidden;
 			}
 			if (options.HasFlag(LayerPropertiesRestoreFlags.Frozen))
 			{
-				if (layer.IsFrozen) this.flags |= LayerPropertiesFlags.Frozen;
+				if (layer.IsFrozen) this.Flags |= LayerPropertiesFlags.Frozen;
 			}
 			if (options.HasFlag(LayerPropertiesRestoreFlags.Locked))
 			{
-				if (layer.IsLocked) this.flags |= LayerPropertiesFlags.Locked;
+				if (layer.IsLocked) this.Flags |= LayerPropertiesFlags.Locked;
 			}
 			if (options.HasFlag(LayerPropertiesRestoreFlags.Plot))
 			{
-				if (layer.Plot) this.flags |= LayerPropertiesFlags.Plot;
+				if (layer.Plot) this.Flags |= LayerPropertiesFlags.Plot;
 			}
 			if (options.HasFlag(LayerPropertiesRestoreFlags.Linetype))
 			{
@@ -178,15 +149,15 @@ namespace netDxf.Objects
 			}
 			if (options.HasFlag(LayerPropertiesRestoreFlags.Color))
 			{
-				this.color = (AciColor)layer.Color.Clone();
+				this.Color = (AciColor)layer.Color.Clone();
 			}
 			if (options.HasFlag(LayerPropertiesRestoreFlags.Lineweight))
 			{
-				this.lineweight = layer.Lineweight;
+				this.Lineweight = layer.Lineweight;
 			}
 			if (options.HasFlag(LayerPropertiesRestoreFlags.Transparency))
 			{
-				this.transparency = (Transparency)layer.Transparency.Clone();
+				this.Transparency = (Transparency)layer.Transparency.Clone();
 			}
 		}
 
@@ -195,26 +166,26 @@ namespace netDxf.Objects
 		/// <param name="options">Layer properties to copy.</param>
 		public void CopyTo(Layer layer, LayerPropertiesRestoreFlags options)
 		{
-			if (!string.Equals(this.name, layer.Name, StringComparison.OrdinalIgnoreCase))
+			if (!string.Equals(this.Name, layer.Name, StringComparison.OrdinalIgnoreCase))
 			{
 				throw new ArgumentException("Only a layer with the same name can be copied.", nameof(layer));
 			}
 
 			if (options.HasFlag(LayerPropertiesRestoreFlags.Hidden))
 			{
-				layer.IsVisible = !this.flags.HasFlag(LayerPropertiesFlags.Hidden);
+				layer.IsVisible = !this.Flags.HasFlag(LayerPropertiesFlags.Hidden);
 			}
 			if (options.HasFlag(LayerPropertiesRestoreFlags.Frozen))
 			{
-				layer.IsFrozen = this.flags.HasFlag(LayerPropertiesFlags.Frozen);
+				layer.IsFrozen = this.Flags.HasFlag(LayerPropertiesFlags.Frozen);
 			}
 			if (options.HasFlag(LayerPropertiesRestoreFlags.Locked))
 			{
-				layer.IsLocked = this.flags.HasFlag(LayerPropertiesFlags.Locked);
+				layer.IsLocked = this.Flags.HasFlag(LayerPropertiesFlags.Locked);
 			}
 			if (options.HasFlag(LayerPropertiesRestoreFlags.Plot))
 			{
-				layer.Plot = this.flags.HasFlag(LayerPropertiesFlags.Plot);
+				layer.Plot = this.Flags.HasFlag(LayerPropertiesFlags.Plot);
 			}
 			if (options.HasFlag(LayerPropertiesRestoreFlags.Linetype))
 			{
@@ -246,27 +217,27 @@ namespace netDxf.Objects
 		/// <returns>If the stored properties are the same as the specified layer it returns <see langword="true"/>; otherwise, <see langword="false"/>.</returns>
 		public bool CompareWith(Layer layer)
 		{
-			if (!string.Equals(layer.Name, this.name, StringComparison.InvariantCultureIgnoreCase))
+			if (!string.Equals(layer.Name, this.Name, StringComparison.InvariantCultureIgnoreCase))
 			{
 				return false;
 			}
 
-			if (layer.IsVisible != !this.flags.HasFlag(LayerPropertiesFlags.Hidden))
+			if (layer.IsVisible != !this.Flags.HasFlag(LayerPropertiesFlags.Hidden))
 			{
 				return false;
 			}
 
-			if (layer.IsFrozen != this.flags.HasFlag(LayerPropertiesFlags.Frozen))
+			if (layer.IsFrozen != this.Flags.HasFlag(LayerPropertiesFlags.Frozen))
 			{
 				return false;
 			}
 
-			if (layer.IsLocked != this.flags.HasFlag(LayerPropertiesFlags.Locked))
+			if (layer.IsLocked != this.Flags.HasFlag(LayerPropertiesFlags.Locked))
 			{
 				return false;
 			}
 
-			if (layer.Plot != this.flags.HasFlag(LayerPropertiesFlags.Plot))
+			if (layer.Plot != this.Flags.HasFlag(LayerPropertiesFlags.Plot))
 			{
 				return false;
 			}
@@ -276,17 +247,17 @@ namespace netDxf.Objects
 				return false;
 			}
 
-			if (!layer.Color.Equals(this.color))
+			if (!layer.Color.Equals(this.Color))
 			{
 				return false;
 			}
 
-			if (layer.Lineweight != this.lineweight)
+			if (layer.Lineweight != this.Lineweight)
 			{
 				return false;
 			}
 
-			if (!layer.Transparency.Equals(this.transparency))
+			if (!layer.Transparency.Equals(this.Transparency))
 			{
 				return false;
 			}
@@ -300,17 +271,15 @@ namespace netDxf.Objects
 
 		/// <inheritdoc/>
 		public object Clone()
-		{
-			return new LayerStateProperties(this.name)
+			=> new LayerStateProperties(this.Name)
 			{
-				Flags = this.flags,
+				Flags = this.Flags,
 				LinetypeName = this.linetype,
-				Color = (AciColor)this.color.Clone(),
-				Lineweight = this.lineweight,
-				Transparency = (Transparency)this.transparency.Clone(),
+				Color = (AciColor)this.Color.Clone(),
+				Lineweight = this.Lineweight,
+				Transparency = (Transparency)this.Transparency.Clone(),
 				//PlotStyleName = this.plotStyle
 			};
-		}
 
 		#endregion
 

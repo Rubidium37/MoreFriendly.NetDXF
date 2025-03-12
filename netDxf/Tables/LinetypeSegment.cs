@@ -31,13 +31,6 @@ namespace netDxf.Tables
 	public abstract class LinetypeSegment :
 		ICloneable
 	{
-		#region private fields
-
-		private readonly LinetypeSegmentType type;
-		private double length;
-
-		#endregion
-
 		#region constructors
 
 		/// <summary>Initializes a new instance of the class.</summary>
@@ -45,8 +38,8 @@ namespace netDxf.Tables
 		/// <param name="length">Dash or space length of the segment.</param>
 		protected LinetypeSegment(LinetypeSegmentType type, double length)
 		{
-			this.type = type;
-			this.length = length;
+			this.Type = type;
+			this.Length = length;
 		}
 
 		#endregion
@@ -54,10 +47,7 @@ namespace netDxf.Tables
 		#region public properties
 
 		/// <summary>Gets the linetype segment simple, text, or shape.</summary>
-		public LinetypeSegmentType Type
-		{
-			get { return this.type; }
-		}
+		public LinetypeSegmentType Type { get; }
 
 		/// <summary>Gets or sets the dash, dot or space length.</summary>
 		/// <remarks>
@@ -65,11 +55,7 @@ namespace netDxf.Tables
 		/// A negative decimal number denotes a pen-up (space) segment of that length.
 		/// A dash length of 0 draws a dot.
 		/// </remarks>
-		public double Length
-		{
-			get { return this.length; }
-			set { this.length = value; }
-		}
+		public double Length { get; set; }
 
 		#endregion
 

@@ -56,7 +56,6 @@ namespace netDxf.Tables
 		#region private fields
 
 		private static readonly char[] invalidCharacters = { '\\', '/', ':', '*', '?', '"', '<', '>', '|', ';', ',', '=', '`' };
-		private bool reserved;
 		private string name;
 
 		#endregion
@@ -80,7 +79,7 @@ namespace netDxf.Tables
 			}
 
 			this.name = name;
-			this.reserved = false;
+			this.IsReserved = false;
 		}
 
 		#endregion
@@ -91,22 +90,16 @@ namespace netDxf.Tables
 		/// <remarks>Table object names are case insensitive.</remarks>
 		public string Name
 		{
-			get { return this.name; }
-			set { this.SetName(value, true); }
+			get => this.name;
+			set => this.SetName(value, true);
 		}
 
 		/// <summary>Gets if the table object is reserved and cannot be deleted.</summary>
-		public bool IsReserved
-		{
-			get { return this.reserved; }
-			internal set { this.reserved = value; }
-		}
+		public bool IsReserved { get; internal set; }
 
 		/// <summary>Gets the array of characters not supported as table object names.</summary>
 		public static char[] InvalidCharacters
-		{
-			get { return invalidCharacters.ToArray(); }
-		}
+			=> invalidCharacters.ToArray();
 
 		#endregion
 
@@ -184,10 +177,7 @@ namespace netDxf.Tables
 		#region overrides
 
 		/// <inheritdoc/>
-		public override string ToString()
-		{
-			return this.Name;
-		}
+		public override string ToString() => this.Name;
 
 		#endregion
 
@@ -195,11 +185,7 @@ namespace netDxf.Tables
 
 		/// <inheritdoc/>
 		/// <remarks>If both table objects are no of the same type it will return zero. The comparison is made by their names.</remarks>
-		public int CompareTo(object other)
-		{
-			return this.CompareTo((TableObject)other);
-		}
-
+		public int CompareTo(object other) => this.CompareTo((TableObject)other);
 		/// <inheritdoc/>
 		/// <remarks>If both table objects are not of the same type it will return zero. The comparison is made by their names.</remarks>
 		public int CompareTo(TableObject other)
@@ -213,10 +199,7 @@ namespace netDxf.Tables
 		}
 
 		/// <inheritdoc/>
-		public override int GetHashCode()
-		{
-			return this.Name.GetHashCode();
-		}
+		public override int GetHashCode() => this.Name.GetHashCode();
 
 		///// <summary>
 		///// Check if the tables are equal.
@@ -234,7 +217,6 @@ namespace netDxf.Tables
 
 		//	return string.Equals(u.Name, v.Name, StringComparison.OrdinalIgnoreCase);
 		//}
-
 		///// <summary>
 		///// Check if the tables are different.
 		///// </summary>
@@ -251,7 +233,6 @@ namespace netDxf.Tables
 
 		//	return !string.Equals(u.Name, v.Name, StringComparison.OrdinalIgnoreCase);
 		//}
-
 		///// <summary>
 		///// Check if the first table is lesser than the second.
 		///// </summary>
@@ -265,7 +246,6 @@ namespace netDxf.Tables
 
 		//	return string.Compare(u.Name, v.Name, StringComparison.OrdinalIgnoreCase) < 0;
 		//}
-
 		///// <summary>
 		///// Check if first table is greater than the second.
 		///// </summary>
@@ -285,20 +265,7 @@ namespace netDxf.Tables
 		#region implements IEquatable
 
 		/// <inheritdoc/>
-		public override bool Equals(object other)
-		{
-			if (other == null)
-			{
-				return false;
-			}
-
-			if (this.GetType() != other.GetType())
-			{
-				return false;
-			}
-
-			return this.Equals((TableObject)other);
-		}
+		public override bool Equals(object obj) => obj is TableObject other && this.Equals(other);
 		/// <inheritdoc/>
 		public bool Equals(TableObject other)
 		{

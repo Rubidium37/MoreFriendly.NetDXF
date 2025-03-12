@@ -40,31 +40,21 @@ namespace netDxf.GTE
 	// https://www.geometrictools.com/Documentation/BSplineCurveLeastSquaresFit.pdf
 	public class BSplineCurveFit
 	{
-		// Input sample information.
-		private readonly int numSamples;
-		private readonly Vector3[] sampleData;
-
-		// The fitted B-spline curve, open and with uniform knots.
-		private readonly int degree;
-		private readonly int numControls;
-		private readonly Vector3[] controlData;
-		private readonly BasisFunction basisFunction;
-
 		// Construction.  The preconditions for calling the constructor are
 		// 1 <= degree && degree < numControls <= numSamples - degree - 1.
 		// The samples points are contiguous blocks of 'dimension' double values
 		// stored in sampleData.
 		public BSplineCurveFit(Vector3[] sampleData, int degree, int numControls)
 		{
-			this.numSamples = sampleData.Length;
-			this.sampleData = sampleData;
-			this.degree = degree;
-			this.numControls = numControls;
-			this.controlData = new Vector3[numControls];
+			this.NumSamples = sampleData.Length;
+			this.SampleData = sampleData;
+			this.Degree = degree;
+			this.NumControls = numControls;
+			this.ControlData = new Vector3[numControls];
 
 			Debug.Assert(1 <= degree && degree < numControls, "Invalid degree.");
 			Debug.Assert(sampleData != null, "Invalid sample data.");
-			Debug.Assert(numControls <= this.numSamples - degree - 1, "Invalid number of controls.");
+			Debug.Assert(numControls <= this.NumSamples - degree - 1, "Invalid number of controls.");
 
 			BasisFunctionInput input = new BasisFunctionInput();
 			input.NumControls = numControls;
@@ -85,44 +75,44 @@ namespace netDxf.GTE
 			}
 			input.UniqueKnots[last].T = 1.0;
 			input.UniqueKnots[last].Multiplicity = degree + 1;
-			this.basisFunction = new BasisFunction(input);
+			this.BasisFunction = new BasisFunction(input);
 
 			// Fit the data points with a B-spline curve using a least-squares
 			// error metric.  The problem is of the form A^T*A*Q = A^T*P,
 			// where A^T*A is a banded matrix, P contains the sample data, and
 			// Q is the unknown vector of control points.
-			double tMultiplier = 1.0 / (this.numSamples - 1.0);
+			double tMultiplier = 1.0 / (this.NumSamples - 1.0);
 			double t;
 			int i0, i1, i2, imin, imax;
 
 			// Construct the matrix A^T*A.
-			int degp1 = this.degree + 1;
-			int numBands = this.numControls > degp1 ? degp1 : this.degree;
-			BandedMatrix ATAMat = new BandedMatrix(this.numControls, numBands, numBands);
-			for (i0 = 0; i0 < this.numControls; i0++)
+			int degp1 = this.Degree + 1;
+			int numBands = this.NumControls > degp1 ? degp1 : this.Degree;
+			BandedMatrix ATAMat = new BandedMatrix(this.NumControls, numBands, numBands);
+			for (i0 = 0; i0 < this.NumControls; i0++)
 			{
 				for (i1 = 0; i1 < i0; i1++)
 				{
 					ATAMat[i0, i1] = ATAMat[i1, i0];
 				}
 
-				int i1Max = i0 + this.degree;
-				if (i1Max >= this.numControls)
+				int i1Max = i0 + this.Degree;
+				if (i1Max >= this.NumControls)
 				{
-					i1Max = this.numControls - 1;
+					i1Max = this.NumControls - 1;
 				}
 
 				for (i1 = i0; i1 <= i1Max; i1++)
 				{
 					double value = 0.0;
-					for (i2 = 0; i2 < this.numSamples; i2++)
+					for (i2 = 0; i2 < this.NumSamples; i2++)
 					{
 						t = tMultiplier * i2;
-						this.basisFunction.Evaluate(t, 0, out imin, out imax);
+						this.BasisFunction.Evaluate(t, 0, out imin, out imax);
 						if (imin <= i0 && i0 <= imax && imin <= i1 && i1 <= imax)
 						{
-							double b0 = this.basisFunction.GetValue(0, i0);
-							double b1 = this.basisFunction.GetValue(0, i1);
+							double b0 = this.BasisFunction.GetValue(0, i0);
+							double b1 = this.BasisFunction.GetValue(0, i1);
 							value += b0 * b1;
 						}
 					}
@@ -131,39 +121,39 @@ namespace netDxf.GTE
 			}
 
 			// Construct the matrix A^T.
-			double[] ATMat = new double[this.numControls * this.numSamples];
+			double[] ATMat = new double[this.NumControls * this.NumSamples];
 
-			for (i0 = 0; i0 < this.numControls; i0++)
+			for (i0 = 0; i0 < this.NumControls; i0++)
 			{
-				for (i1 = 0; i1 < this.numSamples; i1++)
+				for (i1 = 0; i1 < this.NumSamples; i1++)
 				{
 					t = tMultiplier * i1;
-					this.basisFunction.Evaluate(t, 0, out imin, out imax);
+					this.BasisFunction.Evaluate(t, 0, out imin, out imax);
 					if (imin <= i0 && i0 <= imax)
 					{
-						ATMat[i0 * this.numSamples + i1] = this.basisFunction.GetValue(0, i0);
+						ATMat[i0 * this.NumSamples + i1] = this.BasisFunction.GetValue(0, i0);
 					}
 				}
 			}
 
 			// Compute X0 = (A^T*A)^{-1}*A^T by solving the linear system
 			// A^T*A*X = A^T.
-			bool solved = ATAMat.SolveSystem(ref ATMat, this.numSamples);
+			bool solved = ATAMat.SolveSystem(ref ATMat, this.NumSamples);
 			Debug.Assert(solved, "Failed to solve linear system.");
 
 			// The control points for the fitted curve are stored in the
 			// vector Q = X0*P, where P is the vector of sample data.
-			for (i0 = 0; i0 < this.numControls; i0++)
+			for (i0 = 0; i0 < this.NumControls; i0++)
 			{
-				Vector3 Q = this.controlData[i0];
-				for (i1 = 0; i1 < this.numSamples; i1++)
+				Vector3 Q = this.ControlData[i0];
+				for (i1 = 0; i1 < this.NumSamples; i1++)
 				{
-					Vector3 P = this.sampleData[i1];
-					double xValue = ATMat[i0 * this.numSamples + i1];
+					Vector3 P = this.SampleData[i1];
+					double xValue = ATMat[i0 * this.NumSamples + i1];
 					Q += xValue * P;
 				}
 
-				this.controlData[i0] = Q;
+				this.ControlData[i0] = Q;
 			}
 
 			// TRANSLATION NOTE
@@ -185,36 +175,18 @@ namespace netDxf.GTE
 		}
 
 		// Access to input sample information.
-		public int NumSamples
-		{
-			get { return this.numSamples; }
-		}
+		public int NumSamples { get; }
 
-		public Vector3[] SampleData
-		{
-			get { return this.sampleData; }
-		}
+		public Vector3[] SampleData { get; }
 
 		// Access to output control point and curve information.
-		public int Degree
-		{
-			get { return this.degree; }
-		}
+		public int Degree { get; }
 
-		public int NumControls
-		{
-			get { return this.numControls; }
-		}
+		public int NumControls { get; }
 
-		public Vector3[] ControlData
-		{
-			get { return this.controlData; }
-		}
+		public Vector3[] ControlData { get; }
 
-		public BasisFunction BasisFunction
-		{
-			get { return this.basisFunction; }
-		}
+		public BasisFunction BasisFunction { get; }
 
 		// Evaluation of the B-spline curve.  It is defined for 0 <= t <= 1.
 		// If a t-value is outside [0,1], an open spline clamps it to [0,1].
@@ -222,16 +194,16 @@ namespace netDxf.GTE
 		// elements.
 		public void Evaluate(double t, int order, out Vector3 value)
 		{
-			this.basisFunction.Evaluate(t, order, out int imin, out int imax);
+			this.BasisFunction.Evaluate(t, order, out int imin, out int imax);
 
-			Vector3 source = this.controlData[imin];
-			double basisValue = this.basisFunction.GetValue(order, imin);
+			Vector3 source = this.ControlData[imin];
+			double basisValue = this.BasisFunction.GetValue(order, imin);
 			value = basisValue * source;
 
 			for (int i = imin + 1; i <= imax; i++)
 			{
-				source = this.controlData[i];
-				basisValue = this.basisFunction.GetValue(order, i);
+				source = this.ControlData[i];
+				basisValue = this.BasisFunction.GetValue(order, i);
 				value += basisValue * source;
 			}
 		}

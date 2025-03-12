@@ -36,37 +36,22 @@ namespace netDxf.Entities
 	internal class Vertex :
 		DxfObject
 	{
-		#region private fields
-
-		private VertexTypeFlags flags;
-		private Vector3 position;
-		private short[] vertexIndexes;
-		private double startWidth;
-		private double endWidth;
-		private double bulge;
-		private AciColor color;
-		private Layer layer;
-		private Linetype linetype;
-		private string subclassMarker;
-
-		#endregion
-
 		#region constructors
 
 		/// <summary>Initializes a new instance of the class.</summary>
 		public Vertex()
 			: base(DxfObjectCode.Vertex)
 		{
-			this.flags = VertexTypeFlags.Polyline2DVertex;
-			this.position = Vector3.Zero;
-			this.layer = null;
-			this.color = null;
-			this.linetype = null;
-			this.bulge = 0.0;
-			this.startWidth = 0.0;
-			this.endWidth = 0.0;
-			this.vertexIndexes = null;
-			this.subclassMarker = netDxf.SubclassMarker.Polyline2DVertex;
+			this.Flags = VertexTypeFlags.Polyline2DVertex;
+			this.Position = Vector3.Zero;
+			this.Layer = null;
+			this.Color = null;
+			this.Linetype = null;
+			this.Bulge = 0.0;
+			this.StartWidth = 0.0;
+			this.EndWidth = 0.0;
+			this.VertexIndexes = null;
+			this.SubclassMarker = netDxf.SubclassMarker.Polyline2DVertex;
 		}
 
 		#endregion
@@ -74,74 +59,34 @@ namespace netDxf.Entities
 		#region public properties
 
 		/// <summary>Gets or sets the polyline vertex <see cref="Vector3">location</see>.</summary>
-		public Vector3 Position
-		{
-			get { return this.position; }
-			set { this.position = value; }
-		}
+		public Vector3 Position { get; set; }
 
 		/// <summary>Gets or sets the indexes, only applicable when the vertex represents a face of a polyface mesh.</summary>
-		public short[] VertexIndexes
-		{
-			get { return this.vertexIndexes; }
-			set { this.vertexIndexes = value; }
-		}
+		public short[] VertexIndexes { get; set; }
 
 		/// <summary>Gets or sets the light weight polyline start segment width.</summary>
-		public double StartWidth
-		{
-			get { return this.startWidth; }
-			set { this.startWidth = value; }
-		}
+		public double StartWidth { get; set; }
 
 		/// <summary>Gets or sets the light weight polyline end segment width.</summary>
-		public double EndWidth
-		{
-			get { return this.endWidth; }
-			set { this.endWidth = value; }
-		}
+		public double EndWidth { get; set; }
 
 		/// <summary>Gets or set the light weight polyline bulge.Accepted values range from 0 to 1.</summary>
-		public double Bulge
-		{
-			get { return this.bulge; }
-			set { this.bulge = value; }
-		}
+		public double Bulge { get; set; }
 
 		/// <summary>Gets or sets the vertex type.</summary>
-		public VertexTypeFlags Flags
-		{
-			get { return this.flags; }
-			set { this.flags = value; }
-		}
+		public VertexTypeFlags Flags { get; set; }
 
 		/// <summary>Gets or sets the entity color.</summary>
-		public AciColor Color
-		{
-			get { return this.color; }
-			set { this.color = value; }
-		}
+		public AciColor Color { get; set; }
 
 		/// <summary>Gets or sets the entity layer.</summary>
-		public Layer Layer
-		{
-			get { return this.layer; }
-			set { this.layer = value; }
-		}
+		public Layer Layer { get; set; }
 
 		/// <summary>Gets or sets the entity line type.</summary>
-		public Linetype Linetype
-		{
-			get { return this.linetype; }
-			set { this.linetype = value; }
-		}
+		public Linetype Linetype { get; set; }
 
 		/// <summary>Gets or sets the subclass marker</summary>
-		public string SubclassMarker
-		{
-			get { return this.subclassMarker; }
-			set { this.subclassMarker = value; }
-		}
+		public string SubclassMarker { get; set; }
 
 		#endregion
 	}

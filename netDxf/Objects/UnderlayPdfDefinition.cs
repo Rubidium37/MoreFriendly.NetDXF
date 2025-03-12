@@ -71,15 +71,15 @@ namespace netDxf.Objects
 		/// <summary>Gets or sets the <b>PDF</b> page to show.</summary>
 		public string Page
 		{
-			get { return this.page; }
-			set { this.page = string.IsNullOrEmpty(value) ? string.Empty : value; }
+			get => this.page;
+			set => this.page = string.IsNullOrEmpty(value) ? string.Empty : value;
 		}
 
 		/// <summary>Gets the owner of the actual underlay <b>PDF</b> definition.</summary>
 		public new UnderlayPdfDefinitions Owner
 		{
-			get { return (UnderlayPdfDefinitions)base.Owner; }
-			internal set { base.Owner = value; }
+			get => (UnderlayPdfDefinitions)base.Owner;
+			internal set => base.Owner = value;
 		}
 
 		#endregion
@@ -87,10 +87,7 @@ namespace netDxf.Objects
 		#region overrides
 
 		/// <inheritdoc/>
-		public override bool HasReferences()
-		{
-			return this.Owner != null && this.Owner.HasReferences(this.Name);
-		}
+		public override bool HasReferences() => this.Owner != null && this.Owner.HasReferences(this.Name);
 
 		/// <inheritdoc/>
 		public override List<DxfObjectReference> GetReferences()
@@ -118,12 +115,8 @@ namespace netDxf.Objects
 
 			return copy;
 		}
-
 		/// <inheritdoc/>
-		public override object Clone()
-		{
-			return this.Clone(this.Name);
-		}
+		public override object Clone() => this.Clone(this.Name);
 
 		#endregion
 	}

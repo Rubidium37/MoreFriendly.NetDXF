@@ -40,18 +40,16 @@ namespace netDxf.GTE
 	public class GVector :
 		IEquatable<GVector>
 	{
-		private readonly double[] vector;
-
 		//// The tuple is length zero (uninitialized).
 		//public GVector()
 		//{
-		//	this.vector = new double[0];
+		//	this.Vector = new double[0];
 		//}
 
 		// The tuple is length 'size' and the elements are uninitialized.
 		public GVector(int size)
 		{
-			this.vector = new double[size];
+			this.Vector = new double[size];
 		}
 
 		// For 0 <= d <= size, element d is 1 and all others are zero.  If d
@@ -60,14 +58,14 @@ namespace netDxf.GTE
 		// MakeUnit(int,int) and Unit(int,int).
 		public GVector(int size, int d)
 		{
-			this.vector = new double[size];
+			this.Vector = new double[size];
 			this.MakeUnit(d);
 		}
 
 		public GVector(double[] elements)
 		{
-			this.vector = new double[elements.Length];
-			elements.CopyTo(this.vector, 0);
+			this.Vector = new double[elements.Length];
+			elements.CopyTo(this.Vector, 0);
 		}
 
 		// The copy constructor, destructor, and assignment operator are
@@ -80,24 +78,18 @@ namespace netDxf.GTE
 		//public void SetSize(int size)
 		//{
 		//	Debug.Assert(size >= 0, "Invalid size.");
-		//	this.vector = new double[size];
+		//	this.Vector = new double[size];
 		//}
 
-		public int Size
-		{
-			get { return this.vector.Length; }
-		}
+		public int Size => this.Vector.Length;
 
 		public double this[int i]
 		{
-			get { return this.vector[i]; }
-			set { this.vector[i] = value; }
+			get => this.Vector[i];
+			set => this.Vector[i] = value;
 		}
 
-		public double[] Vector
-		{
-			get { return this.vector; }
-		}
+		public double[] Vector { get; }
 
 		// Comparison (for use by STL containers).
 		public static bool operator ==(GVector vec1, GVector vec2)
@@ -108,7 +100,6 @@ namespace netDxf.GTE
 			}
 			return vec1.Equals(vec2);
 		}
-
 		public static bool operator !=(GVector vec1, GVector vec2)
 		{
 			if (vec1 == null || vec2 == null)
@@ -117,7 +108,6 @@ namespace netDxf.GTE
 			}
 			return !vec1.Equals(vec2);
 		}
-
 		public static bool operator <(GVector vec1, GVector vec2)
 		{
 			if (vec1.Size != vec2.Size)
@@ -136,7 +126,6 @@ namespace netDxf.GTE
 
 			return true;
 		}
-
 		public static bool operator <=(GVector vec1, GVector vec2)
 		{
 			if (vec1.Size != vec2.Size)
@@ -155,7 +144,6 @@ namespace netDxf.GTE
 
 			return true;
 		}
-
 		public static bool operator >(GVector vec1, GVector vec2)
 		{
 			if (vec1.Size != vec2.Size)
@@ -174,7 +162,6 @@ namespace netDxf.GTE
 
 			return true;
 		}
-
 		public static bool operator >=(GVector vec1, GVector vec2)
 		{
 			if (vec1.Size != vec2.Size)
@@ -199,37 +186,31 @@ namespace netDxf.GTE
 		// All components are 0.
 		public void MakeZero()
 		{
-			for (int i = 0; i < this.vector.Length; i++)
+			for (int i = 0; i < this.Vector.Length; i++)
 			{
-				this.vector[i] = 0.0;
+				this.Vector[i] = 0.0;
 			}
 		}
 
 		// Component d is 1, all others are zero.
 		public void MakeUnit(int d)
 		{
-			for (int i = 0; i < this.vector.Length; i++)
+			for (int i = 0; i < this.Vector.Length; i++)
 			{
 				if (i == d)
 				{
-					this.vector[i] = 1.0;
+					this.Vector[i] = 1.0;
 				}
 				else
 				{
-					this.vector[i] = 0.0;
+					this.Vector[i] = 0.0;
 				}
 			}
 		}
 
-		public static GVector Zero(int size)
-		{
-			return new GVector(size);
-		}
+		public static GVector Zero(int size) => new GVector(size);
 
-		public static GVector Unit(int size, int d)
-		{
-			return new GVector(size, d);
-		}
+		public static GVector Unit(int size, int d) => new GVector(size, d);
 
 
 		// Unary operations.
@@ -298,15 +279,9 @@ namespace netDxf.GTE
 			return vector;
 		}
 
-		public static GVector operator *(GVector vec, double scalar)
-		{
-			return scalar * vec;
-		}
+		public static GVector operator *(GVector vec, double scalar) => scalar * vec;
 
-		public static GVector operator /(GVector vec, double scalar)
-		{
-			return vec * (1.0 / scalar);
-		}
+		public static GVector operator /(GVector vec, double scalar) => vec * (1.0 / scalar);
 
 		// Geometric operations.  The functions with 'robust' set to 'false' use
 		// the standard algorithm for normalizing a vector by computing the length
@@ -607,15 +582,7 @@ namespace netDxf.GTE
 		}
 
 		/// <inheritdoc/>
-		public override bool Equals(object obj)
-		{
-			if (obj == null)
-			{
-				return false;
-			}
-
-			return obj.GetType() == this.GetType() && this.Equals((GVector)obj);
-		}
+		public override bool Equals(object obj) => obj is GVector other && this.Equals(other);
 		/// <inheritdoc/>
 		public bool Equals(GVector other)
 		{
@@ -642,9 +609,6 @@ namespace netDxf.GTE
 		}
 
 		/// <inheritdoc/>
-		public override int GetHashCode()
-		{
-			return this.vector.GetHashCode();
-		}
+		public override int GetHashCode() => this.Vector.GetHashCode();
 	}
 }

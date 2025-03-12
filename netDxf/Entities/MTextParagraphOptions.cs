@@ -34,15 +34,12 @@ namespace netDxf.Entities
 		#region private fields
 
 		private double heightFactor;
-		private MTextParagraphAlignment alignment;
-		private MTextParagraphVerticalAlignment verticalAlignment;
 		private double spaceBefore;
 		private double spaceAfter;
 		private double firstLineIndent;
 		private double leftIndent;
 		private double rightIndent;
 		private double lineSpacing;
-		private MTextLineSpacingStyle lineSpacingStyle;
 
 		#endregion
 
@@ -52,15 +49,15 @@ namespace netDxf.Entities
 		public MTextParagraphOptions()
 		{
 			this.heightFactor = 1.0;
-			this.alignment = MTextParagraphAlignment.Left;
-			this.verticalAlignment = MTextParagraphVerticalAlignment.Center;
+			this.Alignment = MTextParagraphAlignment.Left;
+			this.VerticalAlignment = MTextParagraphVerticalAlignment.Center;
 			this.spaceBefore = 0.0;
 			this.spaceAfter = 0.0;
 			this.firstLineIndent = 0.0;
 			this.leftIndent = 0.0;
 			this.rightIndent = 0.0;
 			this.lineSpacing = 1.0;
-			this.lineSpacingStyle = MTextLineSpacingStyle.Default;
+			this.LineSpacingStyle = MTextLineSpacingStyle.Default;
 		}
 
 		#endregion
@@ -71,7 +68,7 @@ namespace netDxf.Entities
 		/// <remarks>Set as 1.0 to apply the default height factor.</remarks>
 		public double HeightFactor
 		{
-			get { return this.heightFactor; }
+			get => this.heightFactor;
 			set
 			{
 				if (value <= 0)
@@ -81,22 +78,14 @@ namespace netDxf.Entities
 		}
 
 		/// <summary>Gets or sets the paragraph justification (text horizontal alignment).</summary>
-		public MTextParagraphAlignment Alignment
-		{
-			get { return this.alignment; }
-			set { this.alignment = value; }
-		}
+		public MTextParagraphAlignment Alignment { get; set; }
 
 		/// <summary>Gets or sets the paragraph line vertical alignment.</summary>
 		/// <remarks>
 		/// The vertical alignment affects how fractions, superscripts, subscripts, and characters of different heights are placed in a paragraph line.
 		/// By default the paragraph vertical alignment is Center.
 		/// </remarks>
-		public MTextParagraphVerticalAlignment VerticalAlignment
-		{
-			get { return this.verticalAlignment; }
-			set { this.verticalAlignment = value; }
-		}
+		public MTextParagraphVerticalAlignment VerticalAlignment { get; set; }
 
 		/// <summary>Specifies the spacing before the paragraphs.</summary>
 		/// <remarks>
@@ -106,7 +95,7 @@ namespace netDxf.Entities
 		/// </remarks>
 		public double SpacingBefore
 		{
-			get { return this.spaceBefore; }
+			get => this.spaceBefore;
 			set
 			{
 				if (MathHelper.IsZero(value))
@@ -130,7 +119,7 @@ namespace netDxf.Entities
 		/// </remarks>
 		public double SpacingAfter
 		{
-			get { return this.spaceAfter; }
+			get => this.spaceAfter;
 			set
 			{
 				if (MathHelper.IsZero(value))
@@ -154,7 +143,7 @@ namespace netDxf.Entities
 		/// </remarks>
 		public double FirstLineIndent
 		{
-			get { return this.firstLineIndent; }
+			get => this.firstLineIndent;
 			set
 			{
 				if (value < -10000.0 || value > 10000.0)
@@ -170,7 +159,7 @@ namespace netDxf.Entities
 		/// </remarks>
 		public double LeftIndent
 		{
-			get { return this.leftIndent; }
+			get => this.leftIndent;
 			set
 			{
 				if (value < 0.0 || value > 10000.0)
@@ -185,7 +174,7 @@ namespace netDxf.Entities
 		/// </remarks>
 		public double RightIndent
 		{
-			get { return this.rightIndent; }
+			get => this.rightIndent;
 			set
 			{
 				if (value < 0.0 || value > 10000.0)
@@ -200,7 +189,7 @@ namespace netDxf.Entities
 		/// </remarks>
 		public double LineSpacingFactor
 		{
-			get { return this.lineSpacing; }
+			get => this.lineSpacing;
 			set
 			{
 				if (value < 0.25 || value > 4.0)
@@ -210,11 +199,7 @@ namespace netDxf.Entities
 		}
 
 		/// <summary>Get or sets the paragraph <see cref="MTextLineSpacingStyle">line spacing style</see>.</summary>
-		public MTextLineSpacingStyle LineSpacingStyle
-		{
-			get { return this.lineSpacingStyle; }
-			set { this.lineSpacingStyle = value; }
-		}
+		public MTextLineSpacingStyle LineSpacingStyle { get; set; }
 
 		#endregion
 	}

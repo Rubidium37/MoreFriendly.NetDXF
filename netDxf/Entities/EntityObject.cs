@@ -69,16 +69,13 @@ namespace netDxf.Entities
 
 		#region private fields
 
-		private readonly EntityType type;
 		private AciColor color;
 		private Layer layer;
 		private Linetype linetype;
-		private Lineweight lineweight;
 		private Transparency transparency;
 		private double linetypeScale;
-		private bool isVisible;
 		private Vector3 normal;
-		private readonly List<DxfObject> reactors;
+		private readonly List<DxfObject> reactors = new List<DxfObject>();
 
 		#endregion
 
@@ -87,16 +84,15 @@ namespace netDxf.Entities
 		protected EntityObject(EntityType type, string dxfCode)
 			: base(dxfCode)
 		{
-			this.type = type;
+			this.Type = type;
 			this.color = AciColor.ByLayer;
 			this.layer = Layer.Default;
 			this.linetype = Linetype.ByLayer;
-			this.lineweight = Lineweight.ByLayer;
+			this.Lineweight = Lineweight.ByLayer;
 			this.transparency = Transparency.ByLayer;
 			this.linetypeScale = 1.0;
-			this.isVisible = true;
+			this.IsVisible = true;
 			this.normal = Vector3.UnitZ;
-			this.reactors = new List<DxfObject>();
 		}
 
 		#endregion
@@ -104,21 +100,15 @@ namespace netDxf.Entities
 		#region public properties
 
 		/// <summary>Gets the list of <b>DXF</b> objects that has been attached to this entity.</summary>
-		public IReadOnlyList<DxfObject> Reactors
-		{
-			get { return this.reactors; }
-		}
+		public IReadOnlyList<DxfObject> Reactors => this.reactors;
 
 		/// <summary>Gets the entity <see cref="EntityType">type</see>.</summary>
-		public EntityType Type
-		{
-			get { return this.type; }
-		}
+		public EntityType Type { get; }
 
 		/// <summary>Gets or sets the entity <see cref="AciColor">color</see>.</summary>
 		public AciColor Color
 		{
-			get { return this.color; }
+			get => this.color;
 			set
 			{
 				this.color = value ?? throw new ArgumentNullException(nameof(value));
@@ -128,7 +118,7 @@ namespace netDxf.Entities
 		/// <summary>Gets or sets the entity <see cref="Layer">layer</see>.</summary>
 		public Layer Layer
 		{
-			get { return this.layer; }
+			get => this.layer;
 			set
 			{
 				if (value == null)
@@ -142,7 +132,7 @@ namespace netDxf.Entities
 		/// <summary>Gets or sets the entity <see cref="Linetype">line type</see>.</summary>
 		public Linetype Linetype
 		{
-			get { return this.linetype; }
+			get => this.linetype;
 			set
 			{
 				if (value == null)
@@ -154,16 +144,12 @@ namespace netDxf.Entities
 		}
 
 		/// <summary>Gets or sets the entity <see cref="Lineweight">line weight</see>, one unit is always 1/100 mm (default = ByLayer).</summary>
-		public Lineweight Lineweight
-		{
-			get { return this.lineweight; }
-			set { this.lineweight = value; }
-		}
+		public Lineweight Lineweight { get; set; }
 
 		/// <summary>Gets or sets layer <see cref="Transparency">transparency</see> (default: ByLayer).</summary>
 		public Transparency Transparency
 		{
-			get { return this.transparency; }
+			get => this.transparency;
 			set
 			{
 				this.transparency = value ?? throw new ArgumentNullException(nameof(value));
@@ -173,7 +159,7 @@ namespace netDxf.Entities
 		/// <summary>Gets or sets the entity line type scale.</summary>
 		public double LinetypeScale
 		{
-			get { return this.linetypeScale; }
+			get => this.linetypeScale;
 			set
 			{
 				if (value <= 0)
@@ -185,16 +171,12 @@ namespace netDxf.Entities
 		}
 
 		/// <summary>Gets or set the entity visibility.</summary>
-		public bool IsVisible
-		{
-			get { return this.isVisible; }
-			set { this.isVisible = value; }
-		}
+		public bool IsVisible { get; set; }
 
 		/// <summary>Gets or sets the entity <see cref="Vector3">normal</see>.</summary>
 		public Vector3 Normal
 		{
-			get { return this.normal; }
+			get => this.normal;
 			set
 			{
 				this.normal = Vector3.Normalize(value);
@@ -208,23 +190,17 @@ namespace netDxf.Entities
 		/// <summary>Gets the owner of the actual <b>DXF</b> object.</summary>
 		public new Block Owner
 		{
-			get { return (Block)base.Owner; }
-			internal set { base.Owner = value; }
+			get => (Block)base.Owner;
+			internal set => base.Owner = value;
 		}
 
 		#endregion
 
 		#region internal methods
 
-		internal void AddReactor(DxfObject o)
-		{
-			this.reactors.Add(o);
-		}
+		internal void AddReactor(DxfObject o) => this.reactors.Add(o);
 
-		internal bool RemoveReactor(DxfObject o)
-		{
-			return this.reactors.Remove(o);
-		}
+		internal bool RemoveReactor(DxfObject o) => this.reactors.Remove(o);
 
 		#endregion
 
@@ -254,10 +230,7 @@ namespace netDxf.Entities
 		#region overrides
 
 		/// <inheritdoc/>
-		public override string ToString()
-		{
-			return this.type.ToString();
-		}
+		public override string ToString() => this.Type.ToString();
 
 		#endregion
 

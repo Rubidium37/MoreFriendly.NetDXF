@@ -55,8 +55,6 @@ namespace netDxf.Entities
 		#region private fields
 
 		private readonly PolyfaceMeshFace[] faces;
-		private readonly Vector3[] vertexes;
-		private PolylineTypeFlags flags;
 
 		#endregion
 
@@ -68,15 +66,15 @@ namespace netDxf.Entities
 		public PolyfaceMesh(IEnumerable<Vector3> vertexes, IEnumerable<short[]> faces)
 			: base(EntityType.PolyfaceMesh, DxfObjectCode.Polyline)
 		{
-			this.flags = PolylineTypeFlags.PolyfaceMesh;
+			this.Flags = PolylineTypeFlags.PolyfaceMesh;
 			if (vertexes == null)
 			{
 				throw new ArgumentNullException(nameof(vertexes));
 			}
-			this.vertexes = vertexes.ToArray();
-			if (this.vertexes.Length < 3)
+			this.Vertexes = vertexes.ToArray();
+			if (this.Vertexes.Length < 3)
 			{
-				throw new ArgumentOutOfRangeException(nameof(vertexes), this.vertexes.Length, "The polyface mesh faces list requires at least three points.");
+				throw new ArgumentOutOfRangeException(nameof(vertexes), this.Vertexes.Length, "The polyface mesh faces list requires at least three points.");
 			}
 
 			if (faces == null)
@@ -90,11 +88,11 @@ namespace netDxf.Entities
 			{
 				this.faces[i] = new PolyfaceMeshFace(faces.ElementAt(i));
 			}
-			if (this.faces.Length < 1)
+			if (this.Faces.Count < 1)
 			{
-				throw new ArgumentOutOfRangeException(nameof(vertexes), this.faces.Length, "The polyface mesh faces list requires at least one face.");
+				throw new ArgumentOutOfRangeException(nameof(vertexes), this.Faces.Count, "The polyface mesh faces list requires at least one face.");
 			}
-			foreach (PolyfaceMeshFace face in this.faces)
+			foreach (PolyfaceMeshFace face in this.Faces)
 			{
 				face.LayerChanged += this.PolyfaceMeshFace_LayerChanged;
 			}
@@ -106,15 +104,15 @@ namespace netDxf.Entities
 		public PolyfaceMesh(IEnumerable<Vector3> vertexes, IEnumerable<PolyfaceMeshFace> faces)
 			: base(EntityType.PolyfaceMesh, DxfObjectCode.Polyline)
 		{
-			this.flags = PolylineTypeFlags.PolyfaceMesh;
+			this.Flags = PolylineTypeFlags.PolyfaceMesh;
 			if (vertexes == null)
 			{
 				throw new ArgumentNullException(nameof(vertexes));
 			}
-			this.vertexes = vertexes.ToArray();
-			if (this.vertexes.Length < 3)
+			this.Vertexes = vertexes.ToArray();
+			if (this.Vertexes.Length < 3)
 			{
-				throw new ArgumentOutOfRangeException(nameof(vertexes), this.vertexes.Length, "The polyface mesh faces list requires at least three points.");
+				throw new ArgumentOutOfRangeException(nameof(vertexes), this.Vertexes.Length, "The polyface mesh faces list requires at least three points.");
 			}
 
 			if (faces == null)
@@ -123,12 +121,12 @@ namespace netDxf.Entities
 			}
 
 			this.faces = faces.ToArray();
-			if (this.faces.Length < 1)
+			if (this.Faces.Count < 1)
 			{
-				throw new ArgumentOutOfRangeException(nameof(vertexes), this.faces.Length, "The polyface mesh faces list requires at least one face.");
+				throw new ArgumentOutOfRangeException(nameof(vertexes), this.Faces.Count, "The polyface mesh faces list requires at least one face.");
 			}
 
-			foreach (PolyfaceMeshFace face in this.faces)
+			foreach (PolyfaceMeshFace face in this.Faces)
 			{
 				face.LayerChanged += this.PolyfaceMeshFace_LayerChanged;
 			}
@@ -139,27 +137,17 @@ namespace netDxf.Entities
 		#region public properties
 
 		/// <summary>Gets or sets the polyface mesh <see cref="Vector3">vertexes</see>.</summary>
-		public Vector3[] Vertexes
-		{
-			get { return this.vertexes; }
-		}
+		public Vector3[] Vertexes { get; }
 
 		/// <summary>Gets or sets the polyface mesh <see cref="PolyfaceMeshFace">faces</see>.</summary>
-		public IReadOnlyList<PolyfaceMeshFace> Faces
-		{
-			get { return this.faces; }
-		}
+		public IReadOnlyList<PolyfaceMeshFace> Faces => this.faces;
 
 		#endregion
 
 		#region internal properties
 
 		/// <summary>Gets the polyface mesh flags.</summary>
-		internal PolylineTypeFlags Flags
-		{
-			get { return this.flags; }
-			set { this.flags = value; }
-		}
+		internal PolylineTypeFlags Flags { get; set; }
 
 		#endregion
 
@@ -174,7 +162,7 @@ namespace netDxf.Entities
 		{
 			List<EntityObject> entities = new List<EntityObject>();
 
-			foreach (PolyfaceMeshFace face in this.faces)
+			foreach (PolyfaceMeshFace face in this.Faces)
 			{
 				AciColor faceColor = face.Color == null ? this.Color : face.Color;
 				Layer faceLayer = face.Layer == null ? this.Layer : face.Layer;
@@ -275,9 +263,9 @@ namespace netDxf.Entities
 		/// <inheritdoc/>
 		public override void TransformBy(Matrix3 transformation, Vector3 translation)
 		{
-			for (int i = 0; i < this.vertexes.Length; i++)
+			for (int i = 0; i < this.Vertexes.Length; i++)
 			{
-				this.vertexes[i] = transformation * this.vertexes[i] + translation;
+				this.Vertexes[i] = transformation * this.Vertexes[i] + translation;
 			}
 
 			Vector3 newNormal = transformation * this.Normal;
@@ -291,7 +279,7 @@ namespace netDxf.Entities
 		/// <inheritdoc/>
 		public override object Clone()
 		{
-			PolyfaceMesh entity = new PolyfaceMesh(this.vertexes, this.faces)
+			PolyfaceMesh entity = new PolyfaceMesh(this.Vertexes, this.Faces)
 			{
 				//EntityObject properties
 				Layer = (Layer)this.Layer.Clone(),
@@ -303,7 +291,7 @@ namespace netDxf.Entities
 				Normal = this.Normal,
 				IsVisible = this.IsVisible,
 				//PolyfaceMesh properties
-				Flags = this.flags
+				Flags = this.Flags
 
 			};
 
@@ -320,9 +308,7 @@ namespace netDxf.Entities
 		#region PolyfaceMeshFace events
 
 		private void PolyfaceMeshFace_LayerChanged(PolyfaceMeshFace sender, TableObjectChangedEventArgs<Layer> e)
-		{
-			e.NewValue = this.OnPolyfaceMeshFaceLayerChangedEvent(e.OldValue, e.NewValue);
-		}
+			=> e.NewValue = this.OnPolyfaceMeshFaceLayerChangedEvent(e.OldValue, e.NewValue);
 
 		#endregion
 	}

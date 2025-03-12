@@ -32,19 +32,13 @@ namespace netDxf.Blocks
 	public class BlockAttributeDefinitionChangeEventArgs :
 		EventArgs
 	{
-		#region private fields
-
-		private readonly AttributeDefinition item;
-
-		#endregion
-
 		#region constructor
 
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="item">The attribute definition that is being added or removed from the block.</param>
 		public BlockAttributeDefinitionChangeEventArgs(AttributeDefinition item)
 		{
-			this.item = item;
+			this.Item = item;
 		}
 
 		#endregion
@@ -52,10 +46,7 @@ namespace netDxf.Blocks
 		#region public properties
 
 		/// <summary>Gets the attribute definition that is being added or removed.</summary>
-		public AttributeDefinition Item
-		{
-			get { return this.item; }
-		}
+		public AttributeDefinition Item { get; }
 
 		#endregion
 	}

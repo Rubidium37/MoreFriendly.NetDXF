@@ -31,22 +31,14 @@ namespace netDxf.Objects
 	public class RasterVariables :
 		DxfObject
 	{
-		#region private fields
-
-		private bool displayFrame;
-		private ImageDisplayQuality quality;
-		private ImageUnits units;
-
-		#endregion
-
 		#region constructors
 
 		internal RasterVariables(DxfDocument document)
 			: base(DxfObjectCode.RasterVariables)
 		{
-			this.displayFrame = true;
-			this.quality = ImageDisplayQuality.High;
-			this.units = ImageUnits.Unitless;
+			this.DisplayFrame = true;
+			this.DisplayQuality = ImageDisplayQuality.High;
+			this.Units = ImageUnits.Unitless;
 			this.Owner = document;
 		}
 
@@ -55,18 +47,10 @@ namespace netDxf.Objects
 		#region public properties
 
 		/// <summary>Gets or sets if the image frame is shown.</summary>
-		public bool DisplayFrame
-		{
-			get { return this.displayFrame; }
-			set { this.displayFrame = value; }
-		}
+		public bool DisplayFrame { get; set; }
 
 		/// <summary>Gets or sets the image display quality (screen only).</summary>
-		public ImageDisplayQuality DisplayQuality
-		{
-			get { return this.quality; }
-			set { this.quality = value; }
-		}
+		public ImageDisplayQuality DisplayQuality { get; set; }
 
 		/// <summary>Gets or sets the <b>AutoCAD</b> units for inserting images.</summary>
 		/// <remarks>
@@ -74,11 +58,7 @@ namespace netDxf.Objects
 		/// This is what one <b>AutoCAD</b> unit is equal to for the purpose of inserting and scaling images with an associated resolution.
 		/// It is recommended to use the same units as the header variable InsUnits, or just use none to avoid any unwanted scaling when inserting images into the drawing.
 		/// </remarks>
-		public ImageUnits Units
-		{
-			get { return this.units; }
-			set { this.units = value; }
-		}
+		public ImageUnits Units { get; set; }
 
 		#endregion
 	}

@@ -95,7 +95,6 @@ namespace netDxf.Tables
 		#region private fields
 
 		private string description;
-		private readonly ObservableCollection<LinetypeSegment> segments;
 
 		#endregion
 
@@ -111,22 +110,13 @@ namespace netDxf.Tables
 		public const string DefaultName = "Continuous";
 
 		/// <summary>Gets the <b>ByLayer</b> line type.</summary>
-		public static Linetype ByLayer
-		{
-			get { return new Linetype(ByLayerName); }
-		}
+		public static Linetype ByLayer => new Linetype(ByLayerName);
 
 		/// <summary>Gets the <b>ByBlock</b> line type.</summary>
-		public static Linetype ByBlock
-		{
-			get { return new Linetype(ByBlockName); }
-		}
+		public static Linetype ByBlock => new Linetype(ByBlockName);
 
 		/// <summary>Gets the predefined continuous line.</summary>
-		public static Linetype Continuous
-		{
-			get { return new Linetype(DefaultName, "Solid line"); }
-		}
+		public static Linetype Continuous => new Linetype(DefaultName, "Solid line");
 
 		/// <summary>Gets a predefined center line.</summary>
 		public static Linetype Center
@@ -241,14 +231,14 @@ namespace netDxf.Tables
 								name.Equals(DefaultName, StringComparison.OrdinalIgnoreCase);
 			this.description = string.IsNullOrEmpty(description) ? string.Empty : description;
 
-			this.segments = new ObservableCollection<LinetypeSegment>();
-			this.segments.BeforeAddItem += this.Segments_BeforeAddItem;
-			this.segments.AddItem += this.Segments_AddItem;
-			this.segments.BeforeRemoveItem += this.Segments_BeforeRemoveItem;
-			this.segments.RemoveItem += this.Segments_RemoveItem;
+			this.Segments = new ObservableCollection<LinetypeSegment>();
+			this.Segments.BeforeAddItem += this.Segments_BeforeAddItem;
+			this.Segments.AddItem += this.Segments_AddItem;
+			this.Segments.BeforeRemoveItem += this.Segments_BeforeRemoveItem;
+			this.Segments.RemoveItem += this.Segments_RemoveItem;
 			if (segments != null)
 			{
-				this.segments.AddRange(segments);
+				this.Segments.AddRange(segments);
 			}
 		}
 
@@ -257,16 +247,10 @@ namespace netDxf.Tables
 		#region public properties
 
 		/// <summary>Defines if the line type is defined by layer.</summary>
-		public bool IsByLayer
-		{
-			get { return this.Name.Equals(ByLayerName, StringComparison.InvariantCultureIgnoreCase); }
-		}
+		public bool IsByLayer => this.Name.Equals(ByLayerName, StringComparison.InvariantCultureIgnoreCase);
 
 		/// <summary>Defines if the line type is defined by block.</summary>
-		public bool IsByBlock
-		{
-			get { return this.Name.Equals(ByBlockName, StringComparison.InvariantCultureIgnoreCase); }
-		}
+		public bool IsByBlock => this.Name.Equals(ByBlockName, StringComparison.InvariantCultureIgnoreCase);
 
 		/// <summary>Gets or sets the line type description.</summary>
 		/// <remarks>
@@ -274,21 +258,18 @@ namespace netDxf.Tables
 		/// </remarks>
 		public string Description
 		{
-			get { return this.description; }
-			set { this.description = string.IsNullOrEmpty(value) ? string.Empty : value; }
+			get => this.description;
+			set => this.description = string.IsNullOrEmpty(value) ? string.Empty : value;
 		}
 
 		/// <summary>Gets the list of line type segments.</summary>
-		public ObservableCollection<LinetypeSegment> Segments
-		{
-			get { return this.segments; }
-		}
+		public ObservableCollection<LinetypeSegment> Segments { get; }
 
 		/// <summary>Gets the owner of the actual <b>DXF</b> object.</summary>
 		public new Linetypes Owner
 		{
-			get { return (Linetypes)base.Owner; }
-			internal set { base.Owner = value; }
+			get => (Linetypes)base.Owner;
+			internal set => base.Owner = value;
 		}
 
 		#endregion
@@ -299,7 +280,7 @@ namespace netDxf.Tables
 		public double Length()
 		{
 			double result = 0.0;
-			foreach (LinetypeSegment s in this.segments)
+			foreach (LinetypeSegment s in this.Segments)
 			{
 				result += Math.Abs(s.Length);
 			}
@@ -475,7 +456,7 @@ namespace netDxf.Tables
 
 			sb.AppendLine(string.Format("*{0},{1}", this.Name, this.description));
 			sb.Append("A"); // A (alignment field)
-			foreach (LinetypeSegment s in this.segments)
+			foreach (LinetypeSegment s in this.Segments)
 			{
 				switch (s.Type)
 				{
@@ -654,22 +635,16 @@ namespace netDxf.Tables
 		#region overrides
 
 		/// <inheritdoc/>
-		public override bool HasReferences()
-		{
-			return this.Owner != null && this.Owner.HasReferences(this.Name);
-		}
+		public override bool HasReferences() => this.Owner != null && this.Owner.HasReferences(this.Name);
 
 		/// <inheritdoc/>
-		public override List<DxfObjectReference> GetReferences()
-		{
-			return this.Owner?.GetReferences(this.Name);
-		}
+		public override List<DxfObjectReference> GetReferences() => this.Owner?.GetReferences(this.Name);
 
 		/// <inheritdoc/>
 		public override TableObject Clone(string newName)
 		{
-			List<LinetypeSegment> items = new List<LinetypeSegment>(this.segments.Count);
-			foreach (LinetypeSegment segment in this.segments)
+			List<LinetypeSegment> items = new List<LinetypeSegment>(this.Segments.Count);
+			foreach (LinetypeSegment segment in this.Segments)
 			{
 				items.Add((LinetypeSegment)segment.Clone());
 			}
@@ -683,12 +658,8 @@ namespace netDxf.Tables
 
 			return copy;
 		}
-
 		/// <inheritdoc/>
-		public override object Clone()
-		{
-			return this.Clone(this.Name);
-		}
+		public override object Clone() => this.Clone(this.Name);
 
 		#endregion
 
@@ -737,14 +708,10 @@ namespace netDxf.Tables
 		#region LinetypeSegment events
 
 		private void LinetypeTextSegment_StyleChanged(LinetypeTextSegment sender, TableObjectChangedEventArgs<TextStyle> e)
-		{
-			e.NewValue = this.OnLinetypeTextSegmentStyleChangedEvent(e.OldValue, e.NewValue);
-		}
+			=> e.NewValue = this.OnLinetypeTextSegmentStyleChangedEvent(e.OldValue, e.NewValue);
 
 		private void LinetypeShapeSegment_StyleChanged(LinetypeShapeSegment sender, TableObjectChangedEventArgs<ShapeStyle> e)
-		{
-			e.NewValue = this.OnLinetypeShapeSegmentStyleChangedEvent(e.OldValue, e.NewValue);
-		}
+			=> e.NewValue = this.OnLinetypeShapeSegmentStyleChangedEvent(e.OldValue, e.NewValue);
 
 		#endregion
 	}

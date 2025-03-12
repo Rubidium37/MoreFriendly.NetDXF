@@ -34,12 +34,6 @@ namespace netDxf.Objects
 	public class UnderlayDgnDefinition :
 		UnderlayDefinition
 	{
-		#region private fields
-
-		private string layout;
-
-		#endregion
-
 		#region constructor
 
 		/// <summary>Initializes a new instance of the class.</summary>
@@ -61,7 +55,7 @@ namespace netDxf.Objects
 		public UnderlayDgnDefinition(string name, string file)
 			: base(name, file, UnderlayType.DGN)
 		{
-			this.layout = "Model";
+			this.Layout = "Model";
 		}
 
 		#endregion
@@ -69,17 +63,13 @@ namespace netDxf.Objects
 		#region public properties
 
 		/// <summary>Gets or sets the layout name to show.</summary>
-		public string Layout
-		{
-			get { return this.layout; }
-			set { this.layout = value; }
-		}
+		public string Layout { get; set; }
 
 		/// <summary>Gets the owner of the actual underlay <b>DGN</b> definition.</summary>
 		public new UnderlayDgnDefinitions Owner
 		{
-			get { return (UnderlayDgnDefinitions)base.Owner; }
-			internal set { base.Owner = value; }
+			get => (UnderlayDgnDefinitions)base.Owner;
+			internal set => base.Owner = value;
 		}
 
 		#endregion
@@ -87,10 +77,7 @@ namespace netDxf.Objects
 		#region overrides
 
 		/// <inheritdoc/>
-		public override bool HasReferences()
-		{
-			return this.Owner != null && this.Owner.HasReferences(this.Name);
-		}
+		public override bool HasReferences() => this.Owner != null && this.Owner.HasReferences(this.Name);
 
 		/// <inheritdoc/>
 		public override List<DxfObjectReference> GetReferences()
@@ -108,7 +95,7 @@ namespace netDxf.Objects
 		{
 			UnderlayDgnDefinition copy = new UnderlayDgnDefinition(newName, this.File)
 			{
-				Layout = this.layout
+				Layout = this.Layout
 			};
 
 			foreach (XData data in this.XData.Values)
@@ -118,12 +105,8 @@ namespace netDxf.Objects
 
 			return copy;
 		}
-
 		/// <inheritdoc/>
-		public override object Clone()
-		{
-			return this.Clone(this.Name);
-		}
+		public override object Clone() => this.Clone(this.Name);
 
 		#endregion
 	}

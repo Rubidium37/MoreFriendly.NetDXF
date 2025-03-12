@@ -189,13 +189,9 @@ namespace netDxf.Entities
 
 		#region private fields
 
-		private Vector3 center;
-		private double majorAxis;
-		private double minorAxis;
 		private double rotation;
 		private double startAngle;
 		private double endAngle;
-		private double thickness;
 
 		#endregion
 
@@ -233,7 +229,7 @@ namespace netDxf.Entities
 		public Ellipse(Vector3 center, double majorAxis, double minorAxis)
 			: base(EntityType.Ellipse, DxfObjectCode.Ellipse)
 		{
-			this.center = center;
+			this.Center = center;
 
 			if (majorAxis <= 0)
 			{
@@ -250,12 +246,12 @@ namespace netDxf.Entities
 				throw new ArgumentException("The major axis must be greater than the minor axis.");
 			}
 
-			this.majorAxis = majorAxis;
-			this.minorAxis = minorAxis;
+			this.MajorAxis = majorAxis;
+			this.MinorAxis = minorAxis;
 			this.startAngle = 0.0;
 			this.endAngle = 0.0;
 			this.rotation = 0.0;
-			this.thickness = 0.0;
+			this.Thickness = 0.0;
 		}
 
 		#endregion
@@ -263,62 +259,45 @@ namespace netDxf.Entities
 		#region public properties
 
 		/// <summary>Gets or sets the ellipse <see cref="Vector3">center</see> in world coordinates.</summary>
-		public Vector3 Center
-		{
-			get { return this.center; }
-			set { this.center = value; }
-		}
+		public Vector3 Center { get; set; }
 
 		/// <summary>Gets or sets the ellipse mayor axis.</summary>
 		/// <remarks>The major axis is always measured along the ellipse local X axis.</remarks>
-		public double MajorAxis
-		{
-			get { return this.majorAxis; }
-		}
+		public double MajorAxis { get; private set; }
 
 		/// <summary>Gets or sets the ellipse minor axis.</summary>
 		/// <remarks>The minor axis is always measured along the ellipse local Y axis.</remarks>
-		public double MinorAxis
-		{
-			get { return this.minorAxis; }
-		}
+		public double MinorAxis { get; private set; }
 
 		/// <summary>Gets or sets the ellipse local rotation in degrees along its normal.</summary>
 		public double Rotation
 		{
-			get { return this.rotation; }
-			set { this.rotation = MathHelper.NormalizeAngle(value); }
+			get => this.rotation;
+			set => this.rotation = MathHelper.NormalizeAngle(value);
 		}
 
 		/// <summary>Gets or sets the ellipse start angle in degrees.</summary>
 		/// <remarks>To get a full ellipse set the start angle equal to the end angle.</remarks>
 		public double StartAngle
 		{
-			get { return this.startAngle; }
-			set { this.startAngle = MathHelper.NormalizeAngle(value); }
+			get => this.startAngle;
+			set => this.startAngle = MathHelper.NormalizeAngle(value);
 		}
 
 		/// <summary>Gets or sets the ellipse end angle in degrees.</summary>
 		/// <remarks>To get a full ellipse set the end angle equal to the start angle.</remarks>
 		public double EndAngle
 		{
-			get { return this.endAngle; }
-			set { this.endAngle = MathHelper.NormalizeAngle(value); }
+			get => this.endAngle;
+			set => this.endAngle = MathHelper.NormalizeAngle(value);
 		}
 
 		/// <summary>Gets or sets the ellipse thickness.</summary>
-		public double Thickness
-		{
-			get { return this.thickness; }
-			set { this.thickness = value; }
-		}
+		public double Thickness { get; set; }
 
 		/// <summary>Checks if the actual instance is a full ellipse.</summary>
 		/// <remarks>An ellipse is considered full when its start and end angles are equal.</remarks>
-		public bool IsFullEllipse
-		{
-			get { return MathHelper.IsEqual(this.startAngle, this.endAngle); }
-		}
+		public bool IsFullEllipse => MathHelper.IsEqual(this.startAngle, this.endAngle);
 
 		#endregion
 
@@ -344,13 +323,13 @@ namespace netDxf.Entities
 
 			if (axis2 > axis1)
 			{
-				this.majorAxis = axis2;
-				this.minorAxis = axis1;
+				this.MajorAxis = axis2;
+				this.MinorAxis = axis1;
 			}
 			else
 			{
-				this.majorAxis = axis1;
-				this.minorAxis = axis2;
+				this.MajorAxis = axis1;
+				this.MinorAxis = axis2;
 			}
 		}
 
@@ -400,8 +379,8 @@ namespace netDxf.Entities
 			{
 				Vector2 startPoint = this.PolarCoordinateRelativeToCenter(this.startAngle);
 				Vector2 endPoint = this.PolarCoordinateRelativeToCenter(this.endAngle);
-				double a = 1 / (0.5 * this.majorAxis);
-				double b = 1 / (0.5 * this.minorAxis);
+				double a = 1 / (0.5 * this.MajorAxis);
+				double b = 1 / (0.5 * this.MinorAxis);
 				start = Math.Atan2(startPoint.Y * b, startPoint.X * a);
 				end = Math.Atan2(endPoint.Y * b, endPoint.X * a);
 
@@ -420,8 +399,8 @@ namespace netDxf.Entities
 				double sinAlpha = Math.Sin(angle);
 				double cosAlpha = Math.Cos(angle);
 
-				double pointX = 0.5 * (this.majorAxis * cosAlpha * cosBeta - this.minorAxis * sinAlpha * sinBeta);
-				double pointY = 0.5 * (this.majorAxis * cosAlpha * sinBeta + this.minorAxis * sinAlpha * cosBeta);
+				double pointX = 0.5 * (this.MajorAxis * cosAlpha * cosBeta - this.MinorAxis * sinAlpha * sinBeta);
+				double pointY = 0.5 * (this.MajorAxis * cosAlpha * sinBeta + this.MinorAxis * sinAlpha * cosBeta);
 
 				points.Add(new Vector2(pointX, pointY));
 			}
@@ -435,7 +414,7 @@ namespace netDxf.Entities
 		public Polyline2D ToPolyline2D(int precision)
 		{
 			List<Vector2> vertexes = this.PolygonalVertexes(precision);
-			Vector3 ocsCenter = MathHelper.Transform(this.center, this.Normal, CoordinateSystem.World, CoordinateSystem.Object);
+			Vector3 ocsCenter = MathHelper.Transform(this.Center, this.Normal, CoordinateSystem.World, CoordinateSystem.Object);
 			Polyline2D poly = new Polyline2D
 			{
 				Layer = (Layer)this.Layer.Clone(),
@@ -604,13 +583,13 @@ namespace netDxf.Entities
 				Normal = this.Normal,
 				IsVisible = this.IsVisible,
 				//Ellipse properties
-				Center = this.center,
-				majorAxis = this.majorAxis,
-				minorAxis = this.minorAxis,
+				Center = this.Center,
+				MajorAxis = this.MajorAxis,
+				MinorAxis = this.MinorAxis,
 				Rotation = this.rotation,
 				StartAngle = this.startAngle,
 				EndAngle = this.endAngle,
-				Thickness = this.thickness
+				Thickness = this.Thickness
 			};
 
 			foreach (XData data in this.XData.Values)

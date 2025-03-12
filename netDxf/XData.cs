@@ -37,21 +37,14 @@ namespace netDxf
 	public class XData :
 		ICloneable
 	{
-		#region private fields
-
-		private ApplicationRegistry appReg;
-		private readonly List<XDataRecord> xData;
-
-		#endregion
-
 		#region constructors
 
 		/// <summary>Initialize a new instance of the <see cref="XData"/> class .</summary>
 		/// <param name="appReg">Name of the application associated with the list of extended data records.</param>
 		public XData(ApplicationRegistry appReg)
 		{
-			this.appReg = appReg ?? throw new ArgumentNullException(nameof(appReg));
-			this.xData = new List<XDataRecord>();
+			this.ApplicationRegistry = appReg ?? throw new ArgumentNullException(nameof(appReg));
+			this.XDataRecord = new List<XDataRecord>();
 		}
 
 		#endregion
@@ -59,31 +52,21 @@ namespace netDxf
 		#region public properties
 
 		/// <summary>Gets or sets the name of the application associated with the list of extended data records.</summary>
-		public ApplicationRegistry ApplicationRegistry
-		{
-			get { return this.appReg; }
-			internal set { this.appReg = value; }
-		}
+		public ApplicationRegistry ApplicationRegistry { get; internal set; }
 
 		/// <summary>Gets or sets the list of extended data records.</summary>
 		/// <remarks>
 		/// This list cannot contain a <see cref="XDataRecord"/> with a <see cref="XDataCode"/> of <see cref="ApplicationRegistry"/>, this code is reserved to register the name of the application.
 		/// Any record with this code will be omitted.
 		/// </remarks>
-		public List<XDataRecord> XDataRecord
-		{
-			get { return this.xData; }
-		}
+		public List<XDataRecord> XDataRecord { get; }
 
 		#endregion
 
 		#region overrides
 
 		/// <inheritdoc/>
-		public override string ToString()
-		{
-			return this.appReg.Name;
-		}
+		public override string ToString() => this.ApplicationRegistry.Name;
 
 		#endregion
 
@@ -92,8 +75,8 @@ namespace netDxf
 		/// <inheritdoc/>
 		public object Clone()
 		{
-			XData xdata = new XData((ApplicationRegistry)this.appReg.Clone());
-			foreach (XDataRecord record in this.xData)
+			XData xdata = new XData((ApplicationRegistry)this.ApplicationRegistry.Clone());
+			foreach (XDataRecord record in this.XDataRecord)
 			{
 				xdata.XDataRecord.Add(new XDataRecord(record.Code, record.Value));
 			}

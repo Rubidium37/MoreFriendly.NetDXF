@@ -44,8 +44,6 @@ namespace netDxf.Objects
 
 		private string description;
 		private string currentLayer;
-		private bool paperSpace;
-		private readonly ObservableDictionary<string, LayerStateProperties> properties;
 
 		#endregion
 
@@ -66,10 +64,10 @@ namespace netDxf.Objects
 		{
 			this.description = string.Empty;
 			this.currentLayer = Layer.DefaultName;
-			this.paperSpace = false;
+			this.PaperSpace = false;
 
-			this.properties = new ObservableDictionary<string, LayerStateProperties>();
-			this.properties.BeforeAddItem += this.Properties_BeforeAddItem;
+			this.Properties = new ObservableDictionary<string, LayerStateProperties>();
+			this.Properties.BeforeAddItem += this.Properties_BeforeAddItem;
 
 			if (layers == null)
 			{
@@ -79,7 +77,7 @@ namespace netDxf.Objects
 			foreach (Layer layer in layers)
 			{
 				LayerStateProperties prop = new LayerStateProperties(layer);
-				this.properties.Add(prop.Name, prop);
+				this.Properties.Add(prop.Name, prop);
 			}
 		}
 
@@ -90,14 +88,14 @@ namespace netDxf.Objects
 		/// <summary>Gets or sets the layer state description.</summary>
 		public string Description
 		{
-			get { return this.description; }
-			set { this.description = string.IsNullOrEmpty(value) ? string.Empty : value; }
+			get => this.description;
+			set => this.description = string.IsNullOrEmpty(value) ? string.Empty : value;
 		}
 
 		/// <summary>Gets or sets the current layer name.</summary>
 		public string CurrentLayer
 		{
-			get { return this.currentLayer; }
+			get => this.currentLayer;
 			set
 			{
 				if (string.IsNullOrEmpty(value))
@@ -117,23 +115,16 @@ namespace netDxf.Objects
 		}
 
 		/// <summary>Gets or sets if the layer state belongs to a paper space layout.</summary>
-		public bool PaperSpace
-		{
-			get { return this.paperSpace; }
-			set { this.paperSpace = value; }
-		}
+		public bool PaperSpace { get; set; }
 
 		/// <summary>Gets the list of layer state properties.</summary>
-		public ObservableDictionary<string, LayerStateProperties> Properties
-		{
-			get { return this.properties; }
-		}
+		public ObservableDictionary<string, LayerStateProperties> Properties { get; }
 
 		/// <summary>Gets the owner of the actual layer state.</summary>
 		public new LayerStateManager Owner
 		{
-			get { return (LayerStateManager)base.Owner; }
-			internal set { base.Owner = value; }
+			get => (LayerStateManager)base.Owner;
+			internal set => base.Owner = value;
 		}
 
 		#endregion
@@ -396,10 +387,7 @@ namespace netDxf.Objects
 		#region overrides
 
 		/// <inheritdoc/>
-		public override bool HasReferences()
-		{
-			return this.Owner != null && this.Owner.HasReferences(this.Name);
-		}
+		public override bool HasReferences() => this.Owner != null && this.Owner.HasReferences(this.Name);
 
 		/// <inheritdoc/>
 		public override List<DxfObjectReference> GetReferences()
@@ -421,7 +409,7 @@ namespace netDxf.Objects
 				CurrentLayer = this.currentLayer
 			};
 
-			foreach (LayerStateProperties item in this.properties.Values)
+			foreach (LayerStateProperties item in this.Properties.Values)
 			{
 				LayerStateProperties lp = (LayerStateProperties)item.Clone();
 				ls.Properties.Add(lp.Name, lp);
@@ -429,12 +417,8 @@ namespace netDxf.Objects
 
 			return ls;
 		}
-
 		/// <inheritdoc/>
-		public override object Clone()
-		{
-			return this.Clone(this.Name);
-		}
+		public override object Clone() => this.Clone(this.Name);
 
 		#endregion
 

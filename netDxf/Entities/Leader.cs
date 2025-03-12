@@ -96,16 +96,10 @@ namespace netDxf.Entities
 		#region private fields
 
 		private DimensionStyle style;
-		private bool showArrowhead;
-		private LeaderPathType pathType;
-		private readonly List<Vector2> vertexes;
 		private EntityObject annotation;
 		private bool hasHookline;
 		private AciColor lineColor;
-		private double elevation;
-		private Vector2 offset;
 		private Vector2 direction;
-		private readonly DimensionStyleOverrideDictionary styleOverrides;
 
 		#endregion
 
@@ -134,26 +128,26 @@ namespace netDxf.Entities
 				throw new ArgumentNullException(nameof(vertexes));
 			}
 
-			this.vertexes = new List<Vector2>(vertexes);
-			if (this.vertexes.Count < 2)
+			this.Vertexes = new List<Vector2>(vertexes);
+			if (this.Vertexes.Count < 2)
 			{
-				throw new ArgumentOutOfRangeException(nameof(vertexes), this.vertexes.Count, "The leader vertexes list requires at least two points.");
+				throw new ArgumentOutOfRangeException(nameof(vertexes), this.Vertexes.Count, "The leader vertexes list requires at least two points.");
 			}
 
 			this.style = style ?? throw new ArgumentNullException(nameof(style));
 			this.hasHookline = hasHookline;
-			this.showArrowhead = true;
-			this.pathType = LeaderPathType.StraightLineSegments;
+			this.ShowArrowhead = true;
+			this.PathType = LeaderPathType.StraightLineSegments;
 			this.annotation = null;
 			this.lineColor = AciColor.ByLayer;
-			this.elevation = 0.0;
-			this.offset = Vector2.Zero;
+			this.Elevation = 0.0;
+			this.Offset = Vector2.Zero;
 			this.direction = Vector2.UnitX;
-			this.styleOverrides = new DimensionStyleOverrideDictionary();
-			this.styleOverrides.BeforeAddItem += this.StyleOverrides_BeforeAddItem;
-			this.styleOverrides.AddItem += this.StyleOverrides_AddItem;
-			this.styleOverrides.BeforeRemoveItem += this.StyleOverrides_BeforeRemoveItem;
-			this.styleOverrides.RemoveItem += this.StyleOverrides_RemoveItem;
+			this.StyleOverrides = new DimensionStyleOverrideDictionary();
+			this.StyleOverrides.BeforeAddItem += this.StyleOverrides_BeforeAddItem;
+			this.StyleOverrides.AddItem += this.StyleOverrides_AddItem;
+			this.StyleOverrides.BeforeRemoveItem += this.StyleOverrides_BeforeRemoveItem;
+			this.StyleOverrides.RemoveItem += this.StyleOverrides_RemoveItem;
 		}
 
 		/// <summary>Initializes a new instance of the class.</summary>
@@ -219,7 +213,7 @@ namespace netDxf.Entities
 		/// <summary>Gets or sets the leader style.</summary>
 		public DimensionStyle Style
 		{
-			get { return this.style; }
+			get => this.style;
 			set
 			{
 				if (value == null)
@@ -235,33 +229,19 @@ namespace netDxf.Entities
 		/// <remarks>
 		/// Any dimension style value stored in this list will override its corresponding value in the assigned style.
 		/// </remarks>
-		public DimensionStyleOverrideDictionary StyleOverrides
-		{
-			get { return this.styleOverrides; }
-		}
+		public DimensionStyleOverrideDictionary StyleOverrides { get; }
 
 		/// <summary>Gets or sets if the arrowhead is drawn.</summary>
-		public bool ShowArrowhead
-		{
-			get { return this.showArrowhead; }
-			set { this.showArrowhead = value; }
-		}
+		public bool ShowArrowhead { get; set; }
 
 		/// <summary>Gets or sets the way the leader is drawn.</summary>
-		public LeaderPathType PathType
-		{
-			get { return this.pathType; }
-			set { this.pathType = value; }
-		}
+		public LeaderPathType PathType { get; set; }
 
 		/// <summary>Gets the leader vertexes list in local coordinates.</summary>
 		/// <remarks>
 		/// The leader vertexes list must have at least two points.
 		/// </remarks>
-		public List<Vector2> Vertexes
-		{
-			get { return this.vertexes; }
-		}
+		public List<Vector2> Vertexes { get; }
 
 		/// <summary>Gets or sets the leader annotation entity.</summary>
 		/// <remarks>
@@ -272,7 +252,7 @@ namespace netDxf.Entities
 		/// </remarks>
 		public EntityObject Annotation
 		{
-			get { return this.annotation; }
+			get => this.annotation;
 			set
 			{
 				if (value != null)
@@ -316,8 +296,8 @@ namespace netDxf.Entities
 		/// </remarks>
 		public Vector2 Hook
 		{
-			get { return this.vertexes[this.vertexes.Count - 1]; }
-			set { this.vertexes[this.vertexes.Count - 1] = value; }
+			get => this.Vertexes[this.Vertexes.Count - 1];
+			set => this.Vertexes[this.Vertexes.Count - 1] = value;
 		}
 
 		/// <summary>Gets if the leader has a hook line.</summary>
@@ -327,10 +307,10 @@ namespace netDxf.Entities
 		/// </remarks>
 		public bool HasHookline
 		{
-			get { return this.hasHookline; }
+			get => this.hasHookline;
 			set
 			{
-				if (this.vertexes.Count < 2)
+				if (this.Vertexes.Count < 2)
 				{
 					throw new Exception("The leader vertexes list requires at least two points.");
 				}
@@ -339,11 +319,11 @@ namespace netDxf.Entities
 				{
 					if (value)
 					{
-						this.vertexes.Insert(this.vertexes.Count - 1, this.CalculateHookLine());
+						this.Vertexes.Insert(this.Vertexes.Count - 1, this.CalculateHookLine());
 					}
 					else
 					{
-						this.vertexes.RemoveAt(this.vertexes.Count - 2);
+						this.Vertexes.RemoveAt(this.Vertexes.Count - 2);
 					}
 				}
 				this.hasHookline = value;
@@ -353,7 +333,7 @@ namespace netDxf.Entities
 		/// <summary>Gets or sets the leader line color if the style parameter <b>DIMCLRD</b> is set as BYBLOCK.</summary>
 		public AciColor LineColor
 		{
-			get { return this.lineColor; }
+			get => this.lineColor;
 			set
 			{
 				this.lineColor = value ?? throw new ArgumentNullException(nameof(value));
@@ -363,30 +343,22 @@ namespace netDxf.Entities
 		/// <summary>Gets or sets the entity <see cref="Vector3">normal</see>.</summary>
 		public new Vector3 Normal
 		{
-			get { return base.Normal; }
-			set { base.Normal = value; }
+			get => base.Normal;
+			set => base.Normal = value;
 		}
 
 		/// <summary>Gets or sets the leader elevation.</summary>
 		/// <remarks>This is the distance from the origin to the plane of the leader.</remarks>
-		public double Elevation
-		{
-			get { return this.elevation; }
-			set { this.elevation = value; }
-		}
+		public double Elevation { get; set; }
 
 		/// <summary>Gets or sets the offset from the last leader vertex (hook) to the annotation position.</summary>
-		public Vector2 Offset
-		{
-			get { return this.offset; }
-			set { this.offset = value; }
-		}
+		public Vector2 Offset { get; set; }
 
 		/// <summary>Gets or sets the leader annotation direction.</summary>
 		public Vector2 Direction
 		{
-			get { return this.direction; }
-			set { this.direction = Vector2.Normalize(value); }
+			get => this.direction;
+			set => this.direction = Vector2.Normalize(value);
 		}
 
 		#endregion
@@ -403,7 +375,7 @@ namespace netDxf.Entities
 		/// </remarks>
 		public void Update(bool resetAnnotationPosition)
 		{
-			if (this.vertexes.Count < 2)
+			if (this.Vertexes.Count < 2)
 			{
 				throw new Exception("The leader vertexes list requires at least two points.");
 			}
@@ -427,7 +399,7 @@ namespace netDxf.Entities
 			if (this.hasHookline)
 			{
 				Vector2 vertex = this.CalculateHookLine();
-				this.vertexes[this.vertexes.Count - 2] = vertex;
+				this.Vertexes[this.Vertexes.Count - 2] = vertex;
 			}
 		}
 
@@ -585,7 +557,7 @@ namespace netDxf.Entities
 						new Vector2(side * textGap, textGap);
 
 					position = MathHelper.Transform(mText.Position, this.Normal, out _);
-					this.Hook = position - this.offset - Vector2.Rotate(textOffset, mText.Rotation * MathHelper.DegToRad);
+					this.Hook = position - this.Offset - Vector2.Rotate(textOffset, mText.Rotation * MathHelper.DegToRad);
 
 					mText.Height = textHeight * dimScale;
 					mText.Color = textColor.IsByBlock ? AciColor.ByLayer : textColor;
@@ -639,7 +611,7 @@ namespace netDxf.Entities
 						new Vector2(side * textGap, textGap);
 
 					position = MathHelper.Transform(text.Position, this.Normal, out _);
-					this.Hook = position - this.offset - Vector2.Rotate(textOffset, text.Rotation * MathHelper.DegToRad);
+					this.Hook = position - this.Offset - Vector2.Rotate(textOffset, text.Rotation * MathHelper.DegToRad);
 
 					text.Height = textHeight * dimScale;
 					text.Color = textColor.IsByBlock ? AciColor.ByLayer : textColor;
@@ -648,14 +620,14 @@ namespace netDxf.Entities
 				case EntityType.Insert:
 					Insert ins = (Insert)this.annotation;
 					position = MathHelper.Transform(ins.Position, this.Normal, out _);
-					this.Hook = position - this.offset;
+					this.Hook = position - this.Offset;
 					ins.Color = textColor.IsByBlock ? AciColor.ByLayer : textColor;
 					break;
 
 				case EntityType.Tolerance:
 					Tolerance tol = (Tolerance)this.annotation;
 					position = MathHelper.Transform(tol.Position, this.Normal, out _);
-					this.Hook = position - this.offset;
+					this.Hook = position - this.Offset;
 					tol.Color = textColor.IsByBlock ? AciColor.ByLayer : textColor;
 					break;
 
@@ -749,9 +721,9 @@ namespace netDxf.Entities
 						new Vector2(side * textGap, 0.0) :
 						new Vector2(side * textGap, textGap);
 
-					position = hook + this.offset + Vector2.Rotate(textOffset, mText.Rotation * MathHelper.DegToRad);
+					position = hook + this.Offset + Vector2.Rotate(textOffset, mText.Rotation * MathHelper.DegToRad);
 
-					mText.Position = MathHelper.Transform(position, this.Normal, this.elevation);
+					mText.Position = MathHelper.Transform(position, this.Normal, this.Elevation);
 					mText.Height = textHeight * dimScale;
 					mText.Color = textColor.IsByBlock ? AciColor.ByLayer : textColor;
 					break;
@@ -803,23 +775,23 @@ namespace netDxf.Entities
 						new Vector2(side * textGap, 0.0) :
 						new Vector2(side * textGap, textGap);
 
-					position = hook + this.offset + Vector2.Rotate(textOffset, text.Rotation * MathHelper.DegToRad);
-					text.Position = MathHelper.Transform(position, this.Normal, this.elevation);
+					position = hook + this.Offset + Vector2.Rotate(textOffset, text.Rotation * MathHelper.DegToRad);
+					text.Position = MathHelper.Transform(position, this.Normal, this.Elevation);
 					text.Height = textHeight * dimScale;
 					text.Color = textColor.IsByBlock ? AciColor.ByLayer : textColor;
 					break;
 
 				case EntityType.Insert:
 					Insert ins = (Insert)this.annotation;
-					position = hook + this.offset;
-					ins.Position = MathHelper.Transform(position, this.Normal, this.elevation);
+					position = hook + this.Offset;
+					ins.Position = MathHelper.Transform(position, this.Normal, this.Elevation);
 					ins.Color = textColor.IsByBlock ? AciColor.ByLayer : textColor;
 					break;
 
 				case EntityType.Tolerance:
 					Tolerance tol = (Tolerance)this.annotation;
-					position = hook + this.offset;
-					tol.Position = MathHelper.Transform(position, this.Normal, this.elevation);
+					position = hook + this.Offset;
+					tol.Position = MathHelper.Transform(position, this.Normal, this.Elevation);
 					tol.Color = textColor.IsByBlock ? AciColor.ByLayer : textColor;
 					break;
 
@@ -830,7 +802,7 @@ namespace netDxf.Entities
 
 		private MText BuildAnnotation(string text)
 		{
-			int side = Math.Sign(this.vertexes[this.vertexes.Count - 1].X - this.vertexes[this.vertexes.Count - 2].X);
+			int side = Math.Sign(this.Vertexes[this.Vertexes.Count - 1].X - this.Vertexes[this.Vertexes.Count - 2].X);
 			MTextAttachmentPoint attachment;
 			Vector2 textOffset;
 			if (this.style.TextVerticalPlacement == DimensionStyleTextVerticalPlacement.Centered)
@@ -845,37 +817,31 @@ namespace netDxf.Entities
 			}
 
 			Vector2 position = this.Hook + textOffset;
-			Vector3 mTextPosition = MathHelper.Transform(position, this.Normal, this.elevation);
+			Vector3 mTextPosition = MathHelper.Transform(position, this.Normal, this.Elevation);
 			MText entity = new MText(text, mTextPosition, this.style.TextHeight * this.style.DimScaleOverall, 0.0, this.style.TextStyle)
 			{
 				Color = this.style.TextColor.IsByBlock ? AciColor.ByLayer : this.style.TextColor,
 				AttachmentPoint = attachment
 			};
 
-			if (!MathHelper.IsZero(this.vertexes[this.vertexes.Count - 1].Y - this.vertexes[this.vertexes.Count - 2].Y))
+			if (!MathHelper.IsZero(this.Vertexes[this.Vertexes.Count - 1].Y - this.Vertexes[this.Vertexes.Count - 2].Y))
 			{
 				this.HasHookline = true;
 			}
 
 			return entity;
 		}
-
 		private Insert BuildAnnotation(Block block)
-		{
-			return new Insert(block, this.vertexes[this.vertexes.Count - 1])
+			=> new Insert(block, this.Vertexes[this.Vertexes.Count - 1])
 			{
 				Color = this.style.TextColor.IsByBlock ? AciColor.ByLayer : this.style.TextColor
 			};
-		}
-
 		private Tolerance BuildAnnotation(ToleranceEntry tolerance)
-		{
-			return new Tolerance(tolerance, this.vertexes[this.vertexes.Count - 1])
+			=> new Tolerance(tolerance, this.Vertexes[this.Vertexes.Count - 1])
 			{
 				Color = this.style.TextColor.IsByBlock ? AciColor.ByLayer : this.style.TextColor,
 				Style = this.style
 			};
-		}
 
 		#endregion
 
@@ -917,7 +883,7 @@ namespace netDxf.Entities
 		/// <inheritdoc/>
 		public override object Clone()
 		{
-			Leader entity = new Leader(this.vertexes)
+			Leader entity = new Leader(this.Vertexes)
 			{
 				//EntityObject properties
 				Layer = (Layer)this.Layer.Clone(),
@@ -929,13 +895,13 @@ namespace netDxf.Entities
 				Normal = this.Normal,
 				IsVisible = this.IsVisible,
 				//Leader properties
-				Elevation = this.elevation,
+				Elevation = this.Elevation,
 				Style = (DimensionStyle)this.style.Clone(),
-				ShowArrowhead = this.showArrowhead,
-				PathType = this.pathType,
+				ShowArrowhead = this.ShowArrowhead,
+				PathType = this.PathType,
 				LineColor = this.lineColor,
 				Annotation = (EntityObject)this.annotation?.Clone(),
-				Offset = this.offset,
+				Offset = this.Offset,
 				hasHookline = this.hasHookline
 			};
 
@@ -969,18 +935,14 @@ namespace netDxf.Entities
 		}
 
 		private void StyleOverrides_AddItem(DimensionStyleOverrideDictionary sender, DimensionStyleOverrideDictionaryEventArgs e)
-		{
-			this.OnDimensionStyleOverrideAddedEvent(e.Item);
-		}
+			=> this.OnDimensionStyleOverrideAddedEvent(e.Item);
 
 		private void StyleOverrides_BeforeRemoveItem(DimensionStyleOverrideDictionary sender, DimensionStyleOverrideDictionaryEventArgs e)
 		{
 		}
 
 		private void StyleOverrides_RemoveItem(DimensionStyleOverrideDictionary sender, DimensionStyleOverrideDictionaryEventArgs e)
-		{
-			this.OnDimensionStyleOverrideRemovedEvent(e.Item);
-		}
+			=> this.OnDimensionStyleOverrideRemovedEvent(e.Item);
 
 		#endregion
 	}

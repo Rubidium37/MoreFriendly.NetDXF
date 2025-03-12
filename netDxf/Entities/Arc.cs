@@ -35,11 +35,9 @@ namespace netDxf.Entities
 	{
 		#region private fields
 
-		private Vector3 center;
 		private double radius;
 		private double startAngle;
 		private double endAngle;
-		private double thickness;
 
 		#endregion
 
@@ -69,7 +67,7 @@ namespace netDxf.Entities
 		public Arc(Vector3 center, double radius, double startAngle, double endAngle)
 			: base(EntityType.Arc, DxfObjectCode.Arc)
 		{
-			this.center = center;
+			this.Center = center;
 			if (radius <= 0)
 			{
 				throw new ArgumentOutOfRangeException(nameof(radius), radius, "The arc radius must be greater than zero.");
@@ -77,7 +75,7 @@ namespace netDxf.Entities
 			this.radius = radius;
 			this.startAngle = MathHelper.NormalizeAngle(startAngle);
 			this.endAngle = MathHelper.NormalizeAngle(endAngle);
-			this.thickness = 0.0;
+			this.Thickness = 0.0;
 		}
 
 		/// <summary>Initializes a new instance of the class.</summary>
@@ -92,11 +90,11 @@ namespace netDxf.Entities
 			{
 				throw new ArgumentOutOfRangeException(nameof(radius), radius, "The arc radius must be greater than zero.");
 			}
-			this.center = new Vector3(data.Item1.X, data.Item1.Y, 0.0);
+			this.Center = new Vector3(data.Item1.X, data.Item1.Y, 0.0);
 			this.radius = data.Item2;
 			this.startAngle = data.Item3;
 			this.endAngle = data.Item4;
-			this.thickness = 0.0;
+			this.Thickness = 0.0;
 		}
 
 		#endregion
@@ -104,16 +102,12 @@ namespace netDxf.Entities
 		#region public properties
 
 		/// <summary>Gets or sets the arc <see cref="Vector3">center</see> in world coordinates.</summary>
-		public Vector3 Center
-		{
-			get { return this.center; }
-			set { this.center = value; }
-		}
+		public Vector3 Center { get; set; }
 
 		/// <summary>Gets or sets the arc radius.</summary>
 		public double Radius
 		{
-			get { return this.radius; }
+			get => this.radius;
 			set
 			{
 				if (value <= 0)
@@ -127,23 +121,19 @@ namespace netDxf.Entities
 		/// <summary>Gets or sets the arc start angle in degrees.</summary>
 		public double StartAngle
 		{
-			get { return this.startAngle; }
-			set { this.startAngle = MathHelper.NormalizeAngle(value); }
+			get => this.startAngle;
+			set => this.startAngle = MathHelper.NormalizeAngle(value);
 		}
 
 		/// <summary>Gets or sets the arc end angle in degrees.</summary>
 		public double EndAngle
 		{
-			get { return this.endAngle; }
-			set { this.endAngle = MathHelper.NormalizeAngle(value); }
+			get => this.endAngle;
+			set => this.endAngle = MathHelper.NormalizeAngle(value);
 		}
 
 		/// <summary>Gets or sets the arc thickness.</summary>
-		public double Thickness
-		{
-			get { return this.thickness; }
-			set { this.thickness = value; }
-		}
+		public double Thickness { get; set; }
 
 		#endregion
 
@@ -185,7 +175,7 @@ namespace netDxf.Entities
 		public Polyline2D ToPolyline2D(int precision)
 		{
 			IEnumerable<Vector2> vertexes = this.PolygonalVertexes(precision);
-			Vector3 ocsCenter = MathHelper.Transform(this.center, this.Normal, CoordinateSystem.World, CoordinateSystem.Object);
+			Vector3 ocsCenter = MathHelper.Transform(this.Center, this.Normal, CoordinateSystem.World, CoordinateSystem.Object);
 
 			Polyline2D poly = new Polyline2D
 			{
@@ -279,11 +269,11 @@ namespace netDxf.Entities
 				Normal = this.Normal,
 				IsVisible = this.IsVisible,
 				//Arc properties
-				Center = this.center,
+				Center = this.Center,
 				Radius = this.radius,
 				StartAngle = this.startAngle,
 				EndAngle = this.endAngle,
-				Thickness = this.thickness
+				Thickness = this.Thickness
 			};
 
 			foreach (XData data in this.XData.Values)

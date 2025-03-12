@@ -56,43 +56,31 @@ namespace netDxf.GTE
 	// to be degree+1.
 	public class BSplineReduction
 	{
-		// Input sample information.
-		private readonly Vector3[] sampleData;
-
 		// The reduced B-spline curve, open and with uniform knots.
-		private readonly int degree;
-		private readonly Vector3[] controlData;
-		private readonly BasisFunction basisFunction;
 
-		private readonly int[] quantity;
-		private readonly int[] numKnots; // N+D+2
-		private readonly double[][] knot;
+		private readonly int[] quantity = new[] { 0, 0 };
+		private readonly int[] numKnots = new[] { 0, 0 }; // N+D+2
+		private readonly double[][] knot = new double[2][];
 
 		// For the integration-based least-squares fitting.
-		private readonly int[] mBasis, mIndex;
+		private readonly int[] mBasis = new[] { 0, 0 };
+		private readonly int[] mIndex = new[] { 0, 0 };
 
 		private BSplineReduction()
 		{
-			this.degree = 0;
-			this.quantity = new[] { 0, 0 };
-			this.numKnots = new[] { 0, 0 };
-			this.mBasis = new[] { 0, 0 };
-			this.knot = new double[2][];
-			this.mIndex = new[] { 0, 0 };
 		}
-
 		public BSplineReduction(Vector3[] inControls, int degree, double fraction)
 			: this()
 		{
 			int numSamples = inControls.Length;
-			this.sampleData = inControls;
+			this.SampleData = inControls;
 			Debug.Assert(numSamples >= 2 && 1 <= degree && degree < numSamples, "Invalid input.");
 
 			// Clamp the number of control points to [degree+1,quantity-1].
 			int numControls = (int)Math.Round(fraction * numSamples);
 			if (numControls >= numSamples)
 			{
-				this.controlData = inControls;
+				this.ControlData = inControls;
 				return;
 			}
 
@@ -103,26 +91,26 @@ namespace netDxf.GTE
 
 			// Set up basis function parameters.  Function 0 corresponds to
 			// the output curve.  Function 1 corresponds to the input curve.
-			this.degree = degree;
+			this.Degree = degree;
 			this.quantity[0] = numControls;
 			this.quantity[1] = numSamples;
 
 			for (int j = 0; j <= 1; j++)
 			{
-				this.numKnots[j] = this.quantity[j] + this.degree + 1;
+				this.numKnots[j] = this.quantity[j] + this.Degree + 1;
 				this.knot[j] = new double[this.numKnots[j]];
 
 				int i;
-				for (i = 0; i <= this.degree; ++i)
+				for (i = 0; i <= this.Degree; ++i)
 				{
 					this.knot[j][i] = 0.0;
 				}
 
-				double denom = this.quantity[j] - this.degree;
+				double denom = this.quantity[j] - this.Degree;
 				double factor = 1.0 / denom;
 				for ( /**/; i < this.quantity[j]; ++i)
 				{
-					this.knot[j][i] = (i - this.degree) * factor;
+					this.knot[j][i] = (i - this.Degree) * factor;
 				}
 
 				for ( /**/; i < this.numKnots[j]; ++i)
@@ -140,19 +128,19 @@ namespace netDxf.GTE
 
 			double integrand(double t)
 			{
-				double value0 = this.F(this.mBasis[0], this.mIndex[0], this.degree, t);
-				double value1 = this.F(this.mBasis[1], this.mIndex[1], this.degree, t);
+				double value0 = this.F(this.mBasis[0], this.mIndex[0], this.Degree, t);
+				double value1 = this.F(this.mBasis[1], this.mIndex[1], this.Degree, t);
 				double result = value0 * value1;
 				return result;
 			}
 
-			BandedMatrix A = new BandedMatrix(this.quantity[0], this.degree, this.degree);
+			BandedMatrix A = new BandedMatrix(this.quantity[0], this.Degree, this.Degree);
 			for (i0 = 0; i0 < this.quantity[0]; ++i0)
 			{
 				this.mIndex[0] = i0;
 				tmax = this.MaxSupport(0, i0);
 
-				for (i1 = i0; i1 <= i0 + this.degree && i1 < this.quantity[0]; ++i1)
+				for (i1 = i0; i1 <= i0 + this.Degree && i1 < this.quantity[0]; ++i1)
 				{
 					this.mIndex[1] = i1;
 					tmin = this.MinSupport(0, i1);
@@ -205,12 +193,12 @@ namespace netDxf.GTE
 
 			// Allocate output control points.
 			// Construct the control points for the least-squares curve.
-			this.controlData = new Vector3[numControls];
+			this.ControlData = new Vector3[numControls];
 			for (i0 = 0; i0 < this.quantity[0]; ++i0)
 			{
 				for (i1 = 0; i1 < this.quantity[1]; ++i1)
 				{
-					this.controlData[i0] += inControls[i1] * prod[i0, i1];
+					this.ControlData[i0] += inControls[i1] * prod[i0, i1];
 				}
 			}
 
@@ -228,54 +216,30 @@ namespace netDxf.GTE
 			// reducing keyframe data with B-spline curves.  The user expects
 			// that the curve passes through the first and last positions in
 			// order to support matching two consecutive keyframe sequences.
-			this.controlData[0] = inControls[0];
-			this.controlData[this.controlData.Length - 1] = inControls[inControls.Length - 1];
+			this.ControlData[0] = inControls[0];
+			this.ControlData[this.ControlData.Length - 1] = inControls[inControls.Length - 1];
 
 			BasisFunctionInput input = new BasisFunctionInput(numControls, degree);
-			this.basisFunction = new BasisFunction(input);
+			this.BasisFunction = new BasisFunction(input);
 		}
 
 		// Access to input sample information.
-		public int NumSamples
-		{
-			get { return this.quantity[1]; }
-		}
+		public int NumSamples => this.quantity[1];
 
-		public Vector3[] SampleData
-		{
-			get { return this.sampleData; }
-		}
+		public Vector3[] SampleData { get; }
 
 		// Access to output control point and curve information.
-		public int Degree
-		{
-			get { return this.degree; }
-		}
+		public int Degree { get; } = 0;
 
-		public int NumControls
-		{
-			get { return this.quantity[0]; }
-		}
+		public int NumControls => this.quantity[0];
 
-		public Vector3[] ControlData
-		{
-			get { return this.controlData; }
-		}
+		public Vector3[] ControlData { get; }
 
-		public BasisFunction BasisFunction
-		{
-			get { return this.basisFunction; }
-		}
+		public BasisFunction BasisFunction { get; }
 
-		private double MinSupport(int basis, int i)
-		{
-			return this.knot[basis][i];
-		}
+		private double MinSupport(int basis, int i) => this.knot[basis][i];
 
-		private double MaxSupport(int basis, int i)
-		{
-			return this.knot[basis][i + 1 + this.degree];
-		}
+		private double MaxSupport(int basis, int i) => this.knot[basis][i + 1 + this.Degree];
 
 		private double F(int basis, int i, int j, double t)
 		{

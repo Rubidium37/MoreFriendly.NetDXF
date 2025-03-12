@@ -88,27 +88,29 @@ namespace netDxf
 
 		/// <summary>Gets the zero matrix.</summary>
 		public static Matrix3 Zero
-		{
-			get
+			=> new Matrix3
+			(
+				0.0, 0.0, 0.0,
+				0.0, 0.0, 0.0,
+				0.0, 0.0, 0.0
+			)
 			{
-				return new Matrix3(0.0, 0.0, 0.0,
-									0.0, 0.0, 0.0,
-									0.0, 0.0, 0.0)
-				{ dirty = false, isIdentity = false };
-			}
-		}
+				dirty = false,
+				isIdentity = false
+			};
 
 		/// <summary>Gets the identity matrix.</summary>
 		public static Matrix3 Identity
-		{
-			get
+			=> new Matrix3
+			(
+				1.0, 0.0, 0.0,
+				0.0, 1.0, 0.0,
+				0.0, 0.0, 1.0
+			)
 			{
-				return new Matrix3(1.0, 0.0, 0.0,
-									0.0, 1.0, 0.0,
-									0.0, 0.0, 1.0)
-				{ dirty = false, isIdentity = true };
-			}
-		}
+				dirty = false,
+				isIdentity = true
+			};
 
 		#endregion
 
@@ -117,7 +119,7 @@ namespace netDxf
 		/// <summary>Gets or sets the matrix element [0,0].</summary>
 		public double M11
 		{
-			get { return this.m11; }
+			get => this.m11;
 			set
 			{
 				this.m11 = value;
@@ -128,7 +130,7 @@ namespace netDxf
 		/// <summary>Gets or sets the matrix element [0,1].</summary>
 		public double M12
 		{
-			get { return this.m12; }
+			get => this.m12;
 			set
 			{
 				this.m12 = value;
@@ -139,7 +141,7 @@ namespace netDxf
 		/// <summary>Gets or sets the matrix element [0,2].</summary>
 		public double M13
 		{
-			get { return this.m13; }
+			get => this.m13;
 			set
 			{
 				this.m13 = value;
@@ -150,7 +152,7 @@ namespace netDxf
 		/// <summary>Gets or sets the matrix element [1,0].</summary>
 		public double M21
 		{
-			get { return this.m21; }
+			get => this.m21;
 			set
 			{
 				this.m21 = value;
@@ -161,7 +163,7 @@ namespace netDxf
 		/// <summary>Gets or sets the matrix element [1,1].</summary>
 		public double M22
 		{
-			get { return this.m22; }
+			get => this.m22;
 			set
 			{
 				this.m22 = value;
@@ -172,7 +174,7 @@ namespace netDxf
 		/// <summary>Gets or sets the matrix element [1,2].</summary>
 		public double M23
 		{
-			get { return this.m23; }
+			get => this.m23;
 			set
 			{
 				this.m23 = value;
@@ -183,7 +185,7 @@ namespace netDxf
 		/// <summary>Gets or sets the matrix element [2,0].</summary>
 		public double M31
 		{
-			get { return this.m31; }
+			get => this.m31;
 			set
 			{
 				this.m31 = value;
@@ -194,7 +196,7 @@ namespace netDxf
 		/// <summary>Gets or sets the matrix element [2,1].</summary>
 		public double M32
 		{
-			get { return this.m32; }
+			get => this.m32;
 			set
 			{
 				this.m32 = value;
@@ -205,7 +207,7 @@ namespace netDxf
 		/// <summary>Gets or sets the matrix element [2,2].</summary>
 		public double M33
 		{
-			get { return this.m33; }
+			get => this.m33;
 			set
 			{
 				this.m33 = value;
@@ -424,44 +426,48 @@ namespace netDxf
 		/// <param name="b">Matrix3.</param>
 		/// <returns>Matrix3.</returns>
 		public static Matrix3 operator +(Matrix3 a, Matrix3 b)
-		{
-			return new Matrix3(a.M11 + b.M11, a.M12 + b.M12, a.M13 + b.M13,
-								a.M21 + b.M21, a.M22 + b.M22, a.M23 + b.M23,
-								a.M31 + b.M31, a.M32 + b.M32, a.M33 + b.M33);
-		}
+			=> new Matrix3
+			(
+				a.M11 + b.M11, a.M12 + b.M12, a.M13 + b.M13,
+				a.M21 + b.M21, a.M22 + b.M22, a.M23 + b.M23,
+				a.M31 + b.M31, a.M32 + b.M32, a.M33 + b.M33
+			);
 
 		/// <summary>Matrix addition.</summary>
 		/// <param name="a">Matrix3.</param>
 		/// <param name="b">Matrix3.</param>
 		/// <returns>Matrix3.</returns>
 		public static Matrix3 Add(Matrix3 a, Matrix3 b)
-		{
-			return new Matrix3(a.M11 + b.M11, a.M12 + b.M12, a.M13 + b.M13,
-								a.M21 + b.M21, a.M22 + b.M22, a.M23 + b.M23,
-								a.M31 + b.M31, a.M32 + b.M32, a.M33 + b.M33);
-		}
+			=> new Matrix3
+			(
+				a.M11 + b.M11, a.M12 + b.M12, a.M13 + b.M13,
+				a.M21 + b.M21, a.M22 + b.M22, a.M23 + b.M23,
+				a.M31 + b.M31, a.M32 + b.M32, a.M33 + b.M33
+			);
 
 		/// <summary>Matrix subtraction.</summary>
 		/// <param name="a">Matrix3.</param>
 		/// <param name="b">Matrix3.</param>
 		/// <returns>Matrix3.</returns>
 		public static Matrix3 operator -(Matrix3 a, Matrix3 b)
-		{
-			return new Matrix3(a.M11 - b.M11, a.M12 - b.M12, a.M13 - b.M13,
-								a.M21 - b.M21, a.M22 - b.M22, a.M23 - b.M23,
-								a.M31 - b.M31, a.M32 - b.M32, a.M33 - b.M33);
-		}
+			=> new Matrix3
+			(
+				a.M11 - b.M11, a.M12 - b.M12, a.M13 - b.M13,
+				a.M21 - b.M21, a.M22 - b.M22, a.M23 - b.M23,
+				a.M31 - b.M31, a.M32 - b.M32, a.M33 - b.M33
+			);
 
 		/// <summary>Matrix subtraction.</summary>
 		/// <param name="a">Matrix3.</param>
 		/// <param name="b">Matrix3.</param>
 		/// <returns>Matrix3.</returns>
 		public static Matrix3 Subtract(Matrix3 a, Matrix3 b)
-		{
-			return new Matrix3(a.M11 - b.M11, a.M12 - b.M12, a.M13 - b.M13,
-								a.M21 - b.M21, a.M22 - b.M22, a.M23 - b.M23,
-								a.M31 - b.M31, a.M32 - b.M32, a.M33 - b.M33);
-		}
+			=> new Matrix3
+			(
+				a.M11 - b.M11, a.M12 - b.M12, a.M13 - b.M13,
+				a.M21 - b.M21, a.M22 - b.M22, a.M23 - b.M23,
+				a.M31 - b.M31, a.M32 - b.M32, a.M33 - b.M33
+			);
 
 		/// <summary>Product of two matrices.</summary>
 		/// <param name="a">Matrix3.</param>
@@ -479,9 +485,12 @@ namespace netDxf
 				return a;
 			}
 
-			return new Matrix3(a.M11 * b.M11 + a.M12 * b.M21 + a.M13 * b.M31, a.M11 * b.M12 + a.M12 * b.M22 + a.M13 * b.M32, a.M11 * b.M13 + a.M12 * b.M23 + a.M13 * b.M33,
-								a.M21 * b.M11 + a.M22 * b.M21 + a.M23 * b.M31, a.M21 * b.M12 + a.M22 * b.M22 + a.M23 * b.M32, a.M21 * b.M13 + a.M22 * b.M23 + a.M23 * b.M33,
-								a.M31 * b.M11 + a.M32 * b.M21 + a.M33 * b.M31, a.M31 * b.M12 + a.M32 * b.M22 + a.M33 * b.M32, a.M31 * b.M13 + a.M32 * b.M23 + a.M33 * b.M33);
+			return new Matrix3
+			(
+				a.M11 * b.M11 + a.M12 * b.M21 + a.M13 * b.M31, a.M11 * b.M12 + a.M12 * b.M22 + a.M13 * b.M32, a.M11 * b.M13 + a.M12 * b.M23 + a.M13 * b.M33,
+				a.M21 * b.M11 + a.M22 * b.M21 + a.M23 * b.M31, a.M21 * b.M12 + a.M22 * b.M22 + a.M23 * b.M32, a.M21 * b.M13 + a.M22 * b.M23 + a.M23 * b.M33,
+				a.M31 * b.M11 + a.M32 * b.M21 + a.M33 * b.M31, a.M31 * b.M12 + a.M32 * b.M22 + a.M33 * b.M32, a.M31 * b.M13 + a.M32 * b.M23 + a.M33 * b.M33
+			);
 		}
 
 		/// <summary>Product of two matrices.</summary>
@@ -500,9 +509,12 @@ namespace netDxf
 				return a;
 			}
 
-			return new Matrix3(a.M11 * b.M11 + a.M12 * b.M21 + a.M13 * b.M31, a.M11 * b.M12 + a.M12 * b.M22 + a.M13 * b.M32, a.M11 * b.M13 + a.M12 * b.M23 + a.M13 * b.M33,
-								a.M21 * b.M11 + a.M22 * b.M21 + a.M23 * b.M31, a.M21 * b.M12 + a.M22 * b.M22 + a.M23 * b.M32, a.M21 * b.M13 + a.M22 * b.M23 + a.M23 * b.M33,
-								a.M31 * b.M11 + a.M32 * b.M21 + a.M33 * b.M31, a.M31 * b.M12 + a.M32 * b.M22 + a.M33 * b.M32, a.M31 * b.M13 + a.M32 * b.M23 + a.M33 * b.M33);
+			return new Matrix3
+			(
+				a.M11 * b.M11 + a.M12 * b.M21 + a.M13 * b.M31, a.M11 * b.M12 + a.M12 * b.M22 + a.M13 * b.M32, a.M11 * b.M13 + a.M12 * b.M23 + a.M13 * b.M33,
+				a.M21 * b.M11 + a.M22 * b.M21 + a.M23 * b.M31, a.M21 * b.M12 + a.M22 * b.M22 + a.M23 * b.M32, a.M21 * b.M13 + a.M22 * b.M23 + a.M23 * b.M33,
+				a.M31 * b.M11 + a.M32 * b.M21 + a.M33 * b.M31, a.M31 * b.M12 + a.M32 * b.M22 + a.M33 * b.M32, a.M31 * b.M13 + a.M32 * b.M23 + a.M33 * b.M33
+			);
 		}
 
 		/// <summary>Product of a matrix with a vector.</summary>
@@ -511,11 +523,14 @@ namespace netDxf
 		/// <returns>Matrix3.</returns>
 		/// <remarks>Matrix3 adopts the convention of using column vectors.</remarks>
 		public static Vector3 operator *(Matrix3 a, Vector3 u)
-		{
-			return a.IsIdentity ? u : new Vector3(a.M11 * u.X + a.M12 * u.Y + a.M13 * u.Z,
-													a.M21 * u.X + a.M22 * u.Y + a.M23 * u.Z,
-													a.M31 * u.X + a.M32 * u.Y + a.M33 * u.Z);
-		}
+			=> a.IsIdentity
+			? u
+			: new Vector3
+			(
+				a.M11 * u.X + a.M12 * u.Y + a.M13 * u.Z,
+				a.M21 * u.X + a.M22 * u.Y + a.M23 * u.Z,
+				a.M31 * u.X + a.M32 * u.Y + a.M33 * u.Z
+			);
 
 		/// <summary>Product of a matrix with a vector.</summary>
 		/// <param name="a">Matrix3.</param>
@@ -523,51 +538,49 @@ namespace netDxf
 		/// <returns>Matrix3.</returns>
 		/// <remarks>Matrix3 adopts the convention of using column vectors.</remarks>
 		public static Vector3 Multiply(Matrix3 a, Vector3 u)
-		{
-			return a.IsIdentity ? u : new Vector3(a.M11 * u.X + a.M12 * u.Y + a.M13 * u.Z,
-													a.M21 * u.X + a.M22 * u.Y + a.M23 * u.Z,
-													a.M31 * u.X + a.M32 * u.Y + a.M33 * u.Z);
-		}
+			=> a.IsIdentity
+			? u
+			: new Vector3
+			(
+				a.M11 * u.X + a.M12 * u.Y + a.M13 * u.Z,
+				a.M21 * u.X + a.M22 * u.Y + a.M23 * u.Z,
+				a.M31 * u.X + a.M32 * u.Y + a.M33 * u.Z
+			);
 
 		/// <summary>Product of a matrix with a scalar.</summary>
 		/// <param name="m">Matrix3.</param>
 		/// <param name="a">Scalar.</param>
 		/// <returns>Matrix3.</returns>
 		public static Matrix3 operator *(Matrix3 m, double a)
-		{
-			return new Matrix3(m.M11 * a, m.M12 * a, m.M13 * a,
-								m.M21 * a, m.M22 * a, m.M23 * a,
-								m.M31 * a, m.M32 * a, m.M33 * a);
-		}
+			=> new Matrix3
+			(
+				m.M11 * a, m.M12 * a, m.M13 * a,
+				m.M21 * a, m.M22 * a, m.M23 * a,
+				m.M31 * a, m.M32 * a, m.M33 * a
+			);
 
 		/// <summary>Product of a matrix with a scalar.</summary>
 		/// <param name="m">Matrix3.</param>
 		/// <param name="a">Scalar.</param>
 		/// <returns>Matrix3.</returns>
 		public static Matrix3 Multiply(Matrix3 m, double a)
-		{
-			return new Matrix3(m.M11 * a, m.M12 * a, m.M13 * a,
-								m.M21 * a, m.M22 * a, m.M23 * a,
-								m.M31 * a, m.M32 * a, m.M33 * a);
-		}
+			=> new Matrix3
+			(
+				m.M11 * a, m.M12 * a, m.M13 * a,
+				m.M21 * a, m.M22 * a, m.M23 * a,
+				m.M31 * a, m.M32 * a, m.M33 * a
+			);
 
 		/// <summary>Check if the components of two matrices are equal.</summary>
 		/// <param name="u">Matrix3.</param>
 		/// <param name="v">Matrix3.</param>
 		/// <returns><see langword="true"/> if the matrix components are equal or <see langword="false"/> in any other case.</returns>
-		public static bool operator ==(Matrix3 u, Matrix3 v)
-		{
-			return Equals(u, v);
-		}
-
+		public static bool operator ==(Matrix3 u, Matrix3 v) => Equals(u, v);
 		/// <summary>Check if the components of two matrices are different.</summary>
 		/// <param name="u">Matrix3.</param>
 		/// <param name="v">Matrix3.</param>
 		/// <returns><see langword="true"/> if the matrix components are different or <see langword="false"/> in any other case.</returns>
-		public static bool operator !=(Matrix3 u, Matrix3 v)
-		{
-			return !Equals(u, v);
-		}
+		public static bool operator !=(Matrix3 u, Matrix3 v) => !Equals(u, v);
 
 		#endregion
 
@@ -607,7 +620,8 @@ namespace netDxf
 
 			det = 1 / det;
 
-			return new Matrix3(
+			return new Matrix3
+			(
 				det * (this.m22 * this.m33 - this.m23 * this.m32),
 				det * (this.m13 * this.m32 - this.m12 * this.m33),
 				det * (this.m12 * this.m23 - this.m13 * this.m22),
@@ -616,18 +630,21 @@ namespace netDxf
 				det * (this.m13 * this.m21 - this.m11 * this.m23),
 				det * (this.m21 * this.m32 - this.m22 * this.m31),
 				det * (this.m12 * this.m31 - this.m11 * this.m32),
-				det * (this.m11 * this.m22 - this.m12 * this.m21));
+				det * (this.m11 * this.m22 - this.m12 * this.m21)
+			);
 		}
 
 		/// <summary>Obtains the transpose matrix.</summary>
 		/// <returns>Transpose matrix.</returns>
 		public Matrix3 Transpose()
-		{
-			return this.IsIdentity ? Identity : new Matrix3(this.m11, this.m21, this.m31,
-															this.m12, this.m22, this.m32,
-															this.m13, this.m23, this.m33);
-		}
-
+			=> this.IsIdentity
+			? Identity
+			: new Matrix3
+			(
+				this.m11, this.m21, this.m31,
+				this.m12, this.m22, this.m32,
+				this.m13, this.m23, this.m33
+			);
 
 		#endregion
 
@@ -641,9 +658,12 @@ namespace netDxf
 		{
 			double cos = Math.Cos(angle);
 			double sin = Math.Sin(angle);
-			return new Matrix3(1.0, 0.0, 0.0,
-								0.0, cos, -sin,
-								0.0, sin, cos);
+			return new Matrix3
+			(
+				1.0, 0.0, 0.0,
+				0.0, cos, -sin,
+				0.0, sin, cos
+			);
 		}
 
 		/// <summary>Builds a rotation matrix for a rotation around the y-axis.</summary>
@@ -654,9 +674,12 @@ namespace netDxf
 		{
 			double cos = Math.Cos(angle);
 			double sin = Math.Sin(angle);
-			return new Matrix3(cos, 0.0, sin,
-								0.0, 1.0, 0.0,
-								-sin, 0.0, cos);
+			return new Matrix3
+			(
+				cos, 0.0, sin,
+				0.0, 1.0, 0.0,
+				-sin, 0.0, cos
+			);
 		}
 
 		/// <summary>Builds a rotation matrix for a rotation around the z-axis.</summary>
@@ -667,38 +690,34 @@ namespace netDxf
 		{
 			double cos = Math.Cos(angle);
 			double sin = Math.Sin(angle);
-			return new Matrix3(cos, -sin, 0.0,
-								sin, cos, 0.0,
-								0.0, 0.0, 1.0);
+			return new Matrix3
+			(
+				cos, -sin, 0.0,
+				sin, cos, 0.0,
+				0.0, 0.0, 1.0
+			);
 		}
 
 		/// <summary>Build a scaling matrix.</summary>
 		/// <param name="value">Single scale factor for x, y, and z axis.</param>
 		/// <returns>A scaling matrix.</returns>
-		public static Matrix3 Scale(double value)
-		{
-			return Scale(value, value, value);
-		}
-
+		public static Matrix3 Scale(double value) => Scale(value, value, value);
 		/// <summary>Build a scaling matrix.</summary>
 		/// <param name="value">Scale factors for x, y, and z axis.</param>
 		/// <returns>A scaling matrix.</returns>
-		public static Matrix3 Scale(Vector3 value)
-		{
-			return Scale(value.X, value.Y, value.Z);
-		}
-
+		public static Matrix3 Scale(Vector3 value) => Scale(value.X, value.Y, value.Z);
 		/// <summary>Build a scaling matrix.</summary>
 		/// <param name="x">Scale factor for x-axis.</param>
 		/// <param name="y">Scale factor for y-axis.</param>
 		/// <param name="z">Scale factor for z-axis.</param>
 		/// <returns>A scaling matrix.</returns>
 		public static Matrix3 Scale(double x, double y, double z)
-		{
-			return new Matrix3(x, 0.0, 0.0,
-								0.0, y, 0.0,
-								0.0, 0.0, z);
-		}
+			=> new Matrix3
+			(
+				x, 0.0, 0.0,
+				0.0, y, 0.0,
+				0.0, 0.0, z
+			);
 
 		/// <summary>Build the reflection matrix of a mirror plane that passes through the origin.</summary>
 		/// <param name="normal">Mirror plane normal vector.</param>
@@ -710,9 +729,12 @@ namespace netDxf
 			double a = n.X;
 			double b = n.Y;
 			double c = n.Z;
-			return new Matrix3(1.0 - 2.0 * a * a, -2.0 * a * b, -2.0 * a * c,
-								-2.0 * a * b, 1.0 - 2.0 * b * b, -2.0 * b * c,
-								-2.0 * a * c, -2.0 * b * c, 1.0 - 2.0 * c * c);
+			return new Matrix3
+			(
+				1.0 - 2.0 * a * a, -2.0 * a * b, -2.0 * a * c,
+				-2.0 * a * b, 1.0 - 2.0 * b * b, -2.0 * b * c,
+				-2.0 * a * c, -2.0 * b * c, 1.0 - 2.0 * c * c
+			);
 		}
 
 		#endregion
@@ -720,19 +742,9 @@ namespace netDxf
 		#region comparison methods
 
 		/// <inheritdoc/>
-		public override bool Equals(object obj)
-		{
-			if (obj is Matrix3 matrix)
-			{
-				return this.Equals(matrix);
-			}
-			return false;
-		}
+		public override bool Equals(object obj) => obj is Matrix3 other && this.Equals(other);
 		/// <inheritdoc/>
-		public bool Equals(Matrix3 other)
-		{
-			return this.Equals(other, MathHelper.Epsilon);
-		}
+		public bool Equals(Matrix3 other) => this.Equals(other, MathHelper.Epsilon);
 		/// <summary>Check if the components of two matrices are approximate equal.</summary>
 		/// <param name="obj">Matrix3.</param>
 		/// <param name="threshold">Maximum tolerance.</param>
@@ -754,28 +766,19 @@ namespace netDxf
 		/// <param name="a">Matrix3.</param>
 		/// <param name="b">Matrix3.</param>
 		/// <returns><see langword="true"/> if the matrix components are almost equal or <see langword="false"/> in any other case.</returns>
-		public static bool Equals(Matrix3 a, Matrix3 b)
-		{
-			return a.Equals(b, MathHelper.Epsilon);
-		}
+		public static bool Equals(Matrix3 a, Matrix3 b) => a.Equals(b, MathHelper.Epsilon);
 		/// <summary>Check if the components of two matrices are approximate equal.</summary>
 		/// <param name="a">Matrix3.</param>
 		/// <param name="b">Matrix3.</param>
 		/// <param name="threshold">Maximum tolerance.</param>
 		/// <returns><see langword="true"/> if the matrix components are almost equal or <see langword="false"/> in any other case.</returns>
-		public static bool Equals(Matrix3 a, Matrix3 b, double threshold)
-		{
-			return a.Equals(b, threshold);
-		}
+		public static bool Equals(Matrix3 a, Matrix3 b, double threshold) => a.Equals(b, threshold);
 
 		/// <inheritdoc/>
 		public override int GetHashCode()
-		{
-			return
-				this.M11.GetHashCode() ^ this.M12.GetHashCode() ^ this.M13.GetHashCode() ^
-				this.M21.GetHashCode() ^ this.M22.GetHashCode() ^ this.M23.GetHashCode() ^
-				this.M31.GetHashCode() ^ this.M32.GetHashCode() ^ this.M33.GetHashCode();
-		}
+			=> this.M11.GetHashCode() ^ this.M12.GetHashCode() ^ this.M13.GetHashCode()
+			^ this.M21.GetHashCode() ^ this.M22.GetHashCode() ^ this.M23.GetHashCode()
+			^ this.M31.GetHashCode() ^ this.M32.GetHashCode() ^ this.M33.GetHashCode();
 
 		#endregion
 

@@ -30,19 +30,13 @@ namespace netDxf.Entities
 	public class AttributeChangeEventArgs :
 		EventArgs
 	{
-		#region private fields
-
-		private readonly Attribute item;
-
-		#endregion
-
 		#region constructor
 
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="item">The attribute that is being added or removed from the insert.</param>
 		public AttributeChangeEventArgs(Attribute item)
 		{
-			this.item = item;
+			this.Item = item;
 		}
 
 		#endregion
@@ -50,10 +44,7 @@ namespace netDxf.Entities
 		#region public properties
 
 		/// <summary>Gets the attribute that is being added or removed.</summary>
-		public Attribute Item
-		{
-			get { return this.item; }
-		}
+		public Attribute Item { get; }
 
 		#endregion
 	}

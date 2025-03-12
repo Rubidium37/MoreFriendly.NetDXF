@@ -38,8 +38,6 @@ namespace netDxf.IO
 
 		private readonly TextReader reader;
 		private short code;
-		private object value;
-		private long currentPosition;
 
 		#endregion
 
@@ -49,8 +47,8 @@ namespace netDxf.IO
 		{
 			this.reader = reader;
 			this.code = 0;
-			this.value = null;
-			this.currentPosition = 0;
+			this.Value = null;
+			this.CurrentPosition = 0;
 		}
 
 		#endregion
@@ -58,22 +56,13 @@ namespace netDxf.IO
 		#region public properties
 
 		/// <inheritdoc/>
-		public short Code
-		{
-			get { return this.code; }
-		}
+		public short Code => this.code;
 
 		/// <inheritdoc/>
-		public object Value
-		{
-			get { return this.value; }
-		}
+		public object Value { get; private set; }
 
 		/// <inheritdoc/>
-		public long CurrentPosition
-		{
-			get { return this.currentPosition; }
-		}
+		public long CurrentPosition { get; private set; }
 
 		#endregion
 
@@ -86,79 +75,50 @@ namespace netDxf.IO
 			if (readCode == null)
 			{
 				this.code = 0;
-				this.value = DxfObjectCode.EndOfFile;
+				this.Value = DxfObjectCode.EndOfFile;
 			}
 			else
 			{
-				this.currentPosition += 1;
+				this.CurrentPosition += 1;
 				if (!short.TryParse(readCode, NumberStyles.Integer, CultureInfo.InvariantCulture, out this.code))
 				{
-					throw new Exception(string.Format("Code {0} not valid at line {1}", this.code, this.currentPosition));
+					throw new Exception(string.Format("Code {0} not valid at line {1}", this.Code, this.CurrentPosition));
 				}
-				this.value = this.ReadValue(this.reader.ReadLine());
-				this.currentPosition += 1;
+				this.Value = this.ReadValue(this.reader.ReadLine());
+				this.CurrentPosition += 1;
 			}
 		}
 
 		/// <inheritdoc/>
-		public byte ReadByte()
-		{
-			return (byte)this.value;
-		}
+		public byte ReadByte() => (byte)this.Value;
 
 		/// <inheritdoc/>
-		public byte[] ReadBytes()
-		{
-			return (byte[])this.value;
-		}
+		public byte[] ReadBytes() => (byte[])this.Value;
 
 		/// <inheritdoc/>
-		public short ReadShort()
-		{
-			return (short)this.value;
-		}
+		public short ReadShort() => (short)this.Value;
 
 		/// <inheritdoc/>
-		public int ReadInt()
-		{
-			return (int)this.value;
-		}
+		public int ReadInt() => (int)this.Value;
 
 		/// <inheritdoc/>
-		public long ReadLong()
-		{
-			return (long)this.value;
-		}
+		public long ReadLong() => (long)this.Value;
 
 		/// <inheritdoc/>
-		public bool ReadBool()
-		{
-			return (bool)this.value;
-		}
+		public bool ReadBool() => (bool)this.Value;
 
 		/// <inheritdoc/>
-		public double ReadDouble()
-		{
-			return (double)this.value;
-		}
+		public double ReadDouble() => (double)this.Value;
 
 		/// <inheritdoc/>
-		public string ReadString()
-		{
-			return (string)this.value;
-		}
+		public string ReadString() => (string)this.Value;
 
 		/// <inheritdoc/>
-		public string ReadHex()
-		{
-			return (string)this.value;
-		}
+		public string ReadHex() => (string)this.Value;
 
 		/// <inheritdoc/>
 		public override string ToString()
-		{
-			return string.Format("{0}:{1}", this.code, this.value);
-		}
+			=> string.Format("{0}:{1}", this.Code, this.Value);
 
 		#endregion
 
@@ -166,176 +126,176 @@ namespace netDxf.IO
 
 		private object ReadValue(string valueString)
 		{
-			if (this.code >= 0 && this.code <= 9) // string
+			if (this.Code >= 0 && this.Code <= 9) // string
 			{
 				return this.ReadString(valueString);
 			}
-			if (this.code >= 10 && this.code <= 39) // double precision 3D point value
+			if (this.Code >= 10 && this.Code <= 39) // double precision 3D point value
 			{
 				return this.ReadDouble(valueString);
 			}
-			if (this.code >= 40 && this.code <= 59) // double precision floating point value
+			if (this.Code >= 40 && this.Code <= 59) // double precision floating point value
 			{
 				return this.ReadDouble(valueString);
 			}
-			if (this.code >= 60 && this.code <= 79) // 16-bit integer value
+			if (this.Code >= 60 && this.Code <= 79) // 16-bit integer value
 			{
 				return this.ReadShort(valueString);
 			}
-			if (this.code >= 90 && this.code <= 99) // 32-bit integer value
+			if (this.Code >= 90 && this.Code <= 99) // 32-bit integer value
 			{
 				return this.ReadInt(valueString);
 			}
-			if (this.code == 100) // string (255-character maximum; less for Unicode strings)
+			if (this.Code == 100) // string (255-character maximum; less for Unicode strings)
 			{
 				return this.ReadString(valueString);
 			}
-			if (this.code == 101) // string (255-character maximum; less for Unicode strings). This code is undocumented and seems to affect only the AcdsData in dxf version 2013
+			if (this.Code == 101) // string (255-character maximum; less for Unicode strings). This code is undocumented and seems to affect only the AcdsData in dxf version 2013
 			{
 				return this.ReadString(valueString);
 			}
-			if (this.code == 102) // string (255-character maximum; less for Unicode strings)
+			if (this.Code == 102) // string (255-character maximum; less for Unicode strings)
 			{
 				return this.ReadString(valueString);
 			}
-			if (this.code == 105) // string representing hexadecimal (hex) handle value
+			if (this.Code == 105) // string representing hexadecimal (hex) handle value
 			{
 				return this.ReadHex(valueString);
 			}
-			if (this.code >= 110 && this.code <= 119) // double precision floating point value
+			if (this.Code >= 110 && this.Code <= 119) // double precision floating point value
 			{
 				return this.ReadDouble(valueString);
 			}
-			if (this.code >= 120 && this.code <= 129) // double precision floating point value
+			if (this.Code >= 120 && this.Code <= 129) // double precision floating point value
 			{
 				return this.ReadDouble(valueString);
 			}
-			if (this.code >= 130 && this.code <= 139) // double precision floating point value
+			if (this.Code >= 130 && this.Code <= 139) // double precision floating point value
 			{
 				return this.ReadDouble(valueString);
 			}
-			if (this.code >= 140 && this.code <= 149) // double precision scalar floating-point value
+			if (this.Code >= 140 && this.Code <= 149) // double precision scalar floating-point value
 			{
 				return this.ReadDouble(valueString);
 			}
-			if (this.code >= 160 && this.code <= 169) // 64-bit integer value
+			if (this.Code >= 160 && this.Code <= 169) // 64-bit integer value
 			{
 				return this.ReadLong(valueString);
 			}
-			if (this.code >= 170 && this.code <= 179) // 16-bit integer value
+			if (this.Code >= 170 && this.Code <= 179) // 16-bit integer value
 			{
 				return this.ReadShort(valueString);
 			}
-			if (this.code >= 210 && this.code <= 239) // double precision scalar floating-point value
+			if (this.Code >= 210 && this.Code <= 239) // double precision scalar floating-point value
 			{
 				return this.ReadDouble(valueString);
 			}
-			if (this.code >= 270 && this.code <= 279) // 16-bit integer value
+			if (this.Code >= 270 && this.Code <= 279) // 16-bit integer value
 			{
 				return this.ReadShort(valueString);
 			}
-			if (this.code >= 280 && this.code <= 289) // 16-bit integer value
+			if (this.Code >= 280 && this.Code <= 289) // 16-bit integer value
 			{
 				return this.ReadShort(valueString);
 			}
-			if (this.code >= 290 && this.code <= 299) // byte (boolean flag value)
+			if (this.Code >= 290 && this.Code <= 299) // byte (boolean flag value)
 			{
 				return this.ReadBool(valueString);
 			}
-			if (this.code >= 300 && this.code <= 309) // arbitrary text string
+			if (this.Code >= 300 && this.Code <= 309) // arbitrary text string
 			{
 				return this.ReadString(valueString);
 			}
-			if (this.code >= 310 && this.code <= 319) // string representing hex value of binary chunk
+			if (this.Code >= 310 && this.Code <= 319) // string representing hex value of binary chunk
 			{
 				return this.ReadBytes(valueString);
 			}
-			if (this.code >= 320 && this.code <= 329) // string representing hex handle value
+			if (this.Code >= 320 && this.Code <= 329) // string representing hex handle value
 			{
 				return this.ReadHex(valueString);
 			}
-			if (this.code >= 330 && this.code <= 369) // string representing hex object IDs
+			if (this.Code >= 330 && this.Code <= 369) // string representing hex object IDs
 			{
 				return this.ReadHex(valueString);
 			}
-			if (this.code >= 370 && this.code <= 379) // 16-bit integer value
+			if (this.Code >= 370 && this.Code <= 379) // 16-bit integer value
 			{
 				return this.ReadShort(valueString);
 			}
-			if (this.code >= 380 && this.code <= 389) // 16-bit integer value
+			if (this.Code >= 380 && this.Code <= 389) // 16-bit integer value
 			{
 				return this.ReadShort(valueString);
 			}
-			if (this.code >= 390 && this.code <= 399) // string representing hex handle value
+			if (this.Code >= 390 && this.Code <= 399) // string representing hex handle value
 			{
 				return this.ReadHex(valueString);
 			}
-			if (this.code >= 400 && this.code <= 409) // 16-bit integer value
+			if (this.Code >= 400 && this.Code <= 409) // 16-bit integer value
 			{
 				return this.ReadShort(valueString);
 			}
-			if (this.code >= 410 && this.code <= 419) // string
+			if (this.Code >= 410 && this.Code <= 419) // string
 			{
 				return this.ReadString(valueString);
 			}
-			if (this.code >= 420 && this.code <= 429) // 32-bit integer value
+			if (this.Code >= 420 && this.Code <= 429) // 32-bit integer value
 			{
 				return this.ReadInt(valueString);
 			}
-			if (this.code >= 430 && this.code <= 439) // string
+			if (this.Code >= 430 && this.Code <= 439) // string
 			{
 				return this.ReadString(valueString);
 			}
-			if (this.code >= 440 && this.code <= 449) // 32-bit integer value
+			if (this.Code >= 440 && this.Code <= 449) // 32-bit integer value
 			{
 				return this.ReadInt(valueString);
 			}
-			if (this.code >= 450 && this.code <= 459) // 32-bit integer value
+			if (this.Code >= 450 && this.Code <= 459) // 32-bit integer value
 			{
 				return this.ReadInt(valueString);
 			}
-			if (this.code >= 460 && this.code <= 469) // double-precision floating-point value
+			if (this.Code >= 460 && this.Code <= 469) // double-precision floating-point value
 			{
 				return this.ReadDouble(valueString);
 			}
-			if (this.code >= 470 && this.code <= 479) // string
+			if (this.Code >= 470 && this.Code <= 479) // string
 			{
 				return this.ReadString(valueString);
 			}
-			if (this.code >= 480 && this.code <= 481) // string representing hex handle value
+			if (this.Code >= 480 && this.Code <= 481) // string representing hex handle value
 			{
 				return this.ReadHex(valueString);
 			}
-			if (this.code == 999) // comment (string)
+			if (this.Code == 999) // comment (string)
 			{
 				return this.ReadString(valueString);
 			}
-			if (this.code >= 1010 && this.code <= 1059) // double-precision floating-point value
+			if (this.Code >= 1010 && this.Code <= 1059) // double-precision floating-point value
 			{
 				return this.ReadDouble(valueString);
 			}
-			if (this.code >= 1000 && this.code <= 1003) // string (same limits as indicated with 0-9 code range)
+			if (this.Code >= 1000 && this.Code <= 1003) // string (same limits as indicated with 0-9 code range)
 			{
 				return this.ReadString(valueString);
 			}
-			if (this.code == 1004) // string representing hex value of binary chunk
+			if (this.Code == 1004) // string representing hex value of binary chunk
 			{
 				return this.ReadBytes(valueString);
 			}
-			if (this.code >= 1005 && this.code <= 1009) // string (same limits as indicated with 0-9 code range)
+			if (this.Code >= 1005 && this.Code <= 1009) // string (same limits as indicated with 0-9 code range)
 			{
 				return this.ReadString(valueString);
 			}
-			if (this.code >= 1060 && this.code <= 1070) // 16-bit integer value
+			if (this.Code >= 1060 && this.Code <= 1070) // 16-bit integer value
 			{
 				return this.ReadShort(valueString);
 			}
-			if (this.code == 1071) // 32-bit integer value
+			if (this.Code == 1071) // 32-bit integer value
 			{
 				return this.ReadInt(valueString);
 			}
 
-			throw new Exception(string.Format("Code \"{0}\" not valid at line {1}", this.code, this.currentPosition));
+			throw new Exception(string.Format("Code \"{0}\" not valid at line {1}", this.Code, this.CurrentPosition));
 		}
 
 		//private byte ReadByte(string valueString)
@@ -345,7 +305,7 @@ namespace netDxf.IO
 		//		return result;
 		//	}
 
-		//	Debug.Assert(false, string.Format("Value \"{0}\" not valid at line {1}", valueString, this.currentPosition));
+		//	Debug.Assert(false, string.Format("Value \"{0}\" not valid at line {1}", valueString, this.CurrentPosition));
 
 		//	return 0;
 		//}
@@ -362,7 +322,7 @@ namespace netDxf.IO
 				}
 				else
 				{
-					Debug.Assert(false, string.Format("Value \"{0}\" not valid at line {1}", valueString, this.currentPosition));
+					Debug.Assert(false, string.Format("Value \"{0}\" not valid at line {1}", valueString, this.CurrentPosition));
 
 					return new byte[0];
 				}
@@ -378,7 +338,7 @@ namespace netDxf.IO
 				return result;
 			}
 
-			Debug.Assert(false, string.Format("Value \"{0}\" not valid at line {1}", valueString, this.currentPosition));
+			Debug.Assert(false, string.Format("Value \"{0}\" not valid at line {1}", valueString, this.CurrentPosition));
 
 			return 0;
 		}
@@ -390,7 +350,7 @@ namespace netDxf.IO
 				return result;
 			}
 
-			Debug.Assert(false, string.Format("Value \"{0}\" not valid at line {1}", valueString, this.currentPosition));
+			Debug.Assert(false, string.Format("Value \"{0}\" not valid at line {1}", valueString, this.CurrentPosition));
 
 			return 0;
 		}
@@ -402,7 +362,7 @@ namespace netDxf.IO
 				return result;
 			}
 
-			Debug.Assert(false, string.Format("Value \"{0}\" not valid at line {1}", valueString, this.currentPosition));
+			Debug.Assert(false, string.Format("Value \"{0}\" not valid at line {1}", valueString, this.CurrentPosition));
 
 			return 0;
 		}
@@ -414,7 +374,7 @@ namespace netDxf.IO
 				return result > 0;
 			}
 
-			Debug.Assert(false, string.Format("Value \"{0}\" not valid at line {1}", valueString, this.currentPosition));
+			Debug.Assert(false, string.Format("Value \"{0}\" not valid at line {1}", valueString, this.CurrentPosition));
 
 			return false;
 		}
@@ -426,15 +386,12 @@ namespace netDxf.IO
 				return result;
 			}
 
-			Debug.Assert(false, string.Format("Value \"{0}\" not valid at line {1}", valueString, this.currentPosition));
+			Debug.Assert(false, string.Format("Value \"{0}\" not valid at line {1}", valueString, this.CurrentPosition));
 
 			return 0.0;
 		}
 
-		private string ReadString(string valueString)
-		{
-			return valueString;
-		}
+		private string ReadString(string valueString) => valueString;
 
 		private string ReadHex(string valueString)
 		{
@@ -443,7 +400,7 @@ namespace netDxf.IO
 				return result.ToString("X");
 			}
 
-			Debug.Assert(false, string.Format("Value \"{0}\" not valid at line {1}", valueString, this.currentPosition));
+			Debug.Assert(false, string.Format("Value \"{0}\" not valid at line {1}", valueString, this.CurrentPosition));
 
 			return string.Empty;
 		}

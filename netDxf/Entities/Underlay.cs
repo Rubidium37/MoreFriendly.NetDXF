@@ -55,13 +55,10 @@ namespace netDxf.Entities
 		#region private fields
 
 		private UnderlayDefinition definition;
-		private Vector3 position;
 		private Vector2 scale;
 		private double rotation;
 		private short contrast;
 		private short fade;
-		private UnderlayDisplayFlags displayOptions;
-		private ClippingBoundary clippingBoundary;
 
 		#endregion
 
@@ -95,7 +92,7 @@ namespace netDxf.Entities
 			: base(EntityType.Underlay, DxfObjectCode.Underlay)
 		{
 			this.definition = definition ?? throw new ArgumentNullException(nameof(definition));
-			this.position = position;
+			this.Position = position;
 			if (scale <= 0)
 			{
 				throw new ArgumentOutOfRangeException(nameof(scale), scale, "The Underlay scale must be greater than zero.");
@@ -104,8 +101,8 @@ namespace netDxf.Entities
 			this.rotation = 0.0;
 			this.contrast = 100;
 			this.fade = 0;
-			this.displayOptions = UnderlayDisplayFlags.ShowUnderlay;
-			this.clippingBoundary = null;
+			this.DisplayOptions = UnderlayDisplayFlags.ShowUnderlay;
+			this.ClippingBoundary = null;
 			switch (this.definition.Type)
 			{
 				case UnderlayType.DGN:
@@ -126,7 +123,7 @@ namespace netDxf.Entities
 		/// <summary>Gets the underlay definition.</summary>
 		public UnderlayDefinition Definition
 		{
-			get { return this.definition; }
+			get => this.definition;
 			set
 			{
 				if (value == null)
@@ -152,11 +149,7 @@ namespace netDxf.Entities
 		}
 
 		/// <summary>Gets or sets the underlay position in world coordinates.</summary>
-		public Vector3 Position
-		{
-			get { return this.position; }
-			set { this.position = value; }
-		}
+		public Vector3 Position { get; set; }
 
 		/// <summary>Gets or sets the underlay scale.</summary>
 		/// <remarks>
@@ -167,7 +160,7 @@ namespace netDxf.Entities
 		/// </remarks>
 		public Vector2 Scale
 		{
-			get { return this.scale; }
+			get => this.scale;
 			set
 			{
 				if (MathHelper.IsZero(value.X) || MathHelper.IsZero(value.Y))
@@ -181,15 +174,15 @@ namespace netDxf.Entities
 		/// <summary>Gets or sets the underlay rotation around its normal.</summary>
 		public double Rotation
 		{
-			get { return this.rotation; }
-			set { this.rotation = MathHelper.NormalizeAngle(value); }
+			get => this.rotation;
+			set => this.rotation = MathHelper.NormalizeAngle(value);
 		}
 
 		/// <summary>Gets or sets the underlay contrast.</summary>
 		/// <remarks>Valid values range from 20 to 100.</remarks>
 		public short Contrast
 		{
-			get { return this.contrast; }
+			get => this.contrast;
 			set
 			{
 				if (value < 20 || value > 100)
@@ -204,7 +197,7 @@ namespace netDxf.Entities
 		/// <remarks>Valid values range from 0 to 80.</remarks>
 		public short Fade
 		{
-			get { return this.fade; }
+			get => this.fade;
 			set
 			{
 				if (value < 0 || value > 80)
@@ -216,21 +209,13 @@ namespace netDxf.Entities
 		}
 
 		/// <summary>Gets or sets the underlay display options.</summary>
-		public UnderlayDisplayFlags DisplayOptions
-		{
-			get { return this.displayOptions; }
-			set { this.displayOptions = value; }
-		}
+		public UnderlayDisplayFlags DisplayOptions { get; set; }
 
 		/// <summary>Gets or sets the underlay clipping boundary.</summary>
 		/// <remarks>
 		/// Set as <see langword="null"/> to restore the default clipping boundary, show the full underlay without clipping.
 		/// </remarks>
-		public ClippingBoundary ClippingBoundary
-		{
-			get { return this.clippingBoundary; }
-			set { this.clippingBoundary = value; }
-		}
+		public ClippingBoundary ClippingBoundary { get; set; }
 
 		#endregion
 
@@ -308,13 +293,13 @@ namespace netDxf.Entities
 				IsVisible = this.IsVisible,
 				//Underlay properties
 				Definition = (UnderlayDefinition)this.definition.Clone(),
-				Position = this.position,
+				Position = this.Position,
 				Scale = this.scale,
 				Rotation = this.rotation,
 				Contrast = this.contrast,
 				Fade = this.fade,
-				DisplayOptions = this.displayOptions,
-				ClippingBoundary = this.clippingBoundary != null ? (ClippingBoundary)this.clippingBoundary.Clone() : null
+				DisplayOptions = this.DisplayOptions,
+				ClippingBoundary = this.ClippingBoundary != null ? (ClippingBoundary)this.ClippingBoundary.Clone() : null
 			};
 
 			foreach (XData data in this.XData.Values)

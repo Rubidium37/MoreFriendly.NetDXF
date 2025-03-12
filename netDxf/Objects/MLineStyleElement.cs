@@ -54,7 +54,6 @@ namespace netDxf.Objects
 
 		#region private fields
 
-		private double offset;
 		private AciColor color;
 		private Linetype linetype;
 
@@ -75,7 +74,7 @@ namespace netDxf.Objects
 		/// <param name="linetype">Element line type.</param>
 		public MLineStyleElement(double offset, AciColor color, Linetype linetype)
 		{
-			this.offset = offset;
+			this.Offset = offset;
 			this.color = color;
 			this.linetype = linetype;
 		}
@@ -85,11 +84,7 @@ namespace netDxf.Objects
 		#region public properties
 
 		/// <summary>Gets or sets the element offset.</summary>
-		public double Offset
-		{
-			get { return this.offset; }
-			set { this.offset = value; }
-		}
+		public double Offset { get; set; }
 
 		/// <summary>Gets or sets the element color.</summary>
 		/// <remarks>
@@ -97,7 +92,7 @@ namespace netDxf.Objects
 		/// </remarks>
 		public AciColor Color
 		{
-			get { return this.color; }
+			get => this.color;
 			set
 			{
 				this.color = value ?? throw new ArgumentNullException(nameof(value));
@@ -107,7 +102,7 @@ namespace netDxf.Objects
 		/// <summary>Gets or sets the element line type.</summary>
 		public Linetype Linetype
 		{
-			get { return this.linetype; }
+			get => this.linetype;
 			set
 			{
 				if (value == null)
@@ -136,24 +131,11 @@ namespace netDxf.Objects
 				throw new ArgumentNullException(nameof(other));
 			}
 
-			return -this.offset.CompareTo(other.offset);
+			return -this.Offset.CompareTo(other.Offset);
 		}
 
 		/// <inheritdoc/>
-		public override bool Equals(object other)
-		{
-			if (other == null)
-			{
-				return false;
-			}
-
-			if (this.GetType() != other.GetType())
-			{
-				return false;
-			}
-
-			return this.Equals((MLineStyleElement)other);
-		}
+		public override bool Equals(object obj) => obj is MLineStyleElement other && this.Equals(other);
 		/// <inheritdoc/>
 		public bool Equals(MLineStyleElement other)
 		{
@@ -162,14 +144,11 @@ namespace netDxf.Objects
 				return false;
 			}
 
-			return MathHelper.IsEqual(this.offset, other.offset);
+			return MathHelper.IsEqual(this.Offset, other.Offset);
 		}
 
 		/// <inheritdoc/>
-		public override int GetHashCode()
-		{
-			return this.Offset.GetHashCode();
-		}
+		public override int GetHashCode() => this.Offset.GetHashCode();
 
 		#endregion
 
@@ -177,13 +156,11 @@ namespace netDxf.Objects
 
 		/// <inheritdoc/>
 		public object Clone()
-		{
-			return new MLineStyleElement(this.offset)
+			=> new MLineStyleElement(this.Offset)
 			{
 				Color = (AciColor)this.Color.Clone(),
 				Linetype = (Linetype)this.linetype.Clone()
 			};
-		}
 
 		#endregion
 
@@ -191,9 +168,7 @@ namespace netDxf.Objects
 
 		/// <inheritdoc/>
 		public override string ToString()
-		{
-			return string.Format("{0}, color:{1}, line type:{2}", this.offset, this.color, this.linetype);
-		}
+			=> string.Format("{0}, color:{1}, line type:{2}", this.Offset, this.color, this.linetype);
 
 		#endregion
 	}

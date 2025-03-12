@@ -33,15 +33,6 @@ namespace netDxf.Entities
 	public class Angular3PointDimension :
 		Dimension
 	{
-		#region private fields
-
-		private double offset;
-		private Vector2 center;
-		private Vector2 start;
-		private Vector2 end;
-
-		#endregion
-
 		#region constructors
 
 		/// <summary>Initializes a new instance of the class.</summary>
@@ -71,10 +62,10 @@ namespace netDxf.Entities
 			}
 
 			Vector3 refPoint = MathHelper.Transform(arc.Center, arc.Normal, CoordinateSystem.World, CoordinateSystem.Object);
-			this.center = new Vector2(refPoint.X, refPoint.Y);
-			this.start = Vector2.Polar(this.center, arc.Radius, arc.StartAngle * MathHelper.DegToRad);
-			this.end = Vector2.Polar(this.center, arc.Radius, arc.EndAngle * MathHelper.DegToRad);
-			this.offset = offset;
+			this.CenterPoint = new Vector2(refPoint.X, refPoint.Y);
+			this.StartPoint = Vector2.Polar(this.CenterPoint, arc.Radius, arc.StartAngle * MathHelper.DegToRad);
+			this.EndPoint = Vector2.Polar(this.CenterPoint, arc.Radius, arc.EndAngle * MathHelper.DegToRad);
+			this.Offset = offset;
 			this.Style = style ?? throw new ArgumentNullException(nameof(style));
 			this.Normal = arc.Normal;
 			this.Elevation = refPoint.Z;
@@ -100,10 +91,10 @@ namespace netDxf.Entities
 		public Angular3PointDimension(Vector2 centerPoint, Vector2 startPoint, Vector2 endPoint, double offset, DimensionStyle style)
 			: base(DimensionType.Angular3Point)
 		{
-			this.center = centerPoint;
-			this.start = startPoint;
-			this.end = endPoint;
-			this.offset = offset;
+			this.CenterPoint = centerPoint;
+			this.StartPoint = startPoint;
+			this.EndPoint = endPoint;
+			this.Offset = offset;
 			this.Style = style ?? throw new ArgumentNullException(nameof(style));
 			this.Update();
 		}
@@ -113,50 +104,31 @@ namespace netDxf.Entities
 		#region public properties
 
 		/// <summary>Gets or sets the center <see cref="Vector2">point</see> of the arc in <b>OCS</b> (object coordinate system).</summary>
-		public Vector2 CenterPoint
-		{
-			get { return this.center; }
-			set { this.center = value; }
-		}
+		public Vector2 CenterPoint { get; set; }
 
 		/// <summary>Gets or sets the angle start <see cref="Vector2">point</see> of the dimension in <b>OCS</b> (object coordinate system).</summary>
-		public Vector2 StartPoint
-		{
-			get { return this.start; }
-			set { this.start = value; }
-		}
+		public Vector2 StartPoint { get; set; }
 
 		/// <summary>Gets or sets the angle end <see cref="Vector2">point</see> of the dimension in <b>OCS</b> (object coordinate system).</summary>
-		public Vector2 EndPoint
-		{
-			get { return this.end; }
-			set { this.end = value; }
-		}
+		public Vector2 EndPoint { get; set; }
 
 		/// <summary>Gets the location of the dimension line arc.</summary>
-		public Vector2 ArcDefinitionPoint
-		{
-			get { return this.defPoint; }
-		}
+		public Vector2 ArcDefinitionPoint => this.DefinitionPoint;
 
 		/// <summary>Gets or sets the distance between the center point and the dimension line.</summary>
 		/// <remarks>
 		/// Positive values will measure the angle between the start point and the end point while negative values will measure the opposite arc angle.
 		/// Even thought, zero values are allowed, they are not recommended.
 		/// </remarks>
-		public double Offset
-		{
-			get { return this.offset; }
-			set { this.offset = value; }
-		}
+		public double Offset { get; set; }
 
 		/// <inheritdoc/>
 		public override double Measurement
 		{
 			get
 			{
-				Vector2 dirRef1 = this.start - this.center;
-				Vector2 dirRef2 = this.end - this.center;
+				Vector2 dirRef1 = this.StartPoint - this.CenterPoint;
+				Vector2 dirRef2 = this.EndPoint - this.CenterPoint;
 				if (Vector2.Equals(dirRef1, dirRef2))
 				{
 					return 0.0;
@@ -169,7 +141,7 @@ namespace netDxf.Entities
 
 				double angle = Vector2.AngleBetween(dirRef1, dirRef2) * MathHelper.RadToDeg;
 
-				if (this.offset < 0)
+				if (this.Offset < 0)
 				{
 					return 360 - angle;
 				}
@@ -185,22 +157,22 @@ namespace netDxf.Entities
 		/// <param name="point">Point along the dimension line.</param>
 		public void SetDimensionLinePosition(Vector2 point)
 		{
-			double newOffset = Vector2.Distance(this.center, point);
+			double newOffset = Vector2.Distance(this.CenterPoint, point);
 
-			this.offset = newOffset;
-			Vector2 dirPoint = point - this.center;
-			double cross1 = Vector2.CrossProduct(this.start - this.center, dirPoint);
-			double cross2 = Vector2.CrossProduct(this.end - this.center, dirPoint);
+			this.Offset = newOffset;
+			Vector2 dirPoint = point - this.CenterPoint;
+			double cross1 = Vector2.CrossProduct(this.StartPoint - this.CenterPoint, dirPoint);
+			double cross2 = Vector2.CrossProduct(this.EndPoint - this.CenterPoint, dirPoint);
 
 			if (!(cross1 >= 0) || !(cross2 < 0))
 			{
-				this.offset *= -1;
+				this.Offset *= -1;
 			}
 
-			double startAngle = this.offset >= 0 ? Vector2.Angle(this.center, this.start) : Vector2.Angle(this.center, this.end);
+			double startAngle = this.Offset >= 0 ? Vector2.Angle(this.CenterPoint, this.StartPoint) : Vector2.Angle(this.CenterPoint, this.EndPoint);
 			double midRot = startAngle + 0.5 * this.Measurement * MathHelper.DegToRad;
-			Vector2 midDim = Vector2.Polar(this.center, Math.Abs(this.offset), midRot);
-			this.defPoint = midDim;
+			Vector2 midDim = Vector2.Polar(this.CenterPoint, Math.Abs(this.Offset), midRot);
+			this.DefinitionPoint = midDim;
 
 			if (!this.TextPositionManuallySet)
 			{
@@ -217,7 +189,7 @@ namespace netDxf.Entities
 				}
 
 				double gap = textGap * scale;
-				this.textRefPoint = midDim + gap * Vector2.Normalize(midDim - this.center);
+				this.textRefPoint = midDim + gap * Vector2.Normalize(midDim - this.CenterPoint);
 			}
 		}
 
@@ -261,10 +233,10 @@ namespace netDxf.Entities
 				this.textRefPoint = new Vector2(v.X, v.Y);
 			}
 
-			v = transOW * new Vector3(this.defPoint.X, this.defPoint.Y, this.Elevation);
+			v = transOW * new Vector3(this.DefinitionPoint.X, this.DefinitionPoint.Y, this.Elevation);
 			v = transformation * v + translation;
 			v = transWO * v;
-			this.defPoint = new Vector2(v.X, v.Y);
+			this.DefinitionPoint = new Vector2(v.X, v.Y);
 
 			this.StartPoint = newStart;
 			this.EndPoint = newEnd;
@@ -272,18 +244,18 @@ namespace netDxf.Entities
 			this.Elevation = newElevation;
 			this.Normal = newNormal;
 
-			this.SetDimensionLinePosition(this.defPoint);
+			this.SetDimensionLinePosition(this.DefinitionPoint);
 		}
 
 		/// <inheritdoc/>
 		protected override void CalculateReferencePoints()
 		{
 			DimensionStyleOverride styleOverride;
-			double startAngle = this.offset >= 0 ? Vector2.Angle(this.center, this.start) : Vector2.Angle(this.center, this.end);
+			double startAngle = this.Offset >= 0 ? Vector2.Angle(this.CenterPoint, this.StartPoint) : Vector2.Angle(this.CenterPoint, this.EndPoint);
 			double midRot = startAngle + 0.5 * this.Measurement * MathHelper.DegToRad;
-			Vector2 midDim = Vector2.Polar(this.center, Math.Abs(this.offset), midRot);
+			Vector2 midDim = Vector2.Polar(this.CenterPoint, Math.Abs(this.Offset), midRot);
 
-			this.defPoint = midDim;
+			this.DefinitionPoint = midDim;
 
 			if (this.TextPositionManuallySet)
 			{
@@ -312,15 +284,12 @@ namespace netDxf.Entities
 				}
 
 				double gap = textGap * scale;
-				this.textRefPoint = midDim + gap * Vector2.Normalize(midDim - this.center);
+				this.textRefPoint = midDim + gap * Vector2.Normalize(midDim - this.CenterPoint);
 			}
 		}
 
 		/// <inheritdoc/>
-		protected override Block BuildBlock(string name)
-		{
-			return DimensionBlock.Build(this, name);
-		}
+		protected override Block BuildBlock(string name) => DimensionBlock.Build(this, name);
 
 		/// <inheritdoc/>
 		public override object Clone()
@@ -348,10 +317,10 @@ namespace netDxf.Entities
 				UserText = this.UserText,
 				Elevation = this.Elevation,
 				//Angular3PointDimension properties
-				CenterPoint = this.center,
-				StartPoint = this.start,
-				EndPoint = this.end,
-				Offset = this.offset
+				CenterPoint = this.CenterPoint,
+				StartPoint = this.StartPoint,
+				EndPoint = this.EndPoint,
+				Offset = this.Offset
 			};
 
 			foreach (DimensionStyleOverride styleOverride in this.StyleOverrides.Values)

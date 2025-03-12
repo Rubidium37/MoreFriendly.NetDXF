@@ -90,34 +90,19 @@ namespace netDxf
 		#region constants
 
 		/// <summary>Zero vector.</summary>
-		public static Vector3 Zero
-		{
-			get { return new Vector3(0.0, 0.0, 0.0); }
-		}
+		public static Vector3 Zero => new Vector3(0.0, 0.0, 0.0);
 
 		/// <summary>Unit X vector.</summary>
-		public static Vector3 UnitX
-		{
-			get { return new Vector3(1.0, 0.0, 0.0) { isNormalized = true }; }
-		}
+		public static Vector3 UnitX => new Vector3(1.0, 0.0, 0.0) { isNormalized = true };
 
 		/// <summary>Unit Y vector.</summary>
-		public static Vector3 UnitY
-		{
-			get { return new Vector3(0.0, 1.0, 0.0) { isNormalized = true }; }
-		}
+		public static Vector3 UnitY => new Vector3(0.0, 1.0, 0.0) { isNormalized = true };
 
 		/// <summary>Unit Z vector.</summary>
-		public static Vector3 UnitZ
-		{
-			get { return new Vector3(0.0, 0.0, 1.0) { isNormalized = true }; }
-		}
+		public static Vector3 UnitZ => new Vector3(0.0, 0.0, 1.0) { isNormalized = true };
 
 		/// <summary>Represents a vector with not a number components.</summary>
-		public static Vector3 NaN
-		{
-			get { return new Vector3(double.NaN, double.NaN, double.NaN); }
-		}
+		public static Vector3 NaN => new Vector3(double.NaN, double.NaN, double.NaN);
 
 		#endregion
 
@@ -126,7 +111,7 @@ namespace netDxf
 		/// <summary>Gets or sets the X component.</summary>
 		public double X
 		{
-			get { return this.x; }
+			get => this.x;
 			set
 			{
 				this.x = value;
@@ -137,7 +122,7 @@ namespace netDxf
 		/// <summary>Gets or sets the Y component.</summary>
 		public double Y
 		{
-			get { return this.y; }
+			get => this.y;
 			set
 			{
 				this.y = value;
@@ -148,7 +133,7 @@ namespace netDxf
 		/// <summary>Gets or sets the Z component.</summary>
 		public double Z
 		{
-			get { return this.z; }
+			get => this.z;
 			set
 			{
 				this.z = value;
@@ -196,10 +181,7 @@ namespace netDxf
 		}
 
 		/// <summary>Gets if the vector has been normalized.</summary>
-		public bool IsNormalized
-		{
-			get { return this.isNormalized; }
-		}
+		public bool IsNormalized => this.isNormalized;
 
 		#endregion
 
@@ -208,27 +190,18 @@ namespace netDxf
 		/// <summary>Returns a value indicating if any component of the specified vector evaluates to a value that is not a number <see cref="System.Double.NaN"/>.</summary>
 		/// <param name="u">Vector3.</param>
 		/// <returns>Returns <see langword="true"/> if any component of the specified vector evaluates to <see cref="System.Double.NaN"/>; otherwise, <see langword="false"/>.</returns>
-		public static bool IsNaN(Vector3 u)
-		{
-			return double.IsNaN(u.X) || double.IsNaN(u.Y) || double.IsNaN(u.Z);
-		}
+		public static bool IsNaN(Vector3 u) => double.IsNaN(u.X) || double.IsNaN(u.Y) || double.IsNaN(u.Z);
 
 		/// <summary>Returns a value indicating if all components of the specified vector evaluates to zero.</summary>
 		/// <param name="u">Vector3.</param>
 		/// <returns>Returns <see langword="true"/> if all components of the specified vector evaluates to zero; otherwise, <see langword="false"/>.</returns>
-		public static bool IsZero(Vector3 u)
-		{
-			return MathHelper.IsZero(u.X) && MathHelper.IsZero(u.Y) && MathHelper.IsZero(u.Z);
-		}
+		public static bool IsZero(Vector3 u) => MathHelper.IsZero(u.X) && MathHelper.IsZero(u.Y) && MathHelper.IsZero(u.Z);
 
 		/// <summary>Obtains the dot product of two vectors.</summary>
 		/// <param name="u">Vector3.</param>
 		/// <param name="v">Vector3.</param>
 		/// <returns>The dot product.</returns>
-		public static double DotProduct(Vector3 u, Vector3 v)
-		{
-			return u.X * v.X + u.Y * v.Y + u.Z * v.Z;
-		}
+		public static double DotProduct(Vector3 u, Vector3 v) => u.X * v.X + u.Y * v.Y + u.Z * v.Z;
 
 		/// <summary>Obtains the cross product of two vectors.</summary>
 		/// <param name="u">Vector3.</param>
@@ -246,19 +219,14 @@ namespace netDxf
 		/// <param name="u">Vector3.</param>
 		/// <param name="v">Vector3.</param>
 		/// <returns>Distance.</returns>
-		public static double Distance(Vector3 u, Vector3 v)
-		{
-			return Math.Sqrt(SquareDistance(u, v));
-		}
+		public static double Distance(Vector3 u, Vector3 v) => Math.Sqrt(SquareDistance(u, v));
 
 		/// <summary>Obtains the square distance between two points.</summary>
 		/// <param name="u">Vector3.</param>
 		/// <param name="v">Vector3.</param>
 		/// <returns>Square distance.</returns>
 		public static double SquareDistance(Vector3 u, Vector3 v)
-		{
-			return (u.X - v.X) * (u.X - v.X) + (u.Y - v.Y) * (u.Y - v.Y) + (u.Z - v.Z) * (u.Z - v.Z);
-		}
+			=> (u.X - v.X) * (u.X - v.X) + (u.Y - v.Y) * (u.Y - v.Y) + (u.Z - v.Z) * (u.Z - v.Z);
 
 		/// <summary>Obtains the angle between two vectors.</summary>
 		/// <param name="u">Vector3.</param>
@@ -313,38 +281,26 @@ namespace netDxf
 		/// <param name="v">Vector3.</param>
 		/// <returns>Vector3.</returns>
 		public static Vector3 MidPoint(Vector3 u, Vector3 v)
-		{
-			return new Vector3((v.X + u.X) * 0.5, (v.Y + u.Y) * 0.5, (v.Z + u.Z) * 0.5);
-		}
+			=> new Vector3((v.X + u.X) * 0.5, (v.Y + u.Y) * 0.5, (v.Z + u.Z) * 0.5);
 
 		/// <summary>Checks if two vectors are perpendicular.</summary>
 		/// <param name="u">Vector3.</param>
 		/// <param name="v">Vector3.</param>
 		/// <returns><see langword="true"/> if are perpendicular or <see langword="false"/> in any other case.</returns>
-		public static bool ArePerpendicular(Vector3 u, Vector3 v)
-		{
-			return ArePerpendicular(u, v, MathHelper.Epsilon);
-		}
-
+		public static bool ArePerpendicular(Vector3 u, Vector3 v) => ArePerpendicular(u, v, MathHelper.Epsilon);
 		/// <summary>Checks if two vectors are perpendicular.</summary>
 		/// <param name="u">Vector3.</param>
 		/// <param name="v">Vector3.</param>
 		/// <param name="threshold">Tolerance used.</param>
 		/// <returns><see langword="true"/> if are perpendicular or <see langword="false"/> in any other case.</returns>
 		public static bool ArePerpendicular(Vector3 u, Vector3 v, double threshold)
-		{
-			return MathHelper.IsZero(DotProduct(u, v), threshold);
-		}
+			=> MathHelper.IsZero(DotProduct(u, v), threshold);
 
 		/// <summary>Checks if two vectors are parallel.</summary>
 		/// <param name="u">Vector3.</param>
 		/// <param name="v">Vector3.</param>
 		/// <returns><see langword="true"/> if are parallel or <see langword="false"/> in any other case.</returns>
-		public static bool AreParallel(Vector3 u, Vector3 v)
-		{
-			return AreParallel(u, v, MathHelper.Epsilon);
-		}
-
+		public static bool AreParallel(Vector3 u, Vector3 v) => AreParallel(u, v, MathHelper.Epsilon);
 		/// <summary>Checks if two vectors are parallel.</summary>
 		/// <param name="u">Vector3.</param>
 		/// <param name="v">Vector3.</param>
@@ -377,9 +333,7 @@ namespace netDxf
 		/// <param name="numDigits">Number of decimal places in the return value.</param>
 		/// <returns>The rounded vector.</returns>
 		public static Vector3 Round(Vector3 u, int numDigits)
-		{
-			return new Vector3(Math.Round(u.X, numDigits), Math.Round(u.Y, numDigits), Math.Round(u.Z, numDigits));
-		}
+			=> new Vector3(Math.Round(u.X, numDigits), Math.Round(u.Y, numDigits), Math.Round(u.Z, numDigits));
 
 		/// <summary>Normalizes the vector.</summary>
 		/// <param name="u">Vector to normalize</param>
@@ -409,125 +363,82 @@ namespace netDxf
 		/// <param name="u">Vector3.</param>
 		/// <param name="v">Vector3.</param>
 		/// <returns><see langword="true"/> if the three components are equal or <see langword="false"/> in any other case.</returns>
-		public static bool operator ==(Vector3 u, Vector3 v)
-		{
-			return Equals(u, v);
-		}
-
+		public static bool operator ==(Vector3 u, Vector3 v) => Equals(u, v);
 		/// <summary>Check if the components of two vectors are different.</summary>
 		/// <param name="u">Vector3.</param>
 		/// <param name="v">Vector3.</param>
 		/// <returns><see langword="true"/> if the three components are different or <see langword="false"/> in any other case.</returns>
-		public static bool operator !=(Vector3 u, Vector3 v)
-		{
-			return !Equals(u, v);
-		}
+		public static bool operator !=(Vector3 u, Vector3 v) => !Equals(u, v);
 
 		/// <summary>Adds two vectors.</summary>
 		/// <param name="u">Vector3.</param>
 		/// <param name="v">Vector3.</param>
 		/// <returns>The addition of u plus v.</returns>
-		public static Vector3 operator +(Vector3 u, Vector3 v)
-		{
-			return new Vector3(u.X + v.X, u.Y + v.Y, u.Z + v.Z);
-		}
+		public static Vector3 operator +(Vector3 u, Vector3 v) => new Vector3(u.X + v.X, u.Y + v.Y, u.Z + v.Z);
 
 		/// <summary>Adds two vectors.</summary>
 		/// <param name="u">Vector3.</param>
 		/// <param name="v">Vector3.</param>
 		/// <returns>The addition of u plus v.</returns>
-		public static Vector3 Add(Vector3 u, Vector3 v)
-		{
-			return new Vector3(u.X + v.X, u.Y + v.Y, u.Z + v.Z);
-		}
+		public static Vector3 Add(Vector3 u, Vector3 v) => new Vector3(u.X + v.X, u.Y + v.Y, u.Z + v.Z);
 
 		/// <summary>Subtracts two vectors.</summary>
 		/// <param name="u">Vector3.</param>
 		/// <param name="v">Vector3.</param>
 		/// <returns>The subtraction of u minus v.</returns>
-		public static Vector3 operator -(Vector3 u, Vector3 v)
-		{
-			return new Vector3(u.X - v.X, u.Y - v.Y, u.Z - v.Z);
-		}
+		public static Vector3 operator -(Vector3 u, Vector3 v) => new Vector3(u.X - v.X, u.Y - v.Y, u.Z - v.Z);
 
 		/// <summary>Subtracts two vectors.</summary>
 		/// <param name="u">Vector3.</param>
 		/// <param name="v">Vector3.</param>
 		/// <returns>The subtraction of u minus v.</returns>
-		public static Vector3 Subtract(Vector3 u, Vector3 v)
-		{
-			return new Vector3(u.X - v.X, u.Y - v.Y, u.Z - v.Z);
-		}
+		public static Vector3 Subtract(Vector3 u, Vector3 v) => new Vector3(u.X - v.X, u.Y - v.Y, u.Z - v.Z);
 
 		/// <summary>Negates a vector.</summary>
 		/// <param name="u">Vector3.</param>
 		/// <returns>The negative vector of u.</returns>
-		public static Vector3 operator -(Vector3 u)
-		{
-			return new Vector3(-u.X, -u.Y, -u.Z) { isNormalized = u.IsNormalized };
-		}
+		public static Vector3 operator -(Vector3 u) => new Vector3(-u.X, -u.Y, -u.Z) { isNormalized = u.IsNormalized };
 
 		/// <summary>Negates a vector.</summary>
 		/// <param name="u">Vector3.</param>
 		/// <returns>The negative vector of u.</returns>
-		public static Vector3 Negate(Vector3 u)
-		{
-			return new Vector3(-u.X, -u.Y, -u.Z) { isNormalized = u.IsNormalized };
-		}
+		public static Vector3 Negate(Vector3 u) => new Vector3(-u.X, -u.Y, -u.Z) { isNormalized = u.IsNormalized };
 
 		/// <summary>Multiplies a vector with an scalar (same as a*u, commutative property).</summary>
 		/// <param name="u">Vector3.</param>
 		/// <param name="a">Scalar.</param>
 		/// <returns>The multiplication of u times a.</returns>
-		public static Vector3 operator *(Vector3 u, double a)
-		{
-			return new Vector3(u.X * a, u.Y * a, u.Z * a);
-		}
+		public static Vector3 operator *(Vector3 u, double a) => new Vector3(u.X * a, u.Y * a, u.Z * a);
 
 		/// <summary>Multiplies a vector with an scalar (same as a*u, commutative property).</summary>
 		/// <param name="u">Vector3.</param>
 		/// <param name="a">Scalar.</param>
 		/// <returns>The multiplication of u times a.</returns>
-		public static Vector3 Multiply(Vector3 u, double a)
-		{
-			return new Vector3(u.X * a, u.Y * a, u.Z * a);
-		}
+		public static Vector3 Multiply(Vector3 u, double a) => new Vector3(u.X * a, u.Y * a, u.Z * a);
 
 		/// <summary>Multiplies a scalar with a vector (same as u*a, commutative property).</summary>
 		/// <param name="a">Scalar.</param>
 		/// <param name="u">Vector3.</param>
 		/// <returns>The multiplication of u times a.</returns>
-		public static Vector3 operator *(double a, Vector3 u)
-		{
-			return new Vector3(u.X * a, u.Y * a, u.Z * a);
-		}
+		public static Vector3 operator *(double a, Vector3 u) => new Vector3(u.X * a, u.Y * a, u.Z * a);
 
 		/// <summary>Multiplies a scalar with a vector (same as u*a, commutative property).</summary>
 		/// <param name="a">Scalar.</param>
 		/// <param name="u">Vector3.</param>
 		/// <returns>The multiplication of u times a.</returns>
-		public static Vector3 Multiply(double a, Vector3 u)
-		{
-			return new Vector3(u.X * a, u.Y * a, u.Z * a);
-		}
+		public static Vector3 Multiply(double a, Vector3 u) => new Vector3(u.X * a, u.Y * a, u.Z * a);
 
 		/// <summary>Multiplies two vectors component by component.</summary>
 		/// <param name="u">Vector3.</param>
 		/// <param name="v">Vector3.</param>
 		/// <returns>The multiplication of u times v.</returns>
-		public static Vector3 operator *(Vector3 u, Vector3 v)
-		{
-			return new Vector3(u.X * v.X, u.Y * v.Y, u.Z * v.Z);
-		}
+		public static Vector3 operator *(Vector3 u, Vector3 v) => new Vector3(u.X * v.X, u.Y * v.Y, u.Z * v.Z);
 
 		/// <summary>Multiplies two vectors component by component.</summary>
 		/// <param name="u">Vector3.</param>
 		/// <param name="v">Vector3.</param>
 		/// <returns>The multiplication of u times v.</returns>
-		public static Vector3 Multiply(Vector3 u, Vector3 v)
-		{
-			return new Vector3(u.X * v.X, u.Y * v.Y, u.Z * v.Z);
-		}
+		public static Vector3 Multiply(Vector3 u, Vector3 v) => new Vector3(u.X * v.X, u.Y * v.Y, u.Z * v.Z);
 
 		/// <summary>Divides an scalar with a vector.</summary>
 		/// <param name="a">Scalar.</param>
@@ -553,19 +464,13 @@ namespace netDxf
 		/// <param name="u">Vector3.</param>
 		/// <param name="v">Vector3.</param>
 		/// <returns>The multiplication of u times v.</returns>
-		public static Vector3 operator /(Vector3 u, Vector3 v)
-		{
-			return new Vector3(u.X / v.X, u.Y / v.Y, u.Z / v.Z);
-		}
+		public static Vector3 operator /(Vector3 u, Vector3 v) => new Vector3(u.X / v.X, u.Y / v.Y, u.Z / v.Z);
 
 		/// <summary>Divides two vectors component by component.</summary>
 		/// <param name="u">Vector3.</param>
 		/// <param name="v">Vector3.</param>
 		/// <returns>The multiplication of u times v.</returns>
-		public static Vector3 Divide(Vector3 u, Vector3 v)
-		{
-			return new Vector3(u.X / v.X, u.Y / v.Y, u.Z / v.Z);
-		}
+		public static Vector3 Divide(Vector3 u, Vector3 v) => new Vector3(u.X / v.X, u.Y / v.Y, u.Z / v.Z);
 
 		#endregion
 
@@ -596,68 +501,40 @@ namespace netDxf
 
 		/// <summary>Obtains the modulus of the vector.</summary>
 		/// <returns>Vector modulus.</returns>
-		public double Modulus()
-		{
-			return this.isNormalized ? 1.0 : Math.Sqrt(DotProduct(this, this));
-		}
+		public double Modulus() => this.isNormalized ? 1.0 : Math.Sqrt(DotProduct(this, this));
 
 		/// <summary>Returns an array that represents the vector.</summary>
 		/// <returns>Array.</returns>
-		public double[] ToArray()
-		{
-			return new[] { this.x, this.y, this.z };
-		}
+		public double[] ToArray() => new[] { this.x, this.y, this.z };
 
 		#endregion
 
 		#region comparison methods
 
 		/// <inheritdoc/>
-		public override bool Equals(object other)
-		{
-			if (other is Vector3 vector)
-			{
-				return this.Equals(vector);
-			}
-
-			return false;
-		}
+		public override bool Equals(object obj) => obj is Vector3 other && this.Equals(other);
 		/// <inheritdoc/>
-		public bool Equals(Vector3 other)
-		{
-			return this.Equals(other, MathHelper.Epsilon);
-		}
+		public bool Equals(Vector3 other) => this.Equals(other, MathHelper.Epsilon);
 		/// <summary>Check if the components of two vectors are approximate equal.</summary>
 		/// <param name="other">Vector3.</param>
 		/// <param name="threshold">Maximum tolerance.</param>
 		/// <returns><see langword="true"/> if the three components are almost equal or <see langword="false"/> in any other case.</returns>
 		public bool Equals(Vector3 other, double threshold)
-		{
-			return MathHelper.IsEqual(other.X, this.x, threshold) && MathHelper.IsEqual(other.Y, this.y, threshold) && MathHelper.IsEqual(other.Z, this.z, threshold);
-		}
+			=> MathHelper.IsEqual(other.X, this.x, threshold) && MathHelper.IsEqual(other.Y, this.y, threshold) && MathHelper.IsEqual(other.Z, this.z, threshold);
 		/// <summary>Check if the components of two vectors are approximate equal.</summary>
 		/// <param name="a">Vector3.</param>
 		/// <param name="b">Vector3.</param>
 		/// <returns><see langword="true"/> if the three components are almost equal or <see langword="false"/> in any other case.</returns>
-		public static bool Equals(Vector3 a, Vector3 b)
-		{
-			return a.Equals(b, MathHelper.Epsilon);
-		}
+		public static bool Equals(Vector3 a, Vector3 b) => a.Equals(b, MathHelper.Epsilon);
 		/// <summary>Check if the components of two vectors are approximate equal.</summary>
 		/// <param name="a">Vector3.</param>
 		/// <param name="b">Vector3.</param>
 		/// <param name="threshold">Maximum tolerance.</param>
 		/// <returns><see langword="true"/> if the three components are almost equal or <see langword="false"/> in any other case.</returns>
-		public static bool Equals(Vector3 a, Vector3 b, double threshold)
-		{
-			return a.Equals(b, threshold);
-		}
+		public static bool Equals(Vector3 a, Vector3 b, double threshold) => a.Equals(b, threshold);
 
 		/// <inheritdoc/>
-		public override int GetHashCode()
-		{
-			return this.X.GetHashCode() ^ this.Y.GetHashCode() ^ this.Z.GetHashCode();
-		}
+		public override int GetHashCode() => this.X.GetHashCode() ^ this.Y.GetHashCode() ^ this.Z.GetHashCode();
 
 		#endregion
 
@@ -665,17 +542,13 @@ namespace netDxf
 
 		/// <inheritdoc/>
 		public override string ToString()
-		{
-			return string.Format("{0}{3} {1}{3} {2}", this.x, this.y, this.z, Thread.CurrentThread.CurrentCulture.TextInfo.ListSeparator);
-		}
+			=> string.Format("{0}{3} {1}{3} {2}", this.x, this.y, this.z, Thread.CurrentThread.CurrentCulture.TextInfo.ListSeparator);
 
 		/// <summary>Obtains a string that represents the vector.</summary>
 		/// <param name="provider">An <see cref="IFormatProvider"/> object implementation that supplies culture-specific formatting information. </param>
 		/// <returns>A string text.</returns>
 		public string ToString(IFormatProvider provider)
-		{
-			return string.Format("{0}{3} {1}{3} {2}", this.x.ToString(provider), this.y.ToString(provider), this.z.ToString(provider), Thread.CurrentThread.CurrentCulture.TextInfo.ListSeparator);
-		}
+			=> string.Format("{0}{3} {1}{3} {2}", this.x.ToString(provider), this.y.ToString(provider), this.z.ToString(provider), Thread.CurrentThread.CurrentCulture.TextInfo.ListSeparator);
 
 		#endregion
 	}

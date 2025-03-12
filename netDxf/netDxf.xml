@@ -3950,7 +3950,7 @@
         <member name="T:netDxf.Entities.HatchBoundaryPath.Edge">
             <summary>Base class for all types of <see cref="T:netDxf.Entities.HatchBoundaryPath"/> edges.</summary>
         </member>
-        <member name="F:netDxf.Entities.HatchBoundaryPath.Edge.Type">
+        <member name="P:netDxf.Entities.HatchBoundaryPath.Edge.Type">
             <summary>Gets the <see cref="T:netDxf.Entities.HatchBoundaryPath"/> edge type</summary>
         </member>
         <member name="M:netDxf.Entities.HatchBoundaryPath.Edge.ConvertTo">

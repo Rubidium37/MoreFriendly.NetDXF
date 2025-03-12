@@ -39,9 +39,6 @@ namespace netDxf.Tables
 		private string file;
 		private string bigFont;
 		private double height;
-		private bool isBackward;
-		private bool isUpsideDown;
-		private bool isVertical;
 		private double obliqueAngle;
 		private double widthFactor;
 		private FontStyle fontStyle;
@@ -58,10 +55,7 @@ namespace netDxf.Tables
 		public const string DefaultFont = "simplex.shx";
 
 		/// <summary>Gets the default text style.</summary>
-		public static TextStyle Default
-		{
-			get { return new TextStyle(DefaultName, DefaultFont); }
-		}
+		public static TextStyle Default => new TextStyle(DefaultName, DefaultFont);
 
 		#endregion
 
@@ -104,9 +98,9 @@ namespace netDxf.Tables
 			this.widthFactor = 1.0;
 			this.obliqueAngle = 0.0;
 			this.height = 0.0;
-			this.isVertical = false;
-			this.isBackward = false;
-			this.isUpsideDown = false;
+			this.IsVertical = false;
+			this.IsBackward = false;
+			this.IsUpsideDown = false;
 			this.fontFamilyName = string.Empty;
 			this.fontStyle = FontStyle.Regular;
 		}
@@ -135,9 +129,9 @@ namespace netDxf.Tables
 			this.widthFactor = 1.0;
 			this.obliqueAngle = 0.0;
 			this.height = 0.0;
-			this.isVertical = false;
-			this.isBackward = false;
-			this.isUpsideDown = false;
+			this.IsVertical = false;
+			this.IsBackward = false;
+			this.IsUpsideDown = false;
 			if (string.IsNullOrEmpty(fontFamily))
 			{
 				throw new ArgumentNullException(nameof(fontFamily));
@@ -158,7 +152,7 @@ namespace netDxf.Tables
 		/// </remarks>
 		public string FontFile
 		{
-			get { return this.file; }
+			get => this.file;
 			set
 			{
 				if (string.IsNullOrEmpty(value))
@@ -183,7 +177,7 @@ namespace netDxf.Tables
 		/// <remarks>Only <b>AutoCAD</b> compiled shape <b>SHX</b> fonts are valid for creating Big Fonts.</remarks>
 		public string BigFont
 		{
-			get { return this.bigFont; }
+			get => this.bigFont;
 			set
 			{
 				if (string.IsNullOrEmpty(value))
@@ -221,7 +215,7 @@ namespace netDxf.Tables
 		/// </remarks>
 		public string FontFamilyName
 		{
-			get { return this.fontFamilyName; }
+			get => this.fontFamilyName;
 			set
 			{
 				if (string.IsNullOrEmpty(value))
@@ -242,7 +236,7 @@ namespace netDxf.Tables
 		/// </remarks>
 		public FontStyle FontStyle
 		{
-			get { return this.fontStyle; }
+			get => this.fontStyle;
 			set
 			{
 				if (string.IsNullOrEmpty(this.file))
@@ -256,7 +250,7 @@ namespace netDxf.Tables
 		/// <remarks>Fixed text height; 0 if not fixed.</remarks>
 		public double Height
 		{
-			get { return this.height; }
+			get => this.height;
 			set
 			{
 				if (value < 0)
@@ -271,7 +265,7 @@ namespace netDxf.Tables
 		/// <remarks>Valid values range from 0.01 to 100. Default: 1.0.</remarks>
 		public double WidthFactor
 		{
-			get { return this.widthFactor; }
+			get => this.widthFactor;
 			set
 			{
 				if (value < 0.01 || value > 100.0)
@@ -286,7 +280,7 @@ namespace netDxf.Tables
 		/// <remarks>Valid values range from -85 to 85. Default: 0.0.</remarks>
 		public double ObliqueAngle
 		{
-			get { return this.obliqueAngle; }
+			get => this.obliqueAngle;
 			set
 			{
 				if (value < -85.0 || value > 85.0)
@@ -298,31 +292,19 @@ namespace netDxf.Tables
 		}
 
 		/// <summary>Gets or sets the text is vertical.</summary>
-		public bool IsVertical
-		{
-			get { return this.isVertical; }
-			set { this.isVertical = value; }
-		}
+		public bool IsVertical { get; set; }
 
 		/// <summary>Gets or sets if the text is backward (mirrored in X).</summary>
-		public bool IsBackward
-		{
-			get { return this.isBackward; }
-			set { this.isBackward = value; }
-		}
+		public bool IsBackward { get; set; }
 
 		/// <summary>Gets or sets if the text is upside down (mirrored in Y).</summary>
-		public bool IsUpsideDown
-		{
-			get { return this.isUpsideDown; }
-			set { this.isUpsideDown = value; }
-		}
+		public bool IsUpsideDown { get; set; }
 
 		/// <summary>Gets the owner of the actual text style.</summary>
 		public new TextStyles Owner
 		{
-			get { return (TextStyles)base.Owner; }
-			internal set { base.Owner = value; }
+			get => (TextStyles)base.Owner;
+			internal set => base.Owner = value;
 		}
 
 		#endregion
@@ -376,16 +358,10 @@ namespace netDxf.Tables
 		#region overrides
 
 		/// <inheritdoc/>
-		public override bool HasReferences()
-		{
-			return this.Owner != null && this.Owner.HasReferences(this.Name);
-		}
+		public override bool HasReferences() => this.Owner != null && this.Owner.HasReferences(this.Name);
 
 		/// <inheritdoc/>
-		public override List<DxfObjectReference> GetReferences()
-		{
-			return this.Owner?.GetReferences(this.Name);
-		}
+		public override List<DxfObjectReference> GetReferences() => this.Owner?.GetReferences(this.Name);
 
 		/// <inheritdoc/>
 		public override TableObject Clone(string newName)
@@ -397,9 +373,9 @@ namespace netDxf.Tables
 				copy = new TextStyle(newName, this.file)
 				{
 					Height = this.height,
-					IsBackward = this.isBackward,
-					IsUpsideDown = this.isUpsideDown,
-					IsVertical = this.isVertical,
+					IsBackward = this.IsBackward,
+					IsUpsideDown = this.IsUpsideDown,
+					IsVertical = this.IsVertical,
 					ObliqueAngle = this.obliqueAngle,
 					WidthFactor = this.widthFactor
 				};
@@ -409,9 +385,9 @@ namespace netDxf.Tables
 				copy = new TextStyle(newName, this.fontFamilyName, this.fontStyle)
 				{
 					Height = this.height,
-					IsBackward = this.isBackward,
-					IsUpsideDown = this.isUpsideDown,
-					IsVertical = this.isVertical,
+					IsBackward = this.IsBackward,
+					IsUpsideDown = this.IsUpsideDown,
+					IsVertical = this.IsVertical,
 					ObliqueAngle = this.obliqueAngle,
 					WidthFactor = this.widthFactor
 				};
@@ -424,12 +400,8 @@ namespace netDxf.Tables
 
 			return copy;
 		}
-
 		/// <inheritdoc/>
-		public override object Clone()
-		{
-			return this.Clone(this.Name);
-		}
+		public override object Clone() => this.Clone(this.Name);
 
 		#endregion
 	}

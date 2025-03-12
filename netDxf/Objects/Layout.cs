@@ -39,20 +39,7 @@ namespace netDxf.Objects
 	{
 		#region private fields
 
-		private PlotSettings plot;
-		private Vector2 minLimit;
-		private Vector2 maxLimit;
-		private Vector3 minExtents;
-		private Vector3 maxExtents;
-		private Vector3 basePoint;
-		private double elevation;
-		private Vector3 origin;
-		private Vector3 xAxis;
-		private Vector3 yAxis;
 		private short tabOrder;
-		private Viewport viewport;
-		private readonly bool isPaperSpace;
-		private Block associatedBlock;
 
 		#endregion
 
@@ -65,10 +52,7 @@ namespace netDxf.Objects
 		/// <remarks>
 		/// There can be only one model space layout and it is always called "Model".
 		/// </remarks>
-		public static Layout ModelSpace
-		{
-			get { return new Layout(ModelSpaceName, Block.ModelSpace, new PlotSettings()); }
-		}
+		public static Layout ModelSpace => new Layout(ModelSpaceName, Block.ModelSpace, new PlotSettings());
 
 		#endregion
 
@@ -92,15 +76,15 @@ namespace netDxf.Objects
 			if (name.Equals(ModelSpaceName, StringComparison.OrdinalIgnoreCase))
 			{
 				this.IsReserved = true;
-				this.isPaperSpace = false;
-				this.viewport = null;
+				this.IsPaperSpace = false;
+				this.Viewport = null;
 				plotSettings.Flags = PlotFlags.Initializing | PlotFlags.UpdatePaper | PlotFlags.ModelType | PlotFlags.DrawViewportsFirst | PlotFlags.PrintLineweights | PlotFlags.PlotPlotStyles | PlotFlags.UseStandardScale;
 			}
 			else
 			{
 				this.IsReserved = false;
-				this.isPaperSpace = true;
-				this.viewport = new Viewport(1)
+				this.IsPaperSpace = true;
+				this.Viewport = new Viewport(1)
 				{
 					ViewCenter = new Vector2(50.0, 100.0),
 					Status = ViewportStatusFlags.AdaptiveGridDisplay |
@@ -111,17 +95,17 @@ namespace netDxf.Objects
 			}
 
 			this.tabOrder = 0;
-			this.associatedBlock = associatedBlock;
-			this.plot = plotSettings;
-			this.minLimit = new Vector2(-20.0, -7.5);
-			this.maxLimit = new Vector2(277.0, 202.5);
-			this.basePoint = Vector3.Zero;
-			this.minExtents = new Vector3(25.7, 19.5, 0.0);
-			this.maxExtents = new Vector3(231.3, 175.5, 0.0);
-			this.elevation = 0;
-			this.origin = Vector3.Zero;
-			this.xAxis = Vector3.UnitX;
-			this.yAxis = Vector3.UnitY;
+			this.AssociatedBlock = associatedBlock;
+			this.PlotSettings = plotSettings;
+			this.MinLimit = new Vector2(-20.0, -7.5);
+			this.MaxLimit = new Vector2(277.0, 202.5);
+			this.BasePoint = Vector3.Zero;
+			this.MinExtents = new Vector3(25.7, 19.5, 0.0);
+			this.MaxExtents = new Vector3(231.3, 175.5, 0.0);
+			this.Elevation = 0;
+			this.UcsOrigin = Vector3.Zero;
+			this.UcsXAxis = Vector3.UnitX;
+			this.UcsYAxis = Vector3.UnitY;
 		}
 
 		#endregion
@@ -136,7 +120,7 @@ namespace netDxf.Objects
 		/// </remarks>
 		public short TabOrder
 		{
-			get { return this.tabOrder; }
+			get => this.tabOrder;
 			set
 			{
 				if (value <= 0)
@@ -148,122 +132,65 @@ namespace netDxf.Objects
 		}
 
 		/// <summary>Gets or sets the plot settings</summary>
-		public PlotSettings PlotSettings
-		{
-			get { return this.plot; }
-			set { this.plot = value; }
-		}
+		public PlotSettings PlotSettings { get; set; }
 
 		/// <summary>Gets or sets the minimum limits for this layout.</summary>
-		public Vector2 MinLimit
-		{
-			get { return this.minLimit; }
-			set { this.minLimit = value; }
-		}
+		public Vector2 MinLimit { get; set; }
 
 		/// <summary>Gets or sets the maximum limits for this layout.</summary>
-		public Vector2 MaxLimit
-		{
-			get { return this.maxLimit; }
-			set { this.maxLimit = value; }
-		}
+		public Vector2 MaxLimit { get; set; }
 
 		/// <summary>Gets or sets the maximum extents for this layout.</summary>
-		public Vector3 MinExtents
-		{
-			get { return this.minExtents; }
-			set { this.minExtents = value; }
-		}
+		public Vector3 MinExtents { get; set; }
 
 		/// <summary>Gets or sets the maximum extents for this layout.</summary>
-		public Vector3 MaxExtents
-		{
-			get { return this.maxExtents; }
-			set { this.maxExtents = value; }
-		}
+		public Vector3 MaxExtents { get; set; }
 
 		/// <summary>Gets or sets the insertion base point for this layout.</summary>
-		public Vector3 BasePoint
-		{
-			get { return this.basePoint; }
-			set { this.basePoint = value; }
-		}
+		public Vector3 BasePoint { get; set; }
 
 		/// <summary>Gets or sets the elevation.</summary>
-		public double Elevation
-		{
-			get { return this.elevation; }
-			set { this.elevation = value; }
-		}
+		public double Elevation { get; set; }
 
 		/// <summary>Gets or sets the <b>UCS</b> origin.</summary>
-		public Vector3 UcsOrigin
-		{
-			get { return this.origin; }
-			set { this.origin = value; }
-		}
+		public Vector3 UcsOrigin { get; set; }
 
 		/// <summary>Gets or sets the <b>UCS</b> X axis.</summary>
-		public Vector3 UcsXAxis
-		{
-			get { return this.xAxis; }
-			set { this.xAxis = value; }
-		}
+		public Vector3 UcsXAxis { get; set; }
 
 		/// <summary>Gets or sets the <b>UCS</b> Y axis.</summary>
-		public Vector3 UcsYAxis
-		{
-			get { return this.yAxis; }
-			set { this.yAxis = value; }
-		}
+		public Vector3 UcsYAxis { get; set; }
 
 		/// <summary>Defines if this layout is a paper space.</summary>
-		public bool IsPaperSpace
-		{
-			get { return this.isPaperSpace; }
-		}
+		public bool IsPaperSpace { get; }
 
 		/// <summary>
 		/// Gets the viewport associated with this layout. This is the viewport with Id 1 that represents the paper space itself,
 		/// it has no graphical representation, and does not show the model.
 		/// </summary>
 		/// <remarks>The <see cref="ModelSpace"/> layout does not require a viewport and it will always return <see langword="null"/>.</remarks>
-		public Viewport Viewport
-		{
-			get { return this.viewport; }
-			internal set { this.viewport = value; }
-		}
+		public Viewport Viewport { get; internal set; }
 
 		/// <summary>Gets the owner of the actual layout.</summary>
 		public new Layouts Owner
 		{
-			get { return (Layouts)base.Owner; }
-			internal set { base.Owner = value; }
+			get => (Layouts)base.Owner;
+			internal set => base.Owner = value;
 		}
 
 		/// <summary>Gets the associated <see cref="ModelSpace"/> or PaperSp
 		/// ace block.</summary>
-		public Block AssociatedBlock
-		{
-			get { return this.associatedBlock; }
-			internal set { this.associatedBlock = value; }
-		}
+		public Block AssociatedBlock { get; internal set; }
 
 		#endregion
 
 		#region overrides
 
 		/// <inheritdoc/>
-		public override bool HasReferences()
-		{
-			return this.Owner != null && this.Owner.HasReferences(this.Name);
-		}
+		public override bool HasReferences() => this.Owner != null && this.Owner.HasReferences(this.Name);
 
 		/// <inheritdoc/>
-		public override List<DxfObjectReference> GetReferences()
-		{
-			return this.Owner?.GetReferences(this.Name);
-		}
+		public override List<DxfObjectReference> GetReferences() => this.Owner?.GetReferences(this.Name);
 
 		/// <inheritdoc/>
 		public override TableObject Clone(string newName)
@@ -278,19 +205,19 @@ namespace netDxf.Objects
 				throw new ArgumentException("The layout name \"Model\" is reserved for the ModelSpace.");
 			}
 
-			Layout copy = new Layout(newName, null, (PlotSettings)this.plot.Clone())
+			Layout copy = new Layout(newName, null, (PlotSettings)this.PlotSettings.Clone())
 			{
 				TabOrder = this.tabOrder,
-				MinLimit = this.minLimit,
-				MaxLimit = this.maxLimit,
-				BasePoint = this.basePoint,
-				MinExtents = this.minExtents,
-				MaxExtents = this.maxExtents,
-				Elevation = this.elevation,
-				UcsOrigin = this.origin,
-				UcsXAxis = this.xAxis,
-				UcsYAxis = this.yAxis,
-				Viewport = (Viewport)this.viewport.Clone()
+				MinLimit = this.MinLimit,
+				MaxLimit = this.MaxLimit,
+				BasePoint = this.BasePoint,
+				MinExtents = this.MinExtents,
+				MaxExtents = this.MaxExtents,
+				Elevation = this.Elevation,
+				UcsOrigin = this.UcsOrigin,
+				UcsXAxis = this.UcsXAxis,
+				UcsYAxis = this.UcsYAxis,
+				Viewport = (Viewport)this.Viewport.Clone()
 			};
 
 			foreach (XData data in this.XData.Values)
@@ -300,20 +227,16 @@ namespace netDxf.Objects
 
 			return copy;
 		}
-
 		/// <inheritdoc/>
-		public override object Clone()
-		{
-			return this.Clone(this.Name);
-		}
+		public override object Clone() => this.Clone(this.Name);
 
 		/// <inheritdoc/>
 		internal override long AssignHandle(long entityNumber)
 		{
 			entityNumber = this.Owner.AssignHandle(entityNumber);
-			if (this.isPaperSpace)
+			if (this.IsPaperSpace)
 			{
-				entityNumber = this.viewport.AssignHandle(entityNumber);
+				entityNumber = this.Viewport.AssignHandle(entityNumber);
 			}
 			return base.AssignHandle(entityNumber);
 		}

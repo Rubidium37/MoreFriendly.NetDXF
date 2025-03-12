@@ -53,17 +53,12 @@ namespace netDxf.Entities
 
 		#region private fields
 
-		private TextAlignment alignment;
-		private Vector3 position;
 		private double obliqueAngle;
 		private TextStyle style;
-		private string text;
 		private double height;
 		private double widthFactor;
 		private double width;
 		private double rotation;
-		private bool isBackward;
-		private bool isUpsideDown;
 
 		#endregion
 
@@ -119,22 +114,22 @@ namespace netDxf.Entities
 		public Text(string text, Vector3 position, double height, TextStyle style)
 			: base(EntityType.Text, DxfObjectCode.Text)
 		{
-			this.text = text;
-			this.position = position;
-			this.alignment = TextAlignment.BaselineLeft;
+			this.Value = text;
+			this.Position = position;
+			this.Alignment = TextAlignment.BaselineLeft;
 			this.Normal = Vector3.UnitZ;
 			this.style = style ?? throw new ArgumentNullException(nameof(style));
 			if (height <= 0)
 			{
-				throw new ArgumentOutOfRangeException(nameof(height), this.text, "The Text height must be greater than zero.");
+				throw new ArgumentOutOfRangeException(nameof(height), this.Value, "The Text height must be greater than zero.");
 			}
 			this.height = height;
 			this.width = 1.0;
 			this.widthFactor = style.WidthFactor;
 			this.obliqueAngle = style.ObliqueAngle;
 			this.rotation = 0.0;
-			this.isBackward = false;
-			this.isUpsideDown = false;
+			this.IsBackward = false;
+			this.IsUpsideDown = false;
 		}
 
 		#endregion
@@ -142,24 +137,16 @@ namespace netDxf.Entities
 		#region public properties
 
 		/// <summary>Gets or sets if the text will be mirrored when a symmetry is performed, when the current Text entity does not belong to a <b>DXF</b> document.</summary>
-		public static bool DefaultMirrText
-		{
-			get;
-			set;
-		}
+		public static bool DefaultMirrText { get; set; }
 
 		/// <summary>Gets or sets Text <see cref="Vector3">position</see> in world coordinates.</summary>
-		public Vector3 Position
-		{
-			get { return this.position; }
-			set { this.position = value; }
-		}
+		public Vector3 Position { get; set; }
 
 		/// <summary>Gets or sets the text rotation in degrees.</summary>
 		public double Rotation
 		{
-			get { return this.rotation; }
-			set { this.rotation = MathHelper.NormalizeAngle(value); }
+			get => this.rotation;
+			set => this.rotation = MathHelper.NormalizeAngle(value);
 		}
 
 		/// <summary>Gets or sets the text height.</summary>
@@ -169,7 +156,7 @@ namespace netDxf.Entities
 		/// </remarks>
 		public double Height
 		{
-			get { return this.height; }
+			get => this.height;
 			set
 			{
 				if (value <= 0)
@@ -184,7 +171,7 @@ namespace netDxf.Entities
 		/// <remarks>Valid values must be greater than zero. Default: 1.0.</remarks>
 		public double Width
 		{
-			get { return this.width; }
+			get => this.width;
 			set
 			{
 				if (value <= 0)
@@ -202,7 +189,7 @@ namespace netDxf.Entities
 		/// </remarks>
 		public double WidthFactor
 		{
-			get { return this.widthFactor; }
+			get => this.widthFactor;
 			set
 			{
 				if (value < 0.01 || value > 100.0)
@@ -217,7 +204,7 @@ namespace netDxf.Entities
 		/// <remarks>Valid values range from -85 to 85. Default: 0.0.</remarks>
 		public double ObliqueAngle
 		{
-			get { return this.obliqueAngle; }
+			get => this.obliqueAngle;
 			set
 			{
 				if (value < -85.0 || value > 85.0)
@@ -229,16 +216,12 @@ namespace netDxf.Entities
 		}
 
 		/// <summary>Gets or sets the text alignment.</summary>
-		public TextAlignment Alignment
-		{
-			get { return this.alignment; }
-			set { this.alignment = value; }
-		}
+		public TextAlignment Alignment { get; set; }
 
 		/// <summary>Gets or sets the <see cref="TextStyle">text style</see>.</summary>
 		public TextStyle Style
 		{
-			get { return this.style; }
+			get => this.style;
 			set
 			{
 				if (value == null)
@@ -250,25 +233,13 @@ namespace netDxf.Entities
 		}
 
 		/// <summary>Gets or sets the text string.</summary>
-		public string Value
-		{
-			get { return this.text; }
-			set { this.text = value; }
-		}
+		public string Value { get; set; }
 
 		/// <summary>Gets or sets if the text is backward (mirrored in X).</summary>
-		public bool IsBackward
-		{
-			get { return this.isBackward; }
-			set { this.isBackward = value; }
-		}
+		public bool IsBackward { get; set; }
 
 		/// <summary>Gets or sets if the text is upside down (mirrored in Y).</summary>
-		public bool IsUpsideDown
-		{
-			get { return this.isUpsideDown; }
-			set { this.isUpsideDown = value; }
-		}
+		public bool IsUpsideDown { get; set; }
 
 		#endregion
 
@@ -458,17 +429,17 @@ namespace netDxf.Entities
 				Normal = this.Normal,
 				IsVisible = this.IsVisible,
 				//Text properties
-				Position = this.position,
+				Position = this.Position,
 				Rotation = this.rotation,
 				Height = this.height,
 				Width = this.width,
 				WidthFactor = this.widthFactor,
 				ObliqueAngle = this.obliqueAngle,
-				Alignment = this.alignment,
-				IsBackward = this.isBackward,
-				isUpsideDown = this.isUpsideDown,
+				Alignment = this.Alignment,
+				IsBackward = this.IsBackward,
+				IsUpsideDown = this.IsUpsideDown,
 				Style = (TextStyle)this.style.Clone(),
-				Value = this.text
+				Value = this.Value
 			};
 
 			foreach (XData data in this.XData.Values)

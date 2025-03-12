@@ -99,17 +99,14 @@ namespace netDxf.Collections
 		{
 			this.innerDictionary = new Dictionary<TKey, TValue>();
 		}
-
 		public ObservableDictionary(int capacity)
 		{
 			this.innerDictionary = new Dictionary<TKey, TValue>(capacity);
 		}
-
 		public ObservableDictionary(IEqualityComparer<TKey> comparer)
 		{
 			this.innerDictionary = new Dictionary<TKey, TValue>(comparer);
 		}
-
 		public ObservableDictionary(int capacity, IEqualityComparer<TKey> comparer)
 		{
 			this.innerDictionary = new Dictionary<TKey, TValue>(capacity, comparer);
@@ -122,7 +119,7 @@ namespace netDxf.Collections
 		/// <inheritdoc/>
 		public TValue this[TKey key]
 		{
-			get { return this.innerDictionary[key]; }
+			get => this.innerDictionary[key];
 			set
 			{
 				KeyValuePair<TKey, TValue> remove = new KeyValuePair<TKey, TValue>(key, this.innerDictionary[key]);
@@ -145,28 +142,16 @@ namespace netDxf.Collections
 		}
 
 		/// <inheritdoc/>
-		public ICollection<TKey> Keys
-		{
-			get { return this.innerDictionary.Keys; }
-		}
+		public ICollection<TKey> Keys => this.innerDictionary.Keys;
 
 		/// <inheritdoc/>
-		public ICollection<TValue> Values
-		{
-			get { return this.innerDictionary.Values; }
-		}
+		public ICollection<TValue> Values => this.innerDictionary.Values;
 
 		/// <inheritdoc/>
-		public int Count
-		{
-			get { return this.innerDictionary.Count; }
-		}
+		public int Count => this.innerDictionary.Count;
 
 		/// <inheritdoc/>
-		public bool IsReadOnly
-		{
-			get { return false; }
-		}
+		public bool IsReadOnly => false;
 
 		#endregion
 
@@ -184,10 +169,7 @@ namespace netDxf.Collections
 			this.AddItemEvent(add);
 		}
 
-		void ICollection<KeyValuePair<TKey, TValue>>.Add(KeyValuePair<TKey, TValue> item)
-		{
-			this.Add(item.Key, item.Value);
-		}
+		void ICollection<KeyValuePair<TKey, TValue>>.Add(KeyValuePair<TKey, TValue> item) => this.Add(item.Key, item.Value);
 
 		/// <inheritdoc/>
 		public bool Remove(TKey key)
@@ -231,42 +213,23 @@ namespace netDxf.Collections
 		}
 
 		bool ICollection<KeyValuePair<TKey, TValue>>.Contains(KeyValuePair<TKey, TValue> item)
-		{
-			return ((IDictionary<TKey, TValue>)this.innerDictionary).Contains(item);
-		}
+			=> ((IDictionary<TKey, TValue>)this.innerDictionary).Contains(item);
 
 		/// <inheritdoc/>
-		public bool ContainsKey(TKey key)
-		{
-			return this.innerDictionary.ContainsKey(key);
-		}
+		public bool ContainsKey(TKey key) => this.innerDictionary.ContainsKey(key);
 
-		public bool ContainsValue(TValue value)
-		{
-			return this.innerDictionary.ContainsValue(value);
-		}
+		public bool ContainsValue(TValue value) => this.innerDictionary.ContainsValue(value);
 
 		/// <inheritdoc/>
-		public bool TryGetValue(TKey key, out TValue value)
-		{
-			return this.innerDictionary.TryGetValue(key, out value);
-		}
+		public bool TryGetValue(TKey key, out TValue value) => this.innerDictionary.TryGetValue(key, out value);
 
 		void ICollection<KeyValuePair<TKey, TValue>>.CopyTo(KeyValuePair<TKey, TValue>[] array, int arrayIndex)
-		{
-			((IDictionary<TKey, TValue>)this.innerDictionary).CopyTo(array, arrayIndex);
-		}
+			=> ((IDictionary<TKey, TValue>)this.innerDictionary).CopyTo(array, arrayIndex);
 
 		/// <inheritdoc/>
-		public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
-		{
-			return this.innerDictionary.GetEnumerator();
-		}
+		public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator() => this.innerDictionary.GetEnumerator();
 
-		IEnumerator IEnumerable.GetEnumerator()
-		{
-			return this.GetEnumerator();
-		}
+		IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 
 		#endregion
 	}

@@ -36,9 +36,6 @@ namespace netDxf.Entities
 	{
 		#region private fields
 
-		private Vector2 firstRefPoint;
-		private Vector2 secondRefPoint;
-		private double offset;
 		private double rotation;
 
 		#endregion
@@ -100,9 +97,9 @@ namespace netDxf.Entities
 
 			List<Vector3> ocsPoints = MathHelper.Transform(
 				new List<Vector3> { referenceLine.StartPoint, referenceLine.EndPoint }, normal, CoordinateSystem.World, CoordinateSystem.Object);
-			this.firstRefPoint = new Vector2(ocsPoints[0].X, ocsPoints[0].Y);
-			this.secondRefPoint = new Vector2(ocsPoints[1].X, ocsPoints[1].Y);
-			this.offset = offset;
+			this.FirstReferencePoint = new Vector2(ocsPoints[0].X, ocsPoints[0].Y);
+			this.SecondReferencePoint = new Vector2(ocsPoints[1].X, ocsPoints[1].Y);
+			this.Offset = offset;
 			this.rotation = MathHelper.NormalizeAngle(rotation);
 			this.Style = style ?? throw new ArgumentNullException(nameof(style));
 			this.Normal = normal;
@@ -131,9 +128,9 @@ namespace netDxf.Entities
 		public LinearDimension(Vector2 firstPoint, Vector2 secondPoint, double offset, double rotation, DimensionStyle style)
 			: base(DimensionType.Linear)
 		{
-			this.firstRefPoint = firstPoint;
-			this.secondRefPoint = secondPoint;
-			this.offset = offset;
+			this.FirstReferencePoint = firstPoint;
+			this.SecondReferencePoint = secondPoint;
+			this.Offset = offset;
 			this.rotation = MathHelper.NormalizeAngle(rotation);
 			this.Style = style ?? throw new ArgumentNullException(nameof(style));
 			this.Update();
@@ -144,49 +141,34 @@ namespace netDxf.Entities
 		#region public properties
 
 		/// <summary>Gets or sets the first definition point of the dimension in <b>OCS</b> (object coordinate system).</summary>
-		public Vector2 FirstReferencePoint
-		{
-			get { return this.firstRefPoint; }
-			set { this.firstRefPoint = value; }
-		}
+		public Vector2 FirstReferencePoint { get; set; }
 
 		/// <summary>Gets or sets the second definition point of the dimension in <b>OCS</b> (object coordinate system).</summary>
-		public Vector2 SecondReferencePoint
-		{
-			get { return this.secondRefPoint; }
-			set { this.secondRefPoint = value; }
-		}
+		public Vector2 SecondReferencePoint { get; set; }
 
 		/// <summary>Gets the location of the dimension line.</summary>
-		public Vector2 DimLinePosition
-		{
-			get { return this.defPoint; }
-		}
+		public Vector2 DimLinePosition => this.DefinitionPoint;
 
 		/// <summary>Gets or sets the rotation of the dimension line.</summary>
 		public double Rotation
 		{
-			get { return this.rotation; }
-			set { this.rotation = MathHelper.NormalizeAngle(value); }
+			get => this.rotation;
+			set => this.rotation = MathHelper.NormalizeAngle(value);
 		}
 
 		/// <summary>Gets or sets the distance between the mid point of the reference line and the dimension line.</summary>
 		/// <remarks>
 		/// The positive side at which the dimension line is drawn depends of the direction of its reference line and the dimension rotation.
 		/// </remarks>
-		public double Offset
-		{
-			get { return this.offset; }
-			set { this.offset = value; }
-		}
+		public double Offset { get; set; }
 
 		/// <inheritdoc/>
 		public override double Measurement
 		{
 			get
 			{
-				double refRot = Vector2.Angle(this.firstRefPoint, this.secondRefPoint);
-				return Math.Abs(Vector2.Distance(this.firstRefPoint, this.secondRefPoint) * Math.Cos(this.rotation * MathHelper.DegToRad - refRot));
+				double refRot = Vector2.Angle(this.FirstReferencePoint, this.SecondReferencePoint);
+				return Math.Abs(Vector2.Distance(this.FirstReferencePoint, this.SecondReferencePoint) * Math.Cos(this.rotation * MathHelper.DegToRad - refRot));
 			}
 		}
 
@@ -198,22 +180,22 @@ namespace netDxf.Entities
 		/// <param name="point">Point along the dimension line.</param>
 		public void SetDimensionLinePosition(Vector2 point)
 		{
-			Vector2 midRef = Vector2.MidPoint(this.firstRefPoint, this.secondRefPoint);
+			Vector2 midRef = Vector2.MidPoint(this.FirstReferencePoint, this.SecondReferencePoint);
 			double dimRotation = this.Rotation * MathHelper.DegToRad;
 
-			Vector2 pointDir = point - this.firstRefPoint;
+			Vector2 pointDir = point - this.FirstReferencePoint;
 			Vector2 dimDir = Vector2.Normalize(Vector2.Rotate(Vector2.UnitX, dimRotation));
 
-			this.offset = MathHelper.PointLineDistance(midRef, point, dimDir);
+			this.Offset = MathHelper.PointLineDistance(midRef, point, dimDir);
 			double cross = Vector2.CrossProduct(dimDir, pointDir);
 			if (cross < 0)
 			{
-				this.offset *= -1;
+				this.Offset *= -1;
 			}
 
 			Vector2 offsetDir = Vector2.Perpendicular(dimDir);
-			Vector2 midDimLine = midRef + this.offset * offsetDir;
-			this.defPoint = midDimLine + 0.5 * this.Measurement * dimDir;
+			Vector2 midDimLine = midRef + this.Offset * offsetDir;
+			this.DefinitionPoint = midDimLine + 0.5 * this.Measurement * dimDir;
 
 			if (!this.TextPositionManuallySet)
 			{
@@ -234,7 +216,7 @@ namespace netDxf.Entities
 				{
 					gap = -gap;
 				}
-				this.textRefPoint = midDimLine + gap * offsetDir;
+				this.TextReferencePoint = midDimLine + gap * offsetDir;
 			}
 		}
 
@@ -269,16 +251,16 @@ namespace netDxf.Entities
 
 			if (this.TextPositionManuallySet)
 			{
-				v = transOW * new Vector3(this.textRefPoint.X, this.textRefPoint.Y, this.Elevation);
+				v = transOW * new Vector3(this.TextReferencePoint.X, this.TextReferencePoint.Y, this.Elevation);
 				v = transformation * v + translation;
 				v = transWO * v;
-				this.textRefPoint = new Vector2(v.X, v.Y);
+				this.TextReferencePoint = new Vector2(v.X, v.Y);
 			}
 
-			v = transOW * new Vector3(this.defPoint.X, this.defPoint.Y, this.Elevation);
+			v = transOW * new Vector3(this.DefinitionPoint.X, this.DefinitionPoint.Y, this.Elevation);
 			v = transformation * v + translation;
 			v = transWO * v;
-			this.defPoint = new Vector2(v.X, v.Y);
+			this.DefinitionPoint = new Vector2(v.X, v.Y);
 
 			Vector2 refAxis = Vector2.Rotate(Vector2.UnitX, this.Rotation * MathHelper.DegToRad);
 			v = transOW * new Vector3(refAxis.X, refAxis.Y, this.Elevation);
@@ -293,7 +275,7 @@ namespace netDxf.Entities
 			this.Elevation = newElevation;
 			this.Normal = newNormal;
 
-			this.SetDimensionLinePosition(this.defPoint);
+			this.SetDimensionLinePosition(this.DefinitionPoint);
 		}
 
 		/// <inheritdoc/>
@@ -302,17 +284,17 @@ namespace netDxf.Entities
 			DimensionStyleOverride styleOverride;
 
 			double measure = this.Measurement;
-			Vector2 midRef = Vector2.MidPoint(this.firstRefPoint, this.secondRefPoint);
+			Vector2 midRef = Vector2.MidPoint(this.FirstReferencePoint, this.SecondReferencePoint);
 			double dimRotation = this.Rotation * MathHelper.DegToRad;
 
 			Vector2 vec = Vector2.Normalize(Vector2.Rotate(Vector2.UnitY, dimRotation));
-			Vector2 midDimLine = midRef + this.offset * vec;
-			double cross = Vector2.CrossProduct(this.secondRefPoint - this.firstRefPoint, vec);
+			Vector2 midDimLine = midRef + this.Offset * vec;
+			double cross = Vector2.CrossProduct(this.SecondReferencePoint - this.FirstReferencePoint, vec);
 			if (cross < 0)
 			{
-				this.offset *= -1;
+				this.Offset *= -1;
 			}
-			this.defPoint = midDimLine - measure * 0.5 * Vector2.Perpendicular(vec);
+			this.DefinitionPoint = midDimLine - measure * 0.5 * Vector2.Perpendicular(vec);
 
 			if (this.TextPositionManuallySet)
 			{
@@ -324,7 +306,7 @@ namespace netDxf.Entities
 
 				if (moveText == DimensionStyleFitTextMove.BesideDimLine)
 				{
-					this.SetDimensionLinePosition(this.textRefPoint);
+					this.SetDimensionLinePosition(this.TextReferencePoint);
 				}
 			}
 			else
@@ -346,15 +328,12 @@ namespace netDxf.Entities
 					gap = -gap;
 				}
 
-				this.textRefPoint = midDimLine + gap * vec;
+				this.TextReferencePoint = midDimLine + gap * vec;
 			}
 		}
 
 		/// <inheritdoc/>
-		protected override Block BuildBlock(string name)
-		{
-			return DimensionBlock.Build(this, name);
-		}
+		protected override Block BuildBlock(string name) => DimensionBlock.Build(this, name);
 
 		/// <inheritdoc/>
 		public override object Clone()
@@ -381,10 +360,10 @@ namespace netDxf.Entities
 				LineSpacingFactor = this.LineSpacingFactor,
 				UserText = this.UserText,
 				//LinearDimension properties
-				FirstReferencePoint = this.firstRefPoint,
-				SecondReferencePoint = this.secondRefPoint,
+				FirstReferencePoint = this.FirstReferencePoint,
+				SecondReferencePoint = this.SecondReferencePoint,
 				Rotation = this.rotation,
-				Offset = this.offset,
+				Offset = this.Offset,
 				Elevation = this.Elevation
 			};
 

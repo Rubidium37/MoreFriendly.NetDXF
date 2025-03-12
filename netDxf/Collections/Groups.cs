@@ -107,10 +107,7 @@ namespace netDxf.Collections
 		}
 
 		/// <inheritdoc/>
-		public override bool Remove(string name)
-		{
-			return this.Remove(this[name]);
-		}
+		public override bool Remove(string name) => this.Remove(this[name]);
 		/// <inheritdoc/>
 		public override bool Remove(Group item)
 		{
@@ -188,9 +185,7 @@ namespace netDxf.Collections
 		}
 
 		void Group_EntityRemoved(Group sender, GroupEntityChangeEventArgs e)
-		{
-			this.References[sender.Name].Remove(e.Item);
-		}
+			=> this.References[sender.Name].Remove(e.Item);
 
 		#endregion
 	}

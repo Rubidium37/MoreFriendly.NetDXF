@@ -95,11 +95,7 @@ namespace netDxf
 		/// 1 value is greater than zero.
 		/// </returns>
 		/// <remarks>This method will test for values of numbers very close to zero.</remarks>
-		public static int Sign(double number)
-		{
-			return IsZero(number) ? 0 : Math.Sign(number);
-		}
-
+		public static int Sign(double number) => IsZero(number) ? 0 : Math.Sign(number);
 		/// <summary>Returns a value indicating the sign of a double-precision floating-point number.</summary>
 		/// <param name="number">Double precision number.</param>
 		/// <param name="threshold">Tolerance.</param>
@@ -111,63 +107,39 @@ namespace netDxf
 		/// 1 value is greater than zero.
 		/// </returns>
 		/// <remarks>This method will test for values of numbers very close to zero.</remarks>
-		public static int Sign(double number, double threshold)
-		{
-			return IsZero(number, threshold) ? 0 : Math.Sign(number);
-		}
+		public static int Sign(double number, double threshold) => IsZero(number, threshold) ? 0 : Math.Sign(number);
 
 		/// <summary>Checks if a number is close to one.</summary>
 		/// <param name="number">Double precision number.</param>
 		/// <returns><see langword="true"/> if its close to one or <see langword="false"/> in any other case.</returns>
-		public static bool IsOne(double number)
-		{
-			return IsOne(number, Epsilon);
-		}
-
+		public static bool IsOne(double number) => IsOne(number, Epsilon);
 		/// <summary>Checks if a number is close to one.</summary>
 		/// <param name="number">Double precision number.</param>
 		/// <param name="threshold">Tolerance.</param>
 		/// <returns><see langword="true"/> if its close to one or <see langword="false"/> in any other case.</returns>
-		public static bool IsOne(double number, double threshold)
-		{
-			return IsZero(number - 1, threshold);
-		}
+		public static bool IsOne(double number, double threshold) => IsZero(number - 1, threshold);
 
 		/// <summary>Checks if a number is close to zero.</summary>
 		/// <param name="number">Double precision number.</param>
 		/// <returns><see langword="true"/> if its close to one or <see langword="false"/> in any other case.</returns>
-		public static bool IsZero(double number)
-		{
-			return IsZero(number, Epsilon);
-		}
-
+		public static bool IsZero(double number) => IsZero(number, Epsilon);
 		/// <summary>Checks if a number is close to zero.</summary>
 		/// <param name="number">Double precision number.</param>
 		/// <param name="threshold">Tolerance.</param>
 		/// <returns><see langword="true"/> if its close to one or <see langword="false"/> in any other case.</returns>
-		public static bool IsZero(double number, double threshold)
-		{
-			return number >= -threshold && number <= threshold;
-		}
+		public static bool IsZero(double number, double threshold) => number >= -threshold && number <= threshold;
 
 		/// <summary>Checks if a number is equal to another.</summary>
 		/// <param name="a">Double precision number.</param>
 		/// <param name="b">Double precision number.</param>
 		/// <returns><see langword="true"/> if its close to one or <see langword="false"/> in any other case.</returns>
-		public static bool IsEqual(double a, double b)
-		{
-			return IsEqual(a, b, Epsilon);
-		}
-
+		public static bool IsEqual(double a, double b) => IsEqual(a, b, Epsilon);
 		/// <summary>Checks if a number is equal to another.</summary>
 		/// <param name="a">Double precision number.</param>
 		/// <param name="b">Double precision number.</param>
 		/// <param name="threshold">Tolerance.</param>
 		/// <returns><see langword="true"/> if its close to one or <see langword="false"/> in any other case.</returns>
-		public static bool IsEqual(double a, double b, double threshold)
-		{
-			return IsZero(a - b, threshold);
-		}
+		public static bool IsEqual(double a, double b, double threshold) => IsZero(a - b, threshold);
 
 		/// <summary>Transforms a point between coordinate systems.</summary>
 		/// <param name="point">Point to transform.</param>
@@ -407,7 +379,12 @@ namespace netDxf
 			Vector3 aY = Vector3.CrossProduct(zAxis, aX);
 			aY.Normalize();
 
-			return new Matrix3(aX.X, aY.X, zAxis.X, aX.Y, aY.Y, zAxis.Y, aX.Z, aY.Z, zAxis.Z);
+			return new Matrix3
+			(
+				aX.X, aY.X, zAxis.X,
+				aX.Y, aY.Y, zAxis.Y,
+				aX.Z, aY.Z, zAxis.Z
+			);
 		}
 
 		/// <summary>Calculates the minimum distance between a point and a line.</summary>
@@ -500,9 +477,7 @@ namespace netDxf
 		/// <returns>The intersection point between the two lines.</returns>
 		/// <remarks>If the lines are parallel the method will return a <see cref="Vector2.NaN">Vector2.NaN</see>.</remarks>
 		public static Vector2 FindIntersection(Vector2 point0, Vector2 dir0, Vector2 point1, Vector2 dir1)
-		{
-			return FindIntersection(point0, dir0, point1, dir1, Epsilon);
-		}
+			=> FindIntersection(point0, dir0, point1, dir1, Epsilon);
 
 		/// <summary>Calculates the intersection point of two lines.</summary>
 		/// <param name="point0">First line origin point.</param>

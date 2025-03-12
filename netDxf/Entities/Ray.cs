@@ -35,7 +35,6 @@ namespace netDxf.Entities
 	{
 		#region private fields
 
-		private Vector3 origin;
 		private Vector3 direction;
 
 		#endregion
@@ -62,7 +61,7 @@ namespace netDxf.Entities
 		public Ray(Vector3 origin, Vector3 direction)
 			: base(EntityType.Ray, DxfObjectCode.Ray)
 		{
-			this.origin = origin;
+			this.Origin = origin;
 			this.direction = Vector3.Normalize(direction);
 			if (Vector3.IsZero(this.direction))
 			{
@@ -76,16 +75,12 @@ namespace netDxf.Entities
 		#region public properties
 
 		/// <summary>Gets or sets the ray <see cref="netDxf.Vector3">origin</see>.</summary>
-		public Vector3 Origin
-		{
-			get { return this.origin; }
-			set { this.origin = value; }
-		}
+		public Vector3 Origin { get; set; }
 
 		/// <summary>Gets or sets the ray <see cref="netDxf.Vector3">direction</see>.</summary>
 		public Vector3 Direction
 		{
-			get { return this.direction; }
+			get => this.direction;
 			set
 			{
 				this.direction = Vector3.Normalize(value);
@@ -135,7 +130,7 @@ namespace netDxf.Entities
 				Normal = this.Normal,
 				IsVisible = this.IsVisible,
 				//Ray properties
-				Origin = this.origin,
+				Origin = this.Origin,
 				Direction = this.direction,
 			};
 

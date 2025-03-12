@@ -34,12 +34,6 @@ namespace netDxf.Collections
 	public sealed class Layers :
 		TableObjects<Layer>
 	{
-		#region private fields
-
-		private readonly LayerStateManager stateManager;
-
-		#endregion
-
 		#region constructor
 
 		internal Layers(DxfDocument document)
@@ -50,7 +44,7 @@ namespace netDxf.Collections
 		internal Layers(DxfDocument document, string handle)
 			: base(document, DxfObjectCode.LayerTable, handle)
 		{
-			this.stateManager = new LayerStateManager(document);
+			this.StateManager = new LayerStateManager(document);
 		}
 
 		#endregion
@@ -58,10 +52,7 @@ namespace netDxf.Collections
 		#region public properties
 
 		/// <summary>Gets the layer state manager.</summary>
-		public LayerStateManager StateManager
-		{
-			get { return this.stateManager; }
-		}
+		public LayerStateManager StateManager { get; }
 
 		#endregion
 
@@ -102,10 +93,7 @@ namespace netDxf.Collections
 		}
 
 		/// <inheritdoc/>
-		public override bool Remove(string name)
-		{
-			return this.Remove(this[name]);
-		}
+		public override bool Remove(string name) => this.Remove(this[name]);
 		/// <inheritdoc/>
 		public override bool Remove(Layer item)
 		{

@@ -30,14 +30,6 @@ namespace netDxf.Header
 	/// <summary>Defines a header variable.</summary>
 	public class HeaderVariable
 	{
-		#region private fields
-
-		private readonly string name;
-		private readonly short groupCode;
-		private object variable;
-
-		#endregion
-
 		#region constructors
 
 		/// <summary>Initializes a new instance of the class.</summary>
@@ -55,9 +47,9 @@ namespace netDxf.Header
 		{
 			if (!name.StartsWith("$", StringComparison.InvariantCultureIgnoreCase))
 				throw new ArgumentException("Header variable names always starts with '$'", nameof(name));
-			this.name = name;
-			this.groupCode = groupCode;
-			this.variable = value;
+			this.Name = name;
+			this.GroupCode = groupCode;
+			this.Value = value;
 		}
 
 		#endregion
@@ -66,16 +58,10 @@ namespace netDxf.Header
 
 		/// <summary>Gets the header variable name.</summary>
 		/// <remarks>The header variable name is case insensitive.</remarks>
-		public string Name
-		{
-			get { return this.name; }
-		}
+		public string Name { get; }
 
 		/// <summary>Gets the header variable group code.</summary>
-		public short GroupCode
-		{
-			get { return this.groupCode; }
-		}
+		public short GroupCode { get; }
 
 		/// <summary>Gets the header variable stored value.</summary>
 		/// <remarks>
@@ -85,11 +71,7 @@ namespace netDxf.Header
 		/// If the header value is a <see cref="Vector3"/> use the group code 30, if it is a <see cref="Vector2"/> use group code 20,
 		/// when the variable is written to the <b>DXF</b> the codes 10, 20, and 30 will be added as necessary.
 		/// </remarks>
-		public object Value
-		{
-			get { return this.variable; }
-			set { this.variable = value; }
-		}
+		public object Value { get; set; }
 
 		#endregion
 
@@ -97,9 +79,7 @@ namespace netDxf.Header
 
 		/// <inheritdoc/>
 		public override string ToString()
-		{
-			return string.Format("{0}:{1}", this.name, this.variable);
-		}
+			=> string.Format("{0}:{1}", this.Name, this.Value);
 
 		#endregion
 	}

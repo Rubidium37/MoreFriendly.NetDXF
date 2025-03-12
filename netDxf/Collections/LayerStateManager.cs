@@ -34,12 +34,6 @@ namespace netDxf.Collections
 	public class LayerStateManager :
 		TableObjects<LayerState>
 	{
-		#region private fields
-
-		private LayerPropertiesRestoreFlags options;
-
-		#endregion
-
 		#region constructor
 
 		/// <summary>Initializes a new instance of the class.</summary>
@@ -52,7 +46,7 @@ namespace netDxf.Collections
 		internal LayerStateManager(DxfDocument document, string handle)
 			: base(document, DxfObjectCode.LayerStates, handle)
 		{
-			this.options = LayerPropertiesRestoreFlags.All;
+			this.Options = LayerPropertiesRestoreFlags.All;
 		}
 
 		#endregion
@@ -60,11 +54,7 @@ namespace netDxf.Collections
 		#region public properties
 
 		/// <summary>Gets or sets the restoring options when updating the layer state from the layers list and vice versa.</summary>
-		public LayerPropertiesRestoreFlags Options
-		{
-			get { return this.options; }
-			set { this.options = value; }
-		}
+		public LayerPropertiesRestoreFlags Options { get; set; }
 
 		#endregion
 
@@ -72,10 +62,7 @@ namespace netDxf.Collections
 
 		/// <summary>Adds a new <see cref="LayerState"/> from the current state of the layers.</summary>
 		/// <param name="layerStateName">Layer state name.</param>
-		public void AddNew(string layerStateName)
-		{
-			this.AddNew(layerStateName, String.Empty);
-		}
+		public void AddNew(string layerStateName) => this.AddNew(layerStateName, String.Empty);
 
 		/// <summary>Adds a new <see cref="LayerState"/> from the current state of the layers.</summary>
 		/// <param name="layerStateName">Layer state name.</param>
@@ -103,11 +90,11 @@ namespace netDxf.Collections
 				if (!this.Owner.Layers.Contains(layerProperties.Name))
 				{
 					Layer layer = this.Owner.Layers.Add(new Layer(layerProperties.Name));
-					layerProperties.CopyTo(layer, this.options);
+					layerProperties.CopyTo(layer, this.Options);
 				}
 				else
 				{
-					layerProperties.CopyTo(this.Owner.Layers[layerProperties.Name], this.options);
+					layerProperties.CopyTo(this.Owner.Layers[layerProperties.Name], this.Options);
 				}
 			}
 		}
@@ -132,7 +119,7 @@ namespace netDxf.Collections
 				}
 				else
 				{
-					ls.Properties[layer.Name].CopyFrom(layer, this.options);
+					ls.Properties[layer.Name].CopyFrom(layer, this.Options);
 				}
 			}
 		}
@@ -239,10 +226,7 @@ namespace netDxf.Collections
 		}
 
 		/// <inheritdoc/>
-		public override bool Remove(string name)
-		{
-			return this.Remove(this[name]);
-		}
+		public override bool Remove(string name) => this.Remove(this[name]);
 		/// <inheritdoc/>
 		public override bool Remove(LayerState item)
 		{

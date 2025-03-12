@@ -39,12 +39,8 @@ namespace netDxf.Entities
 		private static short defaultSurfU = 6;
 		private static short defaultSurfV = 6;
 
-		private readonly Vector3[] vertexes;
-		private readonly short u;
-		private readonly short v;
 		private short densityU;
 		private short densityV;
-		private PolylineTypeFlags flags;
 		private PolylineSmoothType smoothType;
 
 		#endregion
@@ -60,24 +56,24 @@ namespace netDxf.Entities
 		{
 			if (u < 2 || u > 256)
 			{
-				throw new ArgumentOutOfRangeException(nameof(this.u), this.u, "The number of vertexes along the U direction must be between 2 and 256.");
+				throw new ArgumentOutOfRangeException(nameof(this.U), this.U, "The number of vertexes along the U direction must be between 2 and 256.");
 			}
-			this.u = u;
+			this.U = u;
 
 			if (v < 2 || v > 256)
 			{
-				throw new ArgumentOutOfRangeException(nameof(this.v), this.v, "The number of vertexes along the V direction must be between 2 and 256.");
+				throw new ArgumentOutOfRangeException(nameof(this.V), this.V, "The number of vertexes along the V direction must be between 2 and 256.");
 			}
-			this.v = v;
+			this.V = v;
 
 			if (vertexes == null)
 			{
 				throw new ArgumentNullException(nameof(vertexes));
 			}
 
-			this.vertexes = vertexes.ToArray();
+			this.Vertexes = vertexes.ToArray();
 
-			if (this.vertexes.Length != u * v)
+			if (this.Vertexes.Length != u * v)
 			{
 				throw new ArgumentException("The number of vertexes must be equal to UxV.", nameof(vertexes));
 			}
@@ -85,7 +81,7 @@ namespace netDxf.Entities
 			this.densityU = 0;
 			this.densityV = 0;
 			this.smoothType = PolylineSmoothType.NoSmooth;
-			this.flags = PolylineTypeFlags.PolygonMesh;
+			this.Flags = PolylineTypeFlags.PolygonMesh;
 		}
 
 		#endregion
@@ -93,10 +89,7 @@ namespace netDxf.Entities
 		#region public properties
 
 		/// <summary>Gets the mesh vertexes.</summary>
-		public Vector3[] Vertexes
-		{
-			get { return this.vertexes; }
-		}
+		public Vector3[] Vertexes { get; }
 
 		/// <summary>Set a <see cref="PolygonMesh"/> vertex by its indexes.</summary>
 		/// <param name="i0">Index of the vertex in the U direction.</param>
@@ -104,9 +97,9 @@ namespace netDxf.Entities
 		/// <param name="vertex">A Vector3.</param>
 		public void SetVertex(int i0, int i1, Vector3 vertex)
 		{
-			if (0 <= i0 && i0 < this.u && 0 <= i1 && i1 < this.v)
+			if (0 <= i0 && i0 < this.U && 0 <= i1 && i1 < this.V)
 			{
-				this.vertexes[i0 + this.u * i1] = vertex;
+				this.Vertexes[i0 + this.U * i1] = vertex;
 			}
 		}
 
@@ -115,31 +108,25 @@ namespace netDxf.Entities
 		/// <param name="i1">Index of the vertex in the V direction.</param>
 		public Vector3 GetVertex(int i0, int i1)
 		{
-			if (0 <= i0 && i0 < this.u && 0 <= i1 && i1 < this.v)
+			if (0 <= i0 && i0 < this.U && 0 <= i1 && i1 < this.V)
 			{
-				return this.vertexes[i0 + this.u * i1];
+				return this.Vertexes[i0 + this.U * i1];
 			}
 
-			return this.vertexes[0];
+			return this.Vertexes[0];
 		}
 
 		/// <summary>Gets the number of vertexes along the U direction (local X axis).</summary>
-		public short U
-		{
-			get { return this.u; }
-		}
+		public short U { get; }
 
 		/// <summary>Gets the number of vertexes along the V direction (local Y axis).</summary>
-		public short V
-		{
-			get { return this.v; }
-		}
+		public short V { get; }
 
 		/// <summary>Smooth surface U density.</summary>
 		/// <remarks>Valid values range from 3 to 201.</remarks>
 		public short DensityU
 		{
-			get { return this.densityU; }
+			get => this.densityU;
 			set
 			{
 				if (value < 3 || value > 201)
@@ -154,7 +141,7 @@ namespace netDxf.Entities
 		/// <remarks>Valid values range from 3 to 201.</remarks>
 		public short DensityV
 		{
-			get { return this.densityV; }
+			get => this.densityV;
 			set
 			{
 				if (value < 3 || value > 201)
@@ -168,16 +155,16 @@ namespace netDxf.Entities
 		/// <summary>Gets or sets if the polygon mesh is closed along the U direction (local X axis).</summary>
 		public bool IsClosedInU
 		{
-			get { return this.flags.HasFlag(PolylineTypeFlags.ClosedPolylineOrClosedPolygonMeshInM); }
+			get => this.Flags.HasFlag(PolylineTypeFlags.ClosedPolylineOrClosedPolygonMeshInM);
 			set
 			{
 				if (value)
 				{
-					this.flags |= PolylineTypeFlags.ClosedPolylineOrClosedPolygonMeshInM;
+					this.Flags |= PolylineTypeFlags.ClosedPolylineOrClosedPolygonMeshInM;
 				}
 				else
 				{
-					this.flags &= ~PolylineTypeFlags.ClosedPolylineOrClosedPolygonMeshInM;
+					this.Flags &= ~PolylineTypeFlags.ClosedPolylineOrClosedPolygonMeshInM;
 				}
 			}
 		}
@@ -185,16 +172,16 @@ namespace netDxf.Entities
 		/// <summary>Gets or sets if the polygon mesh is closed along the V direction (local Y axis).</summary>
 		public bool IsClosedInV
 		{
-			get { return this.flags.HasFlag(PolylineTypeFlags.ClosedPolygonMeshInN); }
+			get => this.Flags.HasFlag(PolylineTypeFlags.ClosedPolygonMeshInN);
 			set
 			{
 				if (value)
 				{
-					this.flags |= PolylineTypeFlags.ClosedPolygonMeshInN;
+					this.Flags |= PolylineTypeFlags.ClosedPolygonMeshInN;
 				}
 				else
 				{
-					this.flags &= ~PolylineTypeFlags.ClosedPolygonMeshInN;
+					this.Flags &= ~PolylineTypeFlags.ClosedPolygonMeshInN;
 				}
 			}
 		}
@@ -205,16 +192,16 @@ namespace netDxf.Entities
 		/// </remarks>
 		public PolylineSmoothType SmoothType
 		{
-			get { return this.smoothType; }
+			get => this.smoothType;
 			set
 			{
 				if (value == PolylineSmoothType.NoSmooth)
 				{
-					this.flags &= ~PolylineTypeFlags.SplineFit;
+					this.Flags &= ~PolylineTypeFlags.SplineFit;
 				}
 				else
 				{
-					this.flags |= PolylineTypeFlags.SplineFit;
+					this.Flags |= PolylineTypeFlags.SplineFit;
 				}
 				this.smoothType = value;
 			}
@@ -227,7 +214,7 @@ namespace netDxf.Entities
 		/// </remarks>
 		public static short DefaultSurfU
 		{
-			get { return defaultSurfU; }
+			get => defaultSurfU;
 			set
 			{
 				if (value < 0 || value > 200)
@@ -245,7 +232,7 @@ namespace netDxf.Entities
 		/// </remarks>
 		public static short DefaultSurfV
 		{
-			get { return defaultSurfV; }
+			get => defaultSurfV;
 			set
 			{
 				if (value < 0 || value > 200)
@@ -261,11 +248,7 @@ namespace netDxf.Entities
 		#region internal properties
 
 		/// <summary>Gets the polygon mesh flags.</summary>
-		internal PolylineTypeFlags Flags
-		{
-			get { return this.flags; }
-			set { this.flags = value; }
-		}
+		internal PolylineTypeFlags Flags { get; set; }
 
 		#endregion
 
@@ -319,30 +302,30 @@ namespace netDxf.Entities
 			}
 			else
 			{
-				return new List<Vector3>(this.vertexes);
+				return new List<Vector3>(this.Vertexes);
 			}
 
 			List<Vector3> controlsUV = new List<Vector3>();
-			int numU = this.u;
-			int numV = this.v;
+			int numU = this.U;
+			int numV = this.V;
 
 			// duplicate vertexes to handle periodic BSpline surfaces
 			if (this.IsClosedInU)
 			{
 				numU += degree;
-				for (int i = 0; i < this.v; i++)
+				for (int i = 0; i < this.V; i++)
 				{
-					for (int j = 0; j < this.u + degree; j++)
+					for (int j = 0; j < this.U + degree; j++)
 					{
-						if (j < this.u)
+						if (j < this.U)
 						{
-							controlsUV.Add(this.vertexes[i * this.u + j]);
+							controlsUV.Add(this.Vertexes[i * this.U + j]);
 						}
 						else
 						{
 							for (int k = 0; k < degree; k++, j++)
 							{
-								controlsUV.Add(this.vertexes[i * this.u + k]);
+								controlsUV.Add(this.Vertexes[i * this.U + k]);
 							}
 						}
 					}
@@ -361,19 +344,19 @@ namespace netDxf.Entities
 			}
 			else if (this.IsClosedInV)
 			{
-				controlsUV.AddRange(this.vertexes);
+				controlsUV.AddRange(this.Vertexes);
 				numV += degree;
 				for (int i = 0; i < degree; i++)
 				{
-					for (int j = 0; j < this.u; j++)
+					for (int j = 0; j < this.U; j++)
 					{
-						controlsUV.Add(this.vertexes[i * this.u + j]);
+						controlsUV.Add(this.Vertexes[i * this.U + j]);
 					}
 				}
 			}
 			else
 			{
-				controlsUV.AddRange(this.vertexes);
+				controlsUV.AddRange(this.Vertexes);
 			}
 
 			GTE.BasisFunctionInput bfU = new GTE.BasisFunctionInput(numU, degree);
@@ -384,7 +367,7 @@ namespace netDxf.Entities
 			//change the knot vector to handle periodic BSplines
 			if (this.IsClosedInU)
 			{
-				double factor = 1.0 / this.u;
+				double factor = 1.0 / this.U;
 				for (int i = 0; i < surface.BasisFunction(0).NumKnots; i++)
 				{
 					surface.BasisFunction(0).Knots[i] = (i - surface.BasisFunction(0).Degree) * factor;
@@ -393,7 +376,7 @@ namespace netDxf.Entities
 
 			if (this.IsClosedInV)
 			{
-				double factor = 1.0 / this.v;
+				double factor = 1.0 / this.V;
 				for (int i = 0; i < surface.BasisFunction(1).NumKnots; i++)
 				{
 					surface.BasisFunction(1).Knots[i] = (i - surface.BasisFunction(1).Degree) * factor;
@@ -445,8 +428,8 @@ namespace netDxf.Entities
 			int precV;
 			if (this.smoothType == PolylineSmoothType.NoSmooth)
 			{
-				precU = this.u;
-				precV = this.v;
+				precU = this.U;
+				precV = this.V;
 			}
 			else
 			{
@@ -509,8 +492,8 @@ namespace netDxf.Entities
 			int precV;
 			if (this.smoothType == PolylineSmoothType.NoSmooth)
 			{
-				precU = this.u;
-				precV = this.v;
+				precU = this.U;
+				precV = this.V;
 			}
 			else
 			{
@@ -569,9 +552,9 @@ namespace netDxf.Entities
 		/// <inheritdoc/>
 		public override void TransformBy(Matrix3 transformation, Vector3 translation)
 		{
-			for (int i = 0; i < this.vertexes.Length; i++)
+			for (int i = 0; i < this.Vertexes.Length; i++)
 			{
-				this.vertexes[i] = transformation * this.vertexes[i] + translation;
+				this.Vertexes[i] = transformation * this.Vertexes[i] + translation;
 			}
 
 			Vector3 newNormal = transformation * this.Normal;
@@ -585,7 +568,7 @@ namespace netDxf.Entities
 		/// <inheritdoc/>
 		public override object Clone()
 		{
-			PolygonMesh entity = new PolygonMesh(this.u, this.v, this.vertexes)
+			PolygonMesh entity = new PolygonMesh(this.U, this.V, this.Vertexes)
 			{
 				//EntityObject properties
 				Layer = (Layer)this.Layer.Clone(),
@@ -599,7 +582,7 @@ namespace netDxf.Entities
 				//PolygonMesh properties
 				DensityU = this.densityU,
 				DensityV = this.densityV,
-				Flags = this.flags
+				Flags = this.Flags
 			};
 
 			foreach (XData data in this.XData.Values)

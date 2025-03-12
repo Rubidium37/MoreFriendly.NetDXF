@@ -38,11 +38,6 @@ namespace netDxf.Entities
 		#region private fields
 
 		private double offset;
-		private Vector2 startFirstLine;
-		private Vector2 endFirstLine;
-		private Vector2 startSecondLine;
-		private Vector2 endSecondLine;
-		private Vector2 arcDefinitionPoint;
 
 		#endregion
 
@@ -118,10 +113,10 @@ namespace netDxf.Entities
 					},
 					normal, CoordinateSystem.World, CoordinateSystem.Object);
 
-			this.startFirstLine = new Vector2(ocsPoints[0].X, ocsPoints[0].Y);
-			this.endFirstLine = new Vector2(ocsPoints[1].X, ocsPoints[1].Y);
-			this.startSecondLine = new Vector2(ocsPoints[2].X, ocsPoints[2].Y);
-			this.endSecondLine = new Vector2(ocsPoints[3].X, ocsPoints[3].Y);
+			this.StartFirstLine = new Vector2(ocsPoints[0].X, ocsPoints[0].Y);
+			this.EndFirstLine = new Vector2(ocsPoints[1].X, ocsPoints[1].Y);
+			this.StartSecondLine = new Vector2(ocsPoints[2].X, ocsPoints[2].Y);
+			this.EndSecondLine = new Vector2(ocsPoints[3].X, ocsPoints[3].Y);
 			if (offset < 0)
 			{
 				throw new ArgumentOutOfRangeException(nameof(offset), "The offset value must be equal or greater than zero.");
@@ -161,10 +156,10 @@ namespace netDxf.Entities
 				throw new ArgumentException("The two lines that define the dimension are parallel.");
 			}
 
-			this.startFirstLine = startFirstLine;
-			this.endFirstLine = endFirstLine;
-			this.startSecondLine = startSecondLine;
-			this.endSecondLine = endSecondLine;
+			this.StartFirstLine = startFirstLine;
+			this.EndFirstLine = endFirstLine;
+			this.StartSecondLine = startSecondLine;
+			this.EndSecondLine = endSecondLine;
 
 			if (offset < 0)
 			{
@@ -186,45 +181,25 @@ namespace netDxf.Entities
 			get
 			{
 				return MathHelper.FindIntersection(
-					this.startFirstLine, this.endFirstLine - this.startFirstLine,
-					this.startSecondLine, this.endSecondLine - this.startSecondLine);
+					this.StartFirstLine, this.EndFirstLine - this.StartFirstLine,
+					this.StartSecondLine, this.EndSecondLine - this.StartSecondLine);
 			}
 		}
 
 		/// <summary>Start <see cref="Vector2">point</see> of the first line that defines the angle to measure in local coordinates.</summary>
-		public Vector2 StartFirstLine
-		{
-			get { return this.startFirstLine; }
-			set { this.startFirstLine = value; }
-		}
+		public Vector2 StartFirstLine { get; set; }
 
 		/// <summary>End <see cref="Vector2">point</see> of the first line that defines the angle to measure in local coordinates.</summary>
-		public Vector2 EndFirstLine
-		{
-			get { return this.endFirstLine; }
-			set { this.endFirstLine = value; }
-		}
+		public Vector2 EndFirstLine { get; set; }
 
 		/// <summary>Start <see cref="Vector2">point</see> of the second line that defines the angle to measure in <b>OCS</b> (object coordinate system).</summary>
-		public Vector2 StartSecondLine
-		{
-			get { return this.startSecondLine; }
-			set { this.startSecondLine = value; }
-		}
+		public Vector2 StartSecondLine { get; set; }
 
 		/// <summary>End <see cref="Vector2">point</see> of the second line that defines the angle to measure in <b>OCS</b> (object coordinate system).</summary>
-		public Vector2 EndSecondLine
-		{
-			get { return this.endSecondLine; }
-			set { this.endSecondLine = value; }
-		}
+		public Vector2 EndSecondLine { get; set; }
 
 		/// <summary>Gets the location of the dimension line arc.</summary>
-		public Vector2 ArcDefinitionPoint
-		{
-			get { return this.arcDefinitionPoint; }
-			internal set { this.arcDefinitionPoint = value; }
-		}
+		public Vector2 ArcDefinitionPoint { get; internal set; }
 
 		/// <summary>Gets or sets the distance between the center point and the dimension line.</summary>
 		/// <remarks>
@@ -232,7 +207,7 @@ namespace netDxf.Entities
 		/// </remarks>
 		public double Offset
 		{
-			get { return this.offset; }
+			get => this.offset;
 			set
 			{
 				if (value < 0)
@@ -248,8 +223,8 @@ namespace netDxf.Entities
 		{
 			get
 			{
-				Vector2 dirRef1 = this.endFirstLine - this.startFirstLine;
-				Vector2 dirRef2 = this.endSecondLine - this.startSecondLine;
+				Vector2 dirRef1 = this.EndFirstLine - this.StartFirstLine;
+				Vector2 dirRef2 = this.EndSecondLine - this.StartSecondLine;
 				return Vector2.AngleBetween(dirRef1, dirRef2) * MathHelper.RadToDeg;
 			}
 		}
@@ -264,10 +239,7 @@ namespace netDxf.Entities
 		/// The start and end points of the reference lines will be modified,
 		/// the angle measurement is always made from the direction of the first line to the direction of the second line.
 		/// </remarks>
-		public void SetDimensionLinePosition(Vector2 point)
-		{
-			this.SetDimensionLinePosition(point, true);
-		}
+		public void SetDimensionLinePosition(Vector2 point) => this.SetDimensionLinePosition(point, true);
 
 		#endregion
 
@@ -275,8 +247,8 @@ namespace netDxf.Entities
 
 		private void SetDimensionLinePosition(Vector2 point, bool updateRefs)
 		{
-			Vector2 dir1 = this.endFirstLine - this.startFirstLine;
-			Vector2 dir2 = this.endSecondLine - this.startSecondLine;
+			Vector2 dir1 = this.EndFirstLine - this.StartFirstLine;
+			Vector2 dir2 = this.EndSecondLine - this.StartSecondLine;
 			if (Vector2.AreParallel(dir1, dir2))
 			{
 				throw new ArgumentException("The two lines that define the dimension are parallel.");
@@ -289,8 +261,8 @@ namespace netDxf.Entities
 				double cross = Vector2.CrossProduct(this.EndFirstLine - this.StartFirstLine, this.EndSecondLine - this.StartSecondLine);
 				if (cross < 0)
 				{
-					(this.startFirstLine, this.startSecondLine) = (this.startSecondLine, this.startFirstLine);
-					(this.endFirstLine, this.endSecondLine) = (this.endSecondLine, this.endFirstLine);
+					(this.StartFirstLine, this.StartSecondLine) = (this.StartSecondLine, this.StartFirstLine);
+					(this.EndFirstLine, this.EndSecondLine) = (this.EndSecondLine, this.EndFirstLine);
 
 					//MathHelper.Swap(ref this.startFirstLine, ref this.startSecondLine);
 					//MathHelper.Swap(ref this.endFirstLine, ref this.endSecondLine);
@@ -333,13 +305,13 @@ namespace netDxf.Entities
 			double newOffset = Vector2.Distance(center, point);
 			this.offset = MathHelper.IsZero(newOffset) ? MathHelper.Epsilon : newOffset;
 
-			this.defPoint = this.endSecondLine;
+			this.DefinitionPoint = this.EndSecondLine;
 
 			double measure = this.Measurement * MathHelper.DegToRad;
-			double startAngle = Vector2.Angle(center, this.endFirstLine);
+			double startAngle = Vector2.Angle(center, this.EndFirstLine);
 			double midRot = startAngle + 0.5 * measure;
 			Vector2 midDim = Vector2.Polar(center, this.offset, midRot);
-			this.arcDefinitionPoint = midDim;
+			this.ArcDefinitionPoint = midDim;
 
 			if (!this.TextPositionManuallySet)
 			{
@@ -415,10 +387,10 @@ namespace netDxf.Entities
 				this.textRefPoint = new Vector2(v.X, v.Y);
 			}
 
-			v = transOW * new Vector3(this.defPoint.X, this.defPoint.Y, this.Elevation);
+			v = transOW * new Vector3(this.DefinitionPoint.X, this.DefinitionPoint.Y, this.Elevation);
 			v = transformation * v + translation;
 			v = transWO * v;
-			this.defPoint = new Vector2(v.X, v.Y);
+			this.DefinitionPoint = new Vector2(v.X, v.Y);
 
 			this.StartFirstLine = newStart1;
 			this.EndFirstLine = newEnd1;
@@ -434,8 +406,8 @@ namespace netDxf.Entities
 		/// <inheritdoc/>
 		protected override void CalculateReferencePoints()
 		{
-			Vector2 dir1 = this.endFirstLine - this.startFirstLine;
-			Vector2 dir2 = this.endSecondLine - this.startSecondLine;
+			Vector2 dir1 = this.EndFirstLine - this.StartFirstLine;
+			Vector2 dir2 = this.EndSecondLine - this.StartSecondLine;
 			if (Vector2.AreParallel(dir1, dir2))
 			{
 				throw new ArgumentException("The two lines that define the dimension are parallel.");
@@ -446,12 +418,12 @@ namespace netDxf.Entities
 			double measure = this.Measurement * MathHelper.DegToRad;
 			Vector2 center = this.CenterPoint;
 
-			double startAngle = Vector2.Angle(center, this.endFirstLine);
+			double startAngle = Vector2.Angle(center, this.EndFirstLine);
 			double midRot = startAngle + 0.5 * measure;
 			Vector2 midDim = Vector2.Polar(center, this.offset, midRot);
 
-			this.defPoint = this.endSecondLine;
-			this.arcDefinitionPoint = midDim;
+			this.DefinitionPoint = this.EndSecondLine;
+			this.ArcDefinitionPoint = midDim;
 
 			if (this.TextPositionManuallySet)
 			{
@@ -485,10 +457,7 @@ namespace netDxf.Entities
 		}
 
 		/// <inheritdoc/>
-		protected override Block BuildBlock(string name)
-		{
-			return DimensionBlock.Build(this, name);
-		}
+		protected override Block BuildBlock(string name) => DimensionBlock.Build(this, name);
 
 		/// <inheritdoc/>
 		public override object Clone()
@@ -516,12 +485,12 @@ namespace netDxf.Entities
 				UserText = this.UserText,
 				Elevation = this.Elevation,
 				//Angular2LineDimension properties
-				StartFirstLine = this.startFirstLine,
-				EndFirstLine = this.endFirstLine,
-				StartSecondLine = this.startSecondLine,
-				EndSecondLine = this.endSecondLine,
+				StartFirstLine = this.StartFirstLine,
+				EndFirstLine = this.EndFirstLine,
+				StartSecondLine = this.StartSecondLine,
+				EndSecondLine = this.EndSecondLine,
 				Offset = this.offset,
-				arcDefinitionPoint = this.arcDefinitionPoint
+				ArcDefinitionPoint = this.ArcDefinitionPoint
 			};
 
 			foreach (DimensionStyleOverride styleOverride in this.StyleOverrides.Values)

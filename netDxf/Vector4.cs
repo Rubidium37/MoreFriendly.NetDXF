@@ -85,40 +85,22 @@ namespace netDxf
 		#region constants
 
 		/// <summary>Zero vector.</summary>
-		public static Vector4 Zero
-		{
-			get { return new Vector4(0.0, 0.0, 0.0, 0.0); }
-		}
+		public static Vector4 Zero => new Vector4(0.0, 0.0, 0.0, 0.0);
 
 		/// <summary>Unit X vector.</summary>
-		public static Vector4 UnitX
-		{
-			get { return new Vector4(1.0, 0.0, 0.0, 0.0) { isNormalized = true }; }
-		}
+		public static Vector4 UnitX => new Vector4(1.0, 0.0, 0.0, 0.0) { isNormalized = true };
 
 		/// <summary>Unit Y vector.</summary>
-		public static Vector4 UnitY
-		{
-			get { return new Vector4(0.0, 1.0, 0.0, 0.0) { isNormalized = true }; }
-		}
+		public static Vector4 UnitY => new Vector4(0.0, 1.0, 0.0, 0.0) { isNormalized = true };
 
 		/// <summary>Unit Z vector.</summary>
-		public static Vector4 UnitZ
-		{
-			get { return new Vector4(0, 0, 1, 0) { isNormalized = true }; }
-		}
+		public static Vector4 UnitZ => new Vector4(0, 0, 1, 0) { isNormalized = true };
 
 		/// <summary>Unit W vector.</summary>
-		public static Vector4 UnitW
-		{
-			get { return new Vector4(0.0, 0.0, 0.0, 1.0) { isNormalized = true }; }
-		}
+		public static Vector4 UnitW => new Vector4(0.0, 0.0, 0.0, 1.0) { isNormalized = true };
 
 		/// <summary>Represents a vector with not a number components.</summary>
-		public static Vector4 NaN
-		{
-			get { return new Vector4(double.NaN, double.NaN, double.NaN, double.NaN); }
-		}
+		public static Vector4 NaN => new Vector4(double.NaN, double.NaN, double.NaN, double.NaN);
 
 		#endregion
 
@@ -127,7 +109,7 @@ namespace netDxf
 		/// <summary>Gets or sets the X component.</summary>
 		public double X
 		{
-			get { return this.x; }
+			get => this.x;
 			set
 			{
 				this.x = value;
@@ -138,7 +120,7 @@ namespace netDxf
 		/// <summary>Gets or sets the Y component.</summary>
 		public double Y
 		{
-			get { return this.y; }
+			get => this.y;
 			set
 			{
 				this.y = value;
@@ -149,7 +131,7 @@ namespace netDxf
 		/// <summary>Gets or sets the Z component.</summary>
 		public double Z
 		{
-			get { return this.z; }
+			get => this.z;
 			set
 			{
 				this.z = value;
@@ -160,7 +142,7 @@ namespace netDxf
 		/// <summary>Gets or sets the W component.</summary>
 		public double W
 		{
-			get { return this.w; }
+			get => this.w;
 			set
 			{
 				this.w = value;
@@ -213,10 +195,7 @@ namespace netDxf
 		}
 
 		/// <summary>Gets if the vector has been normalized.</summary>
-		public bool IsNormalized
-		{
-			get { return this.isNormalized; }
-		}
+		public bool IsNormalized => this.isNormalized;
 
 		#endregion
 
@@ -225,54 +204,39 @@ namespace netDxf
 		/// <summary>Returns a value indicating if any component of the specified vector evaluates to a value that is not a number <see cref="System.Double.NaN"/>.</summary>
 		/// <param name="u">Vector4.</param>
 		/// <returns>Returns <see langword="true"/> if any component of the specified vector evaluates to <see cref="System.Double.NaN"/>; otherwise, <see langword="false"/>.</returns>
-		public static bool IsNaN(Vector4 u)
-		{
-			return double.IsNaN(u.X) || double.IsNaN(u.Y) || double.IsNaN(u.Z) || double.IsNaN(u.W);
-		}
+		public static bool IsNaN(Vector4 u) => double.IsNaN(u.X) || double.IsNaN(u.Y) || double.IsNaN(u.Z) || double.IsNaN(u.W);
 
 		/// <summary>Returns a value indicating if all components of the specified vector evaluates to zero.</summary>
 		/// <param name="u">Vector4.</param>
 		/// <returns>Returns <see langword="true"/> if all components of the specified vector evaluates to zero; otherwise, <see langword="false"/>.</returns>
 		public static bool IsZero(Vector4 u)
-		{
-			return MathHelper.IsZero(u.X) && MathHelper.IsZero(u.Y) && MathHelper.IsZero(u.Z) && MathHelper.IsZero(u.W);
-		}
+			=> MathHelper.IsZero(u.X) && MathHelper.IsZero(u.Y) && MathHelper.IsZero(u.Z) && MathHelper.IsZero(u.W);
 
 		/// <summary>Obtains the dot product of two vectors.</summary>
 		/// <param name="u">Vector4.</param>
 		/// <param name="v">Vector4.</param>
 		/// <returns>The dot product.</returns>
-		public static double DotProduct(Vector4 u, Vector4 v)
-		{
-			return u.X * v.X + u.Y * v.Y + u.Z * v.Z + u.W * v.W;
-		}
+		public static double DotProduct(Vector4 u, Vector4 v) => u.X * v.X + u.Y * v.Y + u.Z * v.Z + u.W * v.W;
 
 		/// <summary>Obtains the distance between two points.</summary>
 		/// <param name="u">Vector4.</param>
 		/// <param name="v">Vector4.</param>
 		/// <returns>Distance.</returns>
-		public static double Distance(Vector4 u, Vector4 v)
-		{
-			return Math.Sqrt(SquareDistance(u, v));
-		}
+		public static double Distance(Vector4 u, Vector4 v) => Math.Sqrt(SquareDistance(u, v));
 
 		/// <summary>Obtains the square distance between two points.</summary>
 		/// <param name="u">Vector4.</param>
 		/// <param name="v">Vector4.</param>
 		/// <returns>Square distance.</returns>
 		public static double SquareDistance(Vector4 u, Vector4 v)
-		{
-			return (u.X - v.X) * (u.X - v.X) + (u.Y - v.Y) * (u.Y - v.Y) + (u.Z - v.Z) * (u.Z - v.Z) + (u.W - v.Z) * (u.W - v.W);
-		}
+			=> (u.X - v.X) * (u.X - v.X) + (u.Y - v.Y) * (u.Y - v.Y) + (u.Z - v.Z) * (u.Z - v.Z) + (u.W - v.Z) * (u.W - v.W);
 
 		/// <summary>Rounds the components of a vector.</summary>
 		/// <param name="u">Vector to round.</param>
 		/// <param name="numDigits">Number of decimal places in the return value.</param>
 		/// <returns>The rounded vector.</returns>
 		public static Vector4 Round(Vector4 u, int numDigits)
-		{
-			return new Vector4(Math.Round(u.X, numDigits), Math.Round(u.Y, numDigits), Math.Round(u.Z, numDigits), Math.Round(u.W, numDigits));
-		}
+			=> new Vector4(Math.Round(u.X, numDigits), Math.Round(u.Y, numDigits), Math.Round(u.Z, numDigits), Math.Round(u.W, numDigits));
 
 		/// <summary>Normalizes the vector.</summary>
 		/// <param name="u">Vector to normalize</param>
@@ -302,125 +266,82 @@ namespace netDxf
 		/// <param name="u">Vector4.</param>
 		/// <param name="v">Vector4.</param>
 		/// <returns><see langword="true"/> if the three components are equal or <see langword="false"/> in any other case.</returns>
-		public static bool operator ==(Vector4 u, Vector4 v)
-		{
-			return Equals(u, v);
-		}
-
+		public static bool operator ==(Vector4 u, Vector4 v) => Equals(u, v);
 		/// <summary>Check if the components of two vectors are different.</summary>
 		/// <param name="u">Vector4.</param>
 		/// <param name="v">Vector4.</param>
 		/// <returns><see langword="true"/> if the three components are different or <see langword="false"/> in any other case.</returns>
-		public static bool operator !=(Vector4 u, Vector4 v)
-		{
-			return !Equals(u, v);
-		}
+		public static bool operator !=(Vector4 u, Vector4 v) => !Equals(u, v);
 
 		/// <summary>Adds two vectors.</summary>
 		/// <param name="u">Vector4.</param>
 		/// <param name="v">Vector4.</param>
 		/// <returns>The addition of u plus v.</returns>
-		public static Vector4 operator +(Vector4 u, Vector4 v)
-		{
-			return new Vector4(u.X + v.X, u.Y + v.Y, u.Z + v.Z, u.W + v.W);
-		}
+		public static Vector4 operator +(Vector4 u, Vector4 v) => new Vector4(u.X + v.X, u.Y + v.Y, u.Z + v.Z, u.W + v.W);
 
 		/// <summary>Adds two vectors.</summary>
 		/// <param name="u">Vector4.</param>
 		/// <param name="v">Vector4.</param>
 		/// <returns>The addition of u plus v.</returns>
-		public static Vector4 Add(Vector4 u, Vector4 v)
-		{
-			return new Vector4(u.X + v.X, u.Y + v.Y, u.Z + v.Z, u.W + v.W);
-		}
+		public static Vector4 Add(Vector4 u, Vector4 v) => new Vector4(u.X + v.X, u.Y + v.Y, u.Z + v.Z, u.W + v.W);
 
 		/// <summary>Subtracts two vectors.</summary>
 		/// <param name="u">Vector4.</param>
 		/// <param name="v">Vector4.</param>
 		/// <returns>The subtraction of u minus v.</returns>
-		public static Vector4 operator -(Vector4 u, Vector4 v)
-		{
-			return new Vector4(u.X - v.X, u.Y - v.Y, u.Z - v.Z, u.W - v.W);
-		}
+		public static Vector4 operator -(Vector4 u, Vector4 v) => new Vector4(u.X - v.X, u.Y - v.Y, u.Z - v.Z, u.W - v.W);
 
 		/// <summary>Subtracts two vectors.</summary>
 		/// <param name="u">Vector4.</param>
 		/// <param name="v">Vector4.</param>
 		/// <returns>The subtraction of u minus v.</returns>
-		public static Vector4 Subtract(Vector4 u, Vector4 v)
-		{
-			return new Vector4(u.X - v.X, u.Y - v.Y, u.Z - v.Z, u.W - v.W);
-		}
+		public static Vector4 Subtract(Vector4 u, Vector4 v) => new Vector4(u.X - v.X, u.Y - v.Y, u.Z - v.Z, u.W - v.W);
 
 		/// <summary>Negates a vector.</summary>
 		/// <param name="u">Vector4.</param>
 		/// <returns>The negative vector of u.</returns>
-		public static Vector4 operator -(Vector4 u)
-		{
-			return new Vector4(-u.X, -u.Y, -u.Z, -u.W) { isNormalized = u.IsNormalized };
-		}
+		public static Vector4 operator -(Vector4 u) => new Vector4(-u.X, -u.Y, -u.Z, -u.W) { isNormalized = u.IsNormalized };
 
 		/// <summary>Negates a vector.</summary>
 		/// <param name="u">Vector4.</param>
 		/// <returns>The negative vector of u.</returns>
-		public static Vector4 Negate(Vector4 u)
-		{
-			return new Vector4(-u.X, -u.Y, -u.Z, -u.W) { isNormalized = u.IsNormalized };
-		}
+		public static Vector4 Negate(Vector4 u) => new Vector4(-u.X, -u.Y, -u.Z, -u.W) { isNormalized = u.IsNormalized };
 
 		/// <summary>Multiplies a vector with an scalar (same as a*u, commutative property).</summary>
 		/// <param name="u">Vector4.</param>
 		/// <param name="a">Scalar.</param>
 		/// <returns>The multiplication of u times a.</returns>
-		public static Vector4 operator *(Vector4 u, double a)
-		{
-			return new Vector4(u.X * a, u.Y * a, u.Z * a, u.W * a);
-		}
+		public static Vector4 operator *(Vector4 u, double a) => new Vector4(u.X * a, u.Y * a, u.Z * a, u.W * a);
 
 		/// <summary>Multiplies a vector with an scalar (same as a*u, commutative property).</summary>
 		/// <param name="u">Vector4.</param>
 		/// <param name="a">Scalar.</param>
 		/// <returns>The multiplication of u times a.</returns>
-		public static Vector4 Multiply(Vector4 u, double a)
-		{
-			return new Vector4(u.X * a, u.Y * a, u.Z * a, u.W * a);
-		}
+		public static Vector4 Multiply(Vector4 u, double a) => new Vector4(u.X * a, u.Y * a, u.Z * a, u.W * a);
 
 		/// <summary>Multiplies a scalar with a vector (same as u*a, commutative property).</summary>
 		/// <param name="a">Scalar.</param>
 		/// <param name="u">Vector4.</param>
 		/// <returns>The multiplication of u times a.</returns>
-		public static Vector4 operator *(double a, Vector4 u)
-		{
-			return new Vector4(u.X * a, u.Y * a, u.Z * a, u.W * a);
-		}
+		public static Vector4 operator *(double a, Vector4 u) => new Vector4(u.X * a, u.Y * a, u.Z * a, u.W * a);
 
 		/// <summary>Multiplies a scalar with a vector (same as u*a, commutative property).</summary>
 		/// <param name="a">Scalar.</param>
 		/// <param name="u">Vector4.</param>
 		/// <returns>The multiplication of u times a.</returns>
-		public static Vector4 Multiply(double a, Vector4 u)
-		{
-			return new Vector4(u.X * a, u.Y * a, u.Z * a, u.W * a);
-		}
+		public static Vector4 Multiply(double a, Vector4 u) => new Vector4(u.X * a, u.Y * a, u.Z * a, u.W * a);
 
 		/// <summary>Multiplies two vectors component by component.</summary>
 		/// <param name="u">Vector4.</param>
 		/// <param name="v">Vector4.</param>
 		/// <returns>The multiplication of u times v.</returns>
-		public static Vector4 operator *(Vector4 u, Vector4 v)
-		{
-			return new Vector4(u.X * v.X, u.Y * v.Y, u.Z * v.Z, u.W * v.W);
-		}
+		public static Vector4 operator *(Vector4 u, Vector4 v) => new Vector4(u.X * v.X, u.Y * v.Y, u.Z * v.Z, u.W * v.W);
 
 		/// <summary>Multiplies two vectors component by component.</summary>
 		/// <param name="u">Vector4.</param>
 		/// <param name="v">Vector4.</param>
 		/// <returns>The multiplication of u times v.</returns>
-		public static Vector4 Multiply(Vector4 u, Vector4 v)
-		{
-			return new Vector4(u.X * v.X, u.Y * v.Y, u.Z * v.Z, u.W * v.W);
-		}
+		public static Vector4 Multiply(Vector4 u, Vector4 v) => new Vector4(u.X * v.X, u.Y * v.Y, u.Z * v.Z, u.W * v.W);
 
 		/// <summary>Divides an scalar with a vector.</summary>
 		/// <param name="a">Scalar.</param>
@@ -446,19 +367,13 @@ namespace netDxf
 		/// <param name="u">Vector4.</param>
 		/// <param name="v">Vector4.</param>
 		/// <returns>The multiplication of u times v.</returns>
-		public static Vector4 operator /(Vector4 u, Vector4 v)
-		{
-			return new Vector4(u.X / v.X, u.Y / v.Y, u.Z / v.Z, u.W / v.W);
-		}
+		public static Vector4 operator /(Vector4 u, Vector4 v) => new Vector4(u.X / v.X, u.Y / v.Y, u.Z / v.Z, u.W / v.W);
 
 		/// <summary>Divides two vectors component by component.</summary>
 		/// <param name="u">Vector4.</param>
 		/// <param name="v">Vector4.</param>
 		/// <returns>The multiplication of u times v.</returns>
-		public static Vector4 Divide(Vector4 u, Vector4 v)
-		{
-			return new Vector4(u.X / v.X, u.Y / v.Y, u.Z / v.Z, u.W / v.W);
-		}
+		public static Vector4 Divide(Vector4 u, Vector4 v) => new Vector4(u.X / v.X, u.Y / v.Y, u.Z / v.Z, u.W / v.W);
 
 		#endregion
 
@@ -490,37 +405,20 @@ namespace netDxf
 
 		/// <summary>Obtains the modulus of the vector.</summary>
 		/// <returns>Vector modulus.</returns>
-		public double Modulus()
-		{
-			return this.isNormalized ? 1.0 : Math.Sqrt(DotProduct(this, this));
-		}
+		public double Modulus() => this.isNormalized ? 1.0 : Math.Sqrt(DotProduct(this, this));
 
 		/// <summary>Returns an array that represents the vector.</summary>
 		/// <returns>Array.</returns>
-		public double[] ToArray()
-		{
-			return new[] { this.x, this.y, this.z };
-		}
+		public double[] ToArray() => new[] { this.x, this.y, this.z };
 
 		#endregion
 
 		#region comparison methods
 
 		/// <inheritdoc/>
-		public override bool Equals(object other)
-		{
-			if (other is Vector4 vector)
-			{
-				return this.Equals(vector);
-			}
-
-			return false;
-		}
+		public override bool Equals(object obj) => obj is Vector4 other && this.Equals(other);
 		/// <inheritdoc/>
-		public bool Equals(Vector4 other)
-		{
-			return this.Equals(other, MathHelper.Epsilon);
-		}
+		public bool Equals(Vector4 other) => this.Equals(other, MathHelper.Epsilon);
 		/// <summary>Check if the components of two vectors are approximate equal.</summary>
 		/// <param name="other">Vector4.</param>
 		/// <param name="threshold">Maximum tolerance.</param>
@@ -536,25 +434,16 @@ namespace netDxf
 		/// <param name="a">Vector4.</param>
 		/// <param name="b">Vector4.</param>
 		/// <returns><see langword="true"/> if the four components are almost equal or <see langword="false"/> in any other case.</returns>
-		public static bool Equals(Vector4 a, Vector4 b)
-		{
-			return a.Equals(b, MathHelper.Epsilon);
-		}
+		public static bool Equals(Vector4 a, Vector4 b) => a.Equals(b, MathHelper.Epsilon);
 		/// <summary>Check if the components of two vectors are approximate equal.</summary>
 		/// <param name="a">Vector4.</param>
 		/// <param name="b">Vector4.</param>
 		/// <param name="threshold">Maximum tolerance.</param>
 		/// <returns><see langword="true"/> if the four components are almost equal or <see langword="false"/> in any other case.</returns>
-		public static bool Equals(Vector4 a, Vector4 b, double threshold)
-		{
-			return a.Equals(b, threshold);
-		}
+		public static bool Equals(Vector4 a, Vector4 b, double threshold) => a.Equals(b, threshold);
 
 		/// <inheritdoc/>
-		public override int GetHashCode()
-		{
-			return this.X.GetHashCode() ^ this.Y.GetHashCode() ^ this.Z.GetHashCode() ^ this.W.GetHashCode();
-		}
+		public override int GetHashCode() => this.X.GetHashCode() ^ this.Y.GetHashCode() ^ this.Z.GetHashCode() ^ this.W.GetHashCode();
 
 		#endregion
 
@@ -562,17 +451,13 @@ namespace netDxf
 
 		/// <inheritdoc/>
 		public override string ToString()
-		{
-			return string.Format("{0}{4} {1}{4} {2}{4} {3}", this.x, this.y, this.z, this.w, Thread.CurrentThread.CurrentCulture.TextInfo.ListSeparator);
-		}
+			=> string.Format("{0}{4} {1}{4} {2}{4} {3}", this.x, this.y, this.z, this.w, Thread.CurrentThread.CurrentCulture.TextInfo.ListSeparator);
 
 		/// <summary>Obtains a string that represents the vector.</summary>
 		/// <param name="provider">An <see cref="IFormatProvider"/> interface implementation that supplies culture-specific formatting information. </param>
 		/// <returns>A string text.</returns>
 		public string ToString(IFormatProvider provider)
-		{
-			return string.Format("{0}{4} {1}{4} {2}{4} {3}", this.x.ToString(provider), this.y.ToString(provider), this.z.ToString(provider), this.w.ToString(provider), Thread.CurrentThread.CurrentCulture.TextInfo.ListSeparator);
-		}
+			=> string.Format("{0}{4} {1}{4} {2}{4} {3}", this.x.ToString(provider), this.y.ToString(provider), this.z.ToString(provider), this.w.ToString(provider), Thread.CurrentThread.CurrentCulture.TextInfo.ListSeparator);
 
 		#endregion
 	}

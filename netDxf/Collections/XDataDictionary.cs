@@ -69,7 +69,6 @@ namespace netDxf.Collections
 		{
 			this.innerDictionary = new Dictionary<string, XData>(StringComparer.OrdinalIgnoreCase);
 		}
-
 		/// <summary>Initializes a new instance of the class and has the specified items.</summary>
 		/// <param name="items">The list of <see cref="XData">extended data</see> items initially stored.</param>
 		public XDataDictionary(IEnumerable<XData> items)
@@ -77,7 +76,6 @@ namespace netDxf.Collections
 			this.innerDictionary = new Dictionary<string, XData>(StringComparer.OrdinalIgnoreCase);
 			this.AddRange(items);
 		}
-
 		/// <summary>Initializes a new instance of the class and has the specified initial capacity.</summary>
 		/// <param name="capacity">The number of items the collection can initially store.</param>
 		public XDataDictionary(int capacity)
@@ -92,7 +90,7 @@ namespace netDxf.Collections
 		/// <inheritdoc/>
 		public XData this[string appId]
 		{
-			get { return this.innerDictionary[appId]; }
+			get => this.innerDictionary[appId];
 			set
 			{
 				if (value == null)
@@ -110,28 +108,16 @@ namespace netDxf.Collections
 		}
 
 		/// <summary>Gets a collection containing the application registry names of the current dictionary.</summary>
-		public ICollection<string> AppIds
-		{
-			get { return this.innerDictionary.Keys; }
-		}
+		public ICollection<string> AppIds => this.innerDictionary.Keys;
 
 		/// <inheritdoc/>
-		public ICollection<XData> Values
-		{
-			get { return this.innerDictionary.Values; }
-		}
+		public ICollection<XData> Values => this.innerDictionary.Values;
 
 		/// <inheritdoc/>
-		public int Count
-		{
-			get { return this.innerDictionary.Count; }
-		}
+		public int Count => this.innerDictionary.Count;
 
 		/// <inheritdoc/>
-		public bool IsReadOnly
-		{
-			get { return false; }
-		}
+		public bool IsReadOnly => false;
 
 		#endregion
 
@@ -206,78 +192,45 @@ namespace netDxf.Collections
 		/// <summary>Determines whether current dictionary contains an <see cref="XData">extended data</see> with the specified application registry name.</summary>
 		/// <param name="appId">The application registry name to locate in the current dictionary.</param>
 		/// <returns><see langword="true"/> if the current dictionary contains an <see cref="XData">extended data</see> with the application registry name; otherwise, <see langword="false"/>.</returns>
-		public bool ContainsAppId(string appId)
-		{
-			return this.innerDictionary.ContainsKey(appId);
-		}
+		public bool ContainsAppId(string appId) => this.innerDictionary.ContainsKey(appId);
 
 		/// <summary>Determines whether current dictionary contains a specified <see cref="XData">extended data</see>.</summary>
 		/// <param name="value">The <see cref="XData">extended data</see> to locate in the current dictionary.</param>
 		/// <returns><see langword="true"/> if the current dictionary contains the <see cref="XData">extended data</see>; otherwise, <see langword="false"/>.</returns>
-		public bool ContainsValue(XData value)
-		{
-			return this.innerDictionary.ContainsValue(value);
-		}
+		public bool ContainsValue(XData value) => this.innerDictionary.ContainsValue(value);
 
 		/// <inheritdoc/>
-		public bool TryGetValue(string appId, out XData value)
-		{
-			return this.innerDictionary.TryGetValue(appId, out value);
-		}
+		public bool TryGetValue(string appId, out XData value) => this.innerDictionary.TryGetValue(appId, out value);
 
 		/// <inheritdoc/>
-		public IEnumerator<KeyValuePair<string, XData>> GetEnumerator()
-		{
-			return this.innerDictionary.GetEnumerator();
-		}
+		public IEnumerator<KeyValuePair<string, XData>> GetEnumerator() => this.innerDictionary.GetEnumerator();
 
 		#endregion
 
 		#region private properties
 
-		ICollection<string> IDictionary<string, XData>.Keys
-		{
-			get { return this.innerDictionary.Keys; }
-		}
+		ICollection<string> IDictionary<string, XData>.Keys => this.innerDictionary.Keys;
 
 		#endregion
 
 		#region private methods
 
-		bool IDictionary<string, XData>.ContainsKey(string tag)
-		{
-			return this.innerDictionary.ContainsKey(tag);
-		}
+		bool IDictionary<string, XData>.ContainsKey(string tag) => this.innerDictionary.ContainsKey(tag);
 
-		void IDictionary<string, XData>.Add(string key, XData value)
-		{
-			this.Add(value);
-		}
+		void IDictionary<string, XData>.Add(string key, XData value) => this.Add(value);
 
-		void ICollection<KeyValuePair<string, XData>>.Add(KeyValuePair<string, XData> item)
-		{
-			this.Add(item.Value);
-		}
+		void ICollection<KeyValuePair<string, XData>>.Add(KeyValuePair<string, XData> item) => this.Add(item.Value);
 
 		bool ICollection<KeyValuePair<string, XData>>.Remove(KeyValuePair<string, XData> item)
-		{
-			return ReferenceEquals(item.Value, this.innerDictionary[item.Key]) && this.Remove(item.Key);
-		}
+			=> ReferenceEquals(item.Value, this.innerDictionary[item.Key]) && this.Remove(item.Key);
 
 		bool ICollection<KeyValuePair<string, XData>>.Contains(KeyValuePair<string, XData> item)
-		{
-			return ((IDictionary<string, XData>)this.innerDictionary).Contains(item);
-		}
+			=> ((IDictionary<string, XData>)this.innerDictionary).Contains(item);
 
 		void ICollection<KeyValuePair<string, XData>>.CopyTo(KeyValuePair<string, XData>[] array, int arrayIndex)
-		{
-			((IDictionary<string, XData>)this.innerDictionary).CopyTo(array, arrayIndex);
-		}
+			=> ((IDictionary<string, XData>)this.innerDictionary).CopyTo(array, arrayIndex);
 
-		IEnumerator IEnumerable.GetEnumerator()
-		{
-			return this.GetEnumerator();
-		}
+		IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 
 		#endregion
 

@@ -30,23 +30,14 @@ namespace netDxf.Entities
 	/// <summary>Represents a <see cref="MLine">multiline</see> vertex.</summary>
 	public class MLineVertex
 	{
-		#region private fields
-
-		private Vector2 position;
-		private readonly Vector2 direction;
-		private readonly Vector2 miter;
-		private readonly List<double>[] distances;
-
-		#endregion
-
 		#region constructors
 
 		internal MLineVertex(Vector2 location, Vector2 direction, Vector2 miter, List<double>[] distances)
 		{
-			this.position = location;
-			this.direction = direction;
-			this.miter = miter;
-			this.distances = distances;
+			this.Position = location;
+			this.Direction = direction;
+			this.Miter = miter;
+			this.Distances = distances;
 		}
 
 		#endregion
@@ -57,23 +48,13 @@ namespace netDxf.Entities
 		/// <remarks>
 		/// If this property is modified the function MLine.Update() will need to be called manually to update the internal information.
 		/// </remarks>
-		public Vector2 Position
-		{
-			get { return this.position; }
-			set { this.position = value; }
-		}
+		public Vector2 Position { get; set; }
 
 		/// <summary>Gets the <b>MLine</b> vertex direction.</summary>
-		public Vector2 Direction
-		{
-			get { return this.direction; }
-		}
+		public Vector2 Direction { get; }
 
 		/// <summary>Gets the <b>MLine</b> vertex miter.</summary>
-		public Vector2 Miter
-		{
-			get { return this.miter; }
-		}
+		public Vector2 Miter { get; }
 
 		/// <summary>Gets the <see cref="MLine">multiline</see> vertex distances lists.</summary>
 		/// <remarks>
@@ -89,10 +70,7 @@ namespace netDxf.Entities
 		/// The successive values list the start and stop points of the line element breaks or cuts in this segment of the multiline.
 		/// </para>
 		/// </remarks>
-		public List<double>[] Distances
-		{
-			get { return this.distances; }
-		}
+		public List<double>[] Distances { get; }
 
 		#endregion
 
@@ -100,21 +78,19 @@ namespace netDxf.Entities
 
 		/// <inheritdoc/>
 		public override string ToString()
-		{
-			return string.Format("{0}: ({1})", "MLineVertex", this.position);
-		}
+			=> string.Format("{0}: ({1})", "MLineVertex", this.Position);
 
 		/// <summary>Creates a new MLineVertex that is a copy of the current instance.</summary>
 		/// <returns>A new MLineVertex that is a copy of this instance.</returns>
 		public object Clone()
 		{
-			List<double>[] copyDistances = new List<double>[this.distances.Length];
-			for (int i = 0; i < this.distances.Length; i++)
+			List<double>[] copyDistances = new List<double>[this.Distances.Length];
+			for (int i = 0; i < this.Distances.Length; i++)
 			{
 				copyDistances[i] = new List<double>();
-				copyDistances[i].AddRange(this.distances[i]);
+				copyDistances[i].AddRange(this.Distances[i]);
 			}
-			return new MLineVertex(this.position, this.direction, this.miter, copyDistances);
+			return new MLineVertex(this.Position, this.Direction, this.Miter, copyDistances);
 		}
 
 		#endregion

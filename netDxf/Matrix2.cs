@@ -70,25 +70,27 @@ namespace netDxf
 
 		/// <summary>Gets the zero matrix.</summary>
 		public static Matrix2 Zero
-		{
-			get
+			=> new Matrix2
+			(
+				0.0, 0.0,
+				0.0, 0.0
+			)
 			{
-				return new Matrix2(0.0, 0.0,
-									0.0, 0.0)
-				{ dirty = false, isIdentity = false };
-			}
-		}
+				dirty = false,
+				isIdentity = false
+			};
 
 		/// <summary>Gets the identity matrix.</summary>
 		public static Matrix2 Identity
-		{
-			get
+			=> new Matrix2
+			(
+				1.0, 0.0,
+				0.0, 1.0
+			)
 			{
-				return new Matrix2(1.0, 0.0,
-									0.0, 1.0)
-				{ dirty = false, isIdentity = true };
-			}
-		}
+				dirty = false,
+				isIdentity = true
+			};
 
 		#endregion
 
@@ -97,7 +99,7 @@ namespace netDxf
 		/// <summary>Gets or sets the matrix element [0,0].</summary>
 		public double M11
 		{
-			get { return this.m11; }
+			get => this.m11;
 			set
 			{
 				this.m11 = value;
@@ -108,7 +110,7 @@ namespace netDxf
 		/// <summary>Gets or sets the matrix element [0,1].</summary>
 		public double M12
 		{
-			get { return this.m12; }
+			get => this.m12;
 			set
 			{
 				this.m12 = value;
@@ -119,7 +121,7 @@ namespace netDxf
 		/// <summary>Gets or sets the matrix element [1,0].</summary>
 		public double M21
 		{
-			get { return this.m21; }
+			get => this.m21;
 			set
 			{
 				this.m21 = value;
@@ -130,7 +132,7 @@ namespace netDxf
 		/// <summary>Gets or sets the matrix element [1,1].</summary>
 		public double M22
 		{
-			get { return this.m22; }
+			get => this.m22;
 			set
 			{
 				this.m22 = value;
@@ -262,40 +264,44 @@ namespace netDxf
 		/// <param name="b">Matrix2.</param>
 		/// <returns>Matrix2.</returns>
 		public static Matrix2 operator +(Matrix2 a, Matrix2 b)
-		{
-			return new Matrix2(a.M11 + b.M11, a.M12 + b.M12,
-								a.M21 + b.M21, a.M22 + b.M22);
-		}
+			=> new Matrix2
+			(
+				a.M11 + b.M11, a.M12 + b.M12,
+				a.M21 + b.M21, a.M22 + b.M22
+			);
 
 		/// <summary>Matrix addition.</summary>
 		/// <param name="a">Matrix2.</param>
 		/// <param name="b">Matrix2.</param>
 		/// <returns>Matrix2.</returns>
 		public static Matrix2 Add(Matrix2 a, Matrix2 b)
-		{
-			return new Matrix2(a.M11 + b.M11, a.M12 + b.M12,
-								a.M21 + b.M21, a.M22 + b.M22);
-		}
+			=> new Matrix2
+			(
+				a.M11 + b.M11, a.M12 + b.M12,
+				a.M21 + b.M21, a.M22 + b.M22
+			);
 
 		/// <summary>Matrix subtraction.</summary>
 		/// <param name="a">Matrix2.</param>
 		/// <param name="b">Matrix2.</param>
 		/// <returns>Matrix2.</returns>
 		public static Matrix2 operator -(Matrix2 a, Matrix2 b)
-		{
-			return new Matrix2(a.M11 - b.M11, a.M12 - b.M12,
-								a.M21 - b.M21, a.M22 - b.M22);
-		}
+			=> new Matrix2
+			(
+				a.M11 - b.M11, a.M12 - b.M12,
+				a.M21 - b.M21, a.M22 - b.M22
+			);
 
 		/// <summary>Matrix subtraction.</summary>
 		/// <param name="a">Matrix2.</param>
 		/// <param name="b">Matrix2.</param>
 		/// <returns>Matrix2.</returns>
 		public static Matrix2 Subtract(Matrix2 a, Matrix2 b)
-		{
-			return new Matrix2(a.M11 - b.M11, a.M12 - b.M12,
-								a.M21 - b.M21, a.M22 - b.M22);
-		}
+			=> new Matrix2
+			(
+				a.M11 - b.M11, a.M12 - b.M12,
+				a.M21 - b.M21, a.M22 - b.M22
+			);
 
 		/// <summary>Product of two matrices.</summary>
 		/// <param name="a">Matrix2.</param>
@@ -313,8 +319,11 @@ namespace netDxf
 				return a;
 			}
 
-			return new Matrix2(a.M11 * b.M11 + a.M12 * b.M21, a.M11 * b.M12 + a.M12 * b.M22,
-								a.M21 * b.M11 + a.M22 * b.M21, a.M21 * b.M12 + a.M22 * b.M22);
+			return new Matrix2
+			(
+				a.M11 * b.M11 + a.M12 * b.M21, a.M11 * b.M12 + a.M12 * b.M22,
+				a.M21 * b.M11 + a.M22 * b.M21, a.M21 * b.M12 + a.M22 * b.M22
+			);
 		}
 
 		/// <summary>Product of two matrices.</summary>
@@ -333,8 +342,11 @@ namespace netDxf
 				return a;
 			}
 
-			return new Matrix2(a.M11 * b.M11 + a.M12 * b.M21, a.M11 * b.M12 + a.M12 * b.M22,
-								a.M21 * b.M11 + a.M22 * b.M21, a.M21 * b.M12 + a.M22 * b.M22);
+			return new Matrix2
+			(
+				a.M11 * b.M11 + a.M12 * b.M21, a.M11 * b.M12 + a.M12 * b.M22,
+				a.M21 * b.M11 + a.M22 * b.M21, a.M21 * b.M12 + a.M22 * b.M22
+			);
 		}
 
 		/// <summary>Product of a matrix with a vector.</summary>
@@ -343,10 +355,13 @@ namespace netDxf
 		/// <returns>Matrix2.</returns>
 		/// <remarks>Matrix2 adopts the convention of using column vectors.</remarks>
 		public static Vector2 operator *(Matrix2 a, Vector2 u)
-		{
-			return a.IsIdentity ? u : new Vector2(a.M11 * u.X + a.M12 * u.Y,
-													a.M21 * u.X + a.M22 * u.Y);
-		}
+			=> a.IsIdentity
+			? u
+			: new Vector2
+			(
+				a.M11 * u.X + a.M12 * u.Y,
+				a.M21 * u.X + a.M22 * u.Y
+			);
 
 		/// <summary>Product of a matrix with a vector.</summary>
 		/// <param name="a">Matrix2.</param>
@@ -354,48 +369,46 @@ namespace netDxf
 		/// <returns>Matrix2.</returns>
 		/// <remarks>Matrix2 adopts the convention of using column vectors.</remarks>
 		public static Vector2 Multiply(Matrix2 a, Vector2 u)
-		{
-			return a.IsIdentity ? u : new Vector2(a.M11 * u.X + a.M12 * u.Y,
-													a.M21 * u.X + a.M22 * u.Y);
-		}
+			=> a.IsIdentity
+			? u
+			: new Vector2
+			(
+				a.M11 * u.X + a.M12 * u.Y,
+				a.M21 * u.X + a.M22 * u.Y
+			);
 
 		/// <summary>Product of a matrix with a scalar.</summary>
 		/// <param name="m">Matrix2.</param>
 		/// <param name="a">Scalar.</param>
 		/// <returns>Matrix2.</returns>
 		public static Matrix2 operator *(Matrix2 m, double a)
-		{
-			return new Matrix2(m.M11 * a, m.M12 * a,
-								m.M21 * a, m.M22 * a);
-		}
+			=> new Matrix2
+			(
+				m.M11 * a, m.M12 * a,
+				m.M21 * a, m.M22 * a
+			);
 
 		/// <summary>Product of a matrix with a scalar.</summary>
 		/// <param name="m">Matrix2.</param>
 		/// <param name="a">Scalar.</param>
 		/// <returns>Matrix2.</returns>
 		public static Matrix2 Multiply(Matrix2 m, double a)
-		{
-			return new Matrix2(m.M11 * a, m.M12 * a,
-								m.M21 * a, m.M22 * a);
-		}
+			=> new Matrix2
+			(
+				m.M11 * a, m.M12 * a,
+				m.M21 * a, m.M22 * a
+			);
 
 		/// <summary>Check if the components of two matrices are equal.</summary>
 		/// <param name="u">Matrix2.</param>
 		/// <param name="v">Matrix2.</param>
 		/// <returns><see langword="true"/> if the matrix components are equal or <see langword="false"/> in any other case.</returns>
-		public static bool operator ==(Matrix2 u, Matrix2 v)
-		{
-			return Equals(u, v);
-		}
-
+		public static bool operator ==(Matrix2 u, Matrix2 v) => Equals(u, v);
 		/// <summary>Check if the components of two matrices are different.</summary>
 		/// <param name="u">Matrix2.</param>
 		/// <param name="v">Matrix2.</param>
 		/// <returns><see langword="true"/> if the matrix components are different or <see langword="false"/> in any other case.</returns>
-		public static bool operator !=(Matrix2 u, Matrix2 v)
-		{
-			return !Equals(u, v);
-		}
+		public static bool operator !=(Matrix2 u, Matrix2 v) => !Equals(u, v);
 
 		#endregion
 
@@ -403,10 +416,7 @@ namespace netDxf
 
 		/// <summary>Calculate the determinant of the actual matrix.</summary>
 		/// <returns>Determinant.</returns>
-		public double Determinant()
-		{
-			return this.IsIdentity ? 1.0 : this.m11 * this.m22 - this.m12 * this.m21;
-		}
+		public double Determinant() => this.IsIdentity ? 1.0 : this.m11 * this.m22 - this.m12 * this.m21;
 
 		/// <summary>Calculates the inverse matrix.</summary>
 		/// <returns>Inverse Matrix2.</returns>
@@ -425,17 +435,23 @@ namespace netDxf
 
 			det = 1 / det;
 
-			return new Matrix2(det * this.m22, -det * this.m12,
-								-det * this.m21, det * this.m11);
+			return new Matrix2
+			(
+				det * this.m22, -det * this.m12,
+				-det * this.m21, det * this.m11
+			);
 		}
 
 		/// <summary>Obtains the transpose matrix.</summary>
 		/// <returns>Transpose matrix.</returns>
 		public Matrix2 Transpose()
-		{
-			return this.IsIdentity ? Identity : new Matrix2(this.m11, this.m21,
-															this.m12, this.m22);
-		}
+			=> this.IsIdentity
+			? Identity
+			: new Matrix2
+			(
+				this.m11, this.m21,
+				this.m12, this.m22
+			);
 
 		#endregion
 
@@ -449,54 +465,40 @@ namespace netDxf
 		{
 			double cos = Math.Cos(angle);
 			double sin = Math.Sin(angle);
-			return new Matrix2(cos, -sin, sin, cos);
+			return new Matrix2
+			(
+				cos, -sin,
+				sin, cos
+			);
 		}
 
 		/// <summary>Build a scaling matrix.</summary>
 		/// <param name="value">Single scale factor for x and y axis.</param>
 		/// <returns>A scaling matrix.</returns>
-		public static Matrix2 Scale(double value)
-		{
-			return Scale(value, value);
-		}
-
+		public static Matrix2 Scale(double value) => Scale(value, value);
 		/// <summary>Build a scaling matrix.</summary>
 		/// <param name="value">Scale factors for x and y axis.</param>
 		/// <returns>A scaling matrix.</returns>
-		public static Matrix2 Scale(Vector2 value)
-		{
-			return Scale(value.X, value.Y);
-		}
-
+		public static Matrix2 Scale(Vector2 value) => Scale(value.X, value.Y);
 		/// <summary>Build a scaling matrix.</summary>
 		/// <param name="x">Scale factor for x-axis.</param>
 		/// <param name="y">Scale factor for y-axis.</param>
 		/// <returns>A scaling matrix.</returns>
 		public static Matrix2 Scale(double x, double y)
-		{
-			return new Matrix2(x, 0.0,
-								0.0, y);
-		}
+			=> new Matrix2
+			(
+				x, 0.0,
+				0.0, y
+			);
 
 		#endregion
 
 		#region comparison methods
 
 		/// <inheritdoc/>
-		public override bool Equals(object obj)
-		{
-			if (obj is Matrix2 matrix)
-			{
-				return this.Equals(matrix);
-			}
-
-			return false;
-		}
+		public override bool Equals(object obj) => obj is Matrix2 other && this.Equals(other);
 		/// <inheritdoc/>
-		public bool Equals(Matrix2 other)
-		{
-			return this.Equals(other, MathHelper.Epsilon);
-		}
+		public bool Equals(Matrix2 other) => this.Equals(other, MathHelper.Epsilon);
 		/// <summary>Check if the components of two matrices are approximate equal.</summary>
 		/// <param name="obj">Matrix2.</param>
 		/// <param name="threshold">Maximum tolerance.</param>
@@ -513,25 +515,18 @@ namespace netDxf
 		/// <param name="a">Matrix2.</param>
 		/// <param name="b">Matrix2.</param>
 		/// <returns><see langword="true"/> if the matrix components are almost equal or <see langword="false"/> in any other case.</returns>
-		public static bool Equals(Matrix2 a, Matrix2 b)
-		{
-			return a.Equals(b, MathHelper.Epsilon);
-		}
+		public static bool Equals(Matrix2 a, Matrix2 b) => a.Equals(b, MathHelper.Epsilon);
 		/// <summary>Check if the components of two matrices are approximate equal.</summary>
 		/// <param name="a">Matrix2.</param>
 		/// <param name="b">Matrix2.</param>
 		/// <param name="threshold">Maximum tolerance.</param>
 		/// <returns><see langword="true"/> if the matrix components are almost equal or <see langword="false"/> in any other case.</returns>
-		public static bool Equals(Matrix2 a, Matrix2 b, double threshold)
-		{
-			return a.Equals(b, threshold);
-		}
+		public static bool Equals(Matrix2 a, Matrix2 b, double threshold) => a.Equals(b, threshold);
 
 		/// <inheritdoc/>
 		public override int GetHashCode()
-		{
-			return this.M11.GetHashCode() ^ this.M12.GetHashCode() ^ this.M21.GetHashCode() ^ this.M22.GetHashCode();
-		}
+			=> this.M11.GetHashCode() ^ this.M12.GetHashCode()
+			^ this.M21.GetHashCode() ^ this.M22.GetHashCode();
 
 		#endregion
 

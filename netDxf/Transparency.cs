@@ -46,16 +46,10 @@ namespace netDxf
 		#region constants
 
 		/// <summary>Gets the <b>ByLayer</b> transparency.</summary>
-		public static Transparency ByLayer
-		{
-			get { return new Transparency { transparency = -1 }; }
-		}
+		public static Transparency ByLayer => new Transparency { transparency = -1 };
 
 		/// <summary>Gets the <b>ByBlock</b> transparency.</summary>
-		public static Transparency ByBlock
-		{
-			get { return new Transparency { transparency = 100 }; }
-		}
+		public static Transparency ByBlock => new Transparency { transparency = 100 };
 
 		#endregion
 
@@ -86,16 +80,10 @@ namespace netDxf
 		#region public properties
 
 		/// <summary>Defines if the transparency is defined by layer.</summary>
-		public bool IsByLayer
-		{
-			get { return this.transparency == -1; }
-		}
+		public bool IsByLayer => this.transparency == -1;
 
 		/// <summary>Defines if the transparency is defined by block.</summary>
-		public bool IsByBlock
-		{
-			get { return this.transparency == 100; }
-		}
+		public bool IsByBlock => this.transparency == 100;
 
 		/// <summary>Gets or sets the transparency value range from 0 to 90.</summary>
 		/// <remarks>
@@ -103,7 +91,7 @@ namespace netDxf
 		/// </remarks>
 		public short Value
 		{
-			get { return this.transparency; }
+			get => this.transparency;
 			set
 			{
 				if (value < 0 || value > 90)
@@ -170,10 +158,7 @@ namespace netDxf
 		#region implements ICloneable
 
 		/// <inheritdoc/>
-		public object Clone()
-		{
-			return FromCadIndex(this.transparency);
-		}
+		public object Clone() => FromCadIndex(this.transparency);
 
 		#endregion
 

@@ -37,7 +37,6 @@ namespace netDxf.Collections
 		#region private fields
 
 		private readonly List<string> folders;
-		private string workingFolder;
 
 		#endregion
 
@@ -47,9 +46,7 @@ namespace netDxf.Collections
 		public SupportFolders()
 		{
 			this.folders = new List<string>();
-			this.workingFolder = Environment.CurrentDirectory;
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="folders">The collection whose elements should be added to the list. The items in the collection cannot be <see langword="null"/>.</param>
 		public SupportFolders(IEnumerable<string> folders)
@@ -59,7 +56,6 @@ namespace netDxf.Collections
 				throw new ArgumentNullException(nameof(folders));
 			}
 			this.folders = new List<string>(folders);
-			this.workingFolder = Environment.CurrentDirectory;
 		}
 
 		#endregion
@@ -68,11 +64,7 @@ namespace netDxf.Collections
 
 		/// <summary>Gets or sets the base folder to resolver relative paths of external references.</summary>
 		/// <remarks>By default it points to the current <see cref="System.Environment.CurrentDirectory"/> when the <see cref="DxfDocument"/> was created.</remarks>
-		public string WorkingFolder
-		{
-			get { return this.workingFolder; }
-			set { this.workingFolder = value; }
-		}
+		public string WorkingFolder { get; set; } = Environment.CurrentDirectory;
 
 		#endregion
 
@@ -87,7 +79,7 @@ namespace netDxf.Collections
 			string foundFile = string.Empty;
 
 			string currentDirectory = Environment.CurrentDirectory;
-			Environment.CurrentDirectory = this.workingFolder;
+			Environment.CurrentDirectory = this.WorkingFolder;
 
 			if (File.Exists(file))
 			{
@@ -116,7 +108,7 @@ namespace netDxf.Collections
 		/// <inheritdoc/>
 		public string this[int index]
 		{
-			get { return this.folders[index]; }
+			get => this.folders[index];
 			set
 			{
 				if (string.IsNullOrEmpty(value))
@@ -128,29 +120,17 @@ namespace netDxf.Collections
 		}
 
 		/// <inheritdoc/>
-		public int Count
-		{
-			get { return this.folders.Count; }
-		}
+		public int Count => this.folders.Count;
 
 		/// <inheritdoc/>
-		public bool IsReadOnly
-		{
-			get { return false; }
-		}
+		public bool IsReadOnly => false;
 
 		/// <inheritdoc/>
-		public IEnumerator<string> GetEnumerator()
-		{
-			return this.folders.GetEnumerator();
-		}
+		public IEnumerator<string> GetEnumerator() => this.folders.GetEnumerator();
 
 		/// <summary>Returns an enumerator that iterates through the list.</summary>
 		/// <returns>The enumerator for the list.</returns>
-		IEnumerator IEnumerable.GetEnumerator()
-		{
-			return this.folders.GetEnumerator();
-		}
+		IEnumerator IEnumerable.GetEnumerator() => this.folders.GetEnumerator();
 
 		/// <inheritdoc/>
 		public void Add(string item)
@@ -177,10 +157,7 @@ namespace netDxf.Collections
 		}
 
 		/// <inheritdoc/>
-		public void Clear()
-		{
-			this.folders.Clear();
-		}
+		public void Clear() => this.folders.Clear();
 
 		/// <inheritdoc/>
 		public bool Contains(string item)
@@ -193,10 +170,7 @@ namespace netDxf.Collections
 		}
 
 		/// <inheritdoc/>
-		public void CopyTo(string[] array, int arrayIndex)
-		{
-			this.folders.CopyTo(array, arrayIndex);
-		}
+		public void CopyTo(string[] array, int arrayIndex) => this.folders.CopyTo(array, arrayIndex);
 
 		/// <inheritdoc/>
 		public bool Remove(string item)
@@ -209,10 +183,7 @@ namespace netDxf.Collections
 		}
 
 		/// <inheritdoc/>
-		public int IndexOf(string item)
-		{
-			return this.folders.IndexOf(item);
-		}
+		public int IndexOf(string item) => this.folders.IndexOf(item);
 
 		/// <inheritdoc/>
 		public void Insert(int index, string item)
@@ -225,10 +196,7 @@ namespace netDxf.Collections
 		}
 
 		/// <inheritdoc/>
-		public void RemoveAt(int index)
-		{
-			this.folders.RemoveAt(index);
-		}
+		public void RemoveAt(int index) => this.folders.RemoveAt(index);
 
 		#endregion
 	}

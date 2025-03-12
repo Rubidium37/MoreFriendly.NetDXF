@@ -35,8 +35,6 @@ namespace netDxf.IO
 		#region private fields
 
 		private readonly BinaryWriter writer;
-		private short dxfCode;
-		private object dxfValue;
 
 		#endregion
 
@@ -52,8 +50,8 @@ namespace netDxf.IO
 			byte[] sentinel = { 65, 117, 116, 111, 67, 65, 68, 32, 66, 105, 110, 97, 114, 121, 32, 68, 88, 70, 13, 10, 26, 0 };
 			this.writer.Write(sentinel);
 
-			this.dxfCode = 0;
-			this.dxfValue = null;
+			this.Code = 0;
+			this.Value = null;
 		}
 
 		#endregion
@@ -61,22 +59,13 @@ namespace netDxf.IO
 		#region public properties
 
 		/// <inheritdoc/>
-		public short Code
-		{
-			get { return this.dxfCode; }
-		}
+		public short Code { get; private set; }
 
 		/// <inheritdoc/>
-		public object Value
-		{
-			get { return this.dxfValue; }
-		}
+		public object Value { get; private set; }
 
 		/// <inheritdoc/>
-		public long CurrentPosition
-		{
-			get { return this.writer.BaseStream.Position; }
-		}
+		public long CurrentPosition => this.writer.BaseStream.Position;
 
 		#endregion
 
@@ -85,7 +74,7 @@ namespace netDxf.IO
 		/// <inheritdoc/>
 		public void Write(short code, object value)
 		{
-			this.dxfCode = code;
+			this.Code = code;
 			this.writer.Write(code);
 
 			if (code >= 0 && code <= 9) // string
@@ -299,17 +288,14 @@ namespace netDxf.IO
 			}
 			else
 			{
-				throw new Exception(string.Format("Code {0} not valid at byte address {1}", this.dxfCode, this.writer.BaseStream.Position));
+				throw new Exception(string.Format("Code {0} not valid at byte address {1}", this.Code, this.writer.BaseStream.Position));
 			}
 
-			this.dxfValue = value;
+			this.Value = value;
 		}
 
 		/// <inheritdoc/>
-		public void WriteByte(byte value)
-		{
-			this.writer.Write(value);
-		}
+		public void WriteByte(byte value) => this.writer.Write(value);
 
 		/// <inheritdoc/>
 		public void WriteBytes(byte[] value)
@@ -319,22 +305,13 @@ namespace netDxf.IO
 		}
 
 		/// <inheritdoc/>
-		public void WriteShort(short value)
-		{
-			this.writer.Write(value);
-		}
+		public void WriteShort(short value) => this.writer.Write(value);
 
 		/// <inheritdoc/>
-		public void WriteInt(int value)
-		{
-			this.writer.Write(value);
-		}
+		public void WriteInt(int value) => this.writer.Write(value);
 
 		/// <inheritdoc/>
-		public void WriteLong(long value)
-		{
-			this.writer.Write(value);
-		}
+		public void WriteLong(long value) => this.writer.Write(value);
 
 		/// <inheritdoc/>
 		public void WriteBool(bool value)
@@ -350,10 +327,7 @@ namespace netDxf.IO
 		}
 
 		/// <inheritdoc/>
-		public void WriteDouble(double value)
-		{
-			this.writer.Write(value);
-		}
+		public void WriteDouble(double value) => this.writer.Write(value);
 
 		/// <inheritdoc/>
 		public void WriteString(string value)
@@ -363,16 +337,11 @@ namespace netDxf.IO
 		}
 
 		/// <inheritdoc/>
-		public void Flush()
-		{
-			this.writer.Flush();
-		}
+		public void Flush() => this.writer.Flush();
 
 		/// <inheritdoc/>
 		public override string ToString()
-		{
-			return string.Format("{0}:{1}", this.dxfCode, this.dxfValue);
-		}
+			=> string.Format("{0}:{1}", this.Code, this.Value);
 
 		#endregion
 	}

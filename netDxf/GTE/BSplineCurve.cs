@@ -37,9 +37,6 @@ namespace netDxf.GTE
 	public class BSplineCurve :
 		ParametricCurve
 	{
-		private readonly BasisFunction basisFunction;
-		private readonly Vector3[] controls;
-
 		// Construction.  If the input controls is non-null, a copy is made of
 		// the controls.  To defer setting the control points, pass a null
 		// pointer and later access the control points via GetControls() or
@@ -49,37 +46,28 @@ namespace netDxf.GTE
 		public BSplineCurve(BasisFunctionInput input, Vector3[] controls)
 			: base(0.0, 1.0)
 		{
-			this.basisFunction = new BasisFunction(input);
+			this.BasisFunction = new BasisFunction(input);
 
 			// The mBasisFunction stores the domain but so does ParametricCurve.
-			this.SetTimeInterval(this.basisFunction.MinDomain, this.basisFunction.MaxDomain);
+			this.SetTimeInterval(this.BasisFunction.MinDomain, this.BasisFunction.MaxDomain);
 
 			// The replication of control points for periodic splines is
 			// avoided by wrapping the i-loop index in Evaluate.
-			this.controls = new Vector3[input.NumControls];
+			this.Controls = new Vector3[input.NumControls];
 			if (controls != null)
 			{
-				controls.CopyTo(this.controls, 0);
+				controls.CopyTo(this.Controls, 0);
 			}
 
-			this.isConstructed = true;
+			this.IsConstructed = true;
 		}
 
 		// Member access.
-		public BasisFunction BasisFunction
-		{
-			get { return this.basisFunction; }
-		}
+		public BasisFunction BasisFunction { get; }
 
-		public int NumControls
-		{
-			get { return this.controls.Length; }
-		}
+		public int NumControls => this.Controls.Length;
 
-		public Vector3[] Controls
-		{
-			get { return this.controls; }
-		}
+		public Vector3[] Controls { get; }
 
 		// Evaluation of the curve.  The function supports derivative
 		// calculation through order 3; that is, order <= 3 is required.  If
@@ -94,13 +82,13 @@ namespace netDxf.GTE
 			int supOrder = SUP_ORDER;
 			jet = new Vector3[supOrder];
 
-			if (!this.isConstructed || order >= supOrder)
+			if (!this.IsConstructed || order >= supOrder)
 			{
 				// Return a zero-valued jet for invalid state.
 				return;
 			}
 
-			this.basisFunction.Evaluate(t, order, out int imin, out int imax);
+			this.BasisFunction.Evaluate(t, order, out int imin, out int imax);
 
 			// Compute position.
 			jet[0] = this.Compute(0, imin, imax);
@@ -131,9 +119,9 @@ namespace netDxf.GTE
 			Vector3 result = Vector3.Zero;
 			for (int i = imin; i <= imax; i++)
 			{
-				double tmp = this.basisFunction.GetValue(order, i);
+				double tmp = this.BasisFunction.GetValue(order, i);
 				int j = i >= numControls ? i - numControls : i;
-				result += tmp * this.controls[j];
+				result += tmp * this.Controls[j];
 			}
 			return result;
 		}

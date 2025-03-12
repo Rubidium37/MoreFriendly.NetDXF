@@ -38,95 +38,79 @@ namespace netDxf.GTE
 {
 	public class BandedMatrix
 	{
-		private readonly int size;
-		private readonly double[] dBand;
-		private readonly double[][] lBands, uBands;
-
 		// Construction and destruction.
 		public BandedMatrix(int size, int numLBands, int numUBands)
 		{
-			this.size = size;
+			this.Size = size;
 
 			if (size > 0 && 0 <= numLBands && numLBands < size && 0 <= numUBands && numUBands < size)
 			{
-				this.dBand = new double[size];
+				this.DBand = new double[size];
 				int numElements;
 
 				if (numLBands > 0)
 				{
-					this.lBands = new double[numLBands][];
+					this.LBands = new double[numLBands][];
 					numElements = size - 1;
 					for (int i = 0; i < numLBands; i++)
 					{
-						this.lBands[i] = new double[numElements--];
+						this.LBands[i] = new double[numElements--];
 					}
 				}
 
 				if (numUBands > 0)
 				{
-					this.uBands = new double[numUBands][];
+					this.UBands = new double[numUBands][];
 					numElements = size - 1;
 					for (int i = 0; i < numUBands; i++)
 					{
-						this.uBands[i] = new double[numElements--];
+						this.UBands[i] = new double[numElements--];
 					}
 				}
 			}
 			else
 			{
 				// Invalid argument to BandedMatrix constructor.
-				this.size = 0;
+				this.Size = 0;
 			}
 		}
 
 		// Member access.
-		public int Size
-		{
-			get { return this.size; }
-		}
+		public int Size { get; }
 
-		public double[] DBand
-		{
-			get { return this.dBand; }
-		}
+		public double[] DBand { get; }
 
-		public double[][] LBands
-		{
-			get { return this.lBands; }
-		}
+		public double[][] LBands { get; }
 
-		public double[][] UBands
-		{
-			get { return this.uBands; }
-		}
+		public double[][] UBands { get; }
 
 		public double this[int r, int c]
 		{
 			get
 			{
-				if (0 <= r && r < this.size && 0 <= c && c < this.size)
+				if (0 <= r && r < this.Size && 0 <= c && c < this.Size)
 				{
 					int band = c - r;
 					if (band > 0)
 					{
-						int numUBands = this.uBands.Length;
-						if (--band < numUBands && r < this.size - 1 - band)
+						int numUBands = this.UBands.Length;
+						if (--band < numUBands && r < this.Size - 1 - band)
 						{
-							return this.uBands[band][r];
+							return this.UBands[band][r];
 						}
 					}
 					else if (band < 0)
 					{
 						band = -band;
-						int numLBands = this.lBands.Length;
-						if (--band < numLBands && c < this.size - 1 - band)
+						int numLBands = this.LBands.Length;
+						if (--band < numLBands && c < this.Size - 1 - band)
 						{
-							return this.lBands[band][c];
+							return this.LBands[band][c];
 						}
 					}
 					else
 					{
-						return this.dBand[r];
+						return this.DBand[r];
 					}
 				}
 
@@ -136,29 +120,29 @@ namespace netDxf.GTE
 			}
 			set
 			{
-				if (0 <= r && r < this.size && 0 <= c && c < this.size)
+				if (0 <= r && r < this.Size && 0 <= c && c < this.Size)
 				{
 					int band = c - r;
 					if (band > 0)
 					{
-						int numUBands = this.uBands.Length;
-						if (--band < numUBands && r < this.size - 1 - band)
+						int numUBands = this.UBands.Length;
+						if (--band < numUBands && r < this.Size - 1 - band)
 						{
-							this.uBands[band][r] = value;
+							this.UBands[band][r] = value;
 						}
 					}
 					else if (band < 0)
 					{
 						band = -band;
-						int numLBands = this.lBands.Length;
-						if (--band < numLBands && c < this.size - 1 - band)
+						int numLBands = this.LBands.Length;
+						if (--band < numLBands && c < this.Size - 1 - band)
 						{
-							this.lBands[band][c] = value;
+							this.LBands[band][c] = value;
 						}
 					}
 					else
 					{
-						this.dBand[r] = value;
+						this.DBand[r] = value;
 					}
 				}
 				else
@@ -178,16 +162,16 @@ namespace netDxf.GTE
 		// L^T in the upper-triangular part of A.
 		public bool CholeskyFactor()
 		{
-			if (this.dBand.Length == 0 || this.lBands.Length != this.uBands.Length)
+			if (this.DBand.Length == 0 || this.LBands.Length != this.UBands.Length)
 			{
 				// Invalid number of bands.
 				return false;
 			}
 
-			int sizeM1 = this.size - 1;
-			int numBands = this.lBands.Length;
+			int sizeM1 = this.Size - 1;
+			int numBands = this.LBands.Length;
 
-			for (int i = 0; i < this.size; i++)
+			for (int i = 0; i < this.Size; i++)
 			{
 				int jMin = i - numBands;
 				if (jMin < 0)
@@ -245,10 +229,7 @@ namespace netDxf.GTE
 		// lower-triangular part of A and L^T in the upper-triangular part
 		// of A.
 		public bool SolveSystem(ref double[] bVector)
-		{
-			return this.CholeskyFactor() && this.SolveLower(ref bVector) && this.SolveUpper(ref bVector);
-		}
-
+			=> this.CholeskyFactor() && this.SolveLower(ref bVector) && this.SolveUpper(ref bVector);
 		// Solve the linear system A*X = B, where A is an NxN banded matrix
 		// and B is an NxM matrix.  The unknown X is also NxM.  The input to
 		// this function is B.  The output X is computed and stored in B.  The
@@ -261,9 +242,7 @@ namespace netDxf.GTE
 		// 'bMatrix' must have the storage order specified by the template
 		// parameter.
 		public bool SolveSystem(ref double[] bMatrix, int numBColumns)
-		{
-			return this.CholeskyFactor() && this.SolveLower(ref bMatrix, numBColumns) && this.SolveUpper(ref bMatrix, numBColumns);
-		}
+			=> this.CholeskyFactor() && this.SolveLower(ref bMatrix, numBColumns) && this.SolveUpper(ref bMatrix, numBColumns);
 
 		// Compute the inverse of the banded matrix.  The return value is
 		// 'true' when the matrix is invertible, in which case the 'inverse'
@@ -276,12 +255,12 @@ namespace netDxf.GTE
 		// parameter.
 		public bool ComputeInverse(double[] inverse)
 		{
-			LexicoArray2 invA = new LexicoArray2(this.size, this.size, inverse);
+			LexicoArray2 invA = new LexicoArray2(this.Size, this.Size, inverse);
 
 			BandedMatrix tmpA = this;
-			for (int row = 0; row < this.size; row++)
+			for (int row = 0; row < this.Size; row++)
 			{
-				for (int col = 0; col < this.size; col++)
+				for (int col = 0; col < this.Size; col++)
 				{
 					if (row != col)
 					{
@@ -295,7 +274,7 @@ namespace netDxf.GTE
 			}
 
 			// Forward elimination.
-			for (int row = 0; row < this.size; row++)
+			for (int row = 0; row < this.Size; row++)
 			{
 				// The pivot must be nonzero in order to proceed.
 				double diag = tmpA[row, row];
@@ -309,10 +288,10 @@ namespace netDxf.GTE
 
 				// Multiply the row to be consistent with diagonal term of 1.
 				int colMin = row + 1;
-				int colMax = colMin + this.uBands.Length;
-				if (colMax > this.size)
+				int colMax = colMin + this.UBands.Length;
+				if (colMax > this.Size)
 				{
-					colMax = this.size;
+					colMax = this.Size;
 				}
 
 				int c;
@@ -327,10 +306,10 @@ namespace netDxf.GTE
 
 				// Reduce the remaining rows.
 				int rowMin = row + 1;
-				int rowMax = rowMin + this.lBands.Length;
-				if (rowMax > this.size)
+				int rowMax = rowMin + this.LBands.Length;
+				if (rowMax > this.Size)
 				{
-					rowMax = this.size;
+					rowMax = this.Size;
 				}
 
 				for (int r = rowMin; r < rowMax; r++)
@@ -349,10 +328,10 @@ namespace netDxf.GTE
 			}
 
 			// Backward elimination.
-			for (int row = this.size - 1; row >= 1; row--)
+			for (int row = this.Size - 1; row >= 1; row--)
 			{
 				int rowMax = row - 1;
-				int rowMin = row - this.uBands.Length;
+				int rowMin = row - this.UBands.Length;
 				if (rowMin < 0)
 				{
 					rowMin = 0;
@@ -362,7 +341,7 @@ namespace netDxf.GTE
 				{
 					double mult = tmpA[r, row];
 					tmpA[r, row] = 0.0;
-					for (int c = 0; c < this.size; c++)
+					for (int c = 0; c < this.Size; c++)
 					{
 						invA[r, c] -= mult * invA[row, c];
 					}
@@ -377,7 +356,7 @@ namespace netDxf.GTE
 		// operation is successful.
 		private bool SolveLower(ref double[] dataVector)
 		{
-			int dBandSize = this.dBand.Length;
+			int dBandSize = this.DBand.Length;
 			for (int r = 0; r < dBandSize; r++)
 			{
 				double lowerRR = this[r, r];
@@ -403,8 +382,8 @@ namespace netDxf.GTE
 		// is successful.
 		private bool SolveUpper(ref double[] dataVector)
 		{
-			int dBandSize = this.dBand.Length;
-			for (int r = this.size - 1; r >= 0; r--)
+			int dBandSize = this.DBand.Length;
+			for (int r = this.Size - 1; r >= 0; r--)
 			{
 				double upperRR = this[r, r];
 				if (upperRR > 0.0)
@@ -431,9 +410,9 @@ namespace netDxf.GTE
 		// SolveSystem(double*,int) about the storage for dataMatrix.
 		private bool SolveLower(ref double[] dataMatrix, int numColumns)
 		{
-			LexicoArray2 data = new LexicoArray2(this.size, numColumns, dataMatrix);
+			LexicoArray2 data = new LexicoArray2(this.Size, numColumns, dataMatrix);
 
-			for (int r = 0; r < this.size; r++)
+			for (int r = 0; r < this.Size; r++)
 			{
 				double lowerRR = this[r, r];
 				if (lowerRR > 0.0)
@@ -467,14 +446,14 @@ namespace netDxf.GTE
 		// the storage for dataMatrix.
 		private bool SolveUpper(ref double[] dataMatrix, int numColumns)
 		{
-			LexicoArray2 data = new LexicoArray2(this.size, numColumns, dataMatrix);
+			LexicoArray2 data = new LexicoArray2(this.Size, numColumns, dataMatrix);
 
-			for (int r = this.size - 1; r >= 0; r--)
+			for (int r = this.Size - 1; r >= 0; r--)
 			{
 				double upperRR = this[r, r];
 				if (upperRR > 0.0)
 				{
-					for (int c = r + 1; c < this.size; c++)
+					for (int c = r + 1; c < this.Size; c++)
 					{
 						double upperRC = this[r, c];
 						for (int bCol = 0; bCol < numColumns; bCol++)

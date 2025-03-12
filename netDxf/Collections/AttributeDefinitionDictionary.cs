@@ -105,7 +105,6 @@ namespace netDxf.Collections
 		{
 			this.innerDictionary = new Dictionary<string, AttributeDefinition>(StringComparer.OrdinalIgnoreCase);
 		}
-
 		/// <summary>Initializes a new instance of the class and has the specified initial capacity.</summary>
 		/// <param name="capacity">The number of items the collection can initially store.</param>
 		public AttributeDefinitionDictionary(int capacity)
@@ -120,7 +119,7 @@ namespace netDxf.Collections
 		/// <inheritdoc/>
 		public AttributeDefinition this[string tag]
 		{
-			get { return this.innerDictionary[tag]; }
+			get => this.innerDictionary[tag];
 			set
 			{
 				if (value == null)
@@ -156,28 +155,16 @@ namespace netDxf.Collections
 		}
 
 		/// <summary>Gets a collection containing the tags of the current dictionary.</summary>
-		public ICollection<string> Tags
-		{
-			get { return this.innerDictionary.Keys; }
-		}
+		public ICollection<string> Tags => this.innerDictionary.Keys;
 
 		/// <inheritdoc/>
-		public ICollection<AttributeDefinition> Values
-		{
-			get { return this.innerDictionary.Values; }
-		}
+		public ICollection<AttributeDefinition> Values => this.innerDictionary.Values;
 
 		/// <inheritdoc/>
-		public int Count
-		{
-			get { return this.innerDictionary.Count; }
-		}
+		public int Count => this.innerDictionary.Count;
 
 		/// <inheritdoc/>
-		public bool IsReadOnly
-		{
-			get { return false; }
-		}
+		public bool IsReadOnly => false;
 
 		#endregion
 
@@ -249,58 +236,35 @@ namespace netDxf.Collections
 		/// <summary>Determines whether current dictionary contains an <see cref="AttributeDefinition">attribute definition</see> with the specified tag.</summary>
 		/// <param name="tag">The tag to locate in the current dictionary.</param>
 		/// <returns><see langword="true"/> if the current dictionary contains an <see cref="AttributeDefinition">attribute definition</see> with the tag; otherwise, <see langword="false"/>.</returns>
-		public bool ContainsTag(string tag)
-		{
-			return this.innerDictionary.ContainsKey(tag);
-		}
+		public bool ContainsTag(string tag) => this.innerDictionary.ContainsKey(tag);
 
 		/// <summary>Determines whether current dictionary contains a specified <see cref="AttributeDefinition">attribute definition</see>.</summary>
 		/// <param name="value">The <see cref="AttributeDefinition">attribute definition</see> to locate in the current dictionary.</param>
 		/// <returns><see langword="true"/> if the current dictionary contains the <see cref="AttributeDefinition">attribute definition</see>; otherwise, <see langword="false"/>.</returns>
-		public bool ContainsValue(AttributeDefinition value)
-		{
-			return this.innerDictionary.ContainsValue(value);
-		}
+		public bool ContainsValue(AttributeDefinition value) => this.innerDictionary.ContainsValue(value);
 
 		/// <inheritdoc/>
-		public bool TryGetValue(string tag, out AttributeDefinition value)
-		{
-			return this.innerDictionary.TryGetValue(tag, out value);
-		}
+		public bool TryGetValue(string tag, out AttributeDefinition value) => this.innerDictionary.TryGetValue(tag, out value);
 
 		/// <inheritdoc/>
-		public IEnumerator<KeyValuePair<string, AttributeDefinition>> GetEnumerator()
-		{
-			return this.innerDictionary.GetEnumerator();
-		}
+		public IEnumerator<KeyValuePair<string, AttributeDefinition>> GetEnumerator() => this.innerDictionary.GetEnumerator();
 
 		#endregion
 
 		#region private properties
 
-		ICollection<string> IDictionary<string, AttributeDefinition>.Keys
-		{
-			get { return this.innerDictionary.Keys; }
-		}
+		ICollection<string> IDictionary<string, AttributeDefinition>.Keys => this.innerDictionary.Keys;
 
 		#endregion
 
 		#region private methods
 
-		bool IDictionary<string, AttributeDefinition>.ContainsKey(string tag)
-		{
-			return this.innerDictionary.ContainsKey(tag);
-		}
+		bool IDictionary<string, AttributeDefinition>.ContainsKey(string tag) => this.innerDictionary.ContainsKey(tag);
 
-		void IDictionary<string, AttributeDefinition>.Add(string key, AttributeDefinition value)
-		{
-			this.Add(value);
-		}
+		void IDictionary<string, AttributeDefinition>.Add(string key, AttributeDefinition value) => this.Add(value);
 
 		void ICollection<KeyValuePair<string, AttributeDefinition>>.Add(KeyValuePair<string, AttributeDefinition> item)
-		{
-			this.Add(item.Value);
-		}
+			=> this.Add(item.Value);
 
 		bool ICollection<KeyValuePair<string, AttributeDefinition>>.Remove(KeyValuePair<string, AttributeDefinition> item)
 		{
@@ -312,19 +276,12 @@ namespace netDxf.Collections
 		}
 
 		bool ICollection<KeyValuePair<string, AttributeDefinition>>.Contains(KeyValuePair<string, AttributeDefinition> item)
-		{
-			return ((IDictionary<string, AttributeDefinition>)this.innerDictionary).Contains(item);
-		}
+			=> ((IDictionary<string, AttributeDefinition>)this.innerDictionary).Contains(item);
 
 		void ICollection<KeyValuePair<string, AttributeDefinition>>.CopyTo(KeyValuePair<string, AttributeDefinition>[] array, int arrayIndex)
-		{
-			((IDictionary<string, AttributeDefinition>)this.innerDictionary).CopyTo(array, arrayIndex);
-		}
+			=> ((IDictionary<string, AttributeDefinition>)this.innerDictionary).CopyTo(array, arrayIndex);
 
-		IEnumerator IEnumerable.GetEnumerator()
-		{
-			return this.GetEnumerator();
-		}
+		IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 
 		#endregion
 	}

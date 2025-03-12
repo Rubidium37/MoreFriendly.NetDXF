@@ -28,28 +28,19 @@ namespace netDxf.Objects
 	internal class ImageDefinitionReactor :
 		DxfObject
 	{
-		#region private fields
-
-		private readonly string imageHandle;
-
-		#endregion
-
 		#region constructors
 
 		public ImageDefinitionReactor(string imageHandle)
 			: base(DxfObjectCode.ImageDefReactor)
 		{
-			this.imageHandle = imageHandle;
+			this.ImageHandle = imageHandle;
 		}
 
 		#endregion
 
 		#region public properties
 
-		public string ImageHandle
-		{
-			get { return this.imageHandle; }
-		}
+		public string ImageHandle { get; }
 
 		#endregion
 	}

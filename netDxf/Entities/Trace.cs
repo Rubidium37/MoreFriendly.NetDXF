@@ -35,17 +35,6 @@ namespace netDxf.Entities
 	public class Trace :
 		EntityObject
 	{
-		#region private fields
-
-		private Vector2 firstVertex;
-		private Vector2 secondVertex;
-		private Vector2 thirdVertex;
-		private Vector2 fourthVertex;
-		private double elevation;
-		private double thickness;
-
-		#endregion
-
 		#region constructors
 
 		/// <summary>Initializes a new instance of the class.</summary>
@@ -74,12 +63,12 @@ namespace netDxf.Entities
 		public Trace(Vector2 firstVertex, Vector2 secondVertex, Vector2 thirdVertex, Vector2 fourthVertex)
 			: base(EntityType.Trace, DxfObjectCode.Trace)
 		{
-			this.firstVertex = firstVertex;
-			this.secondVertex = secondVertex;
-			this.thirdVertex = thirdVertex;
-			this.fourthVertex = fourthVertex;
-			this.elevation = 0.0;
-			this.thickness = 0.0;
+			this.FirstVertex = firstVertex;
+			this.SecondVertex = secondVertex;
+			this.ThirdVertex = thirdVertex;
+			this.FourthVertex = fourthVertex;
+			this.Elevation = 0.0;
+			this.Thickness = 0.0;
 		}
 
 		#endregion
@@ -87,47 +76,23 @@ namespace netDxf.Entities
 		#region public properties
 
 		/// <summary>Gets or sets the first trace <see cref="Vector3">vertex in <b>OCS</b> (object coordinate system).</see>.</summary>
-		public Vector2 FirstVertex
-		{
-			get { return this.firstVertex; }
-			set { this.firstVertex = value; }
-		}
+		public Vector2 FirstVertex { get; set; }
 
 		/// <summary>Gets or sets the second trace <see cref="Vector3">vertex in <b>OCS</b> (object coordinate system).</see>.</summary>
-		public Vector2 SecondVertex
-		{
-			get { return this.secondVertex; }
-			set { this.secondVertex = value; }
-		}
+		public Vector2 SecondVertex { get; set; }
 
 		/// <summary>Gets or sets the third trace <see cref="Vector3">vertex in <b>OCS</b> (object coordinate system).</see>.</summary>
-		public Vector2 ThirdVertex
-		{
-			get { return this.thirdVertex; }
-			set { this.thirdVertex = value; }
-		}
+		public Vector2 ThirdVertex { get; set; }
 
 		/// <summary>Gets or sets the fourth trace <see cref="Vector3">vertex in <b>OCS</b> (object coordinate system).</see>.</summary>
-		public Vector2 FourthVertex
-		{
-			get { return this.fourthVertex; }
-			set { this.fourthVertex = value; }
-		}
+		public Vector2 FourthVertex { get; set; }
 
 		/// <summary>Gets or sets the trace elevation.</summary>
 		/// <remarks>This is the distance from the origin to the plane of the trace.</remarks>
-		public double Elevation
-		{
-			get { return this.elevation; }
-			set { this.elevation = value; }
-		}
+		public double Elevation { get; set; }
 
 		/// <summary>Gets or sets the thickness of the trace.</summary>
-		public double Thickness
-		{
-			get { return this.thickness; }
-			set { this.thickness = value; }
-		}
+		public double Thickness { get; set; }
 
 		#endregion
 
@@ -186,11 +151,11 @@ namespace netDxf.Entities
 				Normal = this.Normal,
 				IsVisible = this.IsVisible,
 				//Solid properties
-				FirstVertex = this.firstVertex,
-				SecondVertex = this.secondVertex,
-				ThirdVertex = this.thirdVertex,
-				FourthVertex = this.fourthVertex,
-				Thickness = this.thickness
+				FirstVertex = this.FirstVertex,
+				SecondVertex = this.SecondVertex,
+				ThirdVertex = this.ThirdVertex,
+				FourthVertex = this.FourthVertex,
+				Thickness = this.Thickness
 			};
 
 			foreach (XData data in this.XData.Values)

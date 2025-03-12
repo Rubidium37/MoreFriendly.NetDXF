@@ -38,9 +38,6 @@ namespace netDxf.Tables
 		#region private fields
 
 		private string shapeFile;
-		private readonly double size;
-		private readonly double widthFactor;
-		private readonly double obliqueAngle;
 
 		#endregion
 
@@ -51,10 +48,7 @@ namespace netDxf.Tables
 
 		/// <summary>Gets the default shape style.</summary>
 		/// <remarks>AutoCad stores the shapes for the predefined complex linetypes in the ltypeshp.shx file.</remarks>
-		internal static ShapeStyle Default
-		{
-			get { return new ShapeStyle("ltypeshp", ShapeStyle.DefaultShapeFile); }
-		}
+		internal static ShapeStyle Default => new ShapeStyle("ltypeshp", ShapeStyle.DefaultShapeFile);
 
 		#endregion
 
@@ -82,9 +76,9 @@ namespace netDxf.Tables
 			}
 
 			this.shapeFile = file;
-			this.size = size;
-			this.widthFactor = widthFactor;
-			this.obliqueAngle = obliqueAngle;
+			this.Size = size;
+			this.WidthFactor = widthFactor;
+			this.ObliqueAngle = obliqueAngle;
 		}
 
 		#endregion
@@ -94,7 +88,7 @@ namespace netDxf.Tables
 		/// <summary>Gets or sets the shape <b>SHX</b> file name.</summary>
 		public string File
 		{
-			get { return this.shapeFile; }
+			get => this.shapeFile;
 			set
 			{
 				if (string.IsNullOrEmpty(value))
@@ -113,30 +107,21 @@ namespace netDxf.Tables
 
 		/// <summary>Gets the shape size.</summary>
 		/// <remarks>This value seems to have no effect on shapes or complex line types with shapes. Default: 0.0.</remarks>
-		public double Size
-		{
-			get { return this.size; }
-		}
+		public double Size { get; }
 
 		/// <summary>Gets the shape width factor.</summary>
 		/// <remarks>This value seems to have no effect on shapes or complex line types with shapes. Default: 1.0.</remarks>
-		public double WidthFactor
-		{
-			get { return this.widthFactor; }
-		}
+		public double WidthFactor { get; }
 
 		/// <summary>Gets the shape oblique angle in degrees.</summary>
 		/// <remarks>This value seems to have no effect on shapes or complex line types with shapes. Default: 0.0.</remarks>
-		public double ObliqueAngle
-		{
-			get { return this.obliqueAngle; }
-		}
+		public double ObliqueAngle { get; }
 
 		/// <summary>Gets the owner of the actual shape style.</summary>
 		public new ShapeStyles Owner
 		{
-			get { return (ShapeStyles)base.Owner; }
-			internal set { base.Owner = value; }
+			get => (ShapeStyles)base.Owner;
+			internal set => base.Owner = value;
 		}
 
 		#endregion
@@ -722,21 +707,15 @@ namespace netDxf.Tables
 		#region overrides
 
 		/// <inheritdoc/>
-		public override bool HasReferences()
-		{
-			return this.Owner != null && this.Owner.HasReferences(this.Name);
-		}
+		public override bool HasReferences() => this.Owner != null && this.Owner.HasReferences(this.Name);
 
 		/// <inheritdoc/>
-		public override List<DxfObjectReference> GetReferences()
-		{
-			return this.Owner?.GetReferences(this.Name);
-		}
+		public override List<DxfObjectReference> GetReferences() => this.Owner?.GetReferences(this.Name);
 
 		/// <inheritdoc/>
 		public override TableObject Clone(string newName)
 		{
-			ShapeStyle copy = new ShapeStyle(newName, this.shapeFile, this.size, this.widthFactor, this.obliqueAngle);
+			ShapeStyle copy = new ShapeStyle(newName, this.shapeFile, this.Size, this.WidthFactor, this.ObliqueAngle);
 
 			foreach (XData data in this.XData.Values)
 			{
@@ -745,12 +724,8 @@ namespace netDxf.Tables
 
 			return copy;
 		}
-
 		/// <inheritdoc/>
-		public override object Clone()
-		{
-			return this.Clone(this.Name);
-		}
+		public override object Clone() => this.Clone(this.Name);
 
 		#endregion
 	}

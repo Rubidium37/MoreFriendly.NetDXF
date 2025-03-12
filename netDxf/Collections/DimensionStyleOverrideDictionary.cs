@@ -105,7 +105,6 @@ namespace netDxf.Collections
 		{
 			this.innerDictionary = new Dictionary<DimensionStyleOverrideType, DimensionStyleOverride>();
 		}
-
 		/// <summary>Initializes a new instance of the class and has the specified initial capacity.</summary>
 		/// <param name="capacity">The number of items the collection can initially store.</param>
 		public DimensionStyleOverrideDictionary(int capacity)
@@ -120,7 +119,7 @@ namespace netDxf.Collections
 		/// <inheritdoc/>
 		public DimensionStyleOverride this[DimensionStyleOverrideType type]
 		{
-			get { return this.innerDictionary[type]; }
+			get => this.innerDictionary[type];
 			set
 			{
 				if (value == null)
@@ -151,28 +150,16 @@ namespace netDxf.Collections
 		}
 
 		/// <summary>Gets a collection containing the types of the current dictionary.</summary>
-		public ICollection<DimensionStyleOverrideType> Types
-		{
-			get { return this.innerDictionary.Keys; }
-		}
+		public ICollection<DimensionStyleOverrideType> Types => this.innerDictionary.Keys;
 
 		/// <inheritdoc/>
-		public ICollection<DimensionStyleOverride> Values
-		{
-			get { return this.innerDictionary.Values; }
-		}
+		public ICollection<DimensionStyleOverride> Values => this.innerDictionary.Values;
 
 		/// <inheritdoc/>
-		public int Count
-		{
-			get { return this.innerDictionary.Count; }
-		}
+		public int Count => this.innerDictionary.Count;
 
 		/// <inheritdoc/>
-		public bool IsReadOnly
-		{
-			get { return false; }
-		}
+		public bool IsReadOnly => false;
 
 		#endregion
 
@@ -182,10 +169,7 @@ namespace netDxf.Collections
 		/// <param name="type">Dimension style override type.</param>
 		/// <param name="value">Dimension style override value.</param>
 		/// <remarks>A new <see cref="DimensionStyleOverride"/> will be created from the specified arguments.</remarks>
-		public void Add(DimensionStyleOverrideType type, object value)
-		{
-			this.Add(new DimensionStyleOverride(type, value));
-		}
+		public void Add(DimensionStyleOverrideType type, object value) => this.Add(new DimensionStyleOverride(type, value));
 
 		/// <summary>Adds an <see cref="DimensionStyleOverride"/> to the dictionary.</summary>
 		/// <param name="item">The <see cref="DimensionStyleOverride"/> to add.</param>
@@ -253,58 +237,40 @@ namespace netDxf.Collections
 		/// <summary>Determines whether current dictionary contains an <see cref="DimensionStyleOverride"/> of the specified type.</summary>
 		/// <param name="type">The type to locate in the current dictionary.</param>
 		/// <returns><see langword="true"/> if the current dictionary contains an <see cref="DimensionStyleOverride"/> of the type; otherwise, <see langword="false"/>.</returns>
-		public bool ContainsType(DimensionStyleOverrideType type)
-		{
-			return this.innerDictionary.ContainsKey(type);
-		}
+		public bool ContainsType(DimensionStyleOverrideType type) => this.innerDictionary.ContainsKey(type);
 
 		/// <summary>Determines whether current dictionary contains a specified <see cref="DimensionStyleOverride"/>.</summary>
 		/// <param name="value">The <see cref="DimensionStyleOverride"/> to locate in the current dictionary.</param>
 		/// <returns><see langword="true"/> if the current dictionary contains the <see cref="DimensionStyleOverride"/>; otherwise, <see langword="false"/>.</returns>
-		public bool ContainsValue(DimensionStyleOverride value)
-		{
-			return this.innerDictionary.ContainsValue(value);
-		}
+		public bool ContainsValue(DimensionStyleOverride value) => this.innerDictionary.ContainsValue(value);
 
 		/// <inheritdoc/>
 		public bool TryGetValue(DimensionStyleOverrideType type, out DimensionStyleOverride value)
-		{
-			return this.innerDictionary.TryGetValue(type, out value);
-		}
+			=> this.innerDictionary.TryGetValue(type, out value);
 
 		/// <inheritdoc/>
 		public IEnumerator<KeyValuePair<DimensionStyleOverrideType, DimensionStyleOverride>> GetEnumerator()
-		{
-			return this.innerDictionary.GetEnumerator();
-		}
+			=> this.innerDictionary.GetEnumerator();
 
 		#endregion
 
 		#region private properties
 
 		ICollection<DimensionStyleOverrideType> IDictionary<DimensionStyleOverrideType, DimensionStyleOverride>.Keys
-		{
-			get { return this.innerDictionary.Keys; }
-		}
+			=> this.innerDictionary.Keys;
 
 		#endregion
 
 		#region private methods
 
 		bool IDictionary<DimensionStyleOverrideType, DimensionStyleOverride>.ContainsKey(DimensionStyleOverrideType tag)
-		{
-			return this.innerDictionary.ContainsKey(tag);
-		}
+			=> this.innerDictionary.ContainsKey(tag);
 
 		void IDictionary<DimensionStyleOverrideType, DimensionStyleOverride>.Add(DimensionStyleOverrideType key, DimensionStyleOverride value)
-		{
-			this.Add(value);
-		}
+			=> this.Add(value);
 
 		void ICollection<KeyValuePair<DimensionStyleOverrideType, DimensionStyleOverride>>.Add(KeyValuePair<DimensionStyleOverrideType, DimensionStyleOverride> item)
-		{
-			this.Add(item.Value);
-		}
+			=> this.Add(item.Value);
 
 		bool ICollection<KeyValuePair<DimensionStyleOverrideType, DimensionStyleOverride>>.Remove(KeyValuePair<DimensionStyleOverrideType, DimensionStyleOverride> item)
 		{
@@ -317,19 +283,12 @@ namespace netDxf.Collections
 		}
 
 		bool ICollection<KeyValuePair<DimensionStyleOverrideType, DimensionStyleOverride>>.Contains(KeyValuePair<DimensionStyleOverrideType, DimensionStyleOverride> item)
-		{
-			return ((IDictionary<DimensionStyleOverrideType, DimensionStyleOverride>)this.innerDictionary).Contains(item);
-		}
+			=> ((IDictionary<DimensionStyleOverrideType, DimensionStyleOverride>)this.innerDictionary).Contains(item);
 
 		void ICollection<KeyValuePair<DimensionStyleOverrideType, DimensionStyleOverride>>.CopyTo(KeyValuePair<DimensionStyleOverrideType, DimensionStyleOverride>[] array, int arrayIndex)
-		{
-			((IDictionary<DimensionStyleOverrideType, DimensionStyleOverride>)this.innerDictionary).CopyTo(array, arrayIndex);
-		}
+			=> ((IDictionary<DimensionStyleOverrideType, DimensionStyleOverride>)this.innerDictionary).CopyTo(array, arrayIndex);
 
-		IEnumerator IEnumerable.GetEnumerator()
-		{
-			return this.GetEnumerator();
-		}
+		IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 
 		#endregion
 	}

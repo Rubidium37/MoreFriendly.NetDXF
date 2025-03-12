@@ -98,26 +98,17 @@ namespace netDxf.Entities
 		private AciColor color;
 		private Layer layer;
 		private Linetype linetype;
-		private Lineweight lineweight;
 		private Transparency transparency;
 		private double linetypeScale;
-		private bool isVisible;
 		private Vector3 normal;
 
-		private AttributeDefinition definition;
-		private readonly string tag;
 		private string attValue;
 		private TextStyle style;
-		private Vector3 position;
-		private AttributeFlags flags;
 		private double height;
 		private double widthFactor;
 		private double width;
 		private double obliqueAngle;
 		private double rotation;
-		private TextAlignment alignment;
-		private bool isBackward;
-		private bool isUpsideDown;
 
 		#endregion
 
@@ -126,7 +117,7 @@ namespace netDxf.Entities
 		internal Attribute(string tag)
 			: base(DxfObjectCode.Attribute)
 		{
-			this.tag = string.IsNullOrEmpty(tag) ? string.Empty : tag;
+			this.Tag = string.IsNullOrEmpty(tag) ? string.Empty : tag;
 		}
 
 		/// <summary>Initializes a new instance of the class.</summary>
@@ -142,26 +133,26 @@ namespace netDxf.Entities
 			this.color = definition.Color;
 			this.layer = definition.Layer;
 			this.linetype = definition.Linetype;
-			this.lineweight = definition.Lineweight;
+			this.Lineweight = definition.Lineweight;
 			this.linetypeScale = definition.LinetypeScale;
 			this.transparency = definition.Transparency;
-			this.isVisible = definition.IsVisible;
+			this.IsVisible = definition.IsVisible;
 			this.normal = definition.Normal;
 
-			this.definition = definition;
-			this.tag = definition.Tag;
+			this.Definition = definition;
+			this.Tag = definition.Tag;
 			this.attValue = definition.Value;
 			this.style = definition.Style;
-			this.position = definition.Position;
-			this.flags = definition.Flags;
+			this.Position = definition.Position;
+			this.Flags = definition.Flags;
 			this.height = definition.Height;
 			this.width = definition.Width;
 			this.widthFactor = definition.WidthFactor;
 			this.obliqueAngle = definition.ObliqueAngle;
 			this.rotation = definition.Rotation;
-			this.alignment = definition.Alignment;
-			this.isBackward = definition.IsBackward;
-			this.isUpsideDown = definition.IsUpsideDown;
+			this.Alignment = definition.Alignment;
+			this.IsBackward = definition.IsBackward;
+			this.IsUpsideDown = definition.IsUpsideDown;
 		}
 
 		#endregion
@@ -171,7 +162,7 @@ namespace netDxf.Entities
 		/// <summary>Gets or sets the entity <see cref="AciColor">color</see>.</summary>
 		public AciColor Color
 		{
-			get { return this.color; }
+			get => this.color;
 			set
 			{
 				this.color = value ?? throw new ArgumentNullException(nameof(value));
@@ -181,7 +172,7 @@ namespace netDxf.Entities
 		/// <summary>Gets or sets the entity <see cref="Layer">layer</see>.</summary>
 		public Layer Layer
 		{
-			get { return this.layer; }
+			get => this.layer;
 			set
 			{
 				if (value == null)
@@ -195,7 +186,7 @@ namespace netDxf.Entities
 		/// <summary>Gets or sets the entity <see cref="Linetype">line type</see>.</summary>
 		public Linetype Linetype
 		{
-			get { return this.linetype; }
+			get => this.linetype;
 			set
 			{
 				if (value == null)
@@ -207,16 +198,12 @@ namespace netDxf.Entities
 		}
 
 		/// <summary>Gets or sets the entity line weight, one unit is always 1/100 mm (default = ByLayer).</summary>
-		public Lineweight Lineweight
-		{
-			get { return this.lineweight; }
-			set { this.lineweight = value; }
-		}
+		public Lineweight Lineweight { get; set; }
 
 		/// <summary>Gets or sets layer transparency (default: ByLayer).</summary>
 		public Transparency Transparency
 		{
-			get { return this.transparency; }
+			get => this.transparency;
 			set
 			{
 				this.transparency = value ?? throw new ArgumentNullException(nameof(value));
@@ -226,7 +213,7 @@ namespace netDxf.Entities
 		/// <summary>Gets or sets the entity line type scale.</summary>
 		public double LinetypeScale
 		{
-			get { return this.linetypeScale; }
+			get => this.linetypeScale;
 			set
 			{
 				if (value <= 0)
@@ -238,16 +225,12 @@ namespace netDxf.Entities
 		}
 
 		/// <summary>Gets or set the entity visibility.</summary>
-		public bool IsVisible
-		{
-			get { return this.isVisible; }
-			set { this.isVisible = value; }
-		}
+		public bool IsVisible { get; set; }
 
 		/// <summary>Gets or sets the entity <see cref="Vector3">normal</see>.</summary>
 		public Vector3 Normal
 		{
-			get { return this.normal; }
+			get => this.normal;
 			set
 			{
 				this.normal = Vector3.Normalize(value);
@@ -261,23 +244,16 @@ namespace netDxf.Entities
 		/// <summary>Gets the owner of the actual <b>DXF</b> object.</summary>
 		public new Insert Owner
 		{
-			get { return (Insert)base.Owner; }
-			internal set { base.Owner = value; }
+			get => (Insert)base.Owner;
+			internal set => base.Owner = value;
 		}
 
 		/// <summary>Gets the attribute definition.</summary>
 		/// <remarks>If the insert attribute has no definition it will return <see langword="null"/>.</remarks>
-		public AttributeDefinition Definition
-		{
-			get { return this.definition; }
-			internal set { this.definition = value; }
-		}
+		public AttributeDefinition Definition { get; internal set; }
 
 		/// <summary>Gets the attribute tag.</summary>
-		public string Tag
-		{
-			get { return this.tag; }
-		}
+		public string Tag { get; }
 
 		/// <summary>Gets or sets the text height.</summary>
 		/// <remarks>
@@ -286,7 +262,7 @@ namespace netDxf.Entities
 		/// </remarks>
 		public double Height
 		{
-			get { return this.height; }
+			get => this.height;
 			set
 			{
 				if (value <= 0)
@@ -301,7 +277,7 @@ namespace netDxf.Entities
 		/// <remarks>Valid values must be greater than zero. Default: 1.0.</remarks>
 		public double Width
 		{
-			get { return this.width; }
+			get => this.width;
 			set
 			{
 				if (value <= 0)
@@ -319,7 +295,7 @@ namespace netDxf.Entities
 		/// </remarks>
 		public double WidthFactor
 		{
-			get { return this.widthFactor; }
+			get => this.widthFactor;
 			set
 			{
 				if (value <= 0)
@@ -334,7 +310,7 @@ namespace netDxf.Entities
 		/// <remarks>Valid values range from -85 to 85. Default: 0.0.</remarks>
 		public double ObliqueAngle
 		{
-			get { return this.obliqueAngle; }
+			get => this.obliqueAngle;
 			set
 			{
 				if (value < -85.0 || value > 85.0)
@@ -348,8 +324,8 @@ namespace netDxf.Entities
 		/// <summary>Gets or sets the attribute value.</summary>
 		public string Value
 		{
-			get { return this.attValue; }
-			set { this.attValue = string.IsNullOrEmpty(value) ? string.Empty : value; }
+			get => this.attValue;
+			set => this.attValue = string.IsNullOrEmpty(value) ? string.Empty : value;
 		}
 
 		/// <summary>Gets or sets the attribute text style.</summary>
@@ -358,7 +334,7 @@ namespace netDxf.Entities
 		/// </remarks>
 		public TextStyle Style
 		{
-			get { return this.style; }
+			get => this.style;
 			set
 			{
 				if (value == null)
@@ -370,46 +346,26 @@ namespace netDxf.Entities
 		}
 
 		/// <summary>Gets or sets the attribute <see cref="Vector3">position</see>.</summary>
-		public Vector3 Position
-		{
-			get { return this.position; }
-			set { this.position = value; }
-		}
+		public Vector3 Position { get; set; }
 
 		/// <summary>Gets or sets the attribute flags.</summary>
-		public AttributeFlags Flags
-		{
-			get { return this.flags; }
-			set { this.flags = value; }
-		}
+		public AttributeFlags Flags { get; set; }
 
 		/// <summary>Gets or sets the attribute text rotation in degrees.</summary>
 		public double Rotation
 		{
-			get { return this.rotation; }
-			set { this.rotation = MathHelper.NormalizeAngle(value); }
+			get => this.rotation;
+			set => this.rotation = MathHelper.NormalizeAngle(value);
 		}
 
 		/// <summary>Gets or sets the text alignment.</summary>
-		public TextAlignment Alignment
-		{
-			get { return this.alignment; }
-			set { this.alignment = value; }
-		}
+		public TextAlignment Alignment { get; set; }
 
 		/// <summary>Gets or sets if the attribute text is backward (mirrored in X).</summary>
-		public bool IsBackward
-		{
-			get { return this.isBackward; }
-			set { this.isBackward = value; }
-		}
+		public bool IsBackward { get; set; }
 
 		/// <summary>Gets or sets if the attribute text is upside down (mirrored in Y).</summary>
-		public bool IsUpsideDown
-		{
-			get { return this.isUpsideDown; }
-			set { this.isUpsideDown = value; }
-		}
+		public bool IsUpsideDown { get; set; }
 
 		#endregion
 
@@ -614,7 +570,7 @@ namespace netDxf.Entities
 		/// <inheritdoc/>
 		public object Clone()
 		{
-			Attribute entity = new Attribute(this.tag)
+			Attribute entity = new Attribute(this.Tag)
 			{
 				//Attribute properties
 				Layer = (Layer)this.Layer.Clone(),
@@ -624,20 +580,20 @@ namespace netDxf.Entities
 				Transparency = (Transparency)this.Transparency.Clone(),
 				LinetypeScale = this.LinetypeScale,
 				Normal = this.Normal,
-				IsVisible = this.isVisible,
-				Definition = (AttributeDefinition)this.definition?.Clone(),
+				IsVisible = this.IsVisible,
+				Definition = (AttributeDefinition)this.Definition?.Clone(),
 				Height = this.height,
 				Width = this.width,
 				WidthFactor = this.widthFactor,
 				ObliqueAngle = this.obliqueAngle,
 				Value = this.attValue,
 				Style = (TextStyle)this.style.Clone(),
-				Position = this.position,
-				Flags = this.flags,
+				Position = this.Position,
+				Flags = this.Flags,
 				Rotation = this.rotation,
-				Alignment = this.alignment,
-				IsBackward = this.isBackward,
-				IsUpsideDown = this.isUpsideDown
+				Alignment = this.Alignment,
+				IsBackward = this.IsBackward,
+				IsUpsideDown = this.IsUpsideDown
 			};
 
 			foreach (XData data in this.XData.Values)

@@ -31,19 +31,13 @@ namespace netDxf.Entities
 	public class EntityChangeEventArgs :
 		EventArgs
 	{
-		#region private fields
-
-		private readonly EntityObject item;
-
-		#endregion
-
 		#region constructor
 
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="item">The entity that is being added or removed from another entity.</param>
 		public EntityChangeEventArgs(EntityObject item)
 		{
-			this.item = item;
+			this.Item = item;
 		}
 
 		#endregion
@@ -51,10 +45,7 @@ namespace netDxf.Entities
 		#region public properties
 
 		/// <summary>Gets the entity that is being added or removed.</summary>
-		public EntityObject Item
-		{
-			get { return this.item; }
-		}
+		public EntityObject Item { get; }
 
 		#endregion
 	}

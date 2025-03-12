@@ -79,10 +79,8 @@ namespace netDxf.Entities
 		#region private fields
 
 		private Block block;
-		private Vector3 position;
 		private Vector3 scale;
 		private double rotation;
-		private AttributeCollection attributes;
 
 		#endregion
 
@@ -96,8 +94,8 @@ namespace netDxf.Entities
 				throw new ArgumentNullException(nameof(attributes));
 			}
 
-			this.attributes = new AttributeCollection(attributes);
-			foreach (Attribute att in this.attributes)
+			this.Attributes = new AttributeCollection(attributes);
+			foreach (Attribute att in this.Attributes)
 			{
 				if (att.Owner != null)
 				{
@@ -107,7 +105,7 @@ namespace netDxf.Entities
 			}
 
 			this.block = null;
-			this.position = Vector3.Zero;
+			this.Position = Vector3.Zero;
 			this.scale = new Vector3(1.0);
 			this.rotation = 0.0;
 		}
@@ -134,7 +132,7 @@ namespace netDxf.Entities
 			: base(EntityType.Insert, DxfObjectCode.Insert)
 		{
 			this.block = block ?? throw new ArgumentNullException(nameof(block));
-			this.position = position;
+			this.Position = position;
 			this.scale = new Vector3(1.0);
 			this.rotation = 0.0;
 
@@ -143,13 +141,13 @@ namespace netDxf.Entities
 			{
 				Attribute att = new Attribute(attdef)
 				{
-					Position = attdef.Position + this.position - this.block.Origin,
+					Position = attdef.Position + this.Position - this.block.Origin,
 					Owner = this
 				};
 				atts.Add(att);
 			}
 
-			this.attributes = new AttributeCollection(atts);
+			this.Attributes = new AttributeCollection(atts);
 		}
 
 		#endregion
@@ -157,22 +155,15 @@ namespace netDxf.Entities
 		#region public properties
 
 		/// <summary>Gets or sets the default drawing units to obtain the Insert transformation matrix, when the current Insert entity does not belong to a <b>DXF</b> document.</summary>
-		public static DrawingUnits DefaultInsUnits
-		{
-			get;
-			set;
-		}
+		public static DrawingUnits DefaultInsUnits { get; set; }
 
 		/// <summary>Gets the insert list of <see cref="Attribute">attributes</see>.</summary>
-		public AttributeCollection Attributes
-		{
-			get { return this.attributes; }
-		}
+		public AttributeCollection Attributes { get; private set; }
 
 		/// <summary>Gets the insert <see cref="Block">block definition</see>.</summary>
 		public Block Block
 		{
-			get { return this.block; }
+			get => this.block;
 			internal set
 			{
 				//if (value == null)
@@ -188,30 +179,26 @@ namespace netDxf.Entities
 				//this.block = this.OnBlockChangedEvent(this.block, value);
 
 				//// remove all attributes in the actual insert
-				//foreach (Attribute att in this.attributes)
+				//foreach (Attribute att in this.Attributes)
 				//{
 				//	this.OnAttributeRemovedEvent(att);
 				//	att.Handle = null;
 				//	att.Owner = null;
 				//}
-				//this.attributes = new AttributeCollection();
+				//this.Attributes = new AttributeCollection();
 
 				this.block = value;
 			}
 		}
 
 		/// <summary>Gets or sets the <see cref="Vector3">position</see> in world coordinates.</summary>
-		public Vector3 Position
-		{
-			get { return this.position; }
-			set { this.position = value; }
-		}
+		public Vector3 Position { get; set; }
 
 		/// <summary>Gets or sets the insert <see cref="Vector3">scale</see>.</summary>
 		/// <remarks>None of the vector scale components can be zero.</remarks>
 		public Vector3 Scale
 		{
-			get { return this.scale; }
+			get => this.scale;
 			set
 			{
 				if (MathHelper.IsZero(value.X) || MathHelper.IsZero(value.Y) || MathHelper.IsZero(value.Z))
@@ -226,8 +213,8 @@ namespace netDxf.Entities
 		/// <summary>Gets or sets the insert rotation along the normal vector in degrees.</summary>
 		public double Rotation
 		{
-			get { return this.rotation; }
-			set { this.rotation = MathHelper.NormalizeAngle(value); }
+			get => this.rotation;
+			set => this.rotation = MathHelper.NormalizeAngle(value);
 		}
 
 		#endregion
@@ -245,7 +232,7 @@ namespace netDxf.Entities
 			List<Attribute> atts = new List<Attribute>();
 
 			// remove all attributes that have no attribute definition in the block
-			foreach (Attribute att in this.attributes)
+			foreach (Attribute att in this.Attributes)
 			{
 				string tag = att.Tag;
 				if (this.block.AttributeDefinitions.ContainsTag(tag))
@@ -263,7 +250,7 @@ namespace netDxf.Entities
 			// add any new attributes from the attribute definitions of the block
 			foreach (AttributeDefinition attdef in this.block.AttributeDefinitions.Values)
 			{
-				if (this.attributes.AttributeWithTag(attdef.Tag) == null)
+				if (this.Attributes.AttributeWithTag(attdef.Tag) == null)
 				{
 					Attribute att = new Attribute(attdef)
 					{
@@ -274,7 +261,7 @@ namespace netDxf.Entities
 					this.OnAttributeAddedEvent(att);
 				}
 			}
-			this.attributes = new AttributeCollection(atts);
+			this.Attributes = new AttributeCollection(atts);
 
 			this.TransformAttributes();
 		}
@@ -332,7 +319,7 @@ namespace netDxf.Entities
 		public void TransformAttributes()
 		{
 			// if the insert does not contain attributes there is nothing to do
-			if (this.attributes.Count == 0)
+			if (this.Attributes.Count == 0)
 			{
 				return;
 			}
@@ -340,7 +327,7 @@ namespace netDxf.Entities
 			Matrix3 transformation = this.GetTransformation();
 			Vector3 translation = this.Position - transformation * this.block.Origin;
 
-			foreach (Attribute att in this.attributes)
+			foreach (Attribute att in this.Attributes)
 			{
 				AttributeDefinition attDef = att.Definition;
 				if (attDef == null)
@@ -523,7 +510,7 @@ namespace netDxf.Entities
 				}
 			}
 
-			foreach (Attribute attribute in this.attributes)
+			foreach (Attribute attribute in this.Attributes)
 			{
 				// the attributes will be exploded as a Text entity
 				Text text = new Text
@@ -594,7 +581,7 @@ namespace netDxf.Entities
 			this.Scale = newScale;
 			this.Rotation = newRotation * MathHelper.RadToDeg;
 
-			foreach (Attribute att in this.attributes)
+			foreach (Attribute att in this.Attributes)
 			{
 				att.TransformBy(transformation, translation);
 			}
@@ -603,7 +590,7 @@ namespace netDxf.Entities
 		/// <inheritdoc/>
 		internal override long AssignHandle(long entityNumber)
 		{
-			foreach (Attribute attrib in this.attributes)
+			foreach (Attribute attrib in this.Attributes)
 			{
 				entityNumber = attrib.AssignHandle(entityNumber);
 			}
@@ -615,7 +602,7 @@ namespace netDxf.Entities
 		{
 			// copy attributes
 			List<Attribute> copyAttributes = new List<Attribute>();
-			foreach (Attribute att in this.attributes)
+			foreach (Attribute att in this.Attributes)
 				copyAttributes.Add((Attribute)att.Clone());
 
 			Insert entity = new Insert(copyAttributes)
@@ -630,7 +617,7 @@ namespace netDxf.Entities
 				Normal = this.Normal,
 				IsVisible = this.IsVisible,
 				//Insert properties
-				Position = this.position,
+				Position = this.Position,
 				Block = (Block)this.block.Clone(),
 				Scale = this.scale,
 				Rotation = this.rotation,

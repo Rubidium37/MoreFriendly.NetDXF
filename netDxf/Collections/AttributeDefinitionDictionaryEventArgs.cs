@@ -32,21 +32,14 @@ namespace netDxf.Collections
 	public class AttributeDefinitionDictionaryEventArgs :
 		EventArgs
 	{
-		#region private fields
-
-		private readonly AttributeDefinition item;
-		private bool cancel;
-
-		#endregion
-
 		#region constructor
 
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="item">Item that is being added or removed from the dictionary.</param>
 		public AttributeDefinitionDictionaryEventArgs(AttributeDefinition item)
 		{
-			this.item = item;
-			this.cancel = false;
+			this.Item = item;
+			this.Cancel = false;
 		}
 
 		#endregion
@@ -54,18 +47,11 @@ namespace netDxf.Collections
 		#region public properties
 
 		/// <summary>Get the item that is being added to or removed from the dictionary.</summary>
-		public AttributeDefinition Item
-		{
-			get { return this.item; }
-		}
+		public AttributeDefinition Item { get; }
 
 		/// <summary>Gets or sets if the operation must be canceled.</summary>
 		/// <remarks>This property is used by the <see cref="AttributeDefinitionDictionary.BeforeAddItem"/> and <see cref="AttributeDefinitionDictionary.BeforeRemoveItem"/> events to cancel the add or remove operations.</remarks>
-		public bool Cancel
-		{
-			get { return this.cancel; }
-			set { this.cancel = value; }
-		}
+		public bool Cancel { get; set; }
 
 		#endregion
 	}

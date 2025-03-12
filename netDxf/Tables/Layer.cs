@@ -55,10 +55,6 @@ namespace netDxf.Tables
 
 		private string description;
 		private AciColor color;
-		private bool isVisible;
-		private bool isFrozen;
-		private bool isLocked;
-		private bool plot;
 		private Linetype linetype;
 		private Lineweight lineweight;
 		private Transparency transparency;
@@ -71,10 +67,7 @@ namespace netDxf.Tables
 		public const string DefaultName = "0";
 
 		/// <summary>Gets the default Layer 0.</summary>
-		public static Layer Default
-		{
-			get { return new Layer(DefaultName); }
-		}
+		public static Layer Default => new Layer(DefaultName);
 
 		#endregion
 
@@ -99,8 +92,8 @@ namespace netDxf.Tables
 			this.IsReserved = name.Equals(DefaultName, StringComparison.OrdinalIgnoreCase);
 			this.color = AciColor.Default;
 			this.linetype = Linetype.Continuous;
-			this.isVisible = true;
-			this.plot = true;
+			this.IsVisible = true;
+			this.Plot = true;
 			this.lineweight = Lineweight.Default;
 			this.transparency = new Transparency(0);
 		}
@@ -116,14 +109,14 @@ namespace netDxf.Tables
 		/// </remarks>
 		public string Description
 		{
-			get { return this.description; }
-			set { this.description = string.IsNullOrEmpty(value) ? string.Empty : value; }
+			get => this.description;
+			set => this.description = string.IsNullOrEmpty(value) ? string.Empty : value;
 		}
 
 		/// <summary>Gets or sets the layer <see cref="Linetype">line type</see>.</summary>
 		public Linetype Linetype
 		{
-			get { return this.linetype; }
+			get => this.linetype;
 			set
 			{
 				if (value == null)
@@ -137,7 +130,7 @@ namespace netDxf.Tables
 		/// <summary>Gets or sets the layer <see cref="AciColor">color</see>.</summary>
 		public AciColor Color
 		{
-			get { return this.color; }
+			get => this.color;
 			set
 			{
 				if (value == null)
@@ -154,38 +147,22 @@ namespace netDxf.Tables
 		}
 
 		/// <summary>Gets or sets the layer visibility.</summary>
-		public bool IsVisible
-		{
-			get { return this.isVisible; }
-			set { this.isVisible = value; }
-		}
+		public bool IsVisible { get; set; }
 
 		/// <summary>Gets or sets if the layer is frozen; otherwise layer is thawed.</summary>
-		public bool IsFrozen
-		{
-			get { return this.isFrozen; }
-			set { this.isFrozen = value; }
-		}
+		public bool IsFrozen { get; set; }
 
 		/// <summary>Gets or sets if the layer is locked.</summary>
-		public bool IsLocked
-		{
-			get { return this.isLocked; }
-			set { this.isLocked = value; }
-		}
+		public bool IsLocked { get; set; }
 
 		/// <summary>Gets or sets if the plotting flag.</summary>
 		/// <remarks>If set to <see langword="false"/>, do not plot this layer.</remarks>
-		public bool Plot
-		{
-			get { return this.plot; }
-			set { this.plot = value; }
-		}
+		public bool Plot { get; set; }
 
 		/// <summary>Gets or sets the layer line weight, one unit is always 1/100 mm (default = Default).</summary>
 		public Lineweight Lineweight
 		{
-			get { return this.lineweight; }
+			get => this.lineweight;
 			set
 			{
 				if (value == Lineweight.ByLayer || value == Lineweight.ByBlock)
@@ -199,7 +176,7 @@ namespace netDxf.Tables
 		/// <summary>Gets or sets layer transparency (default: 0, opaque).</summary>
 		public Transparency Transparency
 		{
-			get { return this.transparency; }
+			get => this.transparency;
 			set
 			{
 				this.transparency = value ?? throw new ArgumentNullException(nameof(value));
@@ -209,8 +186,8 @@ namespace netDxf.Tables
 		/// <summary>Gets the owner of the actual layer.</summary>
 		public new Layers Owner
 		{
-			get { return (Layers)base.Owner; }
-			internal set { base.Owner = value; }
+			get => (Layers)base.Owner;
+			internal set => base.Owner = value;
 		}
 
 		#endregion
@@ -218,16 +195,10 @@ namespace netDxf.Tables
 		#region overrides
 
 		/// <inheritdoc/>
-		public override bool HasReferences()
-		{
-			return this.Owner != null && this.Owner.HasReferences(this.Name);
-		}
+		public override bool HasReferences() => this.Owner != null && this.Owner.HasReferences(this.Name);
 
 		/// <inheritdoc/>
-		public override List<DxfObjectReference> GetReferences()
-		{
-			return this.Owner?.GetReferences(this.Name);
-		}
+		public override List<DxfObjectReference> GetReferences() => this.Owner?.GetReferences(this.Name);
 
 		/// <inheritdoc/>
 		public override TableObject Clone(string newName)
@@ -235,10 +206,10 @@ namespace netDxf.Tables
 			Layer copy = new Layer(newName)
 			{
 				Color = (AciColor)this.Color.Clone(),
-				IsVisible = this.isVisible,
-				IsFrozen = this.isFrozen,
-				IsLocked = this.isLocked,
-				Plot = this.plot,
+				IsVisible = this.IsVisible,
+				IsFrozen = this.IsFrozen,
+				IsLocked = this.IsLocked,
+				Plot = this.Plot,
 				Linetype = (Linetype)this.Linetype.Clone(),
 				Lineweight = this.Lineweight,
 				Transparency = (Transparency)this.Transparency.Clone()
@@ -251,12 +222,8 @@ namespace netDxf.Tables
 
 			return copy;
 		}
-
 		/// <inheritdoc/>
-		public override object Clone()
-		{
-			return this.Clone(this.Name);
-		}
+		public override object Clone() => this.Clone(this.Name);
 
 		#endregion
 	}

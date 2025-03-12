@@ -709,8 +709,8 @@ namespace netDxf.Tables
 					break;
 			}
 
-			this.type = type;
-			this.value = value;
+			this.Type = type;
+			this.Value = value;
 		}
 
 		#endregion
@@ -719,32 +719,17 @@ namespace netDxf.Tables
 
 		/// <inheritdoc/>
 		public override string ToString()
-		{
-			return string.Format("{0} : {1}", this.type, this.value);
-		}
-
-		#endregion
-
-		#region private fields
-
-		private readonly DimensionStyleOverrideType type;
-		private readonly object value;
+			=> string.Format("{0} : {1}", this.Type, this.Value);
 
 		#endregion
 
 		#region public properties
 
 		/// <summary>Gets the type of the dimension style to override.</summary>
-		public DimensionStyleOverrideType Type
-		{
-			get { return this.type; }
-		}
+		public DimensionStyleOverrideType Type { get; }
 
 		/// <summary>Gets the value of the dimension style to override.</summary>
-		public object Value
-		{
-			get { return this.value; }
-		}
+		public object Value { get; }
 
 		#endregion
 	}

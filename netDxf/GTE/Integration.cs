@@ -96,8 +96,8 @@ namespace netDxf.GTE
 
 		private readonly struct Info
 		{
-			public readonly int NumBits;
-			public readonly double[] Product;
+			public int NumBits { get; }
+			public double[] Product { get; }
 
 			public Info(int numBits, double[] product)
 			{

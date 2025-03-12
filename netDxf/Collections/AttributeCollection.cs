@@ -47,7 +47,6 @@ namespace netDxf.Collections
 		{
 			this.innerArray = new List<Attribute>();
 		}
-
 		/// <summary>Initializes a new instance of the class with the specified collection of attributes.</summary>
 		/// <param name="attributes">The collection of attributes from which build the dictionary.</param>
 		public AttributeCollection(IEnumerable<Attribute> attributes)
@@ -64,22 +63,13 @@ namespace netDxf.Collections
 		#region public properties
 
 		/// <inheritdoc/>
-		public int Count
-		{
-			get { return this.innerArray.Count; }
-		}
+		public int Count => this.innerArray.Count;
 
 		/// <summary>Gets a value indicating whether the collection is read-only.</summary>
-		public static bool IsReadOnly
-		{
-			get { return true; }
-		}
+		public static bool IsReadOnly => true;
 
 		/// <inheritdoc/>
-		public Attribute this[int index]
-		{
-			get { return this.innerArray[index]; }
-		}
+		public Attribute this[int index] => this.innerArray[index];
 
 		#endregion
 
@@ -88,26 +78,17 @@ namespace netDxf.Collections
 		/// <summary>Determines whether an attribute is in the collection.</summary>
 		/// <param name="item">The attribute to locate in the collection.</param>
 		/// <returns><see langword="true"/> if attribute is found in the collection; otherwise, <see langword="false"/>.</returns>
-		public bool Contains(Attribute item)
-		{
-			return this.innerArray.Contains(item);
-		}
+		public bool Contains(Attribute item) => this.innerArray.Contains(item);
 
 		/// <summary>Copies the entire collection to a compatible one-dimensional array, starting at the specified index of the target array.</summary>
 		/// <param name="array">The one-dimensional array that is the destination of the elements copied from the collection. The System.Array must have zero-based indexing.</param>
 		/// <param name="arrayIndex">The zero-based index in array at which copying begins.</param>
-		public void CopyTo(Attribute[] array, int arrayIndex)
-		{
-			this.innerArray.CopyTo(array, arrayIndex);
-		}
+		public void CopyTo(Attribute[] array, int arrayIndex) => this.innerArray.CopyTo(array, arrayIndex);
 
 		/// <summary>Searches for the specified attribute and returns the zero-based index of the first occurrence within the entire collection.</summary>
 		/// <param name="item">The attribute to locate in the collection.</param>
 		/// <returns>The zero-based index of the first occurrence of item within the entire collection, if found; otherwise, –1.</returns>
-		public int IndexOf(Attribute item)
-		{
-			return this.innerArray.IndexOf(item);
-		}
+		public int IndexOf(Attribute item) => this.innerArray.IndexOf(item);
 
 		/// <summary>Searches for the first occurrence attribute with the specified attribute definition tag within the entire collection</summary>
 		/// <param name="tag"></param>
@@ -133,19 +114,13 @@ namespace netDxf.Collections
 		}
 
 		/// <inheritdoc/>
-		public IEnumerator<Attribute> GetEnumerator()
-		{
-			return this.innerArray.GetEnumerator();
-		}
+		public IEnumerator<Attribute> GetEnumerator() => this.innerArray.GetEnumerator();
 
 		#endregion
 
 		#region private methods
 
-		IEnumerator IEnumerable.GetEnumerator()
-		{
-			return this.GetEnumerator();
-		}
+		IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 
 		#endregion
 	}

@@ -37,10 +37,6 @@ namespace netDxf.GTE
 	public class NURBSCurve :
 		ParametricCurve
 	{
-		private readonly BasisFunction basisFunction;
-		private readonly Vector3[] controls;
-		private readonly double[] weights;
-
 		// Construction.  If the input controls is non-null, a copy is made of
 		// the controls.  To defer setting the control points or weights, pass
 		// null pointers and later access the control points or weights via
@@ -50,54 +46,42 @@ namespace netDxf.GTE
 		public NURBSCurve(BasisFunctionInput input, Vector3[] controls, double[] weights)
 			: base(0.0, 1.0)
 		{
-			this.basisFunction = new BasisFunction(input);
+			this.BasisFunction = new BasisFunction(input);
 
 			// The mBasisFunction stores the domain but so does ParametricCurve.
-			this.SetTimeInterval(this.basisFunction.MinDomain, this.basisFunction.MaxDomain);
+			this.SetTimeInterval(this.BasisFunction.MinDomain, this.BasisFunction.MaxDomain);
 
 			// The replication of control points for periodic splines is
 			// avoided by wrapping the i-loop index in Evaluate.
-			this.controls = new Vector3[input.NumControls];
+			this.Controls = new Vector3[input.NumControls];
 			if (controls != null)
 			{
-				controls.CopyTo(this.controls, 0);
+				controls.CopyTo(this.Controls, 0);
 			}
 
-			this.weights = new double[input.NumControls];
+			this.Weights = new double[input.NumControls];
 			if (weights != null)
 			{
-				weights.CopyTo(this.weights, 0);
+				weights.CopyTo(this.Weights, 0);
 			}
 
-			this.isConstructed = true;
+			this.IsConstructed = true;
 		}
 
 		// Member access.
-		public BasisFunction BasisFunction
-		{
-			get { return this.basisFunction; }
-		}
+		public BasisFunction BasisFunction { get; }
 
-		public int NumControls
-		{
-			get { return this.controls.Length; }
-		}
+		public int NumControls => this.Controls.Length;
 
-		public Vector3[] Controls
-		{
-			get { return this.controls; }
-		}
+		public Vector3[] Controls { get; }
 
-		public double[] Weights
-		{
-			get { return this.weights; }
-		}
+		public double[] Weights { get; }
 
 		public void SetControl(int i, Vector3 control)
 		{
 			if (0 <= i && i < this.NumControls)
 			{
-				this.controls[i] = control;
+				this.Controls[i] = control;
 			}
 		}
 
@@ -105,18 +89,18 @@ namespace netDxf.GTE
 		{
 			if (0 <= i && i < this.NumControls)
 			{
-				return this.controls[i];
+				return this.Controls[i];
 			}
 
 			// Invalid index, return something.
-			return this.controls[0];
+			return this.Controls[0];
 		}
 
 		public void SetWeight(int i, double weight)
 		{
 			if (0 <= i && i < this.NumControls)
 			{
-				this.weights[i] = weight;
+				this.Weights[i] = weight;
 			}
 		}
 
@@ -124,11 +108,11 @@ namespace netDxf.GTE
 		{
 			if (0 <= i && i < this.NumControls)
 			{
-				return this.weights[i];
+				return this.Weights[i];
 			}
 
 			// Invalid index, return something.
-			return this.weights[0];
+			return this.Weights[0];
 		}
 
 		// Evaluation of the curve.  The function supports derivative
@@ -144,13 +128,13 @@ namespace netDxf.GTE
 			const int supOrder = SUP_ORDER;
 			jet = new Vector3[supOrder];
 
-			if (!this.isConstructed || order >= supOrder)
+			if (!this.IsConstructed || order >= supOrder)
 			{
 				// Return a zero-valued jet for invalid state.
 				return;
 			}
 
-			this.basisFunction.Evaluate(t, order, out int imin, out int imax);
+			this.BasisFunction.Evaluate(t, order, out int imin, out int imax);
 
 			// Compute position.
 			this.Compute(0, imin, imax, out Vector3 X, out double w);
@@ -192,8 +176,8 @@ namespace netDxf.GTE
 			for (int i = imin; i <= imax; ++i)
 			{
 				int j = (i >= numControls ? i - numControls : i);
-				double tmp = this.basisFunction.GetValue(order, i) * this.weights[j];
-				x += tmp * this.controls[j];
+				double tmp = this.BasisFunction.GetValue(order, i) * this.Weights[j];
+				x += tmp * this.Controls[j];
 				w += tmp;
 			}
 		}

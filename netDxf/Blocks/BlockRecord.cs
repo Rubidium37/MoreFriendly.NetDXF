@@ -34,16 +34,6 @@ namespace netDxf.Blocks
 	public class BlockRecord :
 		DxfObject
 	{
-		#region private fields
-
-		private string name;
-		private Layout layout;
-		private static DrawingUnits defaultUnits = DrawingUnits.Unitless;
-		private DrawingUnits units;
-		private bool allowExploding;
-		private bool scaleUniformly;
-
-		#endregion
 
 		#region constructors
 
@@ -56,11 +46,11 @@ namespace netDxf.Blocks
 			{
 				throw new ArgumentNullException(nameof(name));
 			}
-			this.name = name;
-			this.layout = null;
-			this.units = DefaultUnits;
-			this.allowExploding = true;
-			this.scaleUniformly = false;
+			this.Name = name;
+			this.Layout = null;
+			this.Units = DefaultUnits;
+			this.AllowExploding = true;
+			this.ScaleUniformly = false;
 		}
 
 		#endregion
@@ -72,79 +62,49 @@ namespace netDxf.Blocks
 		/// Block record names are case insensitive.<br />
 		/// The block which name starts with "*" are for internal purpose only.
 		/// </remarks>
-		public string Name
-		{
-			get { return this.name; }
-			internal set { this.name = value; }
-		}
+		public string Name { get; internal set; }
 
 		/// <summary>Gets the associated Layout.</summary>
-		public Layout Layout
-		{
-			get { return this.layout; }
-			internal set { this.layout = value; }
-		}
+		public Layout Layout { get; internal set; }
 
 		/// <summary>Gets or sets the block insertion units.</summary>
-		public DrawingUnits Units
-		{
-			get { return this.units; }
-			set { this.units = value; }
-		}
+		public DrawingUnits Units { get; set; }
 
 		/// <summary>Gets or sets the default block units.</summary>
 		/// <remarks>These are the units that all new blocks will use as default.</remarks>
-		public static DrawingUnits DefaultUnits
-		{
-			get { return defaultUnits; }
-			set { defaultUnits = value; }
-		}
+		public static DrawingUnits DefaultUnits { get; set; } = DrawingUnits.Unitless;
 
 		/// <summary>Gets or sets if the block can be exploded.</summary>
 		/// <remarks>
 		/// This property is only compatible with <b>DXF</b> version <b>AutoCad2007</b> and upwards.
 		/// </remarks>
-		public bool AllowExploding
-		{
-			get { return this.allowExploding; }
-			set { this.allowExploding = value; }
-		}
+		public bool AllowExploding { get; set; }
 
 		/// <summary>Gets or sets if the block must be scaled uniformly.</summary>
 		/// <remarks>
 		/// This property is only compatible with <b>DXF</b> version <b>AutoCad2007</b> and upwards.
 		/// </remarks>
-		public bool ScaleUniformly
-		{
-			get { return this.scaleUniformly; }
-			set { this.scaleUniformly = value; }
-		}
+		public bool ScaleUniformly { get; set; }
 
 		/// <summary>Gets the owner of the actual <b>DXF</b> object.</summary>
 		public new BlockRecords Owner
 		{
-			get { return (BlockRecords)base.Owner; }
-			internal set { base.Owner = value; }
+			get => (BlockRecords)base.Owner;
+			internal set => base.Owner = value;
 		}
 
 		/// <summary>Gets if the block record is for internal use only.</summary>
 		/// <remarks>
 		/// All blocks which name starts with "*" are for internal use and should not be modified.
 		/// </remarks>
-		public bool IsForInternalUseOnly
-		{
-			get { return this.name.StartsWith("*"); }
-		}
+		public bool IsForInternalUseOnly => this.Name.StartsWith("*");
 
 		#endregion
 
 		#region overrides
 
 		/// <inheritdoc/>
-		public override string ToString()
-		{
-			return this.Name;
-		}
+		public override string ToString() => this.Name;
 
 		#endregion
 	}

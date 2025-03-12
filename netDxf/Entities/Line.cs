@@ -31,14 +31,6 @@ namespace netDxf.Entities
 	public class Line :
 		EntityObject
 	{
-		#region private fields
-
-		private Vector3 start;
-		private Vector3 end;
-		private double thickness;
-
-		#endregion
-
 		#region constructors
 
 		/// <summary>Initializes a new instance of the class.</summary>
@@ -61,9 +53,9 @@ namespace netDxf.Entities
 		public Line(Vector3 startPoint, Vector3 endPoint)
 			: base(EntityType.Line, DxfObjectCode.Line)
 		{
-			this.start = startPoint;
-			this.end = endPoint;
-			this.thickness = 0.0;
+			this.StartPoint = startPoint;
+			this.EndPoint = endPoint;
+			this.Thickness = 0.0;
 		}
 
 		#endregion
@@ -71,31 +63,16 @@ namespace netDxf.Entities
 		#region public properties
 
 		/// <summary>Gets or sets the line <see cref="Vector3">start point</see>.</summary>
-		public Vector3 StartPoint
-		{
-			get { return this.start; }
-			set { this.start = value; }
-		}
+		public Vector3 StartPoint { get; set; }
 
 		/// <summary>Gets or sets the line <see cref="Vector3">end point</see>.</summary>
-		public Vector3 EndPoint
-		{
-			get { return this.end; }
-			set { this.end = value; }
-		}
+		public Vector3 EndPoint { get; set; }
 
 		/// <summary>Gets the direction of the line.</summary>
-		public Vector3 Direction
-		{
-			get { return this.end - this.start; }
-		}
+		public Vector3 Direction => this.EndPoint - this.StartPoint;
 
 		/// <summary>Gets or sets the line thickness.</summary>
-		public double Thickness
-		{
-			get { return this.thickness; }
-			set { this.thickness = value; }
-		}
+		public double Thickness { get; set; }
 
 		#endregion
 
@@ -104,9 +81,9 @@ namespace netDxf.Entities
 		/// <summary>Switch the line direction.</summary>
 		public void Reverse()
 		{
-			Vector3 tmp = this.start;
-			this.start = this.end;
-			this.end = tmp;
+			Vector3 tmp = this.StartPoint;
+			this.StartPoint = this.EndPoint;
+			this.EndPoint = tmp;
 		}
 
 		#endregion
@@ -142,9 +119,9 @@ namespace netDxf.Entities
 				Normal = this.Normal,
 				IsVisible = this.IsVisible,
 				//Line properties
-				StartPoint = this.start,
-				EndPoint = this.end,
-				Thickness = this.thickness
+				StartPoint = this.StartPoint,
+				EndPoint = this.EndPoint,
+				Thickness = this.Thickness
 			};
 
 			foreach (XData data in this.XData.Values)

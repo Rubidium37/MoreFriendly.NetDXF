@@ -6001,7 +6001,7 @@ namespace netDxf.IO
 									overrides.Add(new DimensionStyleOverride(DimensionStyleOverrideType.DimScaleLinear, (double)data.Value));
 									break;
 								case 145: // DIMTVP
-										// not used
+										  // not used
 									break;
 								case 146: // DIMTFAC
 									if (data.Code != XDataCode.Real)
@@ -6232,7 +6232,7 @@ namespace netDxf.IO
 									dimalttz = (short)data.Value;
 									break;
 								case 288: // DIMUPT
-										// not used
+										  // not used
 									break;
 								case 289: // AIMATFIT
 									if (data.Code != XDataCode.Int16)

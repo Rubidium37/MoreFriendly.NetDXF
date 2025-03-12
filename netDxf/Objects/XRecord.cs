@@ -29,58 +29,30 @@ namespace netDxf.Objects
 {
 	internal sealed class XRecord
 	{
-		#region private fields
-
-		private DictionaryCloningFlags flags;
-		private string handle;
-		private string ownerHandle;
-		private readonly string codename;
-		private readonly List<XRecordEntry> entries;
-
-		#endregion
-
 		#region constructor
 
 		public XRecord()
 		{
-			this.codename = DxfObjectCode.XRecord;
-			this.handle = string.Empty;
-			this.ownerHandle = string.Empty;
-			this.flags = DictionaryCloningFlags.KeepExisting;
-			this.entries = new List<XRecordEntry>();
+			this.Codename = DxfObjectCode.XRecord;
+			this.Handle = string.Empty;
+			this.OwnerHandle = string.Empty;
+			this.Flags = DictionaryCloningFlags.KeepExisting;
+			this.Entries = new List<XRecordEntry>();
 		}
 
 		#endregion
 
 		#region public properties
 
-		public string Handle
-		{
-			get { return this.handle; }
-			set { this.handle = value; }
-		}
+		public string Handle { get; set; }
 
-		public string OwnerHandle
-		{
-			get { return this.ownerHandle; }
-			set { this.ownerHandle = value; }
-		}
+		public string OwnerHandle { get; set; }
 
-		public string Codename
-		{
-			get { return this.codename; }
-		}
+		public string Codename { get; }
 
-		public DictionaryCloningFlags Flags
-		{
-			get { return this.flags; }
-			set { this.flags = value; }
-		}
+		public DictionaryCloningFlags Flags { get; set; }
 
-		public List<XRecordEntry> Entries
-		{
-			get { return this.entries; }
-		}
+		public List<XRecordEntry> Entries { get; }
 
 		#endregion
 	}

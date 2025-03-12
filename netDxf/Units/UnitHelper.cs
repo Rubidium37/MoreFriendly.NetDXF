@@ -70,9 +70,7 @@ namespace netDxf.Units
 		/// <param name="to">Destination drawing units.</param>
 		/// <returns>The converted value to the new drawing units.</returns>
 		public static double ConvertUnit(double value, DrawingUnits from, DrawingUnits to)
-		{
-			return value * ConversionFactor(from, to);
-		}
+			=> value * ConversionFactor(from, to);
 
 		/// <summary>Gets the conversion factor between drawing units.</summary>
 		/// <param name="from">Original drawing units.</param>
@@ -95,18 +93,14 @@ namespace netDxf.Units
 		/// <param name="to">Destination drawing units.</param>
 		/// <returns>The conversion factor between the units.</returns>
 		public static double ConversionFactor(ImageUnits from, DrawingUnits to)
-		{
-			return ConversionFactor(ImageToDrawingUnits(from), to);
-		}
+			=> ConversionFactor(ImageToDrawingUnits(from), to);
 
 		/// <summary>Gets the conversion factor between units.</summary>
 		/// <param name="from">Original value units.</param>
 		/// <param name="to">Destination value units.</param>
 		/// <returns>The conversion factor between the passed units.</returns>
 		public static double ConversionFactor(DrawingUnits from, ImageUnits to)
-		{
-			return ConversionFactor(from, ImageToDrawingUnits(to));
-		}
+			=> ConversionFactor(from, ImageToDrawingUnits(to));
 
 		#endregion
 

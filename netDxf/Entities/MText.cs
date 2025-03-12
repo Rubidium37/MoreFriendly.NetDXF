@@ -108,16 +108,12 @@ namespace netDxf.Entities
 
 		#region private fields
 
-		private Vector3 position;
 		private double rectangleWidth;
 		private double height;
 		private double rotation;
 		private double lineSpacing;
 		private MTextLineSpacingStyle lineSpacingStyle;
-		private MTextDrawingDirection drawingDirection;
-		private MTextAttachmentPoint attachmentPoint;
 		private TextStyle style;
-		private string text;
 
 		#endregion
 
@@ -248,19 +244,19 @@ namespace netDxf.Entities
 		public MText(string text, Vector3 position, double height, double rectangleWidth, TextStyle style)
 			: base(EntityType.MText, DxfObjectCode.MText)
 		{
-			this.text = text;
-			this.position = position;
-			this.attachmentPoint = MTextAttachmentPoint.TopLeft;
+			this.Value = text;
+			this.Position = position;
+			this.AttachmentPoint = MTextAttachmentPoint.TopLeft;
 			this.style = style ?? throw new ArgumentNullException(nameof(style));
 			this.rectangleWidth = rectangleWidth;
 			if (height <= 0.0)
 			{
-				throw new ArgumentOutOfRangeException(nameof(height), this.text, "The MText height must be greater than zero.");
+				throw new ArgumentOutOfRangeException(nameof(height), this.Value, "The MText height must be greater than zero.");
 			}
 			this.height = height;
 			this.lineSpacing = 1.0;
 			this.lineSpacingStyle = MTextLineSpacingStyle.AtLeast;
-			this.drawingDirection = MTextDrawingDirection.ByStyle;
+			this.DrawingDirection = MTextDrawingDirection.ByStyle;
 			this.rotation = 0.0;
 		}
 
@@ -269,23 +265,19 @@ namespace netDxf.Entities
 		#region public properties
 
 		/// <summary>Gets or sets if the text will be mirrored when a symmetry is performed, when the current MText entity does not belong to a <b>DXF</b> document.</summary>
-		public static bool DefaultMirrText
-		{
-			get;
-			set;
-		}
+		public static bool DefaultMirrText { get; set; }
 
 		/// <summary>Gets or sets the text rotation in degrees.</summary>
 		public double Rotation
 		{
-			get { return this.rotation; }
-			set { this.rotation = MathHelper.NormalizeAngle(value); }
+			get => this.rotation;
+			set => this.rotation = MathHelper.NormalizeAngle(value);
 		}
 
 		/// <summary>Gets or sets the text height.</summary>
 		public double Height
 		{
-			get { return this.height; }
+			get => this.height;
 			set
 			{
 				if (value <= 0)
@@ -302,7 +294,7 @@ namespace netDxf.Entities
 		/// </remarks>
 		public double LineSpacingFactor
 		{
-			get { return this.lineSpacing; }
+			get => this.lineSpacing;
 			set
 			{
 				if (value < 0.25 || value > 4.0)
@@ -320,7 +312,7 @@ namespace netDxf.Entities
 		/// </remarks>
 		public MTextLineSpacingStyle LineSpacingStyle
 		{
-			get { return this.lineSpacingStyle; }
+			get => this.lineSpacingStyle;
 			set
 			{
 				if (value == MTextLineSpacingStyle.Default || value == MTextLineSpacingStyle.Multiple)
@@ -332,11 +324,7 @@ namespace netDxf.Entities
 		}
 
 		/// <summary>Get or sets the <see cref="MTextDrawingDirection">text drawing direction</see>.</summary>
-		public MTextDrawingDirection DrawingDirection
-		{
-			get { return this.drawingDirection; }
-			set { this.drawingDirection = value; }
-		}
+		public MTextDrawingDirection DrawingDirection { get; set; }
 
 		/// <summary>Gets or sets the text reference rectangle width.</summary>
 		/// <remarks>
@@ -346,7 +334,7 @@ namespace netDxf.Entities
 		/// </remarks>
 		public double RectangleWidth
 		{
-			get { return this.rectangleWidth; }
+			get => this.rectangleWidth;
 			set
 			{
 				if (value < 0.0)
@@ -358,16 +346,12 @@ namespace netDxf.Entities
 		}
 
 		/// <summary>Gets or sets the text <see cref="MTextAttachmentPoint">attachment point</see>.</summary>
-		public MTextAttachmentPoint AttachmentPoint
-		{
-			get { return this.attachmentPoint; }
-			set { this.attachmentPoint = value; }
-		}
+		public MTextAttachmentPoint AttachmentPoint { get; set; }
 
 		/// <summary>Gets or sets the <see cref="TextStyle">text style</see>.</summary>
 		public TextStyle Style
 		{
-			get { return this.style; }
+			get => this.style;
 			set
 			{
 				if (value == null)
@@ -379,18 +363,10 @@ namespace netDxf.Entities
 		}
 
 		/// <summary>Gets or sets the Text <see cref="Vector3">position</see> in world coordinates.</summary>
-		public Vector3 Position
-		{
-			get { return this.position; }
-			set { this.position = value; }
-		}
+		public Vector3 Position { get; set; }
 
 		/// <summary>Gets or sets the raw text string.</summary>
-		public string Value
-		{
-			get { return this.text; }
-			set { this.text = value; }
-		}
+		public string Value { get; set; }
 
 		#endregion
 
@@ -405,9 +381,7 @@ namespace netDxf.Entities
 		/// In fractions the characters '/' and '#' are reserved if you need to write them you must write "\/" and "\#", respectively.
 		/// </remarks>
 		public void WriteFraction(string numerator, string denominator, FractionFormatType fractionType)
-		{
-			this.WriteFraction(numerator, denominator, fractionType, null);
-		}
+			=> this.WriteFraction(numerator, denominator, fractionType, null);
 
 		/// <summary>Formats a text string to represent a fraction.</summary>
 		/// <param name="numerator">Fraction numerator.</param>
@@ -440,10 +414,7 @@ namespace netDxf.Entities
 
 		/// <summary>Adds the text to the current paragraph.</summary>
 		/// <param name="txt">Text string.</param>
-		public void Write(string txt)
-		{
-			this.Write(txt, null);
-		}
+		public void Write(string txt) => this.Write(txt, null);
 
 		/// <summary>Adds the text to the current paragraph.</summary>
 		/// <param name="txt">Text string.</param>
@@ -452,7 +423,7 @@ namespace netDxf.Entities
 		{
 			if (options == null)
 			{
-				this.text += txt;
+				this.Value += txt;
 				return;
 			}
 
@@ -541,14 +512,11 @@ namespace netDxf.Entities
 				formattedText = string.Format("\\W{0};{1}", options.WidthFactor.ToString(CultureInfo.InvariantCulture), formattedText);
 			}
 
-			this.text += "{" + formattedText + "}";
+			this.Value += "{" + formattedText + "}";
 		}
 
 		/// <summary>Ends the current paragraph.</summary>
-		public void EndParagraph()
-		{
-			this.text += "\\P";
-		}
+		public void EndParagraph() => this.Value += "\\P";
 
 		/// <summary>Starts a new paragraph.</summary>
 		/// <remarks>
@@ -557,11 +525,7 @@ namespace netDxf.Entities
 		/// the paragraph characteristics are inherited from the previous one.
 		/// This way no codes needs to be written and it will save some characters in the final string.
 		/// </remarks>
-		public void StartParagraph()
-		{
-			this.StartParagraph(null);
-
-		}
+		public void StartParagraph() => this.StartParagraph(null);
 		/// <summary>Starts a new paragraph.</summary>
 		/// <param name="options">Paragraph options.</param>
 		/// <remarks>
@@ -574,7 +538,7 @@ namespace netDxf.Entities
 		{
 			if (options == null)
 			{
-				this.text += "\\A1;";
+				this.Value += "\\A1;";
 				return;
 			}
 
@@ -632,7 +596,7 @@ namespace netDxf.Entities
 
 			codes = string.Format("\\A{0};\\H{1}x;{2}", (int)options.VerticalAlignment, options.HeightFactor.ToString(CultureInfo.InvariantCulture), codes);
 
-			this.text += codes;
+			this.Value += codes;
 		}
 
 		/// <summary>
@@ -642,10 +606,10 @@ namespace netDxf.Entities
 		/// <returns>MText text value without the formatting codes.</returns>
 		public string PlainText()
 		{
-			if (string.IsNullOrEmpty(this.text))
+			if (string.IsNullOrEmpty(this.Value))
 				return string.Empty;
 
-			string txt = this.text;
+			string txt = this.Value;
 
 			//text = text.Replace("%%c", "Ø");
 			//text = text.Replace("%%d", "°");
@@ -835,7 +799,7 @@ namespace netDxf.Entities
 								this.AttachmentPoint = MTextAttachmentPoint.BottomLeft;
 								break;
 							case MTextAttachmentPoint.TopCenter:
-								this.attachmentPoint = MTextAttachmentPoint.BottomCenter;
+								this.AttachmentPoint = MTextAttachmentPoint.BottomCenter;
 								break;
 							case MTextAttachmentPoint.TopRight:
 								this.AttachmentPoint = MTextAttachmentPoint.BottomRight;
@@ -844,7 +808,7 @@ namespace netDxf.Entities
 								this.AttachmentPoint = MTextAttachmentPoint.TopLeft;
 								break;
 							case MTextAttachmentPoint.BottomCenter:
-								this.attachmentPoint = MTextAttachmentPoint.TopCenter;
+								this.AttachmentPoint = MTextAttachmentPoint.TopCenter;
 								break;
 							case MTextAttachmentPoint.BottomRight:
 								this.AttachmentPoint = MTextAttachmentPoint.TopRight;
@@ -880,15 +844,15 @@ namespace netDxf.Entities
 				Normal = this.Normal,
 				IsVisible = this.IsVisible,
 				//MText properties
-				Position = this.position,
+				Position = this.Position,
 				Rotation = this.rotation,
 				Height = this.height,
 				LineSpacingFactor = this.lineSpacing,
 				LineSpacingStyle = this.lineSpacingStyle,
 				RectangleWidth = this.rectangleWidth,
-				AttachmentPoint = this.attachmentPoint,
+				AttachmentPoint = this.AttachmentPoint,
 				Style = (TextStyle)this.style.Clone(),
-				Value = this.text
+				Value = this.Value
 			};
 
 			foreach (XData data in this.XData.Values)

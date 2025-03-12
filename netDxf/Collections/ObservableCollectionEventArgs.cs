@@ -32,21 +32,14 @@ namespace netDxf.Collections
 	public class ObservableCollectionEventArgs<T> :
 		EventArgs
 	{
-		#region private fields
-
-		private readonly T item;
-		private bool cancel;
-
-		#endregion
-
 		#region constructor
 
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="item">Item that is being added or removed from the collection.</param>
 		public ObservableCollectionEventArgs(T item)
 		{
-			this.item = item;
-			this.cancel = false;
+			this.Item = item;
+			this.Cancel = false;
 		}
 
 		#endregion
@@ -54,18 +47,11 @@ namespace netDxf.Collections
 		#region public properties
 
 		/// <summary>Get the item that is being added or removed from the collection.</summary>
-		public T Item
-		{
-			get { return this.item; }
-		}
+		public T Item { get; }
 
 		/// <summary>Gets or sets if the operation must be canceled.</summary>
 		/// <remarks>This property is used by the <see cref="ObservableCollection{T}.BeforeAddItem"/> and <see cref="ObservableCollection{T}.BeforeRemoveItem"/> events to cancel the add or remove operation.</remarks>
-		public bool Cancel
-		{
-			get { return this.cancel; }
-			set { this.cancel = value; }
-		}
+		public bool Cancel { get; set; }
 
 		#endregion
 	}

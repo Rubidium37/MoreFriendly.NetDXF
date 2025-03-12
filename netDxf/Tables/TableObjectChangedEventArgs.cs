@@ -32,13 +32,6 @@ namespace netDxf.Tables
 	public class TableObjectChangedEventArgs<T> :
 		EventArgs
 	{
-		#region private fields
-
-		private readonly T oldValue;
-		private T newValue;
-
-		#endregion
-
 		#region constructor
 
 		/// <summary>Initializes a new instance of the class.</summary>
@@ -46,8 +39,8 @@ namespace netDxf.Tables
 		/// <param name="newTable">The new table object.</param>
 		public TableObjectChangedEventArgs(T oldTable, T newTable)
 		{
-			this.oldValue = oldTable;
-			this.newValue = newTable;
+			this.OldValue = oldTable;
+			this.NewValue = newTable;
 		}
 
 		#endregion
@@ -55,17 +48,10 @@ namespace netDxf.Tables
 		#region public properties
 
 		/// <summary>Gets the previous property value.</summary>
-		public T OldValue
-		{
-			get { return this.oldValue; }
-		}
+		public T OldValue { get; }
 
 		/// <summary>Gets or sets the new property value.</summary>
-		public T NewValue
-		{
-			get { return this.newValue; }
-			set { this.newValue = value; }
-		}
+		public T NewValue { get; set; }
 
 		#endregion
 	}

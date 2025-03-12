@@ -39,10 +39,6 @@ namespace netDxf.Entities
 		#region private fields
 
 		private static short defaultSplineSegs = 8;
-		private readonly List<Polyline2DVertex> vertexes;
-		private PolylineTypeFlags flags;
-		private double elevation;
-		private double thickness;
 		private PolylineSmoothType smoothType;
 
 		#endregion
@@ -73,15 +69,15 @@ namespace netDxf.Entities
 				throw new ArgumentNullException(nameof(vertexes));
 			}
 
-			this.vertexes = new List<Polyline2DVertex>();
+			this.Vertexes = new List<Polyline2DVertex>();
 			foreach (Vector2 vertex in vertexes)
 			{
-				this.vertexes.Add(new Polyline2DVertex(vertex));
+				this.Vertexes.Add(new Polyline2DVertex(vertex));
 			}
 
-			this.elevation = 0.0;
-			this.thickness = 0.0;
-			this.flags = isClosed ? PolylineTypeFlags.ClosedPolylineOrClosedPolygonMeshInM : PolylineTypeFlags.OpenPolyline;
+			this.Elevation = 0.0;
+			this.Thickness = 0.0;
+			this.Flags = isClosed ? PolylineTypeFlags.ClosedPolylineOrClosedPolygonMeshInM : PolylineTypeFlags.OpenPolyline;
 			this.smoothType = PolylineSmoothType.NoSmooth;
 		}
 
@@ -103,10 +99,10 @@ namespace netDxf.Entities
 				throw new ArgumentNullException(nameof(vertexes));
 			}
 
-			this.vertexes = new List<Polyline2DVertex>(vertexes);
-			this.elevation = 0.0;
-			this.thickness = 0.0;
-			this.flags = isClosed ? PolylineTypeFlags.ClosedPolylineOrClosedPolygonMeshInM : PolylineTypeFlags.OpenPolyline;
+			this.Vertexes = new List<Polyline2DVertex>(vertexes);
+			this.Elevation = 0.0;
+			this.Thickness = 0.0;
+			this.Flags = isClosed ? PolylineTypeFlags.ClosedPolylineOrClosedPolygonMeshInM : PolylineTypeFlags.OpenPolyline;
 			this.smoothType = PolylineSmoothType.NoSmooth;
 		}
 
@@ -120,7 +116,7 @@ namespace netDxf.Entities
 		/// </remarks>
 		public static short DefaultSplineSegs
 		{
-			get { return defaultSplineSegs; }
+			get => defaultSplineSegs;
 			set
 			{
 				if (value <= 0)
@@ -132,56 +128,45 @@ namespace netDxf.Entities
 		}
 
 		/// <summary>Gets or sets the polyline <see cref="Polyline2DVertex">vertex</see> list.</summary>
-		public List<Polyline2DVertex> Vertexes
-		{
-			get { return this.vertexes; }
-		}
+		public List<Polyline2DVertex> Vertexes { get; }
 
 		/// <summary>Gets or sets if the polyline is closed.</summary>
 		public bool IsClosed
 		{
-			get { return this.flags.HasFlag(PolylineTypeFlags.ClosedPolylineOrClosedPolygonMeshInM); }
+			get => this.Flags.HasFlag(PolylineTypeFlags.ClosedPolylineOrClosedPolygonMeshInM);
 			set
 			{
 				if (value)
 				{
-					this.flags |= PolylineTypeFlags.ClosedPolylineOrClosedPolygonMeshInM;
+					this.Flags |= PolylineTypeFlags.ClosedPolylineOrClosedPolygonMeshInM;
 				}
 				else
 				{
-					this.flags &= ~PolylineTypeFlags.ClosedPolylineOrClosedPolygonMeshInM;
+					this.Flags &= ~PolylineTypeFlags.ClosedPolylineOrClosedPolygonMeshInM;
 				}
 			}
 		}
 
 		/// <summary>Gets or sets the polyline thickness.</summary>
-		public double Thickness
-		{
-			get { return this.thickness; }
-			set { this.thickness = value; }
-		}
+		public double Thickness { get; set; }
 
 		/// <summary>Gets or sets the polyline elevation.</summary>
 		/// <remarks>This is the distance from the origin to the plane of the light weight polyline.</remarks>
-		public double Elevation
-		{
-			get { return this.elevation; }
-			set { this.elevation = value; }
-		}
+		public double Elevation { get; set; }
 
 		/// <summary>Enable or disable if the linetype pattern is generated continuously around the vertexes of the polyline.</summary>
 		public bool LinetypeGeneration
 		{
-			get { return this.flags.HasFlag(PolylineTypeFlags.ContinuousLinetypePattern); }
+			get => this.Flags.HasFlag(PolylineTypeFlags.ContinuousLinetypePattern);
 			set
 			{
 				if (value)
 				{
-					this.flags |= PolylineTypeFlags.ContinuousLinetypePattern;
+					this.Flags |= PolylineTypeFlags.ContinuousLinetypePattern;
 				}
 				else
 				{
-					this.flags &= ~PolylineTypeFlags.ContinuousLinetypePattern;
+					this.Flags &= ~PolylineTypeFlags.ContinuousLinetypePattern;
 				}
 			}
 		}
@@ -192,18 +177,18 @@ namespace netDxf.Entities
 		/// </remarks>
 		public PolylineSmoothType SmoothType
 		{
-			get { return this.smoothType; }
+			get => this.smoothType;
 			set
 			{
 				if (value == PolylineSmoothType.NoSmooth)
 				{
 					this.CodeName = DxfObjectCode.LwPolyline;
-					this.flags &= ~PolylineTypeFlags.SplineFit;
+					this.Flags &= ~PolylineTypeFlags.SplineFit;
 				}
 				else
 				{
 					this.CodeName = DxfObjectCode.Polyline;
-					this.flags |= PolylineTypeFlags.SplineFit;
+					this.Flags |= PolylineTypeFlags.SplineFit;
 				}
 				this.smoothType = value;
 			}
@@ -214,11 +199,7 @@ namespace netDxf.Entities
 		#region internal properties
 
 		/// <summary>Gets the polyline flags.</summary>
-		internal PolylineTypeFlags Flags
-		{
-			get { return this.flags; }
-			set { this.flags = value; }
-		}
+		internal PolylineTypeFlags Flags { get; set; }
 
 		#endregion
 
@@ -227,21 +208,21 @@ namespace netDxf.Entities
 		/// <summary>Switch the polyline direction.</summary>
 		public void Reverse()
 		{
-			if (this.vertexes.Count < 2)
+			if (this.Vertexes.Count < 2)
 			{
 				return;
 			}
 
-			this.vertexes.Reverse();
+			this.Vertexes.Reverse();
 
-			double firstBulge = this.vertexes[0].Bulge;
+			double firstBulge = this.Vertexes[0].Bulge;
 
-			for (int i = 0; i < this.vertexes.Count - 1; i++)
+			for (int i = 0; i < this.Vertexes.Count - 1; i++)
 			{
-				this.vertexes[i].Bulge = -this.vertexes[i + 1].Bulge;
+				this.Vertexes[i].Bulge = -this.Vertexes[i + 1].Bulge;
 			}
 
-			this.vertexes[this.vertexes.Count - 1].Bulge = -firstBulge;
+			this.Vertexes[this.Vertexes.Count - 1].Bulge = -firstBulge;
 		}
 
 		/// <summary>Sets a constant width for all the polyline segments.</summary>
@@ -251,7 +232,7 @@ namespace netDxf.Entities
 		/// </remarks>
 		public void SetConstantWidth(double width)
 		{
-			foreach (Polyline2DVertex v in this.vertexes)
+			foreach (Polyline2DVertex v in this.Vertexes)
 			{
 				v.StartWidth = width;
 				v.EndWidth = width;
@@ -280,19 +261,19 @@ namespace netDxf.Entities
 							break;
 						}
 						p1 = new Vector2(vertex.Position.X, vertex.Position.Y);
-						p2 = new Vector2(this.vertexes[0].Position.X, this.vertexes[0].Position.Y);
+						p2 = new Vector2(this.Vertexes[0].Position.X, this.Vertexes[0].Position.Y);
 					}
 					else
 					{
 						p1 = new Vector2(vertex.Position.X, vertex.Position.Y);
-						p2 = new Vector2(this.vertexes[index + 1].Position.X, this.vertexes[index + 1].Position.Y);
+						p2 = new Vector2(this.Vertexes[index + 1].Position.X, this.Vertexes[index + 1].Position.Y);
 					}
 
 					if (MathHelper.IsZero(bulge))
 					{
 						// the polyline edge is a line
-						Vector3 start = MathHelper.Transform(new Vector3(p1.X, p1.Y, this.elevation), this.Normal, CoordinateSystem.Object, CoordinateSystem.World);
-						Vector3 end = MathHelper.Transform(new Vector3(p2.X, p2.Y, this.elevation), this.Normal, CoordinateSystem.Object, CoordinateSystem.World);
+						Vector3 start = MathHelper.Transform(new Vector3(p1.X, p1.Y, this.Elevation), this.Normal, CoordinateSystem.Object, CoordinateSystem.World);
+						Vector3 end = MathHelper.Transform(new Vector3(p2.X, p2.Y, this.Elevation), this.Normal, CoordinateSystem.Object, CoordinateSystem.World);
 
 						entities.Add(new Line
 						{
@@ -324,8 +305,8 @@ namespace netDxf.Entities
 							List<Vector3> points = MathHelper.Transform(
 								new[]
 								{
-									new Vector3(p1.X, p1.Y, this.elevation),
-									new Vector3(p2.X, p2.Y, this.elevation)
+									new Vector3(p1.X, p1.Y, this.Elevation),
+									new Vector3(p2.X, p2.Y, this.Elevation)
 								},
 								this.Normal,
 								CoordinateSystem.Object, CoordinateSystem.World);
@@ -347,7 +328,7 @@ namespace netDxf.Entities
 						else
 						{
 							Vector3 point = MathHelper.Transform(
-								new Vector3(center.X, center.Y, this.elevation),
+								new Vector3(center.X, center.Y, this.Elevation),
 								this.Normal,
 								CoordinateSystem.Object,
 								CoordinateSystem.World);
@@ -374,11 +355,11 @@ namespace netDxf.Entities
 				return entities;
 			}
 
-			Vector3[] wcsVertexes = new Vector3[this.vertexes.Count];
+			Vector3[] wcsVertexes = new Vector3[this.Vertexes.Count];
 			Matrix3 trans = MathHelper.ArbitraryAxis(this.Normal);
-			for (int i = 0; i < this.vertexes.Count; i++)
+			for (int i = 0; i < this.Vertexes.Count; i++)
 			{
-				Vector3 wcsVertex = trans * new Vector3(this.vertexes[i].Position.X, this.vertexes[i].Position.Y, this.elevation);
+				Vector3 wcsVertex = trans * new Vector3(this.Vertexes[i].Position.X, this.Vertexes[i].Position.Y, this.Elevation);
 				wcsVertexes[i] = wcsVertex;
 			}
 
@@ -436,9 +417,7 @@ namespace netDxf.Entities
 		/// For smoothed polylines the minimum number of vertexes generated is 2.
 		/// </remarks>
 		public List<Vector2> PolygonalVertexes(int precision)
-		{
-			return this.PolygonalVertexes(precision, MathHelper.Epsilon, MathHelper.Epsilon);
-		}
+			=> this.PolygonalVertexes(precision, MathHelper.Epsilon, MathHelper.Epsilon);
 
 		/// <summary>Obtains a list of vertexes that represent the polyline approximating the curve segments as necessary.</summary>
 		/// <param name="precision">The number of vertexes created for curve segments.</param>
@@ -486,12 +465,12 @@ namespace netDxf.Entities
 							ocsVertexes.Add(p1);
 							continue;
 						}
-						p2 = new Vector2(this.vertexes[0].Position.X, this.vertexes[0].Position.Y);
+						p2 = new Vector2(this.Vertexes[0].Position.X, this.Vertexes[0].Position.Y);
 					}
 					else
 					{
 						p1 = new Vector2(vertex.Position.X, vertex.Position.Y);
-						p2 = new Vector2(this.vertexes[index + 1].Position.X, this.vertexes[index + 1].Position.Y);
+						p2 = new Vector2(this.Vertexes[index + 1].Position.X, this.Vertexes[index + 1].Position.Y);
 					}
 
 					if (!p1.Equals(p2, weldThreshold))
@@ -545,10 +524,10 @@ namespace netDxf.Entities
 				precision = 2;
 			}
 
-			Vector3[] ctrlPoints = new Vector3[this.vertexes.Count];
-			for (int i = 0; i < this.vertexes.Count; i++)
+			Vector3[] ctrlPoints = new Vector3[this.Vertexes.Count];
+			for (int i = 0; i < this.Vertexes.Count; i++)
 			{
-				Vector2 position = this.vertexes[i].Position;
+				Vector2 position = this.Vertexes[i].Position;
 				ctrlPoints[i] = new Vector3(position.X, position.Y, 0.0);
 			}
 
@@ -606,12 +585,12 @@ namespace netDxf.Entities
 				Normal = this.Normal,
 				IsVisible = this.IsVisible,
 				//LwPolyline properties
-				Elevation = this.elevation,
-				Thickness = this.thickness,
-				Flags = this.flags
+				Elevation = this.Elevation,
+				Thickness = this.Thickness,
+				Flags = this.Flags
 			};
 
-			foreach (Polyline2DVertex vertex in this.vertexes)
+			foreach (Polyline2DVertex vertex in this.Vertexes)
 			{
 				entity.Vertexes.Add((Polyline2DVertex)vertex.Clone());
 			}

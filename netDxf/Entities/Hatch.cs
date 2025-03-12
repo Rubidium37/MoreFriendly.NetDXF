@@ -62,10 +62,7 @@ namespace netDxf.Entities
 
 		#region private fields
 
-		private readonly ObservableCollection<HatchBoundaryPath> boundaryPaths;
 		private HatchPattern pattern;
-		private double elevation;
-		private bool associative;
 
 		#endregion
 
@@ -85,12 +82,12 @@ namespace netDxf.Entities
 			: base(EntityType.Hatch, DxfObjectCode.Hatch)
 		{
 			this.pattern = pattern ?? throw new ArgumentNullException(nameof(pattern));
-			this.boundaryPaths = new ObservableCollection<HatchBoundaryPath>();
-			this.boundaryPaths.BeforeAddItem += this.BoundaryPaths_BeforeAddItem;
-			this.boundaryPaths.AddItem += this.BoundaryPaths_AddItem;
-			this.boundaryPaths.BeforeRemoveItem += this.BoundaryPaths_BeforeRemoveItem;
-			this.boundaryPaths.RemoveItem += this.BoundaryPaths_RemoveItem;
-			this.associative = associative;
+			this.BoundaryPaths = new ObservableCollection<HatchBoundaryPath>();
+			this.BoundaryPaths.BeforeAddItem += this.BoundaryPaths_BeforeAddItem;
+			this.BoundaryPaths.AddItem += this.BoundaryPaths_AddItem;
+			this.BoundaryPaths.BeforeRemoveItem += this.BoundaryPaths_BeforeRemoveItem;
+			this.BoundaryPaths.RemoveItem += this.BoundaryPaths_RemoveItem;
+			this.Associative = associative;
 		}
 
 		/// <summary>Initializes a new instance of the class.</summary>
@@ -111,12 +108,12 @@ namespace netDxf.Entities
 			{
 				throw new ArgumentNullException(nameof(paths));
 			}
-			this.boundaryPaths = new ObservableCollection<HatchBoundaryPath>();
-			this.boundaryPaths.BeforeAddItem += this.BoundaryPaths_BeforeAddItem;
-			this.boundaryPaths.AddItem += this.BoundaryPaths_AddItem;
-			this.boundaryPaths.BeforeRemoveItem += this.BoundaryPaths_BeforeRemoveItem;
-			this.boundaryPaths.RemoveItem += this.BoundaryPaths_RemoveItem;
-			this.associative = associative;
+			this.BoundaryPaths = new ObservableCollection<HatchBoundaryPath>();
+			this.BoundaryPaths.BeforeAddItem += this.BoundaryPaths_BeforeAddItem;
+			this.BoundaryPaths.AddItem += this.BoundaryPaths_AddItem;
+			this.BoundaryPaths.BeforeRemoveItem += this.BoundaryPaths_BeforeRemoveItem;
+			this.BoundaryPaths.RemoveItem += this.BoundaryPaths_RemoveItem;
+			this.Associative = associative;
 
 			foreach (HatchBoundaryPath path in paths)
 			{
@@ -136,7 +133,7 @@ namespace netDxf.Entities
 					path.ClearContour();
 				}
 
-				this.boundaryPaths.Add(path);
+				this.BoundaryPaths.Add(path);
 			}
 		}
 
@@ -147,7 +144,7 @@ namespace netDxf.Entities
 		/// <summary>Gets the hatch pattern.</summary>
 		public HatchPattern Pattern
 		{
-			get { return this.pattern; }
+			get => this.pattern;
 			set
 			{
 				this.pattern = value ?? throw new ArgumentNullException(nameof(value));
@@ -158,23 +155,13 @@ namespace netDxf.Entities
 		/// <remarks>
 		/// The hatch must contain at least on valid boundary path to be able to add it to the DxfDocument, otherwise it will be rejected.
 		/// </remarks>
-		public ObservableCollection<HatchBoundaryPath> BoundaryPaths
-		{
-			get { return this.boundaryPaths; }
-		}
+		public ObservableCollection<HatchBoundaryPath> BoundaryPaths { get; }
 
 		/// <summary>Gets if the hatch is associative or not, which means if the hatch object is associated with the hatch boundary entities.</summary>
-		public bool Associative
-		{
-			get { return this.associative; }
-		}
+		public bool Associative { get; private set; }
 
 		/// <summary>Gets or sets the hatch elevation, its position along its normal.</summary>
-		public double Elevation
-		{
-			get { return this.elevation; }
-			set { this.elevation = value; }
-		}
+		public double Elevation { get; set; }
 
 		#endregion
 
@@ -186,8 +173,8 @@ namespace netDxf.Entities
 		public List<EntityObject> UnLinkBoundary()
 		{
 			List<EntityObject> boundary = new List<EntityObject>();
-			this.associative = false;
-			foreach (HatchBoundaryPath path in this.boundaryPaths)
+			this.Associative = false;
+			foreach (HatchBoundaryPath path in this.BoundaryPaths)
 			{
 				foreach (EntityObject entity in path.Entities)
 				{
@@ -210,16 +197,16 @@ namespace netDxf.Entities
 		/// </remarks>
 		public List<EntityObject> CreateBoundary(bool linkBoundary)
 		{
-			if (this.associative)
+			if (this.Associative)
 			{
 				this.UnLinkBoundary();
 			}
 
-			this.associative = linkBoundary;
+			this.Associative = linkBoundary;
 			List<EntityObject> boundary = new List<EntityObject>();
 			Matrix3 trans = MathHelper.ArbitraryAxis(this.Normal);
-			Vector3 pos = trans * new Vector3(0.0, 0.0, this.elevation);
-			foreach (HatchBoundaryPath path in this.boundaryPaths)
+			Vector3 pos = trans * new Vector3(0.0, 0.0, this.Elevation);
+			foreach (HatchBoundaryPath path in this.BoundaryPaths)
 			{
 				foreach (HatchBoundaryPath.Edge edge in path.Edges)
 				{
@@ -240,14 +227,14 @@ namespace netDxf.Entities
 							break;
 						case EntityType.Polyline2D:
 							// LwPolylines need an special treatment since their vertexes are expressed in object coordinates.
-							boundary.Add(ProcessLwPolyline((Polyline2D)entity, this.Normal, this.elevation));
+							boundary.Add(ProcessLwPolyline((Polyline2D)entity, this.Normal, this.Elevation));
 							break;
 						case EntityType.Spline:
 							boundary.Add(ProcessSpline((Spline)entity, trans, pos));
 							break;
 					}
 
-					if (this.associative)
+					if (this.Associative)
 					{
 						path.AddContour(entity);
 						entity.AddReactor(this);
@@ -315,7 +302,7 @@ namespace netDxf.Entities
 		// TODO: apply the transformation directly to edges
 		//public void TransformBy2(Matrix3 transformation, Vector3 translation)
 		//{
-		//	if (this.associative)
+		//	if (this.Associative)
 		//	{
 		//		this.UnLinkBoundary();
 		//	}
@@ -395,7 +382,7 @@ namespace netDxf.Entities
 		/// <inheritdoc/>
 		public override void TransformBy(Matrix3 transformation, Vector3 translation)
 		{
-			if (this.associative)
+			if (this.Associative)
 			{
 				this.UnLinkBoundary();
 			}
@@ -486,12 +473,12 @@ namespace netDxf.Entities
 				Normal = this.Normal,
 				IsVisible = this.IsVisible,
 				//Hatch properties
-				Elevation = this.elevation
+				Elevation = this.Elevation
 			};
 
-			foreach (HatchBoundaryPath path in this.boundaryPaths)
+			foreach (HatchBoundaryPath path in this.BoundaryPaths)
 			{
-				entity.boundaryPaths.Add((HatchBoundaryPath)path.Clone());
+				entity.BoundaryPaths.Add((HatchBoundaryPath)path.Clone());
 			}
 
 			foreach (XData data in this.XData.Values)
@@ -518,7 +505,7 @@ namespace netDxf.Entities
 
 		private void BoundaryPaths_AddItem(ObservableCollection<HatchBoundaryPath> sender, ObservableCollectionEventArgs<HatchBoundaryPath> e)
 		{
-			if (this.associative)
+			if (this.Associative)
 			{
 				foreach (EntityObject entity in e.Item.Entities)
 				{
@@ -539,7 +526,7 @@ namespace netDxf.Entities
 
 		private void BoundaryPaths_RemoveItem(ObservableCollection<HatchBoundaryPath> sender, ObservableCollectionEventArgs<HatchBoundaryPath> e)
 		{
-			if (this.associative)
+			if (this.Associative)
 			{
 				foreach (EntityObject entity in e.Item.Entities)
 				{

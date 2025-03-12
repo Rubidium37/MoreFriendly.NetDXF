@@ -33,20 +33,8 @@ namespace netDxf.Tables
 	{
 		#region private fields
 
-		private DimensionStyleTolerancesDisplayMethod dimtol;
-		private double dimtp;
-		private double dimtm;
-		private DimensionStyleTolerancesVerticalPlacement dimtolj;
 		private short dimtdec;
-		private bool suppressLinearLeadingZeros;
-		private bool suppressLinearTrailingZeros;
-		private bool suppressZeroFeet;
-		private bool suppressZeroInches;
 		private short dimalttd;
-		private bool altSuppressLinearLeadingZeros;
-		private bool altSuppressLinearTrailingZeros;
-		private bool altSuppressZeroFeet;
-		private bool altSuppressZeroInches;
 
 		#endregion
 
@@ -55,20 +43,20 @@ namespace netDxf.Tables
 		/// <summary>Initializes a new instance of the class.</summary>
 		public DimensionStyleTolerances()
 		{
-			this.dimtol = DimensionStyleTolerancesDisplayMethod.None;
-			this.dimtm = 0.0;
-			this.dimtp = 0.0;
-			this.dimtolj = DimensionStyleTolerancesVerticalPlacement.Middle;
+			this.DisplayMethod = DimensionStyleTolerancesDisplayMethod.None;
+			this.LowerLimit = 0.0;
+			this.UpperLimit = 0.0;
+			this.VerticalPlacement = DimensionStyleTolerancesVerticalPlacement.Middle;
 			this.dimtdec = 4;
-			this.suppressLinearLeadingZeros = false;
-			this.suppressLinearTrailingZeros = false;
-			this.suppressZeroFeet = true;
-			this.suppressZeroInches = true;
+			this.SuppressLinearLeadingZeros = false;
+			this.SuppressLinearTrailingZeros = false;
+			this.SuppressZeroFeet = true;
+			this.SuppressZeroInches = true;
 			this.dimalttd = 2;
-			this.altSuppressLinearLeadingZeros = false;
-			this.altSuppressLinearTrailingZeros = false;
-			this.altSuppressZeroFeet = true;
-			this.altSuppressZeroInches = true;
+			this.AlternateSuppressLinearLeadingZeros = false;
+			this.AlternateSuppressLinearTrailingZeros = false;
+			this.AlternateSuppressZeroFeet = true;
+			this.AlternateSuppressZeroInches = true;
 		}
 
 		#endregion
@@ -79,41 +67,25 @@ namespace netDxf.Tables
 		/// <remarks>
 		/// Default: None
 		/// </remarks>
-		public DimensionStyleTolerancesDisplayMethod DisplayMethod
-		{
-			get { return this.dimtol; }
-			set { this.dimtol = value; }
-		}
+		public DimensionStyleTolerancesDisplayMethod DisplayMethod { get; set; }
 
 		/// <summary>Gets or sets the maximum or upper tolerance value. When you select <see cref="DimensionStyleTolerancesDisplayMethod.Symmetrical"/> in <see cref="DisplayMethod"/>, this value is used for the tolerance. (<b>DIMTP</b>)</summary>
 		/// <remarks>
 		/// Default: 0.0
 		/// </remarks>
-		public double UpperLimit
-		{
-			get { return this.dimtp; }
-			set { this.dimtp = value; }
-		}
+		public double UpperLimit { get; set; }
 
 		/// <summary>Gets or sets the minimum or lower tolerance value. (<b>DIMTM</b>)</summary>
 		/// <remarks>
 		/// Default: 0.0
 		/// </remarks>
-		public double LowerLimit
-		{
-			get { return this.dimtm; }
-			set { this.dimtm = value; }
-		}
+		public double LowerLimit { get; set; }
 
 		/// <summary>Gets or sets the text vertical placement for symmetrical and deviation tolerances. (<b>DIMTOLJ</b>)</summary>
 		/// <remarks>
 		/// Default: Middle
 		/// </remarks>
-		public DimensionStyleTolerancesVerticalPlacement VerticalPlacement
-		{
-			get { return this.dimtolj; }
-			set { this.dimtolj = value; }
-		}
+		public DimensionStyleTolerancesVerticalPlacement VerticalPlacement { get; set; }
 
 		/// <summary>Gets or sets the number of decimal places. (<b>DIMTDEC</b>)</summary>
 		/// <remarks>
@@ -122,7 +94,7 @@ namespace netDxf.Tables
 		/// </remarks>
 		public short Precision
 		{
-			get { return this.dimtdec; }
+			get => this.dimtdec;
 			set
 			{
 				if (value < 0)
@@ -137,41 +109,25 @@ namespace netDxf.Tables
 		/// <remarks>
 		/// This value is part of the <b>DIMTZIN</b> variable.
 		/// </remarks>
-		public bool SuppressLinearLeadingZeros
-		{
-			get { return this.suppressLinearLeadingZeros; }
-			set { this.suppressLinearLeadingZeros = value; }
-		}
+		public bool SuppressLinearLeadingZeros { get; set; }
 
 		/// <summary>Suppresses trailing zeros in linear decimal tolerance units. (<b>DIMTZIN</b>)</summary>
 		/// <remarks>
 		/// This value is part of the <b>DIMTZIN</b> variable.
 		/// </remarks>
-		public bool SuppressLinearTrailingZeros
-		{
-			get { return this.suppressLinearTrailingZeros; }
-			set { this.suppressLinearTrailingZeros = value; }
-		}
+		public bool SuppressLinearTrailingZeros { get; set; }
 
 		/// <summary>Suppresses zero feet in architectural tolerance units. (<b>DIMTZIN</b>)</summary>
 		/// <remarks>
 		/// This value is part of the <b>DIMTZIN</b> variable.
 		/// </remarks>
-		public bool SuppressZeroFeet
-		{
-			get { return this.suppressZeroFeet; }
-			set { this.suppressZeroFeet = value; }
-		}
+		public bool SuppressZeroFeet { get; set; }
 
 		/// <summary>Suppresses zero inches in architectural tolerance units. (<b>DIMTZIN</b>)</summary>
 		/// <remarks>
 		/// This value is part of the <b>DIMTZIN</b> variable.
 		/// </remarks>
-		public bool SuppressZeroInches
-		{
-			get { return this.suppressZeroInches; }
-			set { this.suppressZeroInches = value; }
-		}
+		public bool SuppressZeroInches { get; set; }
 
 		/// <summary>Gets or sets the number of decimal places of the tolerance alternate units. (<b>DIMALTTD</b>)</summary>
 		/// <remarks>
@@ -180,7 +136,7 @@ namespace netDxf.Tables
 		/// </remarks>
 		public short AlternatePrecision
 		{
-			get { return this.dimalttd; }
+			get => this.dimalttd;
 			set
 			{
 				if (value < 0)
@@ -193,35 +149,19 @@ namespace netDxf.Tables
 
 		/// <summary>Suppresses leading zeros in linear decimal alternate tolerance units. (<b>DIMALTTZ</b>)</summary>
 		/// <remarks>This value is part of the <b>DIMALTTZ</b> variable.</remarks>
-		public bool AlternateSuppressLinearLeadingZeros
-		{
-			get { return this.altSuppressLinearLeadingZeros; }
-			set { this.altSuppressLinearLeadingZeros = value; }
-		}
+		public bool AlternateSuppressLinearLeadingZeros { get; set; }
 
 		/// <summary>Suppresses trailing zeros in linear decimal alternate tolerance units. (<b>DIMALTTZ</b>)</summary>
 		/// <remarks>This value is part of the <b>DIMALTTZ</b> variable.</remarks>
-		public bool AlternateSuppressLinearTrailingZeros
-		{
-			get { return this.altSuppressLinearTrailingZeros; }
-			set { this.altSuppressLinearTrailingZeros = value; }
-		}
+		public bool AlternateSuppressLinearTrailingZeros { get; set; }
 
 		/// <summary>Suppresses zero feet in architectural alternate tolerance units. (<b>DIMALTTZ</b>)</summary>
 		/// <remarks>This value is part of the <b>DIMALTTZ</b> variable.</remarks>
-		public bool AlternateSuppressZeroFeet
-		{
-			get { return this.altSuppressZeroFeet; }
-			set { this.altSuppressZeroFeet = value; }
-		}
+		public bool AlternateSuppressZeroFeet { get; set; }
 
 		/// <summary>Suppresses zero inches in architectural alternate tolerance units. (<b>DIMALTTZ</b>)</summary>
 		/// <remarks>This value is part of the <b>DIMALTTZ</b> variable.</remarks>
-		public bool AlternateSuppressZeroInches
-		{
-			get { return this.altSuppressZeroInches; }
-			set { this.altSuppressZeroInches = value; }
-		}
+		public bool AlternateSuppressZeroInches { get; set; }
 
 		#endregion
 
@@ -229,25 +169,23 @@ namespace netDxf.Tables
 
 		/// <inheritdoc/>
 		public object Clone()
-		{
-			return new DimensionStyleTolerances
+			=> new DimensionStyleTolerances
 			{
-				DisplayMethod = this.dimtol,
-				UpperLimit = this.dimtp,
-				LowerLimit = this.dimtm,
-				VerticalPlacement = this.dimtolj,
+				DisplayMethod = this.DisplayMethod,
+				UpperLimit = this.UpperLimit,
+				LowerLimit = this.LowerLimit,
+				VerticalPlacement = this.VerticalPlacement,
 				Precision = this.dimtdec,
-				SuppressLinearLeadingZeros = this.suppressLinearLeadingZeros,
-				SuppressLinearTrailingZeros = this.suppressLinearTrailingZeros,
-				SuppressZeroFeet = this.suppressZeroFeet,
-				SuppressZeroInches = this.suppressZeroInches,
+				SuppressLinearLeadingZeros = this.SuppressLinearLeadingZeros,
+				SuppressLinearTrailingZeros = this.SuppressLinearTrailingZeros,
+				SuppressZeroFeet = this.SuppressZeroFeet,
+				SuppressZeroInches = this.SuppressZeroInches,
 				AlternatePrecision = this.dimalttd,
-				AlternateSuppressLinearLeadingZeros = this.altSuppressLinearLeadingZeros,
-				AlternateSuppressLinearTrailingZeros = this.altSuppressLinearTrailingZeros,
-				AlternateSuppressZeroFeet = this.altSuppressZeroFeet,
-				AlternateSuppressZeroInches = this.altSuppressZeroInches,
+				AlternateSuppressLinearLeadingZeros = this.AlternateSuppressLinearLeadingZeros,
+				AlternateSuppressLinearTrailingZeros = this.AlternateSuppressLinearTrailingZeros,
+				AlternateSuppressZeroFeet = this.AlternateSuppressZeroFeet,
+				AlternateSuppressZeroInches = this.AlternateSuppressZeroInches,
 			};
-		}
 
 		#endregion
 	}

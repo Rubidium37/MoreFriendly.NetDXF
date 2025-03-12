@@ -315,14 +315,12 @@ namespace netDxf.Entities
 		}
 
 		private static Line ExtensionLine(Vector2 start, Vector2 end, DimensionStyle style, Linetype linetype)
-		{
-			return new Line(start, end)
+			=> new Line(start, end)
 			{
 				Color = style.ExtLineColor,
 				Linetype = linetype,
 				Lineweight = style.ExtLineLineweight
 			};
-		}
 
 		private static EntityObject StartArrowHead(Vector2 position, double rotation, DimensionStyle style)
 		{
@@ -649,11 +647,7 @@ namespace netDxf.Entities
 		/// The dimension block creation only supports a limited number of <see cref="DimensionStyle">dimension style</see> properties.
 		/// Also the list of <see cref="DimensionStyleOverride">dimension style overrides</see> associated with the specified dimension will be applied where necessary.
 		/// </remarks>
-		public static Block Build(Dimension dim)
-		{
-			return Build(dim, "DimBlock");
-		}
-
+		public static Block Build(Dimension dim) => Build(dim, "DimBlock");
 		/// <summary>Creates a block that represents the drawing of the specified dimension.</summary>
 		/// <param name="dim"><see cref="Dimension"/> from which the block will be created.</param>
 		/// <param name="name">The blocks name.</param>
@@ -700,7 +694,6 @@ namespace netDxf.Entities
 
 			return block;
 		}
-
 		/// <summary>Creates a block that represents the drawing of the specified dimension.</summary>
 		/// <param name="dim"><see cref="AlignedDimension"/> from which the block will be created.</param>
 		/// <param name="name">The blocks name.</param>
@@ -788,7 +781,6 @@ namespace netDxf.Entities
 			// drawing block
 			return new Block(name, entities, null, false) { Flags = BlockTypeFlags.AnonymousBlock };
 		}
-
 		/// <summary>Creates a block that represents the drawing of the specified dimension.</summary>
 		/// <param name="dim"><see cref="LinearDimension"/> from which the block will be created.</param>
 		/// <param name="name">The blocks name.</param>
@@ -885,7 +877,6 @@ namespace netDxf.Entities
 			// drawing block
 			return new Block(name, entities, null, false) { Flags = BlockTypeFlags.AnonymousBlock };
 		}
-
 		/// <summary>Creates a block that represents the drawing of the specified dimension.</summary>
 		/// <param name="dim"><see cref="Angular2LineDimension"/> from which the block will be created.</param>
 		/// <param name="name">The blocks name.</param>
@@ -996,7 +987,6 @@ namespace netDxf.Entities
 			// drawing block
 			return new Block(name, entities, null, false) { Flags = BlockTypeFlags.AnonymousBlock };
 		}
-
 		/// <summary>Creates a block that represents the drawing of the specified dimension.</summary>
 		/// <param name="dim"><see cref="Angular3PointDimension"/> from which the block will be created.</param>
 		/// <param name="name">The blocks name.</param>
@@ -1108,7 +1098,6 @@ namespace netDxf.Entities
 			// drawing block
 			return new Block(name, entities, null, false) { Flags = BlockTypeFlags.AnonymousBlock };
 		}
-
 		/// <summary>Creates a block that represents the drawing of the specified dimension.</summary>
 		/// <param name="dim"><see cref="DiametricDimension"/> from which the block will be created.</param>
 		/// <param name="name">The blocks name.</param>
@@ -1224,7 +1213,6 @@ namespace netDxf.Entities
 
 			return new Block(name, entities, null, false) { Flags = BlockTypeFlags.AnonymousBlock };
 		}
-
 		/// <summary>Creates a block that represents the drawing of the specified dimension.</summary>
 		/// <param name="dim"><see cref="RadialDimension"/> from which the block will be created.</param>
 		/// <param name="name">The blocks name.</param>
@@ -1334,7 +1322,6 @@ namespace netDxf.Entities
 			return new Block(name, entities, null, false) { Flags = BlockTypeFlags.AnonymousBlock };
 
 		}
-
 		/// <summary>Creates a block that represents the drawing of the specified dimension.</summary>
 		/// <param name="dim"><see cref="OrdinateDimension"/> from which the block will be created.</param>
 		/// <param name="name">The blocks name.</param>
@@ -1435,7 +1422,6 @@ namespace netDxf.Entities
 			// drawing block
 			return new Block(name, entities, null, false) { Flags = BlockTypeFlags.AnonymousBlock };
 		}
-
 		/// <summary>Creates a block that represents the drawing of the specified dimension.</summary>
 		/// <param name="dim"><see cref="ArcLengthDimension"/> from which the block will be created.</param>
 		/// <param name="name">The blocks name.</param>

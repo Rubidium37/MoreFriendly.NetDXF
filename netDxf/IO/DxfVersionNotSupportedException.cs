@@ -33,19 +33,13 @@ namespace netDxf.IO
 	public class DxfVersionNotSupportedException :
 		Exception
 	{
-		#region private fields
-
-		private readonly DxfVersion version;
-
-		#endregion
-
 		#region constructors
 
 		/// <summary>Initializes a new instance of <see cref="DxfVersionNotSupportedException"/></summary>
 		/// <param name="version">DXF file version.</param>
 		public DxfVersionNotSupportedException(DxfVersion version)
 		{
-			this.version = version;
+			this.Version = version;
 		}
 
 		/// <summary>Initializes a new instance of <see cref="DxfVersionNotSupportedException"/></summary>
@@ -54,7 +48,7 @@ namespace netDxf.IO
 		public DxfVersionNotSupportedException(string message, DxfVersion version)
 			: base(message)
 		{
-			this.version = version;
+			this.Version = version;
 		}
 
 
@@ -63,10 +57,7 @@ namespace netDxf.IO
 		#region public properties
 
 		/// <summary>Gets the <b>DXF</b> file version that generated the exception.</summary>
-		public DxfVersion Version
-		{
-			get { return this.version; }
-		}
+		public DxfVersion Version { get; }
 
 		#endregion
 	}

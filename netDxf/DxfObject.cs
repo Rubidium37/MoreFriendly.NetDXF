@@ -57,27 +57,18 @@ namespace netDxf
 
 		#endregion
 
-		#region private fields
-
-		private string codename;
-		private string handle;
-		private DxfObject owner;
-		private readonly XDataDictionary xData;
-
-		#endregion
-
 		#region constructors
 
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="codename"><see cref="DxfObjectCode">DXF object name</see>.</param>
 		protected DxfObject(string codename)
 		{
-			this.codename = codename;
-			this.handle = null;
-			this.owner = null;
-			this.xData = new XDataDictionary();
-			this.xData.AddAppReg += this.XData_AddAppReg;
-			this.xData.RemoveAppReg += this.XData_RemoveAppReg;
+			this.CodeName = codename;
+			this.Handle = null;
+			this.Owner = null;
+			this.XData = new XDataDictionary();
+			this.XData.AddAppReg += this.XData_AddAppReg;
+			this.XData.RemoveAppReg += this.XData_RemoveAppReg;
 		}
 
 		#endregion
@@ -85,35 +76,20 @@ namespace netDxf
 		#region public properties
 
 		/// <summary>Gets the <see cref="DxfObjectCode">DXF object name</see>.</summary>
-		public string CodeName
-		{
-			get { return this.codename; }
-			protected set { this.codename = value; }
-		}
+		public string CodeName { get; protected set; }
 
 		/// <summary>Gets the handle assigned to the <b>DXF</b> object.</summary>
 		/// <remarks>
 		/// The handle is a unique hexadecimal number assigned automatically to every <b>DXF</b> object,
 		/// that has been added to a <see cref="DxfDocument"/>.
 		/// </remarks>
-		public string Handle
-		{
-			get { return this.handle; }
-			internal set { this.handle = value; }
-		}
+		public string Handle { get; internal set; }
 
 		/// <summary>Gets the owner of the actual <see cref="DxfObject"/>.</summary>
-		public DxfObject Owner
-		{
-			get { return this.owner; }
-			internal set { this.owner = value; }
-		}
+		public DxfObject Owner { get; internal set; }
 
 		/// <summary>Gets the entity <see cref="XDataDictionary">extended data</see>.</summary>
-		public XDataDictionary XData
-		{
-			get { return this.xData; }
-		}
+		public XDataDictionary XData { get; }
 
 		#endregion
 
@@ -128,7 +104,7 @@ namespace netDxf
 		/// </remarks>
 		internal virtual long AssignHandle(long entityNumber)
 		{
-			this.handle = entityNumber.ToString("X");
+			this.Handle = entityNumber.ToString("X");
 			return entityNumber + 1;
 		}
 
@@ -137,24 +113,17 @@ namespace netDxf
 		#region overrides
 
 		/// <inheritdoc/>
-		public override string ToString()
-		{
-			return this.codename;
-		}
+		public override string ToString() => this.CodeName;
 
 		#endregion
 
 		#region XData events
 
 		private void XData_AddAppReg(XDataDictionary sender, ObservableCollectionEventArgs<ApplicationRegistry> e)
-		{
-			this.OnXDataAddAppRegEvent(e.Item);
-		}
+			=> this.OnXDataAddAppRegEvent(e.Item);
 
 		private void XData_RemoveAppReg(XDataDictionary sender, ObservableCollectionEventArgs<ApplicationRegistry> e)
-		{
-			this.OnXDataRemoveAppRegEvent(e.Item);
-		}
+			=> this.OnXDataRemoveAppRegEvent(e.Item);
 
 		#endregion
 	}

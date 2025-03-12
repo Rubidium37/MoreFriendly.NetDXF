@@ -36,12 +36,10 @@ namespace netDxf.Entities
 	{
 		#region private fields
 
-		private HatchGradientPatternType gradientType;
 		private AciColor color1;
 		private AciColor color2;
 		private bool singleColor;
 		private double tint;
-		private bool centered;
 
 		#endregion
 
@@ -61,9 +59,9 @@ namespace netDxf.Entities
 			this.color1 = AciColor.Blue;
 			this.color2 = AciColor.Yellow;
 			this.singleColor = false;
-			this.gradientType = HatchGradientPatternType.Linear;
+			this.GradientType = HatchGradientPatternType.Linear;
 			this.tint = 1.0;
-			this.centered = true;
+			this.Centered = true;
 		}
 
 		/// <summary>Initializes a new instance of the class as a single color gradient.</summary>
@@ -86,9 +84,9 @@ namespace netDxf.Entities
 			this.color1 = color ?? throw new ArgumentNullException(nameof(color));
 			this.color2 = this.Color2FromTint(tint);
 			this.singleColor = true;
-			this.gradientType = type;
+			this.GradientType = type;
 			this.tint = tint;
-			this.centered = true;
+			this.Centered = true;
 		}
 
 		/// <summary>Initializes a new instance of the class as a two color gradient.</summary>
@@ -111,9 +109,9 @@ namespace netDxf.Entities
 			this.color1 = color1 ?? throw new ArgumentNullException(nameof(color1));
 			this.color2 = color2 ?? throw new ArgumentNullException(nameof(color2));
 			this.singleColor = false;
-			this.gradientType = type;
+			this.GradientType = type;
 			this.tint = 1.0;
-			this.centered = true;
+			this.Centered = true;
 		}
 
 		#endregion
@@ -121,16 +119,12 @@ namespace netDxf.Entities
 		#region public properties
 
 		/// <summary>Gets or set the gradient pattern <see cref="HatchGradientPatternType">type</see>.</summary>
-		public HatchGradientPatternType GradientType
-		{
-			get { return this.gradientType; }
-			set { this.gradientType = value; }
-		}
+		public HatchGradientPatternType GradientType { get; set; }
 
 		/// <summary>Gets or sets the gradient <see cref="AciColor">color</see> 1.</summary>
 		public AciColor Color1
 		{
-			get { return this.color1; }
+			get => this.color1;
 			set
 			{
 				this.color1 = value ?? throw new ArgumentNullException(nameof(value));
@@ -143,7 +137,7 @@ namespace netDxf.Entities
 		/// </remarks>
 		public AciColor Color2
 		{
-			get { return this.color2; }
+			get => this.color2;
 			set
 			{
 				this.singleColor = false;
@@ -154,7 +148,7 @@ namespace netDxf.Entities
 		/// <summary>Gets or sets the gradient pattern color type.</summary>
 		public bool SingleColor
 		{
-			get { return this.singleColor; }
+			get => this.singleColor;
 			set
 			{
 				if (value)
@@ -167,7 +161,7 @@ namespace netDxf.Entities
 		/// <remarks>It only applies to single color gradient patterns.</remarks>
 		public double Tint
 		{
-			get { return this.tint; }
+			get => this.tint;
 			set
 			{
 				if (this.singleColor)
@@ -181,11 +175,7 @@ namespace netDxf.Entities
 		/// Each gradient has two definitions, shifted and unsifted. A shift value describes the blend of the two definitions that should be used.
 		/// A value of 0.0 (false) means only the unsifted version should be used, and a value of 1.0 (true) means that only the shifted version should be used.
 		/// </remarks>
-		public bool Centered
-		{
-			get { return this.centered; }
-			set { this.centered = value; }
-		}
+		public bool Centered { get; set; }
 
 		#endregion
 
@@ -214,12 +204,12 @@ namespace netDxf.Entities
 				Scale = this.Scale,
 				Style = this.Style,
 				// GraientPattern
-				GradientType = this.gradientType,
+				GradientType = this.GradientType,
 				Color1 = (AciColor)this.color1.Clone(),
 				Color2 = (AciColor)this.color2.Clone(),
 				SingleColor = this.singleColor,
 				Tint = this.tint,
-				Centered = this.centered
+				Centered = this.Centered
 			};
 
 			return copy;

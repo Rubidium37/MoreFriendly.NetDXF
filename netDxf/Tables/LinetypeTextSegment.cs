@@ -53,10 +53,7 @@ namespace netDxf.Tables
 
 		private string text;
 		private TextStyle style;
-		private Vector2 offset;
-		private LinetypeSegmentRotationType rotationType;
 		private double rotation;
-		private double scale;
 
 		#endregion
 
@@ -88,10 +85,10 @@ namespace netDxf.Tables
 		{
 			this.text = string.IsNullOrEmpty(text) ? string.Empty : text;
 			this.style = style ?? throw new ArgumentNullException(nameof(style), "The style must be a valid TextStyle.");
-			this.offset = offset;
-			this.rotationType = rotationType;
+			this.Offset = offset;
+			this.RotationType = rotationType;
 			this.rotation = MathHelper.NormalizeAngle(rotation);
-			this.scale = scale;
+			this.Scale = scale;
 		}
 
 		#endregion
@@ -101,14 +98,14 @@ namespace netDxf.Tables
 		/// <summary>Gets or sets the text displayed by the linetype.</summary>
 		public string Text
 		{
-			get { return this.text; }
-			set { this.text = string.IsNullOrEmpty(value) ? string.Empty : value; }
+			get => this.text;
+			set => this.text = string.IsNullOrEmpty(value) ? string.Empty : value;
 		}
 
 		/// <summary>Gets or sets the TextStyle of the text to be displayed by the linetype.</summary>
 		public TextStyle Style
 		{
-			get { return this.style; }
+			get => this.style;
 			set
 			{
 				if (value == null)
@@ -120,32 +117,20 @@ namespace netDxf.Tables
 		}
 
 		/// <summary>Gets or sets the shift of the text along the line.</summary>
-		public Vector2 Offset
-		{
-			get { return this.offset; }
-			set { this.offset = value; }
-		}
+		public Vector2 Offset { get; set; }
 
 		/// <summary>Gets or sets the type of rotation defined by the rotation value upright, relative, or absolute.</summary>
-		public LinetypeSegmentRotationType RotationType
-		{
-			get { return this.rotationType; }
-			set { this.rotationType = value; }
-		}
+		public LinetypeSegmentRotationType RotationType { get; set; }
 
 		/// <summary>Gets or sets the angle in degrees of the text.</summary>
 		public double Rotation
 		{
-			get { return this.rotation; }
-			set { this.rotation = MathHelper.NormalizeAngle(value); }
+			get => this.rotation;
+			set => this.rotation = MathHelper.NormalizeAngle(value);
 		}
 
 		/// <summary>Gets or sets the scale of the text relative to the scale of the linetype.</summary>
-		public double Scale
-		{
-			get { return this.scale; }
-			set { this.scale = value; }
-		}
+		public double Scale { get; set; }
 
 		#endregion
 
@@ -153,9 +138,7 @@ namespace netDxf.Tables
 
 		/// <inheritdoc/>
 		public override object Clone()
-		{
-			return new LinetypeTextSegment(this.text, (TextStyle)this.style.Clone(), this.Length, this.offset, this.rotationType, this.rotation, this.scale);
-		}
+			=> new LinetypeTextSegment(this.text, (TextStyle)this.style.Clone(), this.Length, this.Offset, this.RotationType, this.rotation, this.Scale);
 
 		#endregion
 	}

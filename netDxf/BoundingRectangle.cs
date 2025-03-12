@@ -31,13 +31,6 @@ namespace netDxf
 	/// <summary>Represents an axis aligned bounding rectangle.</summary>
 	public class BoundingRectangle
 	{
-		#region private fields
-
-		private Vector2 min;
-		private Vector2 max;
-
-		#endregion
-
 		#region constructors
 
 		/// <summary>Initializes a new axis aligned bounding rectangle from a rotated ellipse.</summary>
@@ -55,8 +48,8 @@ namespace netDxf
 
 			double width = Math.Sqrt(a * a + b * b) * 2;
 			double height = Math.Sqrt(c * c + d * d) * 2;
-			this.min = new Vector2(center.X - width * 0.5, center.Y - height * 0.5);
-			this.max = new Vector2(center.X + width * 0.5, center.Y + height * 0.5);
+			this.Min = new Vector2(center.X - width * 0.5, center.Y - height * 0.5);
+			this.Max = new Vector2(center.X + width * 0.5, center.Y + height * 0.5);
 		}
 
 		/// <summary>Initializes a new axis aligned bounding rectangle from a circle.</summary>
@@ -64,8 +57,8 @@ namespace netDxf
 		/// <param name="radius">Radius of the circle.</param>
 		public BoundingRectangle(Vector2 center, double radius)
 		{
-			this.min = new Vector2(center.X - radius, center.Y - radius);
-			this.max = new Vector2(center.X + radius, center.Y + radius);
+			this.Min = new Vector2(center.X - radius, center.Y - radius);
+			this.Max = new Vector2(center.X + radius, center.Y + radius);
 		}
 
 		/// <summary>Initializes a new axis aligned bounding rectangle.</summary>
@@ -74,8 +67,8 @@ namespace netDxf
 		/// <param name="height">Height of the bounding rectangle.</param>
 		public BoundingRectangle(Vector2 center, double width, double height)
 		{
-			this.min = new Vector2(center.X - width * 0.5, center.Y - height * 0.5);
-			this.max = new Vector2(center.X + width * 0.5, center.Y + height * 0.5);
+			this.Min = new Vector2(center.X - width * 0.5, center.Y - height * 0.5);
+			this.Max = new Vector2(center.X + width * 0.5, center.Y + height * 0.5);
 		}
 
 		/// <summary>Initializes a new axis aligned bounding rectangle.</summary>
@@ -83,8 +76,8 @@ namespace netDxf
 		/// <param name="max">Upper-right corner.</param>
 		public BoundingRectangle(Vector2 min, Vector2 max)
 		{
-			this.min = min;
-			this.max = max;
+			this.Min = min;
+			this.Max = max;
 		}
 
 		/// <summary>Initializes a new axis aligned bounding rectangle.</summary>
@@ -127,13 +120,13 @@ namespace netDxf
 			}
 			if (any)
 			{
-				this.min = new Vector2(minX, minY);
-				this.max = new Vector2(maxX, maxY);
+				this.Min = new Vector2(minX, minY);
+				this.Max = new Vector2(maxX, maxY);
 			}
 			else
 			{
-				this.min = new Vector2(double.MinValue, double.MinValue);
-				this.max = new Vector2(double.MaxValue, double.MaxValue);
+				this.Min = new Vector2(double.MinValue, double.MinValue);
+				this.Max = new Vector2(double.MaxValue, double.MaxValue);
 			}
 		}
 
@@ -142,42 +135,22 @@ namespace netDxf
 		#region public properties
 
 		/// <summary>Gets or sets the bounding rectangle lower-left corner.</summary>
-		public Vector2 Min
-		{
-			get { return this.min; }
-			set { this.min = value; }
-		}
+		public Vector2 Min { get; set; }
 
 		/// <summary>Gets or sets the bounding rectangle upper-right corner.</summary>
-		public Vector2 Max
-		{
-			get { return this.max; }
-			set { this.max = value; }
-		}
+		public Vector2 Max { get; set; }
 
 		/// <summary>Gets the bounding rectangle center.</summary>
-		public Vector2 Center
-		{
-			get { return (this.min + this.max) * 0.5; }
-		}
+		public Vector2 Center => (this.Min + this.Max) * 0.5;
 
 		/// <summary>Gets the radius of the circle that contains the bounding rectangle.</summary>
-		public double Radius
-		{
-			get { return Vector2.Distance(this.min, this.max) * 0.5; }
-		}
+		public double Radius => Vector2.Distance(this.Min, this.Max) * 0.5;
 
 		/// <summary>Gets the bounding rectangle width.</summary>
-		public double Width
-		{
-			get { return this.max.X - this.min.X; }
-		}
+		public double Width => this.Max.X - this.Min.X;
 
 		/// <summary>Gets the bounding rectangle height.</summary>
-		public double Height
-		{
-			get { return this.max.Y - this.min.Y; }
-		}
+		public double Height => this.Max.Y - this.Min.Y;
 
 		#endregion
 
@@ -188,9 +161,7 @@ namespace netDxf
 		/// <returns><see langword="true"/> if the point is inside the bounding rectangle; otherwise, <see langword="false"/>.</returns>
 		/// <remarks></remarks>
 		public bool PointInside(Vector2 point)
-		{
-			return point.X >= this.min.X && point.X <= this.max.X && point.Y >= this.min.Y && point.Y <= this.max.Y;
-		}
+			=> point.X >= this.Min.X && point.X <= this.Max.X && point.Y >= this.Min.Y && point.Y <= this.Max.Y;
 
 		/// <summary>Obtains the union between two bounding rectangles.</summary>
 		/// <param name="aabr1">A bounding rectangle.</param>

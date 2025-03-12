@@ -38,7 +38,7 @@ namespace netDxf
 	{
 		#region list of the indexed colors
 
-		private static readonly IReadOnlyList<byte[]> indexRgb = new List<byte[]>
+		private static IReadOnlyList<byte[]> BuildIndexRgb() => new List<byte[]>
 		{
 			new byte[] { 255, 255, 255 },
 			new byte[] { 255, 0, 0 },
@@ -303,80 +303,43 @@ namespace netDxf
 		#region private fields
 
 		private short index;
-		private byte r;
-		private byte g;
-		private byte b;
-		private bool useTrueColor;
 
 		#endregion
 
 		#region constants
 
 		/// <summary>Gets the <b>ByLayer</b> color.</summary>
-		public static AciColor ByLayer
-		{
-			get { return new AciColor { index = 256 }; }
-		}
+		public static AciColor ByLayer => new AciColor { index = 256 };
 
 		/// <summary>Gets the <b>ByBlock</b> color.</summary>
-		public static AciColor ByBlock
-		{
-			get { return new AciColor { index = 0 }; }
-		}
+		public static AciColor ByBlock => new AciColor { index = 0 };
 
 		/// <summary>Defines a default red color.</summary>
-		public static AciColor Red
-		{
-			get { return new AciColor(1); }
-		}
+		public static AciColor Red => new AciColor(1);
 
 		/// <summary>Defines a default yellow color.</summary>
-		public static AciColor Yellow
-		{
-			get { return new AciColor(2); }
-		}
+		public static AciColor Yellow => new AciColor(2);
 
 		/// <summary>Defines a default green color.</summary>
-		public static AciColor Green
-		{
-			get { return new AciColor(3); }
-		}
+		public static AciColor Green => new AciColor(3);
 
 		/// <summary>Defines a default cyan color.</summary>
-		public static AciColor Cyan
-		{
-			get { return new AciColor(4); }
-		}
+		public static AciColor Cyan => new AciColor(4);
 
 		/// <summary>Defines a default blue color.</summary>
-		public static AciColor Blue
-		{
-			get { return new AciColor(5); }
-		}
+		public static AciColor Blue => new AciColor(5);
 
 		/// <summary>Defines a default magenta color.</summary>
-		public static AciColor Magenta
-		{
-			get { return new AciColor(6); }
-		}
+		public static AciColor Magenta => new AciColor(6);
 
 		/// <summary>Defines a default white/black color.</summary>
-		public static AciColor Default
-		{
-			get { return new AciColor(7); }
-		}
+		public static AciColor Default => new AciColor(7);
 
 		/// <summary>Defines a default dark gray color.</summary>
-		public static AciColor DarkGray
-		{
-			get { return new AciColor(8); }
-		}
+		public static AciColor DarkGray => new AciColor(8);
 
 		/// <summary>Defines a default light gray color.</summary>
-		public static AciColor LightGray
-		{
-			get { return new AciColor(9); }
-		}
+		public static AciColor LightGray => new AciColor(9);
 
 		/// <summary>A list that contains the indexed colors, the key represents the color index and the value the <b>RGB</b> components of the color.</summary>
 		/// <remarks>
@@ -385,10 +348,7 @@ namespace netDxf
 		/// specially the darkest ones.<br />
 		/// The color at index zero is not used, represents the <b>RGB</b> values for abstract colors such as <b>ByLayer</b> or <b>ByBlock</b>
 		/// </remarks>
-		public static IReadOnlyList<byte[]> IndexRgb
-		{
-			get { return indexRgb; }
-		}
+		public static IReadOnlyList<byte[]> IndexRgb { get; } = BuildIndexRgb();
 
 		#endregion
 
@@ -415,11 +375,11 @@ namespace netDxf
 		/// <remarks>By default the <see cref="UseTrueColor"/> will be set to <see langword="true"/>.</remarks>
 		public AciColor(byte r, byte g, byte b)
 		{
-			this.r = r;
-			this.g = g;
-			this.b = b;
-			this.useTrueColor = true;
-			this.index = RgbToAci(this.r, this.g, this.b);
+			this.R = r;
+			this.G = g;
+			this.B = b;
+			this.UseTrueColor = true;
+			this.index = RgbToAci(this.R, this.G, this.B);
 		}
 
 		/// <summary>Initializes a new instance of the class from an array of three values.</summary>
@@ -450,11 +410,11 @@ namespace netDxf
 				throw new ArgumentOutOfRangeException(nameof(b), b, "Blue component input values range from 0 to 1.");
 			}
 
-			this.r = (byte)Math.Round(r * 255);
-			this.g = (byte)Math.Round(g * 255);
-			this.b = (byte)Math.Round(b * 255);
-			this.useTrueColor = true;
-			this.index = RgbToAci(this.r, this.g, this.b);
+			this.R = (byte)Math.Round(r * 255);
+			this.G = (byte)Math.Round(g * 255);
+			this.B = (byte)Math.Round(b * 255);
+			this.UseTrueColor = true;
+			this.index = RgbToAci(this.R, this.G, this.B);
 		}
 
 		/// <summary>Initializes a new instance of the class.</summary>
@@ -480,10 +440,10 @@ namespace netDxf
 			}
 
 			byte[] rgb = IndexRgb[(byte)index];
-			this.r = rgb[0];
-			this.g = rgb[1];
-			this.b = rgb[2];
-			this.useTrueColor = false;
+			this.R = rgb[0];
+			this.G = rgb[1];
+			this.B = rgb[2];
+			this.UseTrueColor = false;
 			this.index = index;
 		}
 
@@ -492,45 +452,26 @@ namespace netDxf
 		#region public properties
 
 		/// <summary>Defines if the color is defined by layer.</summary>
-		public bool IsByLayer
-		{
-			get { return this.index == 256; }
-		}
+		public bool IsByLayer => this.index == 256;
 
 		/// <summary>Defines if the color is defined by block.</summary>
-		public bool IsByBlock
-		{
-			get { return this.index == 0; }
-		}
+		public bool IsByBlock => this.index == 0;
 
 		/// <summary>Gets the red component of the AciColor.</summary>
-		public byte R
-		{
-			get { return this.r; }
-		}
+		public byte R { get; private set; }
 
 		/// <summary>Gets the green component of the AciColor.</summary>
-		public byte G
-		{
-			get { return this.g; }
-		}
+		public byte G { get; private set; }
 
 		/// <summary>Gets the blue component of the AciColor.</summary>
-		public byte B
-		{
-			get { return this.b; }
-		}
+		public byte B { get; private set; }
 
 		/// <summary>Get or set if the <see cref="AciColor"/> should use <see langword="true"/> color values.</summary>
 		/// <remarks>
 		/// By default, the constructors that use <b>RGB</b> values will set this boolean to <see langword="true"/>
 		/// while the constants and the constructor that use a color index will set it to <see langword="false"/>.
 		/// </remarks>
-		public bool UseTrueColor
-		{
-			get { return this.useTrueColor; }
-			set { this.useTrueColor = value; }
-		}
+		public bool UseTrueColor { get; set; }
 
 		/// <summary>Gets or sets the color index.</summary>
 		/// <remarks>
@@ -539,7 +480,7 @@ namespace netDxf
 		/// </remarks>
 		public short Index
 		{
-			get { return this.index; }
+			get => this.index;
 			set
 			{
 				if (value <= 0 || value >= 256)
@@ -549,10 +490,10 @@ namespace netDxf
 
 				this.index = value;
 				byte[] rgb = IndexRgb[(byte)this.index];
-				this.r = rgb[0];
-				this.g = rgb[1];
-				this.b = rgb[2];
-				this.useTrueColor = false;
+				this.R = rgb[0];
+				this.G = rgb[1];
+				this.B = rgb[2];
+				this.UseTrueColor = false;
 			}
 		}
 
@@ -593,10 +534,7 @@ namespace netDxf
 		/// <summary>Converts <b>HSL</b> (hue, saturation, lightness) value to an <see cref="AciColor"/>.</summary>
 		/// <param name="hsl">A <see cref="Vector3"/> containing the hue, saturation, and lightness components.</param>
 		/// <returns>An <see cref="Color">AciColor</see> that represents the actual <b>HSL</b> value.</returns>
-		public static AciColor FromHsl(Vector3 hsl)
-		{
-			return FromHsl(hsl.X, hsl.Y, hsl.Z);
-		}
+		public static AciColor FromHsl(Vector3 hsl) => FromHsl(hsl.X, hsl.Y, hsl.Z);
 
 		/// <summary>Converts <b>HSL</b> (hue, saturation, lightness) value to an <see cref="AciColor"/>.</summary>
 		/// <param name="hue">Hue (input values range from 0 to 1).</param>
@@ -765,18 +703,18 @@ namespace netDxf
 			{
 				return Color.White;
 			}
-			return Color.FromArgb(this.r, this.g, this.b);
+			return Color.FromArgb(this.R, this.G, this.B);
 		}
 
 		/// <summary>Converts a <see cref="Color">color</see> to an <see cref="Color">AciColor</see>.</summary>
 		/// <param name="color">A <see cref="Color">color</see>.</param>
 		public void FromColor(Color color)
 		{
-			this.r = color.R;
-			this.g = color.G;
-			this.b = color.B;
-			this.useTrueColor = true;
-			this.index = RgbToAci(this.r, this.g, this.b);
+			this.R = color.R;
+			this.G = color.G;
+			this.B = color.B;
+			this.UseTrueColor = true;
+			this.index = RgbToAci(this.R, this.G, this.B);
 		}
 
 		/// <summary>Gets the <see cref="AciColor">color</see> from an index.</summary>
@@ -850,9 +788,9 @@ namespace netDxf
 				return "ByLayer";
 			}
 
-			if (this.useTrueColor)
+			if (this.UseTrueColor)
 			{
-				return String.Format("{0}{3}{1}{3}{2}", this.r, this.g, this.b, Thread.CurrentThread.CurrentCulture.TextInfo.ListSeparator);
+				return String.Format("{0}{3}{1}{3}{2}", this.R, this.G, this.B, Thread.CurrentThread.CurrentCulture.TextInfo.ListSeparator);
 			}
 
 			return this.index.ToString(CultureInfo.CurrentCulture);
@@ -867,10 +805,10 @@ namespace netDxf
 		{
 			AciColor color = new AciColor
 			{
-				r = this.r,
-				g = this.g,
-				b = this.b,
-				useTrueColor = this.useTrueColor,
+				R = this.R,
+				G = this.G,
+				B = this.B,
+				UseTrueColor = this.UseTrueColor,
 				index = this.index
 			};
 
@@ -889,7 +827,7 @@ namespace netDxf
 				return false;
 			}
 
-			return (other.r == this.r) && (other.g == this.g) && (other.b == this.b);
+			return (other.R == this.R) && (other.G == this.G) && (other.B == this.B);
 		}
 
 		#endregion

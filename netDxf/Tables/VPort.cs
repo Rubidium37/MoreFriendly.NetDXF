@@ -35,16 +35,8 @@ namespace netDxf.Tables
 	{
 		#region private fields
 
-		private Vector2 center;
-		private Vector2 snapBasePoint;
-		private Vector2 snapSpacing;
-		private Vector2 gridSpacing;
 		private Vector3 direction;
-		private Vector3 target;
-		private double height;
 		private double aspectRatio;
-		private bool showGrid;
-		private bool snapMode;
 
 		#endregion
 
@@ -54,10 +46,7 @@ namespace netDxf.Tables
 		public const string DefaultName = "*Active";
 
 		/// <summary>Gets the active viewport.</summary>
-		public static VPort Active
-		{
-			get { return new VPort(DefaultName, false); }
-		}
+		public static VPort Active => new VPort(DefaultName, false);
 
 		#endregion
 
@@ -78,16 +67,16 @@ namespace netDxf.Tables
 			}
 
 			this.IsReserved = name.Equals("*Active", StringComparison.OrdinalIgnoreCase);
-			this.center = Vector2.Zero;
-			this.snapBasePoint = Vector2.Zero;
-			this.snapSpacing = new Vector2(0.5);
-			this.gridSpacing = new Vector2(10.0);
-			this.target = Vector3.Zero;
+			this.ViewCenter = Vector2.Zero;
+			this.SnapBasePoint = Vector2.Zero;
+			this.SnapSpacing = new Vector2(0.5);
+			this.GridSpacing = new Vector2(10.0);
+			this.ViewTarget = Vector3.Zero;
 			this.direction = Vector3.UnitZ;
-			this.height = 10;
+			this.ViewHeight = 10;
 			this.aspectRatio = 1.0;
-			this.showGrid = true;
-			this.snapMode = false;
+			this.ShowGrid = true;
+			this.SnapMode = false;
 		}
 
 		#endregion
@@ -95,37 +84,21 @@ namespace netDxf.Tables
 		#region public properties
 
 		/// <summary>Gets or sets the view center point in <b>DCS</b> (Display Coordinate System)</summary>
-		public Vector2 ViewCenter
-		{
-			get { return this.center; }
-			set { this.center = value; }
-		}
+		public Vector2 ViewCenter { get; set; }
 
 		/// <summary>Gets or sets the snap base point in <b>DCS</b> (Display Coordinate System)</summary>
-		public Vector2 SnapBasePoint
-		{
-			get { return this.snapBasePoint; }
-			set { this.snapBasePoint = value; }
-		}
+		public Vector2 SnapBasePoint { get; set; }
 
 		/// <summary>Gets or sets the snap spacing X and Y.</summary>
-		public Vector2 SnapSpacing
-		{
-			get { return this.snapSpacing; }
-			set { this.snapSpacing = value; }
-		}
+		public Vector2 SnapSpacing { get; set; }
 
 		/// <summary>Gets or sets the grid spacing X and Y.</summary>
-		public Vector2 GridSpacing
-		{
-			get { return this.gridSpacing; }
-			set { this.gridSpacing = value; }
-		}
+		public Vector2 GridSpacing { get; set; }
 
 		/// <summary>Gets or sets the view direction from target point in <b>WCS</b> (World Coordinate System).</summary>
 		public Vector3 ViewDirection
 		{
-			get { return this.direction; }
+			get => this.direction;
 			set
 			{
 				this.direction = Vector3.Normalize(value);
@@ -137,23 +110,15 @@ namespace netDxf.Tables
 		}
 
 		/// <summary>Gets or sets the view target point in <b>WCS</b> (World Coordinate System).</summary>
-		public Vector3 ViewTarget
-		{
-			get { return this.target; }
-			set { this.target = value; }
-		}
+		public Vector3 ViewTarget { get; set; }
 
 		/// <summary>Gets or sets the view height.</summary>
-		public double ViewHeight
-		{
-			get { return this.height; }
-			set { this.height = value; }
-		}
+		public double ViewHeight { get; set; }
 
 		/// <summary>Gets or sets the view aspect ratio (view width/view height).</summary>
 		public double ViewAspectRatio
 		{
-			get { return this.aspectRatio; }
+			get => this.aspectRatio;
 			set
 			{
 				if (value <= 0)
@@ -165,24 +130,16 @@ namespace netDxf.Tables
 		}
 
 		/// <summary>Gets or sets the grid on/off.</summary>
-		public bool ShowGrid
-		{
-			get { return this.showGrid; }
-			set { this.showGrid = value; }
-		}
+		public bool ShowGrid { get; set; }
 
 		/// <summary>Gets or sets the snap mode on/off.</summary>
-		public bool SnapMode
-		{
-			get { return this.snapMode; }
-			set { this.snapMode = value; }
-		}
+		public bool SnapMode { get; set; }
 
 		/// <summary>Gets the owner of the actual viewport.</summary>
 		public new VPorts Owner
 		{
-			get { return (VPorts)base.Owner; }
-			internal set { base.Owner = value; }
+			get => (VPorts)base.Owner;
+			internal set => base.Owner = value;
 		}
 
 		#endregion
@@ -190,31 +147,25 @@ namespace netDxf.Tables
 		#region overrides
 
 		/// <inheritdoc/>
-		public override bool HasReferences()
-		{
-			return this.Owner != null && this.Owner.HasReferences(this.Name);
-		}
+		public override bool HasReferences() => this.Owner != null && this.Owner.HasReferences(this.Name);
 
 		/// <inheritdoc/>
-		public override List<DxfObjectReference> GetReferences()
-		{
-			return this.Owner?.GetReferences(this.Name);
-		}
+		public override List<DxfObjectReference> GetReferences() => this.Owner?.GetReferences(this.Name);
 
 		/// <inheritdoc/>
 		public override TableObject Clone(string newName)
 		{
 			VPort copy = new VPort(newName)
 			{
-				ViewCenter = this.center,
-				SnapBasePoint = this.snapBasePoint,
-				SnapSpacing = this.snapSpacing,
-				GridSpacing = this.gridSpacing,
-				ViewTarget = this.target,
+				ViewCenter = this.ViewCenter,
+				SnapBasePoint = this.SnapBasePoint,
+				SnapSpacing = this.SnapSpacing,
+				GridSpacing = this.GridSpacing,
+				ViewTarget = this.ViewTarget,
 				ViewDirection = this.direction,
-				ViewHeight = this.height,
+				ViewHeight = this.ViewHeight,
 				ViewAspectRatio = this.aspectRatio,
-				ShowGrid = this.showGrid
+				ShowGrid = this.ShowGrid
 			};
 
 			foreach (XData data in this.XData.Values)
@@ -224,12 +175,8 @@ namespace netDxf.Tables
 
 			return copy;
 		}
-
 		/// <inheritdoc/>
-		public override object Clone()
-		{
-			return this.Clone(this.Name);
-		}
+		public override object Clone() => this.Clone(this.Name);
 
 		#endregion
 	}

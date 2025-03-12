@@ -34,13 +34,6 @@ namespace netDxf.Entities
 	public class DiametricDimension :
 		Dimension
 	{
-		#region private fields
-
-		private Vector2 center;
-		private Vector2 refPoint;
-
-		#endregion
-
 		#region constructors
 
 		/// <summary>Initializes a new instance of the class.</summary>
@@ -70,8 +63,8 @@ namespace netDxf.Entities
 				throw new ArgumentNullException(nameof(arc));
 
 			Vector3 ocsCenter = MathHelper.Transform(arc.Center, arc.Normal, CoordinateSystem.World, CoordinateSystem.Object);
-			this.center = new Vector2(ocsCenter.X, ocsCenter.Y);
-			this.refPoint = Vector2.Polar(this.center, arc.Radius, rotation * MathHelper.DegToRad);
+			this.CenterPoint = new Vector2(ocsCenter.X, ocsCenter.Y);
+			this.ReferencePoint = Vector2.Polar(this.CenterPoint, arc.Radius, rotation * MathHelper.DegToRad);
 
 			this.Style = style ?? throw new ArgumentNullException(nameof(style));
 			this.Normal = arc.Normal;
@@ -100,8 +93,8 @@ namespace netDxf.Entities
 				throw new ArgumentNullException(nameof(circle));
 
 			Vector3 ocsCenter = MathHelper.Transform(circle.Center, circle.Normal, CoordinateSystem.World, CoordinateSystem.Object);
-			this.center = new Vector2(ocsCenter.X, ocsCenter.Y);
-			this.refPoint = Vector2.Polar(this.center, circle.Radius, rotation * MathHelper.DegToRad);
+			this.CenterPoint = new Vector2(ocsCenter.X, ocsCenter.Y);
+			this.ReferencePoint = Vector2.Polar(this.CenterPoint, circle.Radius, rotation * MathHelper.DegToRad);
 
 			this.Style = style ?? throw new ArgumentNullException(nameof(style));
 			this.Normal = circle.Normal;
@@ -128,8 +121,8 @@ namespace netDxf.Entities
 		{
 			if (Vector2.Equals(centerPoint, referencePoint))
 				throw new ArgumentException("The center and the reference point cannot be the same");
-			this.center = centerPoint;
-			this.refPoint = referencePoint;
+			this.CenterPoint = centerPoint;
+			this.ReferencePoint = referencePoint;
 
 			this.Style = style ?? throw new ArgumentNullException(nameof(style));
 
@@ -141,24 +134,13 @@ namespace netDxf.Entities
 		#region public properties
 
 		/// <summary>Gets or sets the center <see cref="Vector2">point</see> of the circumference in <b>OCS</b> (object coordinate system).</summary>
-		public Vector2 CenterPoint
-		{
-			get { return this.center; }
-			set { this.center = value; }
-		}
+		public Vector2 CenterPoint { get; set; }
 
 		/// <summary>Gets or sets the <see cref="Vector2">point</see> on circumference or arc in <b>OCS</b> (object coordinate system).</summary>
-		public Vector2 ReferencePoint
-		{
-			get { return this.refPoint; }
-			set { this.refPoint = value; }
-		}
+		public Vector2 ReferencePoint { get; set; }
 
 		/// <inheritdoc/>
-		public override double Measurement
-		{
-			get { return 2 * Vector2.Distance(this.center, this.refPoint); }
-		}
+		public override double Measurement => 2 * Vector2.Distance(this.CenterPoint, this.ReferencePoint);
 
 		#endregion
 
@@ -168,11 +150,11 @@ namespace netDxf.Entities
 		/// <param name="point">Point along the dimension line.</param>
 		public void SetDimensionLinePosition(Vector2 point)
 		{
-			double radius = Vector2.Distance(this.center, this.refPoint);
-			double rotation = Vector2.Angle(this.center, point);
+			double radius = Vector2.Distance(this.CenterPoint, this.ReferencePoint);
+			double rotation = Vector2.Angle(this.CenterPoint, point);
 
-			this.defPoint = Vector2.Polar(this.center, -radius, rotation);
-			this.refPoint = Vector2.Polar(this.center, radius, rotation);
+			this.DefinitionPoint = Vector2.Polar(this.CenterPoint, -radius, rotation);
+			this.ReferencePoint = Vector2.Polar(this.CenterPoint, radius, rotation);
 
 			if (!this.TextPositionManuallySet)
 			{
@@ -193,9 +175,9 @@ namespace netDxf.Entities
 					arrowSize = (double)styleOverride.Value;
 				}
 
-				Vector2 vec = Vector2.Normalize(this.refPoint - this.center);
+				Vector2 vec = Vector2.Normalize(this.ReferencePoint - this.CenterPoint);
 				double minOffset = (2 * arrowSize + textGap) * scale;
-				this.textRefPoint = this.refPoint + minOffset * vec;
+				this.textRefPoint = this.ReferencePoint + minOffset * vec;
 			}
 		}
 
@@ -237,10 +219,10 @@ namespace netDxf.Entities
 			v = transWO * v;
 			this.textRefPoint = new Vector2(v.X, v.Y);
 
-			v = transOW * new Vector3(this.defPoint.X, this.defPoint.Y, this.Elevation);
+			v = transOW * new Vector3(this.DefinitionPoint.X, this.DefinitionPoint.Y, this.Elevation);
 			v = transformation * v + translation;
 			v = transWO * v;
-			this.defPoint = new Vector2(v.X, v.Y);
+			this.DefinitionPoint = new Vector2(v.X, v.Y);
 
 			this.CenterPoint = newCenter;
 			this.ReferencePoint = newRefPoint;
@@ -251,18 +233,18 @@ namespace netDxf.Entities
 		/// <inheritdoc/>
 		protected override void CalculateReferencePoints()
 		{
-			if (Vector2.Equals(this.center, this.refPoint))
+			if (Vector2.Equals(this.CenterPoint, this.ReferencePoint))
 			{
 				throw new ArgumentException("The center and the reference point cannot be the same");
 			}
 
 			double measure = this.Measurement;
-			Vector2 centerRef = this.center;
-			Vector2 ref1 = this.refPoint;
+			Vector2 centerRef = this.CenterPoint;
+			Vector2 ref1 = this.ReferencePoint;
 
 			double angleRef = Vector2.Angle(centerRef, ref1);
 
-			this.defPoint = Vector2.Polar(ref1, -measure, angleRef);
+			this.DefinitionPoint = Vector2.Polar(ref1, -measure, angleRef);
 
 			if (this.TextPositionManuallySet)
 			{
@@ -288,17 +270,14 @@ namespace netDxf.Entities
 					arrowSize = (double)styleOverride.Value;
 				}
 
-				Vector2 vec = Vector2.Normalize(this.refPoint - this.center);
+				Vector2 vec = Vector2.Normalize(this.ReferencePoint - this.CenterPoint);
 				double minOffset = (2 * arrowSize + textGap) * scale;
-				this.textRefPoint = this.refPoint + minOffset * vec;
+				this.textRefPoint = this.ReferencePoint + minOffset * vec;
 			}
 		}
 
 		/// <inheritdoc/>
-		protected override Block BuildBlock(string name)
-		{
-			return DimensionBlock.Build(this, name);
-		}
+		protected override Block BuildBlock(string name) => DimensionBlock.Build(this, name);
 
 		/// <inheritdoc/>
 		public override object Clone()
@@ -326,8 +305,8 @@ namespace netDxf.Entities
 				UserText = this.UserText,
 				Elevation = this.Elevation,
 				//DiametricDimension properties
-				CenterPoint = this.center,
-				ReferencePoint = this.refPoint
+				CenterPoint = this.CenterPoint,
+				ReferencePoint = this.ReferencePoint
 			};
 
 			foreach (DimensionStyleOverride styleOverride in this.StyleOverrides.Values)

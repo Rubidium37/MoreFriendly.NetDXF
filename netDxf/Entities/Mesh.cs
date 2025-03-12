@@ -40,10 +40,6 @@ namespace netDxf.Entities
 		#region private fields
 
 		private const int MaxFaces = 16000000;
-		private readonly List<Vector3> vertexes;
-		private readonly List<int[]> faces;
-		private readonly List<MeshEdge> edges;
-		private byte subdivisionLevel;
 
 		#endregion
 
@@ -68,18 +64,18 @@ namespace netDxf.Entities
 			{
 				throw new ArgumentNullException(nameof(vertexes));
 			}
-			this.vertexes = new List<Vector3>(vertexes);
+			this.Vertexes = new List<Vector3>(vertexes);
 			if (faces == null)
 			{
 				throw new ArgumentNullException(nameof(faces));
 			}
-			this.faces = new List<int[]>(faces);
-			if (this.faces.Count > MaxFaces)
+			this.Faces = new List<int[]>(faces);
+			if (this.Faces.Count > MaxFaces)
 			{
-				throw new ArgumentOutOfRangeException(nameof(faces), this.faces.Count, string.Format("The maximum number of faces in a mesh is {0}", MaxFaces));
+				throw new ArgumentOutOfRangeException(nameof(faces), this.Faces.Count, string.Format("The maximum number of faces in a mesh is {0}", MaxFaces));
 			}
-			this.edges = edges == null ? new List<MeshEdge>() : new List<MeshEdge>(edges);
-			this.subdivisionLevel = 0;
+			this.Edges = edges == null ? new List<MeshEdge>() : new List<MeshEdge>(edges);
+			this.SubdivisionLevel = 0;
 		}
 
 		#endregion
@@ -87,32 +83,19 @@ namespace netDxf.Entities
 		#region public properties
 
 		/// <summary>Gets the mesh vertexes list.</summary>
-		public List<Vector3> Vertexes
-		{
-			get { return this.vertexes; }
-		}
+		public List<Vector3> Vertexes { get; }
 
 		/// <summary>Gets the mesh faces list.</summary>
-		public List<int[]> Faces
-		{
-			get { return this.faces; }
-		}
+		public List<int[]> Faces { get; }
 
 		/// <summary>Gets the mesh edges list.</summary>
-		public List<MeshEdge> Edges
-		{
-			get { return this.edges; }
-		}
+		public List<MeshEdge> Edges { get; }
 
 		/// <summary>Gets or sets the mesh subdivision level.</summary>
 		/// <remarks>
 		/// The valid range is from 0 to 255. The recommended range is 0-5 to prevent creating extremely dense meshes.
 		/// </remarks>
-		public byte SubdivisionLevel
-		{
-			get { return this.subdivisionLevel; }
-			set { this.subdivisionLevel = value; }
-		}
+		public byte SubdivisionLevel { get; set; }
 
 		#endregion
 
@@ -130,7 +113,7 @@ namespace netDxf.Entities
 
 		//	foreach (int[] face in this.faces)
 		//	{
-		//		faces3D.Add(new Face3D(this.vertexes[face[0]], this.vertexes[face[1]], this.vertexes[face[2]], this.vertexes[face[3]]));
+		//		faces3D.Add(new Face3D(this.Vertexes[face[0]], this.Vertexes[face[1]], this.Vertexes[face[2]], this.Vertexes[face[3]]));
 		//	}
 
 		//	return faces3D;
@@ -156,21 +139,21 @@ namespace netDxf.Entities
 		/// <inheritdoc/>
 		public override object Clone()
 		{
-			List<Vector3> copyVertexes = new List<Vector3>(this.vertexes.Count);
-			List<int[]> copyFaces = new List<int[]>(this.faces.Count);
+			List<Vector3> copyVertexes = new List<Vector3>(this.Vertexes.Count);
+			List<int[]> copyFaces = new List<int[]>(this.Faces.Count);
 			List<MeshEdge> copyEdges = null;
 
-			copyVertexes.AddRange(this.vertexes);
-			foreach (int[] face in this.faces)
+			copyVertexes.AddRange(this.Vertexes);
+			foreach (int[] face in this.Faces)
 			{
 				int[] copyFace = new int[face.Length];
 				face.CopyTo(copyFace, 0);
 				copyFaces.Add(copyFace);
 			}
-			if (this.edges != null)
+			if (this.Edges != null)
 			{
-				copyEdges = new List<MeshEdge>(this.edges.Count);
-				foreach (MeshEdge meshEdge in this.edges)
+				copyEdges = new List<MeshEdge>(this.Edges.Count);
+				foreach (MeshEdge meshEdge in this.Edges)
 				{
 					copyEdges.Add((MeshEdge)meshEdge.Clone());
 				}
@@ -188,7 +171,7 @@ namespace netDxf.Entities
 				Normal = this.Normal,
 				IsVisible = this.IsVisible,
 				//Mesh properties
-				SubdivisionLevel = this.subdivisionLevel
+				SubdivisionLevel = this.SubdivisionLevel
 			};
 
 			foreach (XData data in this.XData.Values)

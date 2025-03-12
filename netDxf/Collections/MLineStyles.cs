@@ -89,10 +89,7 @@ namespace netDxf.Collections
 		}
 
 		/// <inheritdoc/>
-		public override bool Remove(string name)
-		{
-			return this.Remove(this[name]);
-		}
+		public override bool Remove(string name) => this.Remove(this[name]);
 		/// <inheritdoc/>
 		public override bool Remove(MLineStyle item)
 		{
@@ -171,9 +168,7 @@ namespace netDxf.Collections
 		}
 
 		private void MLineStyle_ElementRemoved(MLineStyle sender, MLineStyleElementChangeEventArgs e)
-		{
-			this.Owner.Linetypes.References[e.Item.Linetype.Name].Remove(sender);
-		}
+			=> this.Owner.Linetypes.References[e.Item.Linetype.Name].Remove(sender);
 
 		#endregion
 	}

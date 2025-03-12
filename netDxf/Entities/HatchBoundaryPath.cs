@@ -58,7 +58,7 @@ namespace netDxf.Entities
 			ICloneable
 		{
 			/// <summary>Gets the <see cref="HatchBoundaryPath"/> edge type</summary>
-			public readonly EdgeType Type;
+			public EdgeType Type { get; }
 
 			protected Edge(EdgeType type)
 			{
@@ -91,7 +91,6 @@ namespace netDxf.Entities
 				: base(EdgeType.Polyline)
 			{
 			}
-
 			/// <summary>Initializes a new instance of the <see cref="HatchBoundaryPath.Polyline"/> class.</summary>
 			/// <param name="entity"><see cref="EntityObject">Entity</see> that represents the edge.</param>
 			public Polyline(EntityObject entity)
@@ -208,10 +207,7 @@ namespace netDxf.Entities
 
 			/// <summary>Initializes a new instance of the <see cref="HatchBoundaryPath.Polyline"/> class.</summary>
 			/// <param name="entity"><see cref="EntityObject">Entity</see> that represents the edge.</param>
-			public static Polyline ConvertFrom(EntityObject entity)
-			{
-				return new Polyline(entity);
-			}
+			public static Polyline ConvertFrom(EntityObject entity) => new Polyline(entity);
 
 			/// <inheritdoc/>
 			public override EntityObject ConvertTo()
@@ -255,7 +251,6 @@ namespace netDxf.Entities
 				: base(EdgeType.Line)
 			{
 			}
-
 			/// <summary>Initializes a new instance of the <see cref="HatchBoundaryPath.Line"/> class.</summary>
 			/// <param name="entity"><see cref="EntityObject">Entity</see> that represents the edge.</param>
 			public Line(EntityObject entity)
@@ -280,16 +275,10 @@ namespace netDxf.Entities
 			/// <summary>Creates a BoundaryBoundaryPath from an <see cref="EntityObject">entity</see>.</summary>
 			/// <param name="entity">An <see cref="EntityObject">entity</see>.</param>
 			/// <returns>A <see cref="HatchBoundaryPath"/> line.</returns>
-			public static Line ConvertFrom(EntityObject entity)
-			{
-				return new Line(entity);
-			}
+			public static Line ConvertFrom(EntityObject entity) => new Line(entity);
 
 			/// <inheritdoc/>
-			public override EntityObject ConvertTo()
-			{
-				return new Entities.Line(this.Start, this.End);
-			}
+			public override EntityObject ConvertTo() => new Entities.Line(this.Start, this.End);
 
 			/// <inheritdoc/>
 			public override object Clone()
@@ -328,7 +317,6 @@ namespace netDxf.Entities
 				: base(EdgeType.Arc)
 			{
 			}
-
 			/// <summary>Initializes a new instance of the <see cref="HatchBoundaryPath.Arc"/> class.</summary>
 			/// <param name="entity"><see cref="EntityObject">Entity</see> that represents the edge.</param>
 			public Arc(EntityObject entity)
@@ -365,10 +353,7 @@ namespace netDxf.Entities
 
 			/// <summary>Initializes a new instance of the <see cref="HatchBoundaryPath.Arc"/> class.</summary>
 			/// <param name="entity"><see cref="EntityObject">Entity</see> that represents the edge.</param>
-			public static Arc ConvertFrom(EntityObject entity)
-			{
-				return new Arc(entity);
-			}
+			public static Arc ConvertFrom(EntityObject entity) => new Arc(entity);
 
 			/// <inheritdoc/>
 			public override EntityObject ConvertTo()
@@ -429,7 +414,6 @@ namespace netDxf.Entities
 				: base(EdgeType.Ellipse)
 			{
 			}
-
 			/// <summary>Initializes a new instance of the <see cref="HatchBoundaryPath.Ellipse"/> class.</summary>
 			/// <param name="entity"><see cref="EntityObject">Entity</see> that represents the edge.</param>
 			public Ellipse(EntityObject entity)
@@ -466,10 +450,7 @@ namespace netDxf.Entities
 
 			/// <summary>Initializes a new instance of the <see cref="HatchBoundaryPath.Ellipse"/> class.</summary>
 			/// <param name="entity"><see cref="EntityObject">Entity</see> that represents the edge.</param>
-			public static Ellipse ConvertFrom(EntityObject entity)
-			{
-				return new Ellipse(entity);
-			}
+			public static Ellipse ConvertFrom(EntityObject entity) => new Ellipse(entity);
 
 			/// <inheritdoc/>
 			public override EntityObject ConvertTo()
@@ -534,7 +515,6 @@ namespace netDxf.Entities
 				: base(EdgeType.Spline)
 			{
 			}
-
 			/// <summary>Initializes a new instance of the <see cref="HatchBoundaryPath.Spline"/> class.</summary>
 			/// <param name="entity"><see cref="EntityObject">Entity</see> that represents the edge.</param>
 			public Spline(EntityObject entity)
@@ -577,10 +557,7 @@ namespace netDxf.Entities
 
 			/// <summary>Initializes a new instance of the <see cref="HatchBoundaryPath.Spline"/> class.</summary>
 			/// <param name="entity"><see cref="EntityObject">Entity</see> that represents the edge.</param>
-			public static Spline ConvertFrom(EntityObject entity)
-			{
-				return new Spline(entity);
-			}
+			public static Spline ConvertFrom(EntityObject entity) => new Spline(entity);
 
 			/// <inheritdoc/>
 			public override EntityObject ConvertTo()
@@ -625,8 +602,7 @@ namespace netDxf.Entities
 		#region private fields
 
 		private readonly List<EntityObject> entities;
-		private readonly List<Edge> edges;
-		private HatchBoundaryPathTypeFlags pathType;
+		private readonly List<Edge> edges = new List<Edge>();
 
 		#endregion
 
@@ -640,12 +616,10 @@ namespace netDxf.Entities
 			{
 				throw new ArgumentNullException(nameof(edges));
 			}
-			this.edges = new List<Edge>();
-			this.pathType = HatchBoundaryPathTypeFlags.Derived | HatchBoundaryPathTypeFlags.External;
+			this.PathType = HatchBoundaryPathTypeFlags.Derived | HatchBoundaryPathTypeFlags.External;
 			this.entities = new List<EntityObject>(edges);
 			this.Update();
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="edges">List of edges that makes a loop for the hatch boundary paths.</param>
 		public HatchBoundaryPath(IEnumerable<Edge> edges)
@@ -654,14 +628,13 @@ namespace netDxf.Entities
 			{
 				throw new ArgumentNullException(nameof(edges));
 			}
-			this.pathType = HatchBoundaryPathTypeFlags.Derived | HatchBoundaryPathTypeFlags.External;
+			this.PathType = HatchBoundaryPathTypeFlags.Derived | HatchBoundaryPathTypeFlags.External;
 			this.entities = new List<EntityObject>();
-			this.edges = new List<Edge>();
 			foreach (Edge edge in edges)
 			{
 				if (edges.Count() == 1 && edge.Type == EdgeType.Polyline)
 				{
-					this.pathType |= HatchBoundaryPathTypeFlags.Polyline;
+					this.PathType |= HatchBoundaryPathTypeFlags.Polyline;
 					this.edges.Add(edge);
 				}
 				else
@@ -685,43 +658,24 @@ namespace netDxf.Entities
 		#region public properties
 
 		/// <summary>Gets the list of edges that makes a loop for the hatch boundary path.</summary>
-		public IReadOnlyList<Edge> Edges
-		{
-			get { return this.edges; }
-		}
+		public IReadOnlyList<Edge> Edges => this.edges;
 
 		/// <summary>Gets the boundary path type flag.</summary>
-		public HatchBoundaryPathTypeFlags PathType
-		{
-			get { return this.pathType; }
-			internal set { this.pathType = value; }
-		}
+		public HatchBoundaryPathTypeFlags PathType { get; internal set; }
 
 		/// <summary>Gets the list of entities that makes the boundary.</summary>
 		/// <remarks>If the boundary path belongs to a non-associative hatch this list will contain zero entities.</remarks>
-		public IReadOnlyList<EntityObject> Entities
-		{
-			get { return this.entities; }
-		}
+		public IReadOnlyList<EntityObject> Entities => this.entities;
 
 		#endregion
 
 		#region internal methods
 
-		internal void AddContour(EntityObject entity)
-		{
-			this.entities.Add(entity);
-		}
+		internal void AddContour(EntityObject entity) => this.entities.Add(entity);
 
-		internal void ClearContour()
-		{
-			this.entities.Clear();
-		}
+		internal void ClearContour() => this.entities.Clear();
 
-		internal bool RemoveContour(EntityObject entity)
-		{
-			return this.entities.Remove(entity);
-		}
+		internal bool RemoveContour(EntityObject entity) => this.entities.Remove(entity);
 
 		#endregion
 
@@ -732,10 +686,7 @@ namespace netDxf.Entities
 		/// It is necessary to manually call this method when changes to the boundary entities are made. This is only applicable to associative hatches,
 		/// non-associative hatches has no associated boundary entities.
 		/// </remarks>
-		public void Update()
-		{
-			this.SetInternalInfo(this.entities, true);
-		}
+		public void Update() => this.SetInternalInfo(this.Entities, true);
 
 		#endregion
 
@@ -777,12 +728,12 @@ namespace netDxf.Entities
 						Entities.Polyline2D lwpoly = (Entities.Polyline2D)entity;
 						if (lwpoly.IsClosed)
 						{
-							if (this.edges.Count != 0)
+							if (this.Edges.Count != 0)
 							{
 								throw new ArgumentException("Closed polylines cannot be combined with other entities to make a hatch boundary path.");
 							}
 							this.edges.Add(Polyline.ConvertFrom(entity));
-							this.pathType |= HatchBoundaryPathTypeFlags.Polyline;
+							this.PathType |= HatchBoundaryPathTypeFlags.Polyline;
 							containsPolyline = true;
 						}
 						else
@@ -792,12 +743,12 @@ namespace netDxf.Entities
 						Entities.Polyline3D poly = (Entities.Polyline3D)entity;
 						if (poly.IsClosed)
 						{
-							if (this.edges.Count != 0)
+							if (this.Edges.Count != 0)
 							{
 								throw new ArgumentException("Closed polylines cannot be combined with other entities to make a hatch boundary path.");
 							}
 							this.edges.Add(Polyline.ConvertFrom(entity));
-							this.pathType |= HatchBoundaryPathTypeFlags.Polyline;
+							this.PathType |= HatchBoundaryPathTypeFlags.Polyline;
 							containsPolyline = true;
 						}
 						else
@@ -820,7 +771,7 @@ namespace netDxf.Entities
 		public object Clone()
 		{
 			List<Edge> copyEdges = new List<Edge>();
-			foreach (Edge edge in this.edges)
+			foreach (Edge edge in this.Edges)
 			{
 				copyEdges.Add((Edge)edge.Clone());
 			}

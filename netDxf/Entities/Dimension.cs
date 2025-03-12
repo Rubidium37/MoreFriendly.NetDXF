@@ -97,19 +97,12 @@ namespace netDxf.Entities
 
 		#region protected fields
 
-		protected Vector2 defPoint;
 		protected Vector2 textRefPoint;
 		private DimensionStyle style;
-		private readonly DimensionType dimensionType;
-		private MTextAttachmentPoint attachmentPoint;
-		private MTextLineSpacingStyle lineSpacingStyle;
 		private Block block;
 		private double textRotation;
 		private string userText;
 		private double lineSpacing;
-		private double elevation;
-		private readonly DimensionStyleOverrideDictionary styleOverrides;
-		private bool userTextPosition;
 
 		#endregion
 
@@ -119,22 +112,22 @@ namespace netDxf.Entities
 		protected Dimension(DimensionType type)
 			: base(EntityType.Dimension, DxfObjectCode.Dimension)
 		{
-			this.defPoint = Vector2.Zero;
+			this.DefinitionPoint = Vector2.Zero;
 			this.textRefPoint = Vector2.Zero;
-			this.dimensionType = type;
-			this.attachmentPoint = MTextAttachmentPoint.MiddleCenter;
-			this.lineSpacingStyle = MTextLineSpacingStyle.AtLeast;
+			this.DimensionType = type;
+			this.AttachmentPoint = MTextAttachmentPoint.MiddleCenter;
+			this.LineSpacingStyle = MTextLineSpacingStyle.AtLeast;
 			this.lineSpacing = 1.0;
 			this.block = null;
 			this.style = DimensionStyle.Default;
 			this.textRotation = 0.0;
 			this.userText = string.Empty;
-			this.elevation = 0.0;
-			this.styleOverrides = new DimensionStyleOverrideDictionary();
-			this.styleOverrides.BeforeAddItem += this.StyleOverrides_BeforeAddItem;
-			this.styleOverrides.AddItem += this.StyleOverrides_AddItem;
-			this.styleOverrides.BeforeRemoveItem += this.StyleOverrides_BeforeRemoveItem;
-			this.styleOverrides.RemoveItem += this.StyleOverrides_RemoveItem;
+			this.Elevation = 0.0;
+			this.StyleOverrides = new DimensionStyleOverrideDictionary();
+			this.StyleOverrides.BeforeAddItem += this.StyleOverrides_BeforeAddItem;
+			this.StyleOverrides.AddItem += this.StyleOverrides_AddItem;
+			this.StyleOverrides.BeforeRemoveItem += this.StyleOverrides_BeforeRemoveItem;
+			this.StyleOverrides.RemoveItem += this.StyleOverrides_RemoveItem;
 		}
 
 		#endregion
@@ -142,22 +135,14 @@ namespace netDxf.Entities
 		#region internal properties
 
 		/// <summary>Gets the reference <see cref="Vector2">position</see> for the dimension line in local coordinates.</summary>
-		internal Vector2 DefinitionPoint
-		{
-			get { return this.defPoint; }
-			set { this.defPoint = value; }
-		}
+		internal Vector2 DefinitionPoint { get; set; }
 
 		#endregion
 
 		#region public properties
 
 		/// <summary>Gets or sets if the text reference point has been set by the user. Set to <see langword="false"/> to reset the dimension text to its original position.</summary>
-		public bool TextPositionManuallySet
-		{
-			get { return this.userTextPosition; }
-			set { this.userTextPosition = value; }
-		}
+		public bool TextPositionManuallySet { get; set; }
 
 		/// <summary>Gets or sets the text reference <see cref="Vector2">position</see>, the middle point of dimension text in local coordinates.</summary>
 		/// <remarks>
@@ -168,10 +153,10 @@ namespace netDxf.Entities
 		/// </remarks>
 		public Vector2 TextReferencePoint
 		{
-			get { return this.textRefPoint; }
+			get => this.textRefPoint;
 			set
 			{
-				this.userTextPosition = true;
+				this.TextPositionManuallySet = true;
 				this.textRefPoint = value;
 			}
 		}
@@ -179,7 +164,7 @@ namespace netDxf.Entities
 		/// <summary>Gets or sets the style associated with the dimension.</summary>
 		public DimensionStyle Style
 		{
-			get { return this.style; }
+			get => this.style;
 			set
 			{
 				if (value == null)
@@ -192,33 +177,19 @@ namespace netDxf.Entities
 
 		/// <summary>Gets the dimension style overrides list.</summary>
 		/// <remarks>Any dimension style value stored in this list will override its corresponding value in the assigned style to the dimension.</remarks>
-		public DimensionStyleOverrideDictionary StyleOverrides
-		{
-			get { return this.styleOverrides; }
-		}
+		public DimensionStyleOverrideDictionary StyleOverrides { get; }
 
 		/// <summary>Gets the dimension type.</summary>
-		public DimensionType DimensionType
-		{
-			get { return this.dimensionType; }
-		}
+		public DimensionType DimensionType { get; }
 
 		/// <summary>Gets the actual measurement.</summary>
 		public abstract double Measurement { get; }
 
 		/// <summary>Gets or sets the dimension text attachment point.</summary>
-		public MTextAttachmentPoint AttachmentPoint
-		{
-			get { return this.attachmentPoint; }
-			set { this.attachmentPoint = value; }
-		}
+		public MTextAttachmentPoint AttachmentPoint { get; set; }
 
 		/// <summary>Get or sets the dimension text <see cref="MTextLineSpacingStyle">line spacing style</see>.</summary>
-		public MTextLineSpacingStyle LineSpacingStyle
-		{
-			get { return this.lineSpacingStyle; }
-			set { this.lineSpacingStyle = value; }
-		}
+		public MTextLineSpacingStyle LineSpacingStyle { get; set; }
 
 		/// <summary>Gets or sets the dimension text line spacing factor.</summary>
 		/// <remarks>
@@ -226,7 +197,7 @@ namespace netDxf.Entities
 		/// </remarks>
 		public double LineSpacingFactor
 		{
-			get { return this.lineSpacing; }
+			get => this.lineSpacing;
 			set
 			{
 				if (value < 0.25 || value > 4.0)
@@ -247,15 +218,15 @@ namespace netDxf.Entities
 		/// </remarks>
 		public Block Block
 		{
-			get { return this.block; }
-			set { this.block = this.OnDimensionBlockChangedEvent(this.block, value); }
+			get => this.block;
+			set => this.block = this.OnDimensionBlockChangedEvent(this.block, value);
 		}
 
 		/// <summary>Gets or sets the rotation angle in degrees of the dimension text away from its default orientation(the direction of the dimension line).</summary>
 		public double TextRotation
 		{
-			get { return this.textRotation; }
-			set { this.textRotation = MathHelper.NormalizeAngle(value); }
+			get => this.textRotation;
+			set => this.textRotation = MathHelper.NormalizeAngle(value);
 		}
 
 		/// <summary>Gets or sets the dimension text explicitly.</summary>
@@ -266,16 +237,12 @@ namespace netDxf.Entities
 		/// </remarks>
 		public string UserText
 		{
-			get { return this.userText; }
-			set { this.userText = string.IsNullOrEmpty(value) ? string.Empty : value; }
+			get => this.userText;
+			set => this.userText = string.IsNullOrEmpty(value) ? string.Empty : value;
 		}
 
 		/// <summary>Gets or sets the dimension elevation, its position along its normal.</summary>
-		public double Elevation
-		{
-			get { return this.elevation; }
-			set { this.elevation = value; }
-		}
+		public double Elevation { get; set; }
 
 		#endregion
 
@@ -324,18 +291,14 @@ namespace netDxf.Entities
 		}
 
 		private void StyleOverrides_AddItem(DimensionStyleOverrideDictionary sender, DimensionStyleOverrideDictionaryEventArgs e)
-		{
-			this.OnDimensionStyleOverrideAddedEvent(e.Item);
-		}
+			=> this.OnDimensionStyleOverrideAddedEvent(e.Item);
 
 		private void StyleOverrides_BeforeRemoveItem(DimensionStyleOverrideDictionary sender, DimensionStyleOverrideDictionaryEventArgs e)
 		{
 		}
 
 		private void StyleOverrides_RemoveItem(DimensionStyleOverrideDictionary sender, DimensionStyleOverrideDictionaryEventArgs e)
-		{
-			this.OnDimensionStyleOverrideRemovedEvent(e.Item);
-		}
+			=> this.OnDimensionStyleOverrideRemovedEvent(e.Item);
 
 		#endregion
 	}

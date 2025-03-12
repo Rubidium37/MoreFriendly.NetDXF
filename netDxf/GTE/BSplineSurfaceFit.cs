@@ -43,13 +43,11 @@ namespace netDxf.GTE
 	{
 		// Input sample information.
 		private readonly int[] numSamples;
-		private readonly Vector3[] sampleData;
 
 		// The fitted B-spline surface, open and with uniform knots.
 		private readonly int[] degree;
 		private readonly int[] numControls;
-		private readonly Vector3[] controlData;
-		private readonly BasisFunction[] basisFunctions;
+		private readonly BasisFunction[] basisFunctions = new BasisFunction[2];
 
 		// Construction.  The preconditions for calling the constructor are
 		//   1 <= degree0 && degree0 + 1 < numControls0 <= numSamples0
@@ -64,12 +62,11 @@ namespace netDxf.GTE
 			Debug.Assert(numControls1 <= numSamples1, "Invalid number of controls.");
 			Debug.Assert(sampleData != null, "Invalid sample data.");
 
-			this.sampleData = sampleData;
-			this.controlData = new Vector3[numControls0 * numControls1];
+			this.SampleData = sampleData;
+			this.ControlData = new Vector3[numControls0 * numControls1];
 			this.degree = new[] { degree0, degree1 };
 			this.numSamples = new[] { numSamples0, numSamples1 };
 			this.numControls = new[] { numControls0, numControls1 };
-			this.basisFunctions = new BasisFunction[2];
 
 			BasisFunctionInput input = new BasisFunctionInput();
 			double[] tMultiplier = new double[2];
@@ -191,47 +188,29 @@ namespace netDxf.GTE
 						for (int j0 = 0; j0 < this.numSamples[0]; j0++)
 						{
 							double x0Value = ATMat[0][i0 * this.numSamples[0] + j0];
-							Vector3 sample = this.sampleData[j0 + this.numSamples[0] * j1];
+							Vector3 sample = this.SampleData[j0 + this.numSamples[0] * j1];
 							sum += x0Value * x1Value * sample;
 						}
 					}
 
-					this.controlData[i0 + this.numControls[0] * i1] = sum;
+					this.ControlData[i0 + this.numControls[0] * i1] = sum;
 				}
 			}
 		}
 
 		// Access to input sample information.
-		public int NumSamples(int dimension)
-		{
-			return this.numSamples[dimension];
-		}
+		public int NumSamples(int dimension) => this.numSamples[dimension];
 
-		public Vector3[] SampleData
-		{
-			get { return this.sampleData; }
-		}
+		public Vector3[] SampleData { get; }
 
 		// Access to output control point and surface information.
-		public int Degree(int dimension)
-		{
-			return this.degree[dimension];
-		}
+		public int Degree(int dimension) => this.degree[dimension];
 
-		public int NumControls(int dimension)
-		{
-			return this.numControls[dimension];
-		}
+		public int NumControls(int dimension) => this.numControls[dimension];
 
-		public Vector3[] ControlData
-		{
-			get { return this.controlData; }
-		}
+		public Vector3[] ControlData { get; }
 
-		public BasisFunction BasisFunction(int dimension)
-		{
-			return this.basisFunctions[dimension];
-		}
+		public BasisFunction BasisFunction(int dimension) => this.basisFunctions[dimension];
 
 		// Evaluation of the B-spline surface.  It is defined for
 		// 0 <= u <= 1 and 0 <= v <= 1.  If a parameter value is outside
@@ -248,7 +227,7 @@ namespace netDxf.GTE
 				for (int iu = iumin; iu <= iumax; iu++)
 				{
 					double value0 = this.basisFunctions[0].GetValue(0, iu);
-					Vector3 control = this.controlData[iu + this.numControls[0] * iv];
+					Vector3 control = this.ControlData[iu + this.numControls[0] * iv];
 					position += value0 * value1 * control;
 				}
 			}

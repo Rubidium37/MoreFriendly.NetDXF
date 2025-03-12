@@ -34,15 +34,8 @@ namespace netDxf.Entities
 		#region private fields
 
 		private double superSubScriptHeightFactor;
-		private bool bold;
-		private bool italic;
-		private bool overline;
-		private bool underline;
-		private bool strikeThrough;
 		private bool superscript;
 		private bool subscript;
-		private AciColor color;
-		private string fontName;
 		private double heightFactor;
 		private double obliqueAngle;
 		private double characterSpaceFactor;
@@ -55,12 +48,12 @@ namespace netDxf.Entities
 		/// <summary>Initializes a new instance of the class.</summary>
 		public MTextFormattingOptions()
 		{
-			this.bold = false;
-			this.italic = false;
-			this.overline = false;
-			this.underline = false;
-			this.color = null;
-			this.fontName = null;
+			this.Bold = false;
+			this.Italic = false;
+			this.Overline = false;
+			this.Underline = false;
+			this.Color = null;
+			this.FontName = null;
 			this.heightFactor = 1.0;
 			this.obliqueAngle = 0.0;
 			this.characterSpaceFactor = 1.0;
@@ -74,40 +67,20 @@ namespace netDxf.Entities
 
 		/// <summary>Gets or sets if the text is bold.</summary>
 		/// <remarks>The font style must support bold characters.</remarks>
-		public bool Bold
-		{
-			get { return this.bold; }
-			set { this.bold = value; }
-		}
+		public bool Bold { get; set; }
 
 		/// <summary>Gets or sets if the text is italic.</summary>
 		/// <remarks>The font style must support italic characters.</remarks>
-		public bool Italic
-		{
-			get { return this.italic; }
-			set { this.italic = value; }
-		}
+		public bool Italic { get; set; }
 
 		/// <summary>Gets or sets the over line.</summary>
-		public bool Overline
-		{
-			get { return this.overline; }
-			set { this.overline = value; }
-		}
+		public bool Overline { get; set; }
 
 		/// <summary>Gets or sets underline.</summary>
-		public bool Underline
-		{
-			get { return this.underline; }
-			set { this.underline = value; }
-		}
+		public bool Underline { get; set; }
 
 		/// <summary>Gets or sets strike-through.</summary>
-		public bool StrikeThrough
-		{
-			get { return this.strikeThrough; }
-			set { this.strikeThrough = value; }
-		}
+		public bool StrikeThrough { get; set; }
 
 		/// <summary>Get or set if the text is superscript.</summary>
 		/// <remarks>
@@ -117,7 +90,7 @@ namespace netDxf.Entities
 		/// </remarks>
 		public bool Superscript
 		{
-			get { return this.superscript; }
+			get => this.superscript;
 			set
 			{
 				if (value) this.subscript = false;
@@ -133,7 +106,7 @@ namespace netDxf.Entities
 		/// </remarks>
 		public bool Subscript
 		{
-			get { return this.subscript; }
+			get => this.subscript;
 			set
 			{
 				if (value) this.superscript = false;
@@ -145,7 +118,7 @@ namespace netDxf.Entities
 		/// <remarks>By default it is set as 0.7 the current text height.</remarks>
 		public double SuperSubScriptHeightFactor
 		{
-			get { return this.superSubScriptHeightFactor; }
+			get => this.superSubScriptHeightFactor;
 			set
 			{
 				if (value <= 0)
@@ -158,11 +131,7 @@ namespace netDxf.Entities
 		/// <remarks>
 		/// Set as <see langword="null"/> to apply the default color defined by the MText entity.
 		/// </remarks>
-		public AciColor Color
-		{
-			get { return this.color; }
-			set { this.color = value; }
-		}
+		public AciColor Color { get; set; }
 
 		/// <summary>Gets or sets the font that will override the default defined in the TextStyle.</summary>
 		/// <remarks>
@@ -170,17 +139,13 @@ namespace netDxf.Entities
 		/// When using <b>SHX</b> fonts use the font file with the <b>SHX</b> extension,
 		/// when using <b>TTF</b> fonts use the font family name.
 		/// </remarks>
-		public string FontName
-		{
-			get { return this.fontName; }
-			set { this.fontName = value; }
-		}
+		public string FontName { get; set; }
 
 		/// <summary>Gets or sets the text height as a multiple of the current text height.</summary>
 		/// <remarks>Set as 1.0 to apply the default height factor.</remarks>
 		public double HeightFactor
 		{
-			get { return this.heightFactor; }
+			get => this.heightFactor;
 			set
 			{
 				if (value <= 0)
@@ -193,7 +158,7 @@ namespace netDxf.Entities
 		/// <remarks>Set as 0.0 to apply the default obliquing angle.</remarks>
 		public double ObliqueAngle
 		{
-			get { return this.obliqueAngle; }
+			get => this.obliqueAngle;
 			set
 			{
 				if (value < -85.0 || value > 85.0)
@@ -209,7 +174,7 @@ namespace netDxf.Entities
 		/// </remarks>
 		public double CharacterSpaceFactor
 		{
-			get { return this.characterSpaceFactor; }
+			get => this.characterSpaceFactor;
 			set
 			{
 				if (value < 0.75 || value > 4)
@@ -222,7 +187,7 @@ namespace netDxf.Entities
 		/// <remarks>Set as 1.0 to apply the default width factor.</remarks>
 		public double WidthFactor
 		{
-			get { return this.widthFactor; }
+			get => this.widthFactor;
 			set
 			{
 				if (value <= 0)

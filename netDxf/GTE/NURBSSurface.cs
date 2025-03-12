@@ -39,8 +39,6 @@ namespace netDxf.GTE
 	{
 		private readonly BasisFunction[] basisFunctions;
 		private readonly int[] numControls;
-		private readonly Vector3[] controls;
-		private readonly double[] weights;
 
 		// Construction.  If the input controls is non-null, a copy is made of
 		// the controls.  To defer setting the control points or weights, pass
@@ -56,54 +54,42 @@ namespace netDxf.GTE
 			this.numControls = new[] { input0.NumControls, input1.NumControls };
 
 			// The mBasisFunction stores the domain but so does ParametricSurface.
-			this.uMin = this.basisFunctions[0].MinDomain;
-			this.uMax = this.basisFunctions[0].MaxDomain;
-			this.vMin = this.basisFunctions[1].MinDomain;
-			this.vMax = this.basisFunctions[1].MaxDomain;
+			this.UMin = this.basisFunctions[0].MinDomain;
+			this.UMax = this.basisFunctions[0].MaxDomain;
+			this.VMin = this.basisFunctions[1].MinDomain;
+			this.VMax = this.basisFunctions[1].MaxDomain;
 
 			// The replication of control points for periodic splines is
 			// avoided by wrapping the i-loop index in Evaluate.
-			this.controls = new Vector3[this.numControls[0] * this.numControls[1]];
+			this.Controls = new Vector3[this.numControls[0] * this.numControls[1]];
 			if (controls != null)
 			{
-				controls.CopyTo(this.controls, 0);
+				controls.CopyTo(this.Controls, 0);
 			}
 
-			this.weights = new double[this.numControls[0] * this.numControls[1]];
+			this.Weights = new double[this.numControls[0] * this.numControls[1]];
 			if (weights != null)
 			{
-				weights.CopyTo(this.weights, 0);
+				weights.CopyTo(this.Weights, 0);
 			}
 
-			this.isConstructed = true;
+			this.IsConstructed = true;
 		}
 
 		// Member access.  The index 'dim' must be in {0,1}.
-		public BasisFunction BasisFunction(int dim)
-		{
-			return this.basisFunctions[dim];
-		}
+		public BasisFunction BasisFunction(int dim) => this.basisFunctions[dim];
 
-		public int NumControls(int dim)
-		{
-			return this.numControls[dim];
-		}
+		public int NumControls(int dim) => this.numControls[dim];
 
-		public Vector3[] Controls
-		{
-			get { return this.controls; }
-		}
+		public Vector3[] Controls { get; }
 
-		public double[] Weights
-		{
-			get { return this.weights; }
-		}
+		public double[] Weights { get; }
 
 		public void SetControl(int i0, int i1, Vector3 control)
 		{
 			if (0 <= i0 && i0 < this.NumControls(0) && 0 <= i1 && i1 < this.NumControls(1))
 			{
-				this.controls[i0 + this.numControls[0] * i1] = control;
+				this.Controls[i0 + this.numControls[0] * i1] = control;
 			}
 		}
 
@@ -111,17 +97,17 @@ namespace netDxf.GTE
 		{
 			if (0 <= i0 && i0 < this.NumControls(0) && 0 <= i1 && i1 < this.NumControls(1))
 			{
-				return this.controls[i0 + this.numControls[0] * i1];
+				return this.Controls[i0 + this.numControls[0] * i1];
 			}
 
-			return this.controls[0];
+			return this.Controls[0];
 		}
 
 		public void SetWeight(int i0, int i1, double weight)
 		{
 			if (0 <= i0 && i0 < this.NumControls(0) && 0 <= i1 && i1 < this.NumControls(1))
 			{
-				this.weights[i0 + this.numControls[0] * i1] = weight;
+				this.Weights[i0 + this.numControls[0] * i1] = weight;
 			}
 		}
 
@@ -129,10 +115,10 @@ namespace netDxf.GTE
 		{
 			if (0 <= i0 && i0 < this.NumControls(0) && 0 <= i1 && i1 < this.NumControls(1))
 			{
-				return this.weights[i0 + this.numControls[0] * i1];
+				return this.Weights[i0 + this.numControls[0] * i1];
 			}
 
-			return this.weights[0];
+			return this.Weights[0];
 		}
 
 		// Evaluation of the surface.  The function supports derivative
@@ -149,7 +135,7 @@ namespace netDxf.GTE
 			const int supOrder = SUP_ORDER;
 			jet = new Vector3[supOrder];
 
-			if (!this.isConstructed || order >= supOrder)
+			if (!this.IsConstructed || order >= supOrder)
 			{
 				// Return a zero-valued jet for invalid state.
 				return;
@@ -187,7 +173,6 @@ namespace netDxf.GTE
 			}
 		}
 
-
 		// Support for Evaluate(...).
 		protected void Compute(int uOrder, int vOrder, int iumin, int iumax, int ivmin, int ivmax, out Vector3 x, out double w)
 		{
@@ -208,8 +193,8 @@ namespace netDxf.GTE
 					double tmpu = this.basisFunctions[0].GetValue(uOrder, iu);
 					int ju = (iu >= numControls0 ? iu - numControls0 : iu);
 					int index = ju + numControls0 * jv;
-					double tmp = tmpu * tmpv * this.weights[index];
-					x += tmp * this.controls[index];
+					double tmp = tmpu * tmpv * this.Weights[index];
+					x += tmp * this.Controls[index];
 					w += tmp;
 				}
 			}

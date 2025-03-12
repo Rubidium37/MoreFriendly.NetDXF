@@ -53,10 +53,7 @@ namespace netDxf.Tables
 
 		private string name;
 		private ShapeStyle style;
-		private Vector2 offset;
-		private LinetypeSegmentRotationType rotationType;
 		private double rotation;
-		private double scale;
 
 		#endregion
 
@@ -112,10 +109,10 @@ namespace netDxf.Tables
 			}
 			this.name = name;
 			this.style = style ?? throw new ArgumentNullException(nameof(style));
-			this.offset = offset;
-			this.rotationType = rotationType;
+			this.Offset = offset;
+			this.RotationType = rotationType;
 			this.rotation = MathHelper.NormalizeAngle(rotation);
-			this.scale = scale;
+			this.Scale = scale;
 		}
 
 		#endregion
@@ -130,7 +127,7 @@ namespace netDxf.Tables
 		/// </remarks>
 		public string Name
 		{
-			get { return this.name; }
+			get => this.name;
 			set
 			{
 				if (string.IsNullOrEmpty(value))
@@ -147,7 +144,7 @@ namespace netDxf.Tables
 		/// </remarks>
 		public ShapeStyle Style
 		{
-			get { return this.style; }
+			get => this.style;
 			set
 			{
 				if (value == null)
@@ -159,32 +156,20 @@ namespace netDxf.Tables
 		}
 
 		/// <summary>Gets or sets the shift of the shape along the line.</summary>
-		public Vector2 Offset
-		{
-			get { return this.offset; }
-			set { this.offset = value; }
-		}
+		public Vector2 Offset { get; set; }
 
 		/// <summary>Gets or sets the type of rotation defined by the rotation value upright, relative, or absolute.</summary>
-		public LinetypeSegmentRotationType RotationType
-		{
-			get { return this.rotationType; }
-			set { this.rotationType = value; }
-		}
+		public LinetypeSegmentRotationType RotationType { get; set; }
 
 		/// <summary>Gets or sets the angle in degrees of the shape.</summary>
 		public double Rotation
 		{
-			get { return this.rotation; }
-			set { this.rotation = MathHelper.NormalizeAngle(value); }
+			get => this.rotation;
+			set => this.rotation = MathHelper.NormalizeAngle(value);
 		}
 
 		/// <summary>Gets or sets the scale of the shape relative to the scale of the line type.</summary>
-		public double Scale
-		{
-			get { return this.scale; }
-			set { this.scale = value; }
-		}
+		public double Scale { get; set; }
 
 		#endregion
 
@@ -192,15 +177,13 @@ namespace netDxf.Tables
 
 		/// <inheritdoc/>
 		public override object Clone()
-		{
-			return new LinetypeShapeSegment(this.name, (ShapeStyle)this.style.Clone(), this.Length)
+			=> new LinetypeShapeSegment(this.name, (ShapeStyle)this.style.Clone(), this.Length)
 			{
-				Offset = this.offset,
-				RotationType = this.rotationType,
+				Offset = this.Offset,
+				RotationType = this.RotationType,
 				Rotation = this.rotation,
-				Scale = this.scale
+				Scale = this.Scale
 			};
-		}
 
 		#endregion
 	}

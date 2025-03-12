@@ -36,8 +36,6 @@ namespace netDxf.Entities
 		#region private fields
 
 		private static short defaultSplineSegs = 8;
-		private readonly List<Vector3> vertexes;
-		private PolylineTypeFlags flags;
 		private PolylineSmoothType smoothType;
 
 		#endregion
@@ -68,8 +66,8 @@ namespace netDxf.Entities
 				throw new ArgumentNullException(nameof(vertexes));
 			}
 
-			this.vertexes = new List<Vector3>(vertexes);
-			this.flags = isClosed ? PolylineTypeFlags.ClosedPolylineOrClosedPolygonMeshInM | PolylineTypeFlags.Polyline3D : PolylineTypeFlags.Polyline3D;
+			this.Vertexes = new List<Vector3>(vertexes);
+			this.Flags = isClosed ? PolylineTypeFlags.ClosedPolylineOrClosedPolygonMeshInM | PolylineTypeFlags.Polyline3D : PolylineTypeFlags.Polyline3D;
 			this.smoothType = PolylineSmoothType.NoSmooth;
 		}
 
@@ -80,7 +78,7 @@ namespace netDxf.Entities
 		/// <summary>Gets or sets if the default SplineSegs value, this value is used by the Explode method when the current <see cref="Polyline2D"/> does not belong to a <b>DXF</b> document.</summary>
 		public static short DefaultSplineSegs
 		{
-			get { return defaultSplineSegs; }
+			get => defaultSplineSegs;
 			set
 			{
 				if (value <= 0)
@@ -92,24 +90,21 @@ namespace netDxf.Entities
 		}
 
 		/// <summary>Gets the polyline <see cref="Vector3">vertex</see> list.</summary>
-		public List<Vector3> Vertexes
-		{
-			get { return this.vertexes; }
-		}
+		public List<Vector3> Vertexes { get; }
 
 		/// <summary>Gets or sets if the polyline is closed.</summary>
 		public bool IsClosed
 		{
-			get { return this.flags.HasFlag(PolylineTypeFlags.ClosedPolylineOrClosedPolygonMeshInM); }
+			get => this.Flags.HasFlag(PolylineTypeFlags.ClosedPolylineOrClosedPolygonMeshInM);
 			set
 			{
 				if (value)
 				{
-					this.flags |= PolylineTypeFlags.ClosedPolylineOrClosedPolygonMeshInM;
+					this.Flags |= PolylineTypeFlags.ClosedPolylineOrClosedPolygonMeshInM;
 				}
 				else
 				{
-					this.flags &= ~PolylineTypeFlags.ClosedPolylineOrClosedPolygonMeshInM;
+					this.Flags &= ~PolylineTypeFlags.ClosedPolylineOrClosedPolygonMeshInM;
 				}
 			}
 		}
@@ -117,16 +112,16 @@ namespace netDxf.Entities
 		/// <summary>Enable or disable if the line type pattern is generated continuously around the vertexes of the polyline.</summary>
 		public bool LinetypeGeneration
 		{
-			get { return this.flags.HasFlag(PolylineTypeFlags.ContinuousLinetypePattern); }
+			get => this.Flags.HasFlag(PolylineTypeFlags.ContinuousLinetypePattern);
 			set
 			{
 				if (value)
 				{
-					this.flags |= PolylineTypeFlags.ContinuousLinetypePattern;
+					this.Flags |= PolylineTypeFlags.ContinuousLinetypePattern;
 				}
 				else
 				{
-					this.flags &= ~PolylineTypeFlags.ContinuousLinetypePattern;
+					this.Flags &= ~PolylineTypeFlags.ContinuousLinetypePattern;
 				}
 			}
 		}
@@ -137,16 +132,16 @@ namespace netDxf.Entities
 		/// </remarks>
 		public PolylineSmoothType SmoothType
 		{
-			get { return this.smoothType; }
+			get => this.smoothType;
 			set
 			{
 				if (value == PolylineSmoothType.NoSmooth)
 				{
-					this.flags &= ~PolylineTypeFlags.SplineFit;
+					this.Flags &= ~PolylineTypeFlags.SplineFit;
 				}
 				else
 				{
-					this.flags |= PolylineTypeFlags.SplineFit;
+					this.Flags |= PolylineTypeFlags.SplineFit;
 				}
 				this.smoothType = value;
 			}
@@ -157,11 +152,7 @@ namespace netDxf.Entities
 		#region internal properties
 
 		/// <summary>Gets the <see cref="Polyline3D"/> flags.</summary>
-		internal PolylineTypeFlags Flags
-		{
-			get { return this.flags; }
-			set { this.flags = value; }
-		}
+		internal PolylineTypeFlags Flags { get; set; }
 
 		#endregion
 
@@ -170,12 +161,12 @@ namespace netDxf.Entities
 		/// <summary>Switch the polyline direction.</summary>
 		public void Reverse()
 		{
-			if (this.vertexes.Count < 2)
+			if (this.Vertexes.Count < 2)
 			{
 				return;
 			}
 
-			this.vertexes.Reverse();
+			this.Vertexes.Reverse();
 		}
 
 		/// <summary>Decompose the actual polyline in a list of <see cref="Line">lines</see>.</summary>
@@ -199,12 +190,12 @@ namespace netDxf.Entities
 							break;
 						}
 						start = vertex;
-						end = this.vertexes[0];
+						end = this.Vertexes[0];
 					}
 					else
 					{
 						start = vertex;
-						end = this.vertexes[index + 1];
+						end = this.Vertexes[index + 1];
 					}
 
 					entities.Add(new Line
@@ -229,7 +220,7 @@ namespace netDxf.Entities
 			int degree = this.smoothType == PolylineSmoothType.Quadratic ? 2 : 3;
 			int splineSegs = this.Owner == null ? DefaultSplineSegs : this.Owner.Record.Owner.Owner.DrawingVariables.SplineSegs;
 			int precision = this.IsClosed ? splineSegs * this.Vertexes.Count : splineSegs * (this.Vertexes.Count - 1);
-			List<Vector3> splinePoints = Spline.NurbsEvaluator(this.vertexes.ToArray(), null, null, degree, false, this.IsClosed, precision);
+			List<Vector3> splinePoints = Spline.NurbsEvaluator(this.Vertexes.ToArray(), null, null, degree, false, this.IsClosed, precision);
 
 			for (int i = 1; i < splinePoints.Count; i++)
 			{
@@ -289,7 +280,7 @@ namespace netDxf.Entities
 			}
 			else
 			{
-				List<Vector3> points = new List<Vector3>(this.vertexes);
+				List<Vector3> points = new List<Vector3>(this.Vertexes);
 				return points;
 			}
 
@@ -300,7 +291,7 @@ namespace netDxf.Entities
 			}
 
 			// closed polylines will be considered as closed and periodic
-			return Spline.NurbsEvaluator(this.vertexes.ToArray(), null, null, degree, false, this.IsClosed, precision);
+			return Spline.NurbsEvaluator(this.Vertexes.ToArray(), null, null, degree, false, this.IsClosed, precision);
 		}
 
 		/// <summary>Converts the actual <see cref="Polyline3D"/> in a <see cref="Polyline2D"/>.</summary>
@@ -335,9 +326,9 @@ namespace netDxf.Entities
 		/// <inheritdoc/>
 		public override void TransformBy(Matrix3 transformation, Vector3 translation)
 		{
-			for (int i = 0; i < this.vertexes.Count; i++)
+			for (int i = 0; i < this.Vertexes.Count; i++)
 			{
-				this.vertexes[i] = transformation * this.vertexes[i] + translation;
+				this.Vertexes[i] = transformation * this.Vertexes[i] + translation;
 			}
 
 			Vector3 newNormal = transformation * this.Normal;
@@ -351,7 +342,7 @@ namespace netDxf.Entities
 		/// <inheritdoc/>
 		public override object Clone()
 		{
-			Polyline3D entity = new Polyline3D(this.vertexes)
+			Polyline3D entity = new Polyline3D(this.Vertexes)
 			{
 				//EntityObject properties
 				Layer = (Layer)this.Layer.Clone(),
@@ -363,7 +354,7 @@ namespace netDxf.Entities
 				Normal = this.Normal,
 				IsVisible = this.IsVisible,
 				//Polyline3D properties
-				Flags = this.flags
+				Flags = this.Flags
 			};
 
 			foreach (XData data in this.XData.Values)

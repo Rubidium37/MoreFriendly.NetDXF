@@ -106,7 +106,6 @@ namespace netDxf.Collections
 		{
 			this.innerArray = new List<T>();
 		}
-
 		/// <summary>Initializes a new instance of the class and has the specified initial capacity.</summary>
 		/// <param name="capacity">The number of items the collection can initially store.</param>
 		public ObservableCollection(int capacity)
@@ -125,7 +124,7 @@ namespace netDxf.Collections
 		/// <inheritdoc/>
 		public T this[int index]
 		{
-			get { return this.innerArray[index]; }
+			get => this.innerArray[index];
 			set
 			{
 				T remove = this.innerArray[index];
@@ -148,55 +147,34 @@ namespace netDxf.Collections
 		}
 
 		/// <inheritdoc/>
-		public int Count
-		{
-			get { return this.innerArray.Count; }
-		}
+		public int Count => this.innerArray.Count;
 
 		/// <inheritdoc/>
-		public virtual bool IsReadOnly
-		{
-			get { return false; }
-		}
+		public virtual bool IsReadOnly => false;
 
 		#endregion
 
 		#region public methods
 
 		/// <summary>Reverses the order of the elements in the entire list.</summary>
-		public void Reverse()
-		{
-			this.innerArray.Reverse();
-		}
+		public void Reverse() => this.innerArray.Reverse();
 
 		/// <summary>Sorts the elements in the entire System.Collections.Generic.List&lt;T&gt; using the specified System.Comparison&lt;T&gt;.</summary>
 		/// <param name="comparision">The System.Comparison&lt;T&gt; to use when comparing elements.</param>
-		public void Sort(Comparison<T> comparision)
-		{
-			this.innerArray.Sort(comparision);
-		}
+		public void Sort(Comparison<T> comparision) => this.innerArray.Sort(comparision);
 
 		/// <summary>Sorts the elements in a range of elements in System.Collections.Generic.List&lt;T&gt; using the specified comparer.</summary>
 		/// <param name="index">The zero-based starting index of the range to sort.</param>
 		/// <param name="count">The length of the range to sort.</param>
 		/// <param name="comparer">The System.Collections.Generic.IComparer&lt;T&gt; implementation to use when comparing elements, or <see langword="null"/> to use the default comparer System.Collections.Generic.Comparer&lt;T&gt;.Default.</param>
-		public void Sort(int index, int count, IComparer<T> comparer)
-		{
-			this.innerArray.Sort(index, count, comparer);
-		}
+		public void Sort(int index, int count, IComparer<T> comparer) => this.innerArray.Sort(index, count, comparer);
 
 		/// <summary>Sorts the elements in a range of elements in System.Collections.Generic.List&lt;T&gt; using the specified comparer.</summary>
 		/// <param name="comparer">The System.Collections.Generic.IComparer&lt;T&gt; implementation to use when comparing elements, or <see langword="null"/> to use the default comparer System.Collections.Generic.Comparer&lt;T&gt;.Default.</param>
-		public void Sort(IComparer<T> comparer)
-		{
-			this.innerArray.Sort(comparer);
-		}
+		public void Sort(IComparer<T> comparer) => this.innerArray.Sort(comparer);
 
 		/// <summary>Sorts the elements in the entire System.Collections.Generic.List&lt;T&gt; using the default comparer.</summary>
-		public void Sort()
-		{
-			this.innerArray.Sort();
-		}
+		public void Sort() => this.innerArray.Sort();
 
 		/// <summary>Adds an object to the collection.</summary>
 		/// <param name="item">The object to add to the collection.</param>
@@ -315,47 +293,26 @@ namespace netDxf.Collections
 		}
 
 		/// <inheritdoc/>
-		public int IndexOf(T item)
-		{
-			return this.innerArray.IndexOf(item);
-		}
+		public int IndexOf(T item) => this.innerArray.IndexOf(item);
 
 		/// <inheritdoc/>
-		public bool Contains(T item)
-		{
-			return this.innerArray.Contains(item);
-		}
+		public bool Contains(T item) => this.innerArray.Contains(item);
 
 		/// <inheritdoc/>
-		public void CopyTo(T[] array, int arrayIndex)
-		{
-			this.innerArray.CopyTo(array, arrayIndex);
-		}
+		public void CopyTo(T[] array, int arrayIndex) => this.innerArray.CopyTo(array, arrayIndex);
 
 		/// <inheritdoc/>
-		public IEnumerator<T> GetEnumerator()
-		{
-			return this.innerArray.GetEnumerator();
-		}
+		public IEnumerator<T> GetEnumerator() => this.innerArray.GetEnumerator();
 
 		#endregion
 
 		#region private fields
 
-		void ICollection<T>.Add(T item)
-		{
-			this.Add(item);
-		}
+		void ICollection<T>.Add(T item) => this.Add(item);
 
-		void IList<T>.Insert(int index, T item)
-		{
-			this.Insert(index, item);
-		}
+		void IList<T>.Insert(int index, T item) => this.Insert(index, item);
 
-		IEnumerator IEnumerable.GetEnumerator()
-		{
-			return this.GetEnumerator();
-		}
+		IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 
 		#endregion
 	}

@@ -40,7 +40,6 @@ namespace netDxf.Entities
 		#region private fields
 
 		private ClippingBoundary clippingBoundary;
-		private double elevation;
 
 		#endregion
 
@@ -77,7 +76,7 @@ namespace netDxf.Entities
 			: base(EntityType.Wipeout, DxfObjectCode.Wipeout)
 		{
 			this.clippingBoundary = clippingBoundary ?? throw new ArgumentNullException(nameof(clippingBoundary));
-			this.elevation = 0.0;
+			this.Elevation = 0.0;
 		}
 
 		#endregion
@@ -87,7 +86,7 @@ namespace netDxf.Entities
 		/// <summary>Gets or sets the wipeout clipping boundary.</summary>
 		public ClippingBoundary ClippingBoundary
 		{
-			get { return this.clippingBoundary; }
+			get => this.clippingBoundary;
 			set
 			{
 				this.clippingBoundary = value ?? throw new ArgumentNullException(nameof(value));
@@ -96,11 +95,7 @@ namespace netDxf.Entities
 
 		/// <summary>Gets or sets the wipeout elevation.</summary>
 		/// <remarks>This is the distance from the origin to the plane of the wipeout boundary.</remarks>
-		public double Elevation
-		{
-			get { return this.elevation; }
-			set { this.elevation = value; }
-		}
+		public double Elevation { get; set; }
 
 		#endregion
 
@@ -155,7 +150,7 @@ namespace netDxf.Entities
 				Normal = this.Normal,
 				IsVisible = this.IsVisible,
 				//Wipeout properties
-				Elevation = this.elevation
+				Elevation = this.Elevation
 			};
 
 			foreach (XData data in this.XData.Values)
