@@ -46,7 +46,6 @@ namespace netDxf
 			: base(controlPoints, 2)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="startPoint">Start anchor point.</param>
 		/// <param name="controlPoint">Second control point.</param>

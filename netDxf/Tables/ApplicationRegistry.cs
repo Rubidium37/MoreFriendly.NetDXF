@@ -55,7 +55,6 @@ namespace netDxf.Tables
 			: this(name, true)
 		{
 		}
-
 		internal ApplicationRegistry(string name, bool checkName)
 			: base(name, DxfObjectCode.AppId, checkName)
 		{

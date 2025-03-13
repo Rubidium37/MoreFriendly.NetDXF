@@ -38,7 +38,6 @@ namespace netDxf
 		/// <summary>Creates a new <see cref="StringEnum{T}"/> instance.</summary>
 		public StringEnum()
 		{
-			this.EnumType = typeof(T);
 		}
 
 		#endregion
@@ -47,7 +46,7 @@ namespace netDxf
 
 		/// <summary>Gets the underlying enum type for this instance.</summary>
 		/// <value></value>
-		public Type EnumType { get; }
+		public Type EnumType { get; } = typeof(T);
 
 		#endregion
 

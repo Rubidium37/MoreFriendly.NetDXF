@@ -67,7 +67,6 @@ namespace netDxf.GTE
 
 			this.MakeUnit(r, c);
 		}
-
 		public GMatrix(int numRows, int numCols, double[] elements)
 		{
 			this.NumRows = numRows;

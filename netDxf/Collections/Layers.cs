@@ -40,7 +40,6 @@ namespace netDxf.Collections
 			: this(document, null)
 		{
 		}
-
 		internal Layers(DxfDocument document, string handle)
 			: base(document, DxfObjectCode.LayerTable, handle)
 		{
@@ -78,6 +77,7 @@ namespace netDxf.Collections
 
 			this.List.Add(layer.Name, layer);
 			this.References.Add(layer.Name, new DxfObjectReferences());
+
 			layer.Linetype = this.Owner.Linetypes.Add(layer.Linetype);
 			this.Owner.Linetypes.References[layer.Linetype.Name].Add(layer);
 

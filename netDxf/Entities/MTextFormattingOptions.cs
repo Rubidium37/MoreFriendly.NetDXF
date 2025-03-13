@@ -31,34 +31,11 @@ namespace netDxf.Entities
 	/// <remarks>Old <b>DXF</b> versions might not support all available formatting codes.</remarks>
 	public class MTextFormattingOptions
 	{
-		#region private fields
-
-		private double superSubScriptHeightFactor;
-		private bool superscript;
-		private bool subscript;
-		private double heightFactor;
-		private double obliqueAngle;
-		private double characterSpaceFactor;
-		private double widthFactor;
-
-		#endregion
-
 		#region constructors
 
 		/// <summary>Initializes a new instance of the class.</summary>
 		public MTextFormattingOptions()
 		{
-			this.Bold = false;
-			this.Italic = false;
-			this.Overline = false;
-			this.Underline = false;
-			this.Color = null;
-			this.FontName = null;
-			this.heightFactor = 1.0;
-			this.obliqueAngle = 0.0;
-			this.characterSpaceFactor = 1.0;
-			this.widthFactor = 1.0;
-			this.superSubScriptHeightFactor = 0.7;
 		}
 
 		#endregion
@@ -67,21 +44,22 @@ namespace netDxf.Entities
 
 		/// <summary>Gets or sets if the text is bold.</summary>
 		/// <remarks>The font style must support bold characters.</remarks>
-		public bool Bold { get; set; }
+		public bool Bold { get; set; } = false;
 
 		/// <summary>Gets or sets if the text is italic.</summary>
 		/// <remarks>The font style must support italic characters.</remarks>
-		public bool Italic { get; set; }
+		public bool Italic { get; set; } = false;
 
 		/// <summary>Gets or sets the over line.</summary>
-		public bool Overline { get; set; }
+		public bool Overline { get; set; } = false;
 
 		/// <summary>Gets or sets underline.</summary>
-		public bool Underline { get; set; }
+		public bool Underline { get; set; } = false;
 
 		/// <summary>Gets or sets strike-through.</summary>
-		public bool StrikeThrough { get; set; }
+		public bool StrikeThrough { get; set; } = false;
 
+		private bool _Superscript;
 		/// <summary>Get or set if the text is superscript.</summary>
 		/// <remarks>
 		/// The Superscript and subscript properties are mutually exclusive, if it is set to <see langword="true"/> the <see cref="Subscript"/> property will be set to <see langword="false"/> automatically.<br />
@@ -90,14 +68,15 @@ namespace netDxf.Entities
 		/// </remarks>
 		public bool Superscript
 		{
-			get => this.superscript;
+			get => _Superscript;
 			set
 			{
-				if (value) this.subscript = false;
-				this.superscript = value;
+				if (value) _Subscript = false;
+				_Superscript = value;
 			}
 		}
 
+		private bool _Subscript;
 		/// <summary>Get or set if the text is subscript.</summary>
 		/// <remarks>
 		/// The Superscript and Subscript properties are mutually exclusive, if it is set to <see langword="true"/> the <see cref="Superscript"/> property will be set to <see langword="false"/> automatically.<br />
@@ -106,24 +85,25 @@ namespace netDxf.Entities
 		/// </remarks>
 		public bool Subscript
 		{
-			get => this.subscript;
+			get => _Subscript;
 			set
 			{
-				if (value) this.superscript = false;
-				this.subscript = value;
+				if (value) _Superscript = false;
+				_Subscript = value;
 			}
 		}
 
+		private double _SuperSubScriptHeightFactor = 0.7;
 		/// <summary>Gets or sets the superscript and subscript text height as a multiple of the current text height.</summary>
 		/// <remarks>By default it is set as 0.7 the current text height.</remarks>
 		public double SuperSubScriptHeightFactor
 		{
-			get => this.superSubScriptHeightFactor;
+			get => _SuperSubScriptHeightFactor;
 			set
 			{
 				if (value <= 0)
 					throw new ArgumentOutOfRangeException(nameof(value), value, "The character percentage height must be greater than zero.");
-				this.superSubScriptHeightFactor = value;
+				_SuperSubScriptHeightFactor = value;
 			}
 		}
 
@@ -141,32 +121,35 @@ namespace netDxf.Entities
 		/// </remarks>
 		public string FontName { get; set; }
 
+		private double _HeightFactor = 1.0;
 		/// <summary>Gets or sets the text height as a multiple of the current text height.</summary>
 		/// <remarks>Set as 1.0 to apply the default height factor.</remarks>
 		public double HeightFactor
 		{
-			get => this.heightFactor;
+			get => _HeightFactor;
 			set
 			{
 				if (value <= 0)
 					throw new ArgumentOutOfRangeException(nameof(value), value, "The character percentage height must be greater than zero.");
-				this.heightFactor = value;
+				_HeightFactor = value;
 			}
 		}
 
+		private double _ObliqueAngle = 0.0;
 		/// <summary>Gets or sets the obliquing angle in degrees.</summary>
 		/// <remarks>Set as 0.0 to apply the default obliquing angle.</remarks>
 		public double ObliqueAngle
 		{
-			get => this.obliqueAngle;
+			get => _ObliqueAngle;
 			set
 			{
 				if (value < -85.0 || value > 85.0)
 					throw new ArgumentOutOfRangeException(nameof(value), value, "The oblique angle valid values range from -85 to 85.");
-				this.obliqueAngle = value;
+				_ObliqueAngle = value;
 			}
 		}
 
+		private double _CharacterSpaceFactor = 1.0;
 		/// <summary>Gets or sets the space between characters as a multiple of the original spacing between characters.</summary>
 		/// <remarks>
 		/// Valid values range from a minimum of .75 to 4 times the original spacing between characters.
@@ -174,25 +157,26 @@ namespace netDxf.Entities
 		/// </remarks>
 		public double CharacterSpaceFactor
 		{
-			get => this.characterSpaceFactor;
+			get => _CharacterSpaceFactor;
 			set
 			{
 				if (value < 0.75 || value > 4)
 					throw new ArgumentOutOfRangeException(nameof(value), value, "The character space valid values range from a minimum of .75 to 4");
-				this.characterSpaceFactor = value;
+				_CharacterSpaceFactor = value;
 			}
 		}
 
+		private double _WidthFactor = 1.0;
 		/// <summary>Gets or sets the width factor to produce wide text.</summary>
 		/// <remarks>Set as 1.0 to apply the default width factor.</remarks>
 		public double WidthFactor
 		{
-			get => this.widthFactor;
+			get => _WidthFactor;
 			set
 			{
 				if (value <= 0)
 					throw new ArgumentOutOfRangeException(nameof(value), value, "The width factor should be greater than zero.");
-				this.widthFactor = value;
+				_WidthFactor = value;
 			}
 		}
 

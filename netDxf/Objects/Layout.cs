@@ -37,12 +37,6 @@ namespace netDxf.Objects
 		TableObject,
 		IComparable<Layout>
 	{
-		#region private fields
-
-		private short tabOrder;
-
-		#endregion
-
 		#region constants
 
 		/// <summary>Layout <see cref="ModelSpace"/> name.</summary>
@@ -64,7 +58,6 @@ namespace netDxf.Objects
 			: this(name, null, new PlotSettings())
 		{
 		}
-
 		private Layout(string name, Block associatedBlock, PlotSettings plotSettings)
 			: base(name, DxfObjectCode.Layout, true)
 		{
@@ -94,24 +87,15 @@ namespace netDxf.Objects
 				};
 			}
 
-			this.tabOrder = 0;
 			this.AssociatedBlock = associatedBlock;
 			this.PlotSettings = plotSettings;
-			this.MinLimit = new Vector2(-20.0, -7.5);
-			this.MaxLimit = new Vector2(277.0, 202.5);
-			this.BasePoint = Vector3.Zero;
-			this.MinExtents = new Vector3(25.7, 19.5, 0.0);
-			this.MaxExtents = new Vector3(231.3, 175.5, 0.0);
-			this.Elevation = 0;
-			this.UcsOrigin = Vector3.Zero;
-			this.UcsXAxis = Vector3.UnitX;
-			this.UcsYAxis = Vector3.UnitY;
 		}
 
 		#endregion
 
 		#region public properties
 
+		private short _TabOrder = 0;
 		/// <summary>Gets or sets the tab order.</summary>
 		/// <remarks>
 		/// This number is an ordinal indicating this layout's ordering in the tab control that is
@@ -120,14 +104,14 @@ namespace netDxf.Objects
 		/// </remarks>
 		public short TabOrder
 		{
-			get => this.tabOrder;
+			get => _TabOrder;
 			set
 			{
 				if (value <= 0)
 				{
 					throw new ArgumentException("The tab order index must be greater than zero.", nameof(value));
 				}
-				this.tabOrder = value;
+				_TabOrder = value;
 			}
 		}
 
@@ -135,31 +119,31 @@ namespace netDxf.Objects
 		public PlotSettings PlotSettings { get; set; }
 
 		/// <summary>Gets or sets the minimum limits for this layout.</summary>
-		public Vector2 MinLimit { get; set; }
+		public Vector2 MinLimit { get; set; } = new Vector2(-20.0, -7.5);
 
 		/// <summary>Gets or sets the maximum limits for this layout.</summary>
-		public Vector2 MaxLimit { get; set; }
+		public Vector2 MaxLimit { get; set; } = new Vector2(277.0, 202.5);
 
 		/// <summary>Gets or sets the maximum extents for this layout.</summary>
-		public Vector3 MinExtents { get; set; }
+		public Vector3 MinExtents { get; set; } = new Vector3(25.7, 19.5, 0.0);
 
 		/// <summary>Gets or sets the maximum extents for this layout.</summary>
-		public Vector3 MaxExtents { get; set; }
+		public Vector3 MaxExtents { get; set; } = new Vector3(231.3, 175.5, 0.0);
 
 		/// <summary>Gets or sets the insertion base point for this layout.</summary>
-		public Vector3 BasePoint { get; set; }
+		public Vector3 BasePoint { get; set; } = Vector3.Zero;
 
 		/// <summary>Gets or sets the elevation.</summary>
-		public double Elevation { get; set; }
+		public double Elevation { get; set; } = 0;
 
 		/// <summary>Gets or sets the <b>UCS</b> origin.</summary>
-		public Vector3 UcsOrigin { get; set; }
+		public Vector3 UcsOrigin { get; set; } = Vector3.Zero;
 
 		/// <summary>Gets or sets the <b>UCS</b> X axis.</summary>
-		public Vector3 UcsXAxis { get; set; }
+		public Vector3 UcsXAxis { get; set; } = Vector3.UnitX;
 
 		/// <summary>Gets or sets the <b>UCS</b> Y axis.</summary>
-		public Vector3 UcsYAxis { get; set; }
+		public Vector3 UcsYAxis { get; set; } = Vector3.UnitY;
 
 		/// <summary>Defines if this layout is a paper space.</summary>
 		public bool IsPaperSpace { get; }
@@ -207,7 +191,7 @@ namespace netDxf.Objects
 
 			Layout copy = new Layout(newName, null, (PlotSettings)this.PlotSettings.Clone())
 			{
-				TabOrder = this.tabOrder,
+				TabOrder = _TabOrder,
 				MinLimit = this.MinLimit,
 				MaxLimit = this.MaxLimit,
 				BasePoint = this.BasePoint,
@@ -253,7 +237,7 @@ namespace netDxf.Objects
 				throw new ArgumentNullException(nameof(other));
 			}
 
-			return this.tabOrder.CompareTo(other.tabOrder);
+			return _TabOrder.CompareTo(other.TabOrder);
 		}
 
 		#endregion

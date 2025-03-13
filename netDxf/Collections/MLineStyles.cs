@@ -40,7 +40,6 @@ namespace netDxf.Collections
 			: this(document, null)
 		{
 		}
-
 		internal MLineStyles(DxfDocument document, string handle)
 			: base(document, DxfObjectCode.MLineStyleDictionary, handle)
 		{

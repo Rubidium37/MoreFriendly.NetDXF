@@ -55,17 +55,14 @@ namespace netDxf.GTE
 		// lastTime are both set to zero (invalid because 'intersect' is
 		// false).
 
-		public bool Intersect { get; }
+		public bool Intersect { get; } = false;
 
-		public double FirstTime { get; }
+		public double FirstTime { get; } = 0.0;
 
-		public double LastTime { get; }
+		public double LastTime { get; } = 0.0;
 
 		private TIQueryIntervals()
 		{
-			this.Intersect = false;
-			this.FirstTime = 0.0;
-			this.LastTime = 0.0;
 		}
 
 		// Static query. The firstTime and lastTime values are set to zero by
@@ -96,7 +93,6 @@ namespace netDxf.GTE
 			}
 
 		}
-
 		public TIQueryIntervals(double a0, bool isPositiveInfinite0, double a1, bool isPositiveInfinite1)
 			: this()
 		{
@@ -215,7 +211,7 @@ namespace netDxf.GTE
 		// The query finds overlap, whether a single point or an entire
 		// interval.
 
-		public bool Intersect { get; }
+		public bool Intersect { get; } = false;
 
 		// Static queries (no motion of intervals over time). The number
 		// of number of intersections is 0 (no overlap), 1 (intervals are
@@ -225,13 +221,13 @@ namespace netDxf.GTE
 		// 1 or 2. When 1, 'overlap' is set to [x,x], which is degenerate
 		// and represents the single intersection point x. When 2,
 		// 'overlap' is the interval of intersection.
-		public int NumIntersections { get; }
+		public int NumIntersections { get; } = 0;
 
-		public double[] Overlap { get; }
+		public double[] Overlap { get; } = new[] { 0.0, 0.0 };
 
 		// The type is one of isEmpty, isPoint, isFinite,
 		// isPositiveInfinite, isNegativeInfinite or isDynamicQuery.
-		public FIQueryIntervalsType Type { get; }
+		public FIQueryIntervalsType Type { get; } = FIQueryIntervalsType.IsEmpty;
 
 		// Dynamic queries (intervals moving with constant speeds). If
 		// 'intersect' is true, the contact times are valid and
@@ -242,20 +238,13 @@ namespace netDxf.GTE
 		// if the intervals will not intersect, then firstTime and
 		// lastTime are both set to zero (invalid because 'intersect' is
 		// false).
-		public double FirstTime { get; }
+		public double FirstTime { get; } = 0.0;
 
-		public double LastTime { get; }
+		public double LastTime { get; } = 0.0;
 
 		private FIQueryIntervals()
 		{
-			this.Intersect = false;
-			this.NumIntersections = 0;
-			this.Overlap = new[] { 0.0, 0.0 };
-			this.Type = FIQueryIntervalsType.IsEmpty;
-			this.FirstTime = 0.0;
-			this.LastTime = 0.0;
 		}
-
 		// Static query.
 		public FIQueryIntervals(double[] interval0, double[] interval1)
 			: this()
@@ -302,7 +291,6 @@ namespace netDxf.GTE
 
 			this.Intersect = this.NumIntersections > 0;
 		}
-
 		// Static queries where at least one interval is semiinfinite. The
 		// two types of semiinfinite intervals are [a,+infinity), which I call
 		// a positive-infinite interval, and (-infinity,a], which I call a
@@ -377,7 +365,6 @@ namespace netDxf.GTE
 
 			this.Intersect = (this.NumIntersections > 0);
 		}
-
 		public FIQueryIntervals(double a0, bool isPositiveInfinite0, double a1, bool isPositiveInfinite1)
 			: this()
 		{
@@ -462,7 +449,6 @@ namespace netDxf.GTE
 
 			this.Intersect = (this.NumIntersections > 0);
 		}
-
 		// Dynamic query. Current time is 0, maxTime > 0 is required.
 		public FIQueryIntervals(double maxTime, double[] interval0, double speed0, double[] interval1, double speed1)
 			: this()
@@ -547,5 +533,4 @@ namespace netDxf.GTE
 			// The this constructor sets the correct state for no-intersection.
 		}
 	}
-
 }

@@ -33,14 +33,6 @@ namespace netDxf.Entities
 	public class Arc :
 		EntityObject
 	{
-		#region private fields
-
-		private double radius;
-		private double startAngle;
-		private double endAngle;
-
-		#endregion
-
 		#region constructors
 
 		/// <summary>Initializes a new instance of the class.</summary>
@@ -48,7 +40,6 @@ namespace netDxf.Entities
 			: this(Vector3.Zero, 1.0, 0.0, 180.0)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="center">Arc <see cref="Vector2">center</see> in world coordinates.</param>
 		/// <param name="radius">Arc radius.</param>
@@ -58,7 +49,6 @@ namespace netDxf.Entities
 			: this(new Vector3(center.X, center.Y, 0.0), radius, startAngle, endAngle)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="center">Arc <see cref="Vector3">center</see> in world coordinates.</param>
 		/// <param name="radius">Arc radius.</param>
@@ -72,12 +62,10 @@ namespace netDxf.Entities
 			{
 				throw new ArgumentOutOfRangeException(nameof(radius), radius, "The arc radius must be greater than zero.");
 			}
-			this.radius = radius;
-			this.startAngle = MathHelper.NormalizeAngle(startAngle);
-			this.endAngle = MathHelper.NormalizeAngle(endAngle);
-			this.Thickness = 0.0;
+			_Radius = radius;
+			_StartAngle = MathHelper.NormalizeAngle(startAngle);
+			_EndAngle = MathHelper.NormalizeAngle(endAngle); 
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="startPoint">Arc start point.</param>
 		/// <param name="endPoint">Arc end point.</param>
@@ -88,13 +76,12 @@ namespace netDxf.Entities
 			Tuple<Vector2, double, double, double> data = MathHelper.ArcFromBulge(startPoint, endPoint, bulge);
 			if (data.Item2 <= 0)
 			{
-				throw new ArgumentOutOfRangeException(nameof(radius), radius, "The arc radius must be greater than zero.");
+				throw new ApplicationException("The arc radius must be greater than zero.");
 			}
 			this.Center = new Vector3(data.Item1.X, data.Item1.Y, 0.0);
-			this.radius = data.Item2;
-			this.startAngle = data.Item3;
-			this.endAngle = data.Item4;
-			this.Thickness = 0.0;
+			_Radius = data.Item2;
+			_StartAngle = data.Item3;
+			_EndAngle = data.Item4; 
 		}
 
 		#endregion
@@ -104,36 +91,39 @@ namespace netDxf.Entities
 		/// <summary>Gets or sets the arc <see cref="Vector3">center</see> in world coordinates.</summary>
 		public Vector3 Center { get; set; }
 
+		private double _Radius;
 		/// <summary>Gets or sets the arc radius.</summary>
 		public double Radius
 		{
-			get => this.radius;
+			get => _Radius;
 			set
 			{
 				if (value <= 0)
 				{
 					throw new ArgumentOutOfRangeException(nameof(value), value, "The arc radius must be greater than zero.");
 				}
-				this.radius = value;
+				_Radius = value;
 			}
 		}
 
+		private double _StartAngle;
 		/// <summary>Gets or sets the arc start angle in degrees.</summary>
 		public double StartAngle
 		{
-			get => this.startAngle;
-			set => this.startAngle = MathHelper.NormalizeAngle(value);
+			get => _StartAngle;
+			set => _StartAngle = MathHelper.NormalizeAngle(value);
 		}
 
+		private double _EndAngle;
 		/// <summary>Gets or sets the arc end angle in degrees.</summary>
 		public double EndAngle
 		{
-			get => this.endAngle;
-			set => this.endAngle = MathHelper.NormalizeAngle(value);
+			get => _EndAngle;
+			set => _EndAngle = MathHelper.NormalizeAngle(value);
 		}
 
 		/// <summary>Gets or sets the arc thickness.</summary>
-		public double Thickness { get; set; }
+		public double Thickness { get; set; } = 0.0;
 
 		#endregion
 
@@ -150,8 +140,8 @@ namespace netDxf.Entities
 			}
 
 			List<Vector2> ocsVertexes = new List<Vector2>();
-			double start = this.startAngle * MathHelper.DegToRad;
-			double end = this.endAngle * MathHelper.DegToRad;
+			double start = _StartAngle * MathHelper.DegToRad;
+			double end = _EndAngle * MathHelper.DegToRad;
 			if (end < start)
 			{
 				end += MathHelper.TwoPI;
@@ -161,8 +151,8 @@ namespace netDxf.Entities
 			for (int i = 0; i < precision; i++)
 			{
 				double angle = start + delta * i;
-				double sine = this.radius * Math.Sin(angle);
-				double cosine = this.radius * Math.Cos(angle);
+				double sine = _Radius * Math.Sin(angle);
+				double cosine = _Radius * Math.Cos(angle);
 				ocsVertexes.Add(new Vector2(cosine, sine));
 			}
 
@@ -270,9 +260,9 @@ namespace netDxf.Entities
 				IsVisible = this.IsVisible,
 				//Arc properties
 				Center = this.Center,
-				Radius = this.radius,
-				StartAngle = this.startAngle,
-				EndAngle = this.endAngle,
+				Radius = _Radius,
+				StartAngle = _StartAngle,
+				EndAngle = _EndAngle,
 				Thickness = this.Thickness
 			};
 

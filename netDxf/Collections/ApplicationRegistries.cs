@@ -40,7 +40,6 @@ namespace netDxf.Collections
 			: this(document, null)
 		{
 		}
-
 		internal ApplicationRegistries(DxfDocument document, string handle)
 			: base(document, DxfObjectCode.ApplicationIdTable, handle)
 		{

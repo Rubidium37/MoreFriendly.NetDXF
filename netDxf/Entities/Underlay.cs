@@ -52,30 +52,18 @@ namespace netDxf.Entities
 
 		#endregion
 
-		#region private fields
-
-		private UnderlayDefinition definition;
-		private Vector2 scale;
-		private double rotation;
-		private short contrast;
-		private short fade;
-
-		#endregion
-
 		#region constructor
 
 		internal Underlay()
 			: base(EntityType.Underlay, DxfObjectCode.Underlay)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="definition"><see cref="UnderlayDefinition">Underlay definition</see>.</param>
 		public Underlay(UnderlayDefinition definition)
 			: this(definition, Vector3.Zero, 1.0)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="definition"><see cref="UnderlayDefinition">Underlay definition</see>.</param>
 		/// <param name="position">Underlay <see cref="Vector3">position</see> in world coordinates.</param>
@@ -83,7 +71,6 @@ namespace netDxf.Entities
 			: this(definition, position, 1.0)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="definition"><see cref="UnderlayDefinition">Underlay definition</see>.</param>
 		/// <param name="position">Underlay <see cref="Vector3">position</see> in world coordinates.</param>
@@ -91,19 +78,14 @@ namespace netDxf.Entities
 		public Underlay(UnderlayDefinition definition, Vector3 position, double scale)
 			: base(EntityType.Underlay, DxfObjectCode.Underlay)
 		{
-			this.definition = definition ?? throw new ArgumentNullException(nameof(definition));
+			_Definition = definition ?? throw new ArgumentNullException(nameof(definition));
 			this.Position = position;
 			if (scale <= 0)
 			{
 				throw new ArgumentOutOfRangeException(nameof(scale), scale, "The Underlay scale must be greater than zero.");
 			}
-			this.scale = new Vector2(scale);
-			this.rotation = 0.0;
-			this.contrast = 100;
-			this.fade = 0;
-			this.DisplayOptions = UnderlayDisplayFlags.ShowUnderlay;
-			this.ClippingBoundary = null;
-			switch (this.definition.Type)
+			_Scale = new Vector2(scale);
+			switch (_Definition.Type)
 			{
 				case UnderlayType.DGN:
 					this.CodeName = DxfObjectCode.UnderlayDgn;
@@ -116,14 +98,16 @@ namespace netDxf.Entities
 					break;
 			}
 		}
+
 		#endregion
 
 		#region public properties
 
+		private UnderlayDefinition _Definition;
 		/// <summary>Gets the underlay definition.</summary>
 		public UnderlayDefinition Definition
 		{
-			get => this.definition;
+			get => _Definition;
 			set
 			{
 				if (value == null)
@@ -131,7 +115,7 @@ namespace netDxf.Entities
 					throw new ArgumentNullException(nameof(value));
 				}
 
-				this.definition = this.OnUnderlayDefinitionChangedEvent(this.definition, value);
+				_Definition = this.OnUnderlayDefinitionChangedEvent(_Definition, value);
 
 				switch (value.Type)
 				{
@@ -151,6 +135,7 @@ namespace netDxf.Entities
 		/// <summary>Gets or sets the underlay position in world coordinates.</summary>
 		public Vector3 Position { get; set; }
 
+		private Vector2 _Scale;
 		/// <summary>Gets or sets the underlay scale.</summary>
 		/// <remarks>
 		/// Any of the vector scale components cannot be zero.<br />
@@ -160,56 +145,59 @@ namespace netDxf.Entities
 		/// </remarks>
 		public Vector2 Scale
 		{
-			get => this.scale;
+			get => _Scale;
 			set
 			{
 				if (MathHelper.IsZero(value.X) || MathHelper.IsZero(value.Y))
 				{
 					throw new ArgumentOutOfRangeException(nameof(value), value, "Any of the vector scale components cannot be zero.");
 				}
-				this.scale = value;
+				_Scale = value;
 			}
 		}
 
+		private double _Rotation = 0.0;
 		/// <summary>Gets or sets the underlay rotation around its normal.</summary>
 		public double Rotation
 		{
-			get => this.rotation;
-			set => this.rotation = MathHelper.NormalizeAngle(value);
+			get => _Rotation;
+			set => _Rotation = MathHelper.NormalizeAngle(value);
 		}
 
+		private short _Contrast = 100;
 		/// <summary>Gets or sets the underlay contrast.</summary>
 		/// <remarks>Valid values range from 20 to 100.</remarks>
 		public short Contrast
 		{
-			get => this.contrast;
+			get => _Contrast;
 			set
 			{
 				if (value < 20 || value > 100)
 				{
 					throw new ArgumentOutOfRangeException(nameof(value), value, "Accepted contrast values range from 20 to 100.");
 				}
-				this.contrast = value;
+				_Contrast = value;
 			}
 		}
 
+		private short _Fade = 0;
 		/// <summary>Gets or sets the underlay fade.</summary>
 		/// <remarks>Valid values range from 0 to 80.</remarks>
 		public short Fade
 		{
-			get => this.fade;
+			get => _Fade;
 			set
 			{
 				if (value < 0 || value > 80)
 				{
 					throw new ArgumentOutOfRangeException(nameof(value), value, "Accepted fade values range from 0 to 80.");
 				}
-				this.fade = value;
+				_Fade = value;
 			}
 		}
 
 		/// <summary>Gets or sets the underlay display options.</summary>
-		public UnderlayDisplayFlags DisplayOptions { get; set; }
+		public UnderlayDisplayFlags DisplayOptions { get; set; } = UnderlayDisplayFlags.ShowUnderlay;
 
 		/// <summary>Gets or sets the underlay clipping boundary.</summary>
 		/// <remarks>
@@ -247,7 +235,7 @@ namespace netDxf.Entities
 					this.Scale.X * Vector2.UnitX,
 					this.Scale.Y * Vector2.UnitY
 				},
-				this.rotation * MathHelper.DegToRad,
+				_Rotation * MathHelper.DegToRad,
 				CoordinateSystem.Object, CoordinateSystem.World);
 
 			Vector3 v;
@@ -292,12 +280,12 @@ namespace netDxf.Entities
 				Normal = this.Normal,
 				IsVisible = this.IsVisible,
 				//Underlay properties
-				Definition = (UnderlayDefinition)this.definition.Clone(),
+				Definition = (UnderlayDefinition)_Definition.Clone(),
 				Position = this.Position,
-				Scale = this.scale,
-				Rotation = this.rotation,
-				Contrast = this.contrast,
-				Fade = this.fade,
+				Scale = _Scale,
+				Rotation = _Rotation,
+				Contrast = _Contrast,
+				Fade = _Fade,
 				DisplayOptions = this.DisplayOptions,
 				ClippingBoundary = this.ClippingBoundary != null ? (ClippingBoundary)this.ClippingBoundary.Clone() : null
 			};

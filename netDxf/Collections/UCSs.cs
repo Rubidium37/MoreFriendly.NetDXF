@@ -40,7 +40,6 @@ namespace netDxf.Collections
 			: this(document, null)
 		{
 		}
-
 		internal UCSs(DxfDocument document, string handle)
 			: base(document, DxfObjectCode.UcsTable, handle)
 		{

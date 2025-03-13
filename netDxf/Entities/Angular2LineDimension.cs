@@ -35,12 +35,6 @@ namespace netDxf.Entities
 	public class Angular2LineDimension :
 		Dimension
 	{
-		#region private fields
-
-		private double offset;
-
-		#endregion
-
 		#region constructors
 
 		/// <summary>Initializes a new instance of the class.</summary>
@@ -48,7 +42,6 @@ namespace netDxf.Entities
 			: this(Vector2.Zero, Vector2.UnitX, Vector2.Zero, Vector2.UnitY, 0.1)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="firstLine">First <see cref="Line">line</see> that defines the angle to measure.</param>
 		/// <param name="secondLine">Second <see cref="Line">line</see> that defines the angle to measure.</param>
@@ -57,7 +50,6 @@ namespace netDxf.Entities
 			: this(firstLine, secondLine, offset, Vector3.UnitZ, DimensionStyle.Default)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="firstLine">First <see cref="Line">line</see> that defines the angle to measure.</param>
 		/// <param name="secondLine">Second <see cref="Line">line</see> that defines the angle to measure.</param>
@@ -67,7 +59,6 @@ namespace netDxf.Entities
 			: this(firstLine, secondLine, offset, normal, DimensionStyle.Default)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="firstLine">First <see cref="Line">line</see> that defines the angle to measure.</param>
 		/// <param name="secondLine">Second <see cref="Line">line</see> that defines the angle to measure.</param>
@@ -77,7 +68,6 @@ namespace netDxf.Entities
 			: this(firstLine, secondLine, offset, Vector3.UnitZ, style)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="firstLine">First <see cref="Line">line</see> that defines the angle to measure.</param>
 		/// <param name="secondLine">Second <see cref="Line">line</see> that defines the angle to measure.</param>
@@ -121,13 +111,12 @@ namespace netDxf.Entities
 			{
 				throw new ArgumentOutOfRangeException(nameof(offset), "The offset value must be equal or greater than zero.");
 			}
-			this.offset = offset;
+			_Offset = offset;
 			this.Style = style ?? throw new ArgumentNullException(nameof(style));
 			this.Normal = normal;
 			this.Elevation = ocsPoints[0].Z;
 			this.Update();
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="startFirstLine">Start <see cref="Vector2">point</see> of the first line that defines the angle to measure.</param>
 		/// <param name="endFirstLine">End <see cref="Vector2">point</see> of the first line that defines the angle to measure.</param>
@@ -138,7 +127,6 @@ namespace netDxf.Entities
 			: this(startFirstLine, endFirstLine, startSecondLine, endSecondLine, offset, DimensionStyle.Default)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="startFirstLine">Start <see cref="Vector2">point</see> of the first line that defines the angle to measure.</param>
 		/// <param name="endFirstLine">End <see cref="Vector2">point</see> of the first line that defines the angle to measure.</param>
@@ -165,7 +153,7 @@ namespace netDxf.Entities
 			{
 				throw new ArgumentOutOfRangeException(nameof(offset), "The offset value must be equal or greater than zero.");
 			}
-			this.offset = offset;
+			_Offset = offset;
 
 			this.Style = style ?? throw new ArgumentNullException(nameof(style));
 			this.Update();
@@ -201,20 +189,21 @@ namespace netDxf.Entities
 		/// <summary>Gets the location of the dimension line arc.</summary>
 		public Vector2 ArcDefinitionPoint { get; internal set; }
 
+		private double _Offset;
 		/// <summary>Gets or sets the distance between the center point and the dimension line.</summary>
 		/// <remarks>
 		/// Offset values cannot be negative and, even thought, zero values are allowed, they are not recommended.
 		/// </remarks>
 		public double Offset
 		{
-			get => this.offset;
+			get => _Offset;
 			set
 			{
 				if (value < 0)
 				{
 					throw new ArgumentOutOfRangeException(nameof(value), "The offset value must be equal or greater than zero.");
 				}
-				this.offset = value;
+				_Offset = value;
 			}
 		}
 
@@ -303,14 +292,14 @@ namespace netDxf.Entities
 			}
 
 			double newOffset = Vector2.Distance(center, point);
-			this.offset = MathHelper.IsZero(newOffset) ? MathHelper.Epsilon : newOffset;
+			_Offset = MathHelper.IsZero(newOffset) ? MathHelper.Epsilon : newOffset;
 
 			this.DefinitionPoint = this.EndSecondLine;
 
 			double measure = this.Measurement * MathHelper.DegToRad;
 			double startAngle = Vector2.Angle(center, this.EndFirstLine);
 			double midRot = startAngle + 0.5 * measure;
-			Vector2 midDim = Vector2.Polar(center, this.offset, midRot);
+			Vector2 midDim = Vector2.Polar(center, _Offset, midRot);
 			this.ArcDefinitionPoint = midDim;
 
 			if (!this.TextPositionManuallySet)
@@ -328,7 +317,7 @@ namespace netDxf.Entities
 				}
 
 				double gap = textGap * scale;
-				this.textRefPoint = midDim + gap * Vector2.Normalize(midDim - center);
+				_TextReferencePoint = midDim + gap * Vector2.Normalize(midDim - center);
 			}
 		}
 
@@ -381,10 +370,10 @@ namespace netDxf.Entities
 
 			if (this.TextPositionManuallySet)
 			{
-				v = transOW * new Vector3(this.textRefPoint.X, this.textRefPoint.Y, this.Elevation);
+				v = transOW * new Vector3(_TextReferencePoint.X, _TextReferencePoint.Y, this.Elevation);
 				v = transformation * v + translation;
 				v = transWO * v;
-				this.textRefPoint = new Vector2(v.X, v.Y);
+				_TextReferencePoint = new Vector2(v.X, v.Y);
 			}
 
 			v = transOW * new Vector3(this.DefinitionPoint.X, this.DefinitionPoint.Y, this.Elevation);
@@ -420,7 +409,7 @@ namespace netDxf.Entities
 
 			double startAngle = Vector2.Angle(center, this.EndFirstLine);
 			double midRot = startAngle + 0.5 * measure;
-			Vector2 midDim = Vector2.Polar(center, this.offset, midRot);
+			Vector2 midDim = Vector2.Polar(center, _Offset, midRot);
 
 			this.DefinitionPoint = this.EndSecondLine;
 			this.ArcDefinitionPoint = midDim;
@@ -435,7 +424,7 @@ namespace netDxf.Entities
 
 				if (moveText == DimensionStyleFitTextMove.BesideDimLine)
 				{
-					this.SetDimensionLinePosition(this.textRefPoint, false);
+					this.SetDimensionLinePosition(_TextReferencePoint, false);
 				}
 			}
 			else
@@ -452,7 +441,7 @@ namespace netDxf.Entities
 				}
 
 				double gap = textGap * scale;
-				this.textRefPoint = midDim + gap * Vector2.Normalize(midDim - center);
+				_TextReferencePoint = midDim + gap * Vector2.Normalize(midDim - center);
 			}
 		}
 
@@ -489,7 +478,7 @@ namespace netDxf.Entities
 				EndFirstLine = this.EndFirstLine,
 				StartSecondLine = this.StartSecondLine,
 				EndSecondLine = this.EndSecondLine,
-				Offset = this.offset,
+				Offset = _Offset,
 				ArcDefinitionPoint = this.ArcDefinitionPoint
 			};
 

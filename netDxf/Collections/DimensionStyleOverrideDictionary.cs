@@ -34,6 +34,8 @@ namespace netDxf.Collections
 	public sealed class DimensionStyleOverrideDictionary :
 		IDictionary<DimensionStyleOverrideType, DimensionStyleOverride>
 	{
+		private readonly Dictionary<DimensionStyleOverrideType, DimensionStyleOverride> innerDictionary;
+
 		#region delegates and events
 
 		public delegate void BeforeAddItemEventHandler(DimensionStyleOverrideDictionary sender, DimensionStyleOverrideDictionaryEventArgs e);
@@ -89,12 +91,6 @@ namespace netDxf.Collections
 			if (ae != null)
 				ae(this, new DimensionStyleOverrideDictionaryEventArgs(item));
 		}
-
-		#endregion
-
-		#region private fields
-
-		private readonly Dictionary<DimensionStyleOverrideType, DimensionStyleOverride> innerDictionary;
 
 		#endregion
 

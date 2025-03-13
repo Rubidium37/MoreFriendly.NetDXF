@@ -61,7 +61,6 @@ namespace netDxf.GTE
 			this.Vector = new double[size];
 			this.MakeUnit(d);
 		}
-
 		public GVector(double[] elements)
 		{
 			this.Vector = new double[elements.Length];

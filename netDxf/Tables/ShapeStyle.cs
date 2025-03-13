@@ -35,12 +35,6 @@ namespace netDxf.Tables
 	public class ShapeStyle :
 		TableObject
 	{
-		#region private fields
-
-		private string shapeFile;
-
-		#endregion
-
 		#region constants
 
 		/// <summary>Default text style font.</summary>
@@ -61,7 +55,6 @@ namespace netDxf.Tables
 			: this(name, file, 0.0, 1.0, 0.0)
 		{
 		}
-
 		internal ShapeStyle(string name, string file, double size, double widthFactor, double obliqueAngle)
 			: base(name, DxfObjectCode.TextStyle, true)
 		{
@@ -75,7 +68,7 @@ namespace netDxf.Tables
 				throw new ArgumentException("File path contains invalid characters.", nameof(file));
 			}
 
-			this.shapeFile = file;
+			_File = file;
 			this.Size = size;
 			this.WidthFactor = widthFactor;
 			this.ObliqueAngle = obliqueAngle;
@@ -85,10 +78,11 @@ namespace netDxf.Tables
 
 		#region public properties
 
+		private string _File;
 		/// <summary>Gets or sets the shape <b>SHX</b> file name.</summary>
 		public string File
 		{
-			get => this.shapeFile;
+			get => _File;
 			set
 			{
 				if (string.IsNullOrEmpty(value))
@@ -101,7 +95,7 @@ namespace netDxf.Tables
 					throw new ArgumentException("File path contains invalid characters.", nameof(value));
 				}
 
-				this.shapeFile = value;
+				_File = value;
 			}
 		}
 
@@ -209,7 +203,7 @@ namespace netDxf.Tables
 		/// </remarks>
 		public List<string> NamesFromShapeStyle()
 		{
-			string f = this.shapeFile;
+			string f = _File;
 			if (this.Owner != null)
 			{
 				f = this.Owner.Owner.SupportFolders.FindFile(f);
@@ -256,7 +250,7 @@ namespace netDxf.Tables
 				return 0;
 			}
 
-			string f = this.shapeFile;
+			string f = _File;
 			if (this.Owner != null)
 			{
 				f = this.Owner.Owner.SupportFolders.FindFile(f);
@@ -323,7 +317,7 @@ namespace netDxf.Tables
 		/// <remarks>If the actual shape style belongs to a document, it will look for the <b>SHX</b> file also in the document support folders.</remarks>
 		public string ShapeName(short number)
 		{
-			string f = this.shapeFile;
+			string f = _File;
 			if (this.Owner != null)
 			{
 				f = this.Owner.Owner.SupportFolders.FindFile(f);
@@ -526,7 +520,7 @@ namespace netDxf.Tables
 		///// </remarks>
 		//public List<string> NamesFromShapeStyle(string file)
 		//{
-		//	string f = Path.ChangeExtension(this.shapeFile, "SHP");
+		//	string f = Path.ChangeExtension(_File, "SHP");
 		//	if (this.Owner != null)
 		//	{
 		//		f = this.Owner.Owner.SupportFolders.FindFile(f);
@@ -558,7 +552,7 @@ namespace netDxf.Tables
 		//		return false;
 		//	}
 
-		//	string f = Path.ChangeExtension(this.shapeFile, "SHP");
+		//	string f = Path.ChangeExtension(_File, "SHP");
 		//	if (this.Owner != null)
 		//	{
 		//		f = this.Owner.Owner.SupportFolders.FindFile(f);
@@ -596,7 +590,7 @@ namespace netDxf.Tables
 		//	}
 
 		//	// we will look for the shape name in the SHP file
-		//	string f = Path.ChangeExtension(this.shapeFile, "SHP");
+		//	string f = Path.ChangeExtension(_File, "SHP");
 		//	if (this.Owner != null)
 		//	{
 		//		f = this.Owner.Owner.SupportFolders.FindFile(f);
@@ -654,7 +648,7 @@ namespace netDxf.Tables
 		//internal string ShapeName(short number)
 		//{
 		//	// we will look for the shape name in the SHP file
-		//	string f = Path.ChangeExtension(this.shapeFile, "SHP");
+		//	string f = Path.ChangeExtension(_File, "SHP");
 		//	if (this.Owner != null)
 		//	{
 		//		f = this.Owner.Owner.SupportFolders.FindFile(f);
@@ -715,7 +709,7 @@ namespace netDxf.Tables
 		/// <inheritdoc/>
 		public override TableObject Clone(string newName)
 		{
-			ShapeStyle copy = new ShapeStyle(newName, this.shapeFile, this.Size, this.WidthFactor, this.ObliqueAngle);
+			ShapeStyle copy = new ShapeStyle(newName, _File, this.Size, this.WidthFactor, this.ObliqueAngle);
 
 			foreach (XData data in this.XData.Values)
 			{

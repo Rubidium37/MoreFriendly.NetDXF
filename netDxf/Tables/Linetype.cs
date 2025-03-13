@@ -92,12 +92,6 @@ namespace netDxf.Tables
 
 		#endregion
 
-		#region private fields
-
-		private string description;
-
-		#endregion
-
 		#region constants
 
 		/// <summary>ByLayer line type name.</summary>
@@ -192,7 +186,6 @@ namespace netDxf.Tables
 			: this(name, null, string.Empty, true)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="name">Line type name.</param>
 		/// <param name="description">Line type description.</param>
@@ -200,7 +193,6 @@ namespace netDxf.Tables
 			: this(name, null, description, true)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="name">Line type name.</param>
 		/// <param name="segments">List of linetype segments.</param>
@@ -208,7 +200,6 @@ namespace netDxf.Tables
 			: this(name, segments, string.Empty, true)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="name">Line type name.</param>
 		/// <param name="segments">List of linetype segments.</param>
@@ -217,7 +208,6 @@ namespace netDxf.Tables
 			: this(name, segments, description, true)
 		{
 		}
-
 		internal Linetype(string name, IEnumerable<LinetypeSegment> segments, string description, bool checkName)
 			: base(name, DxfObjectCode.Linetype, checkName)
 		{
@@ -229,9 +219,8 @@ namespace netDxf.Tables
 			this.IsReserved = name.Equals(ByLayerName, StringComparison.OrdinalIgnoreCase) ||
 								name.Equals(ByBlockName, StringComparison.OrdinalIgnoreCase) ||
 								name.Equals(DefaultName, StringComparison.OrdinalIgnoreCase);
-			this.description = string.IsNullOrEmpty(description) ? string.Empty : description;
+			_Description = string.IsNullOrEmpty(description) ? string.Empty : description;
 
-			this.Segments = new ObservableCollection<LinetypeSegment>();
 			this.Segments.BeforeAddItem += this.Segments_BeforeAddItem;
 			this.Segments.AddItem += this.Segments_AddItem;
 			this.Segments.BeforeRemoveItem += this.Segments_BeforeRemoveItem;
@@ -252,18 +241,19 @@ namespace netDxf.Tables
 		/// <summary>Defines if the line type is defined by block.</summary>
 		public bool IsByBlock => this.Name.Equals(ByBlockName, StringComparison.InvariantCultureIgnoreCase);
 
+		private string _Description;
 		/// <summary>Gets or sets the line type description.</summary>
 		/// <remarks>
 		/// New line characters are not allowed.
 		/// </remarks>
 		public string Description
 		{
-			get => this.description;
-			set => this.description = string.IsNullOrEmpty(value) ? string.Empty : value;
+			get => _Description;
+			set => _Description = string.IsNullOrEmpty(value) ? string.Empty : value;
 		}
 
 		/// <summary>Gets the list of line type segments.</summary>
-		public ObservableCollection<LinetypeSegment> Segments { get; }
+		public ObservableCollection<LinetypeSegment> Segments { get; } = new ObservableCollection<LinetypeSegment>();
 
 		/// <summary>Gets the owner of the actual <b>DXF</b> object.</summary>
 		public new Linetypes Owner
@@ -454,7 +444,7 @@ namespace netDxf.Tables
 		{
 			StringBuilder sb = new StringBuilder();
 
-			sb.AppendLine(string.Format("*{0},{1}", this.Name, this.description));
+			sb.AppendLine(string.Format("*{0},{1}", this.Name, _Description));
 			sb.Append("A"); // A (alignment field)
 			foreach (LinetypeSegment s in this.Segments)
 			{
@@ -649,7 +639,7 @@ namespace netDxf.Tables
 				items.Add((LinetypeSegment)segment.Clone());
 			}
 
-			Linetype copy = new Linetype(newName, items, this.description);
+			Linetype copy = new Linetype(newName, items, _Description);
 
 			foreach (XData data in this.XData.Values)
 			{

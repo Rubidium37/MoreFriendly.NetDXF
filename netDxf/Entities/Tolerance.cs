@@ -53,14 +53,6 @@ namespace netDxf.Entities
 
 		#endregion
 
-		#region private fields
-
-		private DimensionStyle style;
-		private double textHeight;
-		private double rotation;
-
-		#endregion
-
 		#region constructors
 
 		/// <summary>Initializes a new instance of the class.</summary>
@@ -68,14 +60,12 @@ namespace netDxf.Entities
 			: this(null, Vector3.Zero)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="tolerance"></param>
 		public Tolerance(ToleranceEntry tolerance)
 			: this(tolerance, Vector3.Zero)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="tolerance"></param>
 		/// <param name="position"></param>
@@ -83,7 +73,6 @@ namespace netDxf.Entities
 			: this(tolerance, new Vector3(position.X, position.Y, 0.0))
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="tolerance"></param>
 		/// <param name="position"></param>
@@ -91,15 +80,9 @@ namespace netDxf.Entities
 			: base(EntityType.Tolerance, DxfObjectCode.Tolerance)
 		{
 			this.Entry1 = tolerance;
-			this.Entry2 = null;
-			this.ProjectedToleranceZoneValue = string.Empty;
-			this.ShowProjectedToleranceZoneSymbol = false;
-			this.DatumIdentifier = string.Empty;
 
-			this.style = DimensionStyle.Default;
-			this.textHeight = this.style.TextHeight;
+			_TextHeight = _Style.TextHeight;
 			this.Position = position;
-			this.rotation = 0.0;
 		}
 
 		#endregion
@@ -112,6 +95,7 @@ namespace netDxf.Entities
 		/// <summary>Gets or sets the second tolerance entry.</summary>
 		public ToleranceEntry Entry2 { get; set; }
 
+		private double _TextHeight;
 		/// <summary>Gets or sets the text height.</summary>
 		/// <remarks>
 		/// Valid values must be greater than zero.
@@ -119,14 +103,14 @@ namespace netDxf.Entities
 		/// </remarks>
 		public double TextHeight
 		{
-			get => this.textHeight;
+			get => _TextHeight;
 			set
 			{
 				if (value <= 0)
 				{
 					throw new ArgumentOutOfRangeException(nameof(value), value, "The tolerance text height must be greater than zero.");
 				}
-				this.textHeight = value;
+				_TextHeight = value;
 			}
 		}
 
@@ -135,40 +119,43 @@ namespace netDxf.Entities
 		/// A projected tolerance zone controls the variation in height of the extended portion of a fixed perpendicular part
 		/// and refines the tolerance to that specified by positional tolerances.
 		/// </remarks>
-		public string ProjectedToleranceZoneValue { get; set; }
+		public string ProjectedToleranceZoneValue { get; set; } = string.Empty;
 
 		/// <summary>Gets or sets if the projected tolerance zone symbol will be shown after the projected tolerance zone value.</summary>
-		public bool ShowProjectedToleranceZoneSymbol { get; set; }
+		public bool ShowProjectedToleranceZoneSymbol { get; set; } = false;
 
 		/// <summary>Gets or sets the datum identifying symbol.</summary>
 		/// <remarks>
 		/// A datum is a theoretically exact geometric reference from which you can establish the location and tolerance zones of other features.
 		/// A point, line, plane, cylinder, or other geometry can serve as a datum.
 		/// </remarks>
-		public string DatumIdentifier { get; set; }
+		public string DatumIdentifier { get; set; } = string.Empty;
 
+		private DimensionStyle _Style = DimensionStyle.Default;
 		/// <summary>Gets or sets the <see cref="DimensionStyle">leader style</see>.</summary>
 		public DimensionStyle Style
 		{
-			get => this.style;
+			get => _Style;
 			set
 			{
 				if (value == null)
 				{
 					throw new ArgumentNullException(nameof(value));
 				}
-				this.style = this.OnDimensionStyleChangedEvent(this.style, value);
+
+				_Style = this.OnDimensionStyleChangedEvent(_Style, value);
 			}
 		}
 
 		/// <summary>Gets or sets the leader <see cref="Vector3">position</see> in world coordinates.</summary>
 		public Vector3 Position { get; set; }
 
+		private double _Rotation;
 		/// <summary>Gets or sets the leader rotation in degrees.</summary>
 		public double Rotation
 		{
-			get => this.rotation;
-			set => this.rotation = MathHelper.NormalizeAngle(value);
+			get => _Rotation;
+			set => _Rotation = MathHelper.NormalizeAngle(value);
 		}
 
 		#endregion
@@ -740,10 +727,10 @@ namespace netDxf.Entities
 				ProjectedToleranceZoneValue = this.ProjectedToleranceZoneValue,
 				ShowProjectedToleranceZoneSymbol = this.ShowProjectedToleranceZoneSymbol,
 				DatumIdentifier = this.DatumIdentifier,
-				Style = (DimensionStyle)this.style.Clone(),
-				TextHeight = this.textHeight,
+				Style = (DimensionStyle)_Style.Clone(),
+				TextHeight = _TextHeight,
 				Position = this.Position,
-				Rotation = this.rotation
+				Rotation = _Rotation
 			};
 
 			foreach (XData data in this.XData.Values)

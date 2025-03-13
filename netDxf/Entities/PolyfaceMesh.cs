@@ -52,12 +52,6 @@ namespace netDxf.Entities
 
 		#endregion
 
-		#region private fields
-
-		private readonly PolyfaceMeshFace[] faces;
-
-		#endregion
-
 		#region constructors
 
 		/// <summary>Initializes a new instance of the class.</summary>
@@ -83,10 +77,10 @@ namespace netDxf.Entities
 			}
 
 			int numFaces = faces.Count();
-			this.faces = new PolyfaceMeshFace[numFaces];
+			_Faces = new PolyfaceMeshFace[numFaces];
 			for (int i = 0; i < numFaces; i++)
 			{
-				this.faces[i] = new PolyfaceMeshFace(faces.ElementAt(i));
+				_Faces[i] = new PolyfaceMeshFace(faces.ElementAt(i));
 			}
 			if (this.Faces.Count < 1)
 			{
@@ -97,7 +91,6 @@ namespace netDxf.Entities
 				face.LayerChanged += this.PolyfaceMeshFace_LayerChanged;
 			}
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="vertexes">Polyface mesh <see cref="Vector3">vertex</see> list.</param>
 		/// <param name="faces">Polyface mesh faces list, a maximum of 4 indexes per face.</param>
@@ -120,7 +113,7 @@ namespace netDxf.Entities
 				throw new ArgumentNullException(nameof(faces));
 			}
 
-			this.faces = faces.ToArray();
+			_Faces = faces.ToArray();
 			if (this.Faces.Count < 1)
 			{
 				throw new ArgumentOutOfRangeException(nameof(vertexes), this.Faces.Count, "The polyface mesh faces list requires at least one face.");
@@ -139,8 +132,9 @@ namespace netDxf.Entities
 		/// <summary>Gets or sets the polyface mesh <see cref="Vector3">vertexes</see>.</summary>
 		public Vector3[] Vertexes { get; }
 
+		private readonly PolyfaceMeshFace[] _Faces;
 		/// <summary>Gets or sets the polyface mesh <see cref="PolyfaceMeshFace">faces</see>.</summary>
-		public IReadOnlyList<PolyfaceMeshFace> Faces => this.faces;
+		public IReadOnlyList<PolyfaceMeshFace> Faces => _Faces;
 
 		#endregion
 

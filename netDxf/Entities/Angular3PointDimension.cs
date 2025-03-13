@@ -40,7 +40,6 @@ namespace netDxf.Entities
 			: this(Vector2.Zero, Vector2.UnitX, Vector2.UnitY, 0.1)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="arc"><see cref="Arc"/> to measure.</param>
 		/// <param name="offset">Distance between the center of the arc and the dimension line.</param>
@@ -48,7 +47,6 @@ namespace netDxf.Entities
 			: this(arc, offset, DimensionStyle.Default)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="arc">Angle <see cref="Arc">arc</see> to measure.</param>
 		/// <param name="offset">Distance between the center of the arc and the dimension line.</param>
@@ -71,7 +69,6 @@ namespace netDxf.Entities
 			this.Elevation = refPoint.Z;
 			this.Update();
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="centerPoint">Center of the angle arc to measure.</param>
 		/// <param name="startPoint">Angle start point.</param>
@@ -81,7 +78,6 @@ namespace netDxf.Entities
 			: this(centerPoint, startPoint, endPoint, offset, DimensionStyle.Default)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="centerPoint">Center of the angle arc to measure.</param>
 		/// <param name="startPoint">Angle start point.</param>
@@ -189,7 +185,7 @@ namespace netDxf.Entities
 				}
 
 				double gap = textGap * scale;
-				this.textRefPoint = midDim + gap * Vector2.Normalize(midDim - this.CenterPoint);
+				_TextReferencePoint = midDim + gap * Vector2.Normalize(midDim - this.CenterPoint);
 			}
 		}
 
@@ -227,10 +223,10 @@ namespace netDxf.Entities
 
 			if (this.TextPositionManuallySet)
 			{
-				v = transOW * new Vector3(this.textRefPoint.X, this.textRefPoint.Y, this.Elevation);
+				v = transOW * new Vector3(_TextReferencePoint.X, _TextReferencePoint.Y, this.Elevation);
 				v = transformation * v + translation;
 				v = transWO * v;
-				this.textRefPoint = new Vector2(v.X, v.Y);
+				_TextReferencePoint = new Vector2(v.X, v.Y);
 			}
 
 			v = transOW * new Vector3(this.DefinitionPoint.X, this.DefinitionPoint.Y, this.Elevation);
@@ -267,7 +263,7 @@ namespace netDxf.Entities
 
 				if (moveText == DimensionStyleFitTextMove.BesideDimLine)
 				{
-					this.SetDimensionLinePosition(this.textRefPoint);
+					this.SetDimensionLinePosition(_TextReferencePoint);
 				}
 			}
 			else
@@ -284,7 +280,7 @@ namespace netDxf.Entities
 				}
 
 				double gap = textGap * scale;
-				this.textRefPoint = midDim + gap * Vector2.Normalize(midDim - this.CenterPoint);
+				_TextReferencePoint = midDim + gap * Vector2.Normalize(midDim - this.CenterPoint);
 			}
 		}
 

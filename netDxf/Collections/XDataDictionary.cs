@@ -34,6 +34,8 @@ namespace netDxf.Collections
 	public sealed class XDataDictionary :
 		IDictionary<string, XData>
 	{
+		private readonly Dictionary<string, XData> innerDictionary;
+
 		#region delegates and events
 
 		public delegate void AddAppRegEventHandler(XDataDictionary sender, ObservableCollectionEventArgs<ApplicationRegistry> e);
@@ -53,12 +55,6 @@ namespace netDxf.Collections
 			if (ae != null)
 				ae(this, new ObservableCollectionEventArgs<ApplicationRegistry>(item));
 		}
-
-		#endregion
-
-		#region private fields
-
-		private readonly Dictionary<string, XData> innerDictionary;
 
 		#endregion
 
@@ -97,7 +93,6 @@ namespace netDxf.Collections
 				{
 					throw new ArgumentNullException(nameof(value));
 				}
-
 				if (!string.Equals(value.ApplicationRegistry.Name, appId, StringComparison.OrdinalIgnoreCase))
 				{
 					throw new ArgumentException(string.Format("The extended data application registry name {0} must be equal to the specified appId {1}.", value.ApplicationRegistry.Name, appId));

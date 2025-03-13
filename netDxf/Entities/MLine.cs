@@ -52,12 +52,6 @@ namespace netDxf.Entities
 
 		#endregion
 
-		#region private fields
-
-		private MLineStyle style;
-
-		#endregion
-
 		#region constructors
 
 		/// <summary>Initializes a new instance of the class.</summary>
@@ -65,14 +59,12 @@ namespace netDxf.Entities
 			: this(new List<Vector2>())
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="vertexes">Multiline <see cref="Vector2">vertex</see> location list in object coordinates.</param>
 		public MLine(IEnumerable<Vector2> vertexes)
 			: this(vertexes, MLineStyle.Default, 1.0, false)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="vertexes">Multiline <see cref="Vector2">vertex</see> location list in object coordinates.</param>
 		/// <param name="isClosed">Sets if the multiline is closed (default: <see langword="false"/>).</param>
@@ -80,7 +72,6 @@ namespace netDxf.Entities
 			: this(vertexes, MLineStyle.Default, 1.0, isClosed)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="vertexes">Multiline <see cref="Vector2">vertex</see> location list in object coordinates.</param>
 		/// <param name="scale">Multiline scale.</param>
@@ -88,7 +79,6 @@ namespace netDxf.Entities
 			: this(vertexes, MLineStyle.Default, scale, false)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="vertexes">Multiline <see cref="Vector2">vertex</see> location list in object coordinates.</param>
 		/// <param name="scale">Multiline scale.</param>
@@ -97,7 +87,6 @@ namespace netDxf.Entities
 			: this(vertexes, MLineStyle.Default, scale, isClosed)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="vertexes">MLine <see cref="Vector2">vertex</see> location list in object coordinates.</param>
 		/// <param name="style">MLine <see cref="MLineStyle">style.</see></param>
@@ -106,7 +95,6 @@ namespace netDxf.Entities
 			: this(vertexes, style, scale, false)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="vertexes">MLine <see cref="Vector2">vertex</see> location list in object coordinates.</param>
 		/// <param name="style">MLine <see cref="MLineStyle">style.</see></param>
@@ -130,9 +118,7 @@ namespace netDxf.Entities
 				this.Flags = MLineFlags.Has;
 			}
 
-			this.style = style;
-			this.Justification = MLineJustification.Zero;
-			this.Elevation = 0.0;
+			_Style = style;
 			if (vertexes == null)
 			{
 				throw new ArgumentNullException(nameof(vertexes));
@@ -153,7 +139,7 @@ namespace netDxf.Entities
 		public List<MLineVertex> Vertexes { get; }
 
 		/// <summary>Gets or sets the multiline elevation.</summary>
-		public double Elevation { get; set; }
+		public double Elevation { get; set; } = 0.0;
 
 		/// <summary>Gets or sets the multiline scale.</summary>
 		public double Scale { get; set; }
@@ -210,19 +196,21 @@ namespace netDxf.Entities
 		}
 
 		/// <summary>Gets or sets the multiline justification.</summary>
-		public MLineJustification Justification { get; set; }
+		public MLineJustification Justification { get; set; } = MLineJustification.Zero;
 
+		private MLineStyle _Style;
 		/// <summary>Gets or set the multiline style.</summary>
 		public MLineStyle Style
 		{
-			get => this.style;
+			get => _Style;
 			set
 			{
 				if (value == null)
 				{
 					throw new ArgumentNullException(nameof(value));
 				}
-				this.style = this.OnMLineStyleChangedEvent(this.style, value);
+
+				_Style = this.OnMLineStyleChangedEvent(_Style, value);
 			}
 		}
 
@@ -344,13 +332,13 @@ namespace netDxf.Entities
 			switch (this.Justification)
 			{
 				case MLineJustification.Top:
-					reference = -this.style.Elements[0].Offset;
+					reference = -_Style.Elements[0].Offset;
 					break;
 				case MLineJustification.Zero:
 					reference = 0.0;
 					break;
 				case MLineJustification.Bottom:
-					reference = -this.style.Elements[this.style.Elements.Count - 1].Offset;
+					reference = -_Style.Elements[_Style.Elements.Count - 1].Offset;
 					break;
 			}
 
@@ -388,7 +376,7 @@ namespace netDxf.Entities
 					}
 					else
 					{
-						miter = -MathHelper.Transform(dir, this.style.StartAngle * MathHelper.DegToRad, CoordinateSystem.Object, CoordinateSystem.World);
+						miter = -MathHelper.Transform(dir, _Style.StartAngle * MathHelper.DegToRad, CoordinateSystem.Object, CoordinateSystem.World);
 						miter.Normalize();
 					}
 				}
@@ -411,7 +399,7 @@ namespace netDxf.Entities
 					else
 					{
 						dir = prevDir;
-						miter = -MathHelper.Transform(dir, this.style.EndAngle * MathHelper.DegToRad, CoordinateSystem.Object, CoordinateSystem.World);
+						miter = -MathHelper.Transform(dir, _Style.EndAngle * MathHelper.DegToRad, CoordinateSystem.Object, CoordinateSystem.World);
 						miter.Normalize();
 					}
 				}
@@ -432,13 +420,13 @@ namespace netDxf.Entities
 				}
 				prevDir = dir;
 
-				List<double>[] distances = new List<double>[this.style.Elements.Count];
+				List<double>[] distances = new List<double>[_Style.Elements.Count];
 				double angleMiter = Vector2.Angle(miter);
 				double angleDir = Vector2.Angle(dir);
 				double cos = Math.Cos(angleMiter - (MathHelper.HalfPI + angleDir));
-				for (int j = 0; j < this.style.Elements.Count; j++)
+				for (int j = 0; j < _Style.Elements.Count; j++)
 				{
-					double distance = (this.style.Elements[j].Offset + reference) / cos;
+					double distance = (_Style.Elements[j].Offset + reference) / cos;
 					distances[j] = new List<double>
 					{
 						distance * this.Scale,
@@ -477,12 +465,12 @@ namespace netDxf.Entities
 				else
 				{
 					nextVertex = this.Vertexes[i + 1];
-					cornerVertexes[i + 1] = new Vector2[this.style.Elements.Count];
+					cornerVertexes[i + 1] = new Vector2[_Style.Elements.Count];
 				}
 
-				cornerVertexes[i] = new Vector2[this.style.Elements.Count];
+				cornerVertexes[i] = new Vector2[_Style.Elements.Count];
 
-				for (int j = 0; j < this.style.Elements.Count; j++)
+				for (int j = 0; j < _Style.Elements.Count; j++)
 				{
 					if (vertex.Distances[j].Count == 0)
 					{
@@ -506,19 +494,19 @@ namespace netDxf.Entities
 							k++; // skip next segment it is a blank space
 						}
 
-						Line line = this.CreateLine(start, end, this.style.Elements[j].Color, this.style.Elements[j].Linetype);
+						Line line = this.CreateLine(start, end, _Style.Elements[j].Color, _Style.Elements[j].Linetype);
 						line.TransformBy(transformation, Vector3.Zero);
 						entities.Add(line);
 					}
 				}
 			}
 
-			if (this.style.Flags.HasFlag(MLineStyleFlags.DisplayJoints))
+			if (_Style.Flags.HasFlag(MLineStyleFlags.DisplayJoints))
 			{
-				AciColor color1 = this.style.Elements[0].Color;
-				AciColor color2 = this.style.Elements[this.style.Elements.Count - 1].Color;
-				Linetype linetype1 = this.style.Elements[0].Linetype;
-				Linetype linetype2 = this.style.Elements[this.style.Elements.Count - 1].Linetype;
+				AciColor color1 = _Style.Elements[0].Color;
+				AciColor color2 = _Style.Elements[_Style.Elements.Count - 1].Color;
+				Linetype linetype1 = _Style.Elements[0].Linetype;
+				Linetype linetype2 = _Style.Elements[_Style.Elements.Count - 1].Linetype;
 
 				for (int i = 0; i < cornerVertexes.Length; i++)
 				{
@@ -539,12 +527,12 @@ namespace netDxf.Entities
 
 			if (!this.NoStartCaps)
 			{
-				if (this.style.Flags.HasFlag(MLineStyleFlags.StartRoundCap))
+				if (_Style.Flags.HasFlag(MLineStyleFlags.StartRoundCap))
 				{
-					AciColor color1 = this.style.Elements[0].Color;
-					AciColor color2 = this.style.Elements[this.style.Elements.Count - 1].Color;
-					Linetype linetype1 = this.style.Elements[0].Linetype;
-					Linetype linetype2 = this.style.Elements[this.style.Elements.Count - 1].Linetype;
+					AciColor color1 = _Style.Elements[0].Color;
+					AciColor color2 = _Style.Elements[_Style.Elements.Count - 1].Color;
+					Linetype linetype1 = _Style.Elements[0].Linetype;
+					Linetype linetype2 = _Style.Elements[_Style.Elements.Count - 1].Linetype;
 
 					Vector2 start = cornerVertexes[0][0];
 					Vector2 end = cornerVertexes[0][cornerVertexes[0].Length - 1];
@@ -554,16 +542,16 @@ namespace netDxf.Entities
 						this.CreateRoundCap(end, start, transformation, color2, linetype2, color1, linetype1));
 				}
 
-				if (this.style.Flags.HasFlag(MLineStyleFlags.StartInnerArcsCap))
+				if (_Style.Flags.HasFlag(MLineStyleFlags.StartInnerArcsCap))
 				{
-					int j = (int)(this.style.Elements.Count * 0.5); // Math.Floor
+					int j = (int)(_Style.Elements.Count * 0.5); // Math.Floor
 
 					for (int i = 1; i < j; i++)
 					{
-						AciColor color1 = this.style.Elements[i].Color;
-						AciColor color2 = this.style.Elements[this.style.Elements.Count - 1 - i].Color;
-						Linetype linetype1 = this.style.Elements[i].Linetype;
-						Linetype linetype2 = this.style.Elements[this.style.Elements.Count - 1 - i].Linetype;
+						AciColor color1 = _Style.Elements[i].Color;
+						AciColor color2 = _Style.Elements[_Style.Elements.Count - 1 - i].Color;
+						Linetype linetype1 = _Style.Elements[i].Linetype;
+						Linetype linetype2 = _Style.Elements[_Style.Elements.Count - 1 - i].Linetype;
 
 						Vector2 start = cornerVertexes[0][i];
 						Vector2 end = cornerVertexes[0][cornerVertexes[0].Length - 1 - i];
@@ -574,12 +562,12 @@ namespace netDxf.Entities
 					}
 				}
 
-				if (this.style.Flags.HasFlag(MLineStyleFlags.StartSquareCap))
+				if (_Style.Flags.HasFlag(MLineStyleFlags.StartSquareCap))
 				{
-					AciColor color1 = this.style.Elements[0].Color;
-					AciColor color2 = this.style.Elements[this.style.Elements.Count - 1].Color;
-					Linetype linetype1 = this.style.Elements[0].Linetype;
-					Linetype linetype2 = this.style.Elements[this.style.Elements.Count - 1].Linetype;
+					AciColor color1 = _Style.Elements[0].Color;
+					AciColor color2 = _Style.Elements[_Style.Elements.Count - 1].Color;
+					Linetype linetype1 = _Style.Elements[0].Linetype;
+					Linetype linetype2 = _Style.Elements[_Style.Elements.Count - 1].Linetype;
 
 					Vector2 start = cornerVertexes[0][0];
 					Vector2 end = cornerVertexes[0][cornerVertexes[0].Length - 1];
@@ -590,12 +578,12 @@ namespace netDxf.Entities
 
 			if (!this.NoEndCaps)
 			{
-				if (this.style.Flags.HasFlag(MLineStyleFlags.EndRoundCap))
+				if (_Style.Flags.HasFlag(MLineStyleFlags.EndRoundCap))
 				{
-					AciColor color1 = this.style.Elements[this.style.Elements.Count - 1].Color;
-					AciColor color2 = this.style.Elements[0].Color;
-					Linetype linetype1 = this.style.Elements[this.style.Elements.Count - 1].Linetype;
-					Linetype linetype2 = this.style.Elements[0].Linetype;
+					AciColor color1 = _Style.Elements[_Style.Elements.Count - 1].Color;
+					AciColor color2 = _Style.Elements[0].Color;
+					Linetype linetype1 = _Style.Elements[_Style.Elements.Count - 1].Linetype;
+					Linetype linetype2 = _Style.Elements[0].Linetype;
 
 					Vector2 start = cornerVertexes[this.Vertexes.Count - 1][cornerVertexes[0].Length - 1];
 					Vector2 end = cornerVertexes[this.Vertexes.Count - 1][0];
@@ -605,16 +593,16 @@ namespace netDxf.Entities
 						this.CreateRoundCap(end, start, transformation, color2, linetype2, color1, linetype1));
 				}
 
-				if (this.style.Flags.HasFlag(MLineStyleFlags.EndInnerArcsCap))
+				if (_Style.Flags.HasFlag(MLineStyleFlags.EndInnerArcsCap))
 				{
-					int j = (int)(this.style.Elements.Count * 0.5); // Math.Floor
+					int j = (int)(_Style.Elements.Count * 0.5); // Math.Floor
 
 					for (int i = 1; i < j; i++)
 					{
-						AciColor color1 = this.style.Elements[this.style.Elements.Count - 1 - i].Color;
-						AciColor color2 = this.style.Elements[i].Color;
-						Linetype linetype1 = this.style.Elements[this.style.Elements.Count - 1 - i].Linetype;
-						Linetype linetype2 = this.style.Elements[i].Linetype;
+						AciColor color1 = _Style.Elements[_Style.Elements.Count - 1 - i].Color;
+						AciColor color2 = _Style.Elements[i].Color;
+						Linetype linetype1 = _Style.Elements[_Style.Elements.Count - 1 - i].Linetype;
+						Linetype linetype2 = _Style.Elements[i].Linetype;
 
 						Vector2 start = cornerVertexes[this.Vertexes.Count - 1][cornerVertexes[0].Length - 1 - i];
 						Vector2 end = cornerVertexes[this.Vertexes.Count - 1][i];
@@ -625,12 +613,12 @@ namespace netDxf.Entities
 					}
 				}
 
-				if (this.style.Flags.HasFlag(MLineStyleFlags.EndSquareCap))
+				if (_Style.Flags.HasFlag(MLineStyleFlags.EndSquareCap))
 				{
-					AciColor color1 = this.style.Elements[this.style.Elements.Count - 1].Color;
-					AciColor color2 = this.style.Elements[0].Color;
-					Linetype linetype1 = this.style.Elements[this.style.Elements.Count - 1].Linetype;
-					Linetype linetype2 = this.style.Elements[0].Linetype;
+					AciColor color1 = _Style.Elements[_Style.Elements.Count - 1].Color;
+					AciColor color2 = _Style.Elements[0].Color;
+					Linetype linetype1 = _Style.Elements[_Style.Elements.Count - 1].Linetype;
+					Linetype linetype2 = _Style.Elements[0].Linetype;
 
 					Vector2 start = cornerVertexes[this.Vertexes.Count - 1][cornerVertexes[0].Length - 1];
 					Vector2 end = cornerVertexes[this.Vertexes.Count - 1][0];
@@ -687,8 +675,8 @@ namespace netDxf.Entities
 				v = transWO * v;
 				Vector2 miter = new Vector2(v.X, v.Y);
 
-				List<double>[] newDistances = new List<double>[this.style.Elements.Count];
-				for (int j = 0; j < this.style.Elements.Count; j++)
+				List<double>[] newDistances = new List<double>[_Style.Elements.Count];
+				for (int j = 0; j < _Style.Elements.Count; j++)
 				{
 					newDistances[j] = new List<double>();
 					for (int k = 0; k < this.Vertexes[i].Distances[j].Count; k++)
@@ -724,7 +712,7 @@ namespace netDxf.Entities
 				Elevation = this.Elevation,
 				Scale = this.Scale,
 				Justification = this.Justification,
-				Style = (MLineStyle)this.style.Clone(),
+				Style = (MLineStyle)_Style.Clone(),
 				Flags = this.Flags
 			};
 

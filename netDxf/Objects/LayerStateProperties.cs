@@ -32,12 +32,6 @@ namespace netDxf.Objects
 	public class LayerStateProperties :
 		ICloneable
 	{
-		#region private fields
-
-		private string linetype;
-
-		#endregion
-
 		#region constructor
 
 		/// <summary>Initializes a new instance of the class.</summary>
@@ -50,13 +44,12 @@ namespace netDxf.Objects
 			}
 			this.Name = name;
 			this.Flags = LayerPropertiesFlags.Plot;
-			this.linetype = Linetype.DefaultName;
+			_Linetype = Linetype.DefaultName;
 			this.Color = AciColor.Default;
 			this.Lineweight = Lineweight.Default;
 			this.Transparency = new Transparency(0);
 			//this.plotStyle = "Color_7";
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="layer">Layer from which copy the properties.</param>
 		public LayerStateProperties(Layer layer)
@@ -66,7 +59,7 @@ namespace netDxf.Objects
 			if (layer.IsFrozen) this.Flags |= LayerPropertiesFlags.Frozen;
 			if (layer.IsLocked) this.Flags |= LayerPropertiesFlags.Locked;
 			if (layer.Plot) this.Flags |= LayerPropertiesFlags.Plot;
-			this.linetype = layer.Linetype.Name;
+			_Linetype = layer.Linetype.Name;
 			this.Color = (AciColor)layer.Color.Clone();
 			this.Lineweight = layer.Lineweight;
 			this.Transparency = (Transparency)layer.Transparency.Clone();
@@ -83,17 +76,18 @@ namespace netDxf.Objects
 		/// <summary>Layer properties flags.</summary>
 		public LayerPropertiesFlags Flags { get; set; }
 
+		private string _Linetype;
 		/// <summary>Layer properties linetype name.</summary>
 		public string LinetypeName
 		{
-			get => this.linetype;
+			get => _Linetype;
 			set
 			{
 				if (string.IsNullOrEmpty(value))
 				{
 					throw new ArgumentNullException(nameof(value));
 				}
-				this.linetype = value;
+				_Linetype = value;
 			}
 		}
 
@@ -145,7 +139,7 @@ namespace netDxf.Objects
 			}
 			if (options.HasFlag(LayerPropertiesRestoreFlags.Linetype))
 			{
-				this.linetype = layer.Linetype.Name;
+				_Linetype = layer.Linetype.Name;
 			}
 			if (options.HasFlag(LayerPropertiesRestoreFlags.Color))
 			{
@@ -274,7 +268,7 @@ namespace netDxf.Objects
 			=> new LayerStateProperties(this.Name)
 			{
 				Flags = this.Flags,
-				LinetypeName = this.linetype,
+				LinetypeName = _Linetype,
 				Color = (AciColor)this.Color.Clone(),
 				Lineweight = this.Lineweight,
 				Transparency = (Transparency)this.Transparency.Clone(),

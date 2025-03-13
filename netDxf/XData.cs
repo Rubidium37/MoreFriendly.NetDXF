@@ -44,7 +44,6 @@ namespace netDxf
 		public XData(ApplicationRegistry appReg)
 		{
 			this.ApplicationRegistry = appReg ?? throw new ArgumentNullException(nameof(appReg));
-			this.XDataRecord = new List<XDataRecord>();
 		}
 
 		#endregion
@@ -59,7 +58,7 @@ namespace netDxf
 		/// This list cannot contain a <see cref="XDataRecord"/> with a <see cref="XDataCode"/> of <see cref="ApplicationRegistry"/>, this code is reserved to register the name of the application.
 		/// Any record with this code will be omitted.
 		/// </remarks>
-		public List<XDataRecord> XDataRecord { get; }
+		public List<XDataRecord> XDataRecord { get; } = new List<XDataRecord>();
 
 		#endregion
 

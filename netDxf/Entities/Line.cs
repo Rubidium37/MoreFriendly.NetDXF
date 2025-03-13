@@ -38,7 +38,6 @@ namespace netDxf.Entities
 			: this(Vector3.Zero, Vector3.Zero)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="startPoint">Line <see cref="Vector2">start point.</see></param>
 		/// <param name="endPoint">Line <see cref="Vector2">end point.</see></param>
@@ -46,7 +45,6 @@ namespace netDxf.Entities
 			: this(new Vector3(startPoint.X, startPoint.Y, 0.0), new Vector3(endPoint.X, endPoint.Y, 0.0))
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="startPoint">Line start <see cref="Vector3">point.</see></param>
 		/// <param name="endPoint">Line end <see cref="Vector3">point.</see></param>
@@ -55,7 +53,6 @@ namespace netDxf.Entities
 		{
 			this.StartPoint = startPoint;
 			this.EndPoint = endPoint;
-			this.Thickness = 0.0;
 		}
 
 		#endregion
@@ -72,7 +69,7 @@ namespace netDxf.Entities
 		public Vector3 Direction => this.EndPoint - this.StartPoint;
 
 		/// <summary>Gets or sets the line thickness.</summary>
-		public double Thickness { get; set; }
+		public double Thickness { get; set; } = 0.0;
 
 		#endregion
 

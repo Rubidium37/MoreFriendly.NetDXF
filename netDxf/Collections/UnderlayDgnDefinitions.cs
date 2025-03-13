@@ -40,7 +40,6 @@ namespace netDxf.Collections
 			: this(document, null)
 		{
 		}
-
 		internal UnderlayDgnDefinitions(DxfDocument document, string handle)
 			: base(document, DxfObjectCode.UnderlayDgnDefinitionDictionary, handle)
 		{

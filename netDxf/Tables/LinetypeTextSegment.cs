@@ -49,29 +49,21 @@ namespace netDxf.Tables
 
 		#endregion
 
-		#region private fields
-
-		private string text;
-		private TextStyle style;
-		private double rotation;
-
-		#endregion
-
 		#region constructors
 
 		/// <summary>Initializes a new instance of the class.</summary>
-		public LinetypeTextSegment() : this(string.Empty, TextStyle.Default, 1.0, Vector2.Zero, LinetypeSegmentRotationType.Relative, 0.0, 1.0)
+		public LinetypeTextSegment()
+			: this(string.Empty, TextStyle.Default, 1.0, Vector2.Zero, LinetypeSegmentRotationType.Relative, 0.0, 1.0)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="text">Text to display on the linetype segment.</param>
 		/// <param name="style">Name of the TextStyle.</param>
 		/// <param name="length">Dash, dot, or space length of the linetype segment.</param>
-		public LinetypeTextSegment(string text, TextStyle style, double length) : this(text, style, length, Vector2.Zero, LinetypeSegmentRotationType.Relative, 0.0, 1.0)
+		public LinetypeTextSegment(string text, TextStyle style, double length)
+			: this(text, style, length, Vector2.Zero, LinetypeSegmentRotationType.Relative, 0.0, 1.0)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="text">Text to display on the linetype segment.</param>
 		/// <param name="style">Name of the TextStyle.</param>
@@ -83,11 +75,11 @@ namespace netDxf.Tables
 		public LinetypeTextSegment(string text, TextStyle style, double length, Vector2 offset, LinetypeSegmentRotationType rotationType, double rotation, double scale)
 			: base(LinetypeSegmentType.Text, length)
 		{
-			this.text = string.IsNullOrEmpty(text) ? string.Empty : text;
-			this.style = style ?? throw new ArgumentNullException(nameof(style), "The style must be a valid TextStyle.");
+			_Text = string.IsNullOrEmpty(text) ? string.Empty : text;
+			_Style = style ?? throw new ArgumentNullException(nameof(style), "The style must be a valid TextStyle.");
 			this.Offset = offset;
 			this.RotationType = rotationType;
-			this.rotation = MathHelper.NormalizeAngle(rotation);
+			_Rotation = MathHelper.NormalizeAngle(rotation);
 			this.Scale = scale;
 		}
 
@@ -95,24 +87,27 @@ namespace netDxf.Tables
 
 		#region public properties
 
+		private string _Text;
 		/// <summary>Gets or sets the text displayed by the linetype.</summary>
 		public string Text
 		{
-			get => this.text;
-			set => this.text = string.IsNullOrEmpty(value) ? string.Empty : value;
+			get => _Text;
+			set => _Text = string.IsNullOrEmpty(value) ? string.Empty : value;
 		}
 
+		private TextStyle _Style;
 		/// <summary>Gets or sets the TextStyle of the text to be displayed by the linetype.</summary>
 		public TextStyle Style
 		{
-			get => this.style;
+			get => _Style;
 			set
 			{
 				if (value == null)
 				{
 					throw new ArgumentNullException(nameof(value));
 				}
-				this.style = this.OnTextStyleChangedEvent(this.style, value);
+
+				_Style = this.OnTextStyleChangedEvent(_Style, value);
 			}
 		}
 
@@ -122,11 +117,12 @@ namespace netDxf.Tables
 		/// <summary>Gets or sets the type of rotation defined by the rotation value upright, relative, or absolute.</summary>
 		public LinetypeSegmentRotationType RotationType { get; set; }
 
+		private double _Rotation;
 		/// <summary>Gets or sets the angle in degrees of the text.</summary>
 		public double Rotation
 		{
-			get => this.rotation;
-			set => this.rotation = MathHelper.NormalizeAngle(value);
+			get => _Rotation;
+			set => _Rotation = MathHelper.NormalizeAngle(value);
 		}
 
 		/// <summary>Gets or sets the scale of the text relative to the scale of the linetype.</summary>
@@ -138,7 +134,7 @@ namespace netDxf.Tables
 
 		/// <inheritdoc/>
 		public override object Clone()
-			=> new LinetypeTextSegment(this.text, (TextStyle)this.style.Clone(), this.Length, this.Offset, this.RotationType, this.rotation, this.Scale);
+			=> new LinetypeTextSegment(_Text, (TextStyle)_Style.Clone(), this.Length, this.Offset, this.RotationType, _Rotation, this.Scale);
 
 		#endregion
 	}

@@ -41,7 +41,6 @@ namespace netDxf.Entities
 			: this(Vector2.Zero, Vector2.UnitX, DimensionStyle.Default)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="arc"><see cref="Arc"/> to measure.</param>
 		/// <param name="rotation">Rotation in degrees of the dimension line.</param>
@@ -50,7 +49,6 @@ namespace netDxf.Entities
 			: this(arc, rotation, DimensionStyle.Default)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="arc"><see cref="Arc"/> to measure.</param>
 		/// <param name="rotation">Rotation in degrees of the dimension line.</param>
@@ -73,7 +71,6 @@ namespace netDxf.Entities
 			this.Elevation = ocsCenter.Z;
 			this.Update();
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="circle"><see cref="Circle"/> to measure.</param>
 		/// <param name="rotation">Rotation in degrees of the dimension line.</param>
@@ -82,7 +79,6 @@ namespace netDxf.Entities
 			: this(circle, rotation, DimensionStyle.Default)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="circle"><see cref="Circle"/> to measure.</param>
 		/// <param name="rotation">Rotation in degrees of the dimension line.</param>
@@ -105,7 +101,6 @@ namespace netDxf.Entities
 			this.Elevation = ocsCenter.Z;
 			this.Update();
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="centerPoint">Center <see cref="Vector2">point</see> of the circumference.</param>
 		/// <param name="referencePoint"><see cref="Vector2">Point</see> on circle or arc.</param>
@@ -114,7 +109,6 @@ namespace netDxf.Entities
 			: this(centerPoint, referencePoint, DimensionStyle.Default)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="centerPoint">Center <see cref="Vector2">point</see> of the circumference.</param>
 		/// <param name="referencePoint"><see cref="Vector2">Point</see> on circle or arc.</param>
@@ -185,7 +179,7 @@ namespace netDxf.Entities
 					vect = Vector2.Zero;
 				}
 				double minOffset = (2 * arrowSize + textGap) * scale;
-				this.textRefPoint = this.ReferencePoint + minOffset * vect;
+				_TextReferencePoint = this.ReferencePoint + minOffset * vect;
 			}
 		}
 
@@ -222,10 +216,10 @@ namespace netDxf.Entities
 				return;
 			}
 
-			v = transOW * new Vector3(this.textRefPoint.X, this.textRefPoint.Y, this.Elevation);
+			v = transOW * new Vector3(_TextReferencePoint.X, _TextReferencePoint.Y, this.Elevation);
 			v = transformation * v + translation;
 			v = transWO * v;
-			this.textRefPoint = new Vector2(v.X, v.Y);
+			_TextReferencePoint = new Vector2(v.X, v.Y);
 
 			v = transOW * new Vector3(this.DefinitionPoint.X, this.DefinitionPoint.Y, this.Elevation);
 			v = transformation * v + translation;
@@ -250,7 +244,7 @@ namespace netDxf.Entities
 
 			if (this.TextPositionManuallySet)
 			{
-				this.SetDimensionLinePosition(this.textRefPoint);
+				this.SetDimensionLinePosition(_TextReferencePoint);
 			}
 			else
 			{
@@ -274,7 +268,7 @@ namespace netDxf.Entities
 
 				Vector2 vec = Vector2.Normalize(this.ReferencePoint - this.CenterPoint);
 				double minOffset = (2 * arrowSize + textGap) * scale;
-				this.textRefPoint = this.ReferencePoint + minOffset * vec;
+				_TextReferencePoint = this.ReferencePoint + minOffset * vec;
 			}
 		}
 

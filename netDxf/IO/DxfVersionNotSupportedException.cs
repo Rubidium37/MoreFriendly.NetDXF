@@ -41,7 +41,6 @@ namespace netDxf.IO
 		{
 			this.Version = version;
 		}
-
 		/// <summary>Initializes a new instance of <see cref="DxfVersionNotSupportedException"/></summary>
 		/// <param name="message">Exception message.</param>
 		/// <param name="version">DXF file version.</param>
@@ -50,7 +49,6 @@ namespace netDxf.IO
 		{
 			this.Version = version;
 		}
-
 
 		#endregion
 

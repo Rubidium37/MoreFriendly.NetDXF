@@ -60,12 +60,6 @@ namespace netDxf.Entities
 
 		#endregion
 
-		#region private fields
-
-		private HatchPattern pattern;
-
-		#endregion
-
 		#region constructors
 
 		/// <summary>Initializes a new instance of the class.</summary>
@@ -81,15 +75,13 @@ namespace netDxf.Entities
 		public Hatch(HatchPattern pattern, bool associative)
 			: base(EntityType.Hatch, DxfObjectCode.Hatch)
 		{
-			this.pattern = pattern ?? throw new ArgumentNullException(nameof(pattern));
-			this.BoundaryPaths = new ObservableCollection<HatchBoundaryPath>();
+			_Pattern = pattern ?? throw new ArgumentNullException(nameof(pattern));
 			this.BoundaryPaths.BeforeAddItem += this.BoundaryPaths_BeforeAddItem;
 			this.BoundaryPaths.AddItem += this.BoundaryPaths_AddItem;
 			this.BoundaryPaths.BeforeRemoveItem += this.BoundaryPaths_BeforeRemoveItem;
 			this.BoundaryPaths.RemoveItem += this.BoundaryPaths_RemoveItem;
 			this.Associative = associative;
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <remarks>
 		/// The hatch boundary paths must be on the same plane as the hatch.
@@ -102,13 +94,12 @@ namespace netDxf.Entities
 		public Hatch(HatchPattern pattern, IEnumerable<HatchBoundaryPath> paths, bool associative)
 			: base(EntityType.Hatch, DxfObjectCode.Hatch)
 		{
-			this.pattern = pattern ?? throw new ArgumentNullException(nameof(pattern));
+			_Pattern = pattern ?? throw new ArgumentNullException(nameof(pattern));
 
 			if (paths == null)
 			{
 				throw new ArgumentNullException(nameof(paths));
 			}
-			this.BoundaryPaths = new ObservableCollection<HatchBoundaryPath>();
 			this.BoundaryPaths.BeforeAddItem += this.BoundaryPaths_BeforeAddItem;
 			this.BoundaryPaths.AddItem += this.BoundaryPaths_AddItem;
 			this.BoundaryPaths.BeforeRemoveItem += this.BoundaryPaths_BeforeRemoveItem;
@@ -141,21 +132,19 @@ namespace netDxf.Entities
 
 		#region public properties
 
+		private HatchPattern _Pattern;
 		/// <summary>Gets the hatch pattern.</summary>
 		public HatchPattern Pattern
 		{
-			get => this.pattern;
-			set
-			{
-				this.pattern = value ?? throw new ArgumentNullException(nameof(value));
-			}
+			get => _Pattern;
+			set => _Pattern = value ?? throw new ArgumentNullException(nameof(value));
 		}
 
 		/// <summary>Gets the hatch boundary paths.</summary>
 		/// <remarks>
 		/// The hatch must contain at least on valid boundary path to be able to add it to the DxfDocument, otherwise it will be rejected.
 		/// </remarks>
-		public ObservableCollection<HatchBoundaryPath> BoundaryPaths { get; }
+		public ObservableCollection<HatchBoundaryPath> BoundaryPaths { get; } = new ObservableCollection<HatchBoundaryPath>();
 
 		/// <summary>Gets if the hatch is associative or not, which means if the hatch object is associated with the hatch boundary entities.</summary>
 		public bool Associative { get; private set; }
@@ -461,7 +450,7 @@ namespace netDxf.Entities
 		/// <inheritdoc/>
 		public override object Clone()
 		{
-			Hatch entity = new Hatch((HatchPattern)this.pattern.Clone(), false)
+			Hatch entity = new Hatch((HatchPattern)_Pattern.Clone(), false)
 			{
 				//EntityObject properties
 				Layer = (Layer)this.Layer.Clone(),

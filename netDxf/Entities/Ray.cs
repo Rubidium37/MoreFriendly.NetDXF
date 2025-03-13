@@ -33,12 +33,6 @@ namespace netDxf.Entities
 	public class Ray :
 		EntityObject
 	{
-		#region private fields
-
-		private Vector3 direction;
-
-		#endregion
-
 		#region constructors
 
 		/// <summary>Initializes a new instance of the class.</summary>
@@ -46,7 +40,6 @@ namespace netDxf.Entities
 			: this(Vector3.Zero, Vector3.UnitX)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="origin">Ray <see cref="Vector2">start point.</see></param>
 		/// <param name="direction">Ray <see cref="Vector2">end point.</see></param>
@@ -54,7 +47,6 @@ namespace netDxf.Entities
 			: this(new Vector3(origin.X, origin.Y, 0.0), new Vector3(direction.X, direction.Y, 0.0))
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="origin">Ray start <see cref="Vector3">point.</see></param>
 		/// <param name="direction">Ray end <see cref="Vector3">point.</see></param>
@@ -62,8 +54,8 @@ namespace netDxf.Entities
 			: base(EntityType.Ray, DxfObjectCode.Ray)
 		{
 			this.Origin = origin;
-			this.direction = Vector3.Normalize(direction);
-			if (Vector3.IsZero(this.direction))
+			_Direction = Vector3.Normalize(direction);
+			if (Vector3.IsZero(_Direction))
 			{
 				throw new ArgumentException("The direction can not be the zero vector.", nameof(direction));
 			}
@@ -77,14 +69,15 @@ namespace netDxf.Entities
 		/// <summary>Gets or sets the ray <see cref="netDxf.Vector3">origin</see>.</summary>
 		public Vector3 Origin { get; set; }
 
+		private Vector3 _Direction;
 		/// <summary>Gets or sets the ray <see cref="netDxf.Vector3">direction</see>.</summary>
 		public Vector3 Direction
 		{
-			get => this.direction;
+			get => _Direction;
 			set
 			{
-				this.direction = Vector3.Normalize(value);
-				if (Vector3.IsZero(this.direction))
+				_Direction = Vector3.Normalize(value);
+				if (Vector3.IsZero(_Direction))
 				{
 					throw new ArgumentException("The direction can not be the zero vector.", nameof(value));
 				}
@@ -131,7 +124,7 @@ namespace netDxf.Entities
 				IsVisible = this.IsVisible,
 				//Ray properties
 				Origin = this.Origin,
-				Direction = this.direction,
+				Direction = _Direction,
 			};
 
 			foreach (XData data in this.XData.Values)

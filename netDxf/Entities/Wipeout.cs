@@ -37,12 +37,6 @@ namespace netDxf.Entities
 	public class Wipeout :
 		EntityObject
 	{
-		#region private fields
-
-		private ClippingBoundary clippingBoundary;
-
-		#endregion
-
 		#region constructors
 
 		/// <summary>Initializes a new instance of the class as a rectangular wipeout.</summary>
@@ -54,7 +48,6 @@ namespace netDxf.Entities
 			: this(new ClippingBoundary(x, y, width, height))
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class as a rectangular wipeout from two opposite corners.</summary>
 		/// <param name="firstCorner">Rectangle firstCorner in local coordinates.</param>
 		/// <param name="secondCorner">Rectangle secondCorner in local coordinates.</param>
@@ -62,40 +55,35 @@ namespace netDxf.Entities
 			: this(new ClippingBoundary(firstCorner, secondCorner))
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class as a polygonal wipeout.</summary>
 		/// <param name="vertexes">The list of vertexes of the wipeout.</param>
 		public Wipeout(IEnumerable<Vector2> vertexes)
 			: this(new ClippingBoundary(vertexes))
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="clippingBoundary">The wipeout clipping boundary.</param>
 		public Wipeout(ClippingBoundary clippingBoundary)
 			: base(EntityType.Wipeout, DxfObjectCode.Wipeout)
 		{
-			this.clippingBoundary = clippingBoundary ?? throw new ArgumentNullException(nameof(clippingBoundary));
-			this.Elevation = 0.0;
+			_ClippingBoundary = clippingBoundary ?? throw new ArgumentNullException(nameof(clippingBoundary));
 		}
 
 		#endregion
 
 		#region public properties
 
+		private ClippingBoundary _ClippingBoundary;
 		/// <summary>Gets or sets the wipeout clipping boundary.</summary>
 		public ClippingBoundary ClippingBoundary
 		{
-			get => this.clippingBoundary;
-			set
-			{
-				this.clippingBoundary = value ?? throw new ArgumentNullException(nameof(value));
-			}
+			get => _ClippingBoundary;
+			set => _ClippingBoundary = value ?? throw new ArgumentNullException(nameof(value));
 		}
 
 		/// <summary>Gets or sets the wipeout elevation.</summary>
 		/// <remarks>This is the distance from the origin to the plane of the wipeout boundary.</remarks>
-		public double Elevation { get; set; }
+		public double Elevation { get; set; } = 0.0;
 
 		#endregion
 

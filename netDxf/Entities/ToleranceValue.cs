@@ -31,22 +31,15 @@ namespace netDxf.Entities
 	public class ToleranceValue :
 		ICloneable
 	{
-		#region private fields
-
-		private string tolerance;
-
-		#endregion
-
 		#region constructors
 
 		/// <summary>Initializes a new instance of the class.</summary>
 		public ToleranceValue()
 		{
 			this.ShowDiameterSymbol = false;
-			this.tolerance = string.Empty;
+			_Value = string.Empty;
 			this.MaterialCondition = ToleranceMaterialCondition.None;
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="showDiameterSymbol">Show a diameter symbol before the tolerance value.</param>
 		/// <param name="value">Tolerance value.</param>
@@ -54,7 +47,7 @@ namespace netDxf.Entities
 		public ToleranceValue(bool showDiameterSymbol, string value, ToleranceMaterialCondition materialCondition)
 		{
 			this.ShowDiameterSymbol = showDiameterSymbol;
-			this.tolerance = string.IsNullOrEmpty(value) ? string.Empty : value;
+			_Value = string.IsNullOrEmpty(value) ? string.Empty : value;
 			this.MaterialCondition = materialCondition;
 		}
 
@@ -65,11 +58,12 @@ namespace netDxf.Entities
 		/// <summary>Gets or sets if the tolerance diameter symbol will be shown.</summary>
 		public bool ShowDiameterSymbol { get; set; }
 
+		private string _Value;
 		/// <summary>Gets or sets the tolerance value.</summary>
 		public string Value
 		{
-			get => this.tolerance;
-			set => this.tolerance = string.IsNullOrEmpty(value) ? string.Empty : value;
+			get => _Value;
+			set => _Value = string.IsNullOrEmpty(value) ? string.Empty : value;
 		}
 
 		/// <summary>Gets or sets the tolerance material condition.</summary>
@@ -84,7 +78,7 @@ namespace netDxf.Entities
 			=> new ToleranceValue
 			{
 				ShowDiameterSymbol = this.ShowDiameterSymbol,
-				Value = this.tolerance,
+				Value = _Value,
 				MaterialCondition = this.MaterialCondition
 			};
 

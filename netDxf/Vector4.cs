@@ -32,17 +32,6 @@ namespace netDxf
 	public struct Vector4 :
 		IEquatable<Vector4>
 	{
-		#region private fields
-
-		private double x;
-		private double y;
-		private double z;
-		private double w;
-
-		private bool isNormalized;
-
-		#endregion
-
 		#region constructors
 
 		/// <summary>Initializes a new instance of Vector4.</summary>
@@ -52,13 +41,12 @@ namespace netDxf
 		/// <param name="w">W component.</param>
 		public Vector4(double x, double y, double z, double w)
 		{
-			this.x = x;
-			this.y = y;
-			this.z = z;
-			this.w = w;
-			this.isNormalized = false;
+			_X = x;
+			_Y = y;
+			_Z = z;
+			_W = w;
+			this.IsNormalized = false;
 		}
-
 		/// <summary>Initializes a new instance of Vector4.</summary>
 		/// <param name="array">Array of four elements that represents the vector.</param>
 		public Vector4(double[] array)
@@ -73,11 +61,11 @@ namespace netDxf
 				throw new ArgumentOutOfRangeException(nameof(array), array.Length, "The dimension of the array must be four.");
 			}
 
-			this.x = array[0];
-			this.y = array[1];
-			this.z = array[2];
-			this.w = array[3];
-			this.isNormalized = false;
+			_X = array[0];
+			_Y = array[1];
+			_Z = array[2];
+			_W = array[3];
+			this.IsNormalized = false;
 		}
 
 		#endregion
@@ -88,16 +76,16 @@ namespace netDxf
 		public static Vector4 Zero => new Vector4(0.0, 0.0, 0.0, 0.0);
 
 		/// <summary>Unit X vector.</summary>
-		public static Vector4 UnitX => new Vector4(1.0, 0.0, 0.0, 0.0) { isNormalized = true };
+		public static Vector4 UnitX => new Vector4(1.0, 0.0, 0.0, 0.0) { IsNormalized = true };
 
 		/// <summary>Unit Y vector.</summary>
-		public static Vector4 UnitY => new Vector4(0.0, 1.0, 0.0, 0.0) { isNormalized = true };
+		public static Vector4 UnitY => new Vector4(0.0, 1.0, 0.0, 0.0) { IsNormalized = true };
 
 		/// <summary>Unit Z vector.</summary>
-		public static Vector4 UnitZ => new Vector4(0, 0, 1, 0) { isNormalized = true };
+		public static Vector4 UnitZ => new Vector4(0, 0, 1, 0) { IsNormalized = true };
 
 		/// <summary>Unit W vector.</summary>
-		public static Vector4 UnitW => new Vector4(0.0, 0.0, 0.0, 1.0) { isNormalized = true };
+		public static Vector4 UnitW => new Vector4(0.0, 0.0, 0.0, 1.0) { IsNormalized = true };
 
 		/// <summary>Represents a vector with not a number components.</summary>
 		public static Vector4 NaN => new Vector4(double.NaN, double.NaN, double.NaN, double.NaN);
@@ -106,47 +94,51 @@ namespace netDxf
 
 		#region public properties
 
+		private double _X;
 		/// <summary>Gets or sets the X component.</summary>
 		public double X
 		{
-			get => this.x;
+			get => _X;
 			set
 			{
-				this.x = value;
-				this.isNormalized = false;
+				_X = value;
+				this.IsNormalized = false;
 			}
 		}
 
+		private double _Y;
 		/// <summary>Gets or sets the Y component.</summary>
 		public double Y
 		{
-			get => this.y;
+			get => _Y;
 			set
 			{
-				this.y = value;
-				this.isNormalized = false;
+				_Y = value;
+				this.IsNormalized = false;
 			}
 		}
 
+		private double _Z;
 		/// <summary>Gets or sets the Z component.</summary>
 		public double Z
 		{
-			get => this.z;
+			get => _Z;
 			set
 			{
-				this.z = value;
-				this.isNormalized = false;
+				_Z = value;
+				this.IsNormalized = false;
 			}
 		}
 
+		private double _W;
 		/// <summary>Gets or sets the W component.</summary>
 		public double W
 		{
-			get => this.w;
+			get => _W;
 			set
 			{
-				this.w = value;
-				this.isNormalized = false;
+				_W = value;
+				this.IsNormalized = false;
 			}
 		}
 
@@ -159,13 +151,13 @@ namespace netDxf
 				switch (index)
 				{
 					case 0:
-						return this.x;
+						return _X;
 					case 1:
-						return this.y;
+						return _Y;
 					case 2:
-						return this.z;
+						return _Z;
 					case 3:
-						return this.w;
+						return _W;
 					default:
 						throw new ArgumentOutOfRangeException(nameof(index));
 				}
@@ -175,27 +167,27 @@ namespace netDxf
 				switch (index)
 				{
 					case 0:
-						this.x = value;
+						_X = value;
 						break;
 					case 1:
-						this.y = value;
+						_Y = value;
 						break;
 					case 2:
-						this.z = value;
+						_Z = value;
 						break;
 					case 3:
-						this.w = value;
+						_W = value;
 						break;
 					default:
 						throw new ArgumentOutOfRangeException(nameof(index));
 				}
 
-				this.isNormalized = false;
+				this.IsNormalized = false;
 			}
 		}
 
 		/// <summary>Gets if the vector has been normalized.</summary>
-		public bool IsNormalized => this.isNormalized;
+		public bool IsNormalized { get; private set; }
 
 		#endregion
 
@@ -243,7 +235,7 @@ namespace netDxf
 		/// <returns>The normalized vector.</returns>
 		public static Vector4 Normalize(Vector4 u)
 		{
-			if (u.isNormalized)
+			if (u.IsNormalized)
 			{
 				return u;
 			}
@@ -255,7 +247,7 @@ namespace netDxf
 			}
 
 			double modInv = 1 / mod;
-			return new Vector4(u.X * modInv, u.Y * modInv, u.Z * modInv, u.W * modInv) { isNormalized = true };
+			return new Vector4(u.X * modInv, u.Y * modInv, u.Z * modInv, u.W * modInv) { IsNormalized = true };
 		}
 
 		#endregion
@@ -300,12 +292,12 @@ namespace netDxf
 		/// <summary>Negates a vector.</summary>
 		/// <param name="u">Vector4.</param>
 		/// <returns>The negative vector of u.</returns>
-		public static Vector4 operator -(Vector4 u) => new Vector4(-u.X, -u.Y, -u.Z, -u.W) { isNormalized = u.IsNormalized };
+		public static Vector4 operator -(Vector4 u) => new Vector4(-u.X, -u.Y, -u.Z, -u.W) { IsNormalized = u.IsNormalized };
 
 		/// <summary>Negates a vector.</summary>
 		/// <param name="u">Vector4.</param>
 		/// <returns>The negative vector of u.</returns>
-		public static Vector4 Negate(Vector4 u) => new Vector4(-u.X, -u.Y, -u.Z, -u.W) { isNormalized = u.IsNormalized };
+		public static Vector4 Negate(Vector4 u) => new Vector4(-u.X, -u.Y, -u.Z, -u.W) { IsNormalized = u.IsNormalized };
 
 		/// <summary>Multiplies a vector with an scalar (same as a*u, commutative property).</summary>
 		/// <param name="u">Vector4.</param>
@@ -382,7 +374,7 @@ namespace netDxf
 		/// <summary>Normalizes the current vector.</summary>
 		public void Normalize()
 		{
-			if (this.isNormalized)
+			if (this.IsNormalized)
 			{
 				return;
 			}
@@ -395,21 +387,21 @@ namespace netDxf
 			}
 
 			double modInv = 1 / mod;
-			this.x *= modInv;
-			this.y *= modInv;
-			this.z *= modInv;
-			this.w *= modInv;
+			_X *= modInv;
+			_Y *= modInv;
+			_Z *= modInv;
+			_W *= modInv;
 
-			this.isNormalized = true;
+			this.IsNormalized = true;
 		}
 
 		/// <summary>Obtains the modulus of the vector.</summary>
 		/// <returns>Vector modulus.</returns>
-		public double Modulus() => this.isNormalized ? 1.0 : Math.Sqrt(DotProduct(this, this));
+		public double Modulus() => this.IsNormalized ? 1.0 : Math.Sqrt(DotProduct(this, this));
 
 		/// <summary>Returns an array that represents the vector.</summary>
 		/// <returns>Array.</returns>
-		public double[] ToArray() => new[] { this.x, this.y, this.z };
+		public double[] ToArray() => new[] { _X, _Y, _Z };
 
 		#endregion
 
@@ -451,13 +443,13 @@ namespace netDxf
 
 		/// <inheritdoc/>
 		public override string ToString()
-			=> string.Format("{0}{4} {1}{4} {2}{4} {3}", this.x, this.y, this.z, this.w, Thread.CurrentThread.CurrentCulture.TextInfo.ListSeparator);
+			=> string.Format("{0}{4} {1}{4} {2}{4} {3}", _X, _Y, _Z, _W, Thread.CurrentThread.CurrentCulture.TextInfo.ListSeparator);
 
 		/// <summary>Obtains a string that represents the vector.</summary>
 		/// <param name="provider">An <see cref="IFormatProvider"/> interface implementation that supplies culture-specific formatting information. </param>
 		/// <returns>A string text.</returns>
 		public string ToString(IFormatProvider provider)
-			=> string.Format("{0}{4} {1}{4} {2}{4} {3}", this.x.ToString(provider), this.y.ToString(provider), this.z.ToString(provider), this.w.ToString(provider), Thread.CurrentThread.CurrentCulture.TextInfo.ListSeparator);
+			=> string.Format("{0}{4} {1}{4} {2}{4} {3}", _X.ToString(provider), _Y.ToString(provider), _Z.ToString(provider), _W.ToString(provider), Thread.CurrentThread.CurrentCulture.TextInfo.ListSeparator);
 
 		#endregion
 	}

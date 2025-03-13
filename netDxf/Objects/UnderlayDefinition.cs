@@ -33,12 +33,6 @@ namespace netDxf.Objects
 	public abstract class UnderlayDefinition :
 		TableObject
 	{
-		#region private fields
-
-		private string file;
-
-		#endregion
-
 		#region constructor
 
 		/// <summary>Initializes a new instance of the class.</summary>
@@ -88,7 +82,7 @@ namespace netDxf.Objects
 					break;
 			}
 
-			this.file = file;
+			_File = file;
 			this.Type = type;
 		}
 
@@ -99,13 +93,14 @@ namespace netDxf.Objects
 		/// <summary>Get the underlay type.</summary>
 		public UnderlayType Type { get; }
 
+		private string _File;
 		/// <summary>Gets or sets the underlay file.</summary>
 		/// <remarks>
 		/// The file extension must match the underlay type.
 		/// </remarks>
 		public string File
 		{
-			get => this.file;
+			get => _File;
 			set
 			{
 				if (string.IsNullOrEmpty(value))
@@ -145,7 +140,7 @@ namespace netDxf.Objects
 						break;
 				}
 
-				this.file = value;
+				_File = value;
 			}
 		}
 

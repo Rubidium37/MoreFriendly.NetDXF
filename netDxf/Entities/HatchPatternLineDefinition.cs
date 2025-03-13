@@ -33,49 +33,40 @@ namespace netDxf.Entities
 	public class HatchPatternLineDefinition :
 		ICloneable
 	{
-		#region private fields
-
-		private double angle;
-
-		#endregion
-
 		#region constructor
 
 		/// <summary>Initializes a new instance of the class.</summary>
 		public HatchPatternLineDefinition()
 		{
-			this.angle = 0.0;
-			this.Origin = Vector2.Zero;
-			this.Delta = Vector2.Zero;
-			this.DashPattern = new List<double>();
 		}
 
 		#endregion
 
 		#region public properties
 
+		private double _Angle = 0.0;
 		/// <summary>Gets or sets the angle of the line.</summary>
 		public double Angle
 		{
-			get => this.angle;
-			set => this.angle = MathHelper.NormalizeAngle(value);
+			get => _Angle;
+			set => _Angle = MathHelper.NormalizeAngle(value);
 		}
 
 		/// <summary>Gets or sets the origin of the line.</summary>
-		public Vector2 Origin { get; set; }
+		public Vector2 Origin { get; set; } = Vector2.Zero;
 
 		/// <summary>Gets or sets the local displacements between lines of the same family.</summary>
 		/// <remarks>
 		/// The Delta.X value indicates the displacement between members of the family in the direction of the line. It is used only for dashed lines.
 		/// The Delta.Y value indicates the spacing between members of the family; that is, it is measured perpendicular to the lines.
 		/// </remarks>
-		public Vector2 Delta { get; set; }
+		public Vector2 Delta { get; set; } = Vector2.Zero;
 
 		/// <summary>Gets he dash pattern of the line it is equivalent as the segments of a <see cref="Linetype"/>.</summary>
 		/// <remarks>
 		/// Positive values means solid segments and negative values means spaces (one entry per element).
 		/// </remarks>
-		public List<double> DashPattern { get; }
+		public List<double> DashPattern { get; } = new List<double>();
 
 		#endregion
 
@@ -86,7 +77,7 @@ namespace netDxf.Entities
 		{
 			HatchPatternLineDefinition copy = new HatchPatternLineDefinition
 			{
-				Angle = this.angle,
+				Angle = _Angle,
 				Origin = this.Origin,
 				Delta = this.Delta,
 			};

@@ -30,113 +30,89 @@ namespace netDxf.Units
 	/// <summary>Represents the parameters to convert linear and angular units to its string representation.</summary>
 	public class UnitStyleFormat
 	{
-		#region private fields
-
-		private short linearDecimalPlaces;
-		private short angularDecimalPlaces;
-		private double fractionHeightScale;
-
-		#endregion
-
 		#region constructors
 
 		/// <summary>Initializes a new instance of the class.</summary>
 		public UnitStyleFormat()
 		{
-			this.linearDecimalPlaces = 2;
-			this.angularDecimalPlaces = 0;
-			this.DecimalSeparator = ".";
-			this.FeetInchesSeparator = "-";
-			this.DegreesSymbol = "°";
-			this.MinutesSymbol = "\'";
-			this.SecondsSymbol = "\"";
-			this.RadiansSymbol = "r";
-			this.GradiansSymbol = "g";
-			this.FeetSymbol = "\'";
-			this.InchesSymbol = "\"";
-			this.fractionHeightScale = 1.0;
-			this.FractionType = FractionFormatType.Horizontal;
-			this.SuppressLinearLeadingZeros = false;
-			this.SuppressLinearTrailingZeros = false;
-			this.SuppressAngularLeadingZeros = false;
-			this.SuppressAngularTrailingZeros = false;
-			this.SuppressZeroFeet = true;
-			this.SuppressZeroInches = true;
 		}
 
 		#endregion
 
 		#region public properties
 
+		private short _LinearDecimalPlaces = 2;
 		/// <summary>Gets or sets the number of decimal places for linear units.</summary>
 		/// <remarks>
 		/// For architectural and fractional the precision used for the minimum fraction is 1/2^LinearDecimalPlaces.
 		/// </remarks>
 		public short LinearDecimalPlaces
 		{
-			get => this.linearDecimalPlaces;
+			get => _LinearDecimalPlaces;
 			set
 			{
 				if (value < 0)
 				{
 					throw new ArgumentOutOfRangeException(nameof(value), value, "The number of decimal places must be equals or greater than zero.");
 				}
-				this.linearDecimalPlaces = value;
+				_LinearDecimalPlaces = value;
 			}
 		}
 
+		private short _AngularDecimalPlaces = 0;
 		/// <summary>Gets or sets the number of decimal places for angular units.</summary>
 		public short AngularDecimalPlaces
 		{
-			get => this.angularDecimalPlaces;
+			get => _AngularDecimalPlaces;
 			set
 			{
 				if (value < 0)
 				{
 					throw new ArgumentOutOfRangeException(nameof(value), value, "The number of decimal places must be equals or greater than zero.");
 				}
-				this.angularDecimalPlaces = value;
+				_AngularDecimalPlaces = value;
 			}
 		}
 
 		/// <summary>Gets or set the decimal separator.</summary>
-		public string DecimalSeparator { get; set; }
+		public string DecimalSeparator { get; set; } = ".";
 
 		/// <summary>Gets or sets the separator between feet and inches.</summary>
-		public string FeetInchesSeparator { get; set; }
+		public string FeetInchesSeparator { get; set; } = "-";
 
 		/// <summary>Gets or set the angle degrees symbol.</summary>
-		public string DegreesSymbol { get; set; }
+		public string DegreesSymbol { get; set; } = "°";
 
 		/// <summary>Gets or set the angle minutes symbol.</summary>
-		public string MinutesSymbol { get; set; }
+		public string MinutesSymbol { get; set; } = "\'";
 
 		/// <summary>Gets or set the angle seconds symbol.</summary>
-		public string SecondsSymbol { get; set; }
+		public string SecondsSymbol { get; set; } = "\"";
 
 		/// <summary>Gets or set the angle radians symbol.</summary>
-		public string RadiansSymbol { get; set; }
+		public string RadiansSymbol { get; set; } = "r";
 
 		/// <summary>Gets or set the angle gradians symbol.</summary>
-		public string GradiansSymbol { get; set; }
+		public string GradiansSymbol { get; set; } = "g";
 
 		/// <summary>Gets or set the feet symbol.</summary>
-		public string FeetSymbol { get; set; }
+		public string FeetSymbol { get; set; } = "\'";
 
 		/// <summary>Gets or set the inches symbol.</summary>
-		public string InchesSymbol { get; set; }
+		public string InchesSymbol { get; set; } = "\"";
 
+		private double _FractionHeightScale = 1.0;
 		/// <summary>Gets or sets the scale of fractions relative to dimension text height.</summary>
 		public double FractionHeightScale
 		{
-			get => this.fractionHeightScale;
+			get => _FractionHeightScale;
 			set
 			{
 				if (value <= 0)
 				{
 					throw new ArgumentOutOfRangeException(nameof(value), value, "The fraction height scale must be greater than zero.");
 				}
-				this.fractionHeightScale = value;
+				_FractionHeightScale = value;
 			}
 		}
 
@@ -146,25 +122,25 @@ namespace netDxf.Units
 		/// Diagonal stacking<br/>
 		/// Not stacked (for example, 1/2)
 		/// </remarks>
-		public FractionFormatType FractionType { get; set; }
+		public FractionFormatType FractionType { get; set; } = FractionFormatType.Horizontal;
 
 		/// <summary>Suppresses leading zeros in linear decimal dimensions (for example, 0.5000 becomes .5000).</summary>
-		public bool SuppressLinearLeadingZeros { get; set; }
+		public bool SuppressLinearLeadingZeros { get; set; } = false;
 
 		/// <summary>Suppresses trailing zeros in linear decimal dimensions (for example, 12.5000 becomes 12.5).</summary>
-		public bool SuppressLinearTrailingZeros { get; set; }
+		public bool SuppressLinearTrailingZeros { get; set; } = false;
 
 		/// <summary>Suppresses leading zeros in angular decimal dimensions (for example, 0.5000 becomes .5000).</summary>
-		public bool SuppressAngularLeadingZeros { get; set; }
+		public bool SuppressAngularLeadingZeros { get; set; } = false;
 
 		/// <summary>Suppresses trailing zeros in angular decimal dimensions (for example, 12.5000 becomes 12.5).</summary>
-		public bool SuppressAngularTrailingZeros { get; set; }
+		public bool SuppressAngularTrailingZeros { get; set; } = false;
 
 		/// <summary>Suppresses zero feet in architectural dimensions.</summary>
-		public bool SuppressZeroFeet { get; set; }
+		public bool SuppressZeroFeet { get; set; } = true;
 
 		/// <summary>Suppresses zero inches in architectural dimensions.</summary>
-		public bool SuppressZeroInches { get; set; }
+		public bool SuppressZeroInches { get; set; } = true;
 
 		#endregion
 	}

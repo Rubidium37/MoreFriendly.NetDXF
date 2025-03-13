@@ -40,13 +40,8 @@ namespace netDxf.Collections
 	public sealed class Layouts :
 		TableObjects<Layout>
 	{
-
-		#region private fields
-
 		/// <summary>Maximum number of layouts that can be added to the document.</summary>
 		public const short MaxCapacity = 256;
-
-		#endregion
 
 		#region constructor
 
@@ -54,7 +49,6 @@ namespace netDxf.Collections
 			: this(document, null)
 		{
 		}
-
 		internal Layouts(DxfDocument document, string handle)
 			: base(document, DxfObjectCode.LayoutDictionary, handle)
 		{

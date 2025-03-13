@@ -95,35 +95,13 @@ namespace netDxf.Entities
 
 		#endregion
 
-		#region protected fields
-
-		protected Vector2 textRefPoint;
-		private DimensionStyle style;
-		private Block block;
-		private double textRotation;
-		private string userText;
-		private double lineSpacing;
-
-		#endregion
-
 		#region constructors
 
 		/// <summary>Initializes a new instance of the class.</summary>
 		protected Dimension(DimensionType type)
 			: base(EntityType.Dimension, DxfObjectCode.Dimension)
 		{
-			this.DefinitionPoint = Vector2.Zero;
-			this.textRefPoint = Vector2.Zero;
 			this.DimensionType = type;
-			this.AttachmentPoint = MTextAttachmentPoint.MiddleCenter;
-			this.LineSpacingStyle = MTextLineSpacingStyle.AtLeast;
-			this.lineSpacing = 1.0;
-			this.block = null;
-			this.style = DimensionStyle.Default;
-			this.textRotation = 0.0;
-			this.userText = string.Empty;
-			this.Elevation = 0.0;
-			this.StyleOverrides = new DimensionStyleOverrideDictionary();
 			this.StyleOverrides.BeforeAddItem += this.StyleOverrides_BeforeAddItem;
 			this.StyleOverrides.AddItem += this.StyleOverrides_AddItem;
 			this.StyleOverrides.BeforeRemoveItem += this.StyleOverrides_BeforeRemoveItem;
@@ -135,7 +113,7 @@ namespace netDxf.Entities
 		#region internal properties
 
 		/// <summary>Gets the reference <see cref="Vector2">position</see> for the dimension line in local coordinates.</summary>
-		internal Vector2 DefinitionPoint { get; set; }
+		internal Vector2 DefinitionPoint { get; set; } = Vector2.Zero;
 
 		#endregion
 
@@ -144,6 +122,7 @@ namespace netDxf.Entities
 		/// <summary>Gets or sets if the text reference point has been set by the user. Set to <see langword="false"/> to reset the dimension text to its original position.</summary>
 		public bool TextPositionManuallySet { get; set; }
 
+		protected Vector2 _TextReferencePoint = Vector2.Zero;
 		/// <summary>Gets or sets the text reference <see cref="Vector2">position</see>, the middle point of dimension text in local coordinates.</summary>
 		/// <remarks>
 		/// This value is related to the style property <see cref="DimensionStyle.FitTextMove"/>.
@@ -153,31 +132,33 @@ namespace netDxf.Entities
 		/// </remarks>
 		public Vector2 TextReferencePoint
 		{
-			get => this.textRefPoint;
+			get => _TextReferencePoint;
 			set
 			{
 				this.TextPositionManuallySet = true;
-				this.textRefPoint = value;
+				_TextReferencePoint = value;
 			}
 		}
 
+		private DimensionStyle _Style = DimensionStyle.Default;
 		/// <summary>Gets or sets the style associated with the dimension.</summary>
 		public DimensionStyle Style
 		{
-			get => this.style;
+			get => _Style;
 			set
 			{
 				if (value == null)
 				{
 					throw new ArgumentNullException(nameof(value));
 				}
-				this.style = this.OnDimensionStyleChangedEvent(this.style, value);
+
+				_Style = this.OnDimensionStyleChangedEvent(_Style, value);
 			}
 		}
 
 		/// <summary>Gets the dimension style overrides list.</summary>
 		/// <remarks>Any dimension style value stored in this list will override its corresponding value in the assigned style to the dimension.</remarks>
-		public DimensionStyleOverrideDictionary StyleOverrides { get; }
+		public DimensionStyleOverrideDictionary StyleOverrides { get; } = new DimensionStyleOverrideDictionary();
 
 		/// <summary>Gets the dimension type.</summary>
 		public DimensionType DimensionType { get; }
@@ -186,28 +167,30 @@ namespace netDxf.Entities
 		public abstract double Measurement { get; }
 
 		/// <summary>Gets or sets the dimension text attachment point.</summary>
-		public MTextAttachmentPoint AttachmentPoint { get; set; }
+		public MTextAttachmentPoint AttachmentPoint { get; set; } = MTextAttachmentPoint.MiddleCenter;
 
 		/// <summary>Get or sets the dimension text <see cref="MTextLineSpacingStyle">line spacing style</see>.</summary>
-		public MTextLineSpacingStyle LineSpacingStyle { get; set; }
+		public MTextLineSpacingStyle LineSpacingStyle { get; set; } = MTextLineSpacingStyle.AtLeast;
 
+		private double _LineSpacingFactor = 1.0;
 		/// <summary>Gets or sets the dimension text line spacing factor.</summary>
 		/// <remarks>
 		/// Percentage of default line spacing to be applied. Valid values range from 0.25 to 4.00, the default value 1.0.
 		/// </remarks>
 		public double LineSpacingFactor
 		{
-			get => this.lineSpacing;
+			get => _LineSpacingFactor;
 			set
 			{
 				if (value < 0.25 || value > 4.0)
 				{
 					throw new ArgumentOutOfRangeException(nameof(value), value, "The line spacing factor valid values range from 0.25 to 4.00");
 				}
-				this.lineSpacing = value;
+				_LineSpacingFactor = value;
 			}
 		}
 
+		private Block _Block;
 		/// <summary>Gets the block that contains the entities that make up the dimension picture.</summary>
 		/// <remarks>
 		/// Set this value to <see langword="null"/> to force the program that reads the resulting <b>DXF</b> file to generate the dimension drawing block,
@@ -218,17 +201,19 @@ namespace netDxf.Entities
 		/// </remarks>
 		public Block Block
 		{
-			get => this.block;
-			set => this.block = this.OnDimensionBlockChangedEvent(this.block, value);
+			get => _Block;
+			set => _Block = this.OnDimensionBlockChangedEvent(_Block, value);
 		}
 
+		private double _TextRotation = 0.0;
 		/// <summary>Gets or sets the rotation angle in degrees of the dimension text away from its default orientation(the direction of the dimension line).</summary>
 		public double TextRotation
 		{
-			get => this.textRotation;
-			set => this.textRotation = MathHelper.NormalizeAngle(value);
+			get => _TextRotation;
+			set => _TextRotation = MathHelper.NormalizeAngle(value);
 		}
 
+		private string _UserText = string.Empty;
 		/// <summary>Gets or sets the dimension text explicitly.</summary>
 		/// <remarks>
 		/// Dimension text explicitly entered by the user. Optional; default is the measurement.
@@ -237,12 +222,12 @@ namespace netDxf.Entities
 		/// </remarks>
 		public string UserText
 		{
-			get => this.userText;
-			set => this.userText = string.IsNullOrEmpty(value) ? string.Empty : value;
+			get => _UserText;
+			set => _UserText = string.IsNullOrEmpty(value) ? string.Empty : value;
 		}
 
 		/// <summary>Gets or sets the dimension elevation, its position along its normal.</summary>
-		public double Elevation { get; set; }
+		public double Elevation { get; set; } = 0.0;
 
 		#endregion
 
@@ -268,10 +253,10 @@ namespace netDxf.Entities
 		{
 			this.CalculateReferencePoints();
 
-			if (this.block != null)
+			if (_Block != null)
 			{
-				Block newBlock = this.BuildBlock(this.block.Name);
-				this.block = this.OnDimensionBlockChangedEvent(this.block, newBlock);
+				Block newBlock = this.BuildBlock(_Block.Name);
+				_Block = this.OnDimensionBlockChangedEvent(_Block, newBlock);
 			}
 		}
 

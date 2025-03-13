@@ -42,7 +42,6 @@ namespace netDxf.Collections
 			: this(owner, null)
 		{
 		}
-
 		internal LayerStateManager(DxfDocument document, string handle)
 			: base(document, DxfObjectCode.LayerStates, handle)
 		{

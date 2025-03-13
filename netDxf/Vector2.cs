@@ -32,35 +32,25 @@ namespace netDxf
 	public struct Vector2 :
 		IEquatable<Vector2>
 	{
-		#region private fields
-
-		private double x;
-		private double y;
-		private bool isNormalized;
-
-		#endregion
-
 		#region constructors
 
 		/// <summary>Initializes a new instance of Vector2.</summary>
 		/// <param name="value">X, Y component.</param>
 		public Vector2(double value)
 		{
-			this.x = value;
-			this.y = value;
-			this.isNormalized = false;
+			_X = value;
+			_Y = value;
+			this.IsNormalized = false;
 		}
-
 		/// <summary>Initializes a new instance of Vector2.</summary>
 		/// <param name="x">X component.</param>
 		/// <param name="y">Y component.</param>
 		public Vector2(double x, double y)
 		{
-			this.x = x;
-			this.y = y;
-			this.isNormalized = false;
+			_X = x;
+			_Y = y;
+			this.IsNormalized = false;
 		}
-
 		/// <summary>Initializes a new instance of Vector2.</summary>
 		/// <param name="array">Array of two elements that represents the vector.</param>
 		public Vector2(double[] array)
@@ -75,9 +65,9 @@ namespace netDxf
 				throw new ArgumentOutOfRangeException(nameof(array), array.Length, "The dimension of the array must be two.");
 			}
 
-			this.x = array[0];
-			this.y = array[1];
-			this.isNormalized = false;
+			_X = array[0];
+			_Y = array[1];
+			this.IsNormalized = false;
 		}
 
 		#endregion
@@ -88,10 +78,10 @@ namespace netDxf
 		public static Vector2 Zero => new Vector2(0.0, 0.0);
 
 		/// <summary>Unit X vector.</summary>
-		public static Vector2 UnitX => new Vector2(1.0, 0.0) { isNormalized = true };
+		public static Vector2 UnitX => new Vector2(1.0, 0.0) { IsNormalized = true };
 
 		/// <summary>Unit Y vector.</summary>
-		public static Vector2 UnitY => new Vector2(0.0, 1.0) { isNormalized = true };
+		public static Vector2 UnitY => new Vector2(0.0, 1.0) { IsNormalized = true };
 
 		/// <summary>Represents a vector with not a number components.</summary>
 		public static Vector2 NaN => new Vector2(double.NaN, double.NaN);
@@ -100,25 +90,27 @@ namespace netDxf
 
 		#region public properties
 
+		private double _X;
 		/// <summary>Gets or sets the X component.</summary>
 		public double X
 		{
-			get => this.x;
+			get => _X;
 			set
 			{
-				this.isNormalized = false;
-				this.x = value;
+				this.IsNormalized = false;
+				_X = value;
 			}
 		}
 
+		private double _Y;
 		/// <summary>Gets or sets the Y component.</summary>
 		public double Y
 		{
-			get => this.y;
+			get => _Y;
 			set
 			{
-				this.isNormalized = false;
-				this.y = value;
+				this.IsNormalized = false;
+				_Y = value;
 			}
 		}
 
@@ -131,23 +123,23 @@ namespace netDxf
 				switch (index)
 				{
 					case 0:
-						return this.x;
+						return _X;
 					case 1:
-						return this.y;
+						return _Y;
 					default:
 						throw new ArgumentOutOfRangeException(nameof(index));
 				}
 			}
 			set
 			{
-				this.isNormalized = false;
+				this.IsNormalized = false;
 				switch (index)
 				{
 					case 0:
-						this.x = value;
+						_X = value;
 						break;
 					case 1:
-						this.y = value;
+						_Y = value;
 						break;
 					default:
 						throw new ArgumentOutOfRangeException(nameof(index));
@@ -156,7 +148,7 @@ namespace netDxf
 		}
 
 		/// <summary>Gets if the vector has been normalized.</summary>
-		public bool IsNormalized => this.isNormalized;
+		public bool IsNormalized { get; private set; }
 
 		#endregion
 
@@ -187,7 +179,7 @@ namespace netDxf
 		/// <summary>Obtains the counter clockwise perpendicular vector.</summary>
 		/// <param name="u">Vector2.</param>
 		/// <returns>The perpendicular vector.</returns>
-		public static Vector2 Perpendicular(Vector2 u) => new Vector2(-u.Y, u.X) { isNormalized = u.IsNormalized };
+		public static Vector2 Perpendicular(Vector2 u) => new Vector2(-u.Y, u.X) { IsNormalized = u.IsNormalized };
 
 		/// <summary>Rotates a vector.</summary>
 		/// <param name="u">Vector2.</param>
@@ -197,7 +189,7 @@ namespace netDxf
 		{
 			double sin = Math.Sin(angle);
 			double cos = Math.Cos(angle);
-			return new Vector2(u.X * cos - u.Y * sin, u.X * sin + u.Y * cos) { isNormalized = u.IsNormalized };
+			return new Vector2(u.X * cos - u.Y * sin, u.X * sin + u.Y * cos) { IsNormalized = u.IsNormalized };
 		}
 
 		/// <summary>Obtains the polar point of another point.</summary>
@@ -309,7 +301,7 @@ namespace netDxf
 		/// <returns>A normalized vector.</returns>
 		public static Vector2 Normalize(Vector2 u)
 		{
-			if (u.isNormalized)
+			if (u.IsNormalized)
 			{
 				return u;
 			}
@@ -321,7 +313,7 @@ namespace netDxf
 			}
 
 			double modInv = 1 / mod;
-			return new Vector2(u.x * modInv, u.y * modInv) { isNormalized = true };
+			return new Vector2(u.X * modInv, u.Y * modInv) { IsNormalized = true };
 		}
 
 		#endregion
@@ -366,12 +358,12 @@ namespace netDxf
 		/// <summary>Negates a vector.</summary>
 		/// <param name="u">Vector2.</param>
 		/// <returns>The negative vector of u.</returns>
-		public static Vector2 operator -(Vector2 u) => new Vector2(-u.X, -u.Y) { isNormalized = u.IsNormalized };
+		public static Vector2 operator -(Vector2 u) => new Vector2(-u.X, -u.Y) { IsNormalized = u.IsNormalized };
 
 		/// <summary>Negates a vector.</summary>
 		/// <param name="u">Vector2.</param>
 		/// <returns>The negative vector of u.</returns>
-		public static Vector2 Negate(Vector2 u) => new Vector2(-u.X, -u.Y) { isNormalized = u.IsNormalized };
+		public static Vector2 Negate(Vector2 u) => new Vector2(-u.X, -u.Y) { IsNormalized = u.IsNormalized };
 
 		/// <summary>Multiplies a vector with an scalar.</summary>
 		/// <param name="u">Vector2.</param>
@@ -448,7 +440,7 @@ namespace netDxf
 		/// <summary>Normalizes the vector.</summary>
 		public void Normalize()
 		{
-			if (this.isNormalized)
+			if (this.IsNormalized)
 			{
 				return;
 			}
@@ -461,19 +453,19 @@ namespace netDxf
 			}
 
 			double modInv = 1 / mod;
-			this.x *= modInv;
-			this.y *= modInv;
+			_X *= modInv;
+			_Y *= modInv;
 
-			this.isNormalized = true;
+			this.IsNormalized = true;
 		}
 
 		/// <summary>Obtains the modulus of the vector.</summary>
 		/// <returns>Vector modulus.</returns>
-		public double Modulus() => this.isNormalized ? 1.0 : Math.Sqrt(DotProduct(this, this));
+		public double Modulus() => this.IsNormalized ? 1.0 : Math.Sqrt(DotProduct(this, this));
 
 		/// <summary>Returns an array that represents the vector.</summary>
 		/// <returns>Array.</returns>
-		public double[] ToArray() => new[] { this.x, this.y };
+		public double[] ToArray() => new[] { _X, _Y };
 
 		#endregion
 
@@ -488,7 +480,7 @@ namespace netDxf
 		/// <param name="threshold">Maximum tolerance.</param>
 		/// <returns><see langword="true"/> if the three components are almost equal or <see langword="false"/> in any other case.</returns>
 		public bool Equals(Vector2 other, double threshold)
-			=> MathHelper.IsEqual(other.X, this.x, threshold) && MathHelper.IsEqual(other.Y, this.y, threshold);
+			=> MathHelper.IsEqual(other.X, _X, threshold) && MathHelper.IsEqual(other.Y, _Y, threshold);
 		/// <summary>Check if the components of two vectors are approximate equal.</summary>
 		/// <param name="a">Vector2.</param>
 		/// <param name="b">Vector2.</param>
@@ -510,13 +502,13 @@ namespace netDxf
 
 		/// <inheritdoc/>
 		public override string ToString()
-			=> string.Format("{0}{2} {1}", this.x, this.y, Thread.CurrentThread.CurrentCulture.TextInfo.ListSeparator);
+			=> string.Format("{0}{2} {1}", _X, _Y, Thread.CurrentThread.CurrentCulture.TextInfo.ListSeparator);
 
 		/// <summary>Obtains a string that represents the vector.</summary>
 		/// <param name="provider">An <see cref="IFormatProvider"/> object implementation that supplies culture-specific formatting information. </param>
 		/// <returns>A string text.</returns>
 		public string ToString(IFormatProvider provider)
-			=> string.Format("{0}{2} {1}", this.x.ToString(provider), this.y.ToString(provider), Thread.CurrentThread.CurrentCulture.TextInfo.ListSeparator);
+			=> string.Format("{0}{2} {1}", _X.ToString(provider), _Y.ToString(provider), Thread.CurrentThread.CurrentCulture.TextInfo.ListSeparator);
 
 		#endregion
 	}

@@ -34,20 +34,13 @@ namespace netDxf.IO
 	internal class TextCodeValueWriter :
 		ICodeValueWriter
 	{
-		#region private fields
-
 		private readonly TextWriter writer;
-
-		#endregion
 
 		#region constructors
 
 		public TextCodeValueWriter(TextWriter writer)
 		{
 			this.writer = writer;
-			this.CurrentPosition = 0;
-			this.Code = 0;
-			this.Value = null;
 		}
 
 		#endregion
@@ -55,13 +48,13 @@ namespace netDxf.IO
 		#region public properties
 
 		/// <inheritdoc/>
-		public short Code { get; private set; }
+		public short Code { get; private set; } = 0;
 
 		/// <inheritdoc/>
 		public object Value { get; private set; }
 
 		/// <inheritdoc/>
-		public long CurrentPosition { get; private set; }
+		public long CurrentPosition { get; private set; } = 0;
 
 		#endregion
 

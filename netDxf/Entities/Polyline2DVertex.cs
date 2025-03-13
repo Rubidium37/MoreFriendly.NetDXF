@@ -31,13 +31,6 @@ namespace netDxf.Entities
 	public class Polyline2DVertex :
 		ICloneable
 	{
-		#region private fields
-
-		private double startWidth;
-		private double endWidth;
-
-		#endregion
-
 		#region constructors
 
 		/// <summary>Initializes a new instance of the class.</summary>
@@ -45,7 +38,6 @@ namespace netDxf.Entities
 			: this(Vector2.Zero)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="x">X coordinate.</param>
 		/// <param name="y">Y coordinate.</param>
@@ -53,7 +45,6 @@ namespace netDxf.Entities
 			: this(new Vector2(x, y), 0.0)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="x">X coordinate.</param>
 		/// <param name="y">Y coordinate.</param>
@@ -62,14 +53,12 @@ namespace netDxf.Entities
 			: this(new Vector2(x, y), bulge)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="position">Lightweight polyline <see cref="Vector2">vertex</see> coordinates.</param>
 		public Polyline2DVertex(Vector2 position)
 			: this(position, 0.0)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="position">Lightweight polyline <see cref="Vector2">vertex</see> coordinates.</param>
 		/// <param name="bulge">Vertex bulge (default: 0.0).</param>
@@ -77,18 +66,17 @@ namespace netDxf.Entities
 		{
 			this.Position = position;
 			this.Bulge = bulge;
-			this.startWidth = 0.0;
-			this.endWidth = 0.0;
+			_StartWidth = 0.0;
+			_EndWidth = 0.0;
 		}
-
 		/// <summary>Copy constructor.</summary>
 		/// <param name="vertex">A <see cref="Polyline2D"/> vertex.</param>
 		public Polyline2DVertex(Polyline2DVertex vertex)
 		{
 			this.Position = vertex.Position;
 			this.Bulge = vertex.Bulge;
-			this.startWidth = vertex.startWidth;
-			this.endWidth = vertex.EndWidth;
+			_StartWidth = vertex.StartWidth;
+			_EndWidth = vertex.EndWidth;
 		}
 
 		#endregion
@@ -98,31 +86,33 @@ namespace netDxf.Entities
 		/// <summary>Gets or sets the polyline 2D vertex <see cref="Vector2">position</see>.</summary>
 		public Vector2 Position { get; set; }
 
+		private double _StartWidth;
 		/// <summary>Gets or sets the polyline 2D vertex start segment width.</summary>
 		/// <remarks>Widths greater than zero produce wide lines.</remarks>
 		public double StartWidth
 		{
-			get => this.startWidth;
+			get => _StartWidth;
 			set
 			{
 				if (value < 0)
 				{
 					throw new ArgumentOutOfRangeException(nameof(value), value, "The vertex start width must be equals or greater than zero.");
 				}
-				this.startWidth = value;
+				_StartWidth = value;
 			}
 		}
 
+		private double _EndWidth;
 		/// <summary>Gets or sets the polyline 2D vertex end segment width.</summary>
 		/// <remarks>Widths greater than zero produce wide lines.</remarks>
 		public double EndWidth
 		{
-			get => this.endWidth;
+			get => _EndWidth;
 			set
 			{
 				if (value < 0)
 					throw new ArgumentOutOfRangeException(nameof(value), value, "The vertex end width must be equals or greater than zero.");
-				this.endWidth = value;
+				_EndWidth = value;
 			}
 		}
 

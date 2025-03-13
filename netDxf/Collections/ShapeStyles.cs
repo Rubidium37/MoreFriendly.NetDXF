@@ -39,7 +39,6 @@ namespace netDxf.Collections
 			: this(document, null)
 		{
 		}
-
 		internal ShapeStyles(DxfDocument document, string handle)
 			: base(document, DxfObjectCode.TextStyleTable, handle)
 		{

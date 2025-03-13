@@ -40,7 +40,6 @@ namespace netDxf.Collections
 			: this(document, null)
 		{
 		}
-
 		internal DimensionStyles(DxfDocument document, string handle)
 			: base(document, DxfObjectCode.DimensionStyleTable, handle)
 		{

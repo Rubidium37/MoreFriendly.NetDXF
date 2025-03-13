@@ -60,12 +60,6 @@ namespace netDxf.Entities
 
 		#endregion
 
-		#region private fields
-
-		private Layer layer;
-
-		#endregion
-
 		#region constructors
 
 		/// <summary>Initializes a new instance of the class.</summary>
@@ -76,7 +70,6 @@ namespace netDxf.Entities
 			: this(new short[4])
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="vertexIndexes">Array of indexes to the vertex list of a polyface mesh that makes up the face.</param>
 		public PolyfaceMeshFace(IEnumerable<short> vertexIndexes)
@@ -90,9 +83,6 @@ namespace netDxf.Entities
 			{
 				throw new ArgumentOutOfRangeException(nameof(vertexIndexes), "The number of indexes per faces must be greater than 0, and a maximum of 4.");
 			}
-
-			this.Color = null;
-			this.layer = null;
 		}
 
 		#endregion
@@ -105,11 +95,12 @@ namespace netDxf.Entities
 		/// <summary>Gets or sets the face color. Set to <see langword="null"/> to inherit from its parent polyface mesh.</summary>
 		public AciColor Color { get; set; }
 
+		private Layer _Layer;
 		/// <summary>Gets or sets the face layer. Set to <see langword="null"/> to inherit from its parent polyface mesh.</summary>
 		public Layer Layer
 		{
-			get => this.layer;
-			set => this.layer = this.OnLayerChangedEvent(this.layer, value);
+			get => _Layer;
+			set => _Layer = this.OnLayerChangedEvent(_Layer, value);
 		}
 
 		#endregion
@@ -123,7 +114,7 @@ namespace netDxf.Entities
 		public object Clone()
 			=> new PolyfaceMeshFace(this.VertexIndexes)
 			{
-				Layer = (Layer)this.layer.Clone(),
+				Layer = (Layer)_Layer.Clone(),
 				Color = (AciColor)this.Color.Clone()
 			};
 

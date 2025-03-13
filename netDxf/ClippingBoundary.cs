@@ -50,7 +50,6 @@ namespace netDxf
 			this.Type = ClippingBoundaryType.Rectangular;
 			this.Vertexes = new List<Vector2> { new Vector2(x, y), new Vector2(x + width, y + height) };
 		}
-
 		/// <summary>Initializes a new instance of the class as a rectangular clipping boundary from two opposite corners.</summary>
 		/// <param name="firstCorner">Rectangle first corner.</param>
 		/// <param name="secondCorner">Rectangle second corner.</param>
@@ -59,7 +58,6 @@ namespace netDxf
 			this.Type = ClippingBoundaryType.Rectangular;
 			this.Vertexes = new List<Vector2> { firstCorner, secondCorner };
 		}
-
 		/// <summary>Initializes a new instance of the class as a polygonal clipping boundary.</summary>
 		/// <param name="vertexes">The list of vertexes of the polygonal boundary.</param>
 		public ClippingBoundary(IEnumerable<Vector2> vertexes)

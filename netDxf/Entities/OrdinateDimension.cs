@@ -33,12 +33,6 @@ namespace netDxf.Entities
 	public class OrdinateDimension :
 		Dimension
 	{
-		#region private fields
-
-		private double rotation;
-
-		#endregion
-
 		#region constructors
 
 		/// <summary>Initializes a new instance of the class.</summary>
@@ -46,7 +40,6 @@ namespace netDxf.Entities
 			: this(Vector2.Zero, new Vector2(0.5, 0), new Vector2(1.0, 0), OrdinateDimensionAxis.Y, DimensionStyle.Default)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="origin">Origin <see cref="Vector2">point</see> in local coordinates of the ordinate dimension.</param>
 		/// <param name="featurePoint">Base location <see cref="Vector2">point</see> in local coordinates of the ordinate dimension.</param>
@@ -59,7 +52,6 @@ namespace netDxf.Entities
 			: this(origin, featurePoint, leaderEndPoint, DimensionStyle.Default)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="origin">Origin <see cref="Vector2">point</see> in local coordinates of the ordinate dimension.</param>
 		/// <param name="featurePoint">Base location <see cref="Vector2">point</see> in local coordinates of the ordinate dimension.</param>
@@ -75,13 +67,12 @@ namespace netDxf.Entities
 			this.DefinitionPoint = origin;
 			this.FeaturePoint = featurePoint;
 			this.LeaderEndPoint = leaderEndPoint;
-			this.textRefPoint = leaderEndPoint;
+			_TextReferencePoint = leaderEndPoint;
 			Vector2 vec = leaderEndPoint - featurePoint;
 			this.Axis = vec.Y > vec.X ? OrdinateDimensionAxis.X : OrdinateDimensionAxis.Y;
-			this.rotation = 0.0;
+			_Rotation = 0.0;
 			this.Style = style ?? throw new ArgumentNullException(nameof(style));
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="origin">Origin <see cref="Vector2">point</see> in local coordinates of the ordinate dimension.</param>
 		/// <param name="featurePoint">Base location <see cref="Vector2">point</see> in local coordinates of the ordinate dimension.</param>
@@ -94,12 +85,11 @@ namespace netDxf.Entities
 			this.DefinitionPoint = origin;
 			this.FeaturePoint = featurePoint;
 			this.LeaderEndPoint = leaderEndPoint;
-			this.textRefPoint = leaderEndPoint;
+			_TextReferencePoint = leaderEndPoint;
 			this.Axis = axis;
-			this.rotation = 0.0;
+			_Rotation = 0.0;
 			this.Style = style ?? throw new ArgumentNullException(nameof(style));
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="origin">Origin <see cref="Vector2">point</see> of the ordinate dimension.</param>
 		/// <param name="featurePoint">Base location <see cref="Vector2">point</see> in local coordinates of the ordinate dimension.</param>
@@ -110,7 +100,6 @@ namespace netDxf.Entities
 			: this(origin, featurePoint, length, axis, 0.0, DimensionStyle.Default)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="origin">Origin <see cref="Vector2">point</see> of the ordinate dimension.</param>
 		/// <param name="featurePoint">Base location <see cref="Vector2">point</see> in local coordinates of the ordinate dimension.</param>
@@ -122,7 +111,6 @@ namespace netDxf.Entities
 			: this(origin, featurePoint, length, axis, 0.0, style)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="origin">Origin <see cref="Vector2">point</see> of the ordinate dimension.</param>
 		/// <param name="featurePoint">Base location <see cref="Vector2">point</see> in local coordinates of the ordinate dimension.</param>
@@ -134,7 +122,6 @@ namespace netDxf.Entities
 			: this(origin, featurePoint, length, axis, rotation, DimensionStyle.Default)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="origin">Origin <see cref="Vector3">point</see> in world coordinates of the ordinate dimension.</param>
 		/// <param name="featurePoint">Base location <see cref="Vector2">point</see> in local coordinates of the ordinate dimension.</param>
@@ -147,7 +134,7 @@ namespace netDxf.Entities
 			: base(DimensionType.Ordinate)
 		{
 			this.DefinitionPoint = origin;
-			this.rotation = MathHelper.NormalizeAngle(rotation);
+			_Rotation = MathHelper.NormalizeAngle(rotation);
 			this.FeaturePoint = featurePoint;
 			this.Axis = axis;
 
@@ -160,7 +147,7 @@ namespace netDxf.Entities
 			}
 
 			this.LeaderEndPoint = Vector2.Polar(featurePoint, length, angle);
-			this.textRefPoint = this.LeaderEndPoint;
+			_TextReferencePoint = this.LeaderEndPoint;
 		}
 
 		#endregion
@@ -180,11 +167,12 @@ namespace netDxf.Entities
 		/// <summary>Gets or sets the leader end <see cref="Vector2">point</see> in local coordinates</summary>
 		public Vector2 LeaderEndPoint { get; set; }
 
+		private double _Rotation;
 		/// <summary>Gets or sets the angle of rotation in degrees of the ordinate dimension local coordinate system.</summary>
 		public double Rotation
 		{
-			get => this.rotation;
-			set => MathHelper.NormalizeAngle(this.rotation = value);
+			get => _Rotation;
+			set => MathHelper.NormalizeAngle(_Rotation = value);
 		}
 
 		/// <summary>Gets or sets the local axis that measures the ordinate dimension.</summary>
@@ -195,7 +183,7 @@ namespace netDxf.Entities
 		{
 			get
 			{
-				Vector2 dirRef = Vector2.Rotate(this.Axis == OrdinateDimensionAxis.X ? Vector2.UnitY : Vector2.UnitX, this.rotation * MathHelper.DegToRad);
+				Vector2 dirRef = Vector2.Rotate(this.Axis == OrdinateDimensionAxis.X ? Vector2.UnitY : Vector2.UnitX, _Rotation * MathHelper.DegToRad);
 				return MathHelper.PointLineDistance(this.FeaturePoint, this.DefinitionPoint, dirRef);
 			}
 		}
@@ -232,10 +220,10 @@ namespace netDxf.Entities
 			v = transWO * v;
 			Vector2 newEnd = new Vector2(v.X, v.Y);
 
-			v = transOW * new Vector3(this.textRefPoint.X, this.textRefPoint.Y, this.Elevation);
+			v = transOW * new Vector3(_TextReferencePoint.X, _TextReferencePoint.Y, this.Elevation);
 			v = transformation * v + translation;
 			v = transWO * v;
-			this.textRefPoint = new Vector2(v.X, v.Y);
+			_TextReferencePoint = new Vector2(v.X, v.Y);
 
 			v = transOW * new Vector3(this.DefinitionPoint.X, this.DefinitionPoint.Y, this.Elevation);
 			v = transformation * v + translation;
@@ -263,12 +251,12 @@ namespace netDxf.Entities
 
 				if (moveText != DimensionStyleFitTextMove.OverDimLineWithoutLeader)
 				{
-					this.LeaderEndPoint = this.textRefPoint;
+					this.LeaderEndPoint = _TextReferencePoint;
 				}
 			}
 			else
 			{
-				this.textRefPoint = this.LeaderEndPoint;
+				_TextReferencePoint = this.LeaderEndPoint;
 			}
 		}
 
@@ -303,7 +291,7 @@ namespace netDxf.Entities
 				//OrdinateDimension properties
 				FeaturePoint = this.FeaturePoint,
 				LeaderEndPoint = this.LeaderEndPoint,
-				Rotation = this.rotation,
+				Rotation = _Rotation,
 				Axis = this.Axis
 			};
 

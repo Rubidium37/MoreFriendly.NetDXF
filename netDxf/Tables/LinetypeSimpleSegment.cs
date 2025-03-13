@@ -29,34 +29,26 @@ namespace netDxf.Tables
 	public class LinetypeSimpleSegment :
 		LinetypeSegment
 	{
-		#region private fields
-
-		#endregion
-
 		#region constructors
 
 		/// <summary>Initializes a new instance of the class.</summary>
-		public LinetypeSimpleSegment() : this(0.0)
+		public LinetypeSimpleSegment()
+			: this(0.0)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="length">Dash or space length of the segment.</param>
-		public LinetypeSimpleSegment(double length) : base(LinetypeSegmentType.Simple, length)
+		public LinetypeSimpleSegment(double length)
+			: base(LinetypeSegmentType.Simple, length)
 		{
 		}
-
-		#endregion
-
-		#region public properties
 
 		#endregion
 
 		#region overrides
 
 		/// <inheritdoc/>
-		public override object Clone()
-			=> new LinetypeSimpleSegment(this.Length);
+		public override object Clone() => new LinetypeSimpleSegment(this.Length);
 
 		#endregion
 	}

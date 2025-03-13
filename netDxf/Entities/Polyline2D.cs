@@ -36,13 +36,6 @@ namespace netDxf.Entities
 	public class Polyline2D :
 		EntityObject
 	{
-		#region private fields
-
-		private static short defaultSplineSegs = 8;
-		private PolylineSmoothType smoothType;
-
-		#endregion
-
 		#region constructors
 
 		/// <summary>Initializes a new instance of the class.</summary>
@@ -50,14 +43,12 @@ namespace netDxf.Entities
 			: this(new List<Polyline2DVertex>())
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="vertexes">Polyline2D <see cref="Vector2">vertex</see> list in object coordinates.</param>
 		public Polyline2D(IEnumerable<Vector2> vertexes)
 			: this(vertexes, false)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="vertexes">Polyline2D <see cref="Vector2">vertex</see> list in object coordinates.</param>
 		/// <param name="isClosed">Sets if the polyline is closed, by default it will create an open polyline.</param>
@@ -75,19 +66,14 @@ namespace netDxf.Entities
 				this.Vertexes.Add(new Polyline2DVertex(vertex));
 			}
 
-			this.Elevation = 0.0;
-			this.Thickness = 0.0;
 			this.Flags = isClosed ? PolylineTypeFlags.ClosedPolylineOrClosedPolygonMeshInM : PolylineTypeFlags.OpenPolyline;
-			this.smoothType = PolylineSmoothType.NoSmooth;
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="vertexes">Polyline2D <see cref="Polyline2DVertex">vertex</see> list in object coordinates.</param>
 		public Polyline2D(IEnumerable<Polyline2DVertex> vertexes)
 			: this(vertexes, false)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="vertexes">Polyline2D <see cref="Polyline2DVertex">vertex</see> list in object coordinates.</param>
 		/// <param name="isClosed">Sets if the polyline is closed (default: <see langword="false"/>).</param>
@@ -100,30 +86,28 @@ namespace netDxf.Entities
 			}
 
 			this.Vertexes = new List<Polyline2DVertex>(vertexes);
-			this.Elevation = 0.0;
-			this.Thickness = 0.0;
 			this.Flags = isClosed ? PolylineTypeFlags.ClosedPolylineOrClosedPolygonMeshInM : PolylineTypeFlags.OpenPolyline;
-			this.smoothType = PolylineSmoothType.NoSmooth;
 		}
 
 		#endregion
 
 		#region public properties
 
+		private static short _DefaultSplineSegs = 8;
 		/// <summary>Gets or sets if the default SplineSegs value.</summary>
 		/// <remarks>
 		/// This value is used by the Explode method when the current <see cref="Polyline2D"/> does not belong to a <b>DXF</b> document.
 		/// </remarks>
 		public static short DefaultSplineSegs
 		{
-			get => defaultSplineSegs;
+			get => _DefaultSplineSegs;
 			set
 			{
 				if (value <= 0)
 				{
 					throw new ArgumentOutOfRangeException(nameof(value), value, "Values must be greater than 0.");
 				}
-				defaultSplineSegs = value;
+				_DefaultSplineSegs = value;
 			}
 		}
 
@@ -148,11 +132,11 @@ namespace netDxf.Entities
 		}
 
 		/// <summary>Gets or sets the polyline thickness.</summary>
-		public double Thickness { get; set; }
+		public double Thickness { get; set; } = 0.0;
 
 		/// <summary>Gets or sets the polyline elevation.</summary>
 		/// <remarks>This is the distance from the origin to the plane of the light weight polyline.</remarks>
-		public double Elevation { get; set; }
+		public double Elevation { get; set; } = 0.0;
 
 		/// <summary>Enable or disable if the linetype pattern is generated continuously around the vertexes of the polyline.</summary>
 		public bool LinetypeGeneration
@@ -171,13 +155,14 @@ namespace netDxf.Entities
 			}
 		}
 
+		private PolylineSmoothType _SmoothType = PolylineSmoothType.NoSmooth;
 		/// <summary>Gets or sets the polyline smooth type.</summary>
 		/// <remarks>
 		/// The additional polyline vertexes corresponding to the SplineFit will be created when writing the <b>DXF</b> file.
 		/// </remarks>
 		public PolylineSmoothType SmoothType
 		{
-			get => this.smoothType;
+			get => _SmoothType;
 			set
 			{
 				if (value == PolylineSmoothType.NoSmooth)
@@ -190,7 +175,7 @@ namespace netDxf.Entities
 					this.CodeName = DxfObjectCode.Polyline;
 					this.Flags |= PolylineTypeFlags.SplineFit;
 				}
-				this.smoothType = value;
+				_SmoothType = value;
 			}
 		}
 
@@ -245,7 +230,7 @@ namespace netDxf.Entities
 		{
 			List<EntityObject> entities = new List<EntityObject>();
 
-			if (this.smoothType == PolylineSmoothType.NoSmooth)
+			if (_SmoothType == PolylineSmoothType.NoSmooth)
 			{
 				int index = 0;
 				foreach (Polyline2DVertex vertex in this.Vertexes)
@@ -363,7 +348,7 @@ namespace netDxf.Entities
 				wcsVertexes[i] = wcsVertex;
 			}
 
-			int degree = this.smoothType == PolylineSmoothType.Quadratic ? 2 : 3;
+			int degree = _SmoothType == PolylineSmoothType.Quadratic ? 2 : 3;
 			int splineSegs = this.Owner == null ? DefaultSplineSegs : this.Owner.Record.Owner.Owner.DrawingVariables.SplineSegs;
 			int precision = this.IsClosed ? splineSegs * this.Vertexes.Count : splineSegs * (this.Vertexes.Count - 1);
 			List<Vector3> splinePoints = Spline.NurbsEvaluator(wcsVertexes, null, null, degree, false, this.IsClosed, precision);
@@ -439,11 +424,11 @@ namespace netDxf.Entities
 
 			List<Vector2> ocsVertexes = new List<Vector2>();
 			int degree;
-			if (this.smoothType == PolylineSmoothType.Quadratic)
+			if (_SmoothType == PolylineSmoothType.Quadratic)
 			{
 				degree = 2;
 			}
-			else if (this.smoothType == PolylineSmoothType.Cubic)
+			else if (_SmoothType == PolylineSmoothType.Cubic)
 			{
 				degree = 3;
 			}

@@ -32,14 +32,6 @@ namespace netDxf.Entities
 	public class MeshEdge :
 		ICloneable
 	{
-		#region private fields
-
-		private int startVertexIndex;
-		private int endVertexIndex;
-		private double crease;
-
-		#endregion
-
 		#region constructor
 
 		/// <summary>Initializes a new instance of the class.</summary>
@@ -49,7 +41,6 @@ namespace netDxf.Entities
 			: this(startVertexIndex, endVertexIndex, 0.0)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="startVertexIndex">The edge start vertex index.</param>
 		/// <param name="endVertexIndex">The edge end vertex index.</param>
@@ -58,45 +49,48 @@ namespace netDxf.Entities
 		{
 			if (startVertexIndex < 0)
 				throw new ArgumentOutOfRangeException(nameof(startVertexIndex), startVertexIndex, "The vertex index must be positive.");
-			this.startVertexIndex = startVertexIndex;
+			_StartVertexIndex = startVertexIndex;
 
 			if (endVertexIndex < 0)
 				throw new ArgumentOutOfRangeException(nameof(endVertexIndex), endVertexIndex, "The vertex index must be positive.");
-			this.endVertexIndex = endVertexIndex;
-			this.crease = crease < 0.0 ? -1.0 : crease;
+			_EndVertexIndex = endVertexIndex;
+			_Crease = crease < 0.0 ? -1.0 : crease;
 		}
 
 		#endregion
 
 		#region public properties
 
+		private int _StartVertexIndex;
 		/// <summary>Gets or sets the edge start vertex index.</summary>
 		/// <remarks>
 		/// This value must be positive represent the position of the vertex in the mesh vertex list.
 		/// </remarks>
 		public int StartVertexIndex
 		{
-			get => this.startVertexIndex;
+			get => _StartVertexIndex;
 			set
 			{
 				if (value < 0)
 					throw new ArgumentOutOfRangeException(nameof(value), value, "The vertex index must be must be equals or greater than zero.");
-				this.startVertexIndex = value;
+				_StartVertexIndex = value;
 			}
 		}
 
+		private int _EndVertexIndex;
 		/// <summary>Gets or sets the edge end vertex index.</summary>
 		public int EndVertexIndex
 		{
-			get => this.endVertexIndex;
+			get => _EndVertexIndex;
 			set
 			{
 				if (value < 0)
 					throw new ArgumentOutOfRangeException(nameof(value), value, "The vertex index must be must be equals or greater than zero.");
-				this.endVertexIndex = value;
+				_EndVertexIndex = value;
 			}
 		}
 
+		private double _Crease;
 		/// <summary>Get or set the highest smoothing level at which the crease is retained. If the smoothing level exceeds this value, the crease is also smoothed.</summary>
 		/// <remarks>
 		/// Enter a value of 0 to remove an existing crease (no edge sharpening).<br/>
@@ -104,8 +98,8 @@ namespace netDxf.Entities
 		/// </remarks>
 		public double Crease
 		{
-			get => this.crease;
-			set => this.crease = value < 0 ? -1 : value;
+			get => _Crease;
+			set => _Crease = value < 0 ? -1 : value;
 		}
 
 		#endregion
@@ -114,17 +108,17 @@ namespace netDxf.Entities
 
 		/// <inheritdoc/>
 		public override string ToString()
-			=> string.Format("{0}: ({1}{4} {2}) crease={3}", "SplineVertex", this.startVertexIndex, this.endVertexIndex, this.crease, Thread.CurrentThread.CurrentCulture.TextInfo.ListSeparator);
+			=> string.Format("{0}: ({1}{4} {2}) crease={3}", "SplineVertex", _StartVertexIndex, _EndVertexIndex, _Crease, Thread.CurrentThread.CurrentCulture.TextInfo.ListSeparator);
 
 		/// <summary>Obtains a string that represents the mesh edge.</summary>
 		/// <param name="provider">An <see cref="IFormatProvider"/> object implementation that supplies culture-specific formatting information. </param>
 		/// <returns>A string text.</returns>
 		public string ToString(IFormatProvider provider)
-			=> string.Format("{0}: ({1}{4} {2}) crease={3}", "SplineVertex", this.startVertexIndex.ToString(provider), this.endVertexIndex.ToString(provider), this.crease.ToString(provider), Thread.CurrentThread.CurrentCulture.TextInfo.ListSeparator);
+			=> string.Format("{0}: ({1}{4} {2}) crease={3}", "SplineVertex", _StartVertexIndex.ToString(provider), _EndVertexIndex.ToString(provider), _Crease.ToString(provider), Thread.CurrentThread.CurrentCulture.TextInfo.ListSeparator);
 
 		/// <inheritdoc/>
 		public object Clone()
-			=> new MeshEdge(this.startVertexIndex, this.endVertexIndex, this.crease);
+			=> new MeshEdge(_StartVertexIndex, _EndVertexIndex, _Crease);
 
 		#endregion
 	}

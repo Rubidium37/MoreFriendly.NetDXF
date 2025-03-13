@@ -39,7 +39,6 @@ namespace netDxf.Entities
 			this.Value = string.Empty;
 			this.MaterialCondition = ToleranceMaterialCondition.None;
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="value">Datum reference value.</param>
 		/// <param name="materialCondition">Datum material condition.</param>

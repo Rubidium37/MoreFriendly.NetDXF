@@ -34,6 +34,8 @@ namespace netDxf.Collections
 	public sealed class AttributeDefinitionDictionary :
 		IDictionary<string, AttributeDefinition>
 	{
+		private readonly Dictionary<string, AttributeDefinition> innerDictionary;
+
 		#region delegates and events
 
 		public delegate void BeforeAddItemEventHandler(AttributeDefinitionDictionary sender, AttributeDefinitionDictionaryEventArgs e);
@@ -89,12 +91,6 @@ namespace netDxf.Collections
 			if (ae != null)
 				ae(this, new AttributeDefinitionDictionaryEventArgs(item));
 		}
-
-		#endregion
-
-		#region private fields
-
-		private readonly Dictionary<string, AttributeDefinition> innerDictionary;
 
 		#endregion
 

@@ -38,7 +38,6 @@ namespace netDxf.Entities
 			: this(Vector2.Zero, Vector2.Zero, Vector2.Zero, Vector2.Zero)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="firstVertex">Solid <see cref="Vector2">first vertex</see> in <b>OCS</b> (object coordinate system).</param>
 		/// <param name="secondVertex">Solid <see cref="Vector2">second vertex</see> in <b>OCS</b> (object coordinate system).</param>
@@ -50,7 +49,6 @@ namespace netDxf.Entities
 				new Vector2(thirdVertex.X, thirdVertex.Y))
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="firstVertex">Solid <see cref="Vector2">first vertex</see> in <b>OCS</b> (object coordinate system).</param>
 		/// <param name="secondVertex">Solid <see cref="Vector2">second vertex</see> in <b>OCS</b> (object coordinate system).</param>
@@ -63,8 +61,6 @@ namespace netDxf.Entities
 			this.SecondVertex = secondVertex;
 			this.ThirdVertex = thirdVertex;
 			this.FourthVertex = fourthVertex;
-			this.Elevation = 0.0;
-			this.Thickness = 0.0;
 		}
 
 		#endregion
@@ -85,10 +81,10 @@ namespace netDxf.Entities
 
 		/// <summary>Gets or sets the solid elevation.</summary>
 		/// <remarks>This is the distance from the origin to the plane of the solid.</remarks>
-		public double Elevation { get; set; }
+		public double Elevation { get; set; } = 0.0;
 
 		/// <summary>Gets or sets the thickness of the solid.</summary>
-		public double Thickness { get; set; }
+		public double Thickness { get; set; } = 0.0;
 
 		#endregion
 

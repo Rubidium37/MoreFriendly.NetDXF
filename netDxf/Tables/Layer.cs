@@ -51,16 +51,6 @@ namespace netDxf.Tables
 
 		#endregion
 
-		#region private fields
-
-		private string description;
-		private AciColor color;
-		private Linetype linetype;
-		private Lineweight lineweight;
-		private Transparency transparency;
-
-		#endregion
-
 		#region constants
 
 		/// <summary>Default layer name.</summary>
@@ -79,7 +69,6 @@ namespace netDxf.Tables
 			: this(name, true)
 		{
 		}
-
 		internal Layer(string name, bool checkName)
 			: base(name, DxfObjectCode.Layer, checkName)
 		{
@@ -88,20 +77,14 @@ namespace netDxf.Tables
 				throw new ArgumentNullException(nameof(name), "The layer name should be at least one character long.");
 			}
 
-			this.description = string.Empty;
 			this.IsReserved = name.Equals(DefaultName, StringComparison.OrdinalIgnoreCase);
-			this.color = AciColor.Default;
-			this.linetype = Linetype.Continuous;
-			this.IsVisible = true;
-			this.Plot = true;
-			this.lineweight = Lineweight.Default;
-			this.transparency = new Transparency(0);
 		}
 
 		#endregion
 
 		#region public properties
 
+		private string _Description = string.Empty;
 		/// <summary>Gets or sets the layer description.</summary>
 		/// <remarks>
 		/// The layer description is saved in the extended data of the layer, it will be handle automatically when the file is saved or loaded.<br />
@@ -109,45 +92,48 @@ namespace netDxf.Tables
 		/// </remarks>
 		public string Description
 		{
-			get => this.description;
-			set => this.description = string.IsNullOrEmpty(value) ? string.Empty : value;
+			get => _Description;
+			set => _Description = string.IsNullOrEmpty(value) ? string.Empty : value;
 		}
 
+		private Linetype _Linetype = Linetype.Continuous;
 		/// <summary>Gets or sets the layer <see cref="Linetype">line type</see>.</summary>
 		public Linetype Linetype
 		{
-			get => this.linetype;
+			get => _Linetype;
 			set
 			{
 				if (value == null)
 				{
 					throw new ArgumentNullException(nameof(value));
 				}
-				this.linetype = this.OnLinetypeChangedEvent(this.linetype, value);
+
+				_Linetype = this.OnLinetypeChangedEvent(_Linetype, value);
 			}
 		}
 
+		private AciColor _Color = AciColor.Default;
 		/// <summary>Gets or sets the layer <see cref="AciColor">color</see>.</summary>
 		public AciColor Color
 		{
-			get => this.color;
+			get => _Color;
 			set
 			{
 				if (value == null)
 				{
 					throw new ArgumentNullException(nameof(value));
 				}
-
 				if (value.IsByLayer || value.IsByBlock)
 				{
 					throw new ArgumentException("The layer color cannot be <b>ByLayer</b> or <b>ByBlock</b>", nameof(value));
 				}
-				this.color = value;
+
+				_Color = value;
 			}
 		}
 
 		/// <summary>Gets or sets the layer visibility.</summary>
-		public bool IsVisible { get; set; }
+		public bool IsVisible { get; set; } = true;
 
 		/// <summary>Gets or sets if the layer is frozen; otherwise layer is thawed.</summary>
 		public bool IsFrozen { get; set; }
@@ -157,30 +143,29 @@ namespace netDxf.Tables
 
 		/// <summary>Gets or sets if the plotting flag.</summary>
 		/// <remarks>If set to <see langword="false"/>, do not plot this layer.</remarks>
-		public bool Plot { get; set; }
+		public bool Plot { get; set; } = true;
 
+		private Lineweight _Lineweight = Lineweight.Default;
 		/// <summary>Gets or sets the layer line weight, one unit is always 1/100 mm (default = Default).</summary>
 		public Lineweight Lineweight
 		{
-			get => this.lineweight;
+			get => _Lineweight;
 			set
 			{
 				if (value == Lineweight.ByLayer || value == Lineweight.ByBlock)
 				{
 					throw new ArgumentException("The lineweight of a layer cannot be set to <b>ByLayer</b> or <b>ByBlock</b>.", nameof(value));
 				}
-				this.lineweight = value;
+				_Lineweight = value;
 			}
 		}
 
+		private Transparency _Transparency = new Transparency(0);
 		/// <summary>Gets or sets layer transparency (default: 0, opaque).</summary>
 		public Transparency Transparency
 		{
-			get => this.transparency;
-			set
-			{
-				this.transparency = value ?? throw new ArgumentNullException(nameof(value));
-			}
+			get => _Transparency;
+			set => _Transparency = value ?? throw new ArgumentNullException(nameof(value));
 		}
 
 		/// <summary>Gets the owner of the actual layer.</summary>

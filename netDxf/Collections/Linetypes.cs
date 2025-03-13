@@ -40,7 +40,6 @@ namespace netDxf.Collections
 			: this(document, null)
 		{
 		}
-
 		internal Linetypes(DxfDocument document, string handle)
 			: base(document, DxfObjectCode.LinetypeTable, handle)
 		{

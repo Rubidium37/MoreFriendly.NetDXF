@@ -35,13 +35,6 @@ namespace netDxf.Entities
 	public class HatchPattern :
 		ICloneable
 	{
-		#region private fields
-
-		private double angle;
-		private double scale;
-
-		#endregion
-
 		#region constructor
 
 		/// <summary>Initializes a new instance of the class.</summary>
@@ -50,7 +43,6 @@ namespace netDxf.Entities
 			: this(name, null, string.Empty)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="name">Pattern name, always stored as uppercase.</param>
 		/// <param name="description">Description of the pattern (optional, this information is not saved in the <b>DXF</b> file). By default it will use the supplied name.</param>
@@ -58,7 +50,6 @@ namespace netDxf.Entities
 			: this(name, null, description)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="name">Pattern name, always stored as uppercase.</param>
 		/// <param name="lineDefinitions">The definition of the lines that make up the pattern (not applicable in Solid fills).</param>
@@ -66,7 +57,6 @@ namespace netDxf.Entities
 			: this(name, lineDefinitions, string.Empty)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="name">Pattern name, always stored as uppercase.</param>
 		/// <param name="lineDefinitions">The definition of the lines that make up the pattern (not applicable in Solid fills).</param>
@@ -75,12 +65,7 @@ namespace netDxf.Entities
 		{
 			this.Name = string.IsNullOrEmpty(name) ? string.Empty : name;
 			this.Description = string.IsNullOrEmpty(description) ? string.Empty : description;
-			this.Style = HatchStyle.Normal;
 			this.Fill = this.Name == "SOLID" ? HatchFillType.SolidFill : HatchFillType.PatternFill;
-			this.Type = HatchType.UserDefined;
-			this.Origin = Vector2.Zero;
-			this.angle = 0.0;
-			this.scale = 1.0;
 			this.LineDefinitions = lineDefinitions == null ? new List<HatchPatternLineDefinition>() : new List<HatchPatternLineDefinition>(lineDefinitions);
 		}
 
@@ -186,33 +171,35 @@ namespace netDxf.Entities
 
 		/// <summary>Gets the hatch style.</summary>
 		/// <remarks>Only normal style is implemented.</remarks>
-		public HatchStyle Style { get; internal set; }
+		public HatchStyle Style { get; internal set; } = HatchStyle.Normal;
 
 		/// <summary>Gets or sets the hatch pattern type.</summary>
-		public HatchType Type { get; set; }
+		public HatchType Type { get; set; } = HatchType.UserDefined;
 
 		/// <summary>Gets the solid fill flag.</summary>
 		public HatchFillType Fill { get; internal set; }
 
 		/// <summary>Gets or sets the pattern origin.</summary>
-		public Vector2 Origin { get; set; }
+		public Vector2 Origin { get; set; } = Vector2.Zero;
 
+		private double _Angle = 0.0;
 		/// <summary>Gets or sets the pattern angle in degrees.</summary>
 		public double Angle
 		{
-			get => this.angle;
-			set => this.angle = MathHelper.NormalizeAngle(value);
+			get => _Angle;
+			set => _Angle = MathHelper.NormalizeAngle(value);
 		}
 
+		private double _Scale = 1.0;
 		/// <summary>Gets or sets the pattern scale (not applicable in Solid fills).</summary>
 		public double Scale
 		{
-			get => this.scale;
+			get => _Scale;
 			set
 			{
 				if (value <= 0)
 					throw new ArgumentOutOfRangeException(nameof(value), value, "The scale can not be zero or less.");
-				this.scale = value;
+				_Scale = value;
 			}
 		}
 
@@ -388,8 +375,8 @@ namespace netDxf.Entities
 				Fill = this.Fill,
 				Type = this.Type,
 				Origin = this.Origin,
-				Angle = this.angle,
-				Scale = this.scale,
+				Angle = _Angle,
+				Scale = _Scale,
 			};
 
 			foreach (HatchPatternLineDefinition def in this.LineDefinitions)

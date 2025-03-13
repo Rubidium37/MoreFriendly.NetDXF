@@ -42,7 +42,6 @@ namespace netDxf.Collections
 			: this(document, null)
 		{
 		}
-
 		internal BlockRecords(DxfDocument document, string handle)
 			: base(document, DxfObjectCode.BlockRecordTable, handle)
 		{

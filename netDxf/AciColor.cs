@@ -300,44 +300,29 @@ namespace netDxf
 
 		#endregion
 
-		#region private fields
-
-		private short index;
-
-		#endregion
-
 		#region constants
 
 		/// <summary>Gets the <b>ByLayer</b> color.</summary>
-		public static AciColor ByLayer => new AciColor { index = 256 };
-
+		public static AciColor ByLayer => new AciColor { _Index = 256 };
 		/// <summary>Gets the <b>ByBlock</b> color.</summary>
-		public static AciColor ByBlock => new AciColor { index = 0 };
+		public static AciColor ByBlock => new AciColor { _Index = 0 };
 
 		/// <summary>Defines a default red color.</summary>
 		public static AciColor Red => new AciColor(1);
-
 		/// <summary>Defines a default yellow color.</summary>
 		public static AciColor Yellow => new AciColor(2);
-
 		/// <summary>Defines a default green color.</summary>
 		public static AciColor Green => new AciColor(3);
-
 		/// <summary>Defines a default cyan color.</summary>
 		public static AciColor Cyan => new AciColor(4);
-
 		/// <summary>Defines a default blue color.</summary>
 		public static AciColor Blue => new AciColor(5);
-
 		/// <summary>Defines a default magenta color.</summary>
 		public static AciColor Magenta => new AciColor(6);
-
 		/// <summary>Defines a default white/black color.</summary>
 		public static AciColor Default => new AciColor(7);
-
 		/// <summary>Defines a default dark gray color.</summary>
 		public static AciColor DarkGray => new AciColor(8);
-
 		/// <summary>Defines a default light gray color.</summary>
 		public static AciColor LightGray => new AciColor(9);
 
@@ -359,7 +344,6 @@ namespace netDxf
 			: this(7)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class from an array of three values.</summary>
 		/// <param name="rgb"><b>RGB</b> components (input values range from 0 to 255). The array must contain three values.</param>
 		/// <remarks>By default the <see cref="UseTrueColor"/> will be set to <see langword="true"/>.</remarks>
@@ -367,7 +351,6 @@ namespace netDxf
 			: this(rgb[0], rgb[1], rgb[2])
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		///<param name="r">Red component (input values range from 0 to 255).</param>
 		///<param name="g">Green component (input values range from 0 to 255).</param>
@@ -379,9 +362,8 @@ namespace netDxf
 			this.G = g;
 			this.B = b;
 			this.UseTrueColor = true;
-			this.index = RgbToAci(this.R, this.G, this.B);
+			_Index = RgbToAci(this.R, this.G, this.B);
 		}
-
 		/// <summary>Initializes a new instance of the class from an array of three values.</summary>
 		/// <param name="rgb"><b>RGB</b> components (input values range from 0 to 1). The array must contain three values.</param>
 		/// <remarks>By default the <see cref="UseTrueColor"/> will be set to <see langword="true"/>.</remarks>
@@ -389,7 +371,6 @@ namespace netDxf
 			: this(rgb[0], rgb[1], rgb[2])
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="r">Red component (input values range from 0 to 1).</param>
 		/// <param name="g">Green component (input values range from 0 to 1).</param>
@@ -414,9 +395,8 @@ namespace netDxf
 			this.G = (byte)Math.Round(g * 255);
 			this.B = (byte)Math.Round(b * 255);
 			this.UseTrueColor = true;
-			this.index = RgbToAci(this.R, this.G, this.B);
+			_Index = RgbToAci(this.R, this.G, this.B);
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="color">A <see cref="Color">color</see>.</param>
 		/// <remarks>By default the <see cref="UseTrueColor"/> will be set to <see langword="true"/>.</remarks>
@@ -424,7 +404,6 @@ namespace netDxf
 			: this(color.R, color.G, color.B)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="index">Color index.</param>
 		/// <remarks>
@@ -444,7 +423,7 @@ namespace netDxf
 			this.G = rgb[1];
 			this.B = rgb[2];
 			this.UseTrueColor = false;
-			this.index = index;
+			_Index = index;
 		}
 
 		#endregion
@@ -452,10 +431,10 @@ namespace netDxf
 		#region public properties
 
 		/// <summary>Defines if the color is defined by layer.</summary>
-		public bool IsByLayer => this.index == 256;
+		public bool IsByLayer => _Index == 256;
 
 		/// <summary>Defines if the color is defined by block.</summary>
-		public bool IsByBlock => this.index == 0;
+		public bool IsByBlock => _Index == 0;
 
 		/// <summary>Gets the red component of the AciColor.</summary>
 		public byte R { get; private set; }
@@ -473,6 +452,7 @@ namespace netDxf
 		/// </remarks>
 		public bool UseTrueColor { get; set; }
 
+		private short _Index;
 		/// <summary>Gets or sets the color index.</summary>
 		/// <remarks>
 		/// Accepted color index values range from 1 to 255.
@@ -480,7 +460,7 @@ namespace netDxf
 		/// </remarks>
 		public short Index
 		{
-			get => this.index;
+			get => _Index;
 			set
 			{
 				if (value <= 0 || value >= 256)
@@ -488,8 +468,8 @@ namespace netDxf
 					throw new ArgumentOutOfRangeException(nameof(value), value, "Accepted color index values range from 1 to 255.");
 				}
 
-				this.index = value;
-				byte[] rgb = IndexRgb[(byte)this.index];
+				_Index = value;
+				byte[] rgb = IndexRgb[(byte)_Index];
 				this.R = rgb[0];
 				this.G = rgb[1];
 				this.B = rgb[2];
@@ -699,7 +679,7 @@ namespace netDxf
 		/// </remarks>
 		public Color ToColor()
 		{
-			if (this.index < 1 || this.index > 255) //default color definition for <b>ByLayer</b> and <b>ByBlock</b> colors
+			if (_Index < 1 || _Index > 255) //default color definition for <b>ByLayer</b> and <b>ByBlock</b> colors
 			{
 				return Color.White;
 			}
@@ -714,7 +694,7 @@ namespace netDxf
 			this.G = color.G;
 			this.B = color.B;
 			this.UseTrueColor = true;
-			this.index = RgbToAci(this.R, this.G, this.B);
+			_Index = RgbToAci(this.R, this.G, this.B);
 		}
 
 		/// <summary>Gets the <see cref="AciColor">color</see> from an index.</summary>
@@ -778,12 +758,12 @@ namespace netDxf
 		/// <inheritdoc/>
 		public override string ToString()
 		{
-			if (this.index == 0)
+			if (_Index == 0)
 			{
 				return "ByBlock";
 			}
 
-			if (this.index == 256)
+			if (_Index == 256)
 			{
 				return "ByLayer";
 			}
@@ -793,7 +773,7 @@ namespace netDxf
 				return String.Format("{0}{3}{1}{3}{2}", this.R, this.G, this.B, Thread.CurrentThread.CurrentCulture.TextInfo.ListSeparator);
 			}
 
-			return this.index.ToString(CultureInfo.CurrentCulture);
+			return _Index.ToString(CultureInfo.CurrentCulture);
 		}
 
 		#endregion
@@ -809,7 +789,7 @@ namespace netDxf
 				G = this.G,
 				B = this.B,
 				UseTrueColor = this.UseTrueColor,
-				index = this.index
+				_Index = _Index
 			};
 
 			return color;

@@ -33,13 +33,6 @@ namespace netDxf.Tables
 	public class VPort :
 		TableObject
 	{
-		#region private fields
-
-		private Vector3 direction;
-		private double aspectRatio;
-
-		#endregion
-
 		#region constants
 
 		/// <summary>Default <b>VPort</b> name.</summary>
@@ -57,7 +50,6 @@ namespace netDxf.Tables
 			: this(name, true)
 		{
 		}
-
 		internal VPort(string name, bool checkName)
 			: base(name, DxfObjectCode.VPort, checkName)
 		{
@@ -67,16 +59,6 @@ namespace netDxf.Tables
 			}
 
 			this.IsReserved = name.Equals("*Active", StringComparison.OrdinalIgnoreCase);
-			this.ViewCenter = Vector2.Zero;
-			this.SnapBasePoint = Vector2.Zero;
-			this.SnapSpacing = new Vector2(0.5);
-			this.GridSpacing = new Vector2(10.0);
-			this.ViewTarget = Vector3.Zero;
-			this.direction = Vector3.UnitZ;
-			this.ViewHeight = 10;
-			this.aspectRatio = 1.0;
-			this.ShowGrid = true;
-			this.SnapMode = false;
 		}
 
 		#endregion
@@ -84,25 +66,26 @@ namespace netDxf.Tables
 		#region public properties
 
 		/// <summary>Gets or sets the view center point in <b>DCS</b> (Display Coordinate System)</summary>
-		public Vector2 ViewCenter { get; set; }
+		public Vector2 ViewCenter { get; set; } = Vector2.Zero;
 
 		/// <summary>Gets or sets the snap base point in <b>DCS</b> (Display Coordinate System)</summary>
-		public Vector2 SnapBasePoint { get; set; }
+		public Vector2 SnapBasePoint { get; set; } = Vector2.Zero;
 
 		/// <summary>Gets or sets the snap spacing X and Y.</summary>
-		public Vector2 SnapSpacing { get; set; }
+		public Vector2 SnapSpacing { get; set; } = new Vector2(0.5);
 
 		/// <summary>Gets or sets the grid spacing X and Y.</summary>
-		public Vector2 GridSpacing { get; set; }
+		public Vector2 GridSpacing { get; set; } = new Vector2(10.0);
 
+		private Vector3 _Direction = Vector3.UnitZ;
 		/// <summary>Gets or sets the view direction from target point in <b>WCS</b> (World Coordinate System).</summary>
 		public Vector3 ViewDirection
 		{
-			get => this.direction;
+			get => _Direction;
 			set
 			{
-				this.direction = Vector3.Normalize(value);
-				if (Vector3.IsZero(this.direction))
+				_Direction = Vector3.Normalize(value);
+				if (Vector3.IsZero(_Direction))
 				{
 					throw new ArgumentException("The direction can not be the zero vector.", nameof(value));
 				}
@@ -110,30 +93,31 @@ namespace netDxf.Tables
 		}
 
 		/// <summary>Gets or sets the view target point in <b>WCS</b> (World Coordinate System).</summary>
-		public Vector3 ViewTarget { get; set; }
+		public Vector3 ViewTarget { get; set; } = Vector3.Zero;
 
 		/// <summary>Gets or sets the view height.</summary>
-		public double ViewHeight { get; set; }
+		public double ViewHeight { get; set; } = 10;
 
+		private double _ViewAspectRatio = 1.0;
 		/// <summary>Gets or sets the view aspect ratio (view width/view height).</summary>
 		public double ViewAspectRatio
 		{
-			get => this.aspectRatio;
+			get => _ViewAspectRatio;
 			set
 			{
 				if (value <= 0)
 				{
 					throw new ArgumentOutOfRangeException(nameof(value), value, "The VPort aspect ratio must be greater than zero.");
 				}
-				this.aspectRatio = value;
+				_ViewAspectRatio = value;
 			}
 		}
 
 		/// <summary>Gets or sets the grid on/off.</summary>
-		public bool ShowGrid { get; set; }
+		public bool ShowGrid { get; set; } = true;
 
 		/// <summary>Gets or sets the snap mode on/off.</summary>
-		public bool SnapMode { get; set; }
+		public bool SnapMode { get; set; } = false;
 
 		/// <summary>Gets the owner of the actual viewport.</summary>
 		public new VPorts Owner
@@ -162,9 +146,9 @@ namespace netDxf.Tables
 				SnapSpacing = this.SnapSpacing,
 				GridSpacing = this.GridSpacing,
 				ViewTarget = this.ViewTarget,
-				ViewDirection = this.direction,
+				ViewDirection = _Direction,
 				ViewHeight = this.ViewHeight,
-				ViewAspectRatio = this.aspectRatio,
+				ViewAspectRatio = _ViewAspectRatio,
 				ShowGrid = this.ShowGrid
 			};
 

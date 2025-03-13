@@ -3984,8 +3984,9 @@
             <returns>A list of <see cref="T:netDxf.Entities.HatchBoundaryPath.Line">lines</see> and <see cref="T:netDxf.Entities.HatchBoundaryPath.Arc">arcs</see> that made up the polyline.</returns>
         </member>
         <member name="M:netDxf.Entities.HatchBoundaryPath.Polyline.ConvertFrom(netDxf.Entities.EntityObject)">
-            <summary>Initializes a new instance of the <see cref="T:netDxf.Entities.HatchBoundaryPath.Polyline"/> class.</summary>
-            <param name="entity"><see cref="T:netDxf.Entities.EntityObject">Entity</see> that represents the edge.</param>
+            <summary>Creates a <see cref="T:netDxf.Entities.HatchBoundaryPath.Polyline"/> from an <see cref="T:netDxf.Entities.EntityObject">entity</see>.</summary>
+            <param name="entity">An <see cref="T:netDxf.Entities.EntityObject">entity</see>.</param>
+            <returns>A <see cref="T:netDxf.Entities.HatchBoundaryPath.Polyline"/> line.</returns>
         </member>
         <member name="M:netDxf.Entities.HatchBoundaryPath.Polyline.ConvertTo">
             <inheritdoc/>
@@ -4010,9 +4011,9 @@
             <param name="entity"><see cref="T:netDxf.Entities.EntityObject">Entity</see> that represents the edge.</param>
         </member>
         <member name="M:netDxf.Entities.HatchBoundaryPath.Line.ConvertFrom(netDxf.Entities.EntityObject)">
-            <summary>Creates a BoundaryBoundaryPath from an <see cref="T:netDxf.Entities.EntityObject">entity</see>.</summary>
+            <summary>Creates a <see cref="T:netDxf.Entities.HatchBoundaryPath.Line"/> from an <see cref="T:netDxf.Entities.EntityObject">entity</see>.</summary>
             <param name="entity">An <see cref="T:netDxf.Entities.EntityObject">entity</see>.</param>
-            <returns>A <see cref="T:netDxf.Entities.HatchBoundaryPath"/> line.</returns>
+            <returns>A <see cref="T:netDxf.Entities.HatchBoundaryPath.Line"/> line.</returns>
         </member>
         <member name="M:netDxf.Entities.HatchBoundaryPath.Line.ConvertTo">
             <inheritdoc/>
@@ -4046,8 +4047,9 @@
             <param name="entity"><see cref="T:netDxf.Entities.EntityObject">Entity</see> that represents the edge.</param>
         </member>
         <member name="M:netDxf.Entities.HatchBoundaryPath.Arc.ConvertFrom(netDxf.Entities.EntityObject)">
-            <summary>Initializes a new instance of the <see cref="T:netDxf.Entities.HatchBoundaryPath.Arc"/> class.</summary>
-            <param name="entity"><see cref="T:netDxf.Entities.EntityObject">Entity</see> that represents the edge.</param>
+            <summary>Creates a <see cref="T:netDxf.Entities.HatchBoundaryPath.Arc"/> from an <see cref="T:netDxf.Entities.EntityObject">entity</see>.</summary>
+            <param name="entity">An <see cref="T:netDxf.Entities.EntityObject">entity</see>.</param>
+            <returns>A <see cref="T:netDxf.Entities.HatchBoundaryPath.Arc"/> line.</returns>
         </member>
         <member name="M:netDxf.Entities.HatchBoundaryPath.Arc.ConvertTo">
             <inheritdoc/>
@@ -4084,8 +4086,9 @@
             <param name="entity"><see cref="T:netDxf.Entities.EntityObject">Entity</see> that represents the edge.</param>
         </member>
         <member name="M:netDxf.Entities.HatchBoundaryPath.Ellipse.ConvertFrom(netDxf.Entities.EntityObject)">
-            <summary>Initializes a new instance of the <see cref="T:netDxf.Entities.HatchBoundaryPath.Ellipse"/> class.</summary>
-            <param name="entity"><see cref="T:netDxf.Entities.EntityObject">Entity</see> that represents the edge.</param>
+            <summary>Creates a <see cref="T:netDxf.Entities.HatchBoundaryPath.Ellipse"/> from an <see cref="T:netDxf.Entities.EntityObject">entity</see>.</summary>
+            <param name="entity">An <see cref="T:netDxf.Entities.EntityObject">entity</see>.</param>
+            <returns>A <see cref="T:netDxf.Entities.HatchBoundaryPath.Ellipse"/> line.</returns>
         </member>
         <member name="M:netDxf.Entities.HatchBoundaryPath.Ellipse.ConvertTo">
             <inheritdoc/>
@@ -4122,8 +4125,9 @@
             <param name="entity"><see cref="T:netDxf.Entities.EntityObject">Entity</see> that represents the edge.</param>
         </member>
         <member name="M:netDxf.Entities.HatchBoundaryPath.Spline.ConvertFrom(netDxf.Entities.EntityObject)">
-            <summary>Initializes a new instance of the <see cref="T:netDxf.Entities.HatchBoundaryPath.Spline"/> class.</summary>
-            <param name="entity"><see cref="T:netDxf.Entities.EntityObject">Entity</see> that represents the edge.</param>
+            <summary>Creates a <see cref="T:netDxf.Entities.HatchBoundaryPath.Spline"/> from an <see cref="T:netDxf.Entities.EntityObject">entity</see>.</summary>
+            <param name="entity">An <see cref="T:netDxf.Entities.EntityObject">entity</see>.</param>
+            <returns>A <see cref="T:netDxf.Entities.HatchBoundaryPath.Spline"/> line.</returns>
         </member>
         <member name="M:netDxf.Entities.HatchBoundaryPath.Spline.ConvertTo">
             <inheritdoc/>

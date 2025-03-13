@@ -41,7 +41,6 @@ namespace netDxf.Collections
 			: this(document, null)
 		{
 		}
-
 		internal Groups(DxfDocument document, string handle)
 			: base(document, DxfObjectCode.GroupDictionary, handle)
 		{

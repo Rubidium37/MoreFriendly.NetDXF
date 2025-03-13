@@ -45,7 +45,6 @@ namespace netDxf.Objects
 			: this(Path.GetFileNameWithoutExtension(file), file)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="name">Underlay definition name.</param>
 		/// <param name="file">Underlay file name with full or relative path.</param>

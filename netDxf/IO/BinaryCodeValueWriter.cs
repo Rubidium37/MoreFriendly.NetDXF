@@ -32,11 +32,7 @@ namespace netDxf.IO
 	internal class BinaryCodeValueWriter :
 		ICodeValueWriter
 	{
-		#region private fields
-
 		private readonly BinaryWriter writer;
-
-		#endregion
 
 		#region constructors
 
@@ -49,9 +45,6 @@ namespace netDxf.IO
 			//char[] sentinel = {'A', 'u', 't', 'o', 'C', 'A', 'D', ' ', 'B', 'i', 'n', 'a', 'r', 'y', ' ', 'D', 'X', 'F', '\r', '\n', (char)26, '\0'};
 			byte[] sentinel = { 65, 117, 116, 111, 67, 65, 68, 32, 66, 105, 110, 97, 114, 121, 32, 68, 88, 70, 13, 10, 26, 0 };
 			this.writer.Write(sentinel);
-
-			this.Code = 0;
-			this.Value = null;
 		}
 
 		#endregion
@@ -59,7 +52,7 @@ namespace netDxf.IO
 		#region public properties
 
 		/// <inheritdoc/>
-		public short Code { get; private set; }
+		public short Code { get; private set; } = 0;
 
 		/// <inheritdoc/>
 		public object Value { get; private set; }

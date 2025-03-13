@@ -33,13 +33,6 @@ namespace netDxf.Entities
 	public class Polyline3D :
 		EntityObject
 	{
-		#region private fields
-
-		private static short defaultSplineSegs = 8;
-		private PolylineSmoothType smoothType;
-
-		#endregion
-
 		#region constructors
 
 		/// <summary>Initializes a new instance of the class.</summary>
@@ -47,14 +40,12 @@ namespace netDxf.Entities
 			: this(new List<Vector3>(), false)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="vertexes">3d polyline <see cref="Vector3">vertex</see> list.</param>
 		public Polyline3D(IEnumerable<Vector3> vertexes)
 			: this(vertexes, false)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="vertexes">3d polyline <see cref="Vector3">vertex</see> list.</param>
 		/// <param name="isClosed">Sets if the polyline is closed, by default it will create an open polyline.</param>
@@ -68,24 +59,24 @@ namespace netDxf.Entities
 
 			this.Vertexes = new List<Vector3>(vertexes);
 			this.Flags = isClosed ? PolylineTypeFlags.ClosedPolylineOrClosedPolygonMeshInM | PolylineTypeFlags.Polyline3D : PolylineTypeFlags.Polyline3D;
-			this.smoothType = PolylineSmoothType.NoSmooth;
 		}
 
 		#endregion
 
 		#region public properties
 
+		private static short _DefaultSplineSegs = 8;
 		/// <summary>Gets or sets if the default SplineSegs value, this value is used by the Explode method when the current <see cref="Polyline2D"/> does not belong to a <b>DXF</b> document.</summary>
 		public static short DefaultSplineSegs
 		{
-			get => defaultSplineSegs;
+			get => _DefaultSplineSegs;
 			set
 			{
 				if (value <= 0)
 				{
 					throw new ArgumentOutOfRangeException(nameof(value), value, "Values must be greater than 0.");
 				}
-				defaultSplineSegs = value;
+				_DefaultSplineSegs = value;
 			}
 		}
 
@@ -126,13 +117,14 @@ namespace netDxf.Entities
 			}
 		}
 
+		private PolylineSmoothType _SmoothType = PolylineSmoothType.NoSmooth;
 		/// <summary>Gets or sets the curve smooth type.</summary>
 		/// <remarks>
 		/// The additional polyline vertexes corresponding to the SplineFit will be created when writing the <b>DXF</b> file.
 		/// </remarks>
 		public PolylineSmoothType SmoothType
 		{
-			get => this.smoothType;
+			get => _SmoothType;
 			set
 			{
 				if (value == PolylineSmoothType.NoSmooth)
@@ -143,7 +135,7 @@ namespace netDxf.Entities
 				{
 					this.Flags |= PolylineTypeFlags.SplineFit;
 				}
-				this.smoothType = value;
+				_SmoothType = value;
 			}
 		}
 
@@ -175,7 +167,7 @@ namespace netDxf.Entities
 		{
 			List<EntityObject> entities = new List<EntityObject>();
 
-			if (this.smoothType == PolylineSmoothType.NoSmooth)
+			if (_SmoothType == PolylineSmoothType.NoSmooth)
 			{
 				int index = 0;
 				foreach (Vector3 vertex in this.Vertexes)
@@ -217,7 +209,7 @@ namespace netDxf.Entities
 				return entities;
 			}
 
-			int degree = this.smoothType == PolylineSmoothType.Quadratic ? 2 : 3;
+			int degree = _SmoothType == PolylineSmoothType.Quadratic ? 2 : 3;
 			int splineSegs = this.Owner == null ? DefaultSplineSegs : this.Owner.Record.Owner.Owner.DrawingVariables.SplineSegs;
 			int precision = this.IsClosed ? splineSegs * this.Vertexes.Count : splineSegs * (this.Vertexes.Count - 1);
 			List<Vector3> splinePoints = Spline.NurbsEvaluator(this.Vertexes.ToArray(), null, null, degree, false, this.IsClosed, precision);
@@ -270,11 +262,11 @@ namespace netDxf.Entities
 			}
 
 			int degree;
-			if (this.smoothType == PolylineSmoothType.Quadratic)
+			if (_SmoothType == PolylineSmoothType.Quadratic)
 			{
 				degree = 2;
 			}
-			else if (this.smoothType == PolylineSmoothType.Cubic)
+			else if (_SmoothType == PolylineSmoothType.Cubic)
 			{
 				degree = 3;
 			}

@@ -51,17 +51,6 @@ namespace netDxf.Entities
 
 		#endregion
 
-		#region private fields
-
-		private double obliqueAngle;
-		private TextStyle style;
-		private double height;
-		private double widthFactor;
-		private double width;
-		private double rotation;
-
-		#endregion
-
 		#region constructors
 
 		/// <summary>Initializes a new instance of the class.</summary>
@@ -69,14 +58,12 @@ namespace netDxf.Entities
 			: this(string.Empty, Vector3.Zero, 1.0, TextStyle.Default)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="text">Text string.</param>
 		public Text(string text)
 			: this(text, Vector2.Zero, 1.0, TextStyle.Default)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="text">Text string.</param>
 		/// <param name="position">Text <see cref="Vector2">position</see> in world coordinates.</param>
@@ -85,7 +72,6 @@ namespace netDxf.Entities
 			: this(text, new Vector3(position.X, position.Y, 0.0), height, TextStyle.Default)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="text">Text string.</param>
 		/// <param name="position">Text <see cref="Vector3">position</see> in world coordinates.</param>
@@ -94,8 +80,6 @@ namespace netDxf.Entities
 			: this(text, position, height, TextStyle.Default)
 		{
 		}
-
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="text">Text string.</param>
 		/// <param name="position">Text <see cref="Vector2">position</see> in world coordinates.</param>
@@ -105,7 +89,6 @@ namespace netDxf.Entities
 			: this(text, new Vector3(position.X, position.Y, 0.0), height, style)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="text">Text string.</param>
 		/// <param name="position">Text <see cref="Vector3">position</see> in world coordinates.</param>
@@ -116,20 +99,14 @@ namespace netDxf.Entities
 		{
 			this.Value = text;
 			this.Position = position;
-			this.Alignment = TextAlignment.BaselineLeft;
-			this.Normal = Vector3.UnitZ;
-			this.style = style ?? throw new ArgumentNullException(nameof(style));
+			_Style = style ?? throw new ArgumentNullException(nameof(style));
 			if (height <= 0)
 			{
 				throw new ArgumentOutOfRangeException(nameof(height), this.Value, "The Text height must be greater than zero.");
 			}
-			this.height = height;
-			this.width = 1.0;
-			this.widthFactor = style.WidthFactor;
-			this.obliqueAngle = style.ObliqueAngle;
-			this.rotation = 0.0;
-			this.IsBackward = false;
-			this.IsUpsideDown = false;
+			_Height = height;
+			_WidthFactor = style.WidthFactor;
+			_ObliqueAngle = style.ObliqueAngle;
 		}
 
 		#endregion
@@ -142,13 +119,15 @@ namespace netDxf.Entities
 		/// <summary>Gets or sets Text <see cref="Vector3">position</see> in world coordinates.</summary>
 		public Vector3 Position { get; set; }
 
+		private double _Rotation = 0.0;
 		/// <summary>Gets or sets the text rotation in degrees.</summary>
 		public double Rotation
 		{
-			get => this.rotation;
-			set => this.rotation = MathHelper.NormalizeAngle(value);
+			get => _Rotation;
+			set => _Rotation = MathHelper.NormalizeAngle(value);
 		}
 
+		private double _Height;
 		/// <summary>Gets or sets the text height.</summary>
 		/// <remarks>
 		/// Valid values must be greater than zero. Default: 1.0.<br />
@@ -156,32 +135,34 @@ namespace netDxf.Entities
 		/// </remarks>
 		public double Height
 		{
-			get => this.height;
+			get => _Height;
 			set
 			{
 				if (value <= 0)
 				{
 					throw new ArgumentOutOfRangeException(nameof(value), value, "The Text height must be greater than zero.");
 				}
-				this.height = value;
+				_Height = value;
 			}
 		}
 
+		private double _Width = 1.0;
 		/// <summary>Gets or sets the text width, only applicable for text Alignment.Fit and Alignment.Align.</summary>
 		/// <remarks>Valid values must be greater than zero. Default: 1.0.</remarks>
 		public double Width
 		{
-			get => this.width;
+			get => _Width;
 			set
 			{
 				if (value <= 0)
 				{
 					throw new ArgumentOutOfRangeException(nameof(value), value, "The Text width must be greater than zero.");
 				}
-				this.width = value;
+				_Width = value;
 			}
 		}
 
+		private double _WidthFactor;
 		/// <summary>Gets or sets the width factor.</summary>
 		/// <remarks>
 		/// Valid values range from 0.01 to 100. Default: 1.0.<br />
@@ -189,46 +170,49 @@ namespace netDxf.Entities
 		/// </remarks>
 		public double WidthFactor
 		{
-			get => this.widthFactor;
+			get => _WidthFactor;
 			set
 			{
 				if (value < 0.01 || value > 100.0)
 				{
 					throw new ArgumentOutOfRangeException(nameof(value), value, "The Text width factor valid values range from 0.01 to 100.");
 				}
-				this.widthFactor = value;
+				_WidthFactor = value;
 			}
 		}
 
+		private double _ObliqueAngle;
 		/// <summary>Gets or sets the font oblique angle.</summary>
 		/// <remarks>Valid values range from -85 to 85. Default: 0.0.</remarks>
 		public double ObliqueAngle
 		{
-			get => this.obliqueAngle;
+			get => _ObliqueAngle;
 			set
 			{
 				if (value < -85.0 || value > 85.0)
 				{
 					throw new ArgumentOutOfRangeException(nameof(value), value, "The Text oblique angle valid values range from -85 to 85.");
 				}
-				this.obliqueAngle = value;
+				_ObliqueAngle = value;
 			}
 		}
 
 		/// <summary>Gets or sets the text alignment.</summary>
-		public TextAlignment Alignment { get; set; }
+		public TextAlignment Alignment { get; set; } = TextAlignment.BaselineLeft;
 
+		private TextStyle _Style;
 		/// <summary>Gets or sets the <see cref="TextStyle">text style</see>.</summary>
 		public TextStyle Style
 		{
-			get => this.style;
+			get => _Style;
 			set
 			{
 				if (value == null)
 				{
 					throw new ArgumentNullException(nameof(value));
 				}
-				this.style = this.OnTextStyleChangedEvent(this.style, value);
+
+				_Style = this.OnTextStyleChangedEvent(_Style, value);
 			}
 		}
 
@@ -236,10 +220,10 @@ namespace netDxf.Entities
 		public string Value { get; set; }
 
 		/// <summary>Gets or sets if the text is backward (mirrored in X).</summary>
-		public bool IsBackward { get; set; }
+		public bool IsBackward { get; set; } = false;
 
 		/// <summary>Gets or sets if the text is upside down (mirrored in Y).</summary>
-		public bool IsUpsideDown { get; set; }
+		public bool IsUpsideDown { get; set; } = false;
 
 		#endregion
 
@@ -430,15 +414,15 @@ namespace netDxf.Entities
 				IsVisible = this.IsVisible,
 				//Text properties
 				Position = this.Position,
-				Rotation = this.rotation,
-				Height = this.height,
-				Width = this.width,
-				WidthFactor = this.widthFactor,
-				ObliqueAngle = this.obliqueAngle,
+				Rotation = _Rotation,
+				Height = _Height,
+				Width = _Width,
+				WidthFactor = _WidthFactor,
+				ObliqueAngle = _ObliqueAngle,
 				Alignment = this.Alignment,
 				IsBackward = this.IsBackward,
 				IsUpsideDown = this.IsUpsideDown,
-				Style = (TextStyle)this.style.Clone(),
+				Style = (TextStyle)_Style.Clone(),
 				Value = this.Value
 			};
 

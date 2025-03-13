@@ -32,6 +32,8 @@ namespace netDxf.Collections
 	public sealed class ObservableDictionary<TKey, TValue> :
 		IDictionary<TKey, TValue>
 	{
+		private readonly Dictionary<TKey, TValue> innerDictionary;
+
 		#region delegates and events
 
 		public delegate void AddItemEventHandler(ObservableDictionary<TKey, TValue> sender, ObservableDictionaryEventArgs<TKey, TValue> e);
@@ -84,12 +86,6 @@ namespace netDxf.Collections
 			if (ae != null)
 				ae(this, new ObservableDictionaryEventArgs<TKey, TValue>(item));
 		}
-
-		#endregion
-
-		#region private fields
-
-		private readonly Dictionary<TKey, TValue> innerDictionary;
 
 		#endregion
 

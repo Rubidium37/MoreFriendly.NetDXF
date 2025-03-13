@@ -36,17 +36,6 @@ namespace netDxf.Objects
 	public class ImageDefinition :
 		TableObject
 	{
-		#region private fields
-
-		private string file;
-		private int width;
-		private int height;
-		private ImageResolutionUnits resolutionUnits;
-		private double horizontalResolution;
-		private double verticalResolution;
-
-		#endregion
-
 		#region constructors
 
 		/// <summary>Initializes a new instance of the class.</summary>
@@ -74,7 +63,6 @@ namespace netDxf.Objects
 			: this(Path.GetFileNameWithoutExtension(file), file, width, horizontalResolution, height, verticalResolution, units)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="name">Image definition name.</param>
 		/// <param name="file">Image file name with full or relative path.</param>
@@ -110,34 +98,33 @@ namespace netDxf.Objects
 				throw new ArgumentException("File path contains invalid characters.", nameof(file));
 			}
 
-			this.file = file;
+			_File = file;
 
 			if (width <= 0)
 			{
 				throw new ArgumentOutOfRangeException(nameof(width), width, "The ImageDefinition width must be greater than zero.");
 			}
-			this.width = width;
+			_Width = width;
 
 			if (height <= 0)
 			{
 				throw new ArgumentOutOfRangeException(nameof(height), height, "The ImageDefinition height must be greater than zero.");
 			}
-			this.height = height;
+			_Height = height;
 
 			if (horizontalResolution <= 0)
 			{
 				throw new ArgumentOutOfRangeException(nameof(horizontalResolution), horizontalResolution, "The ImageDefinition horizontal resolution must be greater than zero.");
 			}
-			this.horizontalResolution = horizontalResolution;
+			_HorizontalResolution = horizontalResolution;
 
 			if (verticalResolution <= 0)
 			{
 				throw new ArgumentOutOfRangeException(nameof(verticalResolution), verticalResolution, "The ImageDefinition vertical resolution must be greater than zero.");
 			}
-			this.verticalResolution = verticalResolution;
+			_VerticalResolution = verticalResolution;
 
-			this.resolutionUnits = units;
-
+			_ResolutionUnits = units;
 		}
 
 #if NET4X
@@ -164,7 +151,6 @@ namespace netDxf.Objects
 			: this(Path.GetFileNameWithoutExtension(file), file)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class. Only available for Net Framework 4.5 builds.</summary>
 		/// <param name="name">Image definition name.</param>
 		/// <param name="file">Image file name with full or relative path.</param>
@@ -198,18 +184,18 @@ namespace netDxf.Objects
 				throw new FileNotFoundException("Image file not found.", file);
 			}
 
-			this.file = file;
+			_File = file;
 
 			try
 			{
 				using (System.Drawing.Image bitmap = System.Drawing.Image.FromFile(file))
 				{
-					this.width = bitmap.Width;
-					this.height = bitmap.Height;
-					this.horizontalResolution = bitmap.HorizontalResolution;
-					this.verticalResolution = bitmap.VerticalResolution;
+					_Width = bitmap.Width;
+					_Height = bitmap.Height;
+					_HorizontalResolution = bitmap.HorizontalResolution;
+					_VerticalResolution = bitmap.VerticalResolution;
 					// the System.Drawing.Image stores the image resolution in inches
-					this.resolutionUnits = ImageResolutionUnits.Inches;
+					_ResolutionUnits = ImageResolutionUnits.Inches;
 				}
 			}
 			catch (Exception)
@@ -225,13 +211,14 @@ namespace netDxf.Objects
 
 		#region public properties
 
+		private string _File;
 		/// <summary>Gets or sets the image file.</summary>
 		/// <remarks>
 		/// When changing the image file the other properties should also be modified accordingly to avoid distortions in the final image.
 		/// </remarks>
 		public string File
 		{
-			get => this.file;
+			get => _File;
 			set
 			{
 				if (string.IsNullOrEmpty(value))
@@ -244,14 +231,15 @@ namespace netDxf.Objects
 					throw new ArgumentException("File path contains invalid characters.", nameof(value));
 				}
 
-				this.file = value;
+				_File = value;
 			}
 		}
 
+		private int _Width;
 		/// <summary>Gets or sets the image width in pixels.</summary>
 		public int Width
 		{
-			get => this.width;
+			get => _Width;
 			set
 			{
 				if (value <= 0)
@@ -259,14 +247,15 @@ namespace netDxf.Objects
 					throw new ArgumentOutOfRangeException(nameof(value), value, "The ImageDefinition width must be greater than zero.");
 				}
 
-				this.width = value;
+				_Width = value;
 			}
 		}
 
+		private int _Height;
 		/// <summary>Gets or sets the image height in pixels.</summary>
 		public int Height
 		{
-			get => this.height;
+			get => _Height;
 			set
 			{
 				if (value <= 0)
@@ -274,14 +263,15 @@ namespace netDxf.Objects
 					throw new ArgumentOutOfRangeException(nameof(value), value, "The ImageDefinition height must be greater than zero.");
 				}
 
-				this.height = value;
+				_Height = value;
 			}
 		}
 
+		private double _HorizontalResolution;
 		/// <summary>Gets or sets the image horizontal resolution in pixels per unit.</summary>
 		public double HorizontalResolution
 		{
-			get => this.horizontalResolution;
+			get => _HorizontalResolution;
 			set
 			{
 				if (value <= 0)
@@ -289,14 +279,15 @@ namespace netDxf.Objects
 					throw new ArgumentOutOfRangeException(nameof(value), value, "The ImageDefinition horizontal resolution must be greater than zero.");
 				}
 
-				this.horizontalResolution = value;
+				_HorizontalResolution = value;
 			}
 		}
 
+		private double _VerticalResolution;
 		/// <summary>Gets or sets the image vertical resolution in pixels per unit.</summary>
 		public double VerticalResolution
 		{
-			get => this.verticalResolution;
+			get => _VerticalResolution;
 			set
 			{
 				if (value <= 0)
@@ -304,36 +295,36 @@ namespace netDxf.Objects
 					throw new ArgumentOutOfRangeException(nameof(value), value, "The ImageDefinition vertical resolution must be greater than zero.");
 				}
 
-				this.verticalResolution = value;
+				_VerticalResolution = value;
 			}
 		}
 
+		private ImageResolutionUnits _ResolutionUnits;
 		/// <summary>Gets or sets the image resolution units.</summary>
 		public ImageResolutionUnits ResolutionUnits
 		{
-			get => this.resolutionUnits;
+			get => _ResolutionUnits;
 			set
 			{
-				if (this.resolutionUnits != value)
+				if (_ResolutionUnits != value)
 				{
 					switch (value)
 					{
 						case ImageResolutionUnits.Centimeters:
-							this.horizontalResolution /= 2.54;
-							this.verticalResolution /= 2.54;
+							_HorizontalResolution /= 2.54;
+							_VerticalResolution /= 2.54;
 							break;
 						case ImageResolutionUnits.Inches:
-							this.horizontalResolution *= 2.54;
-							this.verticalResolution *= 2.54;
+							_HorizontalResolution *= 2.54;
+							_VerticalResolution *= 2.54;
 							break;
 						case ImageResolutionUnits.Unitless:
 							break;
 					}
 				}
-				this.resolutionUnits = value;
+				_ResolutionUnits = value;
 			}
 		}
-
 
 		/// <summary>Gets the owner of the actual image definition.</summary>
 		public new ImageDefinitions Owner
@@ -363,7 +354,7 @@ namespace netDxf.Objects
 		/// <inheritdoc/>
 		public override TableObject Clone(string newName)
 		{
-			ImageDefinition copy = new ImageDefinition(newName, this.file, this.width, this.horizontalResolution, this.height, this.verticalResolution, this.resolutionUnits);
+			ImageDefinition copy = new ImageDefinition(newName, _File, _Width, _HorizontalResolution, _Height, _VerticalResolution, _ResolutionUnits);
 
 			foreach (XData data in this.XData.Values)
 			{

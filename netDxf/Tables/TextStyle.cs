@@ -34,18 +34,6 @@ namespace netDxf.Tables
 	public class TextStyle :
 		TableObject
 	{
-		#region private fields
-
-		private string file;
-		private string bigFont;
-		private double height;
-		private double obliqueAngle;
-		private double widthFactor;
-		private FontStyle fontStyle;
-		private string fontFamilyName;
-
-		#endregion
-
 		#region constants
 
 		/// <summary>Default text style name.</summary>
@@ -68,7 +56,6 @@ namespace netDxf.Tables
 			: this(name, font, true)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="name">Text style name.</param>
 		/// <param name="font">Text style font file name with full or relative path.</param>
@@ -93,18 +80,10 @@ namespace netDxf.Tables
 			}
 
 			this.IsReserved = name.Equals(DefaultName, StringComparison.OrdinalIgnoreCase);
-			this.file = font;
-			this.bigFont = string.Empty;
-			this.widthFactor = 1.0;
-			this.obliqueAngle = 0.0;
-			this.height = 0.0;
-			this.IsVertical = false;
-			this.IsBackward = false;
-			this.IsUpsideDown = false;
-			this.fontFamilyName = string.Empty;
-			this.fontStyle = FontStyle.Regular;
+			_File = font;
+			_FontFamilyName = string.Empty;
+			_FontStyle = FontStyle.Regular;
 		}
-
 		/// <summary>Initializes a new instance of the class exclusively to be used with <see langword="true"/> type fonts.</summary>
 		/// <param name="name">Text style name.</param>
 		/// <param name="fontFamily"><see langword="true"/> type font family name.</param>
@@ -114,7 +93,6 @@ namespace netDxf.Tables
 			: this(name, fontFamily, fontStyle, true)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class exclusively to be used with <see langword="true"/> type fonts.</summary>
 		/// <param name="name">Text style name.</param>
 		/// <param name="fontFamily"><see langword="true"/> type font family name.</param>
@@ -124,26 +102,20 @@ namespace netDxf.Tables
 		internal TextStyle(string name, string fontFamily, FontStyle fontStyle, bool checkName)
 			: base(name, DxfObjectCode.TextStyle, checkName)
 		{
-			this.file = string.Empty;
-			this.bigFont = string.Empty;
-			this.widthFactor = 1.0;
-			this.obliqueAngle = 0.0;
-			this.height = 0.0;
-			this.IsVertical = false;
-			this.IsBackward = false;
-			this.IsUpsideDown = false;
+			_File = string.Empty;
 			if (string.IsNullOrEmpty(fontFamily))
 			{
 				throw new ArgumentNullException(nameof(fontFamily));
 			}
-			this.fontFamilyName = fontFamily;
-			this.fontStyle = fontStyle;
+			_FontFamilyName = fontFamily;
+			_FontStyle = fontStyle;
 		}
 
 		#endregion
 
 		#region public properties
 
+		private string _File;
 		/// <summary>Gets or sets the text style font file name.</summary>
 		/// <remarks>
 		/// When this value is used for <see langword="true"/> type fonts should be present in the Font system folder.<br />
@@ -152,7 +124,7 @@ namespace netDxf.Tables
 		/// </remarks>
 		public string FontFile
 		{
-			get => this.file;
+			get => _File;
 			set
 			{
 				if (string.IsNullOrEmpty(value))
@@ -166,32 +138,33 @@ namespace netDxf.Tables
 					throw new ArgumentException("Only true type TTF fonts and ACAD compiled shape SHX fonts are allowed.");
 				}
 
-				this.fontFamilyName = string.Empty;
-				this.bigFont = string.Empty;
-				this.fontStyle = FontStyle.Regular;
-				this.file = value;
+				_FontFamilyName = string.Empty;
+				_BigFont = string.Empty;
+				_FontStyle = FontStyle.Regular;
+				_File = value;
 			}
 		}
 
+		private string _BigFont = string.Empty;
 		/// <summary>Gets or sets an <b>Asian</b>-language Big Font file.</summary>
 		/// <remarks>Only <b>AutoCAD</b> compiled shape <b>SHX</b> fonts are valid for creating Big Fonts.</remarks>
 		public string BigFont
 		{
-			get => this.bigFont;
+			get => _BigFont;
 			set
 			{
 				if (string.IsNullOrEmpty(value))
 				{
-					this.bigFont = string.Empty;
+					_BigFont = string.Empty;
 				}
 				else
 				{
-					if (string.IsNullOrEmpty(this.file))
+					if (string.IsNullOrEmpty(_File))
 					{
 						throw new NullReferenceException("The Big Font is only applicable for SHX Asian fonts.");
 					}
 
-					if (!Path.GetExtension(this.file).Equals(".SHX", StringComparison.OrdinalIgnoreCase))
+					if (!Path.GetExtension(_File).Equals(".SHX", StringComparison.OrdinalIgnoreCase))
 					{
 						throw new NullReferenceException("The Big Font is only applicable for SHX Asian fonts.");
 					}
@@ -201,11 +174,12 @@ namespace netDxf.Tables
 						throw new ArgumentException("The Big Font is only applicable for SHX Asian fonts.", nameof(value));
 					}
 
-					this.bigFont = value;
+					_BigFont = value;
 				}
 			}
 		}
 
+		private string _FontFamilyName;
 		/// <summary>Gets or sets the <see langword="true"/> type font family name.</summary>
 		/// <remarks>
 		/// When the font family name is manually specified the file font will not be used and it will be set to empty,
@@ -215,20 +189,21 @@ namespace netDxf.Tables
 		/// </remarks>
 		public string FontFamilyName
 		{
-			get => this.fontFamilyName;
+			get => _FontFamilyName;
 			set
 			{
 				if (string.IsNullOrEmpty(value))
 				{
 					throw new ArgumentNullException(nameof(value));
 				}
-				this.file = string.Empty;
-				this.bigFont = string.Empty;
-				this.fontStyle = FontStyle.Regular;
-				this.fontFamilyName = value;
+				_File = string.Empty;
+				_BigFont = string.Empty;
+				_FontStyle = FontStyle.Regular;
+				_FontFamilyName = value;
 			}
 		}
 
+		private FontStyle _FontStyle;
 		/// <summary>Gets or sets the <see langword="true"/> type font style.</summary>
 		/// <remarks>
 		/// The font style value is ignored and will always return FontStyle.Regular when a font file has been specified.<br />
@@ -236,69 +211,72 @@ namespace netDxf.Tables
 		/// </remarks>
 		public FontStyle FontStyle
 		{
-			get => this.fontStyle;
+			get => _FontStyle;
 			set
 			{
-				if (string.IsNullOrEmpty(this.file))
+				if (string.IsNullOrEmpty(_File))
 				{
-					this.fontStyle = value;
+					_FontStyle = value;
 				}
 			}
 		}
 
+		private double _Height = 0.0;
 		/// <summary>Gets or sets the text height.</summary>
 		/// <remarks>Fixed text height; 0 if not fixed.</remarks>
 		public double Height
 		{
-			get => this.height;
+			get => _Height;
 			set
 			{
 				if (value < 0)
 				{
 					throw new ArgumentOutOfRangeException(nameof(value), value, "The TextStyle height must be equals or greater than zero.");
 				}
-				this.height = value;
+				_Height = value;
 			}
 		}
 
+		private double _WidthFactor = 1.0;
 		/// <summary>Gets or sets the text width factor.</summary>
 		/// <remarks>Valid values range from 0.01 to 100. Default: 1.0.</remarks>
 		public double WidthFactor
 		{
-			get => this.widthFactor;
+			get => _WidthFactor;
 			set
 			{
 				if (value < 0.01 || value > 100.0)
 				{
 					throw new ArgumentOutOfRangeException(nameof(value), value, "The TextStyle width factor valid values range from 0.01 to 100.");
 				}
-				this.widthFactor = value;
+				_WidthFactor = value;
 			}
 		}
 
+		private double _ObliqueAngle = 0.0;
 		/// <summary>Gets or sets the font oblique angle in degrees.</summary>
 		/// <remarks>Valid values range from -85 to 85. Default: 0.0.</remarks>
 		public double ObliqueAngle
 		{
-			get => this.obliqueAngle;
+			get => _ObliqueAngle;
 			set
 			{
 				if (value < -85.0 || value > 85.0)
 				{
 					throw new ArgumentOutOfRangeException(nameof(value), value, "The TextStyle oblique angle valid values range from -85 to 85.");
 				}
-				this.obliqueAngle = value;
+				_ObliqueAngle = value;
 			}
 		}
 
 		/// <summary>Gets or sets the text is vertical.</summary>
-		public bool IsVertical { get; set; }
+		public bool IsVertical { get; set; } = false;
 
 		/// <summary>Gets or sets if the text is backward (mirrored in X).</summary>
-		public bool IsBackward { get; set; }
+		public bool IsBackward { get; set; } = false;
 
 		/// <summary>Gets or sets if the text is upside down (mirrored in Y).</summary>
-		public bool IsUpsideDown { get; set; }
+		public bool IsUpsideDown { get; set; } = false;
 
 		/// <summary>Gets the owner of the actual text style.</summary>
 		public new TextStyles Owner
@@ -370,26 +348,26 @@ namespace netDxf.Tables
 
 			if (string.IsNullOrEmpty(this.FontFamilyName))
 			{
-				copy = new TextStyle(newName, this.file)
+				copy = new TextStyle(newName, _File)
 				{
-					Height = this.height,
+					Height = _Height,
 					IsBackward = this.IsBackward,
 					IsUpsideDown = this.IsUpsideDown,
 					IsVertical = this.IsVertical,
-					ObliqueAngle = this.obliqueAngle,
-					WidthFactor = this.widthFactor
+					ObliqueAngle = _ObliqueAngle,
+					WidthFactor = _WidthFactor
 				};
 			}
 			else
 			{
-				copy = new TextStyle(newName, this.fontFamilyName, this.fontStyle)
+				copy = new TextStyle(newName, _FontFamilyName, _FontStyle)
 				{
-					Height = this.height,
+					Height = _Height,
 					IsBackward = this.IsBackward,
 					IsUpsideDown = this.IsUpsideDown,
 					IsVertical = this.IsVertical,
-					ObliqueAngle = this.obliqueAngle,
-					WidthFactor = this.widthFactor
+					ObliqueAngle = _ObliqueAngle,
+					WidthFactor = _WidthFactor
 				};
 			}
 

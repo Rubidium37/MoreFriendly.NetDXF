@@ -33,22 +33,7 @@ namespace netDxf
 	public struct Matrix3 :
 		IEquatable<Matrix3>
 	{
-		#region private fields
-
-		private double m11;
-		private double m12;
-		private double m13;
-		private double m21;
-		private double m22;
-		private double m23;
-		private double m31;
-		private double m32;
-		private double m33;
-
-		private bool dirty;
-		private bool isIdentity;
-
-		#endregion
+		private bool IsDirty;
 
 		#region constructors
 
@@ -66,20 +51,20 @@ namespace netDxf
 						double m21, double m22, double m23,
 						double m31, double m32, double m33)
 		{
-			this.m11 = m11;
-			this.m12 = m12;
-			this.m13 = m13;
+			_M11 = m11;
+			_M12 = m12;
+			_M13 = m13;
 
-			this.m21 = m21;
-			this.m22 = m22;
-			this.m23 = m23;
+			_M21 = m21;
+			_M22 = m22;
+			_M23 = m23;
 
-			this.m31 = m31;
-			this.m32 = m32;
-			this.m33 = m33;
+			_M31 = m31;
+			_M32 = m32;
+			_M33 = m33;
 
-			this.dirty = true;
-			this.isIdentity = false;
+			this.IsDirty = true;
+			_IsIdentity = false;
 		}
 
 		#endregion
@@ -95,8 +80,8 @@ namespace netDxf
 				0.0, 0.0, 0.0
 			)
 			{
-				dirty = false,
-				isIdentity = false
+				IsDirty = false,
+				_IsIdentity = false
 			};
 
 		/// <summary>Gets the identity matrix.</summary>
@@ -108,110 +93,119 @@ namespace netDxf
 				0.0, 0.0, 1.0
 			)
 			{
-				dirty = false,
-				isIdentity = true
+				IsDirty = false,
+				_IsIdentity = true
 			};
 
 		#endregion
 
 		#region public properties
 
+		private double _M11;
 		/// <summary>Gets or sets the matrix element [0,0].</summary>
 		public double M11
 		{
-			get => this.m11;
+			get => _M11;
 			set
 			{
-				this.m11 = value;
-				this.dirty = true;
+				_M11 = value;
+				this.IsDirty = true;
 			}
 		}
 
+		private double _M12;
 		/// <summary>Gets or sets the matrix element [0,1].</summary>
 		public double M12
 		{
-			get => this.m12;
+			get => _M12;
 			set
 			{
-				this.m12 = value;
-				this.dirty = true;
+				_M12 = value;
+				this.IsDirty = true;
 			}
 		}
 
+		private double _M13;
 		/// <summary>Gets or sets the matrix element [0,2].</summary>
 		public double M13
 		{
-			get => this.m13;
+			get => _M13;
 			set
 			{
-				this.m13 = value;
-				this.dirty = true;
+				_M13 = value;
+				this.IsDirty = true;
 			}
 		}
 
+		private double _M21;
 		/// <summary>Gets or sets the matrix element [1,0].</summary>
 		public double M21
 		{
-			get => this.m21;
+			get => _M21;
 			set
 			{
-				this.m21 = value;
-				this.dirty = true;
+				_M21 = value;
+				this.IsDirty = true;
 			}
 		}
 
+		private double _M22;
 		/// <summary>Gets or sets the matrix element [1,1].</summary>
 		public double M22
 		{
-			get => this.m22;
+			get => _M22;
 			set
 			{
-				this.m22 = value;
-				this.dirty = true;
+				_M22 = value;
+				this.IsDirty = true;
 			}
 		}
 
+		private double _M23;
 		/// <summary>Gets or sets the matrix element [1,2].</summary>
 		public double M23
 		{
-			get => this.m23;
+			get => _M23;
 			set
 			{
-				this.m23 = value;
-				this.dirty = true;
+				_M23 = value;
+				this.IsDirty = true;
 			}
 		}
 
+		private double _M31;
 		/// <summary>Gets or sets the matrix element [2,0].</summary>
 		public double M31
 		{
-			get => this.m31;
+			get => _M31;
 			set
 			{
-				this.m31 = value;
-				this.dirty = true;
+				_M31 = value;
+				this.IsDirty = true;
 			}
 		}
 
+		private double _M32;
 		/// <summary>Gets or sets the matrix element [2,1].</summary>
 		public double M32
 		{
-			get => this.m32;
+			get => _M32;
 			set
 			{
-				this.m32 = value;
-				this.dirty = true;
+				_M32 = value;
+				this.IsDirty = true;
 			}
 		}
 
+		private double _M33;
 		/// <summary>Gets or sets the matrix element [2,2].</summary>
 		public double M33
 		{
-			get => this.m33;
+			get => _M33;
 			set
 			{
-				this.m33 = value;
-				this.dirty = true;
+				_M33 = value;
+				this.IsDirty = true;
 			}
 		}
 
@@ -229,11 +223,11 @@ namespace netDxf
 						switch (column)
 						{
 							case 0:
-								return this.m11;
+								return _M11;
 							case 1:
-								return this.m12;
+								return _M12;
 							case 2:
-								return this.m13;
+								return _M13;
 							default:
 								throw new ArgumentOutOfRangeException(nameof(column));
 						}
@@ -241,11 +235,11 @@ namespace netDxf
 						switch (column)
 						{
 							case 0:
-								return this.m21;
+								return _M21;
 							case 1:
-								return this.m22;
+								return _M22;
 							case 2:
-								return this.m23;
+								return _M23;
 							default:
 								throw new ArgumentOutOfRangeException(nameof(column));
 						}
@@ -254,11 +248,11 @@ namespace netDxf
 						switch (column)
 						{
 							case 0:
-								return this.m31;
+								return _M31;
 							case 1:
-								return this.m32;
+								return _M32;
 							case 2:
-								return this.m33;
+								return _M33;
 							default:
 								throw new ArgumentOutOfRangeException(nameof(column));
 						}
@@ -275,13 +269,13 @@ namespace netDxf
 						switch (column)
 						{
 							case 0:
-								this.m11 = value;
+								_M11 = value;
 								break;
 							case 1:
-								this.m12 = value;
+								_M12 = value;
 								break;
 							case 2:
-								this.m13 = value;
+								_M13 = value;
 								break;
 							default:
 								throw new ArgumentOutOfRangeException(nameof(column));
@@ -292,13 +286,13 @@ namespace netDxf
 						switch (column)
 						{
 							case 0:
-								this.m21 = value;
+								_M21 = value;
 								break;
 							case 1:
-								this.m22 = value;
+								_M22 = value;
 								break;
 							case 2:
-								this.m23 = value;
+								_M23 = value;
 								break;
 							default:
 								throw new ArgumentOutOfRangeException(nameof(column));
@@ -309,13 +303,13 @@ namespace netDxf
 						switch (column)
 						{
 							case 0:
-								this.m31 = value;
+								_M31 = value;
 								break;
 							case 1:
-								this.m32 = value;
+								_M32 = value;
 								break;
 							case 2:
-								this.m33 = value;
+								_M33 = value;
 								break;
 							default:
 								throw new ArgumentOutOfRangeException(nameof(column));
@@ -325,10 +319,11 @@ namespace netDxf
 					default:
 						throw new ArgumentOutOfRangeException(nameof(row));
 				}
-				this.dirty = true;
+				this.IsDirty = true;
 			}
 		}
 
+		private bool _IsIdentity;
 		/// <summary>Gets if the actual matrix is the identity.</summary>
 		/// <remarks>
 		/// The checks to see if the matrix is the identity uses the MathHelper.Epsilon as a the threshold for testing values close to one and zero.
@@ -337,68 +332,68 @@ namespace netDxf
 		{
 			get
 			{
-				if (this.dirty)
+				if (this.IsDirty)
 				{
-					this.dirty = false;
+					this.IsDirty = false;
 
 					// row 1
 					if (!MathHelper.IsOne(this.M11))
 					{
-						this.isIdentity = false;
-						return this.isIdentity;
+						_IsIdentity = false;
+						return _IsIdentity;
 					}
 					if (!MathHelper.IsZero(this.M12))
 					{
-						this.isIdentity = false;
-						return this.isIdentity;
+						_IsIdentity = false;
+						return _IsIdentity;
 					}
 					if (!MathHelper.IsZero(this.M13))
 					{
-						this.isIdentity = false;
-						return this.isIdentity;
+						_IsIdentity = false;
+						return _IsIdentity;
 					}
 
 					// row 2
 					if (!MathHelper.IsZero(this.M21))
 					{
-						this.isIdentity = false;
-						return this.isIdentity;
+						_IsIdentity = false;
+						return _IsIdentity;
 					}
 					if (!MathHelper.IsOne(this.M22))
 					{
-						this.isIdentity = false;
-						return this.isIdentity;
+						_IsIdentity = false;
+						return _IsIdentity;
 					}
 					if (!MathHelper.IsZero(this.M23))
 					{
-						this.isIdentity = false;
-						return this.isIdentity;
+						_IsIdentity = false;
+						return _IsIdentity;
 					}
 
 					// row 3
 					if (!MathHelper.IsZero(this.M31))
 					{
-						this.isIdentity = false;
-						return this.isIdentity;
+						_IsIdentity = false;
+						return _IsIdentity;
 					}
 					if (!MathHelper.IsZero(this.M32))
 					{
-						this.isIdentity = false;
-						return this.isIdentity;
+						_IsIdentity = false;
+						return _IsIdentity;
 					}
 					if (!MathHelper.IsOne(this.M33))
 					{
-						this.isIdentity = false;
-						return this.isIdentity;
+						_IsIdentity = false;
+						return _IsIdentity;
 					}
 
-					this.isIdentity = true;
-					return this.isIdentity;
+					_IsIdentity = true;
+					return _IsIdentity;
 				}
 
-				return this.isIdentity;
+				return _IsIdentity;
 
-				//if (this.dirty)
+				//if (this.IsDirty)
 				//{
 				//	bool check = true;
 				//	for (int i = 0; i < 3; i++)
@@ -410,10 +405,10 @@ namespace netDxf
 				//		}
 				//		if (!check) break;
 				//	}
-				//	this.dirty = false;
-				//	this.isIdentity = check;
+				//	this.IsDirty = false;
+				//	_IsIdentity = check;
 				//}
-				//return this.isIdentity;
+				//return _IsIdentity;
 			}
 		}
 
@@ -595,12 +590,12 @@ namespace netDxf
 				return 1.0;
 			}
 
-			return this.m11 * this.m22 * this.m33 +
-					this.m12 * this.m23 * this.m31 +
-					this.m13 * this.m21 * this.m32 -
-					this.m13 * this.m22 * this.m31 -
-					this.m11 * this.m23 * this.m32 -
-					this.m12 * this.m21 * this.m33;
+			return _M11 * _M22 * _M33 +
+					_M12 * _M23 * _M31 +
+					_M13 * _M21 * _M32 -
+					_M13 * _M22 * _M31 -
+					_M11 * _M23 * _M32 -
+					_M12 * _M21 * _M33;
 		}
 
 		/// <summary>Calculates the inverse matrix.</summary>
@@ -622,15 +617,15 @@ namespace netDxf
 
 			return new Matrix3
 			(
-				det * (this.m22 * this.m33 - this.m23 * this.m32),
-				det * (this.m13 * this.m32 - this.m12 * this.m33),
-				det * (this.m12 * this.m23 - this.m13 * this.m22),
-				det * (this.m23 * this.m31 - this.m21 * this.m33),
-				det * (this.m11 * this.m33 - this.m13 * this.m31),
-				det * (this.m13 * this.m21 - this.m11 * this.m23),
-				det * (this.m21 * this.m32 - this.m22 * this.m31),
-				det * (this.m12 * this.m31 - this.m11 * this.m32),
-				det * (this.m11 * this.m22 - this.m12 * this.m21)
+				det * (_M22 * _M33 - _M23 * _M32),
+				det * (_M13 * _M32 - _M12 * _M33),
+				det * (_M12 * _M23 - _M13 * _M22),
+				det * (_M23 * _M31 - _M21 * _M33),
+				det * (_M11 * _M33 - _M13 * _M31),
+				det * (_M13 * _M21 - _M11 * _M23),
+				det * (_M21 * _M32 - _M22 * _M31),
+				det * (_M12 * _M31 - _M11 * _M32),
+				det * (_M11 * _M22 - _M12 * _M21)
 			);
 		}
 
@@ -641,9 +636,9 @@ namespace netDxf
 			? Identity
 			: new Matrix3
 			(
-				this.m11, this.m21, this.m31,
-				this.m12, this.m22, this.m32,
-				this.m13, this.m23, this.m33
+				_M11, _M21, _M31,
+				_M12, _M22, _M32,
+				_M13, _M23, _M33
 			);
 
 		#endregion
@@ -789,9 +784,9 @@ namespace netDxf
 		{
 			string separator = Thread.CurrentThread.CurrentCulture.TextInfo.ListSeparator;
 			StringBuilder s = new StringBuilder();
-			s.Append(string.Format("|{0}{3} {1}{3} {2}|" + Environment.NewLine, this.m11, this.m12, this.m13, separator));
-			s.Append(string.Format("|{0}{3} {1}{3} {2}|" + Environment.NewLine, this.m21, this.m22, this.m23, separator));
-			s.Append(string.Format("|{0}{3} {1}{3} {2}|", this.m31, this.m32, this.m33, separator));
+			s.Append(string.Format("|{0}{3} {1}{3} {2}|" + Environment.NewLine, _M11, _M12, _M13, separator));
+			s.Append(string.Format("|{0}{3} {1}{3} {2}|" + Environment.NewLine, _M21, _M22, _M23, separator));
+			s.Append(string.Format("|{0}{3} {1}{3} {2}|", _M31, _M32, _M33, separator));
 			return s.ToString();
 		}
 
@@ -802,9 +797,9 @@ namespace netDxf
 		{
 			string separator = Thread.CurrentThread.CurrentCulture.TextInfo.ListSeparator;
 			StringBuilder s = new StringBuilder();
-			s.Append(string.Format("|{0}{3} {1}{3} {2}|" + Environment.NewLine, this.m11.ToString(provider), this.m12.ToString(provider), this.m13.ToString(provider), separator));
-			s.Append(string.Format("|{0}{3} {1}{3} {2}|" + Environment.NewLine, this.m21.ToString(provider), this.m22.ToString(provider), this.m23.ToString(provider), separator));
-			s.Append(string.Format("|{0}{3} {1}{3} {2}|", this.m31.ToString(provider), this.m32.ToString(provider), this.m33.ToString(provider), separator));
+			s.Append(string.Format("|{0}{3} {1}{3} {2}|" + Environment.NewLine, _M11.ToString(provider), _M12.ToString(provider), _M13.ToString(provider), separator));
+			s.Append(string.Format("|{0}{3} {1}{3} {2}|" + Environment.NewLine, _M21.ToString(provider), _M22.ToString(provider), _M23.ToString(provider), separator));
+			s.Append(string.Format("|{0}{3} {1}{3} {2}|", _M31.ToString(provider), _M32.ToString(provider), _M33.ToString(provider), separator));
 			return s.ToString();
 		}
 

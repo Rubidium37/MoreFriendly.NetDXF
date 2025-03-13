@@ -37,11 +37,7 @@ namespace netDxf.Entities
 	public class Mesh :
 		EntityObject
 	{
-		#region private fields
-
 		private const int MaxFaces = 16000000;
-
-		#endregion
 
 		#region constructors
 
@@ -52,7 +48,6 @@ namespace netDxf.Entities
 			: this(vertexes, faces, null)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="vertexes">Mesh vertex list.</param>
 		/// <param name="faces">Mesh faces list.</param>
@@ -75,7 +70,6 @@ namespace netDxf.Entities
 				throw new ArgumentOutOfRangeException(nameof(faces), this.Faces.Count, string.Format("The maximum number of faces in a mesh is {0}", MaxFaces));
 			}
 			this.Edges = edges == null ? new List<MeshEdge>() : new List<MeshEdge>(edges);
-			this.SubdivisionLevel = 0;
 		}
 
 		#endregion
@@ -111,7 +105,7 @@ namespace netDxf.Entities
 
 		//	List<Face3D> faces3D = new List<Face3D>();
 
-		//	foreach (int[] face in this.faces)
+		//	foreach (int[] face in _Faces)
 		//	{
 		//		faces3D.Add(new Face3D(this.Vertexes[face[0]], this.Vertexes[face[1]], this.Vertexes[face[2]], this.Vertexes[face[3]]));
 		//	}

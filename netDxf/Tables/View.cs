@@ -43,7 +43,6 @@ namespace netDxf.Tables
 			: this(name, true)
 		{
 		}
-
 		internal View(string name, bool checkName)
 			: base(name, DxfObjectCode.View, checkName)
 		{
@@ -51,40 +50,29 @@ namespace netDxf.Tables
 			{
 				throw new ArgumentNullException(nameof(name), "The view name should be at least one character long.");
 			}
-
-			this.IsReserved = false;
-			this.Target = Vector3.Zero;
-			this.Camera = Vector3.UnitZ;
-			this.Height = 1.0;
-			this.Width = 1.0;
-			this.Rotation = 0.0;
-			this.Viewmode = ViewModeFlags.Off;
-			this.Fov = 40.0;
-			this.FrontClippingPlane = 0.0;
-			this.BackClippingPlane = 0.0;
 		}
 
 		#endregion
 
 		#region public properties
 
-		public Vector3 Target { get; set; }
+		public Vector3 Target { get; set; } = Vector3.Zero;
 
-		public Vector3 Camera { get; set; }
+		public Vector3 Camera { get; set; } = Vector3.UnitZ;
 
-		public double Height { get; set; }
+		public double Height { get; set; } = 1.0;
 
-		public double Width { get; set; }
+		public double Width { get; set; } = 1.0;
 
-		public double Rotation { get; set; }
+		public double Rotation { get; set; } = 0.0;
 
-		public ViewModeFlags Viewmode { get; set; }
+		public ViewModeFlags Viewmode { get; set; } = ViewModeFlags.Off;
 
-		public double Fov { get; set; }
+		public double Fov { get; set; } = 40.0;
 
-		public double FrontClippingPlane { get; set; }
+		public double FrontClippingPlane { get; set; } = 0.0;
 
-		public double BackClippingPlane { get; set; }
+		public double BackClippingPlane { get; set; } = 0.0;
 
 		/// <summary>Gets the owner of the actual view.</summary>
 		public new Views Owner

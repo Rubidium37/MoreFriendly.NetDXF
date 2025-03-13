@@ -34,12 +34,6 @@ namespace netDxf.Objects
 	public class UnderlayPdfDefinition :
 		UnderlayDefinition
 	{
-		#region private fields
-
-		private string page;
-
-		#endregion
-
 		#region constructor
 
 		/// <summary>Initializes a new instance of the class.</summary>
@@ -51,7 +45,6 @@ namespace netDxf.Objects
 			: this(Path.GetFileNameWithoutExtension(file), file)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="name">Underlay definition name.</param>
 		/// <param name="file">Underlay file name with full or relative path.</param>
@@ -61,18 +54,19 @@ namespace netDxf.Objects
 		public UnderlayPdfDefinition(string name, string file)
 			: base(name, file, UnderlayType.PDF)
 		{
-			this.page = "1";
+			_Page = "1";
 		}
 
 		#endregion
 
 		#region public properties
 
+		private string _Page;
 		/// <summary>Gets or sets the <b>PDF</b> page to show.</summary>
 		public string Page
 		{
-			get => this.page;
-			set => this.page = string.IsNullOrEmpty(value) ? string.Empty : value;
+			get => _Page;
+			set => _Page = string.IsNullOrEmpty(value) ? string.Empty : value;
 		}
 
 		/// <summary>Gets the owner of the actual underlay <b>PDF</b> definition.</summary>
@@ -105,7 +99,7 @@ namespace netDxf.Objects
 		{
 			UnderlayPdfDefinition copy = new UnderlayPdfDefinition(newName, this.File)
 			{
-				Page = this.page
+				Page = _Page
 			};
 
 			foreach (XData data in this.XData.Values)

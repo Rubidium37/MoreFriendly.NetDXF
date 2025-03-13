@@ -33,33 +33,11 @@ namespace netDxf.Tables
 	public class DimensionStyleAlternateUnits :
 		ICloneable
 	{
-		#region private fields
-
-		private short dimaltd;
-		private double dimaltf;
-		private double dimaltrnd;
-		private string dimPrefix;
-		private string dimSuffix;
-
-		#endregion
-
 		#region constructors
 
 		/// <summary>Initializes a new instance of the class.</summary>
 		public DimensionStyleAlternateUnits()
 		{
-			this.Enabled = false;
-			this.dimaltd = 2;
-			this.dimPrefix = string.Empty;
-			this.dimSuffix = string.Empty;
-			this.dimaltf = 25.4;
-			this.LengthUnits = LinearUnitType.Decimal;
-			this.StackUnits = false;
-			this.SuppressLinearLeadingZeros = false;
-			this.SuppressLinearTrailingZeros = false;
-			this.SuppressZeroFeet = true;
-			this.SuppressZeroInches = true;
-			this.dimaltrnd = 0.0;
 		}
 
 		#endregion
@@ -67,8 +45,9 @@ namespace netDxf.Tables
 		#region public properties
 
 		/// <summary>Gets or sets if the alternate measurement units are added to the dimension text. (<b>DIMALT</b>)</summary>
-		public bool Enabled { get; set; }
+		public bool Enabled { get; set; } = false;
 
+		private short _LengthPrecision = 2;
 		/// <summary>Sets the number of decimal places displayed for the alternate units of a dimension. (<b>DIMALTD</b>)</summary>
 		/// <remarks>
 		/// Default: 4<br/>
@@ -77,31 +56,34 @@ namespace netDxf.Tables
 		/// </remarks>
 		public short LengthPrecision
 		{
-			get => this.dimaltd;
+			get => _LengthPrecision;
 			set
 			{
 				if (value < 0)
 				{
 					throw new ArgumentOutOfRangeException(nameof(value), value, "The length precision must be equals or greater than zero.");
 				}
-				this.dimaltd = value;
+				_LengthPrecision = value;
 			}
 		}
 
+		private string _Prefix = string.Empty;
 		/// <summary>Specifies the text prefix for the dimension. (<b>DIMAPOST</b>)</summary>
 		public string Prefix
 		{
-			get => this.dimPrefix;
-			set => this.dimPrefix = value ?? string.Empty;
+			get => _Prefix;
+			set => _Prefix = value ?? string.Empty;
 		}
 
+		private string _Suffix = string.Empty;
 		/// <summary>Specifies the text suffix for the dimension. (<b>DIMAPOST</b>)</summary>
 		public string Suffix
 		{
-			get => this.dimSuffix;
-			set => this.dimSuffix = value ?? string.Empty;
+			get => _Suffix;
+			set => _Suffix = value ?? string.Empty;
 		}
 
+		private double _Multiplier = 25.4;
 		/// <summary>Gets or sets the multiplier used as the conversion factor between primary and alternate units. (<b>DIMALTF</b>)</summary>
 		/// <remarks>
 		/// to convert inches to millimeters, enter 25.4.
@@ -109,14 +91,14 @@ namespace netDxf.Tables
 		/// </remarks>
 		public double Multiplier
 		{
-			get => this.dimaltf;
+			get => _Multiplier;
 			set
 			{
 				if (value <= 0.0)
 				{
 					throw new ArgumentOutOfRangeException(nameof(value), value, "The multiplier for alternate units must be greater than zero0.");
 				}
-				this.dimaltf = value;
+				_Multiplier = value;
 			}
 		}
 
@@ -128,31 +110,32 @@ namespace netDxf.Tables
 		/// Architectural<br/>
 		/// Fractional
 		/// </remarks>
-		public LinearUnitType LengthUnits { get; set; }
+		public LinearUnitType LengthUnits { get; set; } = LinearUnitType.Decimal;
 
 		/// <summary>Gets or set if the <see cref="LinearUnitType.Architectural"/> or <see cref="LinearUnitType.Fractional"/> linear units will be shown stacked or not. (<b>DIMALTU</b>)</summary>
 		/// <remarks>
 		/// This value only is applicable if the <see cref="LengthUnits"/> property has been set to <see cref="LinearUnitType.Architectural"/> or <see cref="LinearUnitType.Fractional"/>,
 		/// for any other value this parameter is not applicable.
 		/// </remarks>
-		public bool StackUnits { get; set; }
+		public bool StackUnits { get; set; } = false;
 
 		/// <summary>Suppresses leading zeros in linear decimal alternate units. (<b>DIMALTZ</b>)</summary>
 		/// <remarks>This value is part of the <b>DIMALTZ</b> variable.</remarks>
-		public bool SuppressLinearLeadingZeros { get; set; }
+		public bool SuppressLinearLeadingZeros { get; set; } = false;
 
 		/// <summary>Suppresses trailing zeros in linear decimal alternate units. (<b>DIMALTZ</b>)</summary>
 		/// <remarks>This value is part of the <b>DIMALTZ</b> variable.</remarks>
-		public bool SuppressLinearTrailingZeros { get; set; }
+		public bool SuppressLinearTrailingZeros { get; set; } = false;
 
 		/// <summary>Suppresses zero feet in architectural alternate units. (<b>DIMALTZ</b>)</summary>
 		/// <remarks>This value is part of the <b>DIMALTZ</b> variable.</remarks>
-		public bool SuppressZeroFeet { get; set; }
+		public bool SuppressZeroFeet { get; set; } = true;
 
 		/// <summary>Suppresses zero inches in architectural alternate units. (<b>DIMALTZ</b>)</summary>
 		/// <remarks>This value is part of the <b>DIMALTZ</b> variable.</remarks>
-		public bool SuppressZeroInches { get; set; }
+		public bool SuppressZeroInches { get; set; } = true;
 
+		private double _Roundoff = 0.0;
 		/// <summary>Gets or sets the value to round all dimensioning distances. (<b>DIMALTRND</b>)</summary>
 		/// <remarks>
 		/// Default: 0 (no rounding off).<br/>
@@ -163,14 +146,14 @@ namespace netDxf.Tables
 		/// </remarks>
 		public double Roundoff
 		{
-			get => this.dimaltrnd;
+			get => _Roundoff;
 			set
 			{
 				if (value < 0.000001 && !MathHelper.IsZero(value, double.Epsilon))
 				{
 					throw new ArgumentOutOfRangeException(nameof(value), value, "The nearest value to round all distances must be equal or greater than 0.000001 or zero (no rounding off).");
 				}
-				this.dimaltrnd = value;
+				_Roundoff = value;
 			}
 		}
 
@@ -186,11 +169,11 @@ namespace netDxf.Tables
 				Enabled = this.Enabled,
 				LengthUnits = this.LengthUnits,
 				StackUnits = this.StackUnits,
-				LengthPrecision = this.dimaltd,
-				Multiplier = this.dimaltf,
-				Roundoff = this.dimaltrnd,
-				Prefix = this.dimPrefix,
-				Suffix = this.dimSuffix,
+				LengthPrecision = _LengthPrecision,
+				Multiplier = _Multiplier,
+				Roundoff = _Roundoff,
+				Prefix = _Prefix,
+				Suffix = _Suffix,
 				SuppressLinearLeadingZeros = this.SuppressLinearLeadingZeros,
 				SuppressLinearTrailingZeros = this.SuppressLinearTrailingZeros,
 				SuppressZeroFeet = this.SuppressZeroFeet,

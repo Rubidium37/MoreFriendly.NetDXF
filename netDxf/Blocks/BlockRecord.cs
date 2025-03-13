@@ -46,11 +46,8 @@ namespace netDxf.Blocks
 			{
 				throw new ArgumentNullException(nameof(name));
 			}
+
 			this.Name = name;
-			this.Layout = null;
-			this.Units = DefaultUnits;
-			this.AllowExploding = true;
-			this.ScaleUniformly = false;
 		}
 
 		#endregion
@@ -68,7 +65,7 @@ namespace netDxf.Blocks
 		public Layout Layout { get; internal set; }
 
 		/// <summary>Gets or sets the block insertion units.</summary>
-		public DrawingUnits Units { get; set; }
+		public DrawingUnits Units { get; set; } = DefaultUnits;
 
 		/// <summary>Gets or sets the default block units.</summary>
 		/// <remarks>These are the units that all new blocks will use as default.</remarks>
@@ -78,13 +75,13 @@ namespace netDxf.Blocks
 		/// <remarks>
 		/// This property is only compatible with <b>DXF</b> version <b>AutoCad2007</b> and upwards.
 		/// </remarks>
-		public bool AllowExploding { get; set; }
+		public bool AllowExploding { get; set; } = true;
 
 		/// <summary>Gets or sets if the block must be scaled uniformly.</summary>
 		/// <remarks>
 		/// This property is only compatible with <b>DXF</b> version <b>AutoCad2007</b> and upwards.
 		/// </remarks>
-		public bool ScaleUniformly { get; set; }
+		public bool ScaleUniformly { get; set; } = false;
 
 		/// <summary>Gets the owner of the actual <b>DXF</b> object.</summary>
 		public new BlockRecords Owner

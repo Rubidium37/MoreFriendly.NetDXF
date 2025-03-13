@@ -37,15 +37,8 @@ namespace netDxf.Objects
 	public class LayerState :
 		TableObject
 	{
-		#region private fields
-
 		private const string LayerStateDictionary = "LAYERSTATEDICTIONARY";
 		private const string LayerStateName = "LAYERSTATE";
-
-		private string description;
-		private string currentLayer;
-
-		#endregion
 
 		#region constructor
 
@@ -55,15 +48,14 @@ namespace netDxf.Objects
 			: this(name, new List<Layer>())
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class from a specified list of layers.</summary>
 		/// <param name="name">Layer state name.</param>
 		/// <param name="layers">List of layers.</param>
 		public LayerState(string name, IEnumerable<Layer> layers)
 			: base(name, DxfObjectCode.LayerStates, true)
 		{
-			this.description = string.Empty;
-			this.currentLayer = Layer.DefaultName;
+			_Description = string.Empty;
+			_CurrentLayer = Layer.DefaultName;
 			this.PaperSpace = false;
 
 			this.Properties = new ObservableDictionary<string, LayerStateProperties>();
@@ -85,17 +77,19 @@ namespace netDxf.Objects
 
 		#region public properties
 
+		private string _Description;
 		/// <summary>Gets or sets the layer state description.</summary>
 		public string Description
 		{
-			get => this.description;
-			set => this.description = string.IsNullOrEmpty(value) ? string.Empty : value;
+			get => _Description;
+			set => _Description = string.IsNullOrEmpty(value) ? string.Empty : value;
 		}
 
+		private string _CurrentLayer;
 		/// <summary>Gets or sets the current layer name.</summary>
 		public string CurrentLayer
 		{
-			get => this.currentLayer;
+			get => _CurrentLayer;
 			set
 			{
 				if (string.IsNullOrEmpty(value))
@@ -110,7 +104,7 @@ namespace netDxf.Objects
 						throw new ArgumentException("The value cannot be set as the current layer. It does not exist in the document owner of this layer state.", nameof(value));
 					}
 				}
-				this.currentLayer = value;
+				_CurrentLayer = value;
 			}
 		}
 
@@ -405,8 +399,8 @@ namespace netDxf.Objects
 		{
 			LayerState ls = new LayerState(newName)
 			{
-				Description = this.description,
-				CurrentLayer = this.currentLayer
+				Description = _Description,
+				CurrentLayer = _CurrentLayer
 			};
 
 			foreach (LayerStateProperties item in this.Properties.Values)

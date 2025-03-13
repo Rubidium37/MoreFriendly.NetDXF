@@ -34,11 +34,7 @@ namespace netDxf.Collections
 	public class SupportFolders :
 		IList<string>
 	{
-		#region private fields
-
 		private readonly List<string> folders;
-
-		#endregion
 
 		#region constructors
 

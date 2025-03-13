@@ -39,12 +39,6 @@ namespace netDxf.Entities
 		/// <summary>Initializes a new instance of the class.</summary>
 		public ToleranceEntry()
 		{
-			this.GeometricSymbol = ToleranceGeometricSymbol.None;
-			this.Tolerance1 = null;
-			this.Tolerance2 = null;
-			this.Datum1 = null;
-			this.Datum2 = null;
-			this.Datum3 = null;
 		}
 
 		#endregion

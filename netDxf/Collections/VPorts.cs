@@ -41,7 +41,6 @@ namespace netDxf.Collections
 			: this(document, null)
 		{
 		}
-
 		internal VPorts(DxfDocument document, string handle)
 			: base(document, DxfObjectCode.VportTable, handle)
 		{

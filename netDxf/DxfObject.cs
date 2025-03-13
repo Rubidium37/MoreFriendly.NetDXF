@@ -64,9 +64,6 @@ namespace netDxf
 		protected DxfObject(string codename)
 		{
 			this.CodeName = codename;
-			this.Handle = null;
-			this.Owner = null;
-			this.XData = new XDataDictionary();
 			this.XData.AddAppReg += this.XData_AddAppReg;
 			this.XData.RemoveAppReg += this.XData_RemoveAppReg;
 		}
@@ -89,7 +86,7 @@ namespace netDxf
 		public DxfObject Owner { get; internal set; }
 
 		/// <summary>Gets the entity <see cref="XDataDictionary">extended data</see>.</summary>
-		public XDataDictionary XData { get; }
+		public XDataDictionary XData { get; } = new XDataDictionary();
 
 		#endregion
 

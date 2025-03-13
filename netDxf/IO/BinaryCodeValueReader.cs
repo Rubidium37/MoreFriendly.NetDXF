@@ -35,12 +35,8 @@ namespace netDxf.IO
 	internal class BinaryCodeValueReader :
 		ICodeValueReader
 	{
-		#region private fields
-
 		private readonly BinaryReader reader;
 		private readonly Encoding encoding;
-
-		#endregion
 
 		#region constructors
 
@@ -59,9 +55,6 @@ namespace netDxf.IO
 			{
 				throw new ArgumentException("Not a valid binary DXF.");
 			}
-
-			this.Code = 0;
-			this.Value = null;
 		}
 
 		#endregion
@@ -69,7 +62,7 @@ namespace netDxf.IO
 		#region public properties
 
 		/// <inheritdoc/>
-		public short Code { get; private set; }
+		public short Code { get; private set; } = 0;
 
 		/// <inheritdoc/>
 		public object Value { get; private set; }

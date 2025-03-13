@@ -205,8 +205,9 @@ namespace netDxf.Entities
 				return edges;
 			}
 
-			/// <summary>Initializes a new instance of the <see cref="HatchBoundaryPath.Polyline"/> class.</summary>
-			/// <param name="entity"><see cref="EntityObject">Entity</see> that represents the edge.</param>
+			/// <summary>Creates a <see cref="Polyline"/> from an <see cref="EntityObject">entity</see>.</summary>
+			/// <param name="entity">An <see cref="EntityObject">entity</see>.</param>
+			/// <returns>A <see cref="Polyline"/> line.</returns>
 			public static Polyline ConvertFrom(EntityObject entity) => new Polyline(entity);
 
 			/// <inheritdoc/>
@@ -272,9 +273,9 @@ namespace netDxf.Entities
 				this.End = new Vector2(point.X, point.Y);
 			}
 
-			/// <summary>Creates a BoundaryBoundaryPath from an <see cref="EntityObject">entity</see>.</summary>
+			/// <summary>Creates a <see cref="Line"/> from an <see cref="EntityObject">entity</see>.</summary>
 			/// <param name="entity">An <see cref="EntityObject">entity</see>.</param>
-			/// <returns>A <see cref="HatchBoundaryPath"/> line.</returns>
+			/// <returns>A <see cref="Line"/> line.</returns>
 			public static Line ConvertFrom(EntityObject entity) => new Line(entity);
 
 			/// <inheritdoc/>
@@ -351,8 +352,9 @@ namespace netDxf.Entities
 				}
 			}
 
-			/// <summary>Initializes a new instance of the <see cref="HatchBoundaryPath.Arc"/> class.</summary>
-			/// <param name="entity"><see cref="EntityObject">Entity</see> that represents the edge.</param>
+			/// <summary>Creates a <see cref="Arc"/> from an <see cref="EntityObject">entity</see>.</summary>
+			/// <param name="entity">An <see cref="EntityObject">entity</see>.</param>
+			/// <returns>A <see cref="Arc"/> line.</returns>
 			public static Arc ConvertFrom(EntityObject entity) => new Arc(entity);
 
 			/// <inheritdoc/>
@@ -448,8 +450,9 @@ namespace netDxf.Entities
 				this.IsCounterclockwise = true;
 			}
 
-			/// <summary>Initializes a new instance of the <see cref="HatchBoundaryPath.Ellipse"/> class.</summary>
-			/// <param name="entity"><see cref="EntityObject">Entity</see> that represents the edge.</param>
+			/// <summary>Creates a <see cref="Ellipse"/> from an <see cref="EntityObject">entity</see>.</summary>
+			/// <param name="entity">An <see cref="EntityObject">entity</see>.</param>
+			/// <returns>A <see cref="Ellipse"/> line.</returns>
 			public static Ellipse ConvertFrom(EntityObject entity) => new Ellipse(entity);
 
 			/// <inheritdoc/>
@@ -555,8 +558,9 @@ namespace netDxf.Entities
 				}
 			}
 
-			/// <summary>Initializes a new instance of the <see cref="HatchBoundaryPath.Spline"/> class.</summary>
-			/// <param name="entity"><see cref="EntityObject">Entity</see> that represents the edge.</param>
+			/// <summary>Creates a <see cref="Spline"/> from an <see cref="EntityObject">entity</see>.</summary>
+			/// <param name="entity">An <see cref="EntityObject">entity</see>.</param>
+			/// <returns>A <see cref="Spline"/> line.</returns>
 			public static Spline ConvertFrom(EntityObject entity) => new Spline(entity);
 
 			/// <inheritdoc/>
@@ -599,13 +603,6 @@ namespace netDxf.Entities
 
 		#endregion
 
-		#region private fields
-
-		private readonly List<EntityObject> entities;
-		private readonly List<Edge> edges = new List<Edge>();
-
-		#endregion
-
 		#region constructor
 
 		/// <summary>Initializes a new instance of the class.</summary>
@@ -617,7 +614,7 @@ namespace netDxf.Entities
 				throw new ArgumentNullException(nameof(edges));
 			}
 			this.PathType = HatchBoundaryPathTypeFlags.Derived | HatchBoundaryPathTypeFlags.External;
-			this.entities = new List<EntityObject>(edges);
+			_Entities = new List<EntityObject>(edges);
 			this.Update();
 		}
 		/// <summary>Initializes a new instance of the class.</summary>
@@ -629,13 +626,13 @@ namespace netDxf.Entities
 				throw new ArgumentNullException(nameof(edges));
 			}
 			this.PathType = HatchBoundaryPathTypeFlags.Derived | HatchBoundaryPathTypeFlags.External;
-			this.entities = new List<EntityObject>();
+			_Entities = new List<EntityObject>();
 			foreach (Edge edge in edges)
 			{
 				if (edges.Count() == 1 && edge.Type == EdgeType.Polyline)
 				{
 					this.PathType |= HatchBoundaryPathTypeFlags.Polyline;
-					this.edges.Add(edge);
+					_Edges.Add(edge);
 				}
 				else
 				{
@@ -643,11 +640,11 @@ namespace netDxf.Entities
 					{
 						// Only a single polyline edge can be part of a HatchBoundaryPath. The polyline will be automatically exploded.
 						HatchBoundaryPath.Polyline polyline = (HatchBoundaryPath.Polyline)edge;
-						this.edges.AddRange(polyline.Explode());
+						_Edges.AddRange(polyline.Explode());
 					}
 					else
 					{
-						this.edges.Add(edge);
+						_Edges.Add(edge);
 					}
 				}
 			}
@@ -657,25 +654,27 @@ namespace netDxf.Entities
 
 		#region public properties
 
+		private readonly List<Edge> _Edges = new List<Edge>();
 		/// <summary>Gets the list of edges that makes a loop for the hatch boundary path.</summary>
-		public IReadOnlyList<Edge> Edges => this.edges;
+		public IReadOnlyList<Edge> Edges => _Edges;
 
 		/// <summary>Gets the boundary path type flag.</summary>
 		public HatchBoundaryPathTypeFlags PathType { get; internal set; }
 
+		private readonly List<EntityObject> _Entities;
 		/// <summary>Gets the list of entities that makes the boundary.</summary>
 		/// <remarks>If the boundary path belongs to a non-associative hatch this list will contain zero entities.</remarks>
-		public IReadOnlyList<EntityObject> Entities => this.entities;
+		public IReadOnlyList<EntityObject> Entities => _Entities;
 
 		#endregion
 
 		#region internal methods
 
-		internal void AddContour(EntityObject entity) => this.entities.Add(entity);
+		internal void AddContour(EntityObject entity) => _Entities.Add(entity);
 
-		internal void ClearContour() => this.entities.Clear();
+		internal void ClearContour() => _Entities.Clear();
 
-		internal bool RemoveContour(EntityObject entity) => this.entities.Remove(entity);
+		internal bool RemoveContour(EntityObject entity) => _Entities.Remove(entity);
 
 		#endregion
 
@@ -697,7 +696,7 @@ namespace netDxf.Entities
 			bool containsPolyline = false;
 			if (clearEdges)
 			{
-				this.edges.Clear();
+				_Edges.Clear();
 			}
 
 			foreach (EntityObject entity in contour)
@@ -713,16 +712,16 @@ namespace netDxf.Entities
 				switch (entity.Type)
 				{
 					case EntityType.Arc:
-						this.edges.Add(Arc.ConvertFrom(entity));
+						_Edges.Add(Arc.ConvertFrom(entity));
 						break;
 					case EntityType.Circle:
-						this.edges.Add(Arc.ConvertFrom(entity));
+						_Edges.Add(Arc.ConvertFrom(entity));
 						break;
 					case EntityType.Ellipse:
-						this.edges.Add(Ellipse.ConvertFrom(entity));
+						_Edges.Add(Ellipse.ConvertFrom(entity));
 						break;
 					case EntityType.Line:
-						this.edges.Add(Line.ConvertFrom(entity));
+						_Edges.Add(Line.ConvertFrom(entity));
 						break;
 					case EntityType.Polyline2D:
 						Entities.Polyline2D lwpoly = (Entities.Polyline2D)entity;
@@ -732,7 +731,7 @@ namespace netDxf.Entities
 							{
 								throw new ArgumentException("Closed polylines cannot be combined with other entities to make a hatch boundary path.");
 							}
-							this.edges.Add(Polyline.ConvertFrom(entity));
+							_Edges.Add(Polyline.ConvertFrom(entity));
 							this.PathType |= HatchBoundaryPathTypeFlags.Polyline;
 							containsPolyline = true;
 						}
@@ -747,7 +746,7 @@ namespace netDxf.Entities
 							{
 								throw new ArgumentException("Closed polylines cannot be combined with other entities to make a hatch boundary path.");
 							}
-							this.edges.Add(Polyline.ConvertFrom(entity));
+							_Edges.Add(Polyline.ConvertFrom(entity));
 							this.PathType |= HatchBoundaryPathTypeFlags.Polyline;
 							containsPolyline = true;
 						}
@@ -755,7 +754,7 @@ namespace netDxf.Entities
 							this.SetInternalInfo(poly.Explode(), false); // open polylines will always be exploded, only one polyline can be present in a path
 						break;
 					case EntityType.Spline:
-						this.edges.Add(Spline.ConvertFrom(entity));
+						_Edges.Add(Spline.ConvertFrom(entity));
 						break;
 					default:
 						throw new ArgumentException(string.Format("The entity type {0} cannot be part of a hatch boundary. Only Arc, Circle, Ellipse, Line, Polyline2D, Polyline3D, and Spline entities are allowed.", entity.Type));

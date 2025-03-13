@@ -100,13 +100,6 @@ namespace netDxf.Blocks
 
 		#endregion
 
-		#region private fields
-
-		private string description;
-		private Layer layer;
-
-		#endregion
-
 		#region constants
 
 		/// <summary>Default <see cref="ModelSpace"/> block name.</summary>
@@ -133,7 +126,6 @@ namespace netDxf.Blocks
 			: this(name, xrefFile, false)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class as an external reference drawing.</summary>
 		/// <param name="name">Block name.</param>
 		/// <param name="xrefFile">External reference path name.</param>
@@ -159,14 +151,12 @@ namespace netDxf.Blocks
 				this.Flags |= BlockTypeFlags.XRefOverlay;
 			}
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="name">Block name.</param>
 		public Block(string name)
 			: this(name, null, null, true)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="name">Block name.</param>
 		/// <param name="entities">The list of entities that make the block.</param>
@@ -174,7 +164,6 @@ namespace netDxf.Blocks
 			: this(name, entities, null, true)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="name">Block name.</param>
 		/// <param name="entities">The list of entities that make the block.</param>
@@ -183,7 +172,6 @@ namespace netDxf.Blocks
 			: this(name, entities, attributes, true)
 		{
 		}
-
 		internal Block(string name, IEnumerable<EntityObject> entities, IEnumerable<AttributeDefinition> attributes, bool checkName)
 			: base(name, DxfObjectCode.Block, checkName)
 		{
@@ -194,15 +182,9 @@ namespace netDxf.Blocks
 
 			this.IsReserved = string.Equals(name, DefaultModelSpaceName, StringComparison.OrdinalIgnoreCase);
 			this.IsForInternalUseOnly = name.StartsWith("*");
-			this.description = string.Empty;
-			this.Origin = Vector3.Zero;
-			this.layer = Layer.Default;
-			this.XrefFile = string.Empty;
 			this.Owner = new BlockRecord(name);
-			this.Flags = BlockTypeFlags.None;
 			this.End = new EndBlock(this);
 
-			this.Entities = new EntityCollection();
 			this.Entities.BeforeAddItem += this.Entities_BeforeAddItem;
 			this.Entities.AddItem += this.Entities_AddItem;
 			this.Entities.BeforeRemoveItem += this.Entities_BeforeRemoveItem;
@@ -212,7 +194,6 @@ namespace netDxf.Blocks
 				this.Entities.AddRange(entities);
 			}
 
-			this.AttributeDefinitions = new AttributeDefinitionDictionary();
 			this.AttributeDefinitions.BeforeAddItem += this.AttributeDefinitions_BeforeAddItem;
 			this.AttributeDefinitions.AddItem += this.AttributeDefinitions_ItemAdd;
 			this.AttributeDefinitions.BeforeRemoveItem += this.AttributeDefinitions_BeforeRemoveItem;
@@ -260,6 +241,7 @@ namespace netDxf.Blocks
 			}
 		}
 
+		private string _Description = string.Empty;
 		/// <summary>Gets or sets the block description.</summary>
 		/// <remarks>
 		/// <b>AutoCAD</b> has an unknown limit on the number of characters for the description when loading an external DXF,
@@ -270,38 +252,40 @@ namespace netDxf.Blocks
 		/// </remarks>
 		public string Description
 		{
-			get => this.description;
-			set => this.description = string.IsNullOrEmpty(value) ? string.Empty : value;
+			get => _Description;
+			set => _Description = string.IsNullOrEmpty(value) ? string.Empty : value;
 		}
 
 		/// <summary>Gets or sets the block origin in world coordinates, it is recommended to always keep this value to the default Vector3.Zero.</summary>
-		public Vector3 Origin { get; set; }
+		public Vector3 Origin { get; set; } = Vector3.Zero;
 
+		private Layer _Layer = Layer.Default;
 		/// <summary>Gets or sets the block <see cref="Layer">layer</see>.</summary>
 		/// <remarks>It seems that the block layer is always the default "0" regardless of what is defined here, so it is pointless to change this value.</remarks>
 		public Layer Layer
 		{
-			get => this.layer;
+			get => _Layer;
 			set
 			{
 				if (value == null)
 				{
 					throw new ArgumentNullException(nameof(value));
 				}
-				this.layer = this.OnLayerChangedEvent(this.layer, value);
+
+				_Layer = this.OnLayerChangedEvent(_Layer, value);
 			}
 		}
 
 		/// <summary>Gets the <see cref="EntityObject">entity</see> list of the block.</summary>
 		/// <remarks>Null entities, attribute definitions or entities already owned by another block or document cannot be added to the list.</remarks>
-		public EntityCollection Entities { get; }
+		public EntityCollection Entities { get; } = new EntityCollection();
 
 		/// <summary>Gets the <see cref="AttributeDefinition">entity</see> list of the block.</summary>
 		/// <remarks>
 		/// <see langword="null"/> or attribute definitions already owned by another block or document cannot be added to the list.
 		/// Additionally Paper Space blocks do not contain attribute definitions.
 		/// </remarks>
-		public AttributeDefinitionDictionary AttributeDefinitions { get; }
+		public AttributeDefinitionDictionary AttributeDefinitions { get; } = new AttributeDefinitionDictionary();
 
 		/// <summary>Gets the owner of the actual <b>DXF</b> object.</summary>
 		public new BlockRecord Owner
@@ -315,13 +299,13 @@ namespace netDxf.Blocks
 		public BlockRecord Record => this.Owner;
 
 		/// <summary>Gets the block-type flags (bit-coded values, may be combined).</summary>
-		public BlockTypeFlags Flags { get; internal set; }
+		public BlockTypeFlags Flags { get; internal set; } = BlockTypeFlags.None;
 
 		/// <summary>Gets the external reference path name.</summary>
 		/// <remarks>
 		/// This property is only applicable to externally referenced blocks.
 		/// </remarks>
-		public string XrefFile { get; }
+		public string XrefFile { get; } = string.Empty;
 
 		/// <summary>Gets if the block is an external reference.</summary>
 		public bool IsXRef => this.Flags.HasFlag(BlockTypeFlags.XRef);
@@ -503,7 +487,7 @@ namespace netDxf.Blocks
 
 			Block copy = new Block(newName, null, null, checkName)
 			{
-				Description = block.description,
+				Description = block.Description,
 				Flags = block.Flags,
 				Layer = (Layer)block.Layer.Clone(),
 				Origin = block.Origin

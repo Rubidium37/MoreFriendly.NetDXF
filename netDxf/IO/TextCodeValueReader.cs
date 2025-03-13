@@ -34,35 +34,28 @@ namespace netDxf.IO
 	internal class TextCodeValueReader :
 		ICodeValueReader
 	{
-		#region private fields
-
 		private readonly TextReader reader;
-		private short code;
-
-		#endregion
 
 		#region constructors
 
 		public TextCodeValueReader(TextReader reader)
 		{
 			this.reader = reader;
-			this.code = 0;
-			this.Value = null;
-			this.CurrentPosition = 0;
 		}
 
 		#endregion
 
 		#region public properties
 
+		private short _Code = 0;
 		/// <inheritdoc/>
-		public short Code => this.code;
+		public short Code => _Code;
 
 		/// <inheritdoc/>
 		public object Value { get; private set; }
 
 		/// <inheritdoc/>
-		public long CurrentPosition { get; private set; }
+		public long CurrentPosition { get; private set; } = 0;
 
 		#endregion
 
@@ -74,13 +67,13 @@ namespace netDxf.IO
 			string readCode = this.reader.ReadLine();
 			if (readCode == null)
 			{
-				this.code = 0;
+				_Code = 0;
 				this.Value = DxfObjectCode.EndOfFile;
 			}
 			else
 			{
 				this.CurrentPosition += 1;
-				if (!short.TryParse(readCode, NumberStyles.Integer, CultureInfo.InvariantCulture, out this.code))
+				if (!short.TryParse(readCode, NumberStyles.Integer, CultureInfo.InvariantCulture, out _Code))
 				{
 					throw new Exception(string.Format("Code {0} not valid at line {1}", this.Code, this.CurrentPosition));
 				}

@@ -187,14 +187,6 @@ namespace netDxf.Entities
 
 		#endregion
 
-		#region private fields
-
-		private double rotation;
-		private double startAngle;
-		private double endAngle;
-
-		#endregion
-
 		#region constructors
 
 		/// <summary>Initializes a new instance of the class.</summary>
@@ -202,7 +194,6 @@ namespace netDxf.Entities
 			: this(Vector3.Zero, 1.0, 0.5)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="center">Ellipse <see cref="Vector2">center</see> in object coordinates.</param>
 		/// <param name="majorAxis">Ellipse major axis.</param>
@@ -216,7 +207,6 @@ namespace netDxf.Entities
 			: this(new Vector3(center.X, center.Y, 0.0), majorAxis, minorAxis)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="center">Ellipse <see cref="Vector3">center</see> in object coordinates.</param>
 		/// <param name="majorAxis">Ellipse major axis.</param>
@@ -248,10 +238,6 @@ namespace netDxf.Entities
 
 			this.MajorAxis = majorAxis;
 			this.MinorAxis = minorAxis;
-			this.startAngle = 0.0;
-			this.endAngle = 0.0;
-			this.rotation = 0.0;
-			this.Thickness = 0.0;
 		}
 
 		#endregion
@@ -269,35 +255,38 @@ namespace netDxf.Entities
 		/// <remarks>The minor axis is always measured along the ellipse local Y axis.</remarks>
 		public double MinorAxis { get; private set; }
 
+		private double _Rotation = 0.0;
 		/// <summary>Gets or sets the ellipse local rotation in degrees along its normal.</summary>
 		public double Rotation
 		{
-			get => this.rotation;
-			set => this.rotation = MathHelper.NormalizeAngle(value);
+			get => _Rotation;
+			set => _Rotation = MathHelper.NormalizeAngle(value);
 		}
 
+		private double _StartAngle = 0.0;
 		/// <summary>Gets or sets the ellipse start angle in degrees.</summary>
 		/// <remarks>To get a full ellipse set the start angle equal to the end angle.</remarks>
 		public double StartAngle
 		{
-			get => this.startAngle;
-			set => this.startAngle = MathHelper.NormalizeAngle(value);
+			get => _StartAngle;
+			set => _StartAngle = MathHelper.NormalizeAngle(value);
 		}
 
+		private double _EndAngle = 0.0;
 		/// <summary>Gets or sets the ellipse end angle in degrees.</summary>
 		/// <remarks>To get a full ellipse set the end angle equal to the start angle.</remarks>
 		public double EndAngle
 		{
-			get => this.endAngle;
-			set => this.endAngle = MathHelper.NormalizeAngle(value);
+			get => _EndAngle;
+			set => _EndAngle = MathHelper.NormalizeAngle(value);
 		}
 
 		/// <summary>Gets or sets the ellipse thickness.</summary>
-		public double Thickness { get; set; }
+		public double Thickness { get; set; } = 0.0;
 
 		/// <summary>Checks if the actual instance is a full ellipse.</summary>
 		/// <remarks>An ellipse is considered full when its start and end angles are equal.</remarks>
-		public bool IsFullEllipse => MathHelper.IsEqual(this.startAngle, this.endAngle);
+		public bool IsFullEllipse => MathHelper.IsEqual(_StartAngle, _EndAngle);
 
 		#endregion
 
@@ -362,7 +351,7 @@ namespace netDxf.Entities
 			}
 
 			List<Vector2> points = new List<Vector2>();
-			double beta = this.rotation * MathHelper.DegToRad;
+			double beta = _Rotation * MathHelper.DegToRad;
 			double sinBeta = Math.Sin(beta);
 			double cosBeta = Math.Cos(beta);
 			double start;
@@ -377,8 +366,8 @@ namespace netDxf.Entities
 			}
 			else
 			{
-				Vector2 startPoint = this.PolarCoordinateRelativeToCenter(this.startAngle);
-				Vector2 endPoint = this.PolarCoordinateRelativeToCenter(this.endAngle);
+				Vector2 startPoint = this.PolarCoordinateRelativeToCenter(_StartAngle);
+				Vector2 endPoint = this.PolarCoordinateRelativeToCenter(_EndAngle);
 				double a = 1 / (0.5 * this.MajorAxis);
 				double b = 1 / (0.5 * this.MinorAxis);
 				start = Math.Atan2(startPoint.Y * b, startPoint.X * a);
@@ -586,9 +575,9 @@ namespace netDxf.Entities
 				Center = this.Center,
 				MajorAxis = this.MajorAxis,
 				MinorAxis = this.MinorAxis,
-				Rotation = this.rotation,
-				StartAngle = this.startAngle,
-				EndAngle = this.endAngle,
+				Rotation = _Rotation,
+				StartAngle = _StartAngle,
+				EndAngle = _EndAngle,
 				Thickness = this.Thickness
 			};
 

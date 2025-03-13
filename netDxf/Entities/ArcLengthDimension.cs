@@ -33,14 +33,6 @@ namespace netDxf.Entities
 	public class ArcLengthDimension :
 		Dimension
 	{
-		#region private fields
-
-		private double radius;
-		private double startAngle;
-		private double endAngle;
-
-		#endregion
-
 		#region constructors
 
 		/// <summary>Initializes a new instance of the class.</summary>
@@ -48,7 +40,6 @@ namespace netDxf.Entities
 			: this(Vector2.Zero, 1, 0, 0, 0.1)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="arc"><see cref="Arc"/> to measure.</param>
 		/// <param name="offset">Distance between the center of the measured arc and the dimension line.</param>
@@ -56,7 +47,6 @@ namespace netDxf.Entities
 			: this(arc, offset, DimensionStyle.Default)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="arc">Angle <see cref="Arc">arc</see> to measure.</param>
 		/// <param name="offset">Distance between the center of the measured arc and the dimension line.</param>
@@ -75,16 +65,15 @@ namespace netDxf.Entities
 
 			Vector3 refPoint = MathHelper.Transform(arc.Center, arc.Normal, CoordinateSystem.World, CoordinateSystem.Object);
 			this.CenterPoint = new Vector2(refPoint.X, refPoint.Y);
-			this.radius = arc.Radius;
-			this.startAngle = arc.StartAngle;
-			this.endAngle = arc.EndAngle;
+			_Radius = arc.Radius;
+			_StartAngle = arc.StartAngle;
+			_EndAngle = arc.EndAngle;
 			this.Offset = offset;
 			this.Style = style ?? throw new ArgumentNullException(nameof(style));
 			this.Normal = arc.Normal;
 			this.Elevation = refPoint.Z;
 			this.Update();
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="startPoint">Arc start point, the start point bulge must be different than zero.</param>
 		/// <param name="endPoint">Arc end point.</param>
@@ -94,7 +83,6 @@ namespace netDxf.Entities
 		{
 
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="startPoint">Arc start point.</param>
 		/// <param name="endPoint">Arc end point.</param>
@@ -104,7 +92,6 @@ namespace netDxf.Entities
 			: this(startPoint, endPoint, bulge, offset, DimensionStyle.Default)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="startPoint">Arc start point.</param>
 		/// <param name="endPoint">Arc end point.</param>
@@ -120,14 +107,13 @@ namespace netDxf.Entities
 
 			Tuple<Vector2, double, double, double> arcData = MathHelper.ArcFromBulge(startPoint, endPoint, bulge);
 			this.CenterPoint = arcData.Item1;
-			this.radius = arcData.Item2;
-			this.startAngle = arcData.Item3;
-			this.endAngle = arcData.Item4;
+			_Radius = arcData.Item2;
+			_StartAngle = arcData.Item3;
+			_EndAngle = arcData.Item4;
 			this.Offset = offset;
 			this.Style = style ?? throw new ArgumentNullException(nameof(style));
 			this.Update();
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="center">Center of the angle arc to measure.</param>
 		/// <param name="radius">Arc radius.</param>
@@ -138,7 +124,6 @@ namespace netDxf.Entities
 			: this(center, radius, startAngle, endAngle, offset, DimensionStyle.Default)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="center">Center of the angle arc to measure.</param>
 		/// <param name="radius">Arc radius.</param>
@@ -158,9 +143,9 @@ namespace netDxf.Entities
 			{
 				throw new ArgumentOutOfRangeException(nameof(radius), radius, "The arc radius must be greater than zero.");
 			}
-			this.radius = radius;
-			this.startAngle = MathHelper.NormalizeAngle(startAngle);
-			this.endAngle = MathHelper.NormalizeAngle(endAngle);
+			_Radius = radius;
+			_StartAngle = MathHelper.NormalizeAngle(startAngle);
+			_EndAngle = MathHelper.NormalizeAngle(endAngle);
 			this.Offset = offset;
 			this.Style = style ?? throw new ArgumentNullException(nameof(style));
 			this.Update();
@@ -173,32 +158,35 @@ namespace netDxf.Entities
 		/// <summary>Gets or sets the center <see cref="Vector2">point</see> of the arc in <b>OCS</b> (object coordinate system).</summary>
 		public Vector2 CenterPoint { get; set; }
 
+		private double _Radius;
 		/// <summary>Gets or sets the arc radius.</summary>
 		public double Radius
 		{
-			get => this.radius;
+			get => _Radius;
 			set
 			{
 				if (value <= 0)
 				{
 					throw new ArgumentOutOfRangeException(nameof(value), value, "The arc radius must be greater than zero.");
 				}
-				this.radius = value;
+				_Radius = value;
 			}
 		}
 
+		private double _StartAngle;
 		/// <summary>Gets or sets the arc start angle in degrees.</summary>
 		public double StartAngle
 		{
-			get => this.startAngle;
-			set => this.startAngle = MathHelper.NormalizeAngle(value);
+			get => _StartAngle;
+			set => _StartAngle = MathHelper.NormalizeAngle(value);
 		}
 
+		private double _EndAngle;
 		/// <summary>Gets or sets the arc end angle in degrees.</summary>
 		public double EndAngle
 		{
-			get => this.endAngle;
-			set => this.endAngle = MathHelper.NormalizeAngle(value);
+			get => _EndAngle;
+			set => _EndAngle = MathHelper.NormalizeAngle(value);
 		}
 
 		/// <summary>Gets the location of the dimension line arc.</summary>
@@ -216,7 +204,7 @@ namespace netDxf.Entities
 		{
 			get
 			{
-				double angle = MathHelper.NormalizeAngle(this.endAngle - this.startAngle);
+				double angle = MathHelper.NormalizeAngle(_EndAngle - _StartAngle);
 
 				if (this.Offset < 0)
 				{
@@ -227,7 +215,7 @@ namespace netDxf.Entities
 		}
 
 		/// <inheritdoc/>
-		public override double Measurement => this.radius * this.ArcAngle * MathHelper.DegToRad;
+		public override double Measurement => _Radius * this.ArcAngle * MathHelper.DegToRad;
 
 		#endregion
 
@@ -244,8 +232,8 @@ namespace netDxf.Entities
 			double newOffset = Vector2.Distance(this.CenterPoint, point);
 
 			this.Offset = newOffset;
-			Vector2 start = Vector2.Polar(this.CenterPoint, this.radius, this.startAngle * MathHelper.DegToRad);
-			Vector2 end = Vector2.Polar(this.CenterPoint, this.radius, this.endAngle * MathHelper.DegToRad);
+			Vector2 start = Vector2.Polar(this.CenterPoint, _Radius, _StartAngle * MathHelper.DegToRad);
+			Vector2 end = Vector2.Polar(this.CenterPoint, _Radius, _EndAngle * MathHelper.DegToRad);
 			Vector2 dirPoint = point - this.CenterPoint;
 			double cross1 = Vector2.CrossProduct(start - this.CenterPoint, dirPoint);
 			double cross2 = Vector2.CrossProduct(end - this.CenterPoint, dirPoint);
@@ -255,7 +243,7 @@ namespace netDxf.Entities
 				this.Offset *= -1;
 			}
 
-			double angle = this.Offset >= 0 ? this.startAngle : this.endAngle;
+			double angle = this.Offset >= 0 ? _StartAngle : _EndAngle;
 			double midRot = (angle + 0.5 * this.ArcAngle) * MathHelper.DegToRad;
 			Vector2 midDim = Vector2.Polar(this.CenterPoint, Math.Abs(this.Offset), midRot);
 			this.DefinitionPoint = midDim;
@@ -276,7 +264,7 @@ namespace netDxf.Entities
 				}
 
 				double gap = textGap * scale;
-				this.textRefPoint = midDim + gap * Vector2.Normalize(midDim - this.CenterPoint);
+				_TextReferencePoint = midDim + gap * Vector2.Normalize(midDim - this.CenterPoint);
 			}
 		}
 
@@ -343,10 +331,10 @@ namespace netDxf.Entities
 			Vector3 v;
 			if (this.TextPositionManuallySet)
 			{
-				v = transOW * new Vector3(this.textRefPoint.X, this.textRefPoint.Y, this.Elevation);
+				v = transOW * new Vector3(_TextReferencePoint.X, _TextReferencePoint.Y, this.Elevation);
 				v = transformation * v + translation;
 				v = transWO * v;
-				this.textRefPoint = new Vector2(v.X, v.Y);
+				_TextReferencePoint = new Vector2(v.X, v.Y);
 			}
 
 			v = transOW * new Vector3(this.DefinitionPoint.X, this.DefinitionPoint.Y, this.Elevation);
@@ -361,7 +349,7 @@ namespace netDxf.Entities
 		protected override void CalculateReferencePoints()
 		{
 			DimensionStyleOverride styleOverride;
-			double start = this.Offset >= 0 ? this.startAngle : this.endAngle;
+			double start = this.Offset >= 0 ? _StartAngle : _EndAngle;
 			double midRot = (start + 0.5 * this.ArcAngle) * MathHelper.DegToRad;
 			Vector2 midDim = Vector2.Polar(this.CenterPoint, Math.Abs(this.Offset), midRot);
 
@@ -377,7 +365,7 @@ namespace netDxf.Entities
 
 				if (moveText == DimensionStyleFitTextMove.BesideDimLine)
 				{
-					this.SetDimensionLinePosition(this.textRefPoint);
+					this.SetDimensionLinePosition(_TextReferencePoint);
 				}
 			}
 			else
@@ -394,7 +382,7 @@ namespace netDxf.Entities
 				}
 
 				double gap = textGap * scale;
-				this.textRefPoint = midDim + gap * Vector2.Normalize(midDim - this.CenterPoint);
+				_TextReferencePoint = midDim + gap * Vector2.Normalize(midDim - this.CenterPoint);
 			}
 		}
 
@@ -428,9 +416,9 @@ namespace netDxf.Entities
 				Elevation = this.Elevation,
 				//Angular3PointDimension properties
 				CenterPoint = this.CenterPoint,
-				Radius = this.radius,
-				StartAngle = this.startAngle,
-				EndAngle = this.endAngle,
+				Radius = _Radius,
+				StartAngle = _StartAngle,
+				EndAngle = _EndAngle,
 				Offset = this.Offset
 			};
 

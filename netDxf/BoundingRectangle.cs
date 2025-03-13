@@ -51,7 +51,6 @@ namespace netDxf
 			this.Min = new Vector2(center.X - width * 0.5, center.Y - height * 0.5);
 			this.Max = new Vector2(center.X + width * 0.5, center.Y + height * 0.5);
 		}
-
 		/// <summary>Initializes a new axis aligned bounding rectangle from a circle.</summary>
 		/// <param name="center">Center of the bounding rectangle.</param>
 		/// <param name="radius">Radius of the circle.</param>
@@ -60,7 +59,6 @@ namespace netDxf
 			this.Min = new Vector2(center.X - radius, center.Y - radius);
 			this.Max = new Vector2(center.X + radius, center.Y + radius);
 		}
-
 		/// <summary>Initializes a new axis aligned bounding rectangle.</summary>
 		/// <param name="center">Center of the bounding rectangle.</param>
 		/// <param name="width">Width of the bounding rectangle.</param>
@@ -70,7 +68,6 @@ namespace netDxf
 			this.Min = new Vector2(center.X - width * 0.5, center.Y - height * 0.5);
 			this.Max = new Vector2(center.X + width * 0.5, center.Y + height * 0.5);
 		}
-
 		/// <summary>Initializes a new axis aligned bounding rectangle.</summary>
 		/// <param name="min">Lower-left corner.</param>
 		/// <param name="max">Upper-right corner.</param>
@@ -79,7 +76,6 @@ namespace netDxf
 			this.Min = min;
 			this.Max = max;
 		}
-
 		/// <summary>Initializes a new axis aligned bounding rectangle.</summary>
 		/// <param name="points">A list of Vector2.</param>
 		public BoundingRectangle(IEnumerable<Vector2> points)

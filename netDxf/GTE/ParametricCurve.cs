@@ -44,8 +44,6 @@ namespace netDxf.GTE
 
 		protected readonly double[] segmentLength;
 		protected readonly double[] acumulatedLength;
-		protected int rombergOrder;
-		protected int maxBisections;
 
 		// Abstract base class for a parameterized curve X(t), where t is the
 		// parameter in [tmin,tmax] and X is an N-tuple position.  The first
@@ -61,8 +59,8 @@ namespace netDxf.GTE
 			times.CopyTo(this.Times, 0);
 			this.segmentLength = new double[numSegments];
 			this.acumulatedLength = new double[numSegments];
-			this.rombergOrder = DEFAULT_ROMBERG_ORDER;
-			this.maxBisections = DEFAULT_MAX_BISECTIONS;
+			_RombergOrder = DEFAULT_ROMBERG_ORDER;
+			_MaxBisections = DEFAULT_MAX_BISECTIONS;
 			this.IsConstructed = false;
 		}
 
@@ -80,21 +78,23 @@ namespace netDxf.GTE
 
 		public double[] Times { get; protected set; }
 
+		protected int _RombergOrder;
 		// Parameters used in GetLength(...), GetTotalLength() and
 		// GetTime(...).
 
 		// The default value is 8.
 		public int RombergOrder
 		{
-			get => this.rombergOrder;
-			set => this.rombergOrder = Math.Max(value, 1);
+			get => _RombergOrder;
+			set => _RombergOrder = Math.Max(value, 1);
 		}
 
+		protected int _MaxBisections;
 		// The default value is 1024.
 		public int MaxBisections
 		{
-			get => this.maxBisections;
-			set => this.maxBisections = Math.Max(value, 1);
+			get => _MaxBisections;
+			set => _MaxBisections = Math.Max(value, 1);
 		}
 
 		// This function applies only when the first constructor is used(two
@@ -163,7 +163,7 @@ namespace netDxf.GTE
 				double accumulated = 0;
 				for (int i = 0, ip1 = 1; i < numSegments; ++i, ++ip1)
 				{
-					this.segmentLength[i] = Integration.Romberg(this.rombergOrder, this.Times[i], this.Times[ip1], speed);
+					this.segmentLength[i] = Integration.Romberg(_RombergOrder, this.Times[i], this.Times[ip1], speed);
 					accumulated += this.segmentLength[i];
 					this.acumulatedLength[i] = accumulated;
 				}
@@ -183,13 +183,13 @@ namespace netDxf.GTE
 				length = 0;
 				if (t0 < iter0)
 				{
-					length += Integration.Romberg(this.rombergOrder, t0, this.Times[index0], speed);
+					length += Integration.Romberg(_RombergOrder, t0, this.Times[index0], speed);
 				}
 
 				int isup;
 				if (t1 < iter1)
 				{
-					length += Integration.Romberg(this.rombergOrder, this.Times[index1 - 1], t1, speed);
+					length += Integration.Romberg(_RombergOrder, this.Times[index1 - 1], t1, speed);
 					isup = index1 - 1;
 				}
 				else
@@ -203,7 +203,7 @@ namespace netDxf.GTE
 			}
 			else
 			{
-				length = Integration.Romberg(this.rombergOrder, t0, t1, speed);
+				length = Integration.Romberg(_RombergOrder, t0, t1, speed);
 			}
 			return length;
 		}
@@ -240,7 +240,7 @@ namespace netDxf.GTE
 						double speed(double z)
 							=> this.GetSpeed(z);
 
-						return Integration.Romberg(this.rombergOrder, this.Times[0], t, speed) - length;
+						return Integration.Romberg(_RombergOrder, this.Times[0], t, speed) - length;
 					}
 
 					// We know that F(tmin) < 0 and F(tmax) > 0, which allows us to
@@ -252,11 +252,11 @@ namespace netDxf.GTE
 					double fmid = F(tmid);
 					if (fmid > 0)
 					{
-						RootsBisection.Find(F, this.Times[0], tmid, -1.0, 1.0, this.maxBisections, out tmid);
+						RootsBisection.Find(F, this.Times[0], tmid, -1.0, 1.0, _MaxBisections, out tmid);
 					}
 					else if (fmid < 0)
 					{
-						RootsBisection.Find(F, tmid, this.Times[this.Times.Length - 1], -1.0, 1.0, this.maxBisections, out tmid);
+						RootsBisection.Find(F, tmid, this.Times[this.Times.Length - 1], -1.0, 1.0, _MaxBisections, out tmid);
 					}
 
 					return tmid;

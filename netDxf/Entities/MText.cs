@@ -106,17 +106,6 @@ namespace netDxf.Entities
 
 		#endregion
 
-		#region private fields
-
-		private double rectangleWidth;
-		private double height;
-		private double rotation;
-		private double lineSpacing;
-		private MTextLineSpacingStyle lineSpacingStyle;
-		private TextStyle style;
-
-		#endregion
-
 		#region constructors
 
 		/// <summary>Initializes a new instance of the class.</summary>
@@ -124,14 +113,12 @@ namespace netDxf.Entities
 			: this(string.Empty, Vector3.Zero, 1.0, 0.0, TextStyle.Default)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="text">Text string.</param>
 		public MText(string text)
 			: this(text, Vector3.Zero, 1.0, 0.0, TextStyle.Default)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="position">Text <see cref="Vector2">position</see> in world coordinates.</param>
 		/// <param name="height">Text height.</param>
@@ -139,7 +126,6 @@ namespace netDxf.Entities
 			: this(string.Empty, position, height, 0.0, TextStyle.Default)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="position">Text <see cref="Vector2">position</see> in world coordinates.</param>
 		/// <param name="height">Text height.</param>
@@ -147,7 +133,6 @@ namespace netDxf.Entities
 			: this(string.Empty, position, height, 0.0, TextStyle.Default)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="position">Text <see cref="Vector2">position</see> in world coordinates.</param>
 		/// <param name="height">Text height.</param>
@@ -156,7 +141,6 @@ namespace netDxf.Entities
 			: this(string.Empty, position, height, rectangleWidth, TextStyle.Default)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="position">Text <see cref="Vector2">position</see> in world coordinates.</param>
 		/// <param name="height">Text height.</param>
@@ -165,7 +149,6 @@ namespace netDxf.Entities
 			: this(string.Empty, new Vector3(position.X, position.Y, 0.0), height, rectangleWidth, TextStyle.Default)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="position">Text <see cref="Vector2">position</see> in world coordinates.</param>
 		/// <param name="height">Text height.</param>
@@ -175,7 +158,6 @@ namespace netDxf.Entities
 			: this(string.Empty, position, height, rectangleWidth, style)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="position">Text <see cref="Vector2">position</see> in world coordinates.</param>
 		/// <param name="height">Text height.</param>
@@ -185,7 +167,6 @@ namespace netDxf.Entities
 			: this(string.Empty, new Vector3(position.X, position.Y, 0.0), height, rectangleWidth, style)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="text">Text string.</param>
 		/// <param name="position">Text <see cref="Vector2">position</see> in world coordinates.</param>
@@ -194,7 +175,6 @@ namespace netDxf.Entities
 			: this(text, new Vector3(position.X, position.Y, 0.0), height, 0.0, TextStyle.Default)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="text">Text string.</param>
 		/// <param name="position">Text <see cref="Vector2">position</see> in world coordinates.</param>
@@ -203,7 +183,6 @@ namespace netDxf.Entities
 			: this(text, position, height, 0.0, TextStyle.Default)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="text">Text string.</param>
 		/// <param name="position">Text <see cref="Vector2">position</see> in world coordinates.</param>
@@ -213,7 +192,6 @@ namespace netDxf.Entities
 			: this(text, new Vector3(position.X, position.Y, 0.0), height, rectangleWidth, TextStyle.Default)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="text">Text string.</param>
 		/// <param name="position">Text <see cref="Vector2">position</see> in world coordinates.</param>
@@ -223,7 +201,6 @@ namespace netDxf.Entities
 			: this(text, position, height, rectangleWidth, TextStyle.Default)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="text">Text string.</param>
 		/// <param name="position">Text <see cref="Vector2">position</see> in world coordinates.</param>
@@ -234,7 +211,6 @@ namespace netDxf.Entities
 			: this(text, new Vector3(position.X, position.Y, 0.0), height, rectangleWidth, style)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="text">Text string.</param>
 		/// <param name="position">Text <see cref="Vector2">position</see> in world coordinates.</param>
@@ -246,18 +222,13 @@ namespace netDxf.Entities
 		{
 			this.Value = text;
 			this.Position = position;
-			this.AttachmentPoint = MTextAttachmentPoint.TopLeft;
-			this.style = style ?? throw new ArgumentNullException(nameof(style));
-			this.rectangleWidth = rectangleWidth;
+			_Style = style ?? throw new ArgumentNullException(nameof(style));
+			_RectangleWidth = rectangleWidth;
 			if (height <= 0.0)
 			{
 				throw new ArgumentOutOfRangeException(nameof(height), this.Value, "The MText height must be greater than zero.");
 			}
-			this.height = height;
-			this.lineSpacing = 1.0;
-			this.lineSpacingStyle = MTextLineSpacingStyle.AtLeast;
-			this.DrawingDirection = MTextDrawingDirection.ByStyle;
-			this.rotation = 0.0;
+			_Height = height;
 		}
 
 		#endregion
@@ -267,65 +238,69 @@ namespace netDxf.Entities
 		/// <summary>Gets or sets if the text will be mirrored when a symmetry is performed, when the current MText entity does not belong to a <b>DXF</b> document.</summary>
 		public static bool DefaultMirrText { get; set; }
 
+		private double _Rotation = 0.0;
 		/// <summary>Gets or sets the text rotation in degrees.</summary>
 		public double Rotation
 		{
-			get => this.rotation;
-			set => this.rotation = MathHelper.NormalizeAngle(value);
+			get => _Rotation;
+			set => _Rotation = MathHelper.NormalizeAngle(value);
 		}
 
+		private double _Height;
 		/// <summary>Gets or sets the text height.</summary>
 		public double Height
 		{
-			get => this.height;
+			get => _Height;
 			set
 			{
 				if (value <= 0)
 				{
 					throw new ArgumentOutOfRangeException(nameof(value), value, "The MText height must be greater than zero.");
 				}
-				this.height = value;
+				_Height = value;
 			}
 		}
 
+		private double _LineSpacingFactor = 1.0;
 		/// <summary>Gets or sets the line spacing factor.</summary>
 		/// <remarks>
 		/// Percentage of default line spacing to be applied. Valid values range from 0.25 to 4.0, the default value 1.0.
 		/// </remarks>
 		public double LineSpacingFactor
 		{
-			get => this.lineSpacing;
+			get => _LineSpacingFactor;
 			set
 			{
 				if (value < 0.25 || value > 4.0)
 				{
 					throw new ArgumentOutOfRangeException(nameof(value), value, "The MText LineSpacingFactor valid values range from 0.25 to 4.0");
 				}
-				this.lineSpacing = value;
+				_LineSpacingFactor = value;
 			}
 		}
 
-
+		private MTextLineSpacingStyle _LineSpacingStyle = MTextLineSpacingStyle.AtLeast;
 		/// <summary>Get or sets the <see cref="MTextLineSpacingStyle">line spacing style</see>.</summary>
 		/// <remarks>
 		/// The only available options are <see cref="MTextLineSpacingStyle.AtLeast"/> and <see cref="MTextLineSpacingStyle.Exact"/>, <see cref="MTextLineSpacingStyle.Default"/> and <see cref="MTextLineSpacingStyle.Multiple"/> are only applicable to <see cref="MTextParagraphOptions"/> objects.
 		/// </remarks>
 		public MTextLineSpacingStyle LineSpacingStyle
 		{
-			get => this.lineSpacingStyle;
+			get => _LineSpacingStyle;
 			set
 			{
 				if (value == MTextLineSpacingStyle.Default || value == MTextLineSpacingStyle.Multiple)
 				{
 					throw new ArgumentOutOfRangeException(nameof(value), value, "The Default and Multiple options are only applicable to MTextParagraphOptions objects.");
 				}
-				this.lineSpacingStyle = value;
+				_LineSpacingStyle = value;
 			}
 		}
 
 		/// <summary>Get or sets the <see cref="MTextDrawingDirection">text drawing direction</see>.</summary>
-		public MTextDrawingDirection DrawingDirection { get; set; }
+		public MTextDrawingDirection DrawingDirection { get; set; } = MTextDrawingDirection.ByStyle;
 
+		private double _RectangleWidth;
 		/// <summary>Gets or sets the text reference rectangle width.</summary>
 		/// <remarks>
 		/// This value defines the width of the box where the text will fit.<br/>
@@ -334,31 +309,33 @@ namespace netDxf.Entities
 		/// </remarks>
 		public double RectangleWidth
 		{
-			get => this.rectangleWidth;
+			get => _RectangleWidth;
 			set
 			{
 				if (value < 0.0)
 				{
 					throw new ArgumentOutOfRangeException(nameof(value), value, "The MText rectangle width must be equals or greater than zero.");
 				}
-				this.rectangleWidth = value;
+				_RectangleWidth = value;
 			}
 		}
 
 		/// <summary>Gets or sets the text <see cref="MTextAttachmentPoint">attachment point</see>.</summary>
-		public MTextAttachmentPoint AttachmentPoint { get; set; }
+		public MTextAttachmentPoint AttachmentPoint { get; set; } = MTextAttachmentPoint.TopLeft;
 
+		private TextStyle _Style;
 		/// <summary>Gets or sets the <see cref="TextStyle">text style</see>.</summary>
 		public TextStyle Style
 		{
-			get => this.style;
+			get => _Style;
 			set
 			{
 				if (value == null)
 				{
 					throw new ArgumentNullException(nameof(value));
 				}
-				this.style = this.OnTextStyleChangedEvent(this.style, value);
+
+				_Style = this.OnTextStyleChangedEvent(_Style, value);
 			}
 		}
 
@@ -444,7 +421,7 @@ namespace netDxf.Entities
 			string f;
 			if (string.IsNullOrEmpty(options.FontName))
 			{
-				f = string.IsNullOrEmpty(this.style.FontFamilyName) ? this.style.FontFile : this.style.FontFamilyName;
+				f = string.IsNullOrEmpty(_Style.FontFamilyName) ? _Style.FontFile : _Style.FontFamilyName;
 			}
 			else
 			{
@@ -845,13 +822,13 @@ namespace netDxf.Entities
 				IsVisible = this.IsVisible,
 				//MText properties
 				Position = this.Position,
-				Rotation = this.rotation,
-				Height = this.height,
-				LineSpacingFactor = this.lineSpacing,
-				LineSpacingStyle = this.lineSpacingStyle,
-				RectangleWidth = this.rectangleWidth,
+				Rotation = _Rotation,
+				Height = _Height,
+				LineSpacingFactor = _LineSpacingFactor,
+				LineSpacingStyle = _LineSpacingStyle,
+				RectangleWidth = _RectangleWidth,
 				AttachmentPoint = this.AttachmentPoint,
-				Style = (TextStyle)this.style.Clone(),
+				Style = (TextStyle)_Style.Clone(),
 				Value = this.Value
 			};
 

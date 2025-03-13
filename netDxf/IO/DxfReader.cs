@@ -134,10 +134,6 @@ namespace netDxf.IO
 
 		#endregion
 
-		#region constructors
-
-		#endregion
-
 		#region public methods
 
 		/// <summary>Reads the whole stream.</summary>

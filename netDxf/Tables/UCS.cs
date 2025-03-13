@@ -41,7 +41,6 @@ namespace netDxf.Tables
 			: this(name, true)
 		{
 		}
-
 		internal UCS(string name, bool checkName)
 			: base(name, DxfObjectCode.Ucs, checkName)
 		{
@@ -55,7 +54,6 @@ namespace netDxf.Tables
 			this.YAxis = Vector3.UnitY;
 			this.ZAxis = Vector3.UnitZ;
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="name">User coordinate system name.</param>
 		/// <param name="origin">Origin in WCS.</param>
@@ -68,7 +66,6 @@ namespace netDxf.Tables
 			: this(name, origin, xDirection, yDirection, true)
 		{
 		}
-
 		internal UCS(string name, Vector3 origin, Vector3 xDirection, Vector3 yDirection, bool checkName)
 			: base(name, DxfObjectCode.Ucs, checkName)
 		{

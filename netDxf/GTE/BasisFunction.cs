@@ -139,7 +139,7 @@ namespace netDxf.GTE
 
 
 		// Constructor inputs and values derived from them.
-		private double tLength;
+		private double tLength = 0;
 		// Lookup information for the GetIndex() function.  The first element
 		// of the pair is a unique knot value.  The second element is the
 		// index in mKnots[] for the last occurrence of that knot value.
@@ -147,7 +147,7 @@ namespace netDxf.GTE
 
 		// Storage for the basis functions and their first three derivatives;
 		// mJet[i] is array[d+1][n+d].
-		private double[][][] jet;
+		private double[][][] jet = new double[4][][];
 
 		// Construction and destruction.  The determination that the curve is
 		// open or floating is based on the multiplicities.  The 'uniform'
@@ -173,13 +173,8 @@ namespace netDxf.GTE
 
 			this.NumControls = input.Periodic ? input.NumControls + input.Degree : input.NumControls;
 			this.Degree = input.Degree;
-			this.MinDomain = 0;
-			this.MaxDomain = 0;
-			this.tLength = 0;
-			this.IsOpen = false;
 			this.IsUniform = input.Uniform;
 			this.IsPeriodic = input.Periodic;
-			this.jet = new double[4][][];
 
 			this.UniqueKnots = new UniqueKnot[input.UniqueKnots.Length];
 			input.UniqueKnots.CopyTo(this.UniqueKnots, 0);
@@ -247,9 +242,9 @@ namespace netDxf.GTE
 
 		public int NumKnots => this.Knots.Length;
 
-		public double MinDomain { get; private set; }
+		public double MinDomain { get; private set; } = 0;
 
-		public double MaxDomain { get; private set; }
+		public double MaxDomain { get; private set; } = 0;
 
 		public bool IsOpen { get; private set; }
 

@@ -34,18 +34,7 @@ namespace netDxf.Entities
 	public class Spline :
 		EntityObject
 	{
-		#region private fields
-
 		public const short MaxDegree = 10;
-
-		private readonly Vector3[] fitPoints;
-		private bool isClosedPeriodic;
-
-		private double knotTolerance = 0.0000001;
-		private double ctrlPointTolerance = 0.0000001;
-		private double fitTolerance = 0.0000000001;
-
-		#endregion
 
 		#region constructors
 
@@ -58,7 +47,7 @@ namespace netDxf.Entities
 			: this(BezierCurveCubic.CreateFromFitPoints(fitPoints))
 		{
 			this.CreationMethod = SplineCreationMethod.FitPoints;
-			this.fitPoints = fitPoints.ToArray();
+			_FitPoints = fitPoints.ToArray();
 		}
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="curves">List of cubic bezier curves.</param>
@@ -91,8 +80,8 @@ namespace netDxf.Entities
 			this.ControlPoints = ctrList.ToArray();
 			this.Weights = wList.ToArray();
 			this.Degree = degree;
-			this.isClosedPeriodic = false;
-			this.fitPoints = new Vector3[0];
+			_IsClosedPeriodic = false;
+			_FitPoints = new Vector3[0];
 			this.CreationMethod = SplineCreationMethod.ControlPoints;
 			this.Knots = ÇreateBezierKnotVector(this.ControlPoints.Length, this.Degree);
 		}
@@ -172,10 +161,10 @@ namespace netDxf.Entities
 				}
 			}
 
-			this.isClosedPeriodic = closedPeriodic;
+			_IsClosedPeriodic = closedPeriodic;
 			this.CreationMethod = SplineCreationMethod.ControlPoints;
-			this.fitPoints = new Vector3[0];
-			this.Knots = CreateKnotVector(this.ControlPoints.Length, this.Degree, this.isClosedPeriodic);
+			_FitPoints = new Vector3[0];
+			this.Knots = CreateKnotVector(this.ControlPoints.Length, this.Degree, _IsClosedPeriodic);
 		}
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="controlPoints">Spline control points.</param>
@@ -278,23 +267,24 @@ namespace netDxf.Entities
 				{
 					throw new ArgumentNullException(nameof(fitPoints), "Cannot create a spline without fit points if its creation method is with fit points.");
 				}
-				this.fitPoints = new Vector3[0];
+				_FitPoints = new Vector3[0];
 			}
 			else
 			{
-				this.fitPoints = fitPoints.ToArray();
+				_FitPoints = fitPoints.ToArray();
 			}
 
 			this.CreationMethod = method;
-			this.isClosedPeriodic = closedPeriodic;
+			_IsClosedPeriodic = closedPeriodic;
 		}
 
 		#endregion
 
 		#region public properties
 
+		private readonly Vector3[] _FitPoints;
 		/// <summary>Gets the spline <see cref="Vector3">fit points</see> list.</summary>
-		public IReadOnlyList<Vector3> FitPoints => this.fitPoints;
+		public IReadOnlyList<Vector3> FitPoints => _FitPoints;
 
 		/// <summary>Gets or sets the spline curve start tangent.</summary>
 		/// <remarks>Only applicable to splines created with fit points.</remarks>
@@ -314,10 +304,11 @@ namespace netDxf.Entities
 		/// <summary>Gets the spline creation method.</summary>
 		public SplineCreationMethod CreationMethod { get; }
 
+		private double _KnotTolerance = 0.0000001;
 		/// <summary>Gets or sets the knot tolerance.</summary>
 		public double KnotTolerance
 		{
-			get => this.knotTolerance;
+			get => _KnotTolerance;
 			set
 			{
 				if (value <= 0)
@@ -325,14 +316,15 @@ namespace netDxf.Entities
 					throw new ArgumentOutOfRangeException(nameof(value), value, "The knot tolerance must be greater than zero.");
 				}
 
-				this.knotTolerance = value;
+				_KnotTolerance = value;
 			}
 		}
 
+		private double _CtrlPointTolerance = 0.0000001;
 		/// <summary>Gets or sets the control point tolerance.</summary>
 		public double CtrlPointTolerance
 		{
-			get => this.ctrlPointTolerance;
+			get => _CtrlPointTolerance;
 			set
 			{
 				if (value <= 0)
@@ -340,14 +332,15 @@ namespace netDxf.Entities
 					throw new ArgumentOutOfRangeException(nameof(value), value, "The control point tolerance must be greater than zero.");
 				}
 
-				this.ctrlPointTolerance = value;
+				_CtrlPointTolerance = value;
 			}
 		}
 
+		private double _FitTolerance = 0.0000000001;
 		/// <summary>Gets or sets the fit point tolerance.</summary>
 		public double FitTolerance
 		{
-			get => this.fitTolerance;
+			get => _FitTolerance;
 			set
 			{
 				if (value <= 0)
@@ -355,7 +348,7 @@ namespace netDxf.Entities
 					throw new ArgumentOutOfRangeException(nameof(value), value, "The fit tolerance must be greater than zero.");
 				}
 
-				this.fitTolerance = value;
+				_FitTolerance = value;
 			}
 		}
 
@@ -377,6 +370,7 @@ namespace netDxf.Entities
 			}
 		}
 
+		private bool _IsClosedPeriodic;
 		/// <summary>Gets or sets if the spline is closed and periodic.</summary>
 		/// <remarks>
 		/// A periodic spline is always closed creating a smooth continuity at the end points. <br />
@@ -384,11 +378,11 @@ namespace netDxf.Entities
 		/// </remarks>
 		public bool IsClosedPeriodic
 		{
-			get => this.isClosedPeriodic;
+			get => _IsClosedPeriodic;
 			set
 			{
 				this.Knots = CreateKnotVector(this.ControlPoints.Length, this.Degree, value);
-				this.isClosedPeriodic = value;
+				_IsClosedPeriodic = value;
 			}
 		}
 
@@ -409,7 +403,7 @@ namespace netDxf.Entities
 		/// <summary>Switch the spline direction.</summary>
 		public void Reverse()
 		{
-			Array.Reverse(this.fitPoints);
+			Array.Reverse(_FitPoints);
 			Array.Reverse(this.ControlPoints);
 			Array.Reverse(this.Weights);
 			Vector3? tmp = this.StartTangent;
@@ -431,7 +425,7 @@ namespace netDxf.Entities
 		/// <param name="precision">Number of vertexes generated.</param>
 		/// <returns>A list vertexes that represents the spline.</returns>
 		public List<Vector3> PolygonalVertexes(int precision)
-			=> NurbsEvaluator(this.ControlPoints.ToArray(), this.Weights.ToArray(), this.Knots, this.Degree, this.IsClosed, this.isClosedPeriodic, precision);
+			=> NurbsEvaluator(this.ControlPoints.ToArray(), this.Weights.ToArray(), this.Knots, this.Degree, this.IsClosed, _IsClosedPeriodic, precision);
 
 		/// <summary>Converts the spline in a Polyline3D.</summary>
 		/// <param name="precision">Number of vertexes generated.</param>
@@ -756,9 +750,9 @@ namespace netDxf.Entities
 				this.ControlPoints[i] = transformation * this.ControlPoints[i] + translation;
 			}
 
-			for (int i = 0; i < this.fitPoints.Length; i++)
+			for (int i = 0; i < _FitPoints.Length; i++)
 			{
-				this.fitPoints[i] = transformation * this.fitPoints[i] + translation;
+				_FitPoints[i] = transformation * _FitPoints[i] + translation;
 			}
 
 			Vector3 newNormal = transformation * this.Normal;
@@ -775,7 +769,7 @@ namespace netDxf.Entities
 			Spline entity;
 			if (this.CreationMethod == SplineCreationMethod.FitPoints)
 			{
-				entity = new Spline(new List<Vector3>(this.fitPoints))
+				entity = new Spline(new List<Vector3>(_FitPoints))
 				{
 					//EntityObject properties
 					Layer = (Layer)this.Layer.Clone(),
@@ -794,7 +788,7 @@ namespace netDxf.Entities
 			}
 			else
 			{
-				entity = new Spline(this.ControlPoints, this.Weights, this.Knots, this.Degree, this.fitPoints, this.CreationMethod, this.isClosedPeriodic)
+				entity = new Spline(this.ControlPoints, this.Weights, this.Knots, this.Degree, _FitPoints, this.CreationMethod, _IsClosedPeriodic)
 				{
 					//EntityObject properties
 					Layer = (Layer)this.Layer.Clone(),

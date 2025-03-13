@@ -34,6 +34,8 @@ namespace netDxf.Collections
 	public class EntityCollection :
 		IList<EntityObject>
 	{
+		private readonly List<EntityObject> innerArray;
+
 		#region delegates and events
 
 		public delegate void BeforeAddItemEventHandler(EntityCollection sender, EntityCollectionEventArgs e);
@@ -85,12 +87,6 @@ namespace netDxf.Collections
 				ae(this, new EntityCollectionEventArgs(item));
 			}
 		}
-
-		#endregion
-
-		#region private fields
-
-		private readonly List<EntityObject> innerArray;
 
 		#endregion
 

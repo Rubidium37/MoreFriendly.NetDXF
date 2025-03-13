@@ -37,19 +37,13 @@ namespace netDxf
 		ICloneable,
 		IEquatable<Transparency>
 	{
-		#region private fields
-
-		private short transparency;
-
-		#endregion
-
 		#region constants
 
 		/// <summary>Gets the <b>ByLayer</b> transparency.</summary>
-		public static Transparency ByLayer => new Transparency { transparency = -1 };
+		public static Transparency ByLayer => new Transparency { _Transparency = -1 };
 
 		/// <summary>Gets the <b>ByBlock</b> transparency.</summary>
-		public static Transparency ByBlock => new Transparency { transparency = 100 };
+		public static Transparency ByBlock => new Transparency { _Transparency = 100 };
 
 		#endregion
 
@@ -58,9 +52,8 @@ namespace netDxf
 		/// <summary>Initializes a new instance of the class.</summary>
 		public Transparency()
 		{
-			this.transparency = -1;
+			_Transparency = -1;
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="value">Alpha value range from 0 to 90.</param>
 		/// <remarks>
@@ -72,7 +65,7 @@ namespace netDxf
 			{
 				throw new ArgumentOutOfRangeException(nameof(value), value, "Accepted transparency values range from 0 to 90.");
 			}
-			this.transparency = value;
+			_Transparency = value;
 		}
 
 		#endregion
@@ -80,25 +73,26 @@ namespace netDxf
 		#region public properties
 
 		/// <summary>Defines if the transparency is defined by layer.</summary>
-		public bool IsByLayer => this.transparency == -1;
+		public bool IsByLayer => _Transparency == -1;
 
 		/// <summary>Defines if the transparency is defined by block.</summary>
-		public bool IsByBlock => this.transparency == 100;
+		public bool IsByBlock => _Transparency == 100;
 
+		private short _Transparency;
 		/// <summary>Gets or sets the transparency value range from 0 to 90.</summary>
 		/// <remarks>
 		/// Accepted transparency values range from 0 to 90, the reserved values -1 and 100 represents <b>ByLayer</b> and <b>ByBlock</b>.
 		/// </remarks>
 		public short Value
 		{
-			get => this.transparency;
+			get => _Transparency;
 			set
 			{
 				if (value < 0 || value > 90)
 				{
 					throw new ArgumentOutOfRangeException(nameof(value), value, "Accepted transparency values range from 0 to 90.");
 				}
-				this.transparency = value;
+				_Transparency = value;
 			}
 		}
 
@@ -158,7 +152,7 @@ namespace netDxf
 		#region implements ICloneable
 
 		/// <inheritdoc/>
-		public object Clone() => FromCadIndex(this.transparency);
+		public object Clone() => FromCadIndex(_Transparency);
 
 		#endregion
 
@@ -172,7 +166,7 @@ namespace netDxf
 				return false;
 			}
 
-			return other.transparency == this.transparency;
+			return other._Transparency == _Transparency;
 		}
 
 		#endregion
@@ -182,17 +176,17 @@ namespace netDxf
 		/// <inheritdoc/>
 		public override string ToString()
 		{
-			if (this.transparency == -1)
+			if (_Transparency == -1)
 			{
 				return "ByLayer";
 			}
 
-			if (this.transparency == 100)
+			if (_Transparency == 100)
 			{
 				return "ByBlock";
 			}
 
-			return this.transparency.ToString(CultureInfo.CurrentCulture);
+			return _Transparency.ToString(CultureInfo.CurrentCulture);
 		}
 
 		#endregion

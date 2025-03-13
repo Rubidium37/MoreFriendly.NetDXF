@@ -49,14 +49,6 @@ namespace netDxf.Tables
 
 		#endregion
 
-		#region private fields
-
-		private string name;
-		private ShapeStyle style;
-		private double rotation;
-
-		#endregion
-
 		#region constructors
 
 		/// <summary>Initializes a new instance of the class.</summary>
@@ -68,10 +60,10 @@ namespace netDxf.Tables
 		/// it stores the shape number. Therefore when saving a <b>DXF</b> file the shape number will be obtained reading the .shp file.<br />
 		/// It is required that the equivalent .shp file to be also present in the same folder or one of the support folders defined in the DxfDocument.
 		/// </remarks>
-		public LinetypeShapeSegment(string name, ShapeStyle style) : this(name, style, 1.0, Vector2.Zero, LinetypeSegmentRotationType.Relative, 0.0, 1.0)
+		public LinetypeShapeSegment(string name, ShapeStyle style)
+			: this(name, style, 1.0, Vector2.Zero, LinetypeSegmentRotationType.Relative, 0.0, 1.0)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="name">Shape name of the linetype segment.</param>
 		/// <param name="style">File where the shape of the linetype segment is defined.</param>
@@ -82,10 +74,10 @@ namespace netDxf.Tables
 		/// it stores the shape number. Therefore when saving a <b>DXF</b> file the shape number will be obtained reading the .shp file.<br />
 		/// It is required that the equivalent .shp file to be also present in the same folder or one of the support folders defined in the DxfDocument.
 		/// </remarks>
-		public LinetypeShapeSegment(string name, ShapeStyle style, double length) : this(name, style, length, Vector2.Zero, LinetypeSegmentRotationType.Relative, 0.0, 1.0)
+		public LinetypeShapeSegment(string name, ShapeStyle style, double length)
+			: this(name, style, length, Vector2.Zero, LinetypeSegmentRotationType.Relative, 0.0, 1.0)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="name">Shape name of the linetype segment.</param>
 		/// <param name="style">File where the shape of the linetype segment is defined.</param>
@@ -107,11 +99,11 @@ namespace netDxf.Tables
 			{
 				throw new ArgumentNullException(nameof(name), "The linetype shape name should be at least one character long.");
 			}
-			this.name = name;
-			this.style = style ?? throw new ArgumentNullException(nameof(style));
+			_Name = name;
+			_Style = style ?? throw new ArgumentNullException(nameof(style));
 			this.Offset = offset;
 			this.RotationType = rotationType;
-			this.rotation = MathHelper.NormalizeAngle(rotation);
+			_Rotation = MathHelper.NormalizeAngle(rotation);
 			this.Scale = scale;
 		}
 
@@ -119,6 +111,7 @@ namespace netDxf.Tables
 
 		#region public properties
 
+		private string _Name;
 		/// <summary>Gets or sets the name of the shape.</summary>
 		/// <remarks>
 		/// The shape must be defined in the .shx shape definitions file.<br />
@@ -127,31 +120,33 @@ namespace netDxf.Tables
 		/// </remarks>
 		public string Name
 		{
-			get => this.name;
+			get => _Name;
 			set
 			{
 				if (string.IsNullOrEmpty(value))
 				{
 					throw new ArgumentNullException(nameof(value), "The linetype shape name should be at least one character long.");
 				}
-				this.name = value;
+				_Name = value;
 			}
 		}
 
+		private ShapeStyle _Style;
 		/// <summary>Gets the shape style.</summary>
 		/// <remarks>
 		/// It is required that the equivalent .shp file to be also present in the same folder or one of the support folders defined in the DxfDocument.
 		/// </remarks>
 		public ShapeStyle Style
 		{
-			get => this.style;
+			get => _Style;
 			set
 			{
 				if (value == null)
 				{
 					throw new ArgumentNullException(nameof(value));
 				}
-				this.style = this.OnShapeStyleChangedEvent(this.style, value);
+
+				_Style = this.OnShapeStyleChangedEvent(_Style, value);
 			}
 		}
 
@@ -161,11 +156,12 @@ namespace netDxf.Tables
 		/// <summary>Gets or sets the type of rotation defined by the rotation value upright, relative, or absolute.</summary>
 		public LinetypeSegmentRotationType RotationType { get; set; }
 
+		private double _Rotation;
 		/// <summary>Gets or sets the angle in degrees of the shape.</summary>
 		public double Rotation
 		{
-			get => this.rotation;
-			set => this.rotation = MathHelper.NormalizeAngle(value);
+			get => _Rotation;
+			set => _Rotation = MathHelper.NormalizeAngle(value);
 		}
 
 		/// <summary>Gets or sets the scale of the shape relative to the scale of the line type.</summary>
@@ -177,11 +173,11 @@ namespace netDxf.Tables
 
 		/// <inheritdoc/>
 		public override object Clone()
-			=> new LinetypeShapeSegment(this.name, (ShapeStyle)this.style.Clone(), this.Length)
+			=> new LinetypeShapeSegment(_Name, (ShapeStyle)_Style.Clone(), this.Length)
 			{
 				Offset = this.Offset,
 				RotationType = this.RotationType,
-				Rotation = this.rotation,
+				Rotation = _Rotation,
 				Scale = this.Scale
 			};
 

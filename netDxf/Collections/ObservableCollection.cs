@@ -34,6 +34,8 @@ namespace netDxf.Collections
 	public class ObservableCollection<T> :
 		IList<T>
 	{
+		private readonly List<T> innerArray;
+
 		#region delegates and events
 
 		public delegate void AddItemEventHandler(ObservableCollection<T> sender, ObservableCollectionEventArgs<T> e);
@@ -90,12 +92,6 @@ namespace netDxf.Collections
 				ae(this, new ObservableCollectionEventArgs<T>(item));
 			}
 		}
-
-		#endregion
-
-		#region private fields
-
-		private readonly List<T> innerArray;
 
 		#endregion
 
@@ -306,7 +302,7 @@ namespace netDxf.Collections
 
 		#endregion
 
-		#region private fields
+		#region private methods
 
 		void ICollection<T>.Add(T item) => this.Add(item);
 

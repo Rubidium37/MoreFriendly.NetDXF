@@ -31,12 +31,6 @@ namespace netDxf.Entities
 	public class Point :
 		EntityObject
 	{
-		#region private fields
-
-		private double rotation;
-
-		#endregion
-
 		#region constructors
 
 		/// <summary>Initializes a new instance of the class.</summary>
@@ -45,17 +39,13 @@ namespace netDxf.Entities
 			: base(EntityType.Point, DxfObjectCode.Point)
 		{
 			this.Position = position;
-			this.Thickness = 0.0f;
-			this.rotation = 0.0;
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="position">Point <see cref="Vector2">position</see>.</param>
 		public Point(Vector2 position)
 			: this(new Vector3(position.X, position.Y, 0.0))
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="x">X coordinate.</param>
 		/// <param name="y">Y coordinate.</param>
@@ -64,7 +54,6 @@ namespace netDxf.Entities
 			: this(new Vector3(x, y, z))
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		public Point()
 			: this(Vector3.Zero)
@@ -79,13 +68,14 @@ namespace netDxf.Entities
 		public Vector3 Position { get; set; }
 
 		/// <summary>Gets or sets the point thickness.</summary>
-		public double Thickness { get; set; }
+		public double Thickness { get; set; } = 0.0f;
 
+		private double _Rotation = 0.0;
 		/// <summary>Gets or sets the point local rotation in degrees along its normal.</summary>
 		public double Rotation
 		{
-			get => this.rotation;
-			set => this.rotation = MathHelper.NormalizeAngle(value);
+			get => _Rotation;
+			set => _Rotation = MathHelper.NormalizeAngle(value);
 		}
 
 		#endregion
@@ -132,7 +122,7 @@ namespace netDxf.Entities
 				IsVisible = this.IsVisible,
 				//Point properties
 				Position = this.Position,
-				Rotation = this.rotation,
+				Rotation = _Rotation,
 				Thickness = this.Thickness
 			};
 

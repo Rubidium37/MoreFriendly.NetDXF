@@ -93,16 +93,6 @@ namespace netDxf.Entities
 
 		#endregion
 
-		#region private fields
-
-		private DimensionStyle style;
-		private EntityObject annotation;
-		private bool hasHookline;
-		private AciColor lineColor;
-		private Vector2 direction;
-
-		#endregion
-
 		#region constructors
 
 		/// <summary>Initializes a new instance of the class.</summary>
@@ -111,7 +101,6 @@ namespace netDxf.Entities
 			: this(vertexes, DimensionStyle.Default)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="vertexes">List of leader vertexes in local coordinates.</param>
 		/// <param name="style">Leader style.</param>
@@ -119,7 +108,55 @@ namespace netDxf.Entities
 			: this(vertexes, style, false)
 		{
 		}
-
+		/// <summary>Initializes a new instance of the class.</summary>
+		/// <param name="text">Leader text annotation.</param>
+		/// <param name="vertexes">List of leader vertexes in local coordinates.</param>
+		public Leader(string text, IEnumerable<Vector2> vertexes)
+			: this(text, vertexes, DimensionStyle.Default)
+		{
+		}
+		/// <summary>Initializes a new instance of the class.</summary>
+		/// <param name="text">Leader text annotation.</param>
+		/// <param name="vertexes">List of leader vertexes in local coordinates.</param>
+		/// <param name="style">Leader style.</param>
+		public Leader(string text, IEnumerable<Vector2> vertexes, DimensionStyle style)
+			: this(vertexes, style)
+		{
+			this.Annotation = this.BuildAnnotation(text);
+			this.CalculateAnnotationDirection();
+		}
+		/// <summary>Initializes a new instance of the class.</summary>
+		/// <param name="tolerance">Leader tolerance annotation.</param>
+		/// <param name="vertexes">List of leader vertexes in local coordinates.</param>
+		public Leader(ToleranceEntry tolerance, IEnumerable<Vector2> vertexes)
+			: this(tolerance, vertexes, DimensionStyle.Default)
+		{
+		}
+		/// <summary>Initializes a new instance of the class.</summary>
+		/// <param name="tolerance">Leader tolerance annotation.</param>
+		/// <param name="vertexes">List of leader vertexes in local coordinates.</param>
+		/// <param name="style">Leader style.</param>
+		public Leader(ToleranceEntry tolerance, IEnumerable<Vector2> vertexes, DimensionStyle style)
+			: this(vertexes, style)
+		{
+			this.Annotation = this.BuildAnnotation(tolerance);
+		}
+		/// <summary>Initializes a new instance of the class.</summary>
+		/// <param name="block">Leader block annotation.</param>
+		/// <param name="vertexes">List of leader vertexes in local coordinates.</param>
+		public Leader(Block block, IEnumerable<Vector2> vertexes)
+			: this(block, vertexes, DimensionStyle.Default)
+		{
+		}
+		/// <summary>Initializes a new instance of the class.</summary>
+		/// <param name="block">Leader block annotation.</param>
+		/// <param name="vertexes">List of leader vertexes in local coordinates.</param>
+		/// <param name="style">Leader style.</param>
+		public Leader(Block block, IEnumerable<Vector2> vertexes, DimensionStyle style)
+			: this(vertexes, style)
+		{
+			this.Annotation = this.BuildAnnotation(block);
+		}
 		internal Leader(IEnumerable<Vector2> vertexes, DimensionStyle style, bool hasHookline)
 			: base(EntityType.Leader, DxfObjectCode.Leader)
 		{
@@ -134,86 +171,23 @@ namespace netDxf.Entities
 				throw new ArgumentOutOfRangeException(nameof(vertexes), this.Vertexes.Count, "The leader vertexes list requires at least two points.");
 			}
 
-			this.style = style ?? throw new ArgumentNullException(nameof(style));
-			this.hasHookline = hasHookline;
-			this.ShowArrowhead = true;
-			this.PathType = LeaderPathType.StraightLineSegments;
-			this.annotation = null;
-			this.lineColor = AciColor.ByLayer;
-			this.Elevation = 0.0;
-			this.Offset = Vector2.Zero;
-			this.direction = Vector2.UnitX;
-			this.StyleOverrides = new DimensionStyleOverrideDictionary();
+			_Style = style ?? throw new ArgumentNullException(nameof(style));
+			_HasHookline = hasHookline;
 			this.StyleOverrides.BeforeAddItem += this.StyleOverrides_BeforeAddItem;
 			this.StyleOverrides.AddItem += this.StyleOverrides_AddItem;
 			this.StyleOverrides.BeforeRemoveItem += this.StyleOverrides_BeforeRemoveItem;
 			this.StyleOverrides.RemoveItem += this.StyleOverrides_RemoveItem;
 		}
 
-		/// <summary>Initializes a new instance of the class.</summary>
-		/// <param name="text">Leader text annotation.</param>
-		/// <param name="vertexes">List of leader vertexes in local coordinates.</param>
-		public Leader(string text, IEnumerable<Vector2> vertexes)
-			: this(text, vertexes, DimensionStyle.Default)
-		{
-		}
-
-		/// <summary>Initializes a new instance of the class.</summary>
-		/// <param name="text">Leader text annotation.</param>
-		/// <param name="vertexes">List of leader vertexes in local coordinates.</param>
-		/// <param name="style">Leader style.</param>
-		public Leader(string text, IEnumerable<Vector2> vertexes, DimensionStyle style)
-			: this(vertexes, style)
-		{
-			this.Annotation = this.BuildAnnotation(text);
-			this.CalculateAnnotationDirection();
-
-		}
-
-		/// <summary>Initializes a new instance of the class.</summary>
-		/// <param name="tolerance">Leader tolerance annotation.</param>
-		/// <param name="vertexes">List of leader vertexes in local coordinates.</param>
-		public Leader(ToleranceEntry tolerance, IEnumerable<Vector2> vertexes)
-			: this(tolerance, vertexes, DimensionStyle.Default)
-		{
-		}
-
-		/// <summary>Initializes a new instance of the class.</summary>
-		/// <param name="tolerance">Leader tolerance annotation.</param>
-		/// <param name="vertexes">List of leader vertexes in local coordinates.</param>
-		/// <param name="style">Leader style.</param>
-		public Leader(ToleranceEntry tolerance, IEnumerable<Vector2> vertexes, DimensionStyle style)
-			: this(vertexes, style)
-		{
-			this.Annotation = this.BuildAnnotation(tolerance);
-		}
-
-		/// <summary>Initializes a new instance of the class.</summary>
-		/// <param name="block">Leader block annotation.</param>
-		/// <param name="vertexes">List of leader vertexes in local coordinates.</param>
-		public Leader(Block block, IEnumerable<Vector2> vertexes)
-			: this(block, vertexes, DimensionStyle.Default)
-		{
-		}
-
-		/// <summary>Initializes a new instance of the class.</summary>
-		/// <param name="block">Leader block annotation.</param>
-		/// <param name="vertexes">List of leader vertexes in local coordinates.</param>
-		/// <param name="style">Leader style.</param>
-		public Leader(Block block, IEnumerable<Vector2> vertexes, DimensionStyle style)
-			: this(vertexes, style)
-		{
-			this.Annotation = this.BuildAnnotation(block);
-		}
-
 		#endregion
 
 		#region public properties
 
+		private DimensionStyle _Style;
 		/// <summary>Gets or sets the leader style.</summary>
 		public DimensionStyle Style
 		{
-			get => this.style;
+			get => _Style;
 			set
 			{
 				if (value == null)
@@ -221,7 +195,7 @@ namespace netDxf.Entities
 					throw new ArgumentNullException(nameof(value));
 				}
 
-				this.style = this.OnDimensionStyleChangedEvent(this.style, value);
+				_Style = this.OnDimensionStyleChangedEvent(_Style, value);
 			}
 		}
 
@@ -229,13 +203,13 @@ namespace netDxf.Entities
 		/// <remarks>
 		/// Any dimension style value stored in this list will override its corresponding value in the assigned style.
 		/// </remarks>
-		public DimensionStyleOverrideDictionary StyleOverrides { get; }
+		public DimensionStyleOverrideDictionary StyleOverrides { get; } = new DimensionStyleOverrideDictionary();
 
 		/// <summary>Gets or sets if the arrowhead is drawn.</summary>
-		public bool ShowArrowhead { get; set; }
+		public bool ShowArrowhead { get; set; } = true;
 
 		/// <summary>Gets or sets the way the leader is drawn.</summary>
-		public LeaderPathType PathType { get; set; }
+		public LeaderPathType PathType { get; set; } = LeaderPathType.StraightLineSegments;
 
 		/// <summary>Gets the leader vertexes list in local coordinates.</summary>
 		/// <remarks>
@@ -243,6 +217,7 @@ namespace netDxf.Entities
 		/// </remarks>
 		public List<Vector2> Vertexes { get; }
 
+		private EntityObject _Annotation;
 		/// <summary>Gets or sets the leader annotation entity.</summary>
 		/// <remarks>
 		/// Only MText, Text, Tolerance, and Insert entities are supported as a leader annotation.
@@ -252,7 +227,7 @@ namespace netDxf.Entities
 		/// </remarks>
 		public EntityObject Annotation
 		{
-			get => this.annotation;
+			get => _Annotation;
 			set
 			{
 				if (value != null)
@@ -267,16 +242,16 @@ namespace netDxf.Entities
 				}
 
 				// nothing else to do if it is the same
-				if (ReferenceEquals(this.annotation, value))
+				if (ReferenceEquals(_Annotation, value))
 				{
 					return;
 				}
 
 				// remove the previous annotation
-				if (this.annotation != null)
+				if (_Annotation != null)
 				{
-					this.annotation.RemoveReactor(this);
-					this.OnAnnotationRemovedEvent(this.annotation);
+					_Annotation.RemoveReactor(this);
+					this.OnAnnotationRemovedEvent(_Annotation);
 				}
 
 				// add the new annotation
@@ -286,7 +261,7 @@ namespace netDxf.Entities
 					this.OnAnnotationAddedEvent(value);
 				}
 
-				this.annotation = value;
+				_Annotation = value;
 			}
 		}
 
@@ -300,6 +275,7 @@ namespace netDxf.Entities
 			set => this.Vertexes[this.Vertexes.Count - 1] = value;
 		}
 
+		private bool _HasHookline;
 		/// <summary>Gets if the leader has a hook line.</summary>
 		/// <remarks>
 		/// If set to <see langword="true"/> an additional vertex point (StartHookLine) will be created before the leader end point (hook).
@@ -307,7 +283,7 @@ namespace netDxf.Entities
 		/// </remarks>
 		public bool HasHookline
 		{
-			get => this.hasHookline;
+			get => _HasHookline;
 			set
 			{
 				if (this.Vertexes.Count < 2)
@@ -315,7 +291,7 @@ namespace netDxf.Entities
 					throw new Exception("The leader vertexes list requires at least two points.");
 				}
 
-				if (this.hasHookline != value)
+				if (_HasHookline != value)
 				{
 					if (value)
 					{
@@ -326,18 +302,16 @@ namespace netDxf.Entities
 						this.Vertexes.RemoveAt(this.Vertexes.Count - 2);
 					}
 				}
-				this.hasHookline = value;
+				_HasHookline = value;
 			}
 		}
 
+		private AciColor _LineColor = AciColor.ByLayer;
 		/// <summary>Gets or sets the leader line color if the style parameter <b>DIMCLRD</b> is set as BYBLOCK.</summary>
 		public AciColor LineColor
 		{
-			get => this.lineColor;
-			set
-			{
-				this.lineColor = value ?? throw new ArgumentNullException(nameof(value));
-			}
+			get => _LineColor;
+			set => _LineColor = value ?? throw new ArgumentNullException(nameof(value));
 		}
 
 		/// <summary>Gets or sets the entity <see cref="Vector3">normal</see>.</summary>
@@ -349,16 +323,17 @@ namespace netDxf.Entities
 
 		/// <summary>Gets or sets the leader elevation.</summary>
 		/// <remarks>This is the distance from the origin to the plane of the leader.</remarks>
-		public double Elevation { get; set; }
+		public double Elevation { get; set; } = 0.0;
 
 		/// <summary>Gets or sets the offset from the last leader vertex (hook) to the annotation position.</summary>
-		public Vector2 Offset { get; set; }
+		public Vector2 Offset { get; set; } = Vector2.Zero;
 
+		private Vector2 _Direction = Vector2.UnitX;
 		/// <summary>Gets or sets the leader annotation direction.</summary>
 		public Vector2 Direction
 		{
-			get => this.direction;
-			set => this.direction = Vector2.Normalize(value);
+			get => _Direction;
+			set => _Direction = Vector2.Normalize(value);
 		}
 
 		#endregion
@@ -380,7 +355,7 @@ namespace netDxf.Entities
 				throw new Exception("The leader vertexes list requires at least two points.");
 			}
 
-			if (this.annotation == null)
+			if (_Annotation == null)
 			{
 				return;
 			}
@@ -396,7 +371,7 @@ namespace netDxf.Entities
 				this.ResetHookPosition();
 			}
 
-			if (this.hasHookline)
+			if (_HasHookline)
 			{
 				Vector2 vertex = this.CalculateHookLine();
 				this.Vertexes[this.Vertexes.Count - 2] = vertex;
@@ -411,12 +386,12 @@ namespace netDxf.Entities
 		{
 			double angle = 0.0;
 
-			if (this.annotation != null)
+			if (_Annotation != null)
 			{
-				switch (this.annotation.Type)
+				switch (_Annotation.Type)
 				{
 					case EntityType.MText:
-						MText mText = (MText)this.annotation;
+						MText mText = (MText)_Annotation;
 						angle = mText.Rotation;
 						switch (mText.AttachmentPoint)
 						{
@@ -428,7 +403,7 @@ namespace netDxf.Entities
 						}
 						break;
 					case EntityType.Text:
-						Text text = (Text)this.annotation;
+						Text text = (Text)_Annotation;
 						angle = text.Rotation;
 						switch (text.Alignment)
 						{
@@ -441,16 +416,16 @@ namespace netDxf.Entities
 						}
 						break;
 					case EntityType.Insert:
-						angle = ((Insert)this.annotation).Rotation;
+						angle = ((Insert)_Annotation).Rotation;
 						break;
 					case EntityType.Tolerance:
-						angle = ((Tolerance)this.annotation).Rotation;
+						angle = ((Tolerance)_Annotation).Rotation;
 						break;
 					default:
-						throw new ArgumentException("Only MText, Text, Insert, and Tolerance entities are supported as a leader annotation.", nameof(this.annotation));
+						throw new ArgumentException("Only MText, Text, Insert, and Tolerance entities are supported as a leader annotation.", nameof(_Annotation));
 				}
 			}
-			this.direction = Vector2.Rotate(Vector2.UnitX, angle * MathHelper.DegToRad);
+			_Direction = Vector2.Rotate(Vector2.UnitX, angle * MathHelper.DegToRad);
 		}
 
 		private Vector2 CalculateHookLine()
@@ -513,10 +488,10 @@ namespace netDxf.Entities
 			int side;
 			textGap *= dimScale;
 
-			switch (this.annotation.Type)
+			switch (_Annotation.Type)
 			{
 				case EntityType.MText:
-					MText mText = (MText)this.annotation;
+					MText mText = (MText)_Annotation;
 					side = MathHelper.Sign(dir.X);
 					if (side == 0) side = MathHelper.Sign(dir.Y);
 					if (mText.Rotation > 90.0 && mText.Rotation <= 270.0) side *= -1;
@@ -564,7 +539,7 @@ namespace netDxf.Entities
 					break;
 
 				case EntityType.Text:
-					Text text = (Text)this.annotation;
+					Text text = (Text)_Annotation;
 					side = MathHelper.Sign(dir.X);
 					if (side == 0) side = MathHelper.Sign(dir.Y);
 					if (text.Rotation > 90.0 && text.Rotation <= 270.0) side *= -1;
@@ -618,21 +593,21 @@ namespace netDxf.Entities
 					break;
 
 				case EntityType.Insert:
-					Insert ins = (Insert)this.annotation;
+					Insert ins = (Insert)_Annotation;
 					position = MathHelper.Transform(ins.Position, this.Normal, out _);
 					this.Hook = position - this.Offset;
 					ins.Color = textColor.IsByBlock ? AciColor.ByLayer : textColor;
 					break;
 
 				case EntityType.Tolerance:
-					Tolerance tol = (Tolerance)this.annotation;
+					Tolerance tol = (Tolerance)_Annotation;
 					position = MathHelper.Transform(tol.Position, this.Normal, out _);
 					this.Hook = position - this.Offset;
 					tol.Color = textColor.IsByBlock ? AciColor.ByLayer : textColor;
 					break;
 
 				default:
-					throw new Exception(string.Format("The entity type: {0} not supported as a leader annotation.", this.annotation.Type));
+					throw new Exception(string.Format("The entity type: {0} not supported as a leader annotation.", _Annotation.Type));
 			}
 		}
 
@@ -678,10 +653,10 @@ namespace netDxf.Entities
 			int side;
 			textGap *= dimScale;
 
-			switch (this.annotation.Type)
+			switch (_Annotation.Type)
 			{
 				case EntityType.MText:
-					MText mText = (MText)this.annotation;
+					MText mText = (MText)_Annotation;
 					side = MathHelper.Sign(dir.X);
 					if (side == 0) side = MathHelper.Sign(dir.Y);
 					if (mText.Rotation > 90.0 && mText.Rotation <= 270.0) side *= -1;
@@ -729,7 +704,7 @@ namespace netDxf.Entities
 					break;
 
 				case EntityType.Text:
-					Text text = (Text)this.annotation;
+					Text text = (Text)_Annotation;
 					side = MathHelper.Sign(dir.X);
 					if (side == 0) side = MathHelper.Sign(dir.Y);
 					if (text.Rotation > 90.0 && text.Rotation <= 270.0) side *= -1;
@@ -782,21 +757,21 @@ namespace netDxf.Entities
 					break;
 
 				case EntityType.Insert:
-					Insert ins = (Insert)this.annotation;
+					Insert ins = (Insert)_Annotation;
 					position = hook + this.Offset;
 					ins.Position = MathHelper.Transform(position, this.Normal, this.Elevation);
 					ins.Color = textColor.IsByBlock ? AciColor.ByLayer : textColor;
 					break;
 
 				case EntityType.Tolerance:
-					Tolerance tol = (Tolerance)this.annotation;
+					Tolerance tol = (Tolerance)_Annotation;
 					position = hook + this.Offset;
 					tol.Position = MathHelper.Transform(position, this.Normal, this.Elevation);
 					tol.Color = textColor.IsByBlock ? AciColor.ByLayer : textColor;
 					break;
 
 				default:
-					throw new Exception(string.Format("The entity type: {0} not supported as a leader annotation.", this.annotation.Type));
+					throw new Exception(string.Format("The entity type: {0} not supported as a leader annotation.", _Annotation.Type));
 			}
 		}
 
@@ -805,22 +780,22 @@ namespace netDxf.Entities
 			int side = Math.Sign(this.Vertexes[this.Vertexes.Count - 1].X - this.Vertexes[this.Vertexes.Count - 2].X);
 			MTextAttachmentPoint attachment;
 			Vector2 textOffset;
-			if (this.style.TextVerticalPlacement == DimensionStyleTextVerticalPlacement.Centered)
+			if (_Style.TextVerticalPlacement == DimensionStyleTextVerticalPlacement.Centered)
 			{
-				textOffset = new Vector2(side * this.style.TextOffset * this.style.DimScaleOverall, 0.0);
+				textOffset = new Vector2(side * _Style.TextOffset * _Style.DimScaleOverall, 0.0);
 				attachment = side >= 0 ? MTextAttachmentPoint.MiddleLeft : MTextAttachmentPoint.MiddleRight;
 			}
 			else
 			{
-				textOffset = new Vector2(side * this.style.TextOffset * this.style.DimScaleOverall, this.style.TextOffset * this.style.DimScaleOverall);
+				textOffset = new Vector2(side * _Style.TextOffset * _Style.DimScaleOverall, _Style.TextOffset * _Style.DimScaleOverall);
 				attachment = side >= 0 ? MTextAttachmentPoint.BottomLeft : MTextAttachmentPoint.BottomRight;
 			}
 
 			Vector2 position = this.Hook + textOffset;
 			Vector3 mTextPosition = MathHelper.Transform(position, this.Normal, this.Elevation);
-			MText entity = new MText(text, mTextPosition, this.style.TextHeight * this.style.DimScaleOverall, 0.0, this.style.TextStyle)
+			MText entity = new MText(text, mTextPosition, _Style.TextHeight * _Style.DimScaleOverall, 0.0, _Style.TextStyle)
 			{
-				Color = this.style.TextColor.IsByBlock ? AciColor.ByLayer : this.style.TextColor,
+				Color = _Style.TextColor.IsByBlock ? AciColor.ByLayer : _Style.TextColor,
 				AttachmentPoint = attachment
 			};
 
@@ -834,13 +809,13 @@ namespace netDxf.Entities
 		private Insert BuildAnnotation(Block block)
 			=> new Insert(block, this.Vertexes[this.Vertexes.Count - 1])
 			{
-				Color = this.style.TextColor.IsByBlock ? AciColor.ByLayer : this.style.TextColor
+				Color = _Style.TextColor.IsByBlock ? AciColor.ByLayer : _Style.TextColor
 			};
 		private Tolerance BuildAnnotation(ToleranceEntry tolerance)
 			=> new Tolerance(tolerance, this.Vertexes[this.Vertexes.Count - 1])
 			{
-				Color = this.style.TextColor.IsByBlock ? AciColor.ByLayer : this.style.TextColor,
-				Style = this.style
+				Color = _Style.TextColor.IsByBlock ? AciColor.ByLayer : _Style.TextColor,
+				Style = _Style
 			};
 
 		#endregion
@@ -877,7 +852,7 @@ namespace netDxf.Entities
 			this.Elevation = newElevation;
 			this.Normal = newNormal;
 
-			this.annotation?.TransformBy(transformation, translation);
+			_Annotation?.TransformBy(transformation, translation);
 		}
 
 		/// <inheritdoc/>
@@ -896,13 +871,13 @@ namespace netDxf.Entities
 				IsVisible = this.IsVisible,
 				//Leader properties
 				Elevation = this.Elevation,
-				Style = (DimensionStyle)this.style.Clone(),
+				Style = (DimensionStyle)_Style.Clone(),
 				ShowArrowhead = this.ShowArrowhead,
 				PathType = this.PathType,
-				LineColor = this.lineColor,
-				Annotation = (EntityObject)this.annotation?.Clone(),
+				LineColor = _LineColor,
+				Annotation = (EntityObject)_Annotation?.Clone(),
 				Offset = this.Offset,
-				hasHookline = this.hasHookline
+				HasHookline = _HasHookline
 			};
 
 			foreach (DimensionStyleOverride styleOverride in this.StyleOverrides.Values)

@@ -74,15 +74,6 @@ namespace netDxf.Objects
 
 		#endregion
 
-		#region private fields
-
-		private string description;
-		private AciColor fillColor;
-		private double startAngle;
-		private double endAngle;
-
-		#endregion
-
 		#region constants
 
 		/// <summary>Default multiline style name.</summary>
@@ -102,7 +93,6 @@ namespace netDxf.Objects
 			: this(name, null, string.Empty)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="name">MLine style name.</param>
 		/// <param name="description">MLine style description.</param>
@@ -111,7 +101,6 @@ namespace netDxf.Objects
 			: this(name, null, description)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="name">MLine style name.</param>
 		/// <param name="elements">Elements of the multiline, if <see langword="null"/> two default elements will be added.</param>
@@ -119,7 +108,6 @@ namespace netDxf.Objects
 			: this(name, elements, string.Empty)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="name">MLine style name.</param>
 		/// <param name="elements">Elements of the multiline, if <see langword="null"/> two default elements will be added.</param>
@@ -132,13 +120,8 @@ namespace netDxf.Objects
 				throw new ArgumentNullException(nameof(name), "The multiline style name should be at least one character long.");
 			}
 
-			this.Flags = MLineStyleFlags.None;
-			this.description = string.IsNullOrEmpty(description) ? string.Empty : description;
-			this.fillColor = AciColor.ByLayer;
-			this.startAngle = 90.0;
-			this.endAngle = 90.0;
+			_Description = string.IsNullOrEmpty(description) ? string.Empty : description;
 
-			this.Elements = new ObservableCollection<MLineStyleElement>();
 			this.Elements.BeforeAddItem += this.Elements_BeforeAddItem;
 			this.Elements.AddItem += this.Elements_AddItem;
 			this.Elements.BeforeRemoveItem += this.Elements_BeforeRemoveItem;
@@ -157,55 +140,56 @@ namespace netDxf.Objects
 		#region public properties
 
 		/// <summary>Gets or sets the <b>MLine</b> style flags.</summary>
-		public MLineStyleFlags Flags { get; set; }
+		public MLineStyleFlags Flags { get; set; } = MLineStyleFlags.None;
 
+		private string _Description;
 		/// <summary>Gets or sets the line type description (optional).</summary>
 		public string Description
 		{
-			get => this.description;
-			set => this.description = string.IsNullOrEmpty(value) ? string.Empty : value;
+			get => _Description;
+			set => _Description = string.IsNullOrEmpty(value) ? string.Empty : value;
 		}
 
+		private AciColor _FillColor = AciColor.ByLayer;
 		/// <summary>Gets or sets the <b>MLine</b> fill color.</summary>
 		/// <remarks>
 		/// AutoCad2000 <b>DXF</b> version does not support <see langword="true"/> colors for MLineStyle fill color.
 		/// </remarks>
 		public AciColor FillColor
 		{
-			get => this.fillColor;
-			set
-			{
-				this.fillColor = value ?? throw new ArgumentNullException(nameof(value));
-			}
+			get => _FillColor;
+			set => _FillColor = value ?? throw new ArgumentNullException(nameof(value));
 		}
 
+		private double _StartAngle = 90.0;
 		/// <summary>Gets or sets the <b>MLine</b> start angle in degrees.</summary>
 		/// <remarks>Valid values range from 10.0 to 170.0 degrees. Default: 90.0.</remarks>
 		public double StartAngle
 		{
-			get => this.startAngle;
+			get => _StartAngle;
 			set
 			{
 				if (value < 10.0 || value > 170.0)
 				{
 					throw new ArgumentOutOfRangeException(nameof(value), value, "The MLine style start angle valid values range from 10 to 170 degrees.");
 				}
-				this.startAngle = value;
+				_StartAngle = value;
 			}
 		}
 
+		private double _EndAngle = 90.0;
 		/// <summary>Gets or sets the <b>MLine</b> end angle in degrees.</summary>
 		/// <remarks>Valid values range from 10.0 to 170.0 degrees. Default: 90.0.</remarks>
 		public double EndAngle
 		{
-			get => this.endAngle;
+			get => _EndAngle;
 			set
 			{
 				if (value < 10.0 || value > 170.0)
 				{
 					throw new ArgumentOutOfRangeException(nameof(value), value, "The MLine style end angle valid values range from 10 to 170 degrees.");
 				}
-				this.endAngle = value;
+				_EndAngle = value;
 			}
 		}
 
@@ -216,7 +200,7 @@ namespace netDxf.Objects
 		/// but if new elements are added individually to the list or the offset values of individual elements are modified,
 		/// it will have to be sorted manually calling the Sort() method.
 		/// </remarks>
-		public ObservableCollection<MLineStyleElement> Elements { get; }
+		public ObservableCollection<MLineStyleElement> Elements { get; } = new ObservableCollection<MLineStyleElement>();
 
 		/// <summary>Gets the owner of the actual multi line style.</summary>
 		public new MLineStyles Owner
@@ -255,10 +239,10 @@ namespace netDxf.Objects
 			MLineStyle copy = new MLineStyle(newName, copyElements)
 			{
 				Flags = this.Flags,
-				Description = this.description,
-				FillColor = (AciColor)this.fillColor.Clone(),
-				StartAngle = this.startAngle,
-				EndAngle = this.endAngle,
+				Description = _Description,
+				FillColor = (AciColor)_FillColor.Clone(),
+				StartAngle = _StartAngle,
+				EndAngle = _EndAngle,
 			};
 
 			foreach (XData data in this.XData.Values)

@@ -34,17 +34,6 @@ namespace netDxf.Entities
 	public class PolygonMesh :
 		EntityObject
 	{
-		#region private fields
-
-		private static short defaultSurfU = 6;
-		private static short defaultSurfV = 6;
-
-		private short densityU;
-		private short densityV;
-		private PolylineSmoothType smoothType;
-
-		#endregion
-
 		#region constructor
 
 		/// <summary>Initializes a new instance of the class.</summary>
@@ -77,11 +66,6 @@ namespace netDxf.Entities
 			{
 				throw new ArgumentException("The number of vertexes must be equal to UxV.", nameof(vertexes));
 			}
-
-			this.densityU = 0;
-			this.densityV = 0;
-			this.smoothType = PolylineSmoothType.NoSmooth;
-			this.Flags = PolylineTypeFlags.PolygonMesh;
 		}
 
 		#endregion
@@ -122,33 +106,35 @@ namespace netDxf.Entities
 		/// <summary>Gets the number of vertexes along the V direction (local Y axis).</summary>
 		public short V { get; }
 
+		private short _DensityU = 0;
 		/// <summary>Smooth surface U density.</summary>
 		/// <remarks>Valid values range from 3 to 201.</remarks>
 		public short DensityU
 		{
-			get => this.densityU;
+			get => _DensityU;
 			set
 			{
 				if (value < 3 || value > 201)
 				{
 					throw new ArgumentOutOfRangeException(nameof(value), value, "The density value must be between 3 and 201.");
 				}
-				this.densityU = value;
+				_DensityU = value;
 			}
 		}
 
+		private short _DensityV = 0;
 		/// <summary>Smooth surface V density</summary>
 		/// <remarks>Valid values range from 3 to 201.</remarks>
 		public short DensityV
 		{
-			get => this.densityV;
+			get => _DensityV;
 			set
 			{
 				if (value < 3 || value > 201)
 				{
 					throw new ArgumentOutOfRangeException(nameof(value), value, "The density value must be between 3 and 201.");
 				}
-				this.densityV = value;
+				_DensityV = value;
 			}
 		}
 
@@ -186,13 +172,14 @@ namespace netDxf.Entities
 			}
 		}
 
+		private PolylineSmoothType _SmoothType = PolylineSmoothType.NoSmooth;
 		/// <summary>Gets or sets the polyline smooth type.</summary>
 		/// <remarks>
 		/// The additional polygon meshes vertexes corresponding to the SplineFit will be created when writing the <b>DXF</b> file.
 		/// </remarks>
 		public PolylineSmoothType SmoothType
 		{
-			get => this.smoothType;
+			get => _SmoothType;
 			set
 			{
 				if (value == PolylineSmoothType.NoSmooth)
@@ -203,10 +190,11 @@ namespace netDxf.Entities
 				{
 					this.Flags |= PolylineTypeFlags.SplineFit;
 				}
-				this.smoothType = value;
+				_SmoothType = value;
 			}
 		}
 
+		private static short _DefaultSurfU = 6;
 		/// <summary>Gets or sets if the default SurfU value.</summary>
 		/// <remarks>
 		/// This value is used by smoothed polygon meshes when they not belong to a <b>DXF</b> document and the density values are left at the default 0.<br/>
@@ -214,17 +202,18 @@ namespace netDxf.Entities
 		/// </remarks>
 		public static short DefaultSurfU
 		{
-			get => defaultSurfU;
+			get => _DefaultSurfU;
 			set
 			{
 				if (value < 0 || value > 200)
 				{
 					throw new ArgumentOutOfRangeException(nameof(value), value, "Values must be between 0 and 200.");
 				}
-				defaultSurfU = value;
+				_DefaultSurfU = value;
 			}
 		}
 
+		private static short _DefaultSurfV = 6;
 		/// <summary>Gets or sets if the default SurfV value.</summary>
 		/// <remarks>
 		/// This value is used by smoothed polygon meshes when they not belong to a <b>DXF</b> document and the density values are left at the default 0.<br/>
@@ -232,14 +221,14 @@ namespace netDxf.Entities
 		/// </remarks>
 		public static short DefaultSurfV
 		{
-			get => defaultSurfV;
+			get => _DefaultSurfV;
 			set
 			{
 				if (value < 0 || value > 200)
 				{
 					throw new ArgumentOutOfRangeException(nameof(value), value, "Values must be between 0 and 200.");
 				}
-				defaultSurfV = value;
+				_DefaultSurfV = value;
 			}
 		}
 
@@ -248,7 +237,7 @@ namespace netDxf.Entities
 		#region internal properties
 
 		/// <summary>Gets the polygon mesh flags.</summary>
-		internal PolylineTypeFlags Flags { get; set; }
+		internal PolylineTypeFlags Flags { get; set; } = PolylineTypeFlags.PolygonMesh;
 
 		#endregion
 
@@ -261,8 +250,8 @@ namespace netDxf.Entities
 		/// </remarks>
 		public List<Vector3> MeshVertexes()
 		{
-			int precisionU = this.densityU == 0 ? this.Owner == null ? DefaultSurfU + 1 : this.Owner.Record.Owner.Owner.DrawingVariables.SurfU + 1 : this.densityU;
-			int precisionV = this.densityV == 0 ? this.Owner == null ? DefaultSurfV + 1 : this.Owner.Record.Owner.Owner.DrawingVariables.SurfV + 1 : this.densityV;
+			int precisionU = _DensityU == 0 ? this.Owner == null ? DefaultSurfU + 1 : this.Owner.Record.Owner.Owner.DrawingVariables.SurfU + 1 : _DensityU;
+			int precisionV = _DensityV == 0 ? this.Owner == null ? DefaultSurfV + 1 : this.Owner.Record.Owner.Owner.DrawingVariables.SurfV + 1 : _DensityV;
 
 			// the minimum vertexes generated is 3.
 			if (precisionU < 3)
@@ -292,11 +281,11 @@ namespace netDxf.Entities
 			}
 
 			int degree;
-			if (this.smoothType == PolylineSmoothType.Quadratic)
+			if (_SmoothType == PolylineSmoothType.Quadratic)
 			{
 				degree = 2;
 			}
-			else if (this.smoothType == PolylineSmoothType.Cubic)
+			else if (_SmoothType == PolylineSmoothType.Cubic)
 			{
 				degree = 3;
 			}
@@ -407,8 +396,8 @@ namespace netDxf.Entities
 		/// <returns>A <see cref="Mesh">Mesh entity</see>.</returns>
 		public Mesh ToMesh()
 		{
-			int precisionU = this.densityU == 0 ? this.Owner == null ? DefaultSurfU + 1 : this.Owner.Record.Owner.Owner.DrawingVariables.SurfU + 1 : this.densityU;
-			int precisionV = this.densityV == 0 ? this.Owner == null ? DefaultSurfV + 1 : this.Owner.Record.Owner.Owner.DrawingVariables.SurfV + 1 : this.densityV;
+			int precisionU = _DensityU == 0 ? this.Owner == null ? DefaultSurfU + 1 : this.Owner.Record.Owner.Owner.DrawingVariables.SurfU + 1 : _DensityU;
+			int precisionV = _DensityV == 0 ? this.Owner == null ? DefaultSurfV + 1 : this.Owner.Record.Owner.Owner.DrawingVariables.SurfV + 1 : _DensityV;
 
 			return this.ToMesh(precisionU, precisionV);
 		}
@@ -426,7 +415,7 @@ namespace netDxf.Entities
 
 			int precU;
 			int precV;
-			if (this.smoothType == PolylineSmoothType.NoSmooth)
+			if (_SmoothType == PolylineSmoothType.NoSmooth)
 			{
 				precU = this.U;
 				precV = this.V;
@@ -490,15 +479,15 @@ namespace netDxf.Entities
 
 			int precU;
 			int precV;
-			if (this.smoothType == PolylineSmoothType.NoSmooth)
+			if (_SmoothType == PolylineSmoothType.NoSmooth)
 			{
 				precU = this.U;
 				precV = this.V;
 			}
 			else
 			{
-				precU = this.densityU;
-				precV = this.densityV;
+				precU = _DensityU;
+				precV = _DensityV;
 			}
 
 			List<Face3D> faces = new List<Face3D>();
@@ -580,8 +569,8 @@ namespace netDxf.Entities
 				Normal = this.Normal,
 				IsVisible = this.IsVisible,
 				//PolygonMesh properties
-				DensityU = this.densityU,
-				DensityV = this.densityV,
+				DensityU = _DensityU,
+				DensityV = _DensityV,
 				Flags = this.Flags
 			};
 

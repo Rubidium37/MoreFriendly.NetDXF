@@ -38,7 +38,6 @@ namespace netDxf.Entities
 			: this(Vector3.Zero, Vector3.Zero, Vector3.Zero, Vector3.Zero)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="firstVertex">Face3D <see cref="Vector2">first vertex</see>.</param>
 		/// <param name="secondVertex">Face3D <see cref="Vector2">second vertex</see>.</param>
@@ -50,7 +49,6 @@ namespace netDxf.Entities
 				new Vector3(thirdVertex.X, thirdVertex.Y, 0.0))
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="firstVertex">Face3D <see cref="Vector2">first vertex</see>.</param>
 		/// <param name="secondVertex">Face3D <see cref="Vector2">second vertex</see>.</param>
@@ -63,7 +61,6 @@ namespace netDxf.Entities
 				new Vector3(fourthVertex.X, fourthVertex.Y, 0.0))
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="firstVertex">Face3D <see cref="Vector3">first vertex</see>.</param>
 		/// <param name="secondVertex">Face3D <see cref="Vector3">second vertex</see>.</param>
@@ -72,7 +69,6 @@ namespace netDxf.Entities
 			: this(firstVertex, secondVertex, thirdVertex, thirdVertex)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="firstVertex">Face3D <see cref="Vector3">first vertex</see>.</param>
 		/// <param name="secondVertex">Face3D <see cref="Vector3">second vertex</see>.</param>
@@ -85,7 +81,6 @@ namespace netDxf.Entities
 			this.SecondVertex = secondVertex;
 			this.ThirdVertex = thirdVertex;
 			this.FourthVertex = fourthVertex;
-			this.EdgeFlags = Face3DEdgeFlags.None;
 		}
 
 		#endregion
@@ -105,7 +100,7 @@ namespace netDxf.Entities
 		public Vector3 FourthVertex { get; set; }
 
 		/// <summary>Gets or sets the <b>Face3D</b> edge visibility.</summary>
-		public Face3DEdgeFlags EdgeFlags { get; set; }
+		public Face3DEdgeFlags EdgeFlags { get; set; } = Face3DEdgeFlags.None;
 
 		#endregion
 

@@ -34,11 +34,7 @@ namespace netDxf.Collections
 	public sealed class AttributeCollection :
 		IReadOnlyList<Attribute>
 	{
-		#region private fields
-
 		private readonly List<Attribute> innerArray;
-
-		#endregion
 
 		#region constructor
 

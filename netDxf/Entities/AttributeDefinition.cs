@@ -85,25 +85,6 @@ namespace netDxf.Entities
 
 		#endregion
 
-		#region private fields
-
-		private AciColor color;
-		private Layer layer;
-		private Linetype linetype;
-		private Transparency transparency;
-		private double linetypeScale;
-		private Vector3 normal;
-
-		private string attValue;
-		private TextStyle style;
-		private double height;
-		private double width;
-		private double widthFactor;
-		private double obliqueAngle;
-		private double rotation;
-
-		#endregion
-
 		#region constructor
 
 		/// <summary>Initializes a new instance of the class.</summary>
@@ -112,7 +93,6 @@ namespace netDxf.Entities
 			: this(tag, TextStyle.Default)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="tag">Attribute identifier.</param>
 		/// <param name="style">Attribute <see cref="TextStyle">text style</see>.</param>
@@ -120,7 +100,6 @@ namespace netDxf.Entities
 			: this(tag, MathHelper.IsZero(style.Height) ? 1.0 : style.Height, style)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="tag">Attribute identifier.</param>
 		/// <param name="textHeight">Height of the attribute definition text.</param>
@@ -134,114 +113,98 @@ namespace netDxf.Entities
 			}
 
 			this.Tag = tag;
-			this.Flags = AttributeFlags.None;
-			this.Prompt = string.Empty;
-			this.attValue = null;
-			this.Position = Vector3.Zero;
-			this.style = style ?? throw new ArgumentNullException(nameof(style));
+			_Style = style ?? throw new ArgumentNullException(nameof(style));
 			if (textHeight <= 0.0)
 			{
-				throw new ArgumentOutOfRangeException(nameof(textHeight), this.attValue, "The attribute definition text height must be greater than zero.");
+				throw new ArgumentOutOfRangeException(nameof(textHeight), _Value, "The attribute definition text height must be greater than zero.");
 			}
-			this.height = textHeight;
-			this.width = 1.0;
-			this.widthFactor = style.WidthFactor;
-			this.obliqueAngle = style.ObliqueAngle;
-			this.rotation = 0.0;
-			this.Alignment = TextAlignment.BaselineLeft;
-			this.IsBackward = false;
-			this.IsUpsideDown = false;
-			this.color = AciColor.ByLayer;
-			this.layer = Layer.Default;
-			this.linetype = Linetype.ByLayer;
-			this.Lineweight = Lineweight.ByLayer;
-			this.transparency = Transparency.ByLayer;
-			this.linetypeScale = 1.0;
-			this.IsVisible = true;
-			this.normal = Vector3.UnitZ;
-
+			_Height = textHeight;
+			_WidthFactor = style.WidthFactor;
+			_ObliqueAngle = style.ObliqueAngle;
 		}
 
 		#endregion
 
 		#region public property
 
+		private AciColor _Color = AciColor.ByLayer;
 		/// <summary>Gets or sets the entity <see cref="AciColor">color</see>.</summary>
 		public AciColor Color
 		{
-			get => this.color;
-			set
-			{
-				this.color = value ?? throw new ArgumentNullException(nameof(value));
-			}
+			get => _Color;
+			set => _Color = value ?? throw new ArgumentNullException(nameof(value));
 		}
 
+		private Layer _Layer = Layer.Default;
 		/// <summary>Gets or sets the entity <see cref="Layer">layer</see>.</summary>
 		public Layer Layer
 		{
-			get => this.layer;
+			get => _Layer;
 			set
 			{
 				if (value == null)
 				{
 					throw new ArgumentNullException(nameof(value));
 				}
-				this.layer = this.OnLayerChangedEvent(this.layer, value);
+
+				_Layer = this.OnLayerChangedEvent(_Layer, value);
 			}
 		}
 
+		private Linetype _Linetype = Linetype.ByLayer;
 		/// <summary>Gets or sets the entity <see cref="Linetype">line type</see>.</summary>
 		public Linetype Linetype
 		{
-			get => this.linetype;
+			get => _Linetype;
 			set
 			{
 				if (value == null)
 				{
 					throw new ArgumentNullException(nameof(value));
 				}
-				this.linetype = this.OnLinetypeChangedEvent(this.linetype, value);
+
+				_Linetype = this.OnLinetypeChangedEvent(_Linetype, value);
 			}
 		}
 
 		/// <summary>Gets or sets the entity line weight, one unit is always 1/100 mm (default = ByLayer).</summary>
-		public Lineweight Lineweight { get; set; }
+		public Lineweight Lineweight { get; set; } = Lineweight.ByLayer;
 
+		private Transparency _Transparency = Transparency.ByLayer;
 		/// <summary>Gets or sets layer transparency (default: ByLayer).</summary>
 		public Transparency Transparency
 		{
-			get => this.transparency;
-			set
-			{
-				this.transparency = value ?? throw new ArgumentNullException(nameof(value));
-			}
+			get => _Transparency;
+			set => _Transparency = value ?? throw new ArgumentNullException(nameof(value));
 		}
 
+		private double _LinetypeScale = 1.0;
 		/// <summary>Gets or sets the entity line type scale.</summary>
 		public double LinetypeScale
 		{
-			get => this.linetypeScale;
+			get => _LinetypeScale;
 			set
 			{
 				if (value <= 0)
 				{
 					throw new ArgumentOutOfRangeException(nameof(value), value, "The line type scale must be greater than zero.");
 				}
-				this.linetypeScale = value;
+				_LinetypeScale = value;
 			}
 		}
 
 		/// <summary>Gets or set the entity visibility.</summary>
-		public bool IsVisible { get; set; }
+		public bool IsVisible { get; set; } = true;
 
+		private Vector3 _Normal = Vector3.UnitZ;
 		/// <summary>Gets or sets the entity <see cref="Vector3">normal</see>.</summary>
 		public Vector3 Normal
 		{
-			get => this.normal;
+			get => _Normal;
 			set
 			{
-				this.normal = Vector3.Normalize(value);
-				if (Vector3.IsZero(this.normal))
+				_Normal = Vector3.Normalize(value);
+				if (Vector3.IsZero(_Normal))
 				{
 					throw new ArgumentException("The normal can not be the zero vector.", nameof(value));
 				}
@@ -257,8 +220,9 @@ namespace netDxf.Entities
 
 		/// <summary>Gets or sets the attribute information text.</summary>
 		/// <remarks>This is the text prompt shown to introduce the attribute value when new Insert entities are inserted into the drawing.</remarks>
-		public string Prompt { get; set; }
+		public string Prompt { get; set; } = string.Empty;
 
+		private double _Height;
 		/// <summary>Gets or sets the text height.</summary>
 		/// <remarks>
 		/// Valid values must be greater than zero. Default: 1.0.<br />
@@ -266,32 +230,34 @@ namespace netDxf.Entities
 		/// </remarks>
 		public double Height
 		{
-			get => this.height;
+			get => _Height;
 			set
 			{
 				if (value <= 0)
 				{
 					throw new ArgumentOutOfRangeException(nameof(value), value, "The height should be greater than zero.");
 				}
-				this.height = value;
+				_Height = value;
 			}
 		}
 
+		private double _Width = 1.0;
 		/// <summary>Gets or sets the text width, only applicable for text Alignment.Fit and Alignment.Align.</summary>
 		/// <remarks>Valid values must be greater than zero. Default: 1.0.</remarks>
 		public double Width
 		{
-			get => this.width;
+			get => _Width;
 			set
 			{
 				if (value <= 0)
 				{
 					throw new ArgumentOutOfRangeException(nameof(value), value, "The Text width must be greater than zero.");
 				}
-				this.width = value;
+				_Width = value;
 			}
 		}
 
+		private double _WidthFactor;
 		/// <summary>Gets or sets the width factor.</summary>
 		/// <remarks>
 		/// Valid values range from 0.01 to 100. Default: 1.0.<br />
@@ -299,77 +265,82 @@ namespace netDxf.Entities
 		/// </remarks>
 		public double WidthFactor
 		{
-			get => this.widthFactor;
+			get => _WidthFactor;
 			set
 			{
 				if (value <= 0)
 				{
 					throw new ArgumentOutOfRangeException(nameof(value), value, "The width factor should be greater than zero.");
 				}
-				this.widthFactor = value;
+				_WidthFactor = value;
 			}
 		}
 
+		private double _ObliqueAngle;
 		/// <summary>Gets or sets the font oblique angle.</summary>
 		/// <remarks>Valid values range from -85 to 85. Default: 0.0.</remarks>
 		public double ObliqueAngle
 		{
-			get => this.obliqueAngle;
+			get => _ObliqueAngle;
 			set
 			{
 				if (value < -85.0 || value > 85.0)
 				{
 					throw new ArgumentOutOfRangeException(nameof(value), value, "The oblique angle valid values range from -85 to 85.");
 				}
-				this.obliqueAngle = value;
+				_ObliqueAngle = value;
 			}
 		}
 
+		private string _Value;
 		/// <summary>Gets or sets the attribute default value.</summary>
 		public string Value
 		{
-			get => this.attValue;
-			set => this.attValue = string.IsNullOrEmpty(value) ? string.Empty : value;
+			get => _Value;
+			set => _Value = string.IsNullOrEmpty(value) ? string.Empty : value;
 		}
 
+		private TextStyle _Style;
 		/// <summary>Gets or sets the attribute text style.</summary>
 		/// <remarks>
 		/// The <see cref="TextStyle">text style</see> defines the basic properties of the information text.
 		/// </remarks>
 		public TextStyle Style
 		{
-			get => this.style;
+			get => _Style;
 			set
 			{
 				if (value == null)
 				{
 					throw new ArgumentNullException(nameof(value));
 				}
-				this.style = this.OnTextStyleChangedEvent(this.style, value);
+
+				_Style = this.OnTextStyleChangedEvent(_Style, value);
 			}
 		}
 
 		/// <summary>Gets or sets the attribute <see cref="Vector3">position</see> in object coordinates.</summary>
-		public Vector3 Position { get; set; }
+		public Vector3 Position { get; set; } = Vector3.Zero;
 
 		/// <summary>Gets or sets the attribute flags.</summary>
-		public AttributeFlags Flags { get; set; }
+		public AttributeFlags Flags { get; set; } = AttributeFlags.None;
 
+		private double _Rotation = 0.0;
 		/// <summary>Gets or sets the attribute text rotation in degrees.</summary>
 		public double Rotation
 		{
-			get => this.rotation;
-			set => this.rotation = MathHelper.NormalizeAngle(value);
+			get => _Rotation;
+			set => _Rotation = MathHelper.NormalizeAngle(value);
 		}
 
 		/// <summary>Gets or sets the text alignment.</summary>
-		public TextAlignment Alignment { get; set; }
+		public TextAlignment Alignment { get; set; } = TextAlignment.BaselineLeft;
 
 		/// <summary>Gets or sets if the attribute definition text is backward (mirrored in X).</summary>
-		public bool IsBackward { get; set; }
+		public bool IsBackward { get; set; } = false;
 
 		/// <summary>Gets or sets if the attribute definition text is upside down (mirrored in Y).</summary>
-		public bool IsUpsideDown { get; set; }
+		public bool IsUpsideDown { get; set; } = false;
 
 		/// <summary>Gets the owner of the actual <b>DXF</b> object.</summary>
 		public new Block Owner
@@ -581,15 +552,15 @@ namespace netDxf.Entities
 				Normal = this.Normal,
 				IsVisible = this.IsVisible,
 				Prompt = this.Prompt,
-				Value = this.attValue,
-				Height = this.height,
-				Width = this.width,
-				WidthFactor = this.widthFactor,
-				ObliqueAngle = this.obliqueAngle,
-				Style = (TextStyle)this.style.Clone(),
+				Value = _Value,
+				Height = _Height,
+				Width = _Width,
+				WidthFactor = _WidthFactor,
+				ObliqueAngle = _ObliqueAngle,
+				Style = (TextStyle)_Style.Clone(),
 				Position = this.Position,
 				Flags = this.Flags,
-				Rotation = this.rotation,
+				Rotation = _Rotation,
 				Alignment = this.Alignment,
 				IsBackward = this.IsBackward,
 				IsUpsideDown = this.IsUpsideDown

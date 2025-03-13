@@ -52,13 +52,6 @@ namespace netDxf.Objects
 
 		#endregion
 
-		#region private fields
-
-		private AciColor color;
-		private Linetype linetype;
-
-		#endregion
-
 		#region constructors
 
 		/// <summary>Initializes a new instance of the class.</summary>
@@ -67,7 +60,6 @@ namespace netDxf.Objects
 			: this(offset, AciColor.ByLayer, Linetype.ByLayer)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="offset">Element offset.</param>
 		/// <param name="color">Element color.</param>
@@ -75,8 +67,8 @@ namespace netDxf.Objects
 		public MLineStyleElement(double offset, AciColor color, Linetype linetype)
 		{
 			this.Offset = offset;
-			this.color = color;
-			this.linetype = linetype;
+			_Color = color;
+			_Linetype = linetype;
 		}
 
 		#endregion
@@ -86,30 +78,30 @@ namespace netDxf.Objects
 		/// <summary>Gets or sets the element offset.</summary>
 		public double Offset { get; set; }
 
+		private AciColor _Color;
 		/// <summary>Gets or sets the element color.</summary>
 		/// <remarks>
 		/// AutoCad2000 <b>DXF</b> version does not support <see langword="true"/> colors for MLineStyleElement color.
 		/// </remarks>
 		public AciColor Color
 		{
-			get => this.color;
-			set
-			{
-				this.color = value ?? throw new ArgumentNullException(nameof(value));
-			}
+			get => _Color;
+			set => _Color = value ?? throw new ArgumentNullException(nameof(value));
 		}
 
+		private Linetype _Linetype;
 		/// <summary>Gets or sets the element line type.</summary>
 		public Linetype Linetype
 		{
-			get => this.linetype;
+			get => _Linetype;
 			set
 			{
 				if (value == null)
 				{
 					throw new ArgumentNullException(nameof(value));
 				}
-				this.linetype = this.OnLinetypeChangedEvent(this.linetype, value);
+
+				_Linetype = this.OnLinetypeChangedEvent(_Linetype, value);
 			}
 		}
 
@@ -159,7 +151,7 @@ namespace netDxf.Objects
 			=> new MLineStyleElement(this.Offset)
 			{
 				Color = (AciColor)this.Color.Clone(),
-				Linetype = (Linetype)this.linetype.Clone()
+				Linetype = (Linetype)_Linetype.Clone()
 			};
 
 		#endregion
@@ -168,7 +160,7 @@ namespace netDxf.Objects
 
 		/// <inheritdoc/>
 		public override string ToString()
-			=> string.Format("{0}, color:{1}, line type:{2}", this.Offset, this.color, this.linetype);
+			=> string.Format("{0}, color:{1}, line type:{2}", this.Offset, _Color, _Linetype);
 
 		#endregion
 	}

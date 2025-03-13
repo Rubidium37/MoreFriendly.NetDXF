@@ -53,13 +53,6 @@ namespace netDxf.Tables
 
 		#endregion
 
-		#region private fields
-
-		private static readonly char[] invalidCharacters = { '\\', '/', ':', '*', '?', '"', '<', '>', '|', ';', ',', '=', '`' };
-		private string name;
-
-		#endregion
-
 		#region constructors
 
 		/// <summary>Initializes a new instance of the class.</summary>
@@ -78,28 +71,27 @@ namespace netDxf.Tables
 				}
 			}
 
-			this.name = name;
-			this.IsReserved = false;
+			_Name = name;
 		}
 
 		#endregion
 
 		#region public properties
 
+		private string _Name;
 		/// <summary>Gets the name of the table object.</summary>
 		/// <remarks>Table object names are case insensitive.</remarks>
 		public string Name
 		{
-			get => this.name;
+			get => _Name;
 			set => this.SetName(value, true);
 		}
 
 		/// <summary>Gets if the table object is reserved and cannot be deleted.</summary>
-		public bool IsReserved { get; internal set; }
+		public bool IsReserved { get; internal set; } = false;
 
 		/// <summary>Gets the array of characters not supported as table object names.</summary>
-		public static char[] InvalidCharacters
-			=> invalidCharacters.ToArray();
+		public static char[] InvalidCharacters { get; } = { '\\', '/', ':', '*', '?', '"', '<', '>', '|', ';', ',', '=', '`' };
 
 		#endregion
 
@@ -115,7 +107,7 @@ namespace netDxf.Tables
 				return false;
 			}
 
-			return name.IndexOfAny(invalidCharacters) == -1;
+			return name.IndexOfAny(InvalidCharacters) == -1;
 		}
 
 		/// <summary>Checks if this instance has been referenced by other <see cref="DxfObject"/>s.</summary>
@@ -156,7 +148,7 @@ namespace netDxf.Tables
 				throw new ArgumentException("Reserved table objects cannot be renamed.", nameof(newName));
 			}
 
-			if (string.Equals(this.name, newName, StringComparison.OrdinalIgnoreCase))
+			if (string.Equals(_Name, newName, StringComparison.OrdinalIgnoreCase))
 			{
 				return;
 			}
@@ -168,8 +160,8 @@ namespace netDxf.Tables
 					throw new ArgumentException("The following characters \\<>/?\":;*|,=` are not supported for table object names.", nameof(newName));
 				}
 			}
-			this.OnNameChangedEvent(this.name, newName);
-			this.name = newName;
+			this.OnNameChangedEvent(_Name, newName);
+			_Name = newName;
 		}
 
 		#endregion

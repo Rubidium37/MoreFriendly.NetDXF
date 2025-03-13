@@ -39,7 +39,6 @@ namespace netDxf.Collections
 			: this(document, null)
 		{
 		}
-
 		internal Views(DxfDocument document, string handle)
 			: base(document, DxfObjectCode.ViewTable, handle)
 		{

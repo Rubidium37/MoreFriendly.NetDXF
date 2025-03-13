@@ -32,39 +32,28 @@ namespace netDxf
 	public struct Vector3 :
 		IEquatable<Vector3>
 	{
-		#region private fields
-
-		private double x;
-		private double y;
-		private double z;
-		private bool isNormalized;
-
-		#endregion
-
 		#region constructors
 
 		/// <summary>Initializes a new instance of Vector3.</summary>
 		/// <param name="value">X, Y, Z component.</param>
 		public Vector3(double value)
 		{
-			this.x = value;
-			this.y = value;
-			this.z = value;
-			this.isNormalized = false;
+			_X = value;
+			_Y = value;
+			_Z = value;
+			this.IsNormalized = false;
 		}
-
 		/// <summary>Initializes a new instance of Vector3.</summary>
 		/// <param name="x">X component.</param>
 		/// <param name="y">Y component.</param>
 		/// <param name="z">Z component.</param>
 		public Vector3(double x, double y, double z)
 		{
-			this.x = x;
-			this.y = y;
-			this.z = z;
-			this.isNormalized = false;
+			_X = x;
+			_Y = y;
+			_Z = z;
+			this.IsNormalized = false;
 		}
-
 		/// <summary>Initializes a new instance of Vector3.</summary>
 		/// <param name="array">Array of three elements that represents the vector.</param>
 		public Vector3(double[] array)
@@ -79,10 +68,10 @@ namespace netDxf
 				throw new ArgumentOutOfRangeException(nameof(array), array.Length, "The dimension of the array must be three.");
 			}
 
-			this.x = array[0];
-			this.y = array[1];
-			this.z = array[2];
-			this.isNormalized = false;
+			_X = array[0];
+			_Y = array[1];
+			_Z = array[2];
+			this.IsNormalized = false;
 		}
 
 		#endregion
@@ -93,13 +82,13 @@ namespace netDxf
 		public static Vector3 Zero => new Vector3(0.0, 0.0, 0.0);
 
 		/// <summary>Unit X vector.</summary>
-		public static Vector3 UnitX => new Vector3(1.0, 0.0, 0.0) { isNormalized = true };
+		public static Vector3 UnitX => new Vector3(1.0, 0.0, 0.0) { IsNormalized = true };
 
 		/// <summary>Unit Y vector.</summary>
-		public static Vector3 UnitY => new Vector3(0.0, 1.0, 0.0) { isNormalized = true };
+		public static Vector3 UnitY => new Vector3(0.0, 1.0, 0.0) { IsNormalized = true };
 
 		/// <summary>Unit Z vector.</summary>
-		public static Vector3 UnitZ => new Vector3(0.0, 0.0, 1.0) { isNormalized = true };
+		public static Vector3 UnitZ => new Vector3(0.0, 0.0, 1.0) { IsNormalized = true };
 
 		/// <summary>Represents a vector with not a number components.</summary>
 		public static Vector3 NaN => new Vector3(double.NaN, double.NaN, double.NaN);
@@ -108,36 +97,39 @@ namespace netDxf
 
 		#region public properties
 
+		private double _X;
 		/// <summary>Gets or sets the X component.</summary>
 		public double X
 		{
-			get => this.x;
+			get => _X;
 			set
 			{
-				this.x = value;
-				this.isNormalized = false;
+				_X = value;
+				this.IsNormalized = false;
 			}
 		}
 
+		private double _Y;
 		/// <summary>Gets or sets the Y component.</summary>
 		public double Y
 		{
-			get => this.y;
+			get => _Y;
 			set
 			{
-				this.y = value;
-				this.isNormalized = false;
+				_Y = value;
+				this.IsNormalized = false;
 			}
 		}
 
+		private double _Z;
 		/// <summary>Gets or sets the Z component.</summary>
 		public double Z
 		{
-			get => this.z;
+			get => _Z;
 			set
 			{
-				this.z = value;
-				this.isNormalized = false;
+				_Z = value;
+				this.IsNormalized = false;
 			}
 		}
 
@@ -150,11 +142,11 @@ namespace netDxf
 				switch (index)
 				{
 					case 0:
-						return this.x;
+						return _X;
 					case 1:
-						return this.y;
+						return _Y;
 					case 2:
-						return this.z;
+						return _Z;
 					default:
 						throw new ArgumentOutOfRangeException(nameof(index));
 				}
@@ -164,24 +156,24 @@ namespace netDxf
 				switch (index)
 				{
 					case 0:
-						this.x = value;
+						_X = value;
 						break;
 					case 1:
-						this.y = value;
+						_Y = value;
 						break;
 					case 2:
-						this.z = value;
+						_Z = value;
 						break;
 					default:
 						throw new ArgumentOutOfRangeException(nameof(index));
 				}
 
-				this.isNormalized = false;
+				this.IsNormalized = false;
 			}
 		}
 
 		/// <summary>Gets if the vector has been normalized.</summary>
-		public bool IsNormalized => this.isNormalized;
+		public bool IsNormalized { get; private set; }
 
 		#endregion
 
@@ -340,7 +332,7 @@ namespace netDxf
 		/// <returns>A normalized vector.</returns>
 		public static Vector3 Normalize(Vector3 u)
 		{
-			if (u.isNormalized)
+			if (u.IsNormalized)
 			{
 				return u;
 			}
@@ -352,7 +344,7 @@ namespace netDxf
 			}
 
 			double modInv = 1 / mod;
-			return new Vector3(u.x * modInv, u.y * modInv, u.z * modInv) { isNormalized = true };
+			return new Vector3(u.X * modInv, u.Y * modInv, u.Z * modInv) { IsNormalized = true };
 		}
 
 		#endregion
@@ -397,12 +389,12 @@ namespace netDxf
 		/// <summary>Negates a vector.</summary>
 		/// <param name="u">Vector3.</param>
 		/// <returns>The negative vector of u.</returns>
-		public static Vector3 operator -(Vector3 u) => new Vector3(-u.X, -u.Y, -u.Z) { isNormalized = u.IsNormalized };
+		public static Vector3 operator -(Vector3 u) => new Vector3(-u.X, -u.Y, -u.Z) { IsNormalized = u.IsNormalized };
 
 		/// <summary>Negates a vector.</summary>
 		/// <param name="u">Vector3.</param>
 		/// <returns>The negative vector of u.</returns>
-		public static Vector3 Negate(Vector3 u) => new Vector3(-u.X, -u.Y, -u.Z) { isNormalized = u.IsNormalized };
+		public static Vector3 Negate(Vector3 u) => new Vector3(-u.X, -u.Y, -u.Z) { IsNormalized = u.IsNormalized };
 
 		/// <summary>Multiplies a vector with an scalar (same as a*u, commutative property).</summary>
 		/// <param name="u">Vector3.</param>
@@ -479,7 +471,7 @@ namespace netDxf
 		/// <summary>Normalizes the current vector.</summary>
 		public void Normalize()
 		{
-			if (this.isNormalized)
+			if (this.IsNormalized)
 			{
 				return;
 			}
@@ -492,20 +484,20 @@ namespace netDxf
 			}
 
 			double modInv = 1 / mod;
-			this.x *= modInv;
-			this.y *= modInv;
-			this.z *= modInv;
+			_X *= modInv;
+			_Y *= modInv;
+			_Z *= modInv;
 
-			this.isNormalized = true;
+			this.IsNormalized = true;
 		}
 
 		/// <summary>Obtains the modulus of the vector.</summary>
 		/// <returns>Vector modulus.</returns>
-		public double Modulus() => this.isNormalized ? 1.0 : Math.Sqrt(DotProduct(this, this));
+		public double Modulus() => this.IsNormalized ? 1.0 : Math.Sqrt(DotProduct(this, this));
 
 		/// <summary>Returns an array that represents the vector.</summary>
 		/// <returns>Array.</returns>
-		public double[] ToArray() => new[] { this.x, this.y, this.z };
+		public double[] ToArray() => new[] { _X, _Y, _Z };
 
 		#endregion
 
@@ -520,7 +512,7 @@ namespace netDxf
 		/// <param name="threshold">Maximum tolerance.</param>
 		/// <returns><see langword="true"/> if the three components are almost equal or <see langword="false"/> in any other case.</returns>
 		public bool Equals(Vector3 other, double threshold)
-			=> MathHelper.IsEqual(other.X, this.x, threshold) && MathHelper.IsEqual(other.Y, this.y, threshold) && MathHelper.IsEqual(other.Z, this.z, threshold);
+			=> MathHelper.IsEqual(other.X, _X, threshold) && MathHelper.IsEqual(other.Y, _Y, threshold) && MathHelper.IsEqual(other.Z, _Z, threshold);
 		/// <summary>Check if the components of two vectors are approximate equal.</summary>
 		/// <param name="a">Vector3.</param>
 		/// <param name="b">Vector3.</param>
@@ -542,13 +534,13 @@ namespace netDxf
 
 		/// <inheritdoc/>
 		public override string ToString()
-			=> string.Format("{0}{3} {1}{3} {2}", this.x, this.y, this.z, Thread.CurrentThread.CurrentCulture.TextInfo.ListSeparator);
+			=> string.Format("{0}{3} {1}{3} {2}", _X, _Y, _Z, Thread.CurrentThread.CurrentCulture.TextInfo.ListSeparator);
 
 		/// <summary>Obtains a string that represents the vector.</summary>
 		/// <param name="provider">An <see cref="IFormatProvider"/> object implementation that supplies culture-specific formatting information. </param>
 		/// <returns>A string text.</returns>
 		public string ToString(IFormatProvider provider)
-			=> string.Format("{0}{3} {1}{3} {2}", this.x.ToString(provider), this.y.ToString(provider), this.z.ToString(provider), Thread.CurrentThread.CurrentCulture.TextInfo.ListSeparator);
+			=> string.Format("{0}{3} {1}{3} {2}", _X.ToString(provider), _Y.ToString(provider), _Z.ToString(provider), Thread.CurrentThread.CurrentCulture.TextInfo.ListSeparator);
 
 		#endregion
 	}

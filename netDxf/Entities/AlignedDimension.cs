@@ -41,7 +41,6 @@ namespace netDxf.Entities
 			: this(Vector2.Zero, Vector2.UnitX, 0.1)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="referenceLine">Reference <see cref="Line">line</see> of the dimension.</param>
 		/// <param name="offset">Distance between the reference line and the dimension line.</param>
@@ -50,7 +49,6 @@ namespace netDxf.Entities
 			: this(referenceLine, offset, Vector3.UnitZ, DimensionStyle.Default)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="referenceLine">Reference <see cref="Line">line</see> of the dimension.</param>
 		/// <param name="offset">Distance between the reference line and the dimension line.</param>
@@ -60,7 +58,6 @@ namespace netDxf.Entities
 			: this(referenceLine, offset, Vector3.UnitZ, style)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="referenceLine">Reference <see cref="Line">line</see> of the dimension.</param>
 		/// <param name="offset">Distance between the reference line and the dimension line.</param>
@@ -70,7 +67,6 @@ namespace netDxf.Entities
 			: this(referenceLine, offset, normal, DimensionStyle.Default)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="referenceLine">Reference <see cref="Line">line</see> of the dimension.</param>
 		/// <param name="offset">Distance between the reference line and the dimension line.</param>
@@ -98,7 +94,6 @@ namespace netDxf.Entities
 			this.Elevation = ocsPoints[0].Z;
 			this.Update();
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="firstPoint">First reference <see cref="Vector2">point</see> of the dimension.</param>
 		/// <param name="secondPoint">Second reference <see cref="Vector2">point</see> of the dimension.</param>
@@ -108,7 +103,6 @@ namespace netDxf.Entities
 			: this(firstPoint, secondPoint, offset, DimensionStyle.Default)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="firstPoint">First reference <see cref="Vector2">point</see> of the dimension.</param>
 		/// <param name="secondPoint">Second reference <see cref="Vector2">point</see> of the dimension.</param>
@@ -181,7 +175,7 @@ namespace netDxf.Entities
 				}
 
 				double gap = this.Offset + textGap * scale;
-				this.textRefPoint = Vector2.MidPoint(this.FirstReferencePoint, this.SecondReferencePoint) + gap * vec;
+				_TextReferencePoint = Vector2.MidPoint(this.FirstReferencePoint, this.SecondReferencePoint) + gap * vec;
 			}
 		}
 
@@ -213,10 +207,10 @@ namespace netDxf.Entities
 
 			if (this.TextPositionManuallySet)
 			{
-				v = transOW * new Vector3(this.textRefPoint.X, this.textRefPoint.Y, this.Elevation);
+				v = transOW * new Vector3(_TextReferencePoint.X, _TextReferencePoint.Y, this.Elevation);
 				v = transformation * v + translation;
 				v = transWO * v;
-				this.textRefPoint = new Vector2(v.X, v.Y);
+				_TextReferencePoint = new Vector2(v.X, v.Y);
 			}
 
 			v = transOW * new Vector3(this.DefinitionPoint.X, this.DefinitionPoint.Y, this.Elevation);
@@ -257,7 +251,7 @@ namespace netDxf.Entities
 
 				if (moveText == DimensionStyleFitTextMove.BesideDimLine)
 				{
-					this.SetDimensionLinePosition(this.textRefPoint);
+					this.SetDimensionLinePosition(_TextReferencePoint);
 				}
 			}
 			else
@@ -274,7 +268,7 @@ namespace netDxf.Entities
 				}
 
 				double gap = textGap * scale;
-				this.textRefPoint = Vector2.MidPoint(dimRef1, dimRef2) + gap * dirDesp;
+				_TextReferencePoint = Vector2.MidPoint(dimRef1, dimRef2) + gap * dirDesp;
 			}
 		}
 

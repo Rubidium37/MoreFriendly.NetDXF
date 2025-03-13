@@ -33,12 +33,6 @@ namespace netDxf.Entities
 	public class Circle :
 		EntityObject
 	{
-		#region private fields
-
-		private double radius;
-
-		#endregion
-
 		#region constructors
 
 		/// <summary>Initializes a new instance of the class.</summary>
@@ -46,7 +40,6 @@ namespace netDxf.Entities
 			: this(Vector3.Zero, 1.0)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="center">Circle <see cref="Vector3">center</see> in world coordinates.</param>
 		/// <param name="radius">Circle radius.</param>
@@ -58,10 +51,8 @@ namespace netDxf.Entities
 			{
 				throw new ArgumentOutOfRangeException(nameof(radius), radius, "The circle radius must be greater than zero.");
 			}
-			this.radius = radius;
-			this.Thickness = 0.0;
+			_Radius = radius;
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="center">Circle <see cref="Vector2">center</see> in world coordinates.</param>
 		/// <param name="radius">Circle radius.</param>
@@ -77,22 +68,23 @@ namespace netDxf.Entities
 		/// <summary>Gets or sets the circle <see cref="Vector3">center</see> in world coordinates.</summary>
 		public Vector3 Center { get; set; }
 
+		private double _Radius;
 		/// <summary>Gets or set the circle radius.</summary>
 		public double Radius
 		{
-			get => this.radius;
+			get => _Radius;
 			set
 			{
 				if (value <= 0)
 				{
 					throw new ArgumentOutOfRangeException(nameof(value), value, "The circle radius must be greater than zero.");
 				}
-				this.radius = value;
+				_Radius = value;
 			}
 		}
 
 		/// <summary>Gets or sets the circle thickness.</summary>
-		public double Thickness { get; set; }
+		public double Thickness { get; set; } = 0.0;
 
 		#endregion
 
@@ -115,8 +107,8 @@ namespace netDxf.Entities
 			for (int i = 0; i < precision; i++)
 			{
 				double angle = delta * i;
-				double sine = this.radius * Math.Sin(angle);
-				double cosine = this.radius * Math.Cos(angle);
+				double sine = _Radius * Math.Sin(angle);
+				double cosine = _Radius * Math.Cos(angle);
 				ocsVertexes.Add(new Vector2(cosine, sine));
 			}
 			return ocsVertexes;
@@ -198,7 +190,7 @@ namespace netDxf.Entities
 				IsVisible = this.IsVisible,
 				//Circle properties
 				Center = this.Center,
-				Radius = this.radius,
+				Radius = _Radius,
 				Thickness = this.Thickness
 			};
 

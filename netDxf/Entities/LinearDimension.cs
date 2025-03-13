@@ -34,12 +34,6 @@ namespace netDxf.Entities
 	public class LinearDimension :
 		Dimension
 	{
-		#region private fields
-
-		private double rotation;
-
-		#endregion
-
 		#region constructors
 
 		/// <summary>Initializes a new instance of the class.</summary>
@@ -47,7 +41,6 @@ namespace netDxf.Entities
 			: this(Vector2.Zero, Vector2.UnitX, 0.1, 0.0)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="referenceLine">Reference <see cref="Line">line</see> of the dimension.</param>
 		/// <param name="offset">Distance between the reference line and the dimension line.</param>
@@ -57,7 +50,6 @@ namespace netDxf.Entities
 			: this(referenceLine, offset, rotation, Vector3.UnitZ, DimensionStyle.Default)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="referenceLine">Reference <see cref="Line">line</see> of the dimension.</param>
 		/// <param name="offset">Distance between the reference line and the dimension line.</param>
@@ -68,7 +60,6 @@ namespace netDxf.Entities
 			: this(referenceLine, offset, rotation, Vector3.UnitZ, style)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="referenceLine">Reference <see cref="Line">line</see> of the dimension.</param>
 		/// <param name="offset">Distance between the reference line and the dimension line.</param>
@@ -79,7 +70,6 @@ namespace netDxf.Entities
 			: this(referenceLine, offset, rotation, normal, DimensionStyle.Default)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="referenceLine">Reference <see cref="Line">line</see> of the dimension.</param>
 		/// <param name="offset">Distance between the reference line and the dimension line.</param>
@@ -100,13 +90,12 @@ namespace netDxf.Entities
 			this.FirstReferencePoint = new Vector2(ocsPoints[0].X, ocsPoints[0].Y);
 			this.SecondReferencePoint = new Vector2(ocsPoints[1].X, ocsPoints[1].Y);
 			this.Offset = offset;
-			this.rotation = MathHelper.NormalizeAngle(rotation);
+			_Rotation = MathHelper.NormalizeAngle(rotation);
 			this.Style = style ?? throw new ArgumentNullException(nameof(style));
 			this.Normal = normal;
 			this.Elevation = ocsPoints[0].Z;
 			this.Update();
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="firstPoint">First reference <see cref="Vector2">point</see> of the dimension.</param>
 		/// <param name="secondPoint">Second reference <see cref="Vector2">point</see> of the dimension.</param>
@@ -117,7 +106,6 @@ namespace netDxf.Entities
 			: this(firstPoint, secondPoint, offset, rotation, DimensionStyle.Default)
 		{
 		}
-
 		/// <summary>Initializes a new instance of the class.</summary>
 		/// <param name="firstPoint">First reference <see cref="Vector2">point</see> of the dimension.</param>
 		/// <param name="secondPoint">Second reference <see cref="Vector2">point</see> of the dimension.</param>
@@ -131,7 +119,7 @@ namespace netDxf.Entities
 			this.FirstReferencePoint = firstPoint;
 			this.SecondReferencePoint = secondPoint;
 			this.Offset = offset;
-			this.rotation = MathHelper.NormalizeAngle(rotation);
+			_Rotation = MathHelper.NormalizeAngle(rotation);
 			this.Style = style ?? throw new ArgumentNullException(nameof(style));
 			this.Update();
 		}
@@ -149,11 +137,12 @@ namespace netDxf.Entities
 		/// <summary>Gets the location of the dimension line.</summary>
 		public Vector2 DimLinePosition => this.DefinitionPoint;
 
+		private double _Rotation;
 		/// <summary>Gets or sets the rotation of the dimension line.</summary>
 		public double Rotation
 		{
-			get => this.rotation;
-			set => this.rotation = MathHelper.NormalizeAngle(value);
+			get => _Rotation;
+			set => _Rotation = MathHelper.NormalizeAngle(value);
 		}
 
 		/// <summary>Gets or sets the distance between the mid point of the reference line and the dimension line.</summary>
@@ -168,7 +157,7 @@ namespace netDxf.Entities
 			get
 			{
 				double refRot = Vector2.Angle(this.FirstReferencePoint, this.SecondReferencePoint);
-				return Math.Abs(Vector2.Distance(this.FirstReferencePoint, this.SecondReferencePoint) * Math.Cos(this.rotation * MathHelper.DegToRad - refRot));
+				return Math.Abs(Vector2.Distance(this.FirstReferencePoint, this.SecondReferencePoint) * Math.Cos(_Rotation * MathHelper.DegToRad - refRot));
 			}
 		}
 
@@ -362,7 +351,7 @@ namespace netDxf.Entities
 				//LinearDimension properties
 				FirstReferencePoint = this.FirstReferencePoint,
 				SecondReferencePoint = this.SecondReferencePoint,
-				Rotation = this.rotation,
+				Rotation = _Rotation,
 				Offset = this.Offset,
 				Elevation = this.Elevation
 			};

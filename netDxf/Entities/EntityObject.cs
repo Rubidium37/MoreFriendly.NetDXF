@@ -67,120 +67,103 @@ namespace netDxf.Entities
 
 		#endregion
 
-		#region private fields
-
-		private AciColor color;
-		private Layer layer;
-		private Linetype linetype;
-		private Transparency transparency;
-		private double linetypeScale;
-		private Vector3 normal;
-		private readonly List<DxfObject> reactors = new List<DxfObject>();
-
-		#endregion
-
 		#region constructors
 
 		protected EntityObject(EntityType type, string dxfCode)
 			: base(dxfCode)
 		{
 			this.Type = type;
-			this.color = AciColor.ByLayer;
-			this.layer = Layer.Default;
-			this.linetype = Linetype.ByLayer;
-			this.Lineweight = Lineweight.ByLayer;
-			this.transparency = Transparency.ByLayer;
-			this.linetypeScale = 1.0;
-			this.IsVisible = true;
-			this.normal = Vector3.UnitZ;
 		}
 
 		#endregion
 
 		#region public properties
 
+		private readonly List<DxfObject> _Reactors = new List<DxfObject>();
 		/// <summary>Gets the list of <b>DXF</b> objects that has been attached to this entity.</summary>
-		public IReadOnlyList<DxfObject> Reactors => this.reactors;
+		public IReadOnlyList<DxfObject> Reactors => _Reactors;
 
 		/// <summary>Gets the entity <see cref="EntityType">type</see>.</summary>
 		public EntityType Type { get; }
 
+		private AciColor _Color = AciColor.ByLayer;
 		/// <summary>Gets or sets the entity <see cref="AciColor">color</see>.</summary>
 		public AciColor Color
 		{
-			get => this.color;
-			set
-			{
-				this.color = value ?? throw new ArgumentNullException(nameof(value));
-			}
+			get => _Color;
+			set => _Color = value ?? throw new ArgumentNullException(nameof(value));
 		}
 
+		private Layer _Layer = Layer.Default;
 		/// <summary>Gets or sets the entity <see cref="Layer">layer</see>.</summary>
 		public Layer Layer
 		{
-			get => this.layer;
+			get => _Layer;
 			set
 			{
 				if (value == null)
 				{
 					throw new ArgumentNullException(nameof(value));
 				}
-				this.layer = this.OnLayerChangedEvent(this.layer, value);
+
+				_Layer = this.OnLayerChangedEvent(_Layer, value);
 			}
 		}
 
+		private Linetype _Linetype = Linetype.ByLayer;
 		/// <summary>Gets or sets the entity <see cref="Linetype">line type</see>.</summary>
 		public Linetype Linetype
 		{
-			get => this.linetype;
+			get => _Linetype;
 			set
 			{
 				if (value == null)
 				{
 					throw new ArgumentNullException(nameof(value));
 				}
-				this.linetype = this.OnLinetypeChangedEvent(this.linetype, value);
+
+				_Linetype = this.OnLinetypeChangedEvent(_Linetype, value);
 			}
 		}
 
 		/// <summary>Gets or sets the entity <see cref="Lineweight">line weight</see>, one unit is always 1/100 mm (default = ByLayer).</summary>
-		public Lineweight Lineweight { get; set; }
+		public Lineweight Lineweight { get; set; } = Lineweight.ByLayer;
 
+		private Transparency _Transparency = Transparency.ByLayer;
 		/// <summary>Gets or sets layer <see cref="Transparency">transparency</see> (default: ByLayer).</summary>
 		public Transparency Transparency
 		{
-			get => this.transparency;
-			set
-			{
-				this.transparency = value ?? throw new ArgumentNullException(nameof(value));
-			}
+			get => _Transparency;
+			set => _Transparency = value ?? throw new ArgumentNullException(nameof(value));
 		}
 
+		private double _LinetypeScale = 1.0;
 		/// <summary>Gets or sets the entity line type scale.</summary>
 		public double LinetypeScale
 		{
-			get => this.linetypeScale;
+			get => _LinetypeScale;
 			set
 			{
 				if (value <= 0)
 				{
 					throw new ArgumentOutOfRangeException(nameof(value), value, "The line type scale must be greater than zero.");
 				}
-				this.linetypeScale = value;
+				_LinetypeScale = value;
 			}
 		}
 
 		/// <summary>Gets or set the entity visibility.</summary>
-		public bool IsVisible { get; set; }
+		public bool IsVisible { get; set; } = true;
 
+		private Vector3 _Normal = Vector3.UnitZ;
 		/// <summary>Gets or sets the entity <see cref="Vector3">normal</see>.</summary>
 		public Vector3 Normal
 		{
-			get => this.normal;
+			get => _Normal;
 			set
 			{
-				this.normal = Vector3.Normalize(value);
-				if (Vector3.IsZero(this.normal))
+				_Normal = Vector3.Normalize(value);
+				if (Vector3.IsZero(_Normal))
 				{
 					throw new ArgumentException("The normal can not be the zero vector.", nameof(value));
 				}
@@ -198,9 +181,9 @@ namespace netDxf.Entities
 
 		#region internal methods
 
-		internal void AddReactor(DxfObject o) => this.reactors.Add(o);
+		internal void AddReactor(DxfObject o) => _Reactors.Add(o);
 
-		internal bool RemoveReactor(DxfObject o) => this.reactors.Remove(o);
+		internal bool RemoveReactor(DxfObject o) => _Reactors.Remove(o);
 
 		#endregion
 

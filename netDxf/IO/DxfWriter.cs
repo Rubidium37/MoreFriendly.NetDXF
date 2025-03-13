@@ -69,10 +69,6 @@ namespace netDxf.IO
 
 		#endregion
 
-		#region constructors
-
-		#endregion
-
 		#region public methods
 
 		public void Write(Stream stream, DxfDocument document, bool binary)

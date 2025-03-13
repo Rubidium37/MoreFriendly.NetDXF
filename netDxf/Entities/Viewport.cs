@@ -63,13 +63,6 @@ namespace netDxf.Entities
 
 		#endregion
 
-		#region private fields
-
-		private short stacking;
-		private EntityObject boundary;
-
-		#endregion
-
 		#region constructors
 
 		/// <summary>Initializes a new viewport object.</summary>
@@ -78,7 +71,6 @@ namespace netDxf.Entities
 		{
 			this.Status |= ViewportStatusFlags.GridMode;
 		}
-
 		public Viewport(Vector2 bottomLeftCorner, Vector2 topRightCorner)
 			: this(2)
 		{
@@ -86,7 +78,6 @@ namespace netDxf.Entities
 			this.Width = (topRightCorner.X - bottomLeftCorner.X) * 0.5;
 			this.Height = (topRightCorner.Y - bottomLeftCorner.Y) * 0.5;
 		}
-
 		public Viewport(Vector2 center, double width, double height)
 			: this(2)
 		{
@@ -94,46 +85,21 @@ namespace netDxf.Entities
 			this.Width = width;
 			this.Height = height;
 		}
-
 		public Viewport(EntityObject clippingBoundary)
 			: this(2)
 		{
 			this.ClippingBoundary = clippingBoundary;
 		}
-
 		internal Viewport(short id)
 			: base(EntityType.Viewport, DxfObjectCode.Viewport)
 		{
 			this.Center = Vector3.Zero;
 			this.Width = 297;
 			this.Height = 210;
+
 			this.Stacking = id;
 			this.Id = id;
-			this.ViewCenter = Vector2.Zero;
-			this.SnapBase = Vector2.Zero;
-			this.SnapSpacing = new Vector2(10.0);
-			this.GridSpacing = new Vector2(10.0);
-			this.ViewDirection = Vector3.UnitZ;
-			this.ViewTarget = Vector3.Zero;
-			this.LensLength = 50.0;
-			this.FrontClipPlane = 0.0;
-			this.BackClipPlane = 0.0;
-			this.ViewHeight = 250;
-			this.SnapAngle = 0.0;
-			this.TwistAngle = 0.0;
-			this.CircleZoomPercent = 1000;
-			this.Status = ViewportStatusFlags.AdaptiveGridDisplay |
-							ViewportStatusFlags.DisplayGridBeyondDrawingLimits |
-							ViewportStatusFlags.CurrentlyAlwaysEnabled |
-							ViewportStatusFlags.UcsIconVisibility |
-							ViewportStatusFlags.GridMode;
-			this.FrozenLayers = new ObservableCollection<Layer>();
 			this.FrozenLayers.BeforeAddItem += this.FrozenLayers_BeforeAddItem;
-			this.UcsOrigin = Vector3.Zero;
-			this.UcsXAxis = Vector3.UnitX;
-			this.UcsYAxis = Vector3.UnitY;
-			this.Elevation = 0.0;
-			this.boundary = null;
 		}
 
 		#endregion
@@ -149,6 +115,7 @@ namespace netDxf.Entities
 		/// <summary>Gets or sets the height in paper space units.</summary>
 		public double Height { get; set; }
 
+		private short _Stacking;
 		/// <summary>
 		/// Viewport status field:<br />
 		/// -1 = On, but is fully off screen, or is one of the viewports that is not active because the $MAXACTVP count is currently being exceeded.<br />
@@ -158,14 +125,14 @@ namespace netDxf.Entities
 		/// </summary>
 		public short Stacking
 		{
-			get => this.stacking;
+			get => _Stacking;
 			set
 			{
 				if (value < -1)
 				{
 					throw new ArgumentOutOfRangeException(nameof(value), "The stacking value must be greater than -1.");
 				}
-				this.stacking = value;
+				_Stacking = value;
 			}
 		}
 
@@ -173,66 +140,72 @@ namespace netDxf.Entities
 		internal short Id { get; set; }
 
 		/// <summary>Gets or sets the view center point (in DCS).</summary>
-		public Vector2 ViewCenter { get; set; }
+		public Vector2 ViewCenter { get; set; } = Vector2.Zero;
 
 		/// <summary>Gets or sets the snap base point.</summary>
-		public Vector2 SnapBase { get; set; }
+		public Vector2 SnapBase { get; set; } = Vector2.Zero;
 
 		/// <summary>Gets or sets the snap spacing.</summary>
-		public Vector2 SnapSpacing { get; set; }
+		public Vector2 SnapSpacing { get; set; } = new Vector2(10.0);
 
 		/// <summary>Gets or sets the grid spacing.</summary>
-		public Vector2 GridSpacing { get; set; }
+		public Vector2 GridSpacing { get; set; } = new Vector2(10.0);
 
 		/// <summary>Gets or sets the view direction vector (in WCS).</summary>
-		public Vector3 ViewDirection { get; set; }
+		public Vector3 ViewDirection { get; set; } = Vector3.UnitZ;
 
 		/// <summary>Gets or sets the view target point (in WCS).</summary>
-		public Vector3 ViewTarget { get; set; }
+		public Vector3 ViewTarget { get; set; } = Vector3.Zero;
 
 		/// <summary>Gets or sets the perspective lens length.</summary>
-		public double LensLength { get; set; }
+		public double LensLength { get; set; } = 50.0;
 
 		/// <summary>Gets or sets the front clip plane Z value.</summary>
-		public double FrontClipPlane { get; set; }
+		public double FrontClipPlane { get; set; } = 0.0;
 
 		/// <summary>Gets or sets the back clip plane Z value.</summary>
-		public double BackClipPlane { get; set; }
+		public double BackClipPlane { get; set; } = 0.0;
 
 		/// <summary>Gets or sets the view height (in model space units).</summary>
-		public double ViewHeight { get; set; }
+		public double ViewHeight { get; set; } = 250;
 
 		/// <summary>Gets or sets the snap angle.</summary>
-		public double SnapAngle { get; set; }
+		public double SnapAngle { get; set; } = 0.0;
 
 		/// <summary>Gets or sets the view twist angle.</summary>
-		public double TwistAngle { get; set; }
+		public double TwistAngle { get; set; } = 0.0;
 
 		/// <summary>Gets or sets the circle zoom percent.</summary>
-		public short CircleZoomPercent { get; set; }
+		public short CircleZoomPercent { get; set; } = 1000;
 
 		/// <summary>Gets the list of layers that are frozen in this viewport.</summary>
 		/// <remarks>
 		/// The FrozenLayers list cannot contain <see langword="null"/> items and layers that belong to different documents.
 		/// Even if duplicate items should not cause any problems, it is not allowed to have two layers with the same name in the list.
 		/// </remarks>
-		public ObservableCollection<Layer> FrozenLayers { get; }
+		public ObservableCollection<Layer> FrozenLayers { get; } = new ObservableCollection<Layer>();
 
 		/// <summary>Gets or sets the <see cref="ViewportStatusFlags">viewport status flags</see>:</summary>
 		public ViewportStatusFlags Status { get; set; }
+			= ViewportStatusFlags.AdaptiveGridDisplay
+			| ViewportStatusFlags.DisplayGridBeyondDrawingLimits
+			| ViewportStatusFlags.CurrentlyAlwaysEnabled
+			| ViewportStatusFlags.UcsIconVisibility
+			| ViewportStatusFlags.GridMode;
 
 		/// <summary>Gets or sets the <b>UCS</b> origin.</summary>
-		public Vector3 UcsOrigin { get; set; }
+		public Vector3 UcsOrigin { get; set; } = Vector3.Zero;
 
 		/// <summary>Gets or sets the <b>UCS</b> X axis.</summary>
-		public Vector3 UcsXAxis { get; set; }
+		public Vector3 UcsXAxis { get; set; } = Vector3.UnitX;
 
 		/// <summary>Gets or sets the <b>UCS</b> Y axis.</summary>
-		public Vector3 UcsYAxis { get; set; }
+		public Vector3 UcsYAxis { get; set; } = Vector3.UnitY;
 
 		/// <summary>Gets or sets the elevation.</summary>
-		public double Elevation { get; set; }
+		public double Elevation { get; set; } = 0.0;
 
+		private EntityObject _Boundary;
 		/// <summary>Entity that serves as the viewport clipping boundary (only present if viewport is non-rectangular).</summary>
 		/// <remarks>
 		/// <b>AutoCAD</b> does not allow the creation of viewports from open shapes such as LwPolylines, Polylines, or ellipse arcs;
@@ -244,7 +217,7 @@ namespace netDxf.Entities
 		/// </remarks>
 		public EntityObject ClippingBoundary
 		{
-			get => this.boundary;
+			get => _Boundary;
 			set
 			{
 				if (value != null)
@@ -297,14 +270,14 @@ namespace netDxf.Entities
 				}
 
 				// nothing else to do if it is the same
-				if (ReferenceEquals(this.boundary, value))
+				if (ReferenceEquals(_Boundary, value))
 					return;
 
 				// remove the previous clipping boundary
-				if (this.boundary != null)
+				if (_Boundary != null)
 				{
-					this.boundary.RemoveReactor(this);
-					this.OnClippingBoundaryRemovedEvent(this.boundary);
+					_Boundary.RemoveReactor(this);
+					this.OnClippingBoundaryRemovedEvent(_Boundary);
 				}
 
 				// add the new clipping boundary
@@ -314,7 +287,7 @@ namespace netDxf.Entities
 					this.OnClippingBoundaryAddedEvent(value);
 				}
 
-				this.boundary = value;
+				_Boundary = value;
 			}
 		}
 
@@ -371,7 +344,7 @@ namespace netDxf.Entities
 				Normal = this.Normal,
 				IsVisible = this.IsVisible,
 				//viewport properties
-				ClippingBoundary = (EntityObject)this.boundary?.Clone(),
+				ClippingBoundary = (EntityObject)_Boundary?.Clone(),
 				Center = this.Center,
 				Width = this.Width,
 				Height = this.Height,
