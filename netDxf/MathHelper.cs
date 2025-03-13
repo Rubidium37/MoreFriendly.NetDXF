@@ -537,7 +537,7 @@ namespace netDxf
 		/// <param name="endPoint">Arc end point.</param>
 		/// <param name="bulge">Arc bulge value.</param>
 		/// <returns>A Tuple(center, radius, startAngle in degrees, endAngle in degrees) with the arc data.</returns>
-		public static Tuple<Vector2, double, double, double> ArcFromBulge(Vector2 startPoint, Vector2 endPoint, double bulge)
+		public static (Vector2 Center, double Radius, double StartAngle, double EndAngle) ArcFromBulge(Vector2 startPoint, Vector2 endPoint, double bulge)
 		{
 			if (IsZero(bulge))
 			{
@@ -563,7 +563,7 @@ namespace netDxf
 				startAngle = NormalizeAngle(endAngle - theta * RadToDeg);
 			}
 
-			return new Tuple<Vector2, double, double, double>(center, radius, startAngle, endAngle);
+			return new(center, radius, startAngle, endAngle);
 		}
 
 		/// <summary>Obtains the start point, end point, and bulge value from an arc.</summary>
@@ -572,7 +572,7 @@ namespace netDxf
 		/// <param name="startAngle">Arc start angle in degrees.</param>
 		/// <param name="endAngle">Arc end angle in degrees.</param>
 		/// <returns>A Tuple(start point, end point, bulge value) for the specified arc data.</returns>
-		public static Tuple<Vector2, Vector2, double> ArcToBulge(Vector2 center, double radius, double startAngle, double endAngle)
+		public static (Vector2 StartPoint, Vector2 EndPoint, double Bulge) ArcToBulge(Vector2 center, double radius, double startAngle, double endAngle)
 		{
 			if (radius <= 0.0)
 			{
@@ -584,7 +584,7 @@ namespace netDxf
 			Vector2 startPoint = Vector2.Polar(center, radius, startAngle * DegToRad);
 			Vector2 endPoint = Vector2.Polar(center, radius, endAngle * DegToRad);
 
-			return new Tuple<Vector2, Vector2, double>(startPoint, endPoint, bulge);
+			return new(startPoint, endPoint, bulge);
 		}
 
 		#endregion

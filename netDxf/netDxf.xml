@@ -9507,6 +9507,47 @@
             </para>
             </remarks>
         </member>
+        <member name="M:netDxf.Objects.ImageDefinition.#ctor(System.String)">
+            <summary>Initializes a new instance of the class. Only available for Net Framework 4.5 builds.</summary>
+            <param name="file">Image file name with full or relative path.</param>
+            <remarks>
+            <para>
+            The name of the file without extension will be used as the name of the image definition.
+            </para>
+            <para>
+            Supported image formats: <b>BMP</b>, <b>JPG</b>, <b>PNG</b>, <b>TIFF</b>.<br />
+            Even thought <b>AutoCAD</b> supports more image formats, this constructor is restricted to the ones the net framework supports in common with AutoCAD.
+            Use the generic constructor instead.
+            </para>
+            <para>
+            Note (this is from the <b>AutoCAD</b> docs): <b>AutoCAD 2000</b>, <b>AutoCAD LT 2000</b>, and later releases do not support LZW-compressed <b>TIFF</b> files,
+            with the exception of English language versions sold in the <b>US</b> and Canada.<br />
+            If you have <b>TIFF</b> files that were created using <b>LZW</b> compression and want to insert them into a drawing
+            you must save the <b>TIFF</b> files with <b>LZW</b> compression disabled.
+            </para>
+            </remarks>
+        </member>
+        <member name="M:netDxf.Objects.ImageDefinition.#ctor(System.String,System.String)">
+            <summary>Initializes a new instance of the class. Only available for Net Framework 4.5 builds.</summary>
+            <param name="name">Image definition name.</param>
+            <param name="file">Image file name with full or relative path.</param>
+            <remarks>
+            <para>
+            The name assigned to the image definition must be unique.
+            </para>
+            <para>
+            Supported image formats: <b>BMP</b>, <b>JPG</b>, <b>PNG</b>, <b>TIFF</b>.<br />
+            Even thought <b>AutoCAD</b> supports more image formats, this constructor is restricted to the ones the .net library supports in common with AutoCAD.
+            Use the generic constructor instead.
+            </para>
+            <para>
+            Note (this is from the <b>AutoCAD</b> docs): <b>AutoCAD 2000</b>, <b>AutoCAD LT 2000</b>, and later releases do not support LZW-compressed <b>TIFF</b> files,
+            with the exception of English language versions sold in the <b>US</b> and Canada.<br />
+            If you have <b>TIFF</b> files that were created using <b>LZW</b> compression and want to insert them into a drawing
+            you must save the <b>TIFF</b> files with <b>LZW</b> compression disabled.
+            </para>
+            </remarks>
+        </member>
         <member name="P:netDxf.Objects.ImageDefinition.File">
             <summary>Gets or sets the image file.</summary>
             <remarks>
@@ -12089,6 +12130,12 @@
         <member name="P:netDxf.Tables.TextStyle.Owner">
             <summary>Gets the owner of the actual text style.</summary>
         </member>
+        <member name="M:netDxf.Tables.TextStyle.TrueTypeFontFamilyName(System.String)">
+            <summary>Find the font family name of an specified <b>TTF</b> font file. Only available for Net Framework 4.5 builds.</summary>
+            <param name="ttfFont">TTF font file.</param>
+            <returns>The font family name of the specified <b>TTF</b> font file.</returns>
+            <remarks>This method will return an empty string if the specified font is not found in its path or the system font folder or if it is not a valid <b>TTF</b> font.</remarks>
+        </member>
         <member name="M:netDxf.Tables.TextStyle.HasReferences">
             <inheritdoc/>
         </member>
@@ -13712,6 +13759,12 @@
         </member>
         <member name="M:netDxf.XDataRecord.ToString">
             <inheritdoc/>
+        </member>
+        <member name="T:System.Runtime.CompilerServices.IsExternalInit">
+            <summary>
+            Reserved to be used by the compiler for tracking metadata.
+            This class should not be used by developers in source code.
+            </summary>
         </member>
     </members>
 </doc>

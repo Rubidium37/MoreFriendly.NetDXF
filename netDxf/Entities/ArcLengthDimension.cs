@@ -105,11 +105,11 @@ namespace netDxf.Entities
 			// for some reason it is considered its own entity. Its code 0 is "ARC_DIMENSION" instead of "DIMENSION" as it is in the rest of dimension entities.
 			this.CodeName = DxfObjectCode.ArcDimension;
 
-			Tuple<Vector2, double, double, double> arcData = MathHelper.ArcFromBulge(startPoint, endPoint, bulge);
-			this.CenterPoint = arcData.Item1;
-			_Radius = arcData.Item2;
-			_StartAngle = arcData.Item3;
-			_EndAngle = arcData.Item4;
+			var (center, radius, startAngle, endAngle) = MathHelper.ArcFromBulge(startPoint, endPoint, bulge);
+			this.CenterPoint = center;
+			_Radius = radius;
+			_StartAngle = startAngle;
+			_EndAngle = endAngle;
 			this.Offset = offset;
 			this.Style = style ?? throw new ArgumentNullException(nameof(style));
 			this.Update();

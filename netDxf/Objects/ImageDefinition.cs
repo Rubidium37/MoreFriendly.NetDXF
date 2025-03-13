@@ -127,7 +127,7 @@ namespace netDxf.Objects
 			_ResolutionUnits = units;
 		}
 
-#if NET4X
+#if NETFRAMEWORK
 
 		/// <summary>Initializes a new instance of the class. Only available for Net Framework 4.5 builds.</summary>
 		/// <param name="file">Image file name with full or relative path.</param>

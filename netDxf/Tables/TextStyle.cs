@@ -289,7 +289,7 @@ namespace netDxf.Tables
 
 		#region public methods
 
-#if NET4X
+#if NETFRAMEWORK
 
 		/// <summary>Find the font family name of an specified <b>TTF</b> font file. Only available for Net Framework 4.5 builds.</summary>
 		/// <param name="ttfFont">TTF font file.</param>

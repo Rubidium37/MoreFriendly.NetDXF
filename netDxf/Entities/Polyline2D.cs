@@ -277,11 +277,7 @@ namespace netDxf.Entities
 					else
 					{
 						// the polyline edge is an arc
-						Tuple<Vector2, double, double, double> arcData = MathHelper.ArcFromBulge(p1, p2, bulge);
-						Vector2 center = arcData.Item1;
-						double radius = arcData.Item2;
-						double startAngle = arcData.Item3;
-						double endAngle = arcData.Item4;
+						var (center, radius, startAngle, endAngle) = MathHelper.ArcFromBulge(p1, p2, bulge);
 
 						// avoid arcs with very small radius, draw a line instead
 						if (MathHelper.IsZero(radius))
@@ -467,11 +463,7 @@ namespace netDxf.Entities
 						else
 						{
 							double dist = 0.5 * Vector2.Distance(p1, p2);
-							Tuple<Vector2, double, double, double> arcData = MathHelper.ArcFromBulge(p1, p2, bulge);
-							Vector2 center = arcData.Item1;
-							double radius = arcData.Item2;
-							double startAngle = arcData.Item3;
-							double endAngle = arcData.Item4;
+							var (center, radius, startAngle, endAngle) = MathHelper.ArcFromBulge(p1, p2, bulge);
 
 							if (dist >= bulgeThreshold || !MathHelper.IsZero(radius))
 							{

@@ -73,15 +73,15 @@ namespace netDxf.Entities
 		public Arc(Vector2 startPoint, Vector2 endPoint, double bulge)
 			: base(EntityType.Arc, DxfObjectCode.Arc)
 		{
-			Tuple<Vector2, double, double, double> data = MathHelper.ArcFromBulge(startPoint, endPoint, bulge);
-			if (data.Item2 <= 0)
+			var (center, radius, startAngle, endAngle) = MathHelper.ArcFromBulge(startPoint, endPoint, bulge);
+			if (radius <= 0)
 			{
 				throw new ApplicationException("The arc radius must be greater than zero.");
 			}
-			this.Center = new Vector3(data.Item1.X, data.Item1.Y, 0.0);
-			_Radius = data.Item2;
-			_StartAngle = data.Item3;
-			_EndAngle = data.Item4; 
+			this.Center = new Vector3(center.X, center.Y, 0.0);
+			_Radius = radius;
+			_StartAngle = startAngle;
+			_EndAngle = endAngle; 
 		}
 
 		#endregion
