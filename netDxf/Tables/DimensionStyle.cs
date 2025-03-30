@@ -25,6 +25,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using netDxf.Blocks;
 using netDxf.Collections;
 using netDxf.Units;
@@ -37,46 +38,55 @@ namespace netDxf.Tables
 	{
 		#region delegates and events
 
-		public delegate void LinetypeChangedEventHandler(TableObject sender, TableObjectChangedEventArgs<Linetype> e);
-		public event LinetypeChangedEventHandler LinetypeChanged;
-		protected virtual Linetype OnLinetypeChangedEvent(Linetype oldLinetype, Linetype newLinetype)
+		/// <summary>Generated when a property of <see cref="Linetype"/> type changes.</summary>
+		public event BeforeValueChangeEventHandler<Linetype> BeforeChangingLinetypeValue;
+		/// <summary>Generates the <see cref="BeforeChangingLinetypeValue"/> event.</summary>
+		/// <param name="oldValue">The old value, being changed.</param>
+		/// <param name="newValue">The new value, that will replace the old one.</param>
+		/// <param name="propertyName">(automatic) Name of the affected property.</param>
+		protected virtual Linetype OnBeforeChangingLinetypeValue(Linetype oldValue, Linetype newValue, [CallerMemberName] string propertyName = "")
 		{
-			LinetypeChangedEventHandler ae = this.LinetypeChanged;
-			if (ae != null)
+			if (this.BeforeChangingLinetypeValue is { } handler)
 			{
-				TableObjectChangedEventArgs<Linetype> eventArgs = new TableObjectChangedEventArgs<Linetype>(oldLinetype, newLinetype);
-				ae(this, eventArgs);
-				return eventArgs.NewValue;
+				var e = new BeforeValueChangeEventArgs<Linetype>(propertyName, oldValue, newValue);
+				handler(this, e);
+				return e.NewValue;
 			}
-			return newLinetype;
+			return newValue;
 		}
 
-		public delegate void TextStyleChangedEventHandler(TableObject sender, TableObjectChangedEventArgs<TextStyle> e);
-		public event TextStyleChangedEventHandler TextStyleChanged;
-		protected virtual TextStyle OnTextStyleChangedEvent(TextStyle oldTextStyle, TextStyle newTextStyle)
+		/// <summary>Generated when a property of <see cref="TextStyle"/> type changes.</summary>
+		public event BeforeValueChangeEventHandler<TextStyle> BeforeChangingTextStyleValue;
+		/// <summary>Generates the <see cref="BeforeChangingTextStyleValue"/> event.</summary>
+		/// <param name="oldValue">The old value, being changed.</param>
+		/// <param name="newValue">The new value, that will replace the old one.</param>
+		/// <param name="propertyName">(automatic) Name of the affected property.</param>
+		protected virtual TextStyle OnBeforeChangingBeforeValueTextStyle(TextStyle oldValue, TextStyle newValue, [CallerMemberName] string propertyName = "")
 		{
-			TextStyleChangedEventHandler ae = this.TextStyleChanged;
-			if (ae != null)
+			if (this.BeforeChangingTextStyleValue is { } handler)
 			{
-				TableObjectChangedEventArgs<TextStyle> eventArgs = new TableObjectChangedEventArgs<TextStyle>(oldTextStyle, newTextStyle);
-				ae(this, eventArgs);
-				return eventArgs.NewValue;
+				var e = new BeforeValueChangeEventArgs<TextStyle>(propertyName, oldValue, newValue);
+				handler(this, e);
+				return e.NewValue;
 			}
-			return newTextStyle;
+			return newValue;
 		}
 
-		public delegate void BlockChangedEventHandler(TableObject sender, TableObjectChangedEventArgs<Block> e);
-		public event BlockChangedEventHandler BlockChanged;
-		protected virtual Block OnBlockChangedEvent(Block oldBlock, Block newBlock)
+		/// <summary>Generated when a property of <see cref="Block"/> type changes.</summary>
+		public event BeforeValueChangeEventHandler<Block> BeforeChangingBlockValue;
+		/// <summary>Generates the <see cref="BeforeChangingBlockValue"/> event.</summary>
+		/// <param name="oldValue">The old value, being changed.</param>
+		/// <param name="newValue">The new value, that will replace the old one.</param>
+		/// <param name="propertyName">(automatic) Name of the affected property.</param>
+		protected virtual Block OnBeforeChangingBlockValue(Block oldValue, Block newValue, [CallerMemberName] string propertyName = "")
 		{
-			BlockChangedEventHandler ae = this.BlockChanged;
-			if (ae != null)
+			if (this.BeforeChangingBlockValue is { } handler)
 			{
-				TableObjectChangedEventArgs<Block> eventArgs = new TableObjectChangedEventArgs<Block>(oldBlock, newBlock);
-				ae(this, eventArgs);
-				return eventArgs.NewValue;
+				var e = new BeforeValueChangeEventArgs<Block>(propertyName, oldValue, newValue);
+				handler(this, e);
+				return e.NewValue;
 			}
-			return newBlock;
+			return newValue;
 		}
 
 		#endregion
@@ -181,7 +191,7 @@ namespace netDxf.Tables
 					throw new ArgumentNullException(nameof(value));
 				}
 
-				_DimLineLinetype = this.OnLinetypeChangedEvent(_DimLineLinetype, value);
+				_DimLineLinetype = this.OnBeforeChangingLinetypeValue(_DimLineLinetype, value);
 			}
 		}
 
@@ -273,7 +283,7 @@ namespace netDxf.Tables
 					throw new ArgumentNullException(nameof(value));
 				}
 
-				_ExtLine1Linetype = this.OnLinetypeChangedEvent(_ExtLine1Linetype, value);
+				_ExtLine1Linetype = this.OnBeforeChangingLinetypeValue(_ExtLine1Linetype, value);
 			}
 		}
 
@@ -292,7 +302,7 @@ namespace netDxf.Tables
 					throw new ArgumentNullException(nameof(value));
 				}
 
-				_ExtLine2Linetype = this.OnLinetypeChangedEvent(_ExtLine2Linetype, value);
+				_ExtLine2Linetype = this.OnBeforeChangingLinetypeValue(_ExtLine2Linetype, value);
 			}
 		}
 
@@ -386,7 +396,7 @@ namespace netDxf.Tables
 		public Block DimArrow1
 		{
 			get => _DimArrow1;
-			set => _DimArrow1 = value == null ? null : this.OnBlockChangedEvent(_DimArrow1, value);
+			set => _DimArrow1 = value == null ? null : this.OnBeforeChangingBlockValue(_DimArrow1, value);
 		}
 
 		private Block _DimArrow2;
@@ -397,7 +407,7 @@ namespace netDxf.Tables
 		public Block DimArrow2
 		{
 			get => _DimArrow2;
-			set => _DimArrow2 = value == null ? null : this.OnBlockChangedEvent(_DimArrow2, value);
+			set => _DimArrow2 = value == null ? null : this.OnBeforeChangingBlockValue(_DimArrow2, value);
 		}
 
 		private Block _LeaderArrow;
@@ -408,7 +418,7 @@ namespace netDxf.Tables
 		public Block LeaderArrow
 		{
 			get => _LeaderArrow;
-			set => _LeaderArrow = value == null ? null : this.OnBlockChangedEvent(_LeaderArrow, value);
+			set => _LeaderArrow = value == null ? null : this.OnBeforeChangingBlockValue(_LeaderArrow, value);
 		}
 
 		private double _ArrowSize = 0.18;
@@ -461,7 +471,7 @@ namespace netDxf.Tables
 					throw new ArgumentNullException(nameof(value));
 				}
 
-				_TextStyle = this.OnTextStyleChangedEvent(_TextStyle, value);
+				_TextStyle = this.OnBeforeChangingBeforeValueTextStyle(_TextStyle, value);
 			}
 		}
 

@@ -26,6 +26,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace netDxf.Tables
 {
@@ -39,15 +40,18 @@ namespace netDxf.Tables
 	{
 		#region delegates and events
 
-		public delegate void NameChangedEventHandler(TableObject sender, TableObjectChangedEventArgs<string> e);
-		public event NameChangedEventHandler NameChanged;
-		protected virtual void OnNameChangedEvent(string oldName, string newName)
+		/// <summary>Generated when the value of <see cref="Name"/> changes.</summary>
+		public event AfterValueChangeEventHandler<String> NameChanged;
+		/// <summary>Generates the <see cref="NameChanged"/> event.</summary>
+		/// <param name="oldValue">The old value, being changed.</param>
+		/// <param name="newValue">The new value, that will replace the old one.</param>
+		/// <param name="propertyName">(automatic) Name of the affected property.</param>
+		protected virtual void OnNameChanged(string oldValue, string newValue, [CallerMemberName] string propertyName = "")
 		{
-			NameChangedEventHandler ae = this.NameChanged;
-			if (ae != null)
+			if (this.NameChanged is { } handler)
 			{
-				TableObjectChangedEventArgs<string> eventArgs = new TableObjectChangedEventArgs<string>(oldName, newName);
-				ae(this, eventArgs);
+				var e = new AfterValueChangeEventArgs<String>(propertyName, oldValue, newValue);
+				handler(this, e);
 			}
 		}
 
@@ -160,7 +164,7 @@ namespace netDxf.Tables
 					throw new ArgumentException("The following characters \\<>/?\":;*|,=` are not supported for table object names.", nameof(newName));
 				}
 			}
-			this.OnNameChangedEvent(_Name, newName);
+			this.OnNameChanged(_Name, newName, nameof(this.Name));
 			_Name = newName;
 		}
 

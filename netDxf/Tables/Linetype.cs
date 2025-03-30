@@ -28,6 +28,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using netDxf.Collections;
@@ -40,54 +41,60 @@ namespace netDxf.Tables
 	{
 		#region delegates and events
 
-		public delegate void LinetypeSegmentAddedEventHandler(Linetype sender, LinetypeSegmentChangeEventArgs e);
-		public event LinetypeSegmentAddedEventHandler LinetypeSegmentAdded;
-		protected virtual void OnLinetypeSegmentAddedEvent(LinetypeSegment item)
+		/// <summary>Generated when an <see cref="LinetypeSegment"/> item has been added.</summary>
+		public event AfterItemChangeEventHandler<LinetypeSegment> AfterAddingLinetypeSegment;
+		/// <summary>Generates the <see cref="AfterAddingLinetypeSegment"/> event.</summary>
+		/// <param name="item">The item being added.</param>
+		/// <param name="propertyName">(automatic) Name of the affected collection property.</param>
+		protected virtual void OnAfterAddingLinetypeSegment(LinetypeSegment item, [CallerMemberName] string propertyName = "")
 		{
-			LinetypeSegmentAddedEventHandler ae = this.LinetypeSegmentAdded;
-			if (ae != null)
-			{
-				ae(this, new LinetypeSegmentChangeEventArgs(item));
-			}
+			if (this.AfterAddingLinetypeSegment is { } handler)
+				handler(this, new(propertyName, ItemChangeAction.Add, item));
 		}
 
-		public delegate void LinetypeSegmentRemovedEventHandler(Linetype sender, LinetypeSegmentChangeEventArgs e);
-		public event LinetypeSegmentRemovedEventHandler LinetypeSegmentRemoved;
-		protected virtual void OnLinetypeSegmentRemovedEvent(LinetypeSegment item)
+		/// <summary>Generated when an <see cref="LinetypeSegment"/> item has been removed.</summary>
+		public event AfterItemChangeEventHandler<LinetypeSegment> AfterRemovingLinetypeSegment;
+		/// <summary>Generates the <see cref="AfterRemovingLinetypeSegment"/> event.</summary>
+		/// <param name="item">The item being removed.</param>
+		/// <param name="propertyName">(automatic) Name of the affected collection property.</param>
+		protected virtual void OnAfterRemovingLinetypeSegment(LinetypeSegment item, [CallerMemberName] string propertyName = "")
 		{
-			LinetypeSegmentRemovedEventHandler ae = this.LinetypeSegmentRemoved;
-			if (ae != null)
-			{
-				ae(this, new LinetypeSegmentChangeEventArgs(item));
-			}
+			if (this.AfterRemovingLinetypeSegment is { } handler)
+				handler(this, new(propertyName, ItemChangeAction.Remove, item));
 		}
 
-		public delegate void LinetypeTextSegmentStyleChangedEventHandler(Linetype sender, TableObjectChangedEventArgs<TextStyle> e);
-		public event LinetypeTextSegmentStyleChangedEventHandler LinetypeTextSegmentStyleChanged;
-		protected virtual TextStyle OnLinetypeTextSegmentStyleChangedEvent(TextStyle oldTextStyle, TextStyle newTextStyle)
+		/// <summary>Generated when a property of <see cref="TextStyle"/> type changes.</summary>
+		public event BeforeValueChangeEventHandler<TextStyle> BeforeChangingTextStyleValue;
+		/// <summary>Generates the <see cref="BeforeChangingTextStyleValue"/> event.</summary>
+		/// <param name="oldValue">The old value, being changed.</param>
+		/// <param name="newValue">The new value, that will replace the old one.</param>
+		/// <param name="propertyName">(automatic) Name of the affected property.</param>
+		protected virtual TextStyle OnBeforeChangingBeforeValueTextStyle(TextStyle oldValue, TextStyle newValue, [CallerMemberName] string propertyName = "")
 		{
-			LinetypeTextSegmentStyleChangedEventHandler ae = this.LinetypeTextSegmentStyleChanged;
-			if (ae != null)
+			if (this.BeforeChangingTextStyleValue is { } handler)
 			{
-				TableObjectChangedEventArgs<TextStyle> eventArgs = new TableObjectChangedEventArgs<TextStyle>(oldTextStyle, newTextStyle);
-				ae(this, eventArgs);
-				return eventArgs.NewValue;
+				var e = new BeforeValueChangeEventArgs<TextStyle>(propertyName, oldValue, newValue);
+				handler(this, e);
+				return e.NewValue;
 			}
-			return newTextStyle;
+			return newValue;
 		}
 
-		public delegate void LinetypeShapeSegmentStyleChangedEventHandler(Linetype sender, TableObjectChangedEventArgs<ShapeStyle> e);
-		public event LinetypeShapeSegmentStyleChangedEventHandler LinetypeShapeSegmentStyleChanged;
-		protected virtual ShapeStyle OnLinetypeShapeSegmentStyleChangedEvent(ShapeStyle oldShapeStyle, ShapeStyle newShapeStyle)
+		/// <summary>Generated when a property of <see cref="ShapeStyle"/> type changes.</summary>
+		public event BeforeValueChangeEventHandler<ShapeStyle> BeforeChangingShapeStyleValue;
+		/// <summary>Generates the <see cref="BeforeChangingShapeStyleValue"/> event.</summary>
+		/// <param name="oldValue">The old value, being changed.</param>
+		/// <param name="newValue">The new value, that will replace the old one.</param>
+		/// <param name="propertyName">(automatic) Name of the affected property.</param>
+		protected virtual ShapeStyle OnBeforeChangingBeforeValueShapeStyle(ShapeStyle oldValue, ShapeStyle newValue, [CallerMemberName] string propertyName = "")
 		{
-			LinetypeShapeSegmentStyleChangedEventHandler ae = this.LinetypeShapeSegmentStyleChanged;
-			if (ae != null)
+			if (this.BeforeChangingShapeStyleValue is { } handler)
 			{
-				TableObjectChangedEventArgs<ShapeStyle> eventArgs = new TableObjectChangedEventArgs<ShapeStyle>(oldShapeStyle, newShapeStyle);
-				ae(this, eventArgs);
-				return eventArgs.NewValue;
+				var e = new BeforeValueChangeEventArgs<ShapeStyle>(propertyName, oldValue, newValue);
+				handler(this, e);
+				return e.NewValue;
 			}
-			return newShapeStyle;
+			return newValue;
 		}
 
 		#endregion
@@ -221,10 +228,10 @@ namespace netDxf.Tables
 								name.Equals(DefaultName, StringComparison.OrdinalIgnoreCase);
 			_Description = string.IsNullOrEmpty(description) ? string.Empty : description;
 
-			this.Segments.BeforeAddItem += this.Segments_BeforeAddItem;
-			this.Segments.AddItem += this.Segments_AddItem;
-			this.Segments.BeforeRemoveItem += this.Segments_BeforeRemoveItem;
-			this.Segments.RemoveItem += this.Segments_RemoveItem;
+			this.Segments.BeforeAddingItem += this.Segments_BeforeAddingItem;
+			this.Segments.AfterAddingItem += this.Segments_AfterAddingItem;
+			this.Segments.BeforeRemovingItem += this.Segments_BeforeRemovingItem;
+			this.Segments.AfterRemovingItem += this.Segments_AfterRemovingItem;
 			if (segments != null)
 			{
 				this.Segments.AddRange(segments);
@@ -655,41 +662,41 @@ namespace netDxf.Tables
 
 		#region Elements collection events
 
-		private void Segments_BeforeAddItem(ObservableCollection<LinetypeSegment> sender, ObservableCollectionEventArgs<LinetypeSegment> e)
+		private void Segments_BeforeAddingItem(object sender, BeforeItemChangeEventArgs<LinetypeSegment> e)
 		{
 			// null items are not allowed
 			e.Cancel = e.Item == null;
 		}
 
-		private void Segments_AddItem(ObservableCollection<LinetypeSegment> sender, ObservableCollectionEventArgs<LinetypeSegment> e)
+		private void Segments_AfterAddingItem(object sender, AfterItemChangeEventArgs<LinetypeSegment> e)
 		{
-			this.OnLinetypeSegmentAddedEvent(e.Item);
+			this.OnAfterAddingLinetypeSegment(e.Item, $"{nameof(this.Segments)}.{e.PropertyName}");
 
 			if (e.Item.Type == LinetypeSegmentType.Text)
 			{
-				((LinetypeTextSegment)e.Item).TextStyleChanged += this.LinetypeTextSegment_StyleChanged;
+				((LinetypeTextSegment)e.Item).BeforeChangingTextStyleValue += this.Segments_Item_BeforeChangingTextStyleValue;
 			}
 			if (e.Item.Type == LinetypeSegmentType.Shape)
 			{
-				((LinetypeShapeSegment)e.Item).ShapeStyleChanged += this.LinetypeShapeSegment_StyleChanged;
+				((LinetypeShapeSegment)e.Item).BeforeChangingShapeStyleValue += this.Segments_Item_BeforeChangingShapeStyleValue;
 			}
 		}
 
-		private void Segments_BeforeRemoveItem(ObservableCollection<LinetypeSegment> sender, ObservableCollectionEventArgs<LinetypeSegment> e)
+		private void Segments_BeforeRemovingItem(object sender, BeforeItemChangeEventArgs<LinetypeSegment> e)
 		{
 		}
 
-		private void Segments_RemoveItem(ObservableCollection<LinetypeSegment> sender, ObservableCollectionEventArgs<LinetypeSegment> e)
+		private void Segments_AfterRemovingItem(object sender, AfterItemChangeEventArgs<LinetypeSegment> e)
 		{
-			this.OnLinetypeSegmentRemovedEvent(e.Item);
+			this.OnAfterRemovingLinetypeSegment(e.Item, $"{nameof(this.Segments)}.{e.PropertyName}");
 
 			if (e.Item.Type == LinetypeSegmentType.Text)
 			{
-				((LinetypeTextSegment)e.Item).TextStyleChanged -= this.LinetypeTextSegment_StyleChanged;
+				((LinetypeTextSegment)e.Item).BeforeChangingTextStyleValue -= this.Segments_Item_BeforeChangingTextStyleValue;
 			}
 			if (e.Item.Type == LinetypeSegmentType.Shape)
 			{
-				((LinetypeShapeSegment)e.Item).ShapeStyleChanged -= this.LinetypeShapeSegment_StyleChanged;
+				((LinetypeShapeSegment)e.Item).BeforeChangingShapeStyleValue -= this.Segments_Item_BeforeChangingShapeStyleValue;
 			}
 		}
 
@@ -697,11 +704,11 @@ namespace netDxf.Tables
 
 		#region LinetypeSegment events
 
-		private void LinetypeTextSegment_StyleChanged(LinetypeTextSegment sender, TableObjectChangedEventArgs<TextStyle> e)
-			=> e.NewValue = this.OnLinetypeTextSegmentStyleChangedEvent(e.OldValue, e.NewValue);
+		private void Segments_Item_BeforeChangingTextStyleValue(object sender, BeforeValueChangeEventArgs<TextStyle> e)
+			=> e.NewValue = this.OnBeforeChangingBeforeValueTextStyle(e.OldValue, e.NewValue, $"{nameof(this.Segments)}.{e.PropertyName}");
 
-		private void LinetypeShapeSegment_StyleChanged(LinetypeShapeSegment sender, TableObjectChangedEventArgs<ShapeStyle> e)
-			=> e.NewValue = this.OnLinetypeShapeSegmentStyleChangedEvent(e.OldValue, e.NewValue);
+		private void Segments_Item_BeforeChangingShapeStyleValue(object sender, BeforeValueChangeEventArgs<ShapeStyle> e)
+			=> e.NewValue = this.OnBeforeChangingBeforeValueShapeStyle(e.OldValue, e.NewValue, $"{nameof(this.Segments)}.{e.PropertyName}");
 
 		#endregion
 	}

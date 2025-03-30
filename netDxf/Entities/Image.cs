@@ -25,6 +25,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using netDxf.Objects;
 using netDxf.Tables;
 
@@ -36,18 +37,21 @@ namespace netDxf.Entities
 	{
 		#region delegates and events
 
-		public delegate void ImageDefinitionChangedEventHandler(Image sender, TableObjectChangedEventArgs<ImageDefinition> e);
-		public event ImageDefinitionChangedEventHandler ImageDefinitionChanged;
-		protected virtual ImageDefinition OnImageDefinitionChangedEvent(ImageDefinition oldImageDefinition, ImageDefinition newImageDefinition)
+		/// <summary>Generated when a property of <see cref="ImageDefinition"/> type changes.</summary>
+		public event BeforeValueChangeEventHandler<ImageDefinition> BeforeChangingImageDefinitionValue;
+		/// <summary>Generates the <see cref="BeforeChangingImageDefinitionValue"/> event.</summary>
+		/// <param name="oldValue">The old value, being changed.</param>
+		/// <param name="newValue">The new value, that will replace the old one.</param>
+		/// <param name="propertyName">(automatic) Name of the affected property.</param>
+		protected virtual ImageDefinition OnBeforeChangingImageDefinitionValue(ImageDefinition oldValue, ImageDefinition newValue, [CallerMemberName] string propertyName = "")
 		{
-			ImageDefinitionChangedEventHandler ae = this.ImageDefinitionChanged;
-			if (ae != null)
+			if (this.BeforeChangingImageDefinitionValue is { } handler)
 			{
-				TableObjectChangedEventArgs<ImageDefinition> eventArgs = new TableObjectChangedEventArgs<ImageDefinition>(oldImageDefinition, newImageDefinition);
-				ae(this, eventArgs);
-				return eventArgs.NewValue;
+				var e = new BeforeValueChangeEventArgs<ImageDefinition>(propertyName, oldValue, newValue);
+				handler(this, e);
+				return e.NewValue;
 			}
-			return newImageDefinition;
+			return newValue;
 		}
 
 		#endregion
@@ -212,7 +216,7 @@ namespace netDxf.Entities
 					throw new ArgumentNullException(nameof(value));
 				}
 
-				_Definition = this.OnImageDefinitionChangedEvent(_Definition, value);
+				_Definition = this.OnBeforeChangingImageDefinitionValue(_Definition, value);
 			}
 		}
 

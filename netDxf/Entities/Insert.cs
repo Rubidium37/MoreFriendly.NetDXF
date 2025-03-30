@@ -25,6 +25,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using netDxf.Blocks;
 using netDxf.Collections;
 using netDxf.Tables;
@@ -38,40 +39,43 @@ namespace netDxf.Entities
 	{
 		#region delegates and events
 
-		//public delegate void BlockChangedEventHandler(Insert sender, TableObjectChangedEventArgs<Block> e);
-		//public event BlockChangedEventHandler BlockChanged;
-		//protected virtual Block OnBlockChangedEvent(Block oldBlock, Block newBlock)
+		///// <summary>Generated when a property of <see cref="Block"/> type changes.</summary>
+		//public event BeforeValueChangeEventHandler<Block> BeforeChangingBlockValue;
+		///// <summary>Generates the <see cref="BeforeChangingBlockValue"/> event.</summary>
+		///// <param name="oldValue">The old value, being changed.</param>
+		///// <param name="newValue">The new value, that will replace the old one.</param>
+		///// <param name="propertyName">(automatic) Name of the affected property.</param>
+		//protected virtual Block OnBeforeChangingBlockValue(Block oldValue, Block newValue, [CallerMemberName] string propertyName = "")
 		//{
-		//	BlockChangedEventHandler ae = this.BlockChanged;
-		//	if (ae != null)
+		//	if (this.BeforeChangingBlockValue is { } handler)
 		//	{
-		//		TableObjectChangedEventArgs<Block> eventArgs = new TableObjectChangedEventArgs<Block>(oldBlock, newBlock);
-		//		ae(this, eventArgs);
-		//		return eventArgs.NewValue;
+		//		var e = new BeforeValueChangeEventArgs<Block>(propertyName, oldValue, newValue);
+		//		handler(this, e);
+		//		return e.NewValue;
 		//	}
-		//	return newBlock;
+		//	return newValue;
 		//}
 
-		public delegate void AttributeAddedEventHandler(Insert sender, AttributeChangeEventArgs e);
-		public event AttributeAddedEventHandler AttributeAdded;
-		protected virtual void OnAttributeAddedEvent(Attribute item)
+		/// <summary>Generated when an <see cref="Attribute"/> item has been added.</summary>
+		public event AfterItemChangeEventHandler<Attribute> AfterAddingAttribute;
+		/// <summary>Generates the <see cref="AfterAddingAttribute"/> event.</summary>
+		/// <param name="item">The item being added.</param>
+		/// <param name="propertyName">(automatic) Name of the affected collection property.</param>
+		protected virtual void OnAfterAddingAttribute(Attribute item, [CallerMemberName] string propertyName = "")
 		{
-			AttributeAddedEventHandler ae = this.AttributeAdded;
-			if (ae != null)
-			{
-				ae(this, new AttributeChangeEventArgs(item));
-			}
+			if (this.AfterAddingAttribute is { } handler)
+				handler(this, new(propertyName, ItemChangeAction.Add, item));
 		}
 
-		public delegate void AttributeRemovedEventHandler(Insert sender, AttributeChangeEventArgs e);
-		public event AttributeRemovedEventHandler AttributeRemoved;
-		protected virtual void OnAttributeRemovedEvent(Attribute item)
+		/// <summary>Generated when an <see cref="Attribute"/> item has been removed.</summary>
+		public event AfterItemChangeEventHandler<Attribute> AfterRemovingAttribute;
+		/// <summary>Generates the <see cref="AfterRemovingAttribute"/> event.</summary>
+		/// <param name="item">The item being removed.</param>
+		/// <param name="propertyName">(automatic) Name of the affected collection property.</param>
+		protected virtual void OnAfterRemovingAttribute(Attribute item, [CallerMemberName] string propertyName = "")
 		{
-			AttributeRemovedEventHandler ae = this.AttributeRemoved;
-			if (ae != null)
-			{
-				ae(this, new AttributeChangeEventArgs(item));
-			}
+			if (this.AfterRemovingAttribute is { } handler)
+				handler(this, new(propertyName, ItemChangeAction.Remove, item));
 		}
 
 		#endregion
@@ -162,12 +166,12 @@ namespace netDxf.Entities
 				//	throw new ArgumentException("The block is for internal use only.");
 				//}
 
-				//_Block = this.OnBlockChangedEvent(_Block, value);
+				//_Block = this.OnBeforeChangingBlockValue(_Block, value);
 
 				//// remove all attributes in the actual insert
 				//foreach (Attribute att in this.Attributes)
 				//{
-				//	this.OnAttributeRemovedEvent(att);
+				//	this.OnAfterRemovingAttribute(att, nameof(this.Attributes));
 				//	att.Handle = null;
 				//	att.Owner = null;
 				//}
@@ -229,7 +233,7 @@ namespace netDxf.Entities
 				}
 				else
 				{
-					this.OnAttributeRemovedEvent(att);
+					this.OnAfterRemovingAttribute(att, nameof(this.Attributes));
 					att.Handle = null;
 					att.Owner = null;
 				}
@@ -246,7 +250,7 @@ namespace netDxf.Entities
 					};
 
 					atts.Add(att);
-					this.OnAttributeAddedEvent(att);
+					this.OnAfterAddingAttribute(att, nameof(this.Attributes));
 				}
 			}
 			this.Attributes = new AttributeCollection(atts);

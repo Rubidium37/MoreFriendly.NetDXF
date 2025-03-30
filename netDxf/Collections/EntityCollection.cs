@@ -26,6 +26,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using netDxf.Entities;
 
 namespace netDxf.Collections
@@ -38,54 +39,60 @@ namespace netDxf.Collections
 
 		#region delegates and events
 
-		public delegate void BeforeAddItemEventHandler(EntityCollection sender, EntityCollectionEventArgs e);
-		public event BeforeAddItemEventHandler BeforeAddItem;
-		protected virtual bool OnBeforeAddItemEvent(EntityObject item)
+		/// <summary>Generated when an <see cref="EntityObject"/> item is about to be added; allows to confirm or reject the operation.</summary>
+		public event BeforeItemChangeEventHandler<EntityObject> BeforeAddingItem;
+		/// <summary>Generates the <see cref="BeforeAddingItem"/> event.</summary>
+		/// <param name="item">The item being added.</param>
+		/// <param name="propertyName">(automatic) Name of the affected collection property.</param>
+		/// <returns><see langword="true"/> if the item can be added; otherwise, <see langword="false"/>.</returns>
+		protected virtual bool OnBeforeAddingItem(EntityObject item, [CallerMemberName] string propertyName = "")
 		{
-			BeforeAddItemEventHandler ae = this.BeforeAddItem;
-			if (ae != null)
+			if (this.BeforeAddingItem is { } handler)
 			{
-				EntityCollectionEventArgs e = new EntityCollectionEventArgs(item);
-				ae(this, e);
-				return e.Cancel;
+				var e = new BeforeItemChangeEventArgs<EntityObject>(propertyName, ItemChangeAction.Add, item);
+				handler(this, e);
+				return !e.Cancel;
 			}
-			return false;
+			return true;
 		}
 
-		public delegate void AddItemEventHandler(EntityCollection sender, EntityCollectionEventArgs e);
-		public event AddItemEventHandler AddItem;
-		protected virtual void OnAddItemEvent(EntityObject item)
+		/// <summary>Generated when an <see cref="EntityObject"/> item has been added.</summary>
+		public event AfterItemChangeEventHandler<EntityObject> AfterAddingItem;
+		/// <summary>Generates the <see cref="AfterAddingItem"/> event.</summary>
+		/// <param name="item">The item being added.</param>
+		/// <param name="propertyName">(automatic) Name of the affected collection property.</param>
+		protected virtual void OnAfterAddingItem(EntityObject item, [CallerMemberName] string propertyName = "")
 		{
-			AddItemEventHandler ae = this.AddItem;
-			if (ae != null)
-			{
-				ae(this, new EntityCollectionEventArgs(item));
-			}
+			if (this.AfterAddingItem is { } handler)
+				handler(this, new(propertyName, ItemChangeAction.Add, item));
 		}
 
-		public delegate void RemoveItemEventHandler(EntityCollection sender, EntityCollectionEventArgs e);
-		public event BeforeRemoveItemEventHandler BeforeRemoveItem;
-		protected virtual bool OnBeforeRemoveItemEvent(EntityObject item)
+		/// <summary>Generated when an <see cref="EntityObject"/> item is about to be removed; allows to confirm or reject the operation.</summary>
+		public event BeforeItemChangeEventHandler<EntityObject> BeforeRemovingItem;
+		/// <summary>Generates the <see cref="BeforeRemovingItem"/> event.</summary>
+		/// <param name="item">The item being removed.</param>
+		/// <param name="propertyName">(automatic) Name of the affected collection property.</param>
+		/// <returns><see langword="true"/> if the item can be removed; otherwise, <see langword="false"/>.</returns>
+		protected virtual bool OnBeforeRemovingItem(EntityObject item, [CallerMemberName] string propertyName = "")
 		{
-			BeforeRemoveItemEventHandler ae = this.BeforeRemoveItem;
-			if (ae != null)
+			if (this.BeforeRemovingItem is { } handler)
 			{
-				EntityCollectionEventArgs e = new EntityCollectionEventArgs(item);
-				ae(this, e);
-				return e.Cancel;
+				var e = new BeforeItemChangeEventArgs<EntityObject>(propertyName, ItemChangeAction.Remove, item);
+				handler(this, e);
+				return !e.Cancel;
 			}
-			return false;
+			return true;
 		}
 
-		public delegate void BeforeRemoveItemEventHandler(EntityCollection sender, EntityCollectionEventArgs e);
-		public event RemoveItemEventHandler RemoveItem;
-		protected virtual void OnRemoveItemEvent(EntityObject item)
+		/// <summary>Generated when an <see cref="EntityObject"/> item has been removed.</summary>
+		public event AfterItemChangeEventHandler<EntityObject> AfterRemovingItem;
+		/// <summary>Generates the <see cref="AfterRemovingItem"/> event.</summary>
+		/// <param name="item">The item being removed.</param>
+		/// <param name="propertyName">(automatic) Name of the affected collection property.</param>
+		protected virtual void OnAfterRemovingItem(EntityObject item, [CallerMemberName] string propertyName = "")
 		{
-			RemoveItemEventHandler ae = this.RemoveItem;
-			if (ae != null)
-			{
-				ae(this, new EntityCollectionEventArgs(item));
-			}
+			if (this.AfterRemovingItem is { } handler)
+				handler(this, new(propertyName, ItemChangeAction.Remove, item));
 		}
 
 		#endregion
@@ -125,19 +132,19 @@ namespace netDxf.Collections
 
 				EntityObject remove = this.innerArray[index];
 
-				if (this.OnBeforeRemoveItemEvent(remove))
+				if (!this.OnBeforeRemovingItem(remove))
 				{
 					return;
 				}
 
-				if (this.OnBeforeAddItemEvent(value))
+				if (!this.OnBeforeAddingItem(value))
 				{
 					return;
 				}
 
 				this.innerArray[index] = value;
-				this.OnAddItemEvent(value);
-				this.OnRemoveItemEvent(remove);
+				this.OnAfterAddingItem(value);
+				this.OnAfterRemovingItem(remove);
 			}
 		}
 
@@ -156,12 +163,12 @@ namespace netDxf.Collections
 		/// <returns><see langword="true"/> if the <see cref="EntityObject">entity</see> has been added to the collection; otherwise, <see langword="false"/>.</returns>
 		public void Add(EntityObject item)
 		{
-			if (this.OnBeforeAddItemEvent(item))
+			if (!this.OnBeforeAddingItem(item, "Item"))
 			{
 				throw new ArgumentException("The entity cannot be added to the collection.", nameof(item));
 			}
 			this.innerArray.Add(item);
-			this.OnAddItemEvent(item);
+			this.OnAfterAddingItem(item, "Item");
 		}
 
 		/// <summary>Adds an <see cref="EntityObject">entity</see> list to the end of the collection.</summary>
@@ -189,25 +196,25 @@ namespace netDxf.Collections
 				throw new ArgumentOutOfRangeException(string.Format("The parameter index {0} must be in between {1} and {2}.", index, 0, this.innerArray.Count));
 			}
 
-			if (this.OnBeforeRemoveItemEvent(this.innerArray[index]))
+			if (!this.OnBeforeRemovingItem(this.innerArray[index], "Item"))
 			{
 				return;
 			}
 
-			if (this.OnBeforeAddItemEvent(item))
+			if (!this.OnBeforeAddingItem(item, "Item"))
 			{
 				throw new ArgumentException("The entity cannot be added to the collection.", nameof(item));
 			}
 
-			this.OnRemoveItemEvent(this.innerArray[index]);
+			this.OnAfterRemovingItem(this.innerArray[index], "Item");
 			this.innerArray.Insert(index, item);
-			this.OnAddItemEvent(item);
+			this.OnAfterAddingItem(item, "Item");
 		}
 
 		/// <inheritdoc/>
 		public bool Remove(EntityObject item)
 		{
-			if (this.OnBeforeRemoveItemEvent(item))
+			if (!this.OnBeforeRemovingItem(item, "Item"))
 			{
 				return false;
 			}
@@ -215,7 +222,7 @@ namespace netDxf.Collections
 			bool ok = this.innerArray.Remove(item);
 			if (ok)
 			{
-				this.OnRemoveItemEvent(item);
+				this.OnAfterRemovingItem(item, "Item");
 			}
 
 			return ok;
@@ -246,13 +253,13 @@ namespace netDxf.Collections
 			}
 
 			EntityObject remove = this.innerArray[index];
-			if (this.OnBeforeRemoveItemEvent(remove))
+			if (!this.OnBeforeRemovingItem(remove, "Item"))
 			{
 				return;
 			}
 
 			this.innerArray.RemoveAt(index);
-			this.OnRemoveItemEvent(remove);
+			this.OnAfterRemovingItem(remove, "Item");
 		}
 
 		/// <inheritdoc/>

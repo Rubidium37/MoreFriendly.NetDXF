@@ -26,6 +26,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using netDxf.Tables;
 
 namespace netDxf.Collections
@@ -38,22 +39,26 @@ namespace netDxf.Collections
 
 		#region delegates and events
 
-		public delegate void AddAppRegEventHandler(XDataDictionary sender, ObservableCollectionEventArgs<ApplicationRegistry> e);
-		public event AddAppRegEventHandler AddAppReg;
-		private void OnAddAppRegEvent(ApplicationRegistry item)
+		/// <summary>Generated when an <see cref="ApplicationRegistry"/> item has been added.</summary>
+		public event AfterItemChangeEventHandler<ApplicationRegistry> AfterAddingApplicationRegistry;
+		/// <summary>Generates the <see cref="AfterAddingApplicationRegistry"/> event.</summary>
+		/// <param name="item">The item being added.</param>
+		/// <param name="propertyName">(automatic) Name of the affected collection property.</param>
+		private void OnAfterAddingApplicationRegistry(ApplicationRegistry item, [CallerMemberName] string propertyName = "")
 		{
-			AddAppRegEventHandler ae = this.AddAppReg;
-			if (ae != null)
-				ae(this, new ObservableCollectionEventArgs<ApplicationRegistry>(item));
+			if (this.AfterAddingApplicationRegistry is { } handler)
+				handler(this, new(propertyName, ItemChangeAction.Add, item));
 		}
 
-		public delegate void RemoveAppRegEventHandler(XDataDictionary sender, ObservableCollectionEventArgs<ApplicationRegistry> e);
-		public event RemoveAppRegEventHandler RemoveAppReg;
-		private void OnRemoveAppRegEvent(ApplicationRegistry item)
+		/// <summary>Generated when an <see cref="ApplicationRegistry"/> item has been removed.</summary>
+		public event AfterItemChangeEventHandler<ApplicationRegistry> AfterRemovingApplicationRegistry;
+		/// <summary>Generates the <see cref="AfterRemovingApplicationRegistry"/> event.</summary>
+		/// <param name="item">The item being removed.</param>
+		/// <param name="propertyName">(automatic) Name of the affected collection property.</param>
+		private void OnAfterRemovingApplicationRegistry(ApplicationRegistry item, [CallerMemberName] string propertyName = "")
 		{
-			RemoveAppRegEventHandler ae = this.RemoveAppReg;
-			if (ae != null)
-				ae(this, new ObservableCollectionEventArgs<ApplicationRegistry>(item));
+			if (this.AfterRemovingApplicationRegistry is { } handler)
+				handler(this, new(propertyName, ItemChangeAction.Remove, item));
 		}
 
 		#endregion
@@ -139,7 +144,7 @@ namespace netDxf.Collections
 			{
 				this.innerDictionary.Add(item.ApplicationRegistry.Name, item);
 				item.ApplicationRegistry.NameChanged += this.ApplicationRegistry_NameChanged;
-				this.OnAddAppRegEvent(item.ApplicationRegistry);
+				this.OnAfterAddingApplicationRegistry(item.ApplicationRegistry, "Item");
 			}
 		}
 
@@ -169,7 +174,7 @@ namespace netDxf.Collections
 			XData xdata = this.innerDictionary[appId];
 			xdata.ApplicationRegistry.NameChanged -= this.ApplicationRegistry_NameChanged;
 			this.innerDictionary.Remove(appId);
-			this.OnRemoveAppRegEvent(xdata.ApplicationRegistry);
+			this.OnAfterRemovingApplicationRegistry(xdata.ApplicationRegistry, "Item");
 			return true;
 		}
 
@@ -231,7 +236,7 @@ namespace netDxf.Collections
 
 		#region ApplicationRegistry events
 
-		private void ApplicationRegistry_NameChanged(TableObject sender, TableObjectChangedEventArgs<string> e)
+		private void ApplicationRegistry_NameChanged(object sender, AfterValueChangeEventArgs<String> e)
 		{
 			XData xdata = this.innerDictionary[e.OldValue];
 			this.innerDictionary.Remove(e.OldValue);

@@ -105,10 +105,10 @@ namespace netDxf
 			this.NumHandles = this.AssignHandle(0);
 			this.Entities = new DrawingEntities(this);
 
-			this.AddedObjects.BeforeAddItem += this.AddedObjects_BeforeAddItem;
-			this.AddedObjects.AddItem += this.AddedObjects_AddItem;
-			this.AddedObjects.BeforeRemoveItem += this.AddedObjects_BeforeRemoveItem;
-			this.AddedObjects.RemoveItem += this.AddedObjects_RemoveItem;
+			this.AddedObjects.BeforeAddingItem += this.AddedObjects_BeforeAddingItem;
+			this.AddedObjects.AfterAddingItem += this.AddedObjects_AfterAddingItem;
+			this.AddedObjects.BeforeRemovingItem += this.AddedObjects_BeforeRemovingItem;
+			this.AddedObjects.AfterRemovingItem += this.AddedObjects_AfterRemovingItem;
 			this.AddedObjects.Add(this.Handle, this);
 
 			if (createDefaultObjects)
@@ -577,27 +577,27 @@ namespace netDxf
 						dim.Block = this.Blocks.Add(dim.Block);
 						this.Blocks.References[dim.Block.Name].Add(dim);
 					}
-					dim.DimensionStyleChanged += this.Dimension_DimStyleChanged;
-					dim.DimensionBlockChanged += this.Dimension_DimBlockChanged;
-					dim.DimensionStyleOverrideAdded += this.Dimension_DimStyleOverrideAdded;
-					dim.DimensionStyleOverrideRemoved += this.Dimension_DimStyleOverrideRemoved;
+					dim.BeforeChangingDimensionStyleValue += this.Dimension_BeforeChangingDimensionStyleValue;
+					dim.BeforeChangingBlockValue += this.Dimension_BeforeChangingBlockValue;
+					dim.AfterAddingDimensionStyleOverride += this.Dimension_AfterAddingDimensionStyleOverride;
+					dim.AfterRemovingDimensionStyleOverride += this.Dimension_AfterRemovingDimensionStyleOverride;
 					break;
 				case EntityType.Leader:
 					Leader leader = (Leader)entity;
 					leader.Style = this.DimensionStyles.Add(leader.Style, assignHandle);
 					this.DimensionStyles.References[leader.Style.Name].Add(leader);
-					leader.LeaderStyleChanged += this.Leader_DimStyleChanged;
+					leader.BeforeChangingDimensionStyleValue += this.Leader_BeforeChangingDimensionStyleValue;
 					this.AddDimensionStyleOverridesReferencedDxfObjects(leader, leader.StyleOverrides, assignHandle);
-					leader.DimensionStyleOverrideAdded += this.Leader_DimStyleOverrideAdded;
-					leader.DimensionStyleOverrideRemoved += this.Leader_DimStyleOverrideRemoved;
-					leader.AnnotationAdded += this.Leader_AnnotationAdded;
-					leader.AnnotationRemoved += this.Leader_AnnotationRemoved;
+					leader.AfterAddingDimensionStyleOverride += this.Leader_AfterAddingDimensionStyleOverride;
+					leader.AfterRemovingDimensionStyleOverride += this.Leader_AfterRemovingDimensionStyleOverride;
+					leader.AfterAddingEntityObject += this.Leader_AfterAddingEntityObject;
+					leader.AfterRemovingEntityObject += this.Leader_AfterRemovingEntityObject;
 					break;
 				case EntityType.Tolerance:
 					Tolerance tol = (Tolerance)entity;
 					tol.Style = this.DimensionStyles.Add(tol.Style, assignHandle);
 					this.DimensionStyles.References[tol.Style.Name].Add(tol);
-					tol.ToleranceStyleChanged += this.Tolerance_DimStyleChanged;
+					tol.BeforeChangingDimensionStyleValue += this.Tolerance_BeforeChangingDimensionStyleValue;
 					break;
 				case EntityType.Ellipse:
 					break;
@@ -605,8 +605,8 @@ namespace netDxf
 					break;
 				case EntityType.Hatch:
 					Hatch hatch = (Hatch)entity;
-					hatch.HatchBoundaryPathAdded += this.Hatch_BoundaryPathAdded;
-					hatch.HatchBoundaryPathRemoved += this.Hatch_BoundaryPathRemoved;
+					hatch.AfterAddingHatchBoundaryPath += this.Hatch_AfterAddingHatchBoundaryPath;
+					hatch.AfterRemovingHatchBoundaryPath += this.Hatch_AfterRemovingHatchBoundaryPath;
 					break;
 				case EntityType.Insert:
 					Insert insert = (Insert)entity;
@@ -624,19 +624,19 @@ namespace netDxf
 
 						attribute.Layer = this.Layers.Add(attribute.Layer, assignHandle);
 						this.Layers.References[attribute.Layer.Name].Add(attribute);
-						attribute.LayerChanged += this.Entity_LayerChanged;
+						attribute.BeforeChangingLayerValue += this.Entity_BeforeChangingLayerValue;
 
 						attribute.Linetype = this.Linetypes.Add(attribute.Linetype, assignHandle);
 						this.Linetypes.References[attribute.Linetype.Name].Add(attribute);
-						attribute.LinetypeChanged += this.Entity_LinetypeChanged;
+						attribute.BeforeChangingLinetypeValue += this.Entity_BeforeChangingLinetypeValue;
 
 						attribute.Style = this.TextStyles.Add(attribute.Style, assignHandle);
 						this.TextStyles.References[attribute.Style.Name].Add(attribute);
-						attribute.TextStyleChanged += this.Entity_TextStyleChanged;
+						attribute.BeforeChangingTextStyleValue += this.Entity_BeforeChangingTextStyleValue;
 					}
-					insert.AttributeAdded += this.Insert_AttributeAdded;
-					insert.AttributeRemoved += this.Insert_AttributeRemoved;
-					//insert.BlockChanged += this.Insert_BlockChanged;
+					insert.AfterAddingAttribute += this.Insert_AfterAddingAttribute;
+					insert.AfterRemovingAttribute += this.Insert_AfterRemovingAttribute;
+					//insert.BeforeChangingBlockValue += this.Insert_BeforeChangingBlockValue;
 					break;
 				case EntityType.Line:
 					break;
@@ -649,7 +649,7 @@ namespace netDxf
 					//{
 					//	throw new ArgumentException("The shape name " + shape.Name + " is not defined in the associated shape style " + shape.Style.Name + ".");
 					//}
-					shape.StyleChanged += this.Shape_StyleChanged;
+					shape.BeforeChangingShapeStyleValue += this.Shape_BeforeChangingShapeStyleValue;
 					break;
 				case EntityType.Point:
 					break;
@@ -663,7 +663,7 @@ namespace netDxf
 							this.Layers.References[face.Layer.Name].Add(mesh);
 						}
 					}
-					mesh.PolyfaceMeshFaceLayerChanged += this.Entity_LayerChanged;
+					mesh.BeforeChangingFacesLayerValue += this.Entity_BeforeChangingLayerValue;
 					break;
 				case EntityType.PolygonMesh:
 					break;
@@ -683,25 +683,25 @@ namespace netDxf
 					Text text = (Text)entity;
 					text.Style = this.TextStyles.Add(text.Style, assignHandle);
 					this.TextStyles.References[text.Style.Name].Add(text);
-					text.TextStyleChanged += this.Entity_TextStyleChanged;
+					text.BeforeChangingTextStyleValue += this.Entity_BeforeChangingTextStyleValue;
 					break;
 				case EntityType.MText:
 					MText mText = (MText)entity;
 					mText.Style = this.TextStyles.Add(mText.Style, assignHandle);
 					this.TextStyles.References[mText.Style.Name].Add(mText);
-					mText.TextStyleChanged += this.Entity_TextStyleChanged;
+					mText.BeforeChangingTextStyleValue += this.Entity_BeforeChangingTextStyleValue;
 					break;
 				case EntityType.Image:
 					Image image = (Image)entity;
 					image.Definition = this.ImageDefinitions.Add(image.Definition, assignHandle);
 					this.ImageDefinitions.References[image.Definition.Name].Add(image);
-					image.ImageDefinitionChanged += this.Image_ImageDefinitionChanged;
+					image.BeforeChangingImageDefinitionValue += this.Image_BeforeChangingImageDefinitionValue;
 					break;
 				case EntityType.MLine:
 					MLine mline = (MLine)entity;
 					mline.Style = this.MlineStyles.Add(mline.Style, assignHandle);
 					this.MlineStyles.References[mline.Style.Name].Add(mline);
-					mline.MLineStyleChanged += this.MLine_MLineStyleChanged;
+					mline.BeforeChangingMLineStyleValue += this.MLine_BeforeChangingMLineStyleValue;
 					break;
 				case EntityType.Ray:
 					break;
@@ -724,7 +724,7 @@ namespace netDxf
 							this.UnderlayPdfDefinitions.References[underlay.Definition.Name].Add(underlay);
 							break;
 					}
-					underlay.UnderlayDefinitionChanged += this.Underlay_UnderlayDefinitionChanged;
+					underlay.BeforeChangingUnderlayDefinitionValue += this.Underlay_BeforeChangingUnderlayDefinitionValue;
 					break;
 				case EntityType.Wipeout:
 					break;
@@ -734,8 +734,8 @@ namespace netDxf
 					{
 						viewport.FrozenLayers[i] = this.Layers.Add(viewport.FrozenLayers[i], assignHandle);
 					}
-					viewport.ClippingBoundaryAdded += this.Viewport_ClippingBoundaryAdded;
-					viewport.ClippingBoundaryRemoved += this.Viewport_ClippingBoundaryRemoved;
+					viewport.AfterAddingEntityObject += this.Viewport_AfterAddingEntityObject;
+					viewport.AfterRemovingEntityObject += this.Viewport_AfterRemovingEntityObject;
 					break;
 				default:
 					throw new ArgumentException("The entity " + entity.Type + " is not implemented or unknown.");
@@ -749,8 +749,8 @@ namespace netDxf
 
 			this.AddedObjects.Add(entity.Handle, entity);
 
-			entity.LayerChanged += this.Entity_LayerChanged;
-			entity.LinetypeChanged += this.Entity_LinetypeChanged;
+			entity.BeforeChangingLayerValue += this.Entity_BeforeChangingLayerValue;
+			entity.BeforeChangingLinetypeValue += this.Entity_BeforeChangingLinetypeValue;
 		}
 
 		internal void AddAttributeDefinitionToDocument(AttributeDefinition attDef, bool assignHandle)
@@ -769,7 +769,7 @@ namespace netDxf
 
 			attDef.Style = this.TextStyles.Add(attDef.Style, assignHandle);
 			this.TextStyles.References[attDef.Style.Name].Add(attDef);
-			attDef.TextStyleChange += this.Entity_TextStyleChanged;
+			attDef.BeforeChangingTextStyleValue += this.Entity_BeforeChangingTextStyleValue;
 
 			attDef.Layer = this.Layers.Add(attDef.Layer, assignHandle);
 			this.Layers.References[attDef.Layer.Name].Add(attDef);
@@ -779,8 +779,8 @@ namespace netDxf
 
 			this.AddedObjects.Add(attDef.Handle, attDef);
 
-			attDef.LayerChanged += this.Entity_LayerChanged;
-			attDef.LinetypeChanged += this.Entity_LinetypeChanged;
+			attDef.BeforeChangingLayerValue += this.Entity_BeforeChangingLayerValue;
+			attDef.BeforeChangingLinetypeValue += this.Entity_BeforeChangingLinetypeValue;
 
 		}
 
@@ -802,33 +802,33 @@ namespace netDxf
 						dim.Block = null;
 					}
 
-					dim.DimensionBlockChanged -= this.Dimension_DimBlockChanged;
+					dim.BeforeChangingBlockValue -= this.Dimension_BeforeChangingBlockValue;
 					this.DimensionStyles.References[dim.Style.Name].Remove(entity);
-					dim.DimensionStyleChanged -= this.Dimension_DimStyleChanged;
+					dim.BeforeChangingDimensionStyleValue -= this.Dimension_BeforeChangingDimensionStyleValue;
 
 					this.RemoveDimensionStyleOverridesReferencedDxfObjects(dim, dim.StyleOverrides);
-					dim.DimensionStyleOverrideAdded -= this.Dimension_DimStyleOverrideAdded;
-					dim.DimensionStyleOverrideRemoved -= this.Dimension_DimStyleOverrideRemoved;
+					dim.AfterAddingDimensionStyleOverride -= this.Dimension_AfterAddingDimensionStyleOverride;
+					dim.AfterRemovingDimensionStyleOverride -= this.Dimension_AfterRemovingDimensionStyleOverride;
 					break;
 				case EntityType.Leader:
 					Leader leader = (Leader)entity;
 					this.DimensionStyles.References[leader.Style.Name].Remove(entity);
-					leader.LeaderStyleChanged -= this.Leader_DimStyleChanged;
+					leader.BeforeChangingDimensionStyleValue -= this.Leader_BeforeChangingDimensionStyleValue;
 					if (leader.Annotation != null)
 					{
 						leader.Annotation.RemoveReactor(leader);
 						this.Entities.Remove(leader.Annotation);
 					}
 					this.RemoveDimensionStyleOverridesReferencedDxfObjects(leader, leader.StyleOverrides);
-					leader.DimensionStyleOverrideAdded -= this.Leader_DimStyleOverrideAdded;
-					leader.DimensionStyleOverrideRemoved -= this.Leader_DimStyleOverrideRemoved;
-					leader.AnnotationAdded -= this.Leader_AnnotationAdded;
-					leader.AnnotationRemoved -= this.Leader_AnnotationRemoved;
+					leader.AfterAddingDimensionStyleOverride -= this.Leader_AfterAddingDimensionStyleOverride;
+					leader.AfterRemovingDimensionStyleOverride -= this.Leader_AfterRemovingDimensionStyleOverride;
+					leader.AfterAddingEntityObject -= this.Leader_AfterAddingEntityObject;
+					leader.AfterRemovingEntityObject -= this.Leader_AfterRemovingEntityObject;
 					break;
 				case EntityType.Tolerance:
 					Tolerance tolerance = (Tolerance)entity;
 					this.DimensionStyles.References[tolerance.Style.Name].Remove(entity);
-					tolerance.ToleranceStyleChanged -= this.Tolerance_DimStyleChanged;
+					tolerance.BeforeChangingDimensionStyleValue -= this.Tolerance_BeforeChangingDimensionStyleValue;
 					break;
 				case EntityType.Ellipse:
 					break;
@@ -839,8 +839,8 @@ namespace netDxf
 				case EntityType.Hatch:
 					Hatch hatch = (Hatch)entity;
 					hatch.UnLinkBoundary(); // remove reactors, the entities that made the hatch boundary will not be automatically deleted
-					hatch.HatchBoundaryPathAdded -= this.Hatch_BoundaryPathAdded;
-					hatch.HatchBoundaryPathRemoved -= this.Hatch_BoundaryPathRemoved;
+					hatch.AfterAddingHatchBoundaryPath -= this.Hatch_AfterAddingHatchBoundaryPath;
+					hatch.AfterRemovingHatchBoundaryPath -= this.Hatch_AfterRemovingHatchBoundaryPath;
 					break;
 				case EntityType.Insert:
 					Insert insert = (Insert)entity;
@@ -848,22 +848,22 @@ namespace netDxf
 					foreach (Attribute att in insert.Attributes)
 					{
 						this.Layers.References[att.Layer.Name].Remove(att);
-						att.LayerChanged -= this.Entity_LayerChanged;
+						att.BeforeChangingLayerValue -= this.Entity_BeforeChangingLayerValue;
 						this.Linetypes.References[att.Linetype.Name].Remove(att);
-						att.LinetypeChanged -= this.Entity_LinetypeChanged;
+						att.BeforeChangingLinetypeValue -= this.Entity_BeforeChangingLinetypeValue;
 						this.TextStyles.References[att.Style.Name].Remove(att);
-						att.TextStyleChanged -= this.Entity_TextStyleChanged;
+						att.BeforeChangingTextStyleValue -= this.Entity_BeforeChangingTextStyleValue;
 					}
-					insert.AttributeAdded -= this.Insert_AttributeAdded;
-					insert.AttributeRemoved -= this.Insert_AttributeRemoved;
-					//insert.BlockChanged -= this.Insert_BlockChanged;
+					insert.AfterAddingAttribute -= this.Insert_AfterAddingAttribute;
+					insert.AfterRemovingAttribute -= this.Insert_AfterRemovingAttribute;
+					//insert.BeforeChangingBlockValue -= this.Insert_BeforeChangingBlockValue;
 					break;
 				case EntityType.Line:
 					break;
 				case EntityType.Shape:
 					Shape shape = (Shape)entity;
 					this.ShapeStyles.References[shape.Style.Name].Remove(entity);
-					shape.StyleChanged -= this.Shape_StyleChanged;
+					shape.BeforeChangingShapeStyleValue -= this.Shape_BeforeChangingShapeStyleValue;
 					break;
 				case EntityType.Point:
 					break;
@@ -873,7 +873,7 @@ namespace netDxf
 					{
 						this.Layers.References[face.Layer.Name].Remove(mesh);
 					}
-					mesh.PolyfaceMeshFaceLayerChanged -= this.Entity_LayerChanged;
+					mesh.BeforeChangingFacesLayerValue -= this.Entity_BeforeChangingLayerValue;
 					break;
 				case EntityType.PolygonMesh:
 					break;
@@ -890,22 +890,22 @@ namespace netDxf
 				case EntityType.Text:
 					Text text = (Text)entity;
 					this.TextStyles.References[text.Style.Name].Remove(entity);
-					text.TextStyleChanged -= this.Entity_TextStyleChanged;
+					text.BeforeChangingTextStyleValue -= this.Entity_BeforeChangingTextStyleValue;
 					break;
 				case EntityType.MText:
 					MText mText = (MText)entity;
 					this.TextStyles.References[mText.Style.Name].Remove(entity);
-					mText.TextStyleChanged -= this.Entity_TextStyleChanged;
+					mText.BeforeChangingTextStyleValue -= this.Entity_BeforeChangingTextStyleValue;
 					break;
 				case EntityType.Image:
 					Image image = (Image)entity;
 					this.ImageDefinitions.References[image.Definition.Name].Remove(image);
-					image.ImageDefinitionChanged -= this.Image_ImageDefinitionChanged;
+					image.BeforeChangingImageDefinitionValue -= this.Image_BeforeChangingImageDefinitionValue;
 					break;
 				case EntityType.MLine:
 					MLine mline = (MLine)entity;
 					this.MlineStyles.References[mline.Style.Name].Remove(entity);
-					mline.MLineStyleChanged -= this.MLine_MLineStyleChanged;
+					mline.BeforeChangingMLineStyleValue -= this.MLine_BeforeChangingMLineStyleValue;
 					break;
 				case EntityType.Ray:
 					break;
@@ -925,7 +925,7 @@ namespace netDxf
 							this.UnderlayPdfDefinitions.References[underlay.Definition.Name].Remove(underlay);
 							break;
 					}
-					underlay.UnderlayDefinitionChanged -= this.Underlay_UnderlayDefinitionChanged;
+					underlay.BeforeChangingUnderlayDefinitionValue -= this.Underlay_BeforeChangingUnderlayDefinitionValue;
 					break;
 				case EntityType.Wipeout:
 					break;
@@ -937,8 +937,8 @@ namespace netDxf
 						viewport.ClippingBoundary.RemoveReactor(viewport);
 						this.Entities.Remove(viewport.ClippingBoundary);
 					}
-					viewport.ClippingBoundaryAdded -= this.Viewport_ClippingBoundaryAdded;
-					viewport.ClippingBoundaryRemoved -= this.Viewport_ClippingBoundaryRemoved;
+					viewport.AfterAddingEntityObject -= this.Viewport_AfterAddingEntityObject;
+					viewport.AfterRemovingEntityObject -= this.Viewport_AfterRemovingEntityObject;
 
 					break;
 				default:
@@ -949,8 +949,8 @@ namespace netDxf
 			this.Linetypes.References[entity.Linetype.Name].Remove(entity);
 			this.AddedObjects.Remove(entity.Handle);
 
-			entity.LayerChanged -= this.Entity_LayerChanged;
-			entity.LinetypeChanged -= this.Entity_LinetypeChanged;
+			entity.BeforeChangingLayerValue -= this.Entity_BeforeChangingLayerValue;
+			entity.BeforeChangingLinetypeValue -= this.Entity_BeforeChangingLinetypeValue;
 
 			entity.Handle = null;
 			entity.Owner = null;
@@ -961,14 +961,14 @@ namespace netDxf
 		internal bool RemoveAttributeDefinitionFromDocument(AttributeDefinition attDef)
 		{
 			this.TextStyles.References[attDef.Style.Name].Remove(attDef);
-			attDef.TextStyleChange -= this.Entity_TextStyleChanged;
+			attDef.BeforeChangingTextStyleValue -= this.Entity_BeforeChangingTextStyleValue;
 
 			this.Layers.References[attDef.Layer.Name].Remove(attDef);
 			this.Linetypes.References[attDef.Linetype.Name].Remove(attDef);
 			this.AddedObjects.Remove(attDef.Handle);
 
-			attDef.LayerChanged -= this.Entity_LayerChanged;
-			attDef.LinetypeChanged -= this.Entity_LinetypeChanged;
+			attDef.BeforeChangingLayerValue -= this.Entity_BeforeChangingLayerValue;
+			attDef.BeforeChangingLinetypeValue -= this.Entity_BeforeChangingLinetypeValue;
 
 			attDef.Handle = null;
 			attDef.Owner = null;
@@ -1168,27 +1168,28 @@ namespace netDxf
 
 		#region EntityObject events
 
-		private void MLine_MLineStyleChanged(MLine sender, TableObjectChangedEventArgs<MLineStyle> e)
+		private void MLine_BeforeChangingMLineStyleValue(object sender, BeforeValueChangeEventArgs<MLineStyle> e)
 		{
-			this.MlineStyles.References[e.OldValue.Name].Remove(sender);
-
+			var senderT = (DxfObject)sender;
+			this.MlineStyles.References[e.OldValue.Name].Remove(senderT);
 			e.NewValue = this.MlineStyles.Add(e.NewValue);
-			this.MlineStyles.References[e.NewValue.Name].Add(sender);
+			this.MlineStyles.References[e.NewValue.Name].Add(senderT);
 		}
 
-		private void Dimension_DimStyleChanged(Dimension sender, TableObjectChangedEventArgs<DimensionStyle> e)
+		private void Dimension_BeforeChangingDimensionStyleValue(object sender, BeforeValueChangeEventArgs<DimensionStyle> e)
 		{
-			this.DimensionStyles.References[e.OldValue.Name].Remove(sender);
-
+			var senderT = (DxfObject)sender;
+			this.DimensionStyles.References[e.OldValue.Name].Remove(senderT);
 			e.NewValue = this.DimensionStyles.Add(e.NewValue);
-			this.DimensionStyles.References[e.NewValue.Name].Add(sender);
+			this.DimensionStyles.References[e.NewValue.Name].Add(senderT);
 		}
 
-		private void Dimension_DimBlockChanged(Dimension sender, TableObjectChangedEventArgs<Block> e)
+		private void Dimension_BeforeChangingBlockValue(object sender, BeforeValueChangeEventArgs<Block> e)
 		{
+			var senderT = (DxfObject)sender;
 			if (e.OldValue != null)
 			{
-				this.Blocks.References[e.OldValue.Name].Remove(sender);
+				this.Blocks.References[e.OldValue.Name].Remove(senderT);
 				this.Blocks.Remove(e.OldValue);
 			}
 
@@ -1196,20 +1197,23 @@ namespace netDxf
 			{
 				if (!e.NewValue.Name.StartsWith("*D")) e.NewValue.SetName("*D" + ++this.DimensionBlocksIndex, false);
 				e.NewValue = this.Blocks.Add(e.NewValue);
-				this.Blocks.References[e.NewValue.Name].Add(sender);
+				this.Blocks.References[e.NewValue.Name].Add(senderT);
 			}
 		}
 
-		private void Dimension_DimStyleOverrideAdded(Dimension sender, DimensionStyleOverrideChangeEventArgs e)
+		private void Dimension_AfterAddingDimensionStyleOverride(object sender, AfterItemChangeEventArgs<DimensionStyleOverride> e)
 		{
+			if (sender is not Dimension senderT)
+				return;
+
 			switch (e.Item.Type)
 			{
 				case DimensionStyleOverrideType.DimLineLinetype:
 				case DimensionStyleOverrideType.ExtLine1Linetype:
 				case DimensionStyleOverrideType.ExtLine2Linetype:
 					Linetype linetype = (Linetype)e.Item.Value;
-					sender.StyleOverrides[e.Item.Type] = new DimensionStyleOverride(e.Item.Type, this.Linetypes.Add(linetype));
-					this.Linetypes.References[linetype.Name].Add(sender);
+					senderT.StyleOverrides[e.Item.Type] = new DimensionStyleOverride(e.Item.Type, this.Linetypes.Add(linetype));
+					this.Linetypes.References[linetype.Name].Add(senderT);
 					break;
 				case DimensionStyleOverrideType.LeaderArrow:
 				case DimensionStyleOverrideType.DimArrow1:
@@ -1217,26 +1221,29 @@ namespace netDxf
 					Block block = (Block)e.Item.Value;
 					if (block == null)
 						return; // the block might be defined as null to indicate that the default arrowhead will be used
-					sender.StyleOverrides[e.Item.Type] = new DimensionStyleOverride(e.Item.Type, this.Blocks.Add(block));
-					this.Blocks.References[block.Name].Add(sender);
+					senderT.StyleOverrides[e.Item.Type] = new DimensionStyleOverride(e.Item.Type, this.Blocks.Add(block));
+					this.Blocks.References[block.Name].Add(senderT);
 					break;
 				case DimensionStyleOverrideType.TextStyle:
 					TextStyle style = (TextStyle)e.Item.Value;
-					sender.StyleOverrides[e.Item.Type] = new DimensionStyleOverride(e.Item.Type, this.TextStyles.Add(style));
-					this.TextStyles.References[style.Name].Add(sender);
+					senderT.StyleOverrides[e.Item.Type] = new DimensionStyleOverride(e.Item.Type, this.TextStyles.Add(style));
+					this.TextStyles.References[style.Name].Add(senderT);
 					break;
 			}
 		}
 
-		private void Dimension_DimStyleOverrideRemoved(Dimension sender, DimensionStyleOverrideChangeEventArgs e)
+		private void Dimension_AfterRemovingDimensionStyleOverride(object sender, AfterItemChangeEventArgs<DimensionStyleOverride> e)
 		{
+			if (sender is not Dimension senderT)
+				return;
+
 			switch (e.Item.Type)
 			{
 				case DimensionStyleOverrideType.DimLineLinetype:
 				case DimensionStyleOverrideType.ExtLine1Linetype:
 				case DimensionStyleOverrideType.ExtLine2Linetype:
 					Linetype linetype = (Linetype)e.Item.Value;
-					this.Linetypes.References[linetype.Name].Remove(sender);
+					this.Linetypes.References[linetype.Name].Remove(senderT);
 					break;
 				case DimensionStyleOverrideType.LeaderArrow:
 				case DimensionStyleOverrideType.DimArrow1:
@@ -1244,33 +1251,36 @@ namespace netDxf
 					Block block = (Block)e.Item.Value;
 					if (block == null)
 						return; // the block might be defined as null to indicate that the default arrowhead will be used
-					this.Blocks.References[block.Name].Remove(sender);
+					this.Blocks.References[block.Name].Remove(senderT);
 					break;
 				case DimensionStyleOverrideType.TextStyle:
 					TextStyle style = (TextStyle)e.Item.Value;
-					this.TextStyles.References[style.Name].Remove(sender);
+					this.TextStyles.References[style.Name].Remove(senderT);
 					break;
 			}
 		}
 
-		private void Leader_DimStyleChanged(Leader sender, TableObjectChangedEventArgs<DimensionStyle> e)
+		private void Leader_BeforeChangingDimensionStyleValue(object sender, BeforeValueChangeEventArgs<DimensionStyle> e)
 		{
-			this.DimensionStyles.References[e.OldValue.Name].Remove(sender);
-
+			var senderT = (DxfObject)sender;
+			this.DimensionStyles.References[e.OldValue.Name].Remove(senderT);
 			e.NewValue = this.DimensionStyles.Add(e.NewValue);
-			this.DimensionStyles.References[e.NewValue.Name].Add(sender);
+			this.DimensionStyles.References[e.NewValue.Name].Add(senderT);
 		}
 
-		private void Leader_DimStyleOverrideAdded(Leader sender, DimensionStyleOverrideChangeEventArgs e)
+		private void Leader_AfterAddingDimensionStyleOverride(object sender, AfterItemChangeEventArgs<DimensionStyleOverride> e)
 		{
+			if (sender is not Leader senderT)
+				return;
+
 			switch (e.Item.Type)
 			{
 				case DimensionStyleOverrideType.DimLineLinetype:
 				case DimensionStyleOverrideType.ExtLine1Linetype:
 				case DimensionStyleOverrideType.ExtLine2Linetype:
 					Linetype linetype = (Linetype)e.Item.Value;
-					sender.StyleOverrides[e.Item.Type] = new DimensionStyleOverride(e.Item.Type, this.Linetypes.Add(linetype));
-					this.Linetypes.References[linetype.Name].Add(sender);
+					senderT.StyleOverrides[e.Item.Type] = new DimensionStyleOverride(e.Item.Type, this.Linetypes.Add(linetype));
+					this.Linetypes.References[linetype.Name].Add(senderT);
 					break;
 				case DimensionStyleOverrideType.LeaderArrow:
 				case DimensionStyleOverrideType.DimArrow1:
@@ -1281,26 +1291,29 @@ namespace netDxf
 						// the block might be defined as null to indicate that the default arrowhead will be used
 						return;
 					}
-					sender.StyleOverrides[e.Item.Type] = new DimensionStyleOverride(e.Item.Type, this.Blocks.Add(block));
-					this.Blocks.References[block.Name].Add(sender);
+					senderT.StyleOverrides[e.Item.Type] = new DimensionStyleOverride(e.Item.Type, this.Blocks.Add(block));
+					this.Blocks.References[block.Name].Add(senderT);
 					break;
 				case DimensionStyleOverrideType.TextStyle:
 					TextStyle style = (TextStyle)e.Item.Value;
-					sender.StyleOverrides[e.Item.Type] = new DimensionStyleOverride(e.Item.Type, this.TextStyles.Add(style));
-					this.TextStyles.References[style.Name].Add(sender);
+					senderT.StyleOverrides[e.Item.Type] = new DimensionStyleOverride(e.Item.Type, this.TextStyles.Add(style));
+					this.TextStyles.References[style.Name].Add(senderT);
 					break;
 			}
 		}
 
-		private void Leader_DimStyleOverrideRemoved(Leader sender, DimensionStyleOverrideChangeEventArgs e)
+		private void Leader_AfterRemovingDimensionStyleOverride(object sender, AfterItemChangeEventArgs<DimensionStyleOverride> e)
 		{
+			if (sender is not Leader senderT)
+				return;
+
 			switch (e.Item.Type)
 			{
 				case DimensionStyleOverrideType.DimLineLinetype:
 				case DimensionStyleOverrideType.ExtLine1Linetype:
 				case DimensionStyleOverrideType.ExtLine2Linetype:
 					Linetype linetype = (Linetype)e.Item.Value;
-					this.Linetypes.References[linetype.Name].Remove(sender);
+					this.Linetypes.References[linetype.Name].Remove(senderT);
 					break;
 				case DimensionStyleOverrideType.LeaderArrow:
 				case DimensionStyleOverrideType.DimArrow1:
@@ -1308,18 +1321,21 @@ namespace netDxf
 					Block block = (Block)e.Item.Value;
 					if (block == null)
 						return; // the block might be defined as null to indicate that the default arrowhead will be used
-					this.Blocks.References[block.Name].Remove(sender);
+					this.Blocks.References[block.Name].Remove(senderT);
 					break;
 				case DimensionStyleOverrideType.TextStyle:
 					TextStyle style = (TextStyle)e.Item.Value;
-					this.TextStyles.References[style.Name].Remove(sender);
+					this.TextStyles.References[style.Name].Remove(senderT);
 					break;
 			}
 		}
 
-		private void Leader_AnnotationAdded(Leader sender, EntityChangeEventArgs e)
+		private void Leader_AfterAddingEntityObject(object sender, AfterItemChangeEventArgs<EntityObject> e)
 		{
-			Layout layout = sender.Owner.Record.Layout;
+			if (sender is not Leader senderT)
+				return;
+
+			Layout layout = senderT.Owner.Record.Layout;
 			// the viewport belongs to a layout
 			if (e.Item.Owner != null)
 			{
@@ -1335,104 +1351,91 @@ namespace netDxf
 			}
 		}
 
-		private void Leader_AnnotationRemoved(Leader sender, EntityChangeEventArgs e) => this.Entities.Remove(e.Item);
+		private void Leader_AfterRemovingEntityObject(object sender, AfterItemChangeEventArgs<EntityObject> e)
+			=> this.Entities.Remove(e.Item);
 
-		private void Tolerance_DimStyleChanged(Tolerance sender, TableObjectChangedEventArgs<DimensionStyle> e)
+		private void Tolerance_BeforeChangingDimensionStyleValue(object sender, BeforeValueChangeEventArgs<DimensionStyle> e)
 		{
-			if (e.OldValue != null)
-			{
-				this.DimensionStyles.References[e.OldValue.Name].Remove(sender);
-			}
+			var senderT = (DxfObject)sender;
+			this.DimensionStyles.References[e.OldValue.Name].Remove(senderT);
 			if (e.NewValue == null)
-			{
 				return;
-			}
 			e.NewValue = this.DimensionStyles.Add(e.NewValue);
-			this.DimensionStyles.References[e.NewValue.Name].Add(sender);
+			this.DimensionStyles.References[e.NewValue.Name].Add(senderT);
 		}
 
-		private void Entity_TextStyleChanged(DxfObject sender, TableObjectChangedEventArgs<TextStyle> e)
+		private void Entity_BeforeChangingTextStyleValue(object sender, BeforeValueChangeEventArgs<TextStyle> e)
 		{
-			if (e.OldValue != null)
-			{
-				this.TextStyles.References[e.OldValue.Name].Remove(sender);
-			}
+			var senderT = (DxfObject)sender;
+			this.TextStyles.References[e.OldValue.Name].Remove(senderT);
 			if (e.NewValue == null)
-			{
 				return;
-			}
 			e.NewValue = this.TextStyles.Add(e.NewValue);
-			this.TextStyles.References[e.NewValue.Name].Add(sender);
+			this.TextStyles.References[e.NewValue.Name].Add(senderT);
 		}
 
-		private void Entity_LinetypeChanged(DxfObject sender, TableObjectChangedEventArgs<Linetype> e)
+		private void Entity_BeforeChangingLinetypeValue(object sender, BeforeValueChangeEventArgs<Linetype> e)
 		{
-			if (e.OldValue != null)
-			{
-				this.Linetypes.References[e.OldValue.Name].Remove(sender);
-			}
+			var senderT = (DxfObject)sender;
+			this.Linetypes.References[e.OldValue.Name].Remove(senderT);
 			if (e.NewValue == null)
-			{
 				return;
-			}
 			e.NewValue = this.Linetypes.Add(e.NewValue);
-			this.Linetypes.References[e.NewValue.Name].Add(sender);
+			this.Linetypes.References[e.NewValue.Name].Add(senderT);
 		}
 
-		private void Entity_LayerChanged(DxfObject sender, TableObjectChangedEventArgs<Layer> e)
+		private void Entity_BeforeChangingLayerValue(object sender, BeforeValueChangeEventArgs<Layer> e)
 		{
-			if (e.OldValue != null)
-			{
-				this.Layers.References[e.OldValue.Name].Remove(sender);
-			}
+			var senderT = (DxfObject)sender;
+			this.Layers.References[e.OldValue.Name].Remove(senderT);
 			if (e.NewValue == null)
-			{
 				return;
-			}
 			e.NewValue = this.Layers.Add(e.NewValue);
-			this.Layers.References[e.NewValue.Name].Add(sender);
+			this.Layers.References[e.NewValue.Name].Add(senderT);
 		}
 
-		private void Insert_AttributeAdded(Insert sender, AttributeChangeEventArgs e)
+		private void Insert_AfterAddingAttribute(object sender, AfterItemChangeEventArgs<Attribute> e)
 		{
 			this.NumHandles = e.Item.AssignHandle(this.NumHandles);
 
 			e.Item.Layer = this.Layers.Add(e.Item.Layer);
 			this.Layers.References[e.Item.Layer.Name].Add(e.Item);
-			e.Item.LayerChanged += this.Entity_LayerChanged;
+			e.Item.BeforeChangingLayerValue += this.Entity_BeforeChangingLayerValue;
 
 			e.Item.Linetype = this.Linetypes.Add(e.Item.Linetype);
 			this.Linetypes.References[e.Item.Linetype.Name].Add(e.Item);
-			e.Item.LinetypeChanged += this.Entity_LinetypeChanged;
+			e.Item.BeforeChangingLinetypeValue += this.Entity_BeforeChangingLinetypeValue;
 
 			e.Item.Style = this.TextStyles.Add(e.Item.Style);
 			this.TextStyles.References[e.Item.Style.Name].Add(e.Item);
-			e.Item.TextStyleChanged += this.Entity_TextStyleChanged;
+			e.Item.BeforeChangingTextStyleValue += this.Entity_BeforeChangingTextStyleValue;
 		}
 
-		private void Insert_AttributeRemoved(Insert sender, AttributeChangeEventArgs e)
+		private void Insert_AfterRemovingAttribute(object sender, AfterItemChangeEventArgs<Attribute> e)
 		{
 			this.Layers.References[e.Item.Layer.Name].Remove(e.Item);
-			e.Item.LayerChanged -= this.Entity_LayerChanged;
+			e.Item.BeforeChangingLayerValue -= this.Entity_BeforeChangingLayerValue;
 
 			this.Linetypes.References[e.Item.Linetype.Name].Remove(e.Item);
-			e.Item.LinetypeChanged -= this.Entity_LinetypeChanged;
+			e.Item.BeforeChangingLinetypeValue -= this.Entity_BeforeChangingLinetypeValue;
 
 			this.TextStyles.References[e.Item.Style.Name].Remove(e.Item);
-			e.Item.TextStyleChanged -= this.Entity_TextStyleChanged;
+			e.Item.BeforeChangingTextStyleValue -= this.Entity_BeforeChangingTextStyleValue;
 		}
 
-		//private void Insert_BlockChanged(Insert sender, TableObjectChangedEventArgs<Block> e)
+		//private void Insert_BeforeChangingBlockValue(object sender, BeforeValueChangeEventArgs<Block> e)
 		//{
 		//	this.Blocks.References[e.OldValue.Name].Remove(sender);
-
 		//	e.NewValue = this.Blocks.Add(e.NewValue);
 		//	this.Blocks.References[e.NewValue.Name].Add(sender);
 		//}
 
-		private void Hatch_BoundaryPathAdded(Hatch sender, ObservableCollectionEventArgs<HatchBoundaryPath> e)
+		private void Hatch_AfterAddingHatchBoundaryPath(object sender, AfterItemChangeEventArgs<HatchBoundaryPath> e)
 		{
-			Layout layout = sender.Owner.Record.Layout;
+			if (sender is not Hatch senderT)
+				return;
+
+			Layout layout = senderT.Owner.Record.Layout;
 			foreach (EntityObject entity in e.Item.Entities)
 			{
 				// the hatch belongs to a layout
@@ -1453,7 +1456,7 @@ namespace netDxf
 			}
 		}
 
-		private void Hatch_BoundaryPathRemoved(Hatch sender, ObservableCollectionEventArgs<HatchBoundaryPath> e)
+		private void Hatch_AfterRemovingHatchBoundaryPath(object sender, AfterItemChangeEventArgs<HatchBoundaryPath> e)
 		{
 			foreach (EntityObject entity in e.Item.Entities)
 			{
@@ -1461,9 +1464,12 @@ namespace netDxf
 			}
 		}
 
-		private void Viewport_ClippingBoundaryAdded(Viewport sender, EntityChangeEventArgs e)
+		private void Viewport_AfterAddingEntityObject(object sender, AfterItemChangeEventArgs<EntityObject> e)
 		{
-			Layout layout = sender.Owner.Record.Layout;
+			if (sender is not Viewport senderT)
+				return;
+
+			Layout layout = senderT.Owner.Record.Layout;
 			// the viewport belongs to a layout
 			if (e.Item.Owner != null)
 			{
@@ -1481,66 +1487,66 @@ namespace netDxf
 			}
 		}
 
-		private void Viewport_ClippingBoundaryRemoved(Viewport sender, EntityChangeEventArgs e) => this.Entities.Remove(e.Item);
+		private void Viewport_AfterRemovingEntityObject(object sender, AfterItemChangeEventArgs<EntityObject> e) => this.Entities.Remove(e.Item);
 
-		private void Image_ImageDefinitionChanged(Image sender, TableObjectChangedEventArgs<ImageDefinition> e)
+		private void Image_BeforeChangingImageDefinitionValue(object sender, BeforeValueChangeEventArgs<ImageDefinition> e)
 		{
-			this.ImageDefinitions.References[e.OldValue.Name].Remove(sender);
-
+			var senderT = (DxfObject)sender;
+			this.ImageDefinitions.References[e.OldValue.Name].Remove(senderT);
 			e.NewValue = this.ImageDefinitions.Add(e.NewValue);
-			this.ImageDefinitions.References[e.OldValue.Name].Add(sender);
+			this.ImageDefinitions.References[e.OldValue.Name].Add(senderT);
 		}
 
-		private void Underlay_UnderlayDefinitionChanged(Underlay sender, TableObjectChangedEventArgs<UnderlayDefinition> e)
+		private void Underlay_BeforeChangingUnderlayDefinitionValue(object sender, BeforeValueChangeEventArgs<UnderlayDefinition> e)
 		{
+			var senderT = (DxfObject)sender;
 			switch (e.OldValue.Type)
 			{
 				case UnderlayType.DGN:
-					this.UnderlayDgnDefinitions.References[e.OldValue.Name].Remove(sender);
+					this.UnderlayDgnDefinitions.References[e.OldValue.Name].Remove(senderT);
 					break;
 				case UnderlayType.DWF:
-					this.UnderlayDwfDefinitions.References[e.OldValue.Name].Remove(sender);
+					this.UnderlayDwfDefinitions.References[e.OldValue.Name].Remove(senderT);
 					break;
 				case UnderlayType.PDF:
-					this.UnderlayPdfDefinitions.References[e.OldValue.Name].Remove(sender);
+					this.UnderlayPdfDefinitions.References[e.OldValue.Name].Remove(senderT);
 					break;
 			}
-
 
 			switch (e.NewValue.Type)
 			{
 				case UnderlayType.DGN:
 					e.NewValue = this.UnderlayDgnDefinitions.Add((UnderlayDgnDefinition)e.NewValue);
-					this.UnderlayDgnDefinitions.References[e.NewValue.Name].Add(sender);
+					this.UnderlayDgnDefinitions.References[e.NewValue.Name].Add(senderT);
 					break;
 				case UnderlayType.DWF:
 					e.NewValue = this.UnderlayDwfDefinitions.Add((UnderlayDwfDefinition)e.NewValue);
-					this.UnderlayDwfDefinitions.References[e.NewValue.Name].Add(sender);
+					this.UnderlayDwfDefinitions.References[e.NewValue.Name].Add(senderT);
 					break;
 				case UnderlayType.PDF:
 					e.NewValue = this.UnderlayPdfDefinitions.Add((UnderlayPdfDefinition)e.NewValue);
-					this.UnderlayPdfDefinitions.References[e.NewValue.Name].Add(sender);
+					this.UnderlayPdfDefinitions.References[e.NewValue.Name].Add(senderT);
 					break;
 			}
 		}
 
-		private void Shape_StyleChanged(Shape sender, TableObjectChangedEventArgs<ShapeStyle> e)
+		private void Shape_BeforeChangingShapeStyleValue(object sender, BeforeValueChangeEventArgs<ShapeStyle> e)
 		{
-			this.ShapeStyles.References[e.OldValue.Name].Remove(sender);
-
+			var senderT = (DxfObject)sender;
+			this.ShapeStyles.References[e.OldValue.Name].Remove(senderT);
 			e.NewValue = this.ShapeStyles.Add(e.NewValue);
-			this.ShapeStyles.References[e.NewValue.Name].Add(sender);
+			this.ShapeStyles.References[e.NewValue.Name].Add(senderT);
 		}
 
 		#endregion
 
 		#region DxfObject events
 
-		private void AddedObjects_BeforeAddItem(ObservableDictionary<string, DxfObject> sender, ObservableDictionaryEventArgs<string, DxfObject> e)
+		private void AddedObjects_BeforeAddingItem(object sender, BeforeItemChangeEventArgs<KeyValuePair<string, DxfObject>> e)
 		{
 		}
 
-		private void AddedObjects_AddItem(ObservableDictionary<string, DxfObject> sender, ObservableDictionaryEventArgs<string, DxfObject> e)
+		private void AddedObjects_AfterAddingItem(object sender, AfterItemChangeEventArgs<KeyValuePair<string, DxfObject>> e)
 		{
 			DxfObject o = e.Item.Value;
 			if (o != null)
@@ -1551,16 +1557,16 @@ namespace netDxf
 					this.ApplicationRegistries.References[appReg].Add(e.Item.Value);
 				}
 
-				o.XDataAddAppReg += this.DxfObject_XDataAddAppReg;
-				o.XDataRemoveAppReg += this.DxfObject_XDataRemoveAppReg;
+				o.AfterAddingApplicationRegistry += this.DxfObject_AfterAddingApplicationRegistry;
+				o.AfterRemovingApplicationRegistry += this.DxfObject_AfterRemovingApplicationRegistry;
 			}
 		}
 
-		private void AddedObjects_BeforeRemoveItem(ObservableDictionary<string, DxfObject> sender, ObservableDictionaryEventArgs<string, DxfObject> e)
+		private void AddedObjects_BeforeRemovingItem(object sender, BeforeItemChangeEventArgs<KeyValuePair<string, DxfObject>> e)
 		{
 		}
 
-		private void AddedObjects_RemoveItem(ObservableDictionary<string, DxfObject> sender, ObservableDictionaryEventArgs<string, DxfObject> e)
+		private void AddedObjects_AfterRemovingItem(object sender, AfterItemChangeEventArgs<KeyValuePair<string, DxfObject>> e)
 		{
 			DxfObject o = e.Item.Value;
 			if (o != null)
@@ -1569,19 +1575,27 @@ namespace netDxf
 				{
 					this.ApplicationRegistries.References[appReg].Remove(e.Item.Value);
 				}
-				o.XDataAddAppReg -= this.DxfObject_XDataAddAppReg;
-				o.XDataRemoveAppReg -= this.DxfObject_XDataRemoveAppReg;
+				o.AfterAddingApplicationRegistry -= this.DxfObject_AfterAddingApplicationRegistry;
+				o.AfterRemovingApplicationRegistry -= this.DxfObject_AfterRemovingApplicationRegistry;
 			}
 		}
 
-		private void DxfObject_XDataAddAppReg(DxfObject sender, ObservableCollectionEventArgs<ApplicationRegistry> e)
+		private void DxfObject_AfterAddingApplicationRegistry(object sender, AfterItemChangeEventArgs<ApplicationRegistry> e)
 		{
-			sender.XData[e.Item.Name].ApplicationRegistry = this.ApplicationRegistries.Add(sender.XData[e.Item.Name].ApplicationRegistry);
-			this.ApplicationRegistries.References[e.Item.Name].Add(sender);
+			if (sender is not DxfObject senderT)
+				return;
+
+			senderT.XData[e.Item.Name].ApplicationRegistry = this.ApplicationRegistries.Add(senderT.XData[e.Item.Name].ApplicationRegistry);
+			this.ApplicationRegistries.References[e.Item.Name].Add(senderT);
 		}
 
-		private void DxfObject_XDataRemoveAppReg(DxfObject sender, ObservableCollectionEventArgs<ApplicationRegistry> e)
-			=> this.ApplicationRegistries.References[e.Item.Name].Remove(sender);
+		private void DxfObject_AfterRemovingApplicationRegistry(object sender, AfterItemChangeEventArgs<ApplicationRegistry> e)
+		{
+			if (sender is not DxfObject senderT)
+				return;
+
+			this.ApplicationRegistries.References[e.Item.Name].Remove(senderT);
+		}
 
 		#endregion
 	}

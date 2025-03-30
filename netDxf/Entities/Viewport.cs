@@ -25,6 +25,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using netDxf.Collections;
 using netDxf.Tables;
 
@@ -39,26 +40,26 @@ namespace netDxf.Entities
 	{
 		#region delegates and events
 
-		public delegate void ClippingBoundaryAddedEventHandler(Viewport sender, EntityChangeEventArgs e);
-
-		public event ClippingBoundaryAddedEventHandler ClippingBoundaryAdded;
-
-		protected virtual void OnClippingBoundaryAddedEvent(EntityObject item)
+		/// <summary>Generated when an <see cref="EntityObject"/> item has been added.</summary>
+		public event AfterItemChangeEventHandler<EntityObject> AfterAddingEntityObject;
+		/// <summary>Generates the <see cref="AfterAddingEntityObject"/> event.</summary>
+		/// <param name="item">The item being added.</param>
+		/// <param name="propertyName">(automatic) Name of the affected collection property.</param>
+		protected virtual void OnAfterAddingEntityObject(EntityObject item, [CallerMemberName] string propertyName = "")
 		{
-			ClippingBoundaryAddedEventHandler ae = this.ClippingBoundaryAdded;
-			if (ae != null)
-				ae(this, new EntityChangeEventArgs(item));
+			if (this.AfterAddingEntityObject is { } handler)
+				handler(this, new(propertyName, ItemChangeAction.Add, item));
 		}
 
-		public delegate void ClippingBoundaryRemovedEventHandler(Viewport sender, EntityChangeEventArgs e);
-
-		public event ClippingBoundaryRemovedEventHandler ClippingBoundaryRemoved;
-
-		protected virtual void OnClippingBoundaryRemovedEvent(EntityObject item)
+		/// <summary>Generated when an <see cref="EntityObject"/> item has been removed.</summary>
+		public event AfterItemChangeEventHandler<EntityObject> AfterRemovingEntityObject;
+		/// <summary>Generates the <see cref="AfterRemovingEntityObject"/> event.</summary>
+		/// <param name="item">The item being removed.</param>
+		/// <param name="propertyName">(automatic) Name of the affected collection property.</param>
+		protected virtual void OnAfterRemovingEntityObject(EntityObject item, [CallerMemberName] string propertyName = "")
 		{
-			ClippingBoundaryRemovedEventHandler ae = this.ClippingBoundaryRemoved;
-			if (ae != null)
-				ae(this, new EntityChangeEventArgs(item));
+			if (this.AfterRemovingEntityObject is { } handler)
+				handler(this, new(propertyName, ItemChangeAction.Remove, item));
 		}
 
 		#endregion
@@ -99,7 +100,7 @@ namespace netDxf.Entities
 
 			this.Stacking = id;
 			this.Id = id;
-			this.FrozenLayers.BeforeAddItem += this.FrozenLayers_BeforeAddItem;
+			this.FrozenLayers.BeforeAddingItem += this.FrozenLayers_BeforeAddingItem;
 		}
 
 		#endregion
@@ -277,14 +278,14 @@ namespace netDxf.Entities
 				if (_Boundary != null)
 				{
 					_Boundary.RemoveReactor(this);
-					this.OnClippingBoundaryRemovedEvent(_Boundary);
+					this.OnAfterRemovingEntityObject(_Boundary);
 				}
 
 				// add the new clipping boundary
 				if (value != null)
 				{
 					value.AddReactor(this);
-					this.OnClippingBoundaryAddedEvent(value);
+					this.OnAfterAddingEntityObject(value);
 				}
 
 				_Boundary = value;
@@ -383,7 +384,7 @@ namespace netDxf.Entities
 
 		#region FrozenLayers events
 
-		private void FrozenLayers_BeforeAddItem(ObservableCollection<Layer> sender, ObservableCollectionEventArgs<Layer> e)
+		private void FrozenLayers_BeforeAddingItem(object sender, BeforeItemChangeEventArgs<Layer> e)
 		{
 			if (e.Item == null)
 			{

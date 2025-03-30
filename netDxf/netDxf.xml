@@ -342,6 +342,47 @@
         <member name="T:netDxf.Blocks.Block">
             <summary>Represents a block definition.</summary>
         </member>
+        <member name="E:netDxf.Blocks.Block.BeforeChangingLayerValue">
+            <summary>Generated when a property of <see cref="P:netDxf.Blocks.Block.Layer"/> type changes.</summary>
+        </member>
+        <member name="M:netDxf.Blocks.Block.OnBeforeChangingLayerValue(netDxf.Tables.Layer,netDxf.Tables.Layer,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Blocks.Block.BeforeChangingLayerValue"/> event.</summary>
+            <param name="oldValue">The old value, being changed.</param>
+            <param name="newValue">The new value, that will replace the old one.</param>
+            <param name="propertyName">(automatic) Name of the affected property.</param>
+        </member>
+        <member name="E:netDxf.Blocks.Block.AfterAddingEntityObject">
+            <summary>Generated when an <see cref="T:netDxf.Entities.EntityObject"/> item has been added.</summary>
+        </member>
+        <member name="M:netDxf.Blocks.Block.OnAfterAddingEntityObject(netDxf.Entities.EntityObject,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Blocks.Block.AfterAddingEntityObject"/> event.</summary>
+            <param name="item">The item being added.</param>
+            <param name="propertyName">(automatic) Name of the affected collection property.</param>
+        </member>
+        <member name="E:netDxf.Blocks.Block.AfterRemovingEntityObject">
+            <summary>Generated when an <see cref="T:netDxf.Entities.EntityObject"/> item has been removed.</summary>
+        </member>
+        <member name="M:netDxf.Blocks.Block.OnAfterRemovingEntityObject(netDxf.Entities.EntityObject,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Blocks.Block.AfterRemovingEntityObject"/> event.</summary>
+            <param name="item">The item being removed.</param>
+            <param name="propertyName">(automatic) Name of the affected collection property.</param>
+        </member>
+        <member name="E:netDxf.Blocks.Block.AfterAddingAttributeDefinition">
+            <summary>Generated when an <see cref="T:netDxf.Entities.AttributeDefinition"/> item has been added.</summary>
+        </member>
+        <member name="M:netDxf.Blocks.Block.OnAfterAddingAttributeDefinition(netDxf.Entities.AttributeDefinition,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Blocks.Block.AfterAddingAttributeDefinition"/> event.</summary>
+            <param name="item">The item being added.</param>
+            <param name="propertyName">(automatic) Name of the affected collection property.</param>
+        </member>
+        <member name="E:netDxf.Blocks.Block.AfterRemovingAttributeDefinition">
+            <summary>Generated when an <see cref="T:netDxf.Entities.AttributeDefinition"/> item has been removed.</summary>
+        </member>
+        <member name="M:netDxf.Blocks.Block.OnAfterRemovingAttributeDefinition(netDxf.Entities.AttributeDefinition,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Blocks.Block.AfterRemovingAttributeDefinition"/> event.</summary>
+            <param name="item">The item being removed.</param>
+            <param name="propertyName">(automatic) Name of the affected collection property.</param>
+        </member>
         <member name="F:netDxf.Blocks.Block.DefaultModelSpaceName">
             <summary>Default <see cref="P:netDxf.Blocks.Block.ModelSpace"/> block name.</summary>
         </member>
@@ -513,26 +554,6 @@
         </member>
         <member name="M:netDxf.Blocks.Block.AssignHandle(System.Int64)">
             <inheritdoc/>
-        </member>
-        <member name="T:netDxf.Blocks.BlockAttributeDefinitionChangeEventArgs">
-            <summary>Represents the arguments thrown when an attribute definition is added ore removed from a <see cref="T:netDxf.Blocks.Block"/>.</summary>
-        </member>
-        <member name="M:netDxf.Blocks.BlockAttributeDefinitionChangeEventArgs.#ctor(netDxf.Entities.AttributeDefinition)">
-            <summary>Initializes a new instance of the class.</summary>
-            <param name="item">The attribute definition that is being added or removed from the block.</param>
-        </member>
-        <member name="P:netDxf.Blocks.BlockAttributeDefinitionChangeEventArgs.Item">
-            <summary>Gets the attribute definition that is being added or removed.</summary>
-        </member>
-        <member name="T:netDxf.Blocks.BlockEntityChangeEventArgs">
-            <summary>Represents the arguments thrown when an entity is added ore removed from a <see cref="T:netDxf.Blocks.Block"/>.</summary>
-        </member>
-        <member name="M:netDxf.Blocks.BlockEntityChangeEventArgs.#ctor(netDxf.Entities.EntityObject)">
-            <summary>Initializes a new instance of the class.</summary>
-            <param name="item">The entity that is being added or removed from the block.</param>
-        </member>
-        <member name="P:netDxf.Blocks.BlockEntityChangeEventArgs.Item">
-            <summary>Gets the entity that is being added or removed.</summary>
         </member>
         <member name="T:netDxf.Blocks.BlockRecord">
             <summary>Represent the record of a block in the tables section.</summary>
@@ -782,6 +803,40 @@
         <member name="T:netDxf.Collections.AttributeDefinitionDictionary">
             <summary>Represents a dictionary of <see cref="T:netDxf.Entities.AttributeDefinition">AttributeDefinitions</see>.</summary>
         </member>
+        <member name="E:netDxf.Collections.AttributeDefinitionDictionary.BeforeAddingItem">
+            <summary>Generated when an <see cref="T:netDxf.Entities.AttributeDefinition"/> item is about to be added; allows to confirm or reject the operation.</summary>
+        </member>
+        <member name="M:netDxf.Collections.AttributeDefinitionDictionary.OnBeforeAddingItem(netDxf.Entities.AttributeDefinition,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Collections.AttributeDefinitionDictionary.BeforeAddingItem"/> event.</summary>
+            <param name="item">The item being added.</param>
+            <param name="propertyName">(automatic) Name of the affected collection property.</param>
+            <returns><see langword="true"/> if the item can be added; otherwise, <see langword="false"/>.</returns>
+        </member>
+        <member name="E:netDxf.Collections.AttributeDefinitionDictionary.AfterAddingItem">
+            <summary>Generated when an <see cref="T:netDxf.Entities.AttributeDefinition"/> item has been added.</summary>
+        </member>
+        <member name="M:netDxf.Collections.AttributeDefinitionDictionary.OnAfterAddingItem(netDxf.Entities.AttributeDefinition,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Collections.AttributeDefinitionDictionary.AfterAddingItem"/> event.</summary>
+            <param name="item">The item being added.</param>
+            <param name="propertyName">(automatic) Name of the affected collection property.</param>
+        </member>
+        <member name="E:netDxf.Collections.AttributeDefinitionDictionary.BeforeRemovingItem">
+            <summary>Generated when an <see cref="T:netDxf.Entities.AttributeDefinition"/> item is about to be removed; allows to confirm or reject the operation.</summary>
+        </member>
+        <member name="M:netDxf.Collections.AttributeDefinitionDictionary.OnBeforeRemovingItem(netDxf.Entities.AttributeDefinition,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Collections.AttributeDefinitionDictionary.BeforeRemovingItem"/> event.</summary>
+            <param name="item">The item being removed.</param>
+            <param name="propertyName">(automatic) Name of the affected collection property.</param>
+            <returns><see langword="true"/> if the item can be removed; otherwise, <see langword="false"/>.</returns>
+        </member>
+        <member name="E:netDxf.Collections.AttributeDefinitionDictionary.AfterRemovingItem">
+            <summary>Generated when an <see cref="T:netDxf.Entities.AttributeDefinition"/> item has been removed.</summary>
+        </member>
+        <member name="M:netDxf.Collections.AttributeDefinitionDictionary.OnAfterRemovingItem(netDxf.Entities.AttributeDefinition,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Collections.AttributeDefinitionDictionary.AfterRemovingItem"/> event.</summary>
+            <param name="item">The item being removed.</param>
+            <param name="propertyName">(automatic) Name of the affected collection property.</param>
+        </member>
         <member name="M:netDxf.Collections.AttributeDefinitionDictionary.#ctor">
             <summary>Initializes a new instance of the class.</summary>
         </member>
@@ -834,20 +889,6 @@
         <member name="M:netDxf.Collections.AttributeDefinitionDictionary.GetEnumerator">
             <inheritdoc/>
         </member>
-        <member name="T:netDxf.Collections.AttributeDefinitionDictionaryEventArgs">
-            <summary>Represents the arguments thrown by the <see cref="T:netDxf.Collections.AttributeDefinitionDictionary"/> events.</summary>
-        </member>
-        <member name="M:netDxf.Collections.AttributeDefinitionDictionaryEventArgs.#ctor(netDxf.Entities.AttributeDefinition)">
-            <summary>Initializes a new instance of the class.</summary>
-            <param name="item">Item that is being added or removed from the dictionary.</param>
-        </member>
-        <member name="P:netDxf.Collections.AttributeDefinitionDictionaryEventArgs.Item">
-            <summary>Get the item that is being added to or removed from the dictionary.</summary>
-        </member>
-        <member name="P:netDxf.Collections.AttributeDefinitionDictionaryEventArgs.Cancel">
-            <summary>Gets or sets if the operation must be canceled.</summary>
-            <remarks>This property is used by the <see cref="E:netDxf.Collections.AttributeDefinitionDictionary.BeforeAddItem"/> and <see cref="E:netDxf.Collections.AttributeDefinitionDictionary.BeforeRemoveItem"/> events to cancel the add or remove operations.</remarks>
-        </member>
         <member name="T:netDxf.Collections.BlockRecords">
             <summary>Represents a collection of blocks.</summary>
         </member>
@@ -862,6 +903,40 @@
         </member>
         <member name="T:netDxf.Collections.DimensionStyleOverrideDictionary">
             <summary>Represents a dictionary of <see cref="T:netDxf.Tables.DimensionStyleOverride">DimensionStyleOverrides</see>.</summary>
+        </member>
+        <member name="E:netDxf.Collections.DimensionStyleOverrideDictionary.BeforeAddingItem">
+            <summary>Generated when an <see cref="T:netDxf.Tables.DimensionStyleOverride"/> item is about to be added; allows to confirm or reject the operation.</summary>
+        </member>
+        <member name="M:netDxf.Collections.DimensionStyleOverrideDictionary.OnBeforeAddingItem(netDxf.Tables.DimensionStyleOverride,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Collections.DimensionStyleOverrideDictionary.BeforeAddingItem"/> event.</summary>
+            <param name="item">The item being added.</param>
+            <param name="propertyName">(automatic) Name of the affected collection property.</param>
+            <returns><see langword="true"/> if the item can be added; otherwise, <see langword="false"/>.</returns>
+        </member>
+        <member name="E:netDxf.Collections.DimensionStyleOverrideDictionary.AfterAddingItem">
+            <summary>Generated when an <see cref="T:netDxf.Tables.DimensionStyleOverride"/> item has been added.</summary>
+        </member>
+        <member name="M:netDxf.Collections.DimensionStyleOverrideDictionary.OnAfterAddingItem(netDxf.Tables.DimensionStyleOverride,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Collections.DimensionStyleOverrideDictionary.AfterAddingItem"/> event.</summary>
+            <param name="item">The item being added.</param>
+            <param name="propertyName">(automatic) Name of the affected collection property.</param>
+        </member>
+        <member name="E:netDxf.Collections.DimensionStyleOverrideDictionary.BeforeRemovingItem">
+            <summary>Generated when an <see cref="T:netDxf.Tables.DimensionStyleOverride"/> item is about to be removed; allows to confirm or reject the operation.</summary>
+        </member>
+        <member name="M:netDxf.Collections.DimensionStyleOverrideDictionary.OnBeforeRemovingItem(netDxf.Tables.DimensionStyleOverride,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Collections.DimensionStyleOverrideDictionary.BeforeRemovingItem"/> event.</summary>
+            <param name="item">The item being removed.</param>
+            <param name="propertyName">(automatic) Name of the affected collection property.</param>
+            <returns><see langword="true"/> if the item can be removed; otherwise, <see langword="false"/>.</returns>
+        </member>
+        <member name="E:netDxf.Collections.DimensionStyleOverrideDictionary.AfterRemovingItem">
+            <summary>Generated when an <see cref="T:netDxf.Tables.DimensionStyleOverride"/> item has been removed.</summary>
+        </member>
+        <member name="M:netDxf.Collections.DimensionStyleOverrideDictionary.OnAfterRemovingItem(netDxf.Tables.DimensionStyleOverride,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Collections.DimensionStyleOverrideDictionary.AfterRemovingItem"/> event.</summary>
+            <param name="item">The item being removed.</param>
+            <param name="propertyName">(automatic) Name of the affected collection property.</param>
         </member>
         <member name="M:netDxf.Collections.DimensionStyleOverrideDictionary.#ctor">
             <summary>Initializes a new instance of the class.</summary>
@@ -920,20 +995,6 @@
         </member>
         <member name="M:netDxf.Collections.DimensionStyleOverrideDictionary.GetEnumerator">
             <inheritdoc/>
-        </member>
-        <member name="T:netDxf.Collections.DimensionStyleOverrideDictionaryEventArgs">
-            <summary>Represents the arguments thrown by the <see cref="T:netDxf.Collections.DimensionStyleOverrideDictionary"/> events.</summary>
-        </member>
-        <member name="M:netDxf.Collections.DimensionStyleOverrideDictionaryEventArgs.#ctor(netDxf.Tables.DimensionStyleOverride)">
-            <summary>Initializes a new instance of the class.</summary>
-            <param name="item">Item that is being added or removed from the dictionary.</param>
-        </member>
-        <member name="P:netDxf.Collections.DimensionStyleOverrideDictionaryEventArgs.Item">
-            <summary>Get the item that is being added to or removed from the dictionary.</summary>
-        </member>
-        <member name="P:netDxf.Collections.DimensionStyleOverrideDictionaryEventArgs.Cancel">
-            <summary>Gets or sets if the operation must be canceled.</summary>
-            <remarks>This property is used by the <see cref="E:netDxf.Collections.DimensionStyleOverrideDictionary.BeforeAddItem"/> and <see cref="E:netDxf.Collections.DimensionStyleOverrideDictionary.BeforeRemoveItem"/> events to cancel the add or remove operations.</remarks>
         </member>
         <member name="T:netDxf.Collections.DimensionStyles">
             <summary>Represents a collection of dimension styles.</summary>
@@ -1077,6 +1138,40 @@
         <member name="T:netDxf.Collections.EntityCollection">
             <summary>Represent a collection of <see cref="T:netDxf.Entities.EntityObject">entities</see> that fire events when it is modified.</summary>
         </member>
+        <member name="E:netDxf.Collections.EntityCollection.BeforeAddingItem">
+            <summary>Generated when an <see cref="T:netDxf.Entities.EntityObject"/> item is about to be added; allows to confirm or reject the operation.</summary>
+        </member>
+        <member name="M:netDxf.Collections.EntityCollection.OnBeforeAddingItem(netDxf.Entities.EntityObject,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Collections.EntityCollection.BeforeAddingItem"/> event.</summary>
+            <param name="item">The item being added.</param>
+            <param name="propertyName">(automatic) Name of the affected collection property.</param>
+            <returns><see langword="true"/> if the item can be added; otherwise, <see langword="false"/>.</returns>
+        </member>
+        <member name="E:netDxf.Collections.EntityCollection.AfterAddingItem">
+            <summary>Generated when an <see cref="T:netDxf.Entities.EntityObject"/> item has been added.</summary>
+        </member>
+        <member name="M:netDxf.Collections.EntityCollection.OnAfterAddingItem(netDxf.Entities.EntityObject,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Collections.EntityCollection.AfterAddingItem"/> event.</summary>
+            <param name="item">The item being added.</param>
+            <param name="propertyName">(automatic) Name of the affected collection property.</param>
+        </member>
+        <member name="E:netDxf.Collections.EntityCollection.BeforeRemovingItem">
+            <summary>Generated when an <see cref="T:netDxf.Entities.EntityObject"/> item is about to be removed; allows to confirm or reject the operation.</summary>
+        </member>
+        <member name="M:netDxf.Collections.EntityCollection.OnBeforeRemovingItem(netDxf.Entities.EntityObject,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Collections.EntityCollection.BeforeRemovingItem"/> event.</summary>
+            <param name="item">The item being removed.</param>
+            <param name="propertyName">(automatic) Name of the affected collection property.</param>
+            <returns><see langword="true"/> if the item can be removed; otherwise, <see langword="false"/>.</returns>
+        </member>
+        <member name="E:netDxf.Collections.EntityCollection.AfterRemovingItem">
+            <summary>Generated when an <see cref="T:netDxf.Entities.EntityObject"/> item has been removed.</summary>
+        </member>
+        <member name="M:netDxf.Collections.EntityCollection.OnAfterRemovingItem(netDxf.Entities.EntityObject,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Collections.EntityCollection.AfterRemovingItem"/> event.</summary>
+            <param name="item">The item being removed.</param>
+            <param name="propertyName">(automatic) Name of the affected collection property.</param>
+        </member>
         <member name="M:netDxf.Collections.EntityCollection.#ctor">
             <summary>Initializes a new instance of the class.</summary>
         </member>
@@ -1132,20 +1227,6 @@
         </member>
         <member name="M:netDxf.Collections.EntityCollection.GetEnumerator">
             <inheritdoc/>
-        </member>
-        <member name="T:netDxf.Collections.EntityCollectionEventArgs">
-            <summary>Represents the arguments thrown by the <see cref="T:netDxf.Collections.EntityCollection"/> events.</summary>
-        </member>
-        <member name="M:netDxf.Collections.EntityCollectionEventArgs.#ctor(netDxf.Entities.EntityObject)">
-            <summary>Initializes a new instance of the class.</summary>
-            <param name="item">Item that is being added or removed from the collection.</param>
-        </member>
-        <member name="P:netDxf.Collections.EntityCollectionEventArgs.Item">
-            <summary>Get the item that is being added or removed from the collection.</summary>
-        </member>
-        <member name="P:netDxf.Collections.EntityCollectionEventArgs.Cancel">
-            <summary>Gets or sets if the operation must be canceled.</summary>
-            <remarks>This property is used by the <see cref="E:netDxf.Collections.EntityCollection.BeforeAddItem"/> and <see cref="E:netDxf.Collections.EntityCollection.BeforeRemoveItem"/> events to cancel the add or remove operation.</remarks>
         </member>
         <member name="T:netDxf.Collections.Groups">
             <summary>Represents a collection of groups.</summary>
@@ -1319,6 +1400,40 @@
             <summary>Represent a collection of items that fire events when it is modified.</summary>
             <typeparam name="T">Type of items.</typeparam>
         </member>
+        <member name="E:netDxf.Collections.ObservableCollection`1.BeforeAddingItem">
+            <summary>Generated when an <see cref="!:T"/> item is about to be added; allows to confirm or reject the operation.</summary>
+        </member>
+        <member name="M:netDxf.Collections.ObservableCollection`1.OnBeforeAddingItem(`0,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Collections.ObservableCollection`1.BeforeAddingItem"/> event.</summary>
+            <param name="item">The item being added.</param>
+            <param name="propertyName">(automatic) Name of the affected collection property.</param>
+            <returns><see langword="true"/> if the item can be added; otherwise, <see langword="false"/>.</returns>
+        </member>
+        <member name="E:netDxf.Collections.ObservableCollection`1.AfterAddingItem">
+            <summary>Generated when an <see cref="!:T"/> item has been added.</summary>
+        </member>
+        <member name="M:netDxf.Collections.ObservableCollection`1.OnAfterAddingItem(`0,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Collections.ObservableCollection`1.AfterAddingItem"/> event.</summary>
+            <param name="item">The item being added.</param>
+            <param name="propertyName">(automatic) Name of the affected collection property.</param>
+        </member>
+        <member name="E:netDxf.Collections.ObservableCollection`1.BeforeRemovingItem">
+            <summary>Generated when an <see cref="!:T"/> item is about to be removed; allows to confirm or reject the operation.</summary>
+        </member>
+        <member name="M:netDxf.Collections.ObservableCollection`1.OnBeforeRemovingItem(`0,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Collections.ObservableCollection`1.BeforeRemovingItem"/> event.</summary>
+            <param name="item">The item being removed.</param>
+            <param name="propertyName">(automatic) Name of the affected collection property.</param>
+            <returns><see langword="true"/> if the item can be removed; otherwise, <see langword="false"/>.</returns>
+        </member>
+        <member name="E:netDxf.Collections.ObservableCollection`1.AfterRemovingItem">
+            <summary>Generated when an <see cref="!:T"/> item has been removed.</summary>
+        </member>
+        <member name="M:netDxf.Collections.ObservableCollection`1.OnAfterRemovingItem(`0,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Collections.ObservableCollection`1.AfterRemovingItem"/> event.</summary>
+            <param name="item">The item being removed.</param>
+            <param name="propertyName">(automatic) Name of the affected collection property.</param>
+        </member>
         <member name="M:netDxf.Collections.ObservableCollection`1.#ctor">
             <summary>Initializes a new instance of the class.</summary>
         </member>
@@ -1395,20 +1510,39 @@
         <member name="M:netDxf.Collections.ObservableCollection`1.GetEnumerator">
             <inheritdoc/>
         </member>
-        <member name="T:netDxf.Collections.ObservableCollectionEventArgs`1">
-            <summary>Represents the arguments thrown by the <see cref="T:netDxf.Collections.ObservableCollection`1"/> events.</summary>
-            <typeparam name="T">Type of items.</typeparam>
+        <member name="E:netDxf.Collections.ObservableDictionary`2.BeforeAddingItem">
+            <summary>Generated when an <see cref="T:System.Collections.Generic.KeyValuePair`2"/> item is about to be added; allows to confirm or reject the operation.</summary>
         </member>
-        <member name="M:netDxf.Collections.ObservableCollectionEventArgs`1.#ctor(`0)">
-            <summary>Initializes a new instance of the class.</summary>
-            <param name="item">Item that is being added or removed from the collection.</param>
+        <member name="M:netDxf.Collections.ObservableDictionary`2.OnBeforeAddingItem(System.Collections.Generic.KeyValuePair{`0,`1},System.String)">
+            <summary>Generates the <see cref="E:netDxf.Collections.ObservableDictionary`2.BeforeAddingItem"/> event.</summary>
+            <param name="item">The item being added.</param>
+            <param name="propertyName">(automatic) Name of the affected collection property.</param>
+            <returns><see langword="true"/> if the item can be added; otherwise, <see langword="false"/>.</returns>
         </member>
-        <member name="P:netDxf.Collections.ObservableCollectionEventArgs`1.Item">
-            <summary>Get the item that is being added or removed from the collection.</summary>
+        <member name="E:netDxf.Collections.ObservableDictionary`2.AfterAddingItem">
+            <summary>Generated when an <see cref="T:System.Collections.Generic.KeyValuePair`2"/> item has been added.</summary>
         </member>
-        <member name="P:netDxf.Collections.ObservableCollectionEventArgs`1.Cancel">
-            <summary>Gets or sets if the operation must be canceled.</summary>
-            <remarks>This property is used by the <see cref="E:netDxf.Collections.ObservableCollection`1.BeforeAddItem"/> and <see cref="E:netDxf.Collections.ObservableCollection`1.BeforeRemoveItem"/> events to cancel the add or remove operation.</remarks>
+        <member name="M:netDxf.Collections.ObservableDictionary`2.OnAfterAddingItem(System.Collections.Generic.KeyValuePair{`0,`1},System.String)">
+            <summary>Generates the <see cref="E:netDxf.Collections.ObservableDictionary`2.AfterAddingItem"/> event.</summary>
+            <param name="item">The item being added.</param>
+            <param name="propertyName">(automatic) Name of the affected collection property.</param>
+        </member>
+        <member name="E:netDxf.Collections.ObservableDictionary`2.BeforeRemovingItem">
+            <summary>Generated when an <see cref="T:System.Collections.Generic.KeyValuePair`2"/> item is about to be removed; allows to confirm or reject the operation.</summary>
+        </member>
+        <member name="M:netDxf.Collections.ObservableDictionary`2.OnBeforeRemovingItem(System.Collections.Generic.KeyValuePair{`0,`1},System.String)">
+            <summary>Generates the <see cref="E:netDxf.Collections.ObservableDictionary`2.BeforeRemovingItem"/> event.</summary>
+            <param name="item">The item being removed.</param>
+            <param name="propertyName">(automatic) Name of the affected collection property.</param>
+            <returns><see langword="true"/> if the item can be removed; otherwise, <see langword="false"/>.</returns>
+        </member>
+        <member name="E:netDxf.Collections.ObservableDictionary`2.AfterRemovingItem">
+            <summary>Generated when an <see cref="T:System.Collections.Generic.KeyValuePair`2"/> item has been removed.</summary>
+        </member>
+        <member name="M:netDxf.Collections.ObservableDictionary`2.OnAfterRemovingItem(System.Collections.Generic.KeyValuePair{`0,`1},System.String)">
+            <summary>Generates the <see cref="E:netDxf.Collections.ObservableDictionary`2.AfterRemovingItem"/> event.</summary>
+            <param name="item">The item being removed.</param>
+            <param name="propertyName">(automatic) Name of the affected collection property.</param>
         </member>
         <member name="P:netDxf.Collections.ObservableDictionary`2.Item(`0)">
             <inheritdoc/>
@@ -1442,22 +1576,6 @@
         </member>
         <member name="M:netDxf.Collections.ObservableDictionary`2.GetEnumerator">
             <inheritdoc/>
-        </member>
-        <member name="T:netDxf.Collections.ObservableDictionaryEventArgs`2">
-            <summary>Represents the arguments thrown by the <see cref="T:netDxf.Collections.ObservableDictionary`2"/> events.</summary>
-            <typeparam name="TKey">Type of items.</typeparam>
-            <typeparam name="TValue">Type of items.</typeparam>
-        </member>
-        <member name="M:netDxf.Collections.ObservableDictionaryEventArgs`2.#ctor(System.Collections.Generic.KeyValuePair{`0,`1})">
-            <summary>Initializes a new instance of the class.</summary>
-            <param name="item">Item that is being added or removed from the dictionary.</param>
-        </member>
-        <member name="P:netDxf.Collections.ObservableDictionaryEventArgs`2.Item">
-            <summary>Get the item that is being added to or removed from the dictionary.</summary>
-        </member>
-        <member name="P:netDxf.Collections.ObservableDictionaryEventArgs`2.Cancel">
-            <summary>Gets or sets if the operation must be canceled.</summary>
-            <remarks>This property is used by the <see cref="E:netDxf.Collections.ObservableDictionary`2.BeforeAddItem"/> and <see cref="E:netDxf.Collections.ObservableDictionary`2.BeforeRemoveItem"/> events to cancel the add or remove operations.</remarks>
         </member>
         <member name="T:netDxf.Collections.ShapeStyles">
             <summary>Represents a collection of shape styles.</summary>
@@ -1737,6 +1855,22 @@
         </member>
         <member name="T:netDxf.Collections.XDataDictionary">
             <summary>Represents a dictionary of <see cref="T:netDxf.XData"/>.</summary>
+        </member>
+        <member name="E:netDxf.Collections.XDataDictionary.AfterAddingApplicationRegistry">
+            <summary>Generated when an <see cref="T:netDxf.Tables.ApplicationRegistry"/> item has been added.</summary>
+        </member>
+        <member name="M:netDxf.Collections.XDataDictionary.OnAfterAddingApplicationRegistry(netDxf.Tables.ApplicationRegistry,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Collections.XDataDictionary.AfterAddingApplicationRegistry"/> event.</summary>
+            <param name="item">The item being added.</param>
+            <param name="propertyName">(automatic) Name of the affected collection property.</param>
+        </member>
+        <member name="E:netDxf.Collections.XDataDictionary.AfterRemovingApplicationRegistry">
+            <summary>Generated when an <see cref="T:netDxf.Tables.ApplicationRegistry"/> item has been removed.</summary>
+        </member>
+        <member name="M:netDxf.Collections.XDataDictionary.OnAfterRemovingApplicationRegistry(netDxf.Tables.ApplicationRegistry,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Collections.XDataDictionary.AfterRemovingApplicationRegistry"/> event.</summary>
+            <param name="item">The item being removed.</param>
+            <param name="propertyName">(automatic) Name of the affected collection property.</param>
         </member>
         <member name="M:netDxf.Collections.XDataDictionary.#ctor">
             <summary>Initializes a new instance of the class.</summary>
@@ -2069,6 +2203,22 @@
         </member>
         <member name="T:netDxf.DxfObject">
             <summary>Represents the base class for all <b>DXF</b> objects.</summary>
+        </member>
+        <member name="E:netDxf.DxfObject.AfterAddingApplicationRegistry">
+            <summary>Generated when an <see cref="T:netDxf.Tables.ApplicationRegistry"/> item has been added.</summary>
+        </member>
+        <member name="M:netDxf.DxfObject.OnAfterAddingApplicationRegistry(netDxf.Tables.ApplicationRegistry,System.String)">
+            <summary>Generates the <see cref="E:netDxf.DxfObject.AfterAddingApplicationRegistry"/> event.</summary>
+            <param name="item">The item being added.</param>
+            <param name="propertyName">(automatic) Name of the affected collection property.</param>
+        </member>
+        <member name="E:netDxf.DxfObject.AfterRemovingApplicationRegistry">
+            <summary>Generated when an <see cref="T:netDxf.Tables.ApplicationRegistry"/> item has been removed.</summary>
+        </member>
+        <member name="M:netDxf.DxfObject.OnAfterRemovingApplicationRegistry(netDxf.Tables.ApplicationRegistry,System.String)">
+            <summary>Generates the <see cref="E:netDxf.DxfObject.AfterRemovingApplicationRegistry"/> event.</summary>
+            <param name="item">The item being removed.</param>
+            <param name="propertyName">(automatic) Name of the affected collection property.</param>
         </member>
         <member name="M:netDxf.DxfObject.#ctor(System.String)">
             <summary>Initializes a new instance of the class.</summary>
@@ -2822,6 +2972,33 @@
             although this might sound not totally correct it is allowed by AutoCad.
             </remarks>
         </member>
+        <member name="E:netDxf.Entities.Attribute.BeforeChangingLayerValue">
+            <summary>Generated when a property of <see cref="P:netDxf.Entities.Attribute.Layer"/> type changes.</summary>
+        </member>
+        <member name="M:netDxf.Entities.Attribute.OnBeforeChangingLayerValue(netDxf.Tables.Layer,netDxf.Tables.Layer,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Entities.Attribute.BeforeChangingLayerValue"/> event.</summary>
+            <param name="oldValue">The old value, being changed.</param>
+            <param name="newValue">The new value, that will replace the old one.</param>
+            <param name="propertyName">(automatic) Name of the affected property.</param>
+        </member>
+        <member name="E:netDxf.Entities.Attribute.BeforeChangingLinetypeValue">
+            <summary>Generated when a property of <see cref="P:netDxf.Entities.Attribute.Linetype"/> type changes.</summary>
+        </member>
+        <member name="M:netDxf.Entities.Attribute.OnBeforeChangingLinetypeValue(netDxf.Tables.Linetype,netDxf.Tables.Linetype,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Entities.Attribute.BeforeChangingLinetypeValue"/> event.</summary>
+            <param name="oldValue">The old value, being changed.</param>
+            <param name="newValue">The new value, that will replace the old one.</param>
+            <param name="propertyName">(automatic) Name of the affected property.</param>
+        </member>
+        <member name="E:netDxf.Entities.Attribute.BeforeChangingTextStyleValue">
+            <summary>Generated when a property of <see cref="T:netDxf.Tables.TextStyle"/> type changes.</summary>
+        </member>
+        <member name="M:netDxf.Entities.Attribute.OnBeforeChangingBeforeValueTextStyle(netDxf.Tables.TextStyle,netDxf.Tables.TextStyle,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Entities.Attribute.BeforeChangingTextStyleValue"/> event.</summary>
+            <param name="oldValue">The old value, being changed.</param>
+            <param name="newValue">The new value, that will replace the old one.</param>
+            <param name="propertyName">(automatic) Name of the affected property.</param>
+        </member>
         <member name="M:netDxf.Entities.Attribute.#ctor(netDxf.Entities.AttributeDefinition)">
             <summary>Initializes a new instance of the class.</summary>
             <param name="definition"><see cref="T:netDxf.Entities.AttributeDefinition">Attribute definition</see>.</param>
@@ -2923,19 +3100,39 @@
         <member name="M:netDxf.Entities.Attribute.Clone">
             <inheritdoc/>
         </member>
-        <member name="M:netDxf.Entities.AttributeChangeEventArgs.#ctor(netDxf.Entities.Attribute)">
-            <summary>Initializes a new instance of the class.</summary>
-            <param name="item">The attribute that is being added or removed from the insert.</param>
-        </member>
-        <member name="P:netDxf.Entities.AttributeChangeEventArgs.Item">
-            <summary>Gets the attribute that is being added or removed.</summary>
-        </member>
         <member name="T:netDxf.Entities.AttributeDefinition">
             <summary>Represents an attribute definition.</summary>
             <remarks>
             <b>AutoCAD</b> allows to have duplicate tags in the attribute definitions list, but this library does not.
             To have duplicate tags is not recommended in any way, since there will be now way to know which is the definition associated to the insert attribute.
             </remarks>
+        </member>
+        <member name="E:netDxf.Entities.AttributeDefinition.BeforeChangingLayerValue">
+            <summary>Generated when a property of <see cref="P:netDxf.Entities.AttributeDefinition.Layer"/> type changes.</summary>
+        </member>
+        <member name="M:netDxf.Entities.AttributeDefinition.OnBeforeChangingLayerValue(netDxf.Tables.Layer,netDxf.Tables.Layer,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Entities.AttributeDefinition.BeforeChangingLayerValue"/> event.</summary>
+            <param name="oldValue">The old value, being changed.</param>
+            <param name="newValue">The new value, that will replace the old one.</param>
+            <param name="propertyName">(automatic) Name of the affected property.</param>
+        </member>
+        <member name="E:netDxf.Entities.AttributeDefinition.BeforeChangingLinetypeValue">
+            <summary>Generated when a property of <see cref="P:netDxf.Entities.AttributeDefinition.Linetype"/> type changes.</summary>
+        </member>
+        <member name="M:netDxf.Entities.AttributeDefinition.OnBeforeChangingLinetypeValue(netDxf.Tables.Linetype,netDxf.Tables.Linetype,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Entities.AttributeDefinition.BeforeChangingLinetypeValue"/> event.</summary>
+            <param name="oldValue">The old value, being changed.</param>
+            <param name="newValue">The new value, that will replace the old one.</param>
+            <param name="propertyName">(automatic) Name of the affected property.</param>
+        </member>
+        <member name="E:netDxf.Entities.AttributeDefinition.BeforeChangingTextStyleValue">
+            <summary>Generated when a property of <see cref="T:netDxf.Tables.TextStyle"/> type changes.</summary>
+        </member>
+        <member name="M:netDxf.Entities.AttributeDefinition.OnBeforeChangingBeforeValueTextStyle(netDxf.Tables.TextStyle,netDxf.Tables.TextStyle,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Entities.AttributeDefinition.BeforeChangingTextStyleValue"/> event.</summary>
+            <param name="oldValue">The old value, being changed.</param>
+            <param name="newValue">The new value, that will replace the old one.</param>
+            <param name="propertyName">(automatic) Name of the affected property.</param>
         </member>
         <member name="M:netDxf.Entities.AttributeDefinition.#ctor(System.String)">
             <summary>Initializes a new instance of the class.</summary>
@@ -3207,6 +3404,40 @@
             <reamarks>
             Once a dimension is added to the <b>DXF</b> document, its properties should not be modified or the changes will not be reflected in the saved <b>DXF</b> file.
             </reamarks>
+        </member>
+        <member name="E:netDxf.Entities.Dimension.BeforeChangingDimensionStyleValue">
+            <summary>Generated when a property of <see cref="T:netDxf.Tables.DimensionStyle"/> type changes.</summary>
+        </member>
+        <member name="M:netDxf.Entities.Dimension.OnBeforeChangingDimensionStyleValue(netDxf.Tables.DimensionStyle,netDxf.Tables.DimensionStyle,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Entities.Dimension.BeforeChangingDimensionStyleValue"/> event.</summary>
+            <param name="oldValue">The old value, being changed.</param>
+            <param name="newValue">The new value, that will replace the old one.</param>
+            <param name="propertyName">(automatic) Name of the affected property.</param>
+        </member>
+        <member name="E:netDxf.Entities.Dimension.BeforeChangingBlockValue">
+            <summary>Generated when a property of <see cref="P:netDxf.Entities.Dimension.Block"/> type changes.</summary>
+        </member>
+        <member name="M:netDxf.Entities.Dimension.OnBeforeChangingBlockValue(netDxf.Blocks.Block,netDxf.Blocks.Block,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Entities.Dimension.BeforeChangingBlockValue"/> event.</summary>
+            <param name="oldValue">The old value, being changed.</param>
+            <param name="newValue">The new value, that will replace the old one.</param>
+            <param name="propertyName">(automatic) Name of the affected property.</param>
+        </member>
+        <member name="E:netDxf.Entities.Dimension.AfterAddingDimensionStyleOverride">
+            <summary>Generated when an <see cref="T:netDxf.Tables.DimensionStyleOverride"/> item has been added.</summary>
+        </member>
+        <member name="M:netDxf.Entities.Dimension.OnAfterAddingDimensionStyleOverride(netDxf.Tables.DimensionStyleOverride,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Entities.Dimension.AfterAddingDimensionStyleOverride"/> event.</summary>
+            <param name="item">The item being added.</param>
+            <param name="propertyName">(automatic) Name of the affected collection property.</param>
+        </member>
+        <member name="E:netDxf.Entities.Dimension.AfterRemovingDimensionStyleOverride">
+            <summary>Generated when an <see cref="T:netDxf.Tables.DimensionStyleOverride"/> item has been removed.</summary>
+        </member>
+        <member name="M:netDxf.Entities.Dimension.OnAfterRemovingDimensionStyleOverride(netDxf.Tables.DimensionStyleOverride,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Entities.Dimension.AfterRemovingDimensionStyleOverride"/> event.</summary>
+            <param name="item">The item being removed.</param>
+            <param name="propertyName">(automatic) Name of the affected collection property.</param>
         </member>
         <member name="M:netDxf.Entities.Dimension.#ctor(netDxf.Entities.DimensionType)">
             <summary>Initializes a new instance of the class.</summary>
@@ -3646,18 +3877,26 @@
         <member name="M:netDxf.Entities.EndSequence.#ctor">
             <summary>Initializes a new instance of the class.</summary>
         </member>
-        <member name="T:netDxf.Entities.EntityChangeEventArgs">
-            <summary>Represents the arguments thrown when the reference of an entity is added ore removed from another entity.</summary>
-        </member>
-        <member name="M:netDxf.Entities.EntityChangeEventArgs.#ctor(netDxf.Entities.EntityObject)">
-            <summary>Initializes a new instance of the class.</summary>
-            <param name="item">The entity that is being added or removed from another entity.</param>
-        </member>
-        <member name="P:netDxf.Entities.EntityChangeEventArgs.Item">
-            <summary>Gets the entity that is being added or removed.</summary>
-        </member>
         <member name="T:netDxf.Entities.EntityObject">
             <summary>Represents a generic entity.</summary>
+        </member>
+        <member name="E:netDxf.Entities.EntityObject.BeforeChangingLayerValue">
+            <summary>Generated when a property of <see cref="P:netDxf.Entities.EntityObject.Layer"/> type changes.</summary>
+        </member>
+        <member name="M:netDxf.Entities.EntityObject.OnBeforeChangingLayerValue(netDxf.Tables.Layer,netDxf.Tables.Layer,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Entities.EntityObject.BeforeChangingLayerValue"/> event.</summary>
+            <param name="oldValue">The old value, being changed.</param>
+            <param name="newValue">The new value, that will replace the old one.</param>
+            <param name="propertyName">(automatic) Name of the affected property.</param>
+        </member>
+        <member name="E:netDxf.Entities.EntityObject.BeforeChangingLinetypeValue">
+            <summary>Generated when a property of <see cref="P:netDxf.Entities.EntityObject.Linetype"/> type changes.</summary>
+        </member>
+        <member name="M:netDxf.Entities.EntityObject.OnBeforeChangingLinetypeValue(netDxf.Tables.Linetype,netDxf.Tables.Linetype,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Entities.EntityObject.BeforeChangingLinetypeValue"/> event.</summary>
+            <param name="oldValue">The old value, being changed.</param>
+            <param name="newValue">The new value, that will replace the old one.</param>
+            <param name="propertyName">(automatic) Name of the affected property.</param>
         </member>
         <member name="P:netDxf.Entities.EntityObject.Reactors">
             <summary>Gets the list of <b>DXF</b> objects that has been attached to this entity.</summary>
@@ -3872,6 +4111,22 @@
         </member>
         <member name="T:netDxf.Entities.Hatch">
             <summary>Represents a hatch <see cref="T:netDxf.Entities.EntityObject">entity</see>.</summary>
+        </member>
+        <member name="E:netDxf.Entities.Hatch.AfterAddingHatchBoundaryPath">
+            <summary>Generated when an <see cref="T:netDxf.Entities.HatchBoundaryPath"/> item has been added.</summary>
+        </member>
+        <member name="M:netDxf.Entities.Hatch.OnAfterAddingHatchBoundaryPath(netDxf.Entities.HatchBoundaryPath,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Entities.Hatch.AfterAddingHatchBoundaryPath"/> event.</summary>
+            <param name="item">The item being added.</param>
+            <param name="propertyName">(automatic) Name of the affected collection property.</param>
+        </member>
+        <member name="E:netDxf.Entities.Hatch.AfterRemovingHatchBoundaryPath">
+            <summary>Generated when an <see cref="T:netDxf.Entities.HatchBoundaryPath"/> item has been removed.</summary>
+        </member>
+        <member name="M:netDxf.Entities.Hatch.OnAfterRemovingHatchBoundaryPath(netDxf.Entities.HatchBoundaryPath,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Entities.Hatch.AfterRemovingHatchBoundaryPath"/> event.</summary>
+            <param name="item">The item being removed.</param>
+            <param name="propertyName">(automatic) Name of the affected collection property.</param>
         </member>
         <member name="M:netDxf.Entities.Hatch.#ctor(netDxf.Entities.HatchPattern,System.Boolean)">
             <summary>Initializes a new instance of the class.</summary>
@@ -4432,6 +4687,15 @@
         <member name="T:netDxf.Entities.Image">
             <summary>Represents a raster image <see cref="T:netDxf.Entities.EntityObject">entity</see>.</summary>
         </member>
+        <member name="E:netDxf.Entities.Image.BeforeChangingImageDefinitionValue">
+            <summary>Generated when a property of <see cref="T:netDxf.Objects.ImageDefinition"/> type changes.</summary>
+        </member>
+        <member name="M:netDxf.Entities.Image.OnBeforeChangingImageDefinitionValue(netDxf.Objects.ImageDefinition,netDxf.Objects.ImageDefinition,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Entities.Image.BeforeChangingImageDefinitionValue"/> event.</summary>
+            <param name="oldValue">The old value, being changed.</param>
+            <param name="newValue">The new value, that will replace the old one.</param>
+            <param name="propertyName">(automatic) Name of the affected property.</param>
+        </member>
         <member name="M:netDxf.Entities.Image.#ctor(netDxf.Objects.ImageDefinition,netDxf.Vector2,netDxf.Vector2)">
             <summary>Initializes a new instance of the class.</summary>
             <param name="imageDefinition">Image definition.</param>
@@ -4526,6 +4790,22 @@
         <member name="T:netDxf.Entities.Insert">
             <summary>Represents a block insertion <see cref="T:netDxf.Entities.EntityObject">entity</see>.</summary>
         </member>
+        <member name="E:netDxf.Entities.Insert.AfterAddingAttribute">
+            <summary>Generated when an <see cref="T:netDxf.Entities.Attribute"/> item has been added.</summary>
+        </member>
+        <member name="M:netDxf.Entities.Insert.OnAfterAddingAttribute(netDxf.Entities.Attribute,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Entities.Insert.AfterAddingAttribute"/> event.</summary>
+            <param name="item">The item being added.</param>
+            <param name="propertyName">(automatic) Name of the affected collection property.</param>
+        </member>
+        <member name="E:netDxf.Entities.Insert.AfterRemovingAttribute">
+            <summary>Generated when an <see cref="T:netDxf.Entities.Attribute"/> item has been removed.</summary>
+        </member>
+        <member name="M:netDxf.Entities.Insert.OnAfterRemovingAttribute(netDxf.Entities.Attribute,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Entities.Insert.AfterRemovingAttribute"/> event.</summary>
+            <param name="item">The item being removed.</param>
+            <param name="propertyName">(automatic) Name of the affected collection property.</param>
+        </member>
         <member name="M:netDxf.Entities.Insert.#ctor(netDxf.Blocks.Block)">
             <summary>Initializes a new instance of the class.</summary>
             <param name="block">Insert <see cref="P:netDxf.Entities.Insert.Block">block definition</see>.</param>
@@ -4608,6 +4888,47 @@
         </member>
         <member name="T:netDxf.Entities.Leader">
             <summary>Represents a leader <see cref="T:netDxf.Entities.EntityObject">entity</see>.</summary>
+        </member>
+        <member name="E:netDxf.Entities.Leader.BeforeChangingDimensionStyleValue">
+            <summary>Generated when a property of <see cref="T:netDxf.Tables.DimensionStyle"/> type changes.</summary>
+        </member>
+        <member name="M:netDxf.Entities.Leader.OnBeforeChangingDimensionStyleValue(netDxf.Tables.DimensionStyle,netDxf.Tables.DimensionStyle,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Entities.Leader.BeforeChangingDimensionStyleValue"/> event.</summary>
+            <param name="oldValue">The old value, being changed.</param>
+            <param name="newValue">The new value, that will replace the old one.</param>
+            <param name="propertyName">(automatic) Name of the affected property.</param>
+        </member>
+        <member name="E:netDxf.Entities.Leader.AfterAddingEntityObject">
+            <summary>Generated when an <see cref="T:netDxf.Entities.EntityObject"/> item has been added.</summary>
+        </member>
+        <member name="M:netDxf.Entities.Leader.OnAfterAddingEntityObject(netDxf.Entities.EntityObject,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Entities.Leader.AfterAddingEntityObject"/> event.</summary>
+            <param name="item">The item being added.</param>
+            <param name="propertyName">(automatic) Name of the affected collection property.</param>
+        </member>
+        <member name="E:netDxf.Entities.Leader.AfterRemovingEntityObject">
+            <summary>Generated when an <see cref="T:netDxf.Entities.EntityObject"/> item has been removed.</summary>
+        </member>
+        <member name="M:netDxf.Entities.Leader.OnAfterRemovingEntityObject(netDxf.Entities.EntityObject,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Entities.Leader.AfterRemovingEntityObject"/> event.</summary>
+            <param name="item">The item being removed.</param>
+            <param name="propertyName">(automatic) Name of the affected collection property.</param>
+        </member>
+        <member name="E:netDxf.Entities.Leader.AfterAddingDimensionStyleOverride">
+            <summary>Generated when an <see cref="T:netDxf.Tables.DimensionStyleOverride"/> item has been added.</summary>
+        </member>
+        <member name="M:netDxf.Entities.Leader.OnAfterAddingDimensionStyleOverride(netDxf.Tables.DimensionStyleOverride,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Entities.Leader.AfterAddingDimensionStyleOverride"/> event.</summary>
+            <param name="item">The item being added.</param>
+            <param name="propertyName">(automatic) Name of the affected collection property.</param>
+        </member>
+        <member name="E:netDxf.Entities.Leader.AfterRemovingDimensionStyleOverride">
+            <summary>Generated when an <see cref="T:netDxf.Tables.DimensionStyleOverride"/> item has been removed.</summary>
+        </member>
+        <member name="M:netDxf.Entities.Leader.OnAfterRemovingDimensionStyleOverride(netDxf.Tables.DimensionStyleOverride,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Entities.Leader.AfterRemovingDimensionStyleOverride"/> event.</summary>
+            <param name="item">The item being removed.</param>
+            <param name="propertyName">(automatic) Name of the affected collection property.</param>
         </member>
         <member name="M:netDxf.Entities.Leader.#ctor(System.Collections.Generic.IEnumerable{netDxf.Vector2})">
             <summary>Initializes a new instance of the class.</summary>
@@ -4953,6 +5274,15 @@
         <member name="T:netDxf.Entities.MLine">
             <summary>Represents a multiline <see cref="T:netDxf.Entities.EntityObject">entity</see>.</summary>
         </member>
+        <member name="E:netDxf.Entities.MLine.BeforeChangingMLineStyleValue">
+            <summary>Generated when a property of <see cref="T:netDxf.Objects.MLineStyle"/> type changes.</summary>
+        </member>
+        <member name="M:netDxf.Entities.MLine.OnBeforeChangingMLineStyleValue(netDxf.Objects.MLineStyle,netDxf.Objects.MLineStyle,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Entities.MLine.BeforeChangingMLineStyleValue"/> event.</summary>
+            <param name="oldValue">The old value, being changed.</param>
+            <param name="newValue">The new value, that will replace the old one.</param>
+            <param name="propertyName">(automatic) Name of the affected property.</param>
+        </member>
         <member name="M:netDxf.Entities.MLine.#ctor">
             <summary>Initializes a new instance of the class.</summary>
         </member>
@@ -5157,6 +5487,15 @@
             <br />
             Codes and braces can be nested up to 8 levels deep.<br />
             </remarks>
+        </member>
+        <member name="E:netDxf.Entities.MText.BeforeChangingTextStyleValue">
+            <summary>Generated when a property of <see cref="T:netDxf.Tables.TextStyle"/> type changes.</summary>
+        </member>
+        <member name="M:netDxf.Entities.MText.OnBeforeChangingBeforeValueTextStyle(netDxf.Tables.TextStyle,netDxf.Tables.TextStyle,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Entities.MText.BeforeChangingTextStyleValue"/> event.</summary>
+            <param name="oldValue">The old value, being changed.</param>
+            <param name="newValue">The new value, that will replace the old one.</param>
+            <param name="propertyName">(automatic) Name of the affected property.</param>
         </member>
         <member name="M:netDxf.Entities.MText.#ctor">
             <summary>Initializes a new instance of the class.</summary>
@@ -5746,6 +6085,15 @@
         <member name="T:netDxf.Entities.PolyfaceMesh">
             <summary>Represents a polyface mesh <see cref="T:netDxf.Entities.EntityObject">entity</see>.</summary>
         </member>
+        <member name="E:netDxf.Entities.PolyfaceMesh.BeforeChangingFacesLayerValue">
+            <summary>Generated when a property of <see cref="T:netDxf.Tables.Layer"/> type changes.</summary>
+        </member>
+        <member name="M:netDxf.Entities.PolyfaceMesh.OnBeforeChangingFacesLayerValue(netDxf.Tables.Layer,netDxf.Tables.Layer,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Entities.PolyfaceMesh.BeforeChangingFacesLayerValue"/> event.</summary>
+            <param name="oldValue">The old value, being changed.</param>
+            <param name="newValue">The new value, that will replace the old one.</param>
+            <param name="propertyName">(automatic) Name of the affected property.</param>
+        </member>
         <member name="M:netDxf.Entities.PolyfaceMesh.#ctor(System.Collections.Generic.IEnumerable{netDxf.Vector3},System.Collections.Generic.IEnumerable{System.Int16[]})">
             <summary>Initializes a new instance of the class.</summary>
             <param name="vertexes">Polyface mesh <see cref="T:netDxf.Vector3">vertex</see> list.</param>
@@ -5788,6 +6136,15 @@
             if the edge between the vertexes 0 and 1 is hidden the vertex index for the face will be -1.<br/>
             The maximum number of vertexes per face is 4.
             </remarks>
+        </member>
+        <member name="E:netDxf.Entities.PolyfaceMeshFace.BeforeChangingLayerValue">
+            <summary>Generated when a property of <see cref="P:netDxf.Entities.PolyfaceMeshFace.Layer"/> type changes.</summary>
+        </member>
+        <member name="M:netDxf.Entities.PolyfaceMeshFace.OnBeforeChangingLayerValue(netDxf.Tables.Layer,netDxf.Tables.Layer,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Entities.PolyfaceMeshFace.BeforeChangingLayerValue"/> event.</summary>
+            <param name="oldValue">The old value, being changed.</param>
+            <param name="newValue">The new value, that will replace the old one.</param>
+            <param name="propertyName">(automatic) Name of the affected property.</param>
         </member>
         <member name="M:netDxf.Entities.PolyfaceMeshFace.#ctor">
             <summary>Initializes a new instance of the class.</summary>
@@ -6333,6 +6690,15 @@
         <member name="T:netDxf.Entities.Shape">
             <summary>Represents a shape entity.</summary>
         </member>
+        <member name="E:netDxf.Entities.Shape.BeforeChangingShapeStyleValue">
+            <summary>Generated when a property of <see cref="T:netDxf.Tables.ShapeStyle"/> type changes.</summary>
+        </member>
+        <member name="M:netDxf.Entities.Shape.OnBeforeChangingBeforeValueShapeStyle(netDxf.Tables.ShapeStyle,netDxf.Tables.ShapeStyle,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Entities.Shape.BeforeChangingShapeStyleValue"/> event.</summary>
+            <param name="oldValue">The old value, being changed.</param>
+            <param name="newValue">The new value, that will replace the old one.</param>
+            <param name="propertyName">(automatic) Name of the affected property.</param>
+        </member>
         <member name="M:netDxf.Entities.Shape.#ctor(System.String,netDxf.Tables.ShapeStyle)">
             <summary>Initializes a new instance of the class.</summary>
             <param name="name">Name of the shape which geometry is defined in the shape <see cref="T:netDxf.Tables.ShapeStyle">style</see>.</param>
@@ -6660,6 +7026,15 @@
         <member name="T:netDxf.Entities.Text">
             <summary>Represents a Text <see cref="T:netDxf.Entities.EntityObject">entity</see>.</summary>
         </member>
+        <member name="E:netDxf.Entities.Text.BeforeChangingTextStyleValue">
+            <summary>Generated when a property of <see cref="T:netDxf.Tables.TextStyle"/> type changes.</summary>
+        </member>
+        <member name="M:netDxf.Entities.Text.OnBeforeChangingBeforeValueTextStyle(netDxf.Tables.TextStyle,netDxf.Tables.TextStyle,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Entities.Text.BeforeChangingTextStyleValue"/> event.</summary>
+            <param name="oldValue">The old value, being changed.</param>
+            <param name="newValue">The new value, that will replace the old one.</param>
+            <param name="propertyName">(automatic) Name of the affected property.</param>
+        </member>
         <member name="M:netDxf.Entities.Text.#ctor">
             <summary>Initializes a new instance of the class.</summary>
         </member>
@@ -6804,6 +7179,15 @@
         </member>
         <member name="T:netDxf.Entities.Tolerance">
             <summary>Represents a tolerance <see cref="T:netDxf.Entities.EntityObject">entity</see>.</summary>
+        </member>
+        <member name="E:netDxf.Entities.Tolerance.BeforeChangingDimensionStyleValue">
+            <summary>Generated when a property of <see cref="T:netDxf.Tables.DimensionStyle"/> type changes.</summary>
+        </member>
+        <member name="M:netDxf.Entities.Tolerance.OnBeforeChangingDimensionStyleValue(netDxf.Tables.DimensionStyle,netDxf.Tables.DimensionStyle,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Entities.Tolerance.BeforeChangingDimensionStyleValue"/> event.</summary>
+            <param name="oldValue">The old value, being changed.</param>
+            <param name="newValue">The new value, that will replace the old one.</param>
+            <param name="propertyName">(automatic) Name of the affected property.</param>
         </member>
         <member name="M:netDxf.Entities.Tolerance.#ctor">
             <summary>Initializes a new instance of the class.</summary>
@@ -7057,6 +7441,15 @@
         <member name="T:netDxf.Entities.Underlay">
             <summary>Represents an underlay <see cref="T:netDxf.Entities.EntityObject">entity</see>.</summary>
         </member>
+        <member name="E:netDxf.Entities.Underlay.BeforeChangingUnderlayDefinitionValue">
+            <summary>Generated when a property of <see cref="T:netDxf.Objects.UnderlayDefinition"/> type changes.</summary>
+        </member>
+        <member name="M:netDxf.Entities.Underlay.OnBeforeChangingUnderlayDefinitionValue(netDxf.Objects.UnderlayDefinition,netDxf.Objects.UnderlayDefinition,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Entities.Underlay.BeforeChangingUnderlayDefinitionValue"/> event.</summary>
+            <param name="oldValue">The old value, being changed.</param>
+            <param name="newValue">The new value, that will replace the old one.</param>
+            <param name="propertyName">(automatic) Name of the affected property.</param>
+        </member>
         <member name="M:netDxf.Entities.Underlay.#ctor(netDxf.Objects.UnderlayDefinition)">
             <summary>Initializes a new instance of the class.</summary>
             <param name="definition"><see cref="T:netDxf.Objects.UnderlayDefinition">Underlay definition</see>.</param>
@@ -7215,6 +7608,22 @@
             <remarks>
             The viewport with id equals 1 is the view of the paper space layout itself and it does not show the model.
             </remarks>
+        </member>
+        <member name="E:netDxf.Entities.Viewport.AfterAddingEntityObject">
+            <summary>Generated when an <see cref="T:netDxf.Entities.EntityObject"/> item has been added.</summary>
+        </member>
+        <member name="M:netDxf.Entities.Viewport.OnAfterAddingEntityObject(netDxf.Entities.EntityObject,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Entities.Viewport.AfterAddingEntityObject"/> event.</summary>
+            <param name="item">The item being added.</param>
+            <param name="propertyName">(automatic) Name of the affected collection property.</param>
+        </member>
+        <member name="E:netDxf.Entities.Viewport.AfterRemovingEntityObject">
+            <summary>Generated when an <see cref="T:netDxf.Entities.EntityObject"/> item has been removed.</summary>
+        </member>
+        <member name="M:netDxf.Entities.Viewport.OnAfterRemovingEntityObject(netDxf.Entities.EntityObject,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Entities.Viewport.AfterRemovingEntityObject"/> event.</summary>
+            <param name="item">The item being removed.</param>
+            <param name="propertyName">(automatic) Name of the affected collection property.</param>
         </member>
         <member name="M:netDxf.Entities.Viewport.#ctor">
             <summary>Initializes a new viewport object.</summary>
@@ -7452,6 +7861,130 @@
         </member>
         <member name="M:netDxf.Entities.XLine.Clone">
             <inheritdoc/>
+        </member>
+        <member name="T:netDxf.BeforeItemChangeEventHandler`1">
+            <summary>Represents a method that handles item changes before they occur; allows to confirm or reject the changes.</summary>
+            <typeparam name="TItem">Type of the item.</typeparam>
+            <param name="sender">The source of the event.</param>
+            <param name="e">An object that contains the event data.</param>
+        </member>
+        <member name="T:netDxf.BeforeItemChangeEventArgs`1">
+            <summary>Represents the event data for a <see cref="T:netDxf.BeforeItemChangeEventHandler`1"/>.</summary>
+            <typeparam name="TItem">Type of the item.</typeparam>
+        </member>
+        <member name="P:netDxf.BeforeItemChangeEventArgs`1.PropertyName">
+            <summary>Gets the name of the affected collection property.</summary>
+        </member>
+        <member name="P:netDxf.BeforeItemChangeEventArgs`1.Action">
+            <summary>Gets the action being performed.</summary>
+        </member>
+        <member name="P:netDxf.BeforeItemChangeEventArgs`1.Item">
+            <summary>Gets the item being changed.</summary>
+        </member>
+        <member name="M:netDxf.BeforeItemChangeEventArgs`1.#ctor(System.String,netDxf.ItemChangeAction,`0)">
+            <summary>Initializes a new instance of the class.</summary>
+            <param name="propertyName">Name of the affected collection property.</param>
+            <param name="action">Action being performed.</param>
+            <param name="item">Item being changed.</param>
+        </member>
+        <member name="M:netDxf.BeforeItemChangeEventArgs`1.#ctor(System.String,netDxf.ItemChangeAction,`0,System.Boolean)">
+            <summary>Initializes a new instance of the class.</summary>
+            <param name="propertyName">Name of the affected collection property.</param>
+            <param name="action">Action being performed.</param>
+            <param name="item">Item being changed.</param>
+            <param name="cancel"><inheritdoc cref="M:System.ComponentModel.CancelEventArgs.#ctor(System.Boolean)" path="/param[@name='cancel']"/></param>
+        </member>
+        <member name="T:netDxf.AfterItemChangeEventHandler`1">
+            <summary>Represents a method that handles item changes after they have occurred.</summary>
+            <typeparam name="TItem">Type of the item.</typeparam>
+            <param name="sender">The source of the event.</param>
+            <param name="e">An object that contains the event data.</param>
+        </member>
+        <member name="T:netDxf.AfterItemChangeEventArgs`1">
+            <summary>Represents the event data for a <see cref="T:netDxf.AfterItemChangeEventHandler`1"/>.</summary>
+            <typeparam name="TItem">Type of the item.</typeparam>
+        </member>
+        <member name="P:netDxf.AfterItemChangeEventArgs`1.PropertyName">
+            <summary>Gets the name of the affected collection property.</summary>
+        </member>
+        <member name="P:netDxf.AfterItemChangeEventArgs`1.Action">
+            <summary>Gets the action being performed.</summary>
+        </member>
+        <member name="P:netDxf.AfterItemChangeEventArgs`1.Item">
+            <summary>Gets the item being changed.</summary>
+        </member>
+        <member name="M:netDxf.AfterItemChangeEventArgs`1.#ctor(System.String,netDxf.ItemChangeAction,`0)">
+            <summary>Initializes a new instance of the class.</summary>
+            <param name="propertyName">Name of the affected collection property.</param>
+            <param name="action">Action being performed.</param>
+            <param name="item">Item being changed.</param>
+        </member>
+        <member name="T:netDxf.ItemChangeAction">
+            <summary>Defines the actions of events realted to item changes.</summary>
+        </member>
+        <member name="F:netDxf.ItemChangeAction.Add">
+            <summary>The item is being added.</summary>
+        </member>
+        <member name="F:netDxf.ItemChangeAction.Remove">
+            <summary>The item is being remove.</summary>
+        </member>
+        <member name="T:netDxf.BeforeValueChangeEventHandler`1">
+            <summary>Represents a method that handles value changes before they occur; allows to confirm, replace or reject the new values.</summary>
+            <typeparam name="TValue">Type of the property values.</typeparam>
+            <param name="sender">The source of the event.</param>
+            <param name="e">An object that contains the event data.</param>
+        </member>
+        <member name="T:netDxf.BeforeValueChangeEventArgs`1">
+            <summary>Represents the event data for a <see cref="T:netDxf.BeforeValueChangeEventHandler`1"/>.</summary>
+            <typeparam name="TValue">Type of the property values.</typeparam>
+        </member>
+        <member name="P:netDxf.BeforeValueChangeEventArgs`1.PropertyName">
+            <summary>Gets the name of the affected property.</summary>
+        </member>
+        <member name="P:netDxf.BeforeValueChangeEventArgs`1.OldValue">
+            <summary>Gets the old value, being changed.</summary>
+        </member>
+        <member name="P:netDxf.BeforeValueChangeEventArgs`1.NewValue">
+            <summary>Gets or sets the new value, that will replace the old one.</summary>
+            <remarks>Can be changed by the event handler.</remarks>
+        </member>
+        <member name="M:netDxf.BeforeValueChangeEventArgs`1.#ctor(System.String,`0,`0)">
+            <summary>Initializes a new instance of the class.</summary>
+            <param name="propertyName">Name of the affected property.</param>
+            <param name="oldValue">The old value, being changed.</param>
+            <param name="newValue">The new value, that will replace the old one.</param>
+        </member>
+        <member name="M:netDxf.BeforeValueChangeEventArgs`1.#ctor(System.String,`0,`0,System.Boolean)">
+            <summary>Initializes a new instance of the class.</summary>
+            <param name="propertyName">Name of the affected property.</param>
+            <param name="oldValue">The old value, being changed.</param>
+            <param name="newValue">The new value, that will replace the old one.</param>
+            <param name="cancel"><inheritdoc cref="M:System.ComponentModel.CancelEventArgs.#ctor(System.Boolean)" path="/param[@name='cancel']"/></param>
+        </member>
+        <member name="T:netDxf.AfterValueChangeEventHandler`1">
+            <summary>Represents a method that handles value changes after they have occurred.</summary>
+            <typeparam name="TValue">Type of the property values.</typeparam>
+            <param name="sender">The source of the event.</param>
+            <param name="e">An object that contains the event data.</param>
+        </member>
+        <member name="T:netDxf.AfterValueChangeEventArgs`1">
+            <summary>Represents the event data for a <see cref="T:netDxf.AfterValueChangeEventHandler`1"/>.</summary>
+            <typeparam name="TValue">Type of the property values.</typeparam>
+        </member>
+        <member name="P:netDxf.AfterValueChangeEventArgs`1.PropertyName">
+            <summary>Gets the name of the affected property.</summary>
+        </member>
+        <member name="P:netDxf.AfterValueChangeEventArgs`1.OldValue">
+            <summary>Gets the old value, being changed.</summary>
+        </member>
+        <member name="P:netDxf.AfterValueChangeEventArgs`1.NewValue">
+            <summary>Gets the new value, that replaced the old one.</summary>
+        </member>
+        <member name="M:netDxf.AfterValueChangeEventArgs`1.#ctor(System.String,`0,`0)">
+            <summary>Initializes a new instance of the class.</summary>
+            <param name="propertyName">Name of the affected property.</param>
+            <param name="oldValue">The old value, being changed.</param>
+            <param name="newValue">The new value, that replaced the old one.</param>
         </member>
         <member name="M:netDxf.GTE.BezierCurve.Evaluate(System.Double,System.Int32,netDxf.Vector3[]@)">
             <inheritdoc/>
@@ -9387,6 +9920,22 @@
         <member name="T:netDxf.Objects.Group">
             <summary>Represents a group of entities.</summary>
         </member>
+        <member name="E:netDxf.Objects.Group.AfterAddingEntityObject">
+            <summary>Generated when an <see cref="T:netDxf.Entities.EntityObject"/> item has been added.</summary>
+        </member>
+        <member name="M:netDxf.Objects.Group.OnAfterAddingEntityObject(netDxf.Entities.EntityObject,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Objects.Group.AfterAddingEntityObject"/> event.</summary>
+            <param name="item">The item being added.</param>
+            <param name="propertyName">(automatic) Name of the affected collection property.</param>
+        </member>
+        <member name="E:netDxf.Objects.Group.AfterRemovingEntityObject">
+            <summary>Generated when an <see cref="T:netDxf.Entities.EntityObject"/> item has been removed.</summary>
+        </member>
+        <member name="M:netDxf.Objects.Group.OnAfterRemovingEntityObject(netDxf.Entities.EntityObject,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Objects.Group.AfterRemovingEntityObject"/> event.</summary>
+            <param name="item">The item being removed.</param>
+            <param name="propertyName">(automatic) Name of the affected collection property.</param>
+        </member>
         <member name="M:netDxf.Objects.Group.#ctor">
             <summary>Initialized a new unnamed empty group.</summary>
             <remarks>
@@ -9450,13 +9999,6 @@
         <member name="M:netDxf.Objects.Group.Clone">
             <inheritdoc/>
         </member>
-        <member name="M:netDxf.Objects.GroupEntityChangeEventArgs.#ctor(netDxf.Entities.EntityObject)">
-            <summary>Initializes a new instance of the class.</summary>
-            <param name="item">The entity that is being added or removed from the block.</param>
-        </member>
-        <member name="P:netDxf.Objects.GroupEntityChangeEventArgs.Item">
-            <summary>Gets the entity that is being added or removed.</summary>
-        </member>
         <member name="T:netDxf.Objects.ImageDefinition">
             <summary>Represents an image definition.</summary>
         </member>
@@ -9498,47 +10040,6 @@
             </para>
             <para>
             This is a generic constructor for all image formats supported by <b>AutoCAD</b>, note that not all <b>AutoCAD</b> versions support the same image formats.
-            </para>
-            <para>
-            Note (this is from the <b>AutoCAD</b> docs): <b>AutoCAD 2000</b>, <b>AutoCAD LT 2000</b>, and later releases do not support LZW-compressed <b>TIFF</b> files,
-            with the exception of English language versions sold in the <b>US</b> and Canada.<br />
-            If you have <b>TIFF</b> files that were created using <b>LZW</b> compression and want to insert them into a drawing
-            you must save the <b>TIFF</b> files with <b>LZW</b> compression disabled.
-            </para>
-            </remarks>
-        </member>
-        <member name="M:netDxf.Objects.ImageDefinition.#ctor(System.String)">
-            <summary>Initializes a new instance of the class. Only available for Net Framework 4.5 builds.</summary>
-            <param name="file">Image file name with full or relative path.</param>
-            <remarks>
-            <para>
-            The name of the file without extension will be used as the name of the image definition.
-            </para>
-            <para>
-            Supported image formats: <b>BMP</b>, <b>JPG</b>, <b>PNG</b>, <b>TIFF</b>.<br />
-            Even thought <b>AutoCAD</b> supports more image formats, this constructor is restricted to the ones the net framework supports in common with AutoCAD.
-            Use the generic constructor instead.
-            </para>
-            <para>
-            Note (this is from the <b>AutoCAD</b> docs): <b>AutoCAD 2000</b>, <b>AutoCAD LT 2000</b>, and later releases do not support LZW-compressed <b>TIFF</b> files,
-            with the exception of English language versions sold in the <b>US</b> and Canada.<br />
-            If you have <b>TIFF</b> files that were created using <b>LZW</b> compression and want to insert them into a drawing
-            you must save the <b>TIFF</b> files with <b>LZW</b> compression disabled.
-            </para>
-            </remarks>
-        </member>
-        <member name="M:netDxf.Objects.ImageDefinition.#ctor(System.String,System.String)">
-            <summary>Initializes a new instance of the class. Only available for Net Framework 4.5 builds.</summary>
-            <param name="name">Image definition name.</param>
-            <param name="file">Image file name with full or relative path.</param>
-            <remarks>
-            <para>
-            The name assigned to the image definition must be unique.
-            </para>
-            <para>
-            Supported image formats: <b>BMP</b>, <b>JPG</b>, <b>PNG</b>, <b>TIFF</b>.<br />
-            Even thought <b>AutoCAD</b> supports more image formats, this constructor is restricted to the ones the .net library supports in common with AutoCAD.
-            Use the generic constructor instead.
             </para>
             <para>
             Note (this is from the <b>AutoCAD</b> docs): <b>AutoCAD 2000</b>, <b>AutoCAD LT 2000</b>, and later releases do not support LZW-compressed <b>TIFF</b> files,
@@ -9860,6 +10361,31 @@
         <member name="T:netDxf.Objects.MLineStyle">
             <summary>Represents as <b>MLine</b> style.</summary>
         </member>
+        <member name="E:netDxf.Objects.MLineStyle.AfterAddingMLineStyleElement">
+            <summary>Generated when an <see cref="T:netDxf.Objects.MLineStyleElement"/> item has been added.</summary>
+        </member>
+        <member name="M:netDxf.Objects.MLineStyle.OnAfterAddingMLineStyleElement(netDxf.Objects.MLineStyleElement,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Objects.MLineStyle.AfterAddingMLineStyleElement"/> event.</summary>
+            <param name="item">The item being added.</param>
+            <param name="propertyName">(automatic) Name of the affected collection property.</param>
+        </member>
+        <member name="E:netDxf.Objects.MLineStyle.AfterRemovingMLineStyleElement">
+            <summary>Generated when an <see cref="T:netDxf.Objects.MLineStyleElement"/> item has been removed.</summary>
+        </member>
+        <member name="M:netDxf.Objects.MLineStyle.OnAfterRemovingMLineStyleElement(netDxf.Objects.MLineStyleElement,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Objects.MLineStyle.AfterRemovingMLineStyleElement"/> event.</summary>
+            <param name="item">The item being removed.</param>
+            <param name="propertyName">(automatic) Name of the affected collection property.</param>
+        </member>
+        <member name="E:netDxf.Objects.MLineStyle.BeforeChangingLinetypeValue">
+            <summary>Generated when a property of <see cref="T:netDxf.Tables.Linetype"/> type changes.</summary>
+        </member>
+        <member name="M:netDxf.Objects.MLineStyle.OnBeforeChangingLinetypeValue(netDxf.Tables.Linetype,netDxf.Tables.Linetype,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Objects.MLineStyle.BeforeChangingLinetypeValue"/> event.</summary>
+            <param name="oldValue">The old value, being changed.</param>
+            <param name="newValue">The new value, that will replace the old one.</param>
+            <param name="propertyName">(automatic) Name of the affected property.</param>
+        </member>
         <member name="F:netDxf.Objects.MLineStyle.DefaultName">
             <summary>Default multiline style name.</summary>
         </member>
@@ -9935,6 +10461,15 @@
         <member name="T:netDxf.Objects.MLineStyleElement">
             <summary>Represent each of the elements that make up a MLineStyle.</summary>
         </member>
+        <member name="E:netDxf.Objects.MLineStyleElement.BeforeChangingLinetypeValue">
+            <summary>Generated when a property of <see cref="P:netDxf.Objects.MLineStyleElement.Linetype"/> type changes.</summary>
+        </member>
+        <member name="M:netDxf.Objects.MLineStyleElement.OnBeforeChangingLinetypeValue(netDxf.Tables.Linetype,netDxf.Tables.Linetype,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Objects.MLineStyleElement.BeforeChangingLinetypeValue"/> event.</summary>
+            <param name="oldValue">The old value, being changed.</param>
+            <param name="newValue">The new value, that will replace the old one.</param>
+            <param name="propertyName">(automatic) Name of the affected property.</param>
+        </member>
         <member name="M:netDxf.Objects.MLineStyleElement.#ctor(System.Double)">
             <summary>Initializes a new instance of the class.</summary>
             <param name="offset">Element offset.</param>
@@ -9980,13 +10515,6 @@
         </member>
         <member name="M:netDxf.Objects.MLineStyleElement.ToString">
             <inheritdoc/>
-        </member>
-        <member name="M:netDxf.Objects.MLineStyleElementChangeEventArgs.#ctor(netDxf.Objects.MLineStyleElement)">
-            <summary>Initializes a new instance of the class.</summary>
-            <param name="item">The item that is being added or removed from the <see cref="T:netDxf.Objects.MLineStyle"/> elements list.</param>
-        </member>
-        <member name="P:netDxf.Objects.MLineStyleElementChangeEventArgs.Item">
-            <summary>Gets the item that is being added or removed from the <see cref="T:netDxf.Objects.MLineStyle"/> elements list.</summary>
         </member>
         <member name="T:netDxf.Objects.MLineStyleFlags">
             <summary>Flags (bit-coded).</summary>
@@ -10536,6 +11064,33 @@
         <member name="T:netDxf.Tables.DimensionStyle">
             <summary>Represents a dimension style.</summary>
         </member>
+        <member name="E:netDxf.Tables.DimensionStyle.BeforeChangingLinetypeValue">
+            <summary>Generated when a property of <see cref="T:netDxf.Tables.Linetype"/> type changes.</summary>
+        </member>
+        <member name="M:netDxf.Tables.DimensionStyle.OnBeforeChangingLinetypeValue(netDxf.Tables.Linetype,netDxf.Tables.Linetype,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Tables.DimensionStyle.BeforeChangingLinetypeValue"/> event.</summary>
+            <param name="oldValue">The old value, being changed.</param>
+            <param name="newValue">The new value, that will replace the old one.</param>
+            <param name="propertyName">(automatic) Name of the affected property.</param>
+        </member>
+        <member name="E:netDxf.Tables.DimensionStyle.BeforeChangingTextStyleValue">
+            <summary>Generated when a property of <see cref="P:netDxf.Tables.DimensionStyle.TextStyle"/> type changes.</summary>
+        </member>
+        <member name="M:netDxf.Tables.DimensionStyle.OnBeforeChangingBeforeValueTextStyle(netDxf.Tables.TextStyle,netDxf.Tables.TextStyle,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Tables.DimensionStyle.BeforeChangingTextStyleValue"/> event.</summary>
+            <param name="oldValue">The old value, being changed.</param>
+            <param name="newValue">The new value, that will replace the old one.</param>
+            <param name="propertyName">(automatic) Name of the affected property.</param>
+        </member>
+        <member name="E:netDxf.Tables.DimensionStyle.BeforeChangingBlockValue">
+            <summary>Generated when a property of <see cref="T:netDxf.Blocks.Block"/> type changes.</summary>
+        </member>
+        <member name="M:netDxf.Tables.DimensionStyle.OnBeforeChangingBlockValue(netDxf.Blocks.Block,netDxf.Blocks.Block,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Tables.DimensionStyle.BeforeChangingBlockValue"/> event.</summary>
+            <param name="oldValue">The old value, being changed.</param>
+            <param name="newValue">The new value, that will replace the old one.</param>
+            <param name="propertyName">(automatic) Name of the affected property.</param>
+        </member>
         <member name="F:netDxf.Tables.DimensionStyle.DefaultName">
             <summary>Default dimension style name.</summary>
         </member>
@@ -11068,13 +11623,6 @@
         <member name="P:netDxf.Tables.DimensionStyleOverride.Value">
             <summary>Gets the value of the dimension style to override.</summary>
         </member>
-        <member name="M:netDxf.Tables.DimensionStyleOverrideChangeEventArgs.#ctor(netDxf.Tables.DimensionStyleOverride)">
-            <summary>Initializes a new instance of the class.</summary>
-            <param name="item">The <see cref="T:netDxf.Tables.DimensionStyleOverride"/> that is being added or removed from the insert.</param>
-        </member>
-        <member name="P:netDxf.Tables.DimensionStyleOverrideChangeEventArgs.Item">
-            <summary>Gets the <see cref="T:netDxf.Tables.DimensionStyleOverride"/> that is being added or removed.</summary>
-        </member>
         <member name="T:netDxf.Tables.DimensionStyleOverrideType">
             <summary>Dimension style override types.</summary>
             <remarks>
@@ -11505,6 +12053,15 @@
         <member name="T:netDxf.Tables.Layer">
             <summary>Represents a layer.</summary>
         </member>
+        <member name="E:netDxf.Tables.Layer.BeforeChangingLinetypeValue">
+            <summary>Generated when a property of <see cref="P:netDxf.Tables.Layer.Linetype"/> type changes.</summary>
+        </member>
+        <member name="M:netDxf.Tables.Layer.OnBeforeChangingLinetypeValue(netDxf.Tables.Linetype,netDxf.Tables.Linetype,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Tables.Layer.BeforeChangingLinetypeValue"/> event.</summary>
+            <param name="oldValue">The old value, being changed.</param>
+            <param name="newValue">The new value, that will replace the old one.</param>
+            <param name="propertyName">(automatic) Name of the affected property.</param>
+        </member>
         <member name="F:netDxf.Tables.Layer.DefaultName">
             <summary>Default layer name.</summary>
         </member>
@@ -11592,6 +12149,40 @@
         </member>
         <member name="T:netDxf.Tables.Linetype">
             <summary>Represents a line type. Simple and complex line types are supported.</summary>
+        </member>
+        <member name="E:netDxf.Tables.Linetype.AfterAddingLinetypeSegment">
+            <summary>Generated when an <see cref="T:netDxf.Tables.LinetypeSegment"/> item has been added.</summary>
+        </member>
+        <member name="M:netDxf.Tables.Linetype.OnAfterAddingLinetypeSegment(netDxf.Tables.LinetypeSegment,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Tables.Linetype.AfterAddingLinetypeSegment"/> event.</summary>
+            <param name="item">The item being added.</param>
+            <param name="propertyName">(automatic) Name of the affected collection property.</param>
+        </member>
+        <member name="E:netDxf.Tables.Linetype.AfterRemovingLinetypeSegment">
+            <summary>Generated when an <see cref="T:netDxf.Tables.LinetypeSegment"/> item has been removed.</summary>
+        </member>
+        <member name="M:netDxf.Tables.Linetype.OnAfterRemovingLinetypeSegment(netDxf.Tables.LinetypeSegment,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Tables.Linetype.AfterRemovingLinetypeSegment"/> event.</summary>
+            <param name="item">The item being removed.</param>
+            <param name="propertyName">(automatic) Name of the affected collection property.</param>
+        </member>
+        <member name="E:netDxf.Tables.Linetype.BeforeChangingTextStyleValue">
+            <summary>Generated when a property of <see cref="T:netDxf.Tables.TextStyle"/> type changes.</summary>
+        </member>
+        <member name="M:netDxf.Tables.Linetype.OnBeforeChangingBeforeValueTextStyle(netDxf.Tables.TextStyle,netDxf.Tables.TextStyle,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Tables.Linetype.BeforeChangingTextStyleValue"/> event.</summary>
+            <param name="oldValue">The old value, being changed.</param>
+            <param name="newValue">The new value, that will replace the old one.</param>
+            <param name="propertyName">(automatic) Name of the affected property.</param>
+        </member>
+        <member name="E:netDxf.Tables.Linetype.BeforeChangingShapeStyleValue">
+            <summary>Generated when a property of <see cref="T:netDxf.Tables.ShapeStyle"/> type changes.</summary>
+        </member>
+        <member name="M:netDxf.Tables.Linetype.OnBeforeChangingBeforeValueShapeStyle(netDxf.Tables.ShapeStyle,netDxf.Tables.ShapeStyle,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Tables.Linetype.BeforeChangingShapeStyleValue"/> event.</summary>
+            <param name="oldValue">The old value, being changed.</param>
+            <param name="newValue">The new value, that will replace the old one.</param>
+            <param name="propertyName">(automatic) Name of the affected property.</param>
         </member>
         <member name="F:netDxf.Tables.Linetype.ByLayerName">
             <summary>ByLayer line type name.</summary>
@@ -11713,13 +12304,6 @@
         <member name="M:netDxf.Tables.LinetypeSegment.Clone">
             <inheritdoc/>
         </member>
-        <member name="M:netDxf.Tables.LinetypeSegmentChangeEventArgs.#ctor(netDxf.Tables.LinetypeSegment)">
-            <summary>Initializes a new instance of the class.</summary>
-            <param name="item">The item that is being added or removed from the line type segment list.</param>
-        </member>
-        <member name="P:netDxf.Tables.LinetypeSegmentChangeEventArgs.Item">
-            <summary>Gets the item that is being added or removed from the line type segment list.</summary>
-        </member>
         <member name="T:netDxf.Tables.LinetypeSegmentRotationType">
             <summary>Define the type of rotation specified by the rotation value of the text or shape linetype segment.</summary>
         </member>
@@ -11747,6 +12331,15 @@
         </member>
         <member name="T:netDxf.Tables.LinetypeShapeSegment">
             <summary>Represents a shape linetype segment.</summary>
+        </member>
+        <member name="E:netDxf.Tables.LinetypeShapeSegment.BeforeChangingShapeStyleValue">
+            <summary>Generated when a property of <see cref="T:netDxf.Tables.ShapeStyle"/> type changes.</summary>
+        </member>
+        <member name="M:netDxf.Tables.LinetypeShapeSegment.OnBeforeChangingBeforeValueShapeStyle(netDxf.Tables.ShapeStyle,netDxf.Tables.ShapeStyle,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Tables.LinetypeShapeSegment.BeforeChangingShapeStyleValue"/> event.</summary>
+            <param name="oldValue">The old value, being changed.</param>
+            <param name="newValue">The new value, that will replace the old one.</param>
+            <param name="propertyName">(automatic) Name of the affected property.</param>
         </member>
         <member name="M:netDxf.Tables.LinetypeShapeSegment.#ctor(System.String,netDxf.Tables.ShapeStyle)">
             <summary>Initializes a new instance of the class.</summary>
@@ -11831,6 +12424,15 @@
         </member>
         <member name="T:netDxf.Tables.LinetypeTextSegment">
             <summary>Represents a text linetype segment.</summary>
+        </member>
+        <member name="E:netDxf.Tables.LinetypeTextSegment.BeforeChangingTextStyleValue">
+            <summary>Generated when a property of <see cref="T:netDxf.Tables.TextStyle"/> type changes.</summary>
+        </member>
+        <member name="M:netDxf.Tables.LinetypeTextSegment.OnBeforeChangingBeforeValueTextStyle(netDxf.Tables.TextStyle,netDxf.Tables.TextStyle,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Tables.LinetypeTextSegment.BeforeChangingTextStyleValue"/> event.</summary>
+            <param name="oldValue">The old value, being changed.</param>
+            <param name="newValue">The new value, that will replace the old one.</param>
+            <param name="propertyName">(automatic) Name of the affected property.</param>
         </member>
         <member name="M:netDxf.Tables.LinetypeTextSegment.#ctor">
             <summary>Initializes a new instance of the class.</summary>
@@ -11956,6 +12558,15 @@
         <member name="T:netDxf.Tables.TableObject">
             <summary>Defines classes that can be accessed by name. They are usually part of the <b>DXF TABLE</b> section but can also be part of the <b>OBJECTS</b> section.</summary>
         </member>
+        <member name="E:netDxf.Tables.TableObject.NameChanged">
+            <summary>Generated when the value of <see cref="P:netDxf.Tables.TableObject.Name"/> changes.</summary>
+        </member>
+        <member name="M:netDxf.Tables.TableObject.OnNameChanged(System.String,System.String,System.String)">
+            <summary>Generates the <see cref="E:netDxf.Tables.TableObject.NameChanged"/> event.</summary>
+            <param name="oldValue">The old value, being changed.</param>
+            <param name="newValue">The new value, that will replace the old one.</param>
+            <param name="propertyName">(automatic) Name of the affected property.</param>
+        </member>
         <member name="M:netDxf.Tables.TableObject.#ctor(System.String,System.String,System.Boolean)">
             <summary>Initializes a new instance of the class.</summary>
             <param name="name">Table name. The following characters \&lt;&gt;/?":;*|,=` are not supported for table object names.</param>
@@ -12024,21 +12635,6 @@
             <summary>Creates a new table object that is a copy of the current instance.</summary>
             <param name="newName">TableObject name of the copy.</param>
             <returns>A new table object that is a copy of this instance.</returns>
-        </member>
-        <member name="T:netDxf.Tables.TableObjectChangedEventArgs`1">
-            <summary>Event data for changes or substitutions of table objects in entities or other tables.</summary>
-            <typeparam name="T">A table object</typeparam>
-        </member>
-        <member name="M:netDxf.Tables.TableObjectChangedEventArgs`1.#ctor(`0,`0)">
-            <summary>Initializes a new instance of the class.</summary>
-            <param name="oldTable">The previous table object.</param>
-            <param name="newTable">The new table object.</param>
-        </member>
-        <member name="P:netDxf.Tables.TableObjectChangedEventArgs`1.OldValue">
-            <summary>Gets the previous property value.</summary>
-        </member>
-        <member name="P:netDxf.Tables.TableObjectChangedEventArgs`1.NewValue">
-            <summary>Gets or sets the new property value.</summary>
         </member>
         <member name="T:netDxf.Tables.TextStyle">
             <summary>Represents a text style.</summary>
@@ -12129,12 +12725,6 @@
         </member>
         <member name="P:netDxf.Tables.TextStyle.Owner">
             <summary>Gets the owner of the actual text style.</summary>
-        </member>
-        <member name="M:netDxf.Tables.TextStyle.TrueTypeFontFamilyName(System.String)">
-            <summary>Find the font family name of an specified <b>TTF</b> font file. Only available for Net Framework 4.5 builds.</summary>
-            <param name="ttfFont">TTF font file.</param>
-            <returns>The font family name of the specified <b>TTF</b> font file.</returns>
-            <remarks>This method will return an empty string if the specified font is not found in its path or the system font folder or if it is not a valid <b>TTF</b> font.</remarks>
         </member>
         <member name="M:netDxf.Tables.TextStyle.HasReferences">
             <inheritdoc/>
@@ -13759,12 +14349,6 @@
         </member>
         <member name="M:netDxf.XDataRecord.ToString">
             <inheritdoc/>
-        </member>
-        <member name="T:System.Runtime.CompilerServices.IsExternalInit">
-            <summary>
-            Reserved to be used by the compiler for tracking metadata.
-            This class should not be used by developers in source code.
-            </summary>
         </member>
     </members>
 </doc>

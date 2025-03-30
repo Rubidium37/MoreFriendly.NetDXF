@@ -24,6 +24,7 @@
 #endregion
 
 using System;
+using System.Runtime.CompilerServices;
 using netDxf.Blocks;
 using netDxf.Collections;
 using netDxf.Tables;
@@ -39,58 +40,64 @@ namespace netDxf.Entities
 	{
 		#region delegates and events
 
-		public delegate void DimensionStyleChangedEventHandler(Dimension sender, TableObjectChangedEventArgs<DimensionStyle> e);
-		public event DimensionStyleChangedEventHandler DimensionStyleChanged;
-		protected virtual DimensionStyle OnDimensionStyleChangedEvent(DimensionStyle oldStyle, DimensionStyle newStyle)
+		/// <summary>Generated when a property of <see cref="DimensionStyle"/> type changes.</summary>
+		public event BeforeValueChangeEventHandler<DimensionStyle> BeforeChangingDimensionStyleValue;
+		/// <summary>Generates the <see cref="BeforeChangingDimensionStyleValue"/> event.</summary>
+		/// <param name="oldValue">The old value, being changed.</param>
+		/// <param name="newValue">The new value, that will replace the old one.</param>
+		/// <param name="propertyName">(automatic) Name of the affected property.</param>
+		protected virtual DimensionStyle OnBeforeChangingDimensionStyleValue(DimensionStyle oldValue, DimensionStyle newValue, [CallerMemberName] string propertyName = "")
 		{
-			DimensionStyleChangedEventHandler ae = this.DimensionStyleChanged;
-			if (ae != null)
+			if (this.BeforeChangingDimensionStyleValue is { } handler)
 			{
-				TableObjectChangedEventArgs<DimensionStyle> eventArgs = new TableObjectChangedEventArgs<DimensionStyle>(oldStyle, newStyle);
-				ae(this, eventArgs);
-				return eventArgs.NewValue;
+				var e = new BeforeValueChangeEventArgs<DimensionStyle>(propertyName, oldValue, newValue);
+				handler(this, e);
+				return e.NewValue;
 			}
-			return newStyle;
+			return newValue;
 		}
 
-		public delegate void DimensionBlockChangedEventHandler(Dimension sender, TableObjectChangedEventArgs<Block> e);
-		public event DimensionBlockChangedEventHandler DimensionBlockChanged;
-		protected virtual Block OnDimensionBlockChangedEvent(Block oldBlock, Block newBlock)
+		/// <summary>Generated when a property of <see cref="Block"/> type changes.</summary>
+		public event BeforeValueChangeEventHandler<Block> BeforeChangingBlockValue;
+		/// <summary>Generates the <see cref="BeforeChangingBlockValue"/> event.</summary>
+		/// <param name="oldValue">The old value, being changed.</param>
+		/// <param name="newValue">The new value, that will replace the old one.</param>
+		/// <param name="propertyName">(automatic) Name of the affected property.</param>
+		protected virtual Block OnBeforeChangingBlockValue(Block oldValue, Block newValue, [CallerMemberName] string propertyName = "")
 		{
-			DimensionBlockChangedEventHandler ae = this.DimensionBlockChanged;
-			if (ae != null)
+			if (this.BeforeChangingBlockValue is { } handler)
 			{
-				TableObjectChangedEventArgs<Block> eventArgs = new TableObjectChangedEventArgs<Block>(oldBlock, newBlock);
-				ae(this, eventArgs);
-				return eventArgs.NewValue;
+				var e = new BeforeValueChangeEventArgs<Block>(propertyName, oldValue, newValue);
+				handler(this, e);
+				return e.NewValue;
 			}
-			return newBlock;
+			return newValue;
 		}
 
 		#endregion
 
 		#region delegates and events for style overrides
 
-		public delegate void DimensionStyleOverrideAddedEventHandler(Dimension sender, DimensionStyleOverrideChangeEventArgs e);
-		public event DimensionStyleOverrideAddedEventHandler DimensionStyleOverrideAdded;
-		protected virtual void OnDimensionStyleOverrideAddedEvent(DimensionStyleOverride item)
+		/// <summary>Generated when an <see cref="DimensionStyleOverride"/> item has been added.</summary>
+		public event AfterItemChangeEventHandler<DimensionStyleOverride> AfterAddingDimensionStyleOverride;
+		/// <summary>Generates the <see cref="AfterAddingDimensionStyleOverride"/> event.</summary>
+		/// <param name="item">The item being added.</param>
+		/// <param name="propertyName">(automatic) Name of the affected collection property.</param>
+		protected virtual void OnAfterAddingDimensionStyleOverride(DimensionStyleOverride item, [CallerMemberName] string propertyName = "")
 		{
-			DimensionStyleOverrideAddedEventHandler ae = this.DimensionStyleOverrideAdded;
-			if (ae != null)
-			{
-				ae(this, new DimensionStyleOverrideChangeEventArgs(item));
-			}
+			if (this.AfterAddingDimensionStyleOverride is { } handler)
+				handler(this, new(propertyName, ItemChangeAction.Add, item));
 		}
 
-		public delegate void DimensionStyleOverrideRemovedEventHandler(Dimension sender, DimensionStyleOverrideChangeEventArgs e);
-		public event DimensionStyleOverrideRemovedEventHandler DimensionStyleOverrideRemoved;
-		protected virtual void OnDimensionStyleOverrideRemovedEvent(DimensionStyleOverride item)
+		/// <summary>Generated when an <see cref="DimensionStyleOverride"/> item has been removed.</summary>
+		public event AfterItemChangeEventHandler<DimensionStyleOverride> AfterRemovingDimensionStyleOverride;
+		/// <summary>Generates the <see cref="AfterRemovingDimensionStyleOverride"/> event.</summary>
+		/// <param name="item">The item being removed.</param>
+		/// <param name="propertyName">(automatic) Name of the affected collection property.</param>
+		protected virtual void OnAfterRemovingDimensionStyleOverride(DimensionStyleOverride item, [CallerMemberName] string propertyName = "")
 		{
-			DimensionStyleOverrideRemovedEventHandler ae = this.DimensionStyleOverrideRemoved;
-			if (ae != null)
-			{
-				ae(this, new DimensionStyleOverrideChangeEventArgs(item));
-			}
+			if (this.AfterRemovingDimensionStyleOverride is { } handler)
+				handler(this, new(propertyName, ItemChangeAction.Remove, item));
 		}
 
 		#endregion
@@ -102,10 +109,10 @@ namespace netDxf.Entities
 			: base(EntityType.Dimension, DxfObjectCode.Dimension)
 		{
 			this.DimensionType = type;
-			this.StyleOverrides.BeforeAddItem += this.StyleOverrides_BeforeAddItem;
-			this.StyleOverrides.AddItem += this.StyleOverrides_AddItem;
-			this.StyleOverrides.BeforeRemoveItem += this.StyleOverrides_BeforeRemoveItem;
-			this.StyleOverrides.RemoveItem += this.StyleOverrides_RemoveItem;
+			this.StyleOverrides.BeforeAddingItem += this.StyleOverrides_BeforeAddingItem;
+			this.StyleOverrides.AfterAddingItem += this.StyleOverrides_AfterAddingItem;
+			this.StyleOverrides.BeforeRemovingItem += this.StyleOverrides_BeforeRemovingItem;
+			this.StyleOverrides.AfterRemovingItem += this.StyleOverrides_AfterRemovingItem;
 		}
 
 		#endregion
@@ -152,7 +159,7 @@ namespace netDxf.Entities
 					throw new ArgumentNullException(nameof(value));
 				}
 
-				_Style = this.OnDimensionStyleChangedEvent(_Style, value);
+				_Style = this.OnBeforeChangingDimensionStyleValue(_Style, value);
 			}
 		}
 
@@ -202,7 +209,7 @@ namespace netDxf.Entities
 		public Block Block
 		{
 			get => _Block;
-			set => _Block = this.OnDimensionBlockChangedEvent(_Block, value);
+			set => _Block = this.OnBeforeChangingBlockValue(_Block, value);
 		}
 
 		private double _TextRotation = 0.0;
@@ -256,7 +263,7 @@ namespace netDxf.Entities
 			if (_Block != null)
 			{
 				Block newBlock = this.BuildBlock(_Block.Name);
-				_Block = this.OnDimensionBlockChangedEvent(_Block, newBlock);
+				_Block = this.OnBeforeChangingBlockValue(_Block, newBlock, nameof(this.Block));
 			}
 		}
 
@@ -264,9 +271,12 @@ namespace netDxf.Entities
 
 		#region Dimension style overrides events
 
-		private void StyleOverrides_BeforeAddItem(DimensionStyleOverrideDictionary sender, DimensionStyleOverrideDictionaryEventArgs e)
+		private void StyleOverrides_BeforeAddingItem(object sender, BeforeItemChangeEventArgs<DimensionStyleOverride> e)
 		{
-			if (sender.TryGetValue(e.Item.Type, out DimensionStyleOverride old))
+			if (sender is not DimensionStyleOverrideDictionary senderT)
+				return;
+
+			if (senderT.TryGetValue(e.Item.Type, out DimensionStyleOverride old))
 			{
 				if (ReferenceEquals(old.Value, e.Item.Value))
 				{
@@ -275,15 +285,15 @@ namespace netDxf.Entities
 			}
 		}
 
-		private void StyleOverrides_AddItem(DimensionStyleOverrideDictionary sender, DimensionStyleOverrideDictionaryEventArgs e)
-			=> this.OnDimensionStyleOverrideAddedEvent(e.Item);
+		private void StyleOverrides_AfterAddingItem(object sender, AfterItemChangeEventArgs<DimensionStyleOverride> e)
+			=> this.OnAfterAddingDimensionStyleOverride(e.Item, nameof(StyleOverrides));
 
-		private void StyleOverrides_BeforeRemoveItem(DimensionStyleOverrideDictionary sender, DimensionStyleOverrideDictionaryEventArgs e)
+		private void StyleOverrides_BeforeRemovingItem(object sender, BeforeItemChangeEventArgs<DimensionStyleOverride> e)
 		{
 		}
 
-		private void StyleOverrides_RemoveItem(DimensionStyleOverrideDictionary sender, DimensionStyleOverrideDictionaryEventArgs e)
-			=> this.OnDimensionStyleOverrideRemovedEvent(e.Item);
+		private void StyleOverrides_AfterRemovingItem(object sender, AfterItemChangeEventArgs<DimensionStyleOverride> e)
+			=> this.OnAfterRemovingDimensionStyleOverride(e.Item, nameof(StyleOverrides));
 
 		#endregion
 	}

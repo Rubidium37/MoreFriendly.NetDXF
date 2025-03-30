@@ -24,6 +24,7 @@
 #endregion
 
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using netDxf.Collections;
 using netDxf.Entities;
 using netDxf.Tables;
@@ -36,22 +37,26 @@ namespace netDxf.Objects
 	{
 		#region delegates and events
 
-		public delegate void EntityAddedEventHandler(Group sender, GroupEntityChangeEventArgs e);
-		public event EntityAddedEventHandler EntityAdded;
-		protected virtual void OnEntityAddedEvent(EntityObject item)
+		/// <summary>Generated when an <see cref="EntityObject"/> item has been added.</summary>
+		public event AfterItemChangeEventHandler<EntityObject> AfterAddingEntityObject;
+		/// <summary>Generates the <see cref="AfterAddingEntityObject"/> event.</summary>
+		/// <param name="item">The item being added.</param>
+		/// <param name="propertyName">(automatic) Name of the affected collection property.</param>
+		protected virtual void OnAfterAddingEntityObject(EntityObject item, [CallerMemberName] string propertyName = "")
 		{
-			EntityAddedEventHandler ae = this.EntityAdded;
-			if (ae != null)
-				ae(this, new GroupEntityChangeEventArgs(item));
+			if (this.AfterAddingEntityObject is { } handler)
+				handler(this, new(propertyName, ItemChangeAction.Add, item));
 		}
 
-		public delegate void EntityRemovedEventHandler(Group sender, GroupEntityChangeEventArgs e);
-		public event EntityRemovedEventHandler EntityRemoved;
-		protected virtual void OnEntityRemovedEvent(EntityObject item)
+		/// <summary>Generated when an <see cref="EntityObject"/> item has been removed.</summary>
+		public event AfterItemChangeEventHandler<EntityObject> AfterRemovingEntityObject;
+		/// <summary>Generates the <see cref="AfterRemovingEntityObject"/> event.</summary>
+		/// <param name="item">The item being removed.</param>
+		/// <param name="propertyName">(automatic) Name of the affected collection property.</param>
+		protected virtual void OnAfterRemovingEntityObject(EntityObject item, [CallerMemberName] string propertyName = "")
 		{
-			EntityRemovedEventHandler ae = this.EntityRemoved;
-			if (ae != null)
-				ae(this, new GroupEntityChangeEventArgs(item));
+			if (this.AfterRemovingEntityObject is { } handler)
+				handler(this, new(propertyName, ItemChangeAction.Remove, item));
 		}
 
 		#endregion
@@ -97,10 +102,10 @@ namespace netDxf.Objects
 			this.Description = string.Empty;
 			this.IsSelectable = true;
 			this.Entities = new EntityCollection();
-			this.Entities.BeforeAddItem += this.Entities_BeforeAddItem;
-			this.Entities.AddItem += this.Entities_AddItem;
-			this.Entities.BeforeRemoveItem += this.Entities_BeforeRemoveItem;
-			this.Entities.RemoveItem += this.Entities_RemoveItem;
+			this.Entities.BeforeAddingItem += this.Entities_BeforeAddingItem;
+			this.Entities.AfterAddingItem += this.Entities_AfterAddingItem;
+			this.Entities.BeforeRemovingItem += this.Entities_BeforeRemovingItem;
+			this.Entities.AfterRemovingItem += this.Entities_AfterRemovingItem;
 			if (entities != null)
 			{
 				this.Entities.AddRange(entities);
@@ -113,10 +118,10 @@ namespace netDxf.Objects
 			this.Description = string.Empty;
 			this.IsSelectable = true;
 			this.Entities = new EntityCollection();
-			this.Entities.BeforeAddItem += this.Entities_BeforeAddItem;
-			this.Entities.AddItem += this.Entities_AddItem;
-			this.Entities.BeforeRemoveItem += this.Entities_BeforeRemoveItem;
-			this.Entities.RemoveItem += this.Entities_RemoveItem;
+			this.Entities.BeforeAddingItem += this.Entities_BeforeAddingItem;
+			this.Entities.AfterAddingItem += this.Entities_AfterAddingItem;
+			this.Entities.BeforeRemovingItem += this.Entities_BeforeRemovingItem;
+			this.Entities.AfterRemovingItem += this.Entities_AfterRemovingItem;
 		}
 
 		#endregion
@@ -205,7 +210,7 @@ namespace netDxf.Objects
 
 		#region Entities collection events
 
-		private void Entities_BeforeAddItem(EntityCollection sender, EntityCollectionEventArgs e)
+		private void Entities_BeforeAddingItem(object sender, BeforeItemChangeEventArgs<EntityObject> e)
 		{
 			// null or duplicate items are not allowed in the entities list.
 			if (e.Item == null)
@@ -222,20 +227,20 @@ namespace netDxf.Objects
 			}
 		}
 
-		private void Entities_AddItem(EntityCollection sender, EntityCollectionEventArgs e)
+		private void Entities_AfterAddingItem(object sender, AfterItemChangeEventArgs<EntityObject> e)
 		{
 			e.Item.AddReactor(this);
-			this.OnEntityAddedEvent(e.Item);
+			this.OnAfterAddingEntityObject(e.Item, $"{nameof(this.Entities)}.{e.PropertyName}");
 		}
 
-		private void Entities_BeforeRemoveItem(EntityCollection sender, EntityCollectionEventArgs e)
+		private void Entities_BeforeRemovingItem(object sender, BeforeItemChangeEventArgs<EntityObject> e)
 		{
 		}
 
-		private void Entities_RemoveItem(EntityCollection sender, EntityCollectionEventArgs e)
+		private void Entities_AfterRemovingItem(object sender, AfterItemChangeEventArgs<EntityObject> e)
 		{
 			e.Item.RemoveReactor(this);
-			this.OnEntityRemovedEvent(e.Item);
+			this.OnAfterRemovingEntityObject(e.Item, $"{nameof(this.Entities)}.{e.PropertyName}");
 		}
 
 		#endregion

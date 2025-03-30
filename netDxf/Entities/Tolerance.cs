@@ -25,6 +25,7 @@
 
 using System;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using netDxf.Tables;
@@ -37,18 +38,21 @@ namespace netDxf.Entities
 	{
 		#region delegates and events
 
-		public delegate void ToleranceStyleChangedEventHandler(Tolerance sender, TableObjectChangedEventArgs<DimensionStyle> e);
-		public event ToleranceStyleChangedEventHandler ToleranceStyleChanged;
-		protected virtual DimensionStyle OnDimensionStyleChangedEvent(DimensionStyle oldStyle, DimensionStyle newStyle)
+		/// <summary>Generated when a property of <see cref="DimensionStyle"/> type changes.</summary>
+		public event BeforeValueChangeEventHandler<DimensionStyle> BeforeChangingDimensionStyleValue;
+		/// <summary>Generates the <see cref="BeforeChangingDimensionStyleValue"/> event.</summary>
+		/// <param name="oldValue">The old value, being changed.</param>
+		/// <param name="newValue">The new value, that will replace the old one.</param>
+		/// <param name="propertyName">(automatic) Name of the affected property.</param>
+		protected virtual DimensionStyle OnBeforeChangingDimensionStyleValue(DimensionStyle oldValue, DimensionStyle newValue, [CallerMemberName] string propertyName = "")
 		{
-			ToleranceStyleChangedEventHandler ae = this.ToleranceStyleChanged;
-			if (ae != null)
+			if (this.BeforeChangingDimensionStyleValue is { } handler)
 			{
-				TableObjectChangedEventArgs<DimensionStyle> eventArgs = new TableObjectChangedEventArgs<DimensionStyle>(oldStyle, newStyle);
-				ae(this, eventArgs);
-				return eventArgs.NewValue;
+				var e = new BeforeValueChangeEventArgs<DimensionStyle>(propertyName, oldValue, newValue);
+				handler(this, e);
+				return e.NewValue;
 			}
-			return newStyle;
+			return newValue;
 		}
 
 		#endregion
@@ -143,7 +147,7 @@ namespace netDxf.Entities
 					throw new ArgumentNullException(nameof(value));
 				}
 
-				_Style = this.OnDimensionStyleChangedEvent(_Style, value);
+				_Style = this.OnBeforeChangingDimensionStyleValue(_Style, value);
 			}
 		}
 

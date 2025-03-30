@@ -97,8 +97,8 @@ namespace netDxf.Collections
 			group.Owner = this;
 
 			group.NameChanged += this.Item_NameChanged;
-			group.EntityAdded += this.Group_EntityAdded;
-			group.EntityRemoved += this.Group_EntityRemoved;
+			group.AfterAddingEntityObject += this.Group_AfterAddingEntityObject;
+			group.AfterRemovingEntityObject += this.Group_AfterRemovingEntityObject;
 
 			this.Owner.AddedObjects.Add(group.Handle, group);
 
@@ -138,8 +138,8 @@ namespace netDxf.Collections
 			item.Owner = null;
 
 			item.NameChanged -= this.Item_NameChanged;
-			item.EntityAdded -= this.Group_EntityAdded;
-			item.EntityRemoved -= this.Group_EntityRemoved;
+			item.AfterAddingEntityObject -= this.Group_AfterAddingEntityObject;
+			item.AfterRemovingEntityObject -= this.Group_AfterRemovingEntityObject;
 
 			return true;
 		}
@@ -148,24 +148,27 @@ namespace netDxf.Collections
 
 		#region Group events
 
-		private void Item_NameChanged(TableObject sender, TableObjectChangedEventArgs<string> e)
+		private void Item_NameChanged(object sender, AfterValueChangeEventArgs<String> e)
 		{
 			if (this.Contains(e.NewValue))
 			{
 				throw new ArgumentException("There is already another dimension style with the same name.");
 			}
 
-			this.List.Remove(sender.Name);
+			this.List.Remove(e.OldValue);
 			this.List.Add(e.NewValue, (Group)sender);
 
-			List<DxfObjectReference> refs = this.GetReferences(sender.Name);
-			this.References.Remove(sender.Name);
+			var refs = this.GetReferences(e.OldValue);
+			this.References.Remove(e.OldValue);
 			this.References.Add(e.NewValue, new DxfObjectReferences());
 			this.References[e.NewValue].Add(refs);
 		}
 
-		void Group_EntityAdded(Group sender, GroupEntityChangeEventArgs e)
+		void Group_AfterAddingEntityObject(object sender, AfterItemChangeEventArgs<EntityObject> e)
 		{
+			if (sender is not Group senderT)
+				return;
+
 			if (e.Item.Owner != null)
 			{
 				// the group and its entities must belong to the same document
@@ -180,11 +183,16 @@ namespace netDxf.Collections
 				this.Owner.Entities.Add(e.Item);
 			}
 
-			this.References[sender.Name].Add(e.Item);
+			this.References[senderT.Name].Add(e.Item);
 		}
 
-		void Group_EntityRemoved(Group sender, GroupEntityChangeEventArgs e)
-			=> this.References[sender.Name].Remove(e.Item);
+		void Group_AfterRemovingEntityObject(object sender, AfterItemChangeEventArgs<EntityObject> e)
+		{
+			if (sender is not Group senderT)
+				return;
+
+			this.References[senderT.Name].Remove(e.Item);
+		}
 
 		#endregion
 	}

@@ -25,6 +25,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using netDxf.Collections;
 using netDxf.Tables;
 
@@ -36,40 +37,43 @@ namespace netDxf.Objects
 	{
 		#region delegates and events
 
-		public delegate void MLineStyleElementAddedEventHandler(MLineStyle sender, MLineStyleElementChangeEventArgs e);
-		public event MLineStyleElementAddedEventHandler MLineStyleElementAdded;
-		protected virtual void OnMLineStyleElementAddedEvent(MLineStyleElement item)
+		/// <summary>Generated when an <see cref="MLineStyleElement"/> item has been added.</summary>
+		public event AfterItemChangeEventHandler<MLineStyleElement> AfterAddingMLineStyleElement;
+		/// <summary>Generates the <see cref="AfterAddingMLineStyleElement"/> event.</summary>
+		/// <param name="item">The item being added.</param>
+		/// <param name="propertyName">(automatic) Name of the affected collection property.</param>
+		protected virtual void OnAfterAddingMLineStyleElement(MLineStyleElement item, [CallerMemberName] string propertyName = "")
 		{
-			MLineStyleElementAddedEventHandler ae = this.MLineStyleElementAdded;
-			if (ae != null)
-			{
-				ae(this, new MLineStyleElementChangeEventArgs(item));
-			}
+			if (this.AfterAddingMLineStyleElement is { } handler)
+				handler(this, new(propertyName, ItemChangeAction.Add, item));
 		}
 
-		public delegate void MLineStyleElementRemovedEventHandler(MLineStyle sender, MLineStyleElementChangeEventArgs e);
-		public event MLineStyleElementRemovedEventHandler MLineStyleElementRemoved;
-		protected virtual void OnMLineStyleElementRemovedEvent(MLineStyleElement item)
+		/// <summary>Generated when an <see cref="MLineStyleElement"/> item has been removed.</summary>
+		public event AfterItemChangeEventHandler<MLineStyleElement> AfterRemovingMLineStyleElement;
+		/// <summary>Generates the <see cref="AfterRemovingMLineStyleElement"/> event.</summary>
+		/// <param name="item">The item being removed.</param>
+		/// <param name="propertyName">(automatic) Name of the affected collection property.</param>
+		protected virtual void OnAfterRemovingMLineStyleElement(MLineStyleElement item, [CallerMemberName] string propertyName = "")
 		{
-			MLineStyleElementRemovedEventHandler ae = this.MLineStyleElementRemoved;
-			if (ae != null)
-			{
-				ae(this, new MLineStyleElementChangeEventArgs(item));
-			}
+			if (this.AfterRemovingMLineStyleElement is { } handler)
+				handler(this, new(propertyName, ItemChangeAction.Remove, item));
 		}
 
-		public delegate void MLineStyleElementLinetypeChangedEventHandler(MLineStyle sender, TableObjectChangedEventArgs<Linetype> e);
-		public event MLineStyleElementLinetypeChangedEventHandler MLineStyleElementLinetypeChanged;
-		protected virtual Linetype OnMLineStyleElementLinetypeChangedEvent(Linetype oldLinetype, Linetype newLinetype)
+		/// <summary>Generated when a property of <see cref="Linetype"/> type changes.</summary>
+		public event BeforeValueChangeEventHandler<Linetype> BeforeChangingLinetypeValue;
+		/// <summary>Generates the <see cref="BeforeChangingLinetypeValue"/> event.</summary>
+		/// <param name="oldValue">The old value, being changed.</param>
+		/// <param name="newValue">The new value, that will replace the old one.</param>
+		/// <param name="propertyName">(automatic) Name of the affected property.</param>
+		protected virtual Linetype OnBeforeChangingLinetypeValue(Linetype oldValue, Linetype newValue, [CallerMemberName] string propertyName = "")
 		{
-			MLineStyleElementLinetypeChangedEventHandler ae = this.MLineStyleElementLinetypeChanged;
-			if (ae != null)
+			if (this.BeforeChangingLinetypeValue is { } handler)
 			{
-				TableObjectChangedEventArgs<Linetype> eventArgs = new TableObjectChangedEventArgs<Linetype>(oldLinetype, newLinetype);
-				ae(this, eventArgs);
-				return eventArgs.NewValue;
+				var e = new BeforeValueChangeEventArgs<Linetype>(propertyName, oldValue, newValue);
+				handler(this, e);
+				return e.NewValue;
 			}
-			return newLinetype;
+			return newValue;
 		}
 
 		#endregion
@@ -122,10 +126,10 @@ namespace netDxf.Objects
 
 			_Description = string.IsNullOrEmpty(description) ? string.Empty : description;
 
-			this.Elements.BeforeAddItem += this.Elements_BeforeAddItem;
-			this.Elements.AddItem += this.Elements_AddItem;
-			this.Elements.BeforeRemoveItem += this.Elements_BeforeRemoveItem;
-			this.Elements.RemoveItem += this.Elements_RemoveItem;
+			this.Elements.BeforeAddingItem += this.Elements_BeforeAddingItem;
+			this.Elements.AfterAddingItem += this.Elements_AfterAddingItem;
+			this.Elements.BeforeRemovingItem += this.Elements_BeforeRemovingItem;
+			this.Elements.AfterRemovingItem += this.Elements_AfterRemovingItem;
 			this.Elements.AddRange(elements ?? new[] { new MLineStyleElement(0.5), new MLineStyleElement(-0.5) });
 			this.Elements.Sort(); // the elements list must be ordered
 
@@ -259,7 +263,7 @@ namespace netDxf.Objects
 
 		#region Elements collection events
 
-		private void Elements_BeforeAddItem(ObservableCollection<MLineStyleElement> sender, ObservableCollectionEventArgs<MLineStyleElement> e)
+		private void Elements_BeforeAddingItem(object sender, BeforeItemChangeEventArgs<MLineStyleElement> e)
 		{
 			// null items are not allowed
 			if (e.Item == null)
@@ -272,28 +276,28 @@ namespace netDxf.Objects
 			}
 		}
 
-		private void Elements_AddItem(ObservableCollection<MLineStyleElement> sender, ObservableCollectionEventArgs<MLineStyleElement> e)
+		private void Elements_AfterAddingItem(object sender, AfterItemChangeEventArgs<MLineStyleElement> e)
 		{
-			this.OnMLineStyleElementAddedEvent(e.Item);
-			e.Item.LinetypeChanged += this.MLineStyleElement_LinetypeChanged;
+			this.OnAfterAddingMLineStyleElement(e.Item, $"{nameof(this.Elements)}.{e.PropertyName}");
+			e.Item.BeforeChangingLinetypeValue += this.Elements_Item_BeforeChangingLinetypeValue;
 		}
 
-		private void Elements_BeforeRemoveItem(ObservableCollection<MLineStyleElement> sender, ObservableCollectionEventArgs<MLineStyleElement> e)
+		private void Elements_BeforeRemovingItem(object sender, BeforeItemChangeEventArgs<MLineStyleElement> e)
 		{
 		}
 
-		private void Elements_RemoveItem(ObservableCollection<MLineStyleElement> sender, ObservableCollectionEventArgs<MLineStyleElement> e)
+		private void Elements_AfterRemovingItem(object sender, AfterItemChangeEventArgs<MLineStyleElement> e)
 		{
-			this.OnMLineStyleElementRemovedEvent(e.Item);
-			e.Item.LinetypeChanged -= this.MLineStyleElement_LinetypeChanged;
+			this.OnAfterRemovingMLineStyleElement(e.Item, $"{nameof(this.Elements)}.{e.PropertyName}");
+			e.Item.BeforeChangingLinetypeValue -= this.Elements_Item_BeforeChangingLinetypeValue;
 		}
 
 		#endregion
 
 		#region MLineStyleElement events
 
-		private void MLineStyleElement_LinetypeChanged(MLineStyleElement sender, TableObjectChangedEventArgs<Linetype> e)
-			=> e.NewValue = this.OnMLineStyleElementLinetypeChangedEvent(e.OldValue, e.NewValue);
+		private void Elements_Item_BeforeChangingLinetypeValue(object sender, BeforeValueChangeEventArgs<Linetype> e)
+			=> e.NewValue = this.OnBeforeChangingLinetypeValue(e.OldValue, e.NewValue, $"{nameof(this.Elements)}.{e.PropertyName}");
 
 		#endregion
 	}

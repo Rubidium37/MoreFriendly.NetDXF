@@ -59,7 +59,7 @@ namespace netDxf.Objects
 			this.PaperSpace = false;
 
 			this.Properties = new ObservableDictionary<string, LayerStateProperties>();
-			this.Properties.BeforeAddItem += this.Properties_BeforeAddItem;
+			this.Properties.BeforeAddingItem += this.Properties_BeforeAddingItem;
 
 			if (layers == null)
 			{
@@ -418,7 +418,7 @@ namespace netDxf.Objects
 
 		#region Properties events
 
-		private void Properties_BeforeAddItem(ObservableDictionary<string, LayerStateProperties> sender, ObservableDictionaryEventArgs<string, LayerStateProperties> e)
+		private void Properties_BeforeAddingItem(object sender, BeforeItemChangeEventArgs<KeyValuePair<string, LayerStateProperties>> e)
 		{
 			if (e.Item.Value == null)
 			{
@@ -442,7 +442,6 @@ namespace netDxf.Objects
 				e.Cancel = false;
 			}
 		}
-
 
 		#endregion
 	}
