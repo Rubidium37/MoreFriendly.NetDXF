@@ -26,6 +26,7 @@
 using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Runtime.CompilerServices;
 using System.Text;
 using netDxf.Tables;
 using netDxf.Units;
@@ -90,18 +91,21 @@ namespace netDxf.Entities
 	{
 		#region delegates and events
 
-		public delegate void TextStyleChangedEventHandler(MText sender, TableObjectChangedEventArgs<TextStyle> e);
-		public event TextStyleChangedEventHandler TextStyleChanged;
-		protected virtual TextStyle OnTextStyleChangedEvent(TextStyle oldTextStyle, TextStyle newTextStyle)
+		/// <summary>Generated when a property of <see cref="TextStyle"/> type changes.</summary>
+		public event BeforeValueChangeEventHandler<TextStyle> BeforeChangingTextStyleValue;
+		/// <summary>Generates the <see cref="BeforeChangingTextStyleValue"/> event.</summary>
+		/// <param name="oldValue">The old value, being changed.</param>
+		/// <param name="newValue">The new value, that will replace the old one.</param>
+		/// <param name="propertyName">(automatic) Name of the affected property.</param>
+		protected virtual TextStyle OnBeforeChangingBeforeValueTextStyle(TextStyle oldValue, TextStyle newValue, [CallerMemberName] string propertyName = "")
 		{
-			TextStyleChangedEventHandler ae = this.TextStyleChanged;
-			if (ae != null)
+			if (this.BeforeChangingTextStyleValue is { } handler)
 			{
-				TableObjectChangedEventArgs<TextStyle> eventArgs = new TableObjectChangedEventArgs<TextStyle>(oldTextStyle, newTextStyle);
-				ae(this, eventArgs);
-				return eventArgs.NewValue;
+				var e = new BeforeValueChangeEventArgs<TextStyle>(propertyName, oldValue, newValue);
+				handler(this, e);
+				return e.NewValue;
 			}
-			return newTextStyle;
+			return newValue;
 		}
 
 		#endregion
@@ -335,7 +339,7 @@ namespace netDxf.Entities
 					throw new ArgumentNullException(nameof(value));
 				}
 
-				_Style = this.OnTextStyleChangedEvent(_Style, value);
+				_Style = this.OnBeforeChangingBeforeValueTextStyle(_Style, value);
 			}
 		}
 

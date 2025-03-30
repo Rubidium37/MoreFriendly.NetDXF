@@ -26,6 +26,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.CompilerServices;
 using netDxf.Collections;
 using netDxf.Entities;
 using netDxf.Header;
@@ -40,62 +41,65 @@ namespace netDxf.Blocks
 	{
 		#region delegates and events
 
-		public delegate void LayerChangedEventHandler(Block sender, TableObjectChangedEventArgs<Layer> e);
-		public event LayerChangedEventHandler LayerChanged;
-		protected virtual Layer OnLayerChangedEvent(Layer oldLayer, Layer newLayer)
+		/// <summary>Generated when a property of <see cref="Layer"/> type changes.</summary>
+		public event BeforeValueChangeEventHandler<Layer> BeforeChangingLayerValue;
+		/// <summary>Generates the <see cref="BeforeChangingLayerValue"/> event.</summary>
+		/// <param name="oldValue">The old value, being changed.</param>
+		/// <param name="newValue">The new value, that will replace the old one.</param>
+		/// <param name="propertyName">(automatic) Name of the affected property.</param>
+		protected virtual Layer OnBeforeChangingLayerValue(Layer oldValue, Layer newValue, [CallerMemberName] string propertyName = "")
 		{
-			LayerChangedEventHandler ae = this.LayerChanged;
-			if (ae != null)
+			if (this.BeforeChangingLayerValue is { } handler)
 			{
-				TableObjectChangedEventArgs<Layer> eventArgs = new TableObjectChangedEventArgs<Layer>(oldLayer, newLayer);
-				ae(this, eventArgs);
-				return eventArgs.NewValue;
+				var e = new BeforeValueChangeEventArgs<Layer>(propertyName, oldValue, newValue);
+				handler(this, e);
+				return e.NewValue;
 			}
-			return newLayer;
+			return newValue;
 		}
 
-		public delegate void EntityAddedEventHandler(Block sender, BlockEntityChangeEventArgs e);
-		public event EntityAddedEventHandler EntityAdded;
-		protected virtual void OnEntityAddedEvent(EntityObject item)
+		/// <summary>Generated when an <see cref="EntityObject"/> item has been added.</summary>
+		public event AfterItemChangeEventHandler<EntityObject> AfterAddingEntityObject;
+		/// <summary>Generates the <see cref="AfterAddingEntityObject"/> event.</summary>
+		/// <param name="item">The item being added.</param>
+		/// <param name="propertyName">(automatic) Name of the affected collection property.</param>
+		protected virtual void OnAfterAddingEntityObject(EntityObject item, [CallerMemberName] string propertyName = "")
 		{
-			EntityAddedEventHandler ae = this.EntityAdded;
-			if (ae != null)
-			{
-				ae(this, new BlockEntityChangeEventArgs(item));
-			}
+			if (this.AfterAddingEntityObject is { } handler)
+				handler(this, new(propertyName, ItemChangeAction.Add, item));
 		}
 
-		public delegate void EntityRemovedEventHandler(Block sender, BlockEntityChangeEventArgs e);
-		public event EntityRemovedEventHandler EntityRemoved;
-		protected virtual void OnEntityRemovedEvent(EntityObject item)
+		/// <summary>Generated when an <see cref="EntityObject"/> item has been removed.</summary>
+		public event AfterItemChangeEventHandler<EntityObject> AfterRemovingEntityObject;
+		/// <summary>Generates the <see cref="AfterRemovingEntityObject"/> event.</summary>
+		/// <param name="item">The item being removed.</param>
+		/// <param name="propertyName">(automatic) Name of the affected collection property.</param>
+		protected virtual void OnAfterRemovingEntityObject(EntityObject item, [CallerMemberName] string propertyName = "")
 		{
-			EntityRemovedEventHandler ae = this.EntityRemoved;
-			if (ae != null)
-			{
-				ae(this, new BlockEntityChangeEventArgs(item));
-			}
+			if (this.AfterRemovingEntityObject is { } handler)
+				handler(this, new(propertyName, ItemChangeAction.Remove, item));
 		}
 
-		public delegate void AttributeDefinitionAddedEventHandler(Block sender, BlockAttributeDefinitionChangeEventArgs e);
-		public event AttributeDefinitionAddedEventHandler AttributeDefinitionAdded;
-		protected virtual void OnAttributeDefinitionAddedEvent(AttributeDefinition item)
+		/// <summary>Generated when an <see cref="AttributeDefinition"/> item has been added.</summary>
+		public event AfterItemChangeEventHandler<AttributeDefinition> AfterAddingAttributeDefinition;
+		/// <summary>Generates the <see cref="AfterAddingAttributeDefinition"/> event.</summary>
+		/// <param name="item">The item being added.</param>
+		/// <param name="propertyName">(automatic) Name of the affected collection property.</param>
+		protected virtual void OnAfterAddingAttributeDefinition(AttributeDefinition item, [CallerMemberName] string propertyName = "")
 		{
-			AttributeDefinitionAddedEventHandler ae = this.AttributeDefinitionAdded;
-			if (ae != null)
-			{
-				ae(this, new BlockAttributeDefinitionChangeEventArgs(item));
-			}
+			if (this.AfterAddingAttributeDefinition is { } handler)
+				handler(this, new(propertyName, ItemChangeAction.Add, item));
 		}
 
-		public delegate void AttributeDefinitionRemovedEventHandler(Block sender, BlockAttributeDefinitionChangeEventArgs e);
-		public event AttributeDefinitionRemovedEventHandler AttributeDefinitionRemoved;
-		protected virtual void OnAttributeDefinitionRemovedEvent(AttributeDefinition item)
+		/// <summary>Generated when an <see cref="AttributeDefinition"/> item has been removed.</summary>
+		public event AfterItemChangeEventHandler<AttributeDefinition> AfterRemovingAttributeDefinition;
+		/// <summary>Generates the <see cref="AfterRemovingAttributeDefinition"/> event.</summary>
+		/// <param name="item">The item being removed.</param>
+		/// <param name="propertyName">(automatic) Name of the affected collection property.</param>
+		protected virtual void OnAfterRemovingAttributeDefinition(AttributeDefinition item, [CallerMemberName] string propertyName = "")
 		{
-			AttributeDefinitionRemovedEventHandler ae = this.AttributeDefinitionRemoved;
-			if (ae != null)
-			{
-				ae(this, new BlockAttributeDefinitionChangeEventArgs(item));
-			}
+			if (this.AfterRemovingAttributeDefinition is { } handler)
+				handler(this, new(propertyName, ItemChangeAction.Remove, item));
 		}
 
 		#endregion
@@ -185,19 +189,19 @@ namespace netDxf.Blocks
 			this.Owner = new BlockRecord(name);
 			this.End = new EndBlock(this);
 
-			this.Entities.BeforeAddItem += this.Entities_BeforeAddItem;
-			this.Entities.AddItem += this.Entities_AddItem;
-			this.Entities.BeforeRemoveItem += this.Entities_BeforeRemoveItem;
-			this.Entities.RemoveItem += this.Entities_RemoveItem;
+			this.Entities.BeforeAddingItem += this.Entities_BeforeAddingItem;
+			this.Entities.AfterAddingItem += this.Entities_AfterAddingItem;
+			this.Entities.BeforeRemovingItem += this.Entities_BeforeRemovingItem;
+			this.Entities.AfterRemovingItem += this.Entities_AfterRemovingItem;
 			if (entities != null)
 			{
 				this.Entities.AddRange(entities);
 			}
 
-			this.AttributeDefinitions.BeforeAddItem += this.AttributeDefinitions_BeforeAddItem;
-			this.AttributeDefinitions.AddItem += this.AttributeDefinitions_ItemAdd;
-			this.AttributeDefinitions.BeforeRemoveItem += this.AttributeDefinitions_BeforeRemoveItem;
-			this.AttributeDefinitions.RemoveItem += this.AttributeDefinitions_RemoveItem;
+			this.AttributeDefinitions.BeforeAddingItem += this.AttributeDefinitions_BeforeAddingItem;
+			this.AttributeDefinitions.AfterAddingItem += this.AttributeDefinitions_ItemAdd;
+			this.AttributeDefinitions.BeforeRemovingItem += this.AttributeDefinitions_BeforeRemovingItem;
+			this.AttributeDefinitions.AfterRemovingItem += this.AttributeDefinitions_AfterRemovingItem;
 			if (attributes != null)
 			{
 				this.AttributeDefinitions.AddRange(attributes);
@@ -272,7 +276,7 @@ namespace netDxf.Blocks
 					throw new ArgumentNullException(nameof(value));
 				}
 
-				_Layer = this.OnLayerChangedEvent(_Layer, value);
+				_Layer = this.OnBeforeChangingLayerValue(_Layer, value);
 			}
 		}
 
@@ -543,7 +547,7 @@ namespace netDxf.Blocks
 
 		#region Entities collection events
 
-		private void Entities_BeforeAddItem(EntityCollection sender, EntityCollectionEventArgs e)
+		private void Entities_BeforeAddingItem(object sender, BeforeItemChangeEventArgs<EntityObject> e)
 		{
 			// null items, entities already owned by another Block, attribute definitions and attributes are not allowed in the entities list.
 			if (e.Item == null)
@@ -564,7 +568,7 @@ namespace netDxf.Blocks
 			}
 		}
 
-		private void Entities_AddItem(EntityCollection sender, EntityCollectionEventArgs e)
+		private void Entities_AfterAddingItem(object sender, AfterItemChangeEventArgs<EntityObject> e)
 		{
 			if (e.Item.Type == EntityType.Leader)
 			{
@@ -593,11 +597,11 @@ namespace netDxf.Blocks
 					this.Entities.Add(viewport.ClippingBoundary);
 				}
 			}
-			this.OnEntityAddedEvent(e.Item);
+			this.OnAfterAddingEntityObject(e.Item, $"{nameof(this.Entities)}.{e.PropertyName}");
 			e.Item.Owner = this;
 		}
 
-		private void Entities_BeforeRemoveItem(EntityCollection sender, EntityCollectionEventArgs e)
+		private void Entities_BeforeRemovingItem(object sender, BeforeItemChangeEventArgs<EntityObject> e)
 		{
 			// only items owned by the actual block can be removed
 			if (e.Item.Reactors.Count > 0)
@@ -610,9 +614,9 @@ namespace netDxf.Blocks
 			}
 		}
 
-		private void Entities_RemoveItem(EntityCollection sender, EntityCollectionEventArgs e)
+		private void Entities_AfterRemovingItem(object sender, AfterItemChangeEventArgs<EntityObject> e)
 		{
-			this.OnEntityRemovedEvent(e.Item);
+			this.OnAfterRemovingEntityObject(e.Item, $"{nameof(this.Entities)}.{e.PropertyName}");
 			e.Item.Owner = null;
 		}
 
@@ -620,7 +624,7 @@ namespace netDxf.Blocks
 
 		#region Attributes dictionary events
 
-		private void AttributeDefinitions_BeforeAddItem(AttributeDefinitionDictionary sender, AttributeDefinitionDictionaryEventArgs e)
+		private void AttributeDefinitions_BeforeAddingItem(object sender, BeforeItemChangeEventArgs<AttributeDefinition> e)
 		{
 			// attributes with the same tag, and attribute definitions already owned by another Block are not allowed in the attributes list.
 			if (e.Item == null)
@@ -645,23 +649,23 @@ namespace netDxf.Blocks
 			}
 		}
 
-		private void AttributeDefinitions_ItemAdd(AttributeDefinitionDictionary sender, AttributeDefinitionDictionaryEventArgs e)
+		private void AttributeDefinitions_ItemAdd(object sender, AfterItemChangeEventArgs<AttributeDefinition> e)
 		{
-			this.OnAttributeDefinitionAddedEvent(e.Item);
+			this.OnAfterAddingAttributeDefinition(e.Item, $"{nameof(this.AttributeDefinitions)}.{e.PropertyName}");
 			e.Item.Owner = this;
 			// the block has attributes
 			this.Flags |= BlockTypeFlags.NonConstantAttributeDefinitions;
 		}
 
-		private void AttributeDefinitions_BeforeRemoveItem(AttributeDefinitionDictionary sender, AttributeDefinitionDictionaryEventArgs e)
+		private void AttributeDefinitions_BeforeRemovingItem(object sender, BeforeItemChangeEventArgs<AttributeDefinition> e)
 		{
 			// only attribute definitions owned by the actual block can be removed
 			e.Cancel = !ReferenceEquals(e.Item.Owner, this);
 		}
 
-		private void AttributeDefinitions_RemoveItem(AttributeDefinitionDictionary sender, AttributeDefinitionDictionaryEventArgs e)
+		private void AttributeDefinitions_AfterRemovingItem(object sender, AfterItemChangeEventArgs<AttributeDefinition> e)
 		{
-			this.OnAttributeDefinitionRemovedEvent(e.Item);
+			this.OnAfterRemovingAttributeDefinition(e.Item, $"{nameof(this.AttributeDefinitions)}.{e.PropertyName}");
 			e.Item.Owner = null;
 			if (this.AttributeDefinitions.Count == 0)
 			{

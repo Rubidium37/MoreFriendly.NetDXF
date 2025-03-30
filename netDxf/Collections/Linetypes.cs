@@ -197,10 +197,10 @@ namespace netDxf.Collections
 			linetype.Owner = this;
 
 			linetype.NameChanged += this.Item_NameChanged;
-			linetype.LinetypeSegmentAdded += this.Linetype_SegmentAdded;
-			linetype.LinetypeSegmentRemoved += this.Linetype_SegmentRemoved;
-			linetype.LinetypeTextSegmentStyleChanged += this.Linetype_TextSegmentStyleChanged;
-			linetype.LinetypeShapeSegmentStyleChanged += this.Linetype_ShapeSegmentStyleChanged;
+			linetype.AfterAddingLinetypeSegment += this.Linetype_AfterAddingLinetypeSegment;
+			linetype.AfterRemovingLinetypeSegment += this.Linetype_AfterRemovingLinetypeSegment;
+			linetype.BeforeChangingTextStyleValue += this.Linetype_BeforeChangingTextStyleValue;
+			linetype.BeforeChangingShapeStyleValue += this.Linetype_BeforeChangingShapeStyleValue;
 
 			this.Owner.AddedObjects.Add(linetype.Handle, linetype);
 
@@ -244,10 +244,10 @@ namespace netDxf.Collections
 			item.Owner = null;
 
 			item.NameChanged -= this.Item_NameChanged;
-			item.LinetypeSegmentAdded -= this.Linetype_SegmentAdded;
-			item.LinetypeSegmentRemoved -= this.Linetype_SegmentRemoved;
-			item.LinetypeTextSegmentStyleChanged -= this.Linetype_TextSegmentStyleChanged;
-			item.LinetypeShapeSegmentStyleChanged -= this.Linetype_ShapeSegmentStyleChanged;
+			item.AfterAddingLinetypeSegment -= this.Linetype_AfterAddingLinetypeSegment;
+			item.AfterRemovingLinetypeSegment -= this.Linetype_AfterRemovingLinetypeSegment;
+			item.BeforeChangingTextStyleValue -= this.Linetype_BeforeChangingTextStyleValue;
+			item.BeforeChangingShapeStyleValue -= this.Linetype_BeforeChangingShapeStyleValue;
 
 			return true;
 		}
@@ -256,63 +256,71 @@ namespace netDxf.Collections
 
 		#region Linetype events
 
-		private void Item_NameChanged(TableObject sender, TableObjectChangedEventArgs<string> e)
+		private void Item_NameChanged(object sender, AfterValueChangeEventArgs<String> e)
 		{
 			if (this.Contains(e.NewValue))
 			{
 				throw new ArgumentException("There is already another line type with the same name.");
 			}
 
-			this.List.Remove(sender.Name);
+			this.List.Remove(e.OldValue);
 			this.List.Add(e.NewValue, (Linetype)sender);
 
-			List<DxfObjectReference> refs = this.GetReferences(sender.Name);
-			this.References.Remove(sender.Name);
+			var refs = this.GetReferences(e.OldValue);
+			this.References.Remove(e.OldValue);
 			this.References.Add(e.NewValue, new DxfObjectReferences());
 			this.References[e.NewValue].Add(refs);
 		}
 
-		private void Linetype_SegmentAdded(Linetype sender, LinetypeSegmentChangeEventArgs e)
+		private void Linetype_AfterAddingLinetypeSegment(object sender, AfterItemChangeEventArgs<LinetypeSegment> e)
 		{
+			if (sender is not Linetype senderT)
+				return;
+
 			if (e.Item.Type == LinetypeSegmentType.Text)
 			{
 				LinetypeTextSegment textSegment = (LinetypeTextSegment)e.Item;
 				textSegment.Style = this.Owner.TextStyles.Add(textSegment.Style);
-				this.Owner.TextStyles.References[textSegment.Style.Name].Add(sender);
+				this.Owner.TextStyles.References[textSegment.Style.Name].Add(senderT);
 			}
 
 			if (e.Item.Type == LinetypeSegmentType.Shape)
 			{
 				LinetypeShapeSegment shapeSegment = (LinetypeShapeSegment)e.Item;
 				shapeSegment.Style = this.Owner.ShapeStyles.Add(shapeSegment.Style);
-				this.Owner.ShapeStyles.References[shapeSegment.Style.Name].Add(sender);
+				this.Owner.ShapeStyles.References[shapeSegment.Style.Name].Add(senderT);
 			}
 		}
 
-		private void Linetype_SegmentRemoved(Linetype sender, LinetypeSegmentChangeEventArgs e)
+		private void Linetype_AfterRemovingLinetypeSegment(object sender, AfterItemChangeEventArgs<LinetypeSegment> e)
 		{
+			if (sender is not Linetype senderT)
+				return;
+
 			if (e.Item.Type == LinetypeSegmentType.Text)
 			{
-				this.Owner.TextStyles.References[((LinetypeTextSegment)e.Item).Style.Name].Remove(sender);
+				this.Owner.TextStyles.References[((LinetypeTextSegment)e.Item).Style.Name].Remove(senderT);
 			}
 			if (e.Item.Type == LinetypeSegmentType.Shape)
 			{
-				this.Owner.ShapeStyles.References[((LinetypeShapeSegment)e.Item).Style.Name].Remove(sender);
+				this.Owner.ShapeStyles.References[((LinetypeShapeSegment)e.Item).Style.Name].Remove(senderT);
 			}
 		}
 
-		private void Linetype_TextSegmentStyleChanged(Linetype sender, TableObjectChangedEventArgs<TextStyle> e)
+		private void Linetype_BeforeChangingTextStyleValue(object sender, BeforeValueChangeEventArgs<TextStyle> e)
 		{
-			this.Owner.TextStyles.References[e.OldValue.Name].Remove(sender);
+			var senderT = (DxfObject)sender;
+			this.Owner.TextStyles.References[e.OldValue.Name].Remove(senderT);
 			e.NewValue = this.Owner.TextStyles.Add(e.NewValue);
-			this.Owner.TextStyles.References[e.NewValue.Name].Add(sender);
+			this.Owner.TextStyles.References[e.NewValue.Name].Add(senderT);
 		}
 
-		private void Linetype_ShapeSegmentStyleChanged(Linetype sender, TableObjectChangedEventArgs<ShapeStyle> e)
+		private void Linetype_BeforeChangingShapeStyleValue(object sender, BeforeValueChangeEventArgs<ShapeStyle> e)
 		{
-			this.Owner.ShapeStyles.References[e.OldValue.Name].Remove(sender);
+			var senderT = (DxfObject)sender;
+			this.Owner.ShapeStyles.References[e.OldValue.Name].Remove(senderT);
 			e.NewValue = this.Owner.ShapeStyles.Add(e.NewValue);
-			this.Owner.ShapeStyles.References[e.NewValue.Name].Add(sender);
+			this.Owner.ShapeStyles.References[e.NewValue.Name].Add(senderT);
 		}
 
 		#endregion

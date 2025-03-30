@@ -26,6 +26,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace netDxf.Collections
 {
@@ -38,59 +39,60 @@ namespace netDxf.Collections
 
 		#region delegates and events
 
-		public delegate void AddItemEventHandler(ObservableCollection<T> sender, ObservableCollectionEventArgs<T> e);
-
-		public delegate void BeforeAddItemEventHandler(ObservableCollection<T> sender, ObservableCollectionEventArgs<T> e);
-
-		public delegate void RemoveItemEventHandler(ObservableCollection<T> sender, ObservableCollectionEventArgs<T> e);
-
-		public delegate void BeforeRemoveItemEventHandler(ObservableCollection<T> sender, ObservableCollectionEventArgs<T> e);
-
-		public event BeforeAddItemEventHandler BeforeAddItem;
-		public event AddItemEventHandler AddItem;
-		public event BeforeRemoveItemEventHandler BeforeRemoveItem;
-		public event RemoveItemEventHandler RemoveItem;
-
-		protected virtual void OnAddItemEvent(T item)
+		/// <summary>Generated when an <typeparamref name="T"/> item is about to be added; allows to confirm or reject the operation.</summary>
+		public event BeforeItemChangeEventHandler<T> BeforeAddingItem;
+		/// <summary>Generates the <see cref="BeforeAddingItem"/> event.</summary>
+		/// <param name="item">The item being added.</param>
+		/// <param name="propertyName">(automatic) Name of the affected collection property.</param>
+		/// <returns><see langword="true"/> if the item can be added; otherwise, <see langword="false"/>.</returns>
+		protected virtual bool OnBeforeAddingItem(T item, [CallerMemberName] string propertyName = "")
 		{
-			AddItemEventHandler ae = this.AddItem;
-			if (ae != null)
+			if (this.BeforeAddingItem is { } handler)
 			{
-				ae(this, new ObservableCollectionEventArgs<T>(item));
+				var e = new BeforeItemChangeEventArgs<T>(propertyName, ItemChangeAction.Add, item);
+				handler(this, e);
+				return !e.Cancel;
 			}
+			return true;
 		}
 
-		protected virtual bool OnBeforeAddItemEvent(T item)
+		/// <summary>Generated when an <typeparamref name="T"/> item has been added.</summary>
+		public event AfterItemChangeEventHandler<T> AfterAddingItem;
+		/// <summary>Generates the <see cref="AfterAddingItem"/> event.</summary>
+		/// <param name="item">The item being added.</param>
+		/// <param name="propertyName">(automatic) Name of the affected collection property.</param>
+		protected virtual void OnAfterAddingItem(T item, [CallerMemberName] string propertyName = "")
 		{
-			BeforeAddItemEventHandler ae = this.BeforeAddItem;
-			if (ae != null)
-			{
-				ObservableCollectionEventArgs<T> e = new ObservableCollectionEventArgs<T>(item);
-				ae(this, e);
-				return e.Cancel;
-			}
-			return false;
+			if (this.AfterAddingItem is { } handler)
+				handler(this, new(propertyName, ItemChangeAction.Add, item));
 		}
 
-		protected virtual bool OnBeforeRemoveItemEvent(T item)
+		/// <summary>Generated when an <typeparamref name="T"/> item is about to be removed; allows to confirm or reject the operation.</summary>
+		public event BeforeItemChangeEventHandler<T> BeforeRemovingItem;
+		/// <summary>Generates the <see cref="BeforeRemovingItem"/> event.</summary>
+		/// <param name="item">The item being removed.</param>
+		/// <param name="propertyName">(automatic) Name of the affected collection property.</param>
+		/// <returns><see langword="true"/> if the item can be removed; otherwise, <see langword="false"/>.</returns>
+		protected virtual bool OnBeforeRemovingItem(T item, [CallerMemberName] string propertyName = "")
 		{
-			BeforeRemoveItemEventHandler ae = this.BeforeRemoveItem;
-			if (ae != null)
+			if (this.BeforeRemovingItem is { } handler)
 			{
-				ObservableCollectionEventArgs<T> e = new ObservableCollectionEventArgs<T>(item);
-				ae(this, e);
-				return e.Cancel;
+				var e = new BeforeItemChangeEventArgs<T>(propertyName, ItemChangeAction.Remove, item);
+				handler(this, e);
+				return !e.Cancel;
 			}
-			return false;
+			return true;
 		}
 
-		protected virtual void OnRemoveItemEvent(T item)
+		/// <summary>Generated when an <typeparamref name="T"/> item has been removed.</summary>
+		public event AfterItemChangeEventHandler<T> AfterRemovingItem;
+		/// <summary>Generates the <see cref="AfterRemovingItem"/> event.</summary>
+		/// <param name="item">The item being removed.</param>
+		/// <param name="propertyName">(automatic) Name of the affected collection property.</param>
+		protected virtual void OnAfterRemovingItem(T item, [CallerMemberName] string propertyName = "")
 		{
-			RemoveItemEventHandler ae = this.RemoveItem;
-			if (ae != null)
-			{
-				ae(this, new ObservableCollectionEventArgs<T>(item));
-			}
+			if (this.AfterRemovingItem is { } handler)
+				handler(this, new(propertyName, ItemChangeAction.Remove, item));
 		}
 
 		#endregion
@@ -126,19 +128,19 @@ namespace netDxf.Collections
 				T remove = this.innerArray[index];
 				T add = value;
 
-				if (this.OnBeforeRemoveItemEvent(remove))
+				if (!this.OnBeforeRemovingItem(remove))
 				{
 					return;
 				}
 
-				if (this.OnBeforeAddItemEvent(add))
+				if (!this.OnBeforeAddingItem(add))
 				{
 					return;
 				}
 
 				this.innerArray[index] = value;
-				this.OnAddItemEvent(add);
-				this.OnRemoveItemEvent(remove);
+				this.OnAfterAddingItem(add);
+				this.OnAfterRemovingItem(remove);
 			}
 		}
 
@@ -177,12 +179,12 @@ namespace netDxf.Collections
 		/// <returns><see langword="true"/> if the object has been added to the collection; otherwise, <see langword="false"/>.</returns>
 		public void Add(T item)
 		{
-			if (this.OnBeforeAddItemEvent(item))
+			if (!this.OnBeforeAddingItem(item, "Item"))
 			{
 				throw new ArgumentException("The item cannot be added to the collection.", nameof(item));
 			}
 			this.innerArray.Add(item);
-			this.OnAddItemEvent(item);
+			this.OnAfterAddingItem(item, "Item");
 		}
 
 		/// <summary>Adds an object list to the end of the collection.</summary>
@@ -211,19 +213,19 @@ namespace netDxf.Collections
 				throw new ArgumentOutOfRangeException(string.Format("The parameter index {0} must be in between {1} and {2}.", index, 0, this.innerArray.Count));
 			}
 
-			if (this.OnBeforeRemoveItemEvent(this.innerArray[index]))
+			if (!this.OnBeforeRemovingItem(this.innerArray[index], "Item"))
 			{
 				return;
 			}
 
-			if (this.OnBeforeAddItemEvent(item))
+			if (!this.OnBeforeAddingItem(item, "Item"))
 			{
 				throw new ArgumentException("The item cannot be added to the collection.", nameof(item));
 			}
 
-			this.OnRemoveItemEvent(this.innerArray[index]);
+			this.OnAfterRemovingItem(this.innerArray[index], "Item");
 			this.innerArray.Insert(index, item);
-			this.OnAddItemEvent(item);
+			this.OnAfterAddingItem(item, "Item");
 		}
 
 		/// <inheritdoc/>
@@ -234,13 +236,13 @@ namespace netDxf.Collections
 				return false;
 			}
 
-			if (this.OnBeforeRemoveItemEvent(item))
+			if (!this.OnBeforeRemovingItem(item, "Item"))
 			{
 				return false;
 			}
 
 			this.innerArray.Remove(item);
-			this.OnRemoveItemEvent(item);
+			this.OnAfterRemovingItem(item, "Item");
 			return true;
 		}
 
@@ -268,13 +270,13 @@ namespace netDxf.Collections
 			}
 
 			T remove = this.innerArray[index];
-			if (this.OnBeforeRemoveItemEvent(remove))
+			if (!this.OnBeforeRemovingItem(remove, "Item"))
 			{
 				return;
 			}
 
 			this.innerArray.RemoveAt(index);
-			this.OnRemoveItemEvent(remove);
+			this.OnAfterRemovingItem(remove, "Item");
 		}
 
 		/// <inheritdoc/>

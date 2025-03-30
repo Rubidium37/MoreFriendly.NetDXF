@@ -26,6 +26,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 
 namespace netDxf.Collections
 {
@@ -36,55 +37,60 @@ namespace netDxf.Collections
 
 		#region delegates and events
 
-		public delegate void AddItemEventHandler(ObservableDictionary<TKey, TValue> sender, ObservableDictionaryEventArgs<TKey, TValue> e);
-
-		public delegate void BeforeAddItemEventHandler(ObservableDictionary<TKey, TValue> sender, ObservableDictionaryEventArgs<TKey, TValue> e);
-
-		public delegate void RemoveItemEventHandler(ObservableDictionary<TKey, TValue> sender, ObservableDictionaryEventArgs<TKey, TValue> e);
-
-		public delegate void BeforeRemoveItemEventHandler(ObservableDictionary<TKey, TValue> sender, ObservableDictionaryEventArgs<TKey, TValue> e);
-
-		public event BeforeAddItemEventHandler BeforeAddItem;
-		public event AddItemEventHandler AddItem;
-		public event BeforeRemoveItemEventHandler BeforeRemoveItem;
-		public event RemoveItemEventHandler RemoveItem;
-
-		private bool BeforeAddItemEvent(KeyValuePair<TKey, TValue> item)
+		/// <summary>Generated when an <see cref="KeyValuePair{TKey, TValue}"/> item is about to be added; allows to confirm or reject the operation.</summary>
+		public event BeforeItemChangeEventHandler<KeyValuePair<TKey, TValue>> BeforeAddingItem;
+		/// <summary>Generates the <see cref="BeforeAddingItem"/> event.</summary>
+		/// <param name="item">The item being added.</param>
+		/// <param name="propertyName">(automatic) Name of the affected collection property.</param>
+		/// <returns><see langword="true"/> if the item can be added; otherwise, <see langword="false"/>.</returns>
+		private bool OnBeforeAddingItem(KeyValuePair<TKey, TValue> item, [CallerMemberName] string propertyName = "")
 		{
-			BeforeAddItemEventHandler ae = this.BeforeAddItem;
-			if (ae != null)
+			if (this.BeforeAddingItem is { } handler)
 			{
-				ObservableDictionaryEventArgs<TKey, TValue> e = new ObservableDictionaryEventArgs<TKey, TValue>(item);
-				ae(this, e);
-				return e.Cancel;
+				var e = new BeforeItemChangeEventArgs<KeyValuePair<TKey, TValue>>(propertyName, ItemChangeAction.Add, item);
+				handler(this, e);
+				return !e.Cancel;
 			}
-			return false;
+			return true;
 		}
 
-		private void AddItemEvent(KeyValuePair<TKey, TValue> item)
+		/// <summary>Generated when an <see cref="KeyValuePair{TKey, TValue}"/> item has been added.</summary>
+		public event AfterItemChangeEventHandler<KeyValuePair<TKey, TValue>> AfterAddingItem;
+		/// <summary>Generates the <see cref="AfterAddingItem"/> event.</summary>
+		/// <param name="item">The item being added.</param>
+		/// <param name="propertyName">(automatic) Name of the affected collection property.</param>
+		private void OnAfterAddingItem(KeyValuePair<TKey, TValue> item, [CallerMemberName] string propertyName = "")
 		{
-			AddItemEventHandler ae = this.AddItem;
-			if (ae != null)
-				ae(this, new ObservableDictionaryEventArgs<TKey, TValue>(item));
+			if (this.AfterAddingItem is { } handler)
+				handler(this, new(propertyName, ItemChangeAction.Add, item));
 		}
 
-		private bool BeforeRemoveItemEvent(KeyValuePair<TKey, TValue> item)
+		/// <summary>Generated when an <see cref="KeyValuePair{TKey, TValue}"/> item is about to be removed; allows to confirm or reject the operation.</summary>
+		public event BeforeItemChangeEventHandler<KeyValuePair<TKey, TValue>> BeforeRemovingItem;
+		/// <summary>Generates the <see cref="BeforeRemovingItem"/> event.</summary>
+		/// <param name="item">The item being removed.</param>
+		/// <param name="propertyName">(automatic) Name of the affected collection property.</param>
+		/// <returns><see langword="true"/> if the item can be removed; otherwise, <see langword="false"/>.</returns>
+		private bool OnBeforeRemovingItem(KeyValuePair<TKey, TValue> item, [CallerMemberName] string propertyName = "")
 		{
-			BeforeRemoveItemEventHandler ae = this.BeforeRemoveItem;
-			if (ae != null)
+			if (this.BeforeRemovingItem is { } handler)
 			{
-				ObservableDictionaryEventArgs<TKey, TValue> e = new ObservableDictionaryEventArgs<TKey, TValue>(item);
-				ae(this, e);
-				return e.Cancel;
+				var e = new BeforeItemChangeEventArgs<KeyValuePair<TKey, TValue>>(propertyName, ItemChangeAction.Remove, item);
+				handler(this, e);
+				return !e.Cancel;
 			}
-			return false;
+			return true;
 		}
 
-		private void RemoveItemEvent(KeyValuePair<TKey, TValue> item)
+		/// <summary>Generated when an <see cref="KeyValuePair{TKey, TValue}"/> item has been removed.</summary>
+		public event AfterItemChangeEventHandler<KeyValuePair<TKey, TValue>> AfterRemovingItem;
+		/// <summary>Generates the <see cref="AfterRemovingItem"/> event.</summary>
+		/// <param name="item">The item being removed.</param>
+		/// <param name="propertyName">(automatic) Name of the affected collection property.</param>
+		private void OnAfterRemovingItem(KeyValuePair<TKey, TValue> item, [CallerMemberName] string propertyName = "")
 		{
-			RemoveItemEventHandler ae = this.RemoveItem;
-			if (ae != null)
-				ae(this, new ObservableDictionaryEventArgs<TKey, TValue>(item));
+			if (this.AfterRemovingItem is { } handler)
+				handler(this, new(propertyName, ItemChangeAction.Remove, item));
 		}
 
 		#endregion
@@ -121,19 +127,19 @@ namespace netDxf.Collections
 				KeyValuePair<TKey, TValue> remove = new KeyValuePair<TKey, TValue>(key, this.innerDictionary[key]);
 				KeyValuePair<TKey, TValue> add = new KeyValuePair<TKey, TValue>(key, value);
 
-				if (this.BeforeRemoveItemEvent(remove))
+				if (!this.OnBeforeRemovingItem(remove))
 				{
 					return;
 				}
 
-				if (this.BeforeAddItemEvent(add))
+				if (!this.OnBeforeAddingItem(add))
 				{
 					return;
 				}
 
 				this.innerDictionary[key] = value;
-				this.AddItemEvent(add);
-				this.RemoveItemEvent(remove);
+				this.OnAfterAddingItem(add);
+				this.OnAfterRemovingItem(remove);
 			}
 		}
 
@@ -157,12 +163,12 @@ namespace netDxf.Collections
 		public void Add(TKey key, TValue value)
 		{
 			KeyValuePair<TKey, TValue> add = new KeyValuePair<TKey, TValue>(key, value);
-			if (this.BeforeAddItemEvent(add))
+			if (!this.OnBeforeAddingItem(add, "Item"))
 			{
 				throw new ArgumentException("The item cannot be added to the dictionary.", nameof(value));
 			}
 			this.innerDictionary.Add(key, value);
-			this.AddItemEvent(add);
+			this.OnAfterAddingItem(add, "Item");
 		}
 
 		void ICollection<KeyValuePair<TKey, TValue>>.Add(KeyValuePair<TKey, TValue> item) => this.Add(item.Key, item.Value);
@@ -176,13 +182,13 @@ namespace netDxf.Collections
 			}
 
 			KeyValuePair<TKey, TValue> remove = new KeyValuePair<TKey, TValue>(key, this.innerDictionary[key]);
-			if (this.BeforeRemoveItemEvent(remove))
+			if (!this.OnBeforeRemovingItem(remove, "Item"))
 			{
 				return false;
 			}
 
 			this.innerDictionary.Remove(key);
-			this.RemoveItemEvent(remove);
+			this.OnAfterRemovingItem(remove, "Item");
 
 			return true;
 		}

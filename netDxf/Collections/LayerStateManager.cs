@@ -265,18 +265,18 @@ namespace netDxf.Collections
 
 		#region Layer events
 
-		private void Item_NameChanged(TableObject sender, TableObjectChangedEventArgs<string> e)
+		private void Item_NameChanged(object sender, AfterValueChangeEventArgs<String> e)
 		{
 			if (this.Contains(e.NewValue))
 			{
 				throw new ArgumentException("There is already another layer with the same name.");
 			}
 
-			this.List.Remove(sender.Name);
+			this.List.Remove(e.OldValue);
 			this.List.Add(e.NewValue, (LayerState)sender);
 
-			List<DxfObjectReference> refs = this.GetReferences(sender.Name);
-			this.References.Remove(sender.Name);
+			var refs = this.GetReferences(e.OldValue);
+			this.References.Remove(e.OldValue);
 			this.References.Add(e.NewValue, new DxfObjectReferences());
 			this.References[e.NewValue].Add(refs);
 		}

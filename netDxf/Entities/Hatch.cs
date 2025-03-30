@@ -25,6 +25,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using netDxf.Collections;
 using netDxf.Tables;
 
@@ -36,26 +37,26 @@ namespace netDxf.Entities
 	{
 		#region delegates and events
 
-		public delegate void HatchBoundaryPathAddedEventHandler(Hatch sender, ObservableCollectionEventArgs<HatchBoundaryPath> e);
-		public event HatchBoundaryPathAddedEventHandler HatchBoundaryPathAdded;
-		protected virtual void OnHatchBoundaryPathAddedEvent(HatchBoundaryPath item)
+		/// <summary>Generated when an <see cref="HatchBoundaryPath"/> item has been added.</summary>
+		public event AfterItemChangeEventHandler<HatchBoundaryPath> AfterAddingHatchBoundaryPath;
+		/// <summary>Generates the <see cref="AfterAddingHatchBoundaryPath"/> event.</summary>
+		/// <param name="item">The item being added.</param>
+		/// <param name="propertyName">(automatic) Name of the affected collection property.</param>
+		protected virtual void OnAfterAddingHatchBoundaryPath(HatchBoundaryPath item, [CallerMemberName] string propertyName = "")
 		{
-			HatchBoundaryPathAddedEventHandler ae = this.HatchBoundaryPathAdded;
-			if (ae != null)
-			{
-				ae(this, new ObservableCollectionEventArgs<HatchBoundaryPath>(item));
-			}
+			if (this.AfterAddingHatchBoundaryPath is { } handler)
+				handler(this, new(propertyName, ItemChangeAction.Add, item));
 		}
 
-		public delegate void HatchBoundaryPathRemovedEventHandler(Hatch sender, ObservableCollectionEventArgs<HatchBoundaryPath> e);
-		public event HatchBoundaryPathRemovedEventHandler HatchBoundaryPathRemoved;
-		protected virtual void OnHatchBoundaryPathRemovedEvent(HatchBoundaryPath item)
+		/// <summary>Generated when an <see cref="HatchBoundaryPath"/> item has been removed.</summary>
+		public event AfterItemChangeEventHandler<HatchBoundaryPath> AfterRemovingHatchBoundaryPath;
+		/// <summary>Generates the <see cref="AfterRemovingHatchBoundaryPath"/> event.</summary>
+		/// <param name="item">The item being removed.</param>
+		/// <param name="propertyName">(automatic) Name of the affected collection property.</param>
+		protected virtual void OnAfterRemovingHatchBoundaryPath(HatchBoundaryPath item, [CallerMemberName] string propertyName = "")
 		{
-			HatchBoundaryPathRemovedEventHandler ae = this.HatchBoundaryPathRemoved;
-			if (ae != null)
-			{
-				ae(this, new ObservableCollectionEventArgs<HatchBoundaryPath>(item));
-			}
+			if (this.AfterRemovingHatchBoundaryPath is { } handler)
+				handler(this, new(propertyName, ItemChangeAction.Remove, item));
 		}
 
 		#endregion
@@ -76,10 +77,10 @@ namespace netDxf.Entities
 			: base(EntityType.Hatch, DxfObjectCode.Hatch)
 		{
 			_Pattern = pattern ?? throw new ArgumentNullException(nameof(pattern));
-			this.BoundaryPaths.BeforeAddItem += this.BoundaryPaths_BeforeAddItem;
-			this.BoundaryPaths.AddItem += this.BoundaryPaths_AddItem;
-			this.BoundaryPaths.BeforeRemoveItem += this.BoundaryPaths_BeforeRemoveItem;
-			this.BoundaryPaths.RemoveItem += this.BoundaryPaths_RemoveItem;
+			this.BoundaryPaths.BeforeAddingItem += this.BoundaryPaths_BeforeAddingItem;
+			this.BoundaryPaths.AfterAddingItem += this.BoundaryPaths_AfterAddingItem;
+			this.BoundaryPaths.BeforeRemovingItem += this.BoundaryPaths_BeforeRemovingItem;
+			this.BoundaryPaths.AfterRemovingItem += this.BoundaryPaths_AfterRemovingItem;
 			this.Associative = associative;
 		}
 		/// <summary>Initializes a new instance of the class.</summary>
@@ -100,10 +101,10 @@ namespace netDxf.Entities
 			{
 				throw new ArgumentNullException(nameof(paths));
 			}
-			this.BoundaryPaths.BeforeAddItem += this.BoundaryPaths_BeforeAddItem;
-			this.BoundaryPaths.AddItem += this.BoundaryPaths_AddItem;
-			this.BoundaryPaths.BeforeRemoveItem += this.BoundaryPaths_BeforeRemoveItem;
-			this.BoundaryPaths.RemoveItem += this.BoundaryPaths_RemoveItem;
+			this.BoundaryPaths.BeforeAddingItem += this.BoundaryPaths_BeforeAddingItem;
+			this.BoundaryPaths.AfterAddingItem += this.BoundaryPaths_AfterAddingItem;
+			this.BoundaryPaths.BeforeRemovingItem += this.BoundaryPaths_BeforeRemovingItem;
+			this.BoundaryPaths.AfterRemovingItem += this.BoundaryPaths_AfterRemovingItem;
 			this.Associative = associative;
 
 			foreach (HatchBoundaryPath path in paths)
@@ -227,7 +228,7 @@ namespace netDxf.Entities
 					{
 						path.AddContour(entity);
 						entity.AddReactor(this);
-						this.OnHatchBoundaryPathAddedEvent(path);
+						this.OnAfterAddingHatchBoundaryPath(path, nameof(this.BoundaryPaths));
 					}
 				}
 			}
@@ -482,7 +483,7 @@ namespace netDxf.Entities
 
 		#region HatchBoundaryPath collection events
 
-		private void BoundaryPaths_BeforeAddItem(ObservableCollection<HatchBoundaryPath> sender, ObservableCollectionEventArgs<HatchBoundaryPath> e)
+		private void BoundaryPaths_BeforeAddingItem(object sender, BeforeItemChangeEventArgs<HatchBoundaryPath> e)
 		{
 			// null items are not allowed in the list.
 			if (e.Item == null)
@@ -492,7 +493,7 @@ namespace netDxf.Entities
 			e.Cancel = false;
 		}
 
-		private void BoundaryPaths_AddItem(ObservableCollection<HatchBoundaryPath> sender, ObservableCollectionEventArgs<HatchBoundaryPath> e)
+		private void BoundaryPaths_AfterAddingItem(object sender, AfterItemChangeEventArgs<HatchBoundaryPath> e)
 		{
 			if (this.Associative)
 			{
@@ -506,14 +507,14 @@ namespace netDxf.Entities
 				e.Item.ClearContour();
 			}
 
-			this.OnHatchBoundaryPathAddedEvent(e.Item);
+			this.OnAfterAddingHatchBoundaryPath(e.Item, $"{nameof(this.BoundaryPaths)}.{e.PropertyName}");
 		}
 
-		private void BoundaryPaths_BeforeRemoveItem(ObservableCollection<HatchBoundaryPath> sender, ObservableCollectionEventArgs<HatchBoundaryPath> e)
+		private void BoundaryPaths_BeforeRemovingItem(object sender, BeforeItemChangeEventArgs<HatchBoundaryPath> e)
 		{
 		}
 
-		private void BoundaryPaths_RemoveItem(ObservableCollection<HatchBoundaryPath> sender, ObservableCollectionEventArgs<HatchBoundaryPath> e)
+		private void BoundaryPaths_AfterRemovingItem(object sender, AfterItemChangeEventArgs<HatchBoundaryPath> e)
 		{
 			if (this.Associative)
 			{
@@ -523,7 +524,7 @@ namespace netDxf.Entities
 				}
 			}
 
-			this.OnHatchBoundaryPathRemovedEvent(e.Item);
+			this.OnAfterRemovingHatchBoundaryPath(e.Item, $"{nameof(this.BoundaryPaths)}.{e.PropertyName}");
 		}
 
 		#endregion

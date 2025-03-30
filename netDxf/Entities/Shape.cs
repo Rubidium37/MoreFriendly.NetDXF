@@ -25,6 +25,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using netDxf.Tables;
 
 namespace netDxf.Entities
@@ -35,18 +36,21 @@ namespace netDxf.Entities
 	{
 		#region delegates and events
 
-		public delegate void StyleChangedEventHandler(Shape sender, TableObjectChangedEventArgs<ShapeStyle> e);
-		public event StyleChangedEventHandler StyleChanged;
-		protected virtual ShapeStyle OnStyleChangedEvent(ShapeStyle oldStyle, ShapeStyle newStyle)
+		/// <summary>Generated when a property of <see cref="ShapeStyle"/> type changes.</summary>
+		public event BeforeValueChangeEventHandler<ShapeStyle> BeforeChangingShapeStyleValue;
+		/// <summary>Generates the <see cref="BeforeChangingShapeStyleValue"/> event.</summary>
+		/// <param name="oldValue">The old value, being changed.</param>
+		/// <param name="newValue">The new value, that will replace the old one.</param>
+		/// <param name="propertyName">(automatic) Name of the affected property.</param>
+		protected virtual ShapeStyle OnBeforeChangingBeforeValueShapeStyle(ShapeStyle oldValue, ShapeStyle newValue, [CallerMemberName] string propertyName = "")
 		{
-			StyleChangedEventHandler ae = this.StyleChanged;
-			if (ae != null)
+			if (this.BeforeChangingShapeStyleValue is { } handler)
 			{
-				TableObjectChangedEventArgs<ShapeStyle> eventArgs = new TableObjectChangedEventArgs<ShapeStyle>(oldStyle, newStyle);
-				ae(this, eventArgs);
-				return eventArgs.NewValue;
+				var e = new BeforeValueChangeEventArgs<ShapeStyle>(propertyName, oldValue, newValue);
+				handler(this, e);
+				return e.NewValue;
 			}
-			return newStyle;
+			return newValue;
 		}
 
 		#endregion
@@ -116,7 +120,7 @@ namespace netDxf.Entities
 					throw new ArgumentNullException(nameof(value));
 				}
 
-				_Style = this.OnStyleChangedEvent(_Style, value);
+				_Style = this.OnBeforeChangingBeforeValueShapeStyle(_Style, value);
 			}
 		}
 

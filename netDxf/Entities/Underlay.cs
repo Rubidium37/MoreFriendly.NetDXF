@@ -25,6 +25,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using netDxf.Objects;
 using netDxf.Tables;
 
@@ -36,18 +37,21 @@ namespace netDxf.Entities
 	{
 		#region delegates and events
 
-		public delegate void UnderlayDefinitionChangedEventHandler(Underlay sender, TableObjectChangedEventArgs<UnderlayDefinition> e);
-		public event UnderlayDefinitionChangedEventHandler UnderlayDefinitionChanged;
-		protected virtual UnderlayDefinition OnUnderlayDefinitionChangedEvent(UnderlayDefinition oldUnderlayDefinition, UnderlayDefinition newUnderlayDefinition)
+		/// <summary>Generated when a property of <see cref="UnderlayDefinition"/> type changes.</summary>
+		public event BeforeValueChangeEventHandler<UnderlayDefinition> BeforeChangingUnderlayDefinitionValue;
+		/// <summary>Generates the <see cref="BeforeChangingUnderlayDefinitionValue"/> event.</summary>
+		/// <param name="oldValue">The old value, being changed.</param>
+		/// <param name="newValue">The new value, that will replace the old one.</param>
+		/// <param name="propertyName">(automatic) Name of the affected property.</param>
+		protected virtual UnderlayDefinition OnBeforeChangingUnderlayDefinitionValue(UnderlayDefinition oldValue, UnderlayDefinition newValue, [CallerMemberName] string propertyName = "")
 		{
-			UnderlayDefinitionChangedEventHandler ae = this.UnderlayDefinitionChanged;
-			if (ae != null)
+			if (this.BeforeChangingUnderlayDefinitionValue is { } handler)
 			{
-				TableObjectChangedEventArgs<UnderlayDefinition> eventArgs = new TableObjectChangedEventArgs<UnderlayDefinition>(oldUnderlayDefinition, newUnderlayDefinition);
-				ae(this, eventArgs);
-				return eventArgs.NewValue;
+				var e = new BeforeValueChangeEventArgs<UnderlayDefinition>(propertyName, oldValue, newValue);
+				handler(this, e);
+				return e.NewValue;
 			}
-			return newUnderlayDefinition;
+			return newValue;
 		}
 
 		#endregion
@@ -115,7 +119,7 @@ namespace netDxf.Entities
 					throw new ArgumentNullException(nameof(value));
 				}
 
-				_Definition = this.OnUnderlayDefinitionChangedEvent(_Definition, value);
+				_Definition = this.OnBeforeChangingUnderlayDefinitionValue(_Definition, value);
 
 				switch (value.Type)
 				{

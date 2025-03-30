@@ -25,6 +25,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using netDxf.Blocks;
 using netDxf.Tables;
 
@@ -37,32 +38,38 @@ namespace netDxf.Entities
 	{
 		#region delegates and events
 
-		public delegate void LayerChangedEventHandler(EntityObject sender, TableObjectChangedEventArgs<Layer> e);
-		public event LayerChangedEventHandler LayerChanged;
-		protected virtual Layer OnLayerChangedEvent(Layer oldLayer, Layer newLayer)
+		/// <summary>Generated when a property of <see cref="Layer"/> type changes.</summary>
+		public event BeforeValueChangeEventHandler<Layer> BeforeChangingLayerValue;
+		/// <summary>Generates the <see cref="BeforeChangingLayerValue"/> event.</summary>
+		/// <param name="oldValue">The old value, being changed.</param>
+		/// <param name="newValue">The new value, that will replace the old one.</param>
+		/// <param name="propertyName">(automatic) Name of the affected property.</param>
+		protected virtual Layer OnBeforeChangingLayerValue(Layer oldValue, Layer newValue, [CallerMemberName] string propertyName = "")
 		{
-			LayerChangedEventHandler ae = this.LayerChanged;
-			if (ae != null)
+			if (this.BeforeChangingLayerValue is { } handler)
 			{
-				TableObjectChangedEventArgs<Layer> eventArgs = new TableObjectChangedEventArgs<Layer>(oldLayer, newLayer);
-				ae(this, eventArgs);
-				return eventArgs.NewValue;
+				var e = new BeforeValueChangeEventArgs<Layer>(propertyName, oldValue, newValue);
+				handler(this, e);
+				return e.NewValue;
 			}
-			return newLayer;
+			return newValue;
 		}
 
-		public delegate void LinetypeChangedEventHandler(EntityObject sender, TableObjectChangedEventArgs<Linetype> e);
-		public event LinetypeChangedEventHandler LinetypeChanged;
-		protected virtual Linetype OnLinetypeChangedEvent(Linetype oldLinetype, Linetype newLinetype)
+		/// <summary>Generated when a property of <see cref="Linetype"/> type changes.</summary>
+		public event BeforeValueChangeEventHandler<Linetype> BeforeChangingLinetypeValue;
+		/// <summary>Generates the <see cref="BeforeChangingLinetypeValue"/> event.</summary>
+		/// <param name="oldValue">The old value, being changed.</param>
+		/// <param name="newValue">The new value, that will replace the old one.</param>
+		/// <param name="propertyName">(automatic) Name of the affected property.</param>
+		protected virtual Linetype OnBeforeChangingLinetypeValue(Linetype oldValue, Linetype newValue, [CallerMemberName] string propertyName = "")
 		{
-			LinetypeChangedEventHandler ae = this.LinetypeChanged;
-			if (ae != null)
+			if (this.BeforeChangingLinetypeValue is { } handler)
 			{
-				TableObjectChangedEventArgs<Linetype> eventArgs = new TableObjectChangedEventArgs<Linetype>(oldLinetype, newLinetype);
-				ae(this, eventArgs);
-				return eventArgs.NewValue;
+				var e = new BeforeValueChangeEventArgs<Linetype>(propertyName, oldValue, newValue);
+				handler(this, e);
+				return e.NewValue;
 			}
-			return newLinetype;
+			return newValue;
 		}
 
 		#endregion
@@ -106,7 +113,7 @@ namespace netDxf.Entities
 					throw new ArgumentNullException(nameof(value));
 				}
 
-				_Layer = this.OnLayerChangedEvent(_Layer, value);
+				_Layer = this.OnBeforeChangingLayerValue(_Layer, value);
 			}
 		}
 
@@ -122,7 +129,7 @@ namespace netDxf.Entities
 					throw new ArgumentNullException(nameof(value));
 				}
 
-				_Linetype = this.OnLinetypeChangedEvent(_Linetype, value);
+				_Linetype = this.OnBeforeChangingLinetypeValue(_Linetype, value);
 			}
 		}
 

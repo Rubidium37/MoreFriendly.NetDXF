@@ -104,9 +104,9 @@ namespace netDxf.Collections
 			item.Owner = this;
 
 			item.NameChanged += this.Item_NameChanged;
-			item.LinetypeChanged += this.DimensionStyleLinetypeChanged;
-			item.TextStyleChanged += this.DimensionStyleTextStyleChanged;
-			item.BlockChanged += this.DimensionStyleBlockChanged;
+			item.BeforeChangingLinetypeValue += this.DimensionStyle_BeforeChangingLinetypeValue;
+			item.BeforeChangingTextStyleValue += this.DimensionStyle_BeforeChangingTextStyleValue;
+			item.BeforeChangingBlockValue += this.DimensionStyle_BeforeChangingBlockValue;
 
 			this.Owner.AddedObjects.Add(item.Handle, item);
 
@@ -170,9 +170,9 @@ namespace netDxf.Collections
 			item.Owner = null;
 
 			item.NameChanged -= this.Item_NameChanged;
-			item.LinetypeChanged -= this.DimensionStyleLinetypeChanged;
-			item.TextStyleChanged -= this.DimensionStyleTextStyleChanged;
-			item.BlockChanged -= this.DimensionStyleBlockChanged;
+			item.BeforeChangingLinetypeValue -= this.DimensionStyle_BeforeChangingLinetypeValue;
+			item.BeforeChangingTextStyleValue -= this.DimensionStyle_BeforeChangingTextStyleValue;
+			item.BeforeChangingBlockValue -= this.DimensionStyle_BeforeChangingBlockValue;
 
 			return true;
 		}
@@ -181,49 +181,44 @@ namespace netDxf.Collections
 
 		#region TableObject events
 
-		private void Item_NameChanged(TableObject sender, TableObjectChangedEventArgs<string> e)
+		private void Item_NameChanged(object sender, AfterValueChangeEventArgs<String> e)
 		{
 			if (this.Contains(e.NewValue))
 			{
 				throw new ArgumentException("There is already another dimension style with the same name.");
 			}
 
-			this.List.Remove(sender.Name);
+			this.List.Remove(e.OldValue);
 			this.List.Add(e.NewValue, (DimensionStyle)sender);
 
-			List<DxfObjectReference> refs = this.GetReferences(sender.Name);
-			this.References.Remove(sender.Name);
+			var refs = this.GetReferences(e.OldValue);
+			this.References.Remove(e.OldValue);
 			this.References.Add(e.NewValue, new DxfObjectReferences());
 			this.References[e.NewValue].Add(refs);
 		}
 
-		private void DimensionStyleLinetypeChanged(TableObject sender, TableObjectChangedEventArgs<Linetype> e)
+		private void DimensionStyle_BeforeChangingLinetypeValue(object sender, BeforeValueChangeEventArgs<Linetype> e)
 		{
-			this.Owner.Linetypes.References[e.OldValue.Name].Remove(sender);
+			var senderT = (DxfObject)sender;
+			this.Owner.Linetypes.References[e.OldValue.Name].Remove(senderT);
 			e.NewValue = this.Owner.Linetypes.Add(e.NewValue);
-			this.Owner.Linetypes.References[e.NewValue.Name].Add(sender);
+			this.Owner.Linetypes.References[e.NewValue.Name].Add(senderT);
 		}
 
-		private void DimensionStyleTextStyleChanged(TableObject sender, TableObjectChangedEventArgs<TextStyle> e)
+		private void DimensionStyle_BeforeChangingTextStyleValue(object sender, BeforeValueChangeEventArgs<TextStyle> e)
 		{
-			this.Owner.TextStyles.References[e.OldValue.Name].Remove(sender);
-
+			var senderT = (DxfObject)sender;
+			this.Owner.TextStyles.References[e.OldValue.Name].Remove(senderT);
 			e.NewValue = this.Owner.TextStyles.Add(e.NewValue);
-			this.Owner.TextStyles.References[e.NewValue.Name].Add(sender);
+			this.Owner.TextStyles.References[e.NewValue.Name].Add(senderT);
 		}
 
-		private void DimensionStyleBlockChanged(TableObject sender, TableObjectChangedEventArgs<Block> e)
+		private void DimensionStyle_BeforeChangingBlockValue(object sender, BeforeValueChangeEventArgs<Block> e)
 		{
-			if (e.OldValue != null)
-			{
-				this.Owner.Blocks.References[e.OldValue.Name].Remove(sender);
-			}
-
+			var senderT = (DxfObject)sender;
+			this.Owner.Blocks.References[e.OldValue.Name].Remove(senderT);
 			e.NewValue = this.Owner.Blocks.Add(e.NewValue);
-			if (e.NewValue != null)
-			{
-				this.Owner.Blocks.References[e.NewValue.Name].Add(sender);
-			}
+			this.Owner.Blocks.References[e.NewValue.Name].Add(senderT);
 		}
 
 		#endregion

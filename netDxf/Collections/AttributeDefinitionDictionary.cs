@@ -26,6 +26,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using netDxf.Entities;
 
 namespace netDxf.Collections
@@ -38,58 +39,60 @@ namespace netDxf.Collections
 
 		#region delegates and events
 
-		public delegate void BeforeAddItemEventHandler(AttributeDefinitionDictionary sender, AttributeDefinitionDictionaryEventArgs e);
-
-		public event BeforeAddItemEventHandler BeforeAddItem;
-
-		private bool OnBeforeAddItemEvent(AttributeDefinition item)
+		/// <summary>Generated when an <see cref="AttributeDefinition"/> item is about to be added; allows to confirm or reject the operation.</summary>
+		public event BeforeItemChangeEventHandler<AttributeDefinition> BeforeAddingItem;
+		/// <summary>Generates the <see cref="BeforeAddingItem"/> event.</summary>
+		/// <param name="item">The item being added.</param>
+		/// <param name="propertyName">(automatic) Name of the affected collection property.</param>
+		/// <returns><see langword="true"/> if the item can be added; otherwise, <see langword="false"/>.</returns>
+		private bool OnBeforeAddingItem(AttributeDefinition item, [CallerMemberName] string propertyName = "")
 		{
-			BeforeAddItemEventHandler ae = this.BeforeAddItem;
-			if (ae != null)
+			if (this.BeforeAddingItem is { } handler)
 			{
-				AttributeDefinitionDictionaryEventArgs e = new AttributeDefinitionDictionaryEventArgs(item);
-				ae(this, e);
-				return e.Cancel;
+				var e = new BeforeItemChangeEventArgs<AttributeDefinition>(propertyName, ItemChangeAction.Add, item);
+				handler(this, e);
+				return !e.Cancel;
 			}
-			return false;
+			return true;
 		}
 
-		public delegate void AddItemEventHandler(AttributeDefinitionDictionary sender, AttributeDefinitionDictionaryEventArgs e);
-
-		public event AddItemEventHandler AddItem;
-
-		private void OnAddItemEvent(AttributeDefinition item)
+		/// <summary>Generated when an <see cref="AttributeDefinition"/> item has been added.</summary>
+		public event AfterItemChangeEventHandler<AttributeDefinition> AfterAddingItem;
+		/// <summary>Generates the <see cref="AfterAddingItem"/> event.</summary>
+		/// <param name="item">The item being added.</param>
+		/// <param name="propertyName">(automatic) Name of the affected collection property.</param>
+		private void OnAfterAddingItem(AttributeDefinition item, [CallerMemberName] string propertyName = "")
 		{
-			AddItemEventHandler ae = this.AddItem;
-			if (ae != null)
-				ae(this, new AttributeDefinitionDictionaryEventArgs(item));
+			if (this.AfterAddingItem is { } handler)
+				handler(this, new(propertyName, ItemChangeAction.Add, item));
 		}
 
-		public delegate void BeforeRemoveItemEventHandler(AttributeDefinitionDictionary sender, AttributeDefinitionDictionaryEventArgs e);
-
-		public event BeforeRemoveItemEventHandler BeforeRemoveItem;
-
-		private bool OnBeforeRemoveItemEvent(AttributeDefinition item)
+		/// <summary>Generated when an <see cref="AttributeDefinition"/> item is about to be removed; allows to confirm or reject the operation.</summary>
+		public event BeforeItemChangeEventHandler<AttributeDefinition> BeforeRemovingItem;
+		/// <summary>Generates the <see cref="BeforeRemovingItem"/> event.</summary>
+		/// <param name="item">The item being removed.</param>
+		/// <param name="propertyName">(automatic) Name of the affected collection property.</param>
+		/// <returns><see langword="true"/> if the item can be removed; otherwise, <see langword="false"/>.</returns>
+		private bool OnBeforeRemovingItem(AttributeDefinition item, [CallerMemberName] string propertyName = "")
 		{
-			BeforeRemoveItemEventHandler ae = this.BeforeRemoveItem;
-			if (ae != null)
+			if (this.BeforeRemovingItem is { } handler)
 			{
-				AttributeDefinitionDictionaryEventArgs e = new AttributeDefinitionDictionaryEventArgs(item);
-				ae(this, e);
-				return e.Cancel;
+				var e = new BeforeItemChangeEventArgs<AttributeDefinition>(propertyName, ItemChangeAction.Remove, item);
+				handler(this, e);
+				return !e.Cancel;
 			}
-			return false;
+			return true;
 		}
 
-		public delegate void RemoveItemEventHandler(AttributeDefinitionDictionary sender, AttributeDefinitionDictionaryEventArgs e);
-
-		public event RemoveItemEventHandler RemoveItem;
-
-		private void OnRemoveItemEvent(AttributeDefinition item)
+		/// <summary>Generated when an <see cref="AttributeDefinition"/> item has been removed.</summary>
+		public event AfterItemChangeEventHandler<AttributeDefinition> AfterRemovingItem;
+		/// <summary>Generates the <see cref="AfterRemovingItem"/> event.</summary>
+		/// <param name="item">The item being removed.</param>
+		/// <param name="propertyName">(automatic) Name of the affected collection property.</param>
+		private void OnAfterRemovingItem(AttributeDefinition item, [CallerMemberName] string propertyName = "")
 		{
-			RemoveItemEventHandler ae = this.RemoveItem;
-			if (ae != null)
-				ae(this, new AttributeDefinitionDictionaryEventArgs(item));
+			if (this.AfterRemovingItem is { } handler)
+				handler(this, new(propertyName, ItemChangeAction.Remove, item));
 		}
 
 		#endregion
@@ -135,18 +138,18 @@ namespace netDxf.Collections
 				}
 
 				AttributeDefinition remove = this.innerDictionary[tag];
-				if (this.OnBeforeRemoveItemEvent(remove))
+				if (!this.OnBeforeRemovingItem(remove))
 				{
 					return;
 				}
 
-				if (this.OnBeforeAddItemEvent(value))
+				if (!this.OnBeforeAddingItem(value))
 				{
 					return;
 				}
 				this.innerDictionary[tag] = value;
-				this.OnAddItemEvent(value);
-				this.OnRemoveItemEvent(remove);
+				this.OnAfterAddingItem(value);
+				this.OnAfterRemovingItem(remove);
 			}
 		}
 
@@ -175,13 +178,13 @@ namespace netDxf.Collections
 				throw new ArgumentNullException(nameof(item));
 			}
 
-			if (this.OnBeforeAddItemEvent(item))
+			if (!this.OnBeforeAddingItem(item, "Item"))
 			{
 				throw new ArgumentException("The attribute definition cannot be added to the collection.", nameof(item));
 			}
 
 			this.innerDictionary.Add(item.Tag, item);
-			this.OnAddItemEvent(item);
+			this.OnAfterAddingItem(item, "Item");
 		}
 
 		/// <summary>Adds an <see cref="AttributeDefinition">attribute definition</see> list to the dictionary.</summary>
@@ -208,13 +211,13 @@ namespace netDxf.Collections
 				return false;
 			}
 
-			if (this.OnBeforeRemoveItemEvent(remove))
+			if (!this.OnBeforeRemovingItem(remove, "Item"))
 			{
 				return false;
 			}
 
 			this.innerDictionary.Remove(tag);
-			this.OnRemoveItemEvent(remove);
+			this.OnAfterRemovingItem(remove, "Item");
 			return true;
 		}
 

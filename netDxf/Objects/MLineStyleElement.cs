@@ -24,6 +24,7 @@
 #endregion
 
 using System;
+using System.Runtime.CompilerServices;
 using netDxf.Tables;
 
 namespace netDxf.Objects
@@ -36,18 +37,21 @@ namespace netDxf.Objects
 	{
 		#region delegates and events
 
-		public delegate void LinetypeChangedEventHandler(MLineStyleElement sender, TableObjectChangedEventArgs<Linetype> e);
-		public event LinetypeChangedEventHandler LinetypeChanged;
-		protected virtual Linetype OnLinetypeChangedEvent(Linetype oldLinetype, Linetype newLinetype)
+		/// <summary>Generated when a property of <see cref="Linetype"/> type changes.</summary>
+		public event BeforeValueChangeEventHandler<Linetype> BeforeChangingLinetypeValue;
+		/// <summary>Generates the <see cref="BeforeChangingLinetypeValue"/> event.</summary>
+		/// <param name="oldValue">The old value, being changed.</param>
+		/// <param name="newValue">The new value, that will replace the old one.</param>
+		/// <param name="propertyName">(automatic) Name of the affected property.</param>
+		protected virtual Linetype OnBeforeChangingLinetypeValue(Linetype oldValue, Linetype newValue, [CallerMemberName] string propertyName = "")
 		{
-			LinetypeChangedEventHandler ae = this.LinetypeChanged;
-			if (ae != null)
+			if (this.BeforeChangingLinetypeValue is { } handler)
 			{
-				TableObjectChangedEventArgs<Linetype> eventArgs = new TableObjectChangedEventArgs<Linetype>(oldLinetype, newLinetype);
-				ae(this, eventArgs);
-				return eventArgs.NewValue;
+				var e = new BeforeValueChangeEventArgs<Linetype>(propertyName, oldValue, newValue);
+				handler(this, e);
+				return e.NewValue;
 			}
-			return newLinetype;
+			return newValue;
 		}
 
 		#endregion
@@ -101,7 +105,7 @@ namespace netDxf.Objects
 					throw new ArgumentNullException(nameof(value));
 				}
 
-				_Linetype = this.OnLinetypeChangedEvent(_Linetype, value);
+				_Linetype = this.OnBeforeChangingLinetypeValue(_Linetype, value);
 			}
 		}
 

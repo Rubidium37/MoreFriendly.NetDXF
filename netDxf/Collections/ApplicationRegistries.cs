@@ -121,18 +121,18 @@ namespace netDxf.Collections
 
 		#region TableObject events
 
-		private void Item_NameChanged(TableObject sender, TableObjectChangedEventArgs<string> e)
+		private void Item_NameChanged(object sender, AfterValueChangeEventArgs<String> e)
 		{
 			if (this.Contains(e.NewValue))
 			{
 				throw new ArgumentException("There is already another application registry with the same name.");
 			}
 
-			this.List.Remove(sender.Name);
+			this.List.Remove(e.OldValue);
 			this.List.Add(e.NewValue, (ApplicationRegistry)sender);
 
-			List<DxfObjectReference> refs = this.References[sender.Name].ToList();
-			this.References.Remove(sender.Name);
+			var refs = this.References[e.OldValue].ToList();
+			this.References.Remove(e.OldValue);
 			this.References.Add(e.NewValue, new DxfObjectReferences());
 			this.References[e.NewValue].Add(refs);
 		}

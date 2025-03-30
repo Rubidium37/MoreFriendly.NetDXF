@@ -90,11 +90,11 @@ namespace netDxf.Collections
 			block.Record.Owner = this;
 
 			block.NameChanged += this.Item_NameChanged;
-			block.LayerChanged += this.Block_LayerChanged;
-			block.EntityAdded += this.Block_EntityAdded;
-			block.EntityRemoved += this.Block_EntityRemoved;
-			block.AttributeDefinitionAdded += this.Block_AttributeDefinitionAdded;
-			block.AttributeDefinitionRemoved += this.Block_AttributeDefinitionRemoved;
+			block.BeforeChangingLayerValue += this.Block_BeforeChangingLayerValue;
+			block.AfterAddingEntityObject += this.Block_AfterAddingEntityObject;
+			block.AfterRemovingEntityObject += this.Block_AfterRemovingEntityObject;
+			block.AfterAddingAttributeDefinition += this.Block_AfterAddingAttributeDefinition;
+			block.AfterRemovingAttributeDefinition += this.Block_AfterRemovingAttributeDefinition;
 
 			Debug.Assert(!string.IsNullOrEmpty(block.Handle), "The block handle cannot be null or empty.");
 			this.Owner.AddedObjects.Add(block.Handle, block);
@@ -155,11 +155,11 @@ namespace netDxf.Collections
 			item.Owner = null;
 
 			item.NameChanged -= this.Item_NameChanged;
-			item.LayerChanged -= this.Block_LayerChanged;
-			item.EntityAdded -= this.Block_EntityAdded;
-			item.EntityRemoved -= this.Block_EntityRemoved;
-			item.AttributeDefinitionAdded -= this.Block_AttributeDefinitionAdded;
-			item.AttributeDefinitionRemoved -= this.Block_AttributeDefinitionRemoved;
+			item.BeforeChangingLayerValue -= this.Block_BeforeChangingLayerValue;
+			item.AfterAddingEntityObject -= this.Block_AfterAddingEntityObject;
+			item.AfterRemovingEntityObject -= this.Block_AfterRemovingEntityObject;
+			item.AfterAddingAttributeDefinition -= this.Block_AfterAddingAttributeDefinition;
+			item.AfterRemovingAttributeDefinition -= this.Block_AfterRemovingAttributeDefinition;
 
 			return true;
 		}
@@ -168,40 +168,40 @@ namespace netDxf.Collections
 
 		#region Block events
 
-		private void Item_NameChanged(TableObject sender, TableObjectChangedEventArgs<string> e)
+		private void Item_NameChanged(object sender, AfterValueChangeEventArgs<String> e)
 		{
 			if (this.Contains(e.NewValue))
 			{
 				throw new ArgumentException("There is already another block with the same name.");
 			}
 
-			this.List.Remove(sender.Name);
+			this.List.Remove(e.OldValue);
 			this.List.Add(e.NewValue, (Block)sender);
 
-			List<DxfObjectReference> refs = this.GetReferences(sender.Name);
-			this.References.Remove(sender.Name);
+			var refs = this.GetReferences(e.OldValue);
+			this.References.Remove(e.OldValue);
 			this.References.Add(e.NewValue, new DxfObjectReferences());
 			this.References[e.NewValue].Add(refs);
 		}
 
-		private void Block_LayerChanged(Block sender, TableObjectChangedEventArgs<Layer> e)
+		private void Block_BeforeChangingLayerValue(object sender, BeforeValueChangeEventArgs<Layer> e)
 		{
-			this.Owner.Layers.References[e.OldValue.Name].Remove(sender);
-
+			var senderT = (DxfObject)sender;
+			this.Owner.Layers.References[e.OldValue.Name].Remove(senderT);
 			e.NewValue = this.Owner.Layers.Add(e.NewValue);
-			this.Owner.Layers.References[e.NewValue.Name].Add(sender);
+			this.Owner.Layers.References[e.NewValue.Name].Add(senderT);
 		}
 
-		private void Block_EntityAdded(TableObject sender, BlockEntityChangeEventArgs e)
+		private void Block_AfterAddingEntityObject(object sender, AfterItemChangeEventArgs<EntityObject> e)
 			=> this.Owner.AddEntityToDocument(e.Item, string.IsNullOrEmpty(e.Item.Handle));
 
-		private void Block_EntityRemoved(TableObject sender, BlockEntityChangeEventArgs e)
+		private void Block_AfterRemovingEntityObject(object sender, AfterItemChangeEventArgs<EntityObject> e)
 			=> this.Owner.RemoveEntityFromDocument(e.Item);
 
-		private void Block_AttributeDefinitionAdded(Block sender, BlockAttributeDefinitionChangeEventArgs e)
+		private void Block_AfterAddingAttributeDefinition(object sender, AfterItemChangeEventArgs<AttributeDefinition> e)
 			=> this.Owner.AddAttributeDefinitionToDocument(e.Item, string.IsNullOrEmpty(e.Item.Handle));
 
-		private void Block_AttributeDefinitionRemoved(Block sender, BlockAttributeDefinitionChangeEventArgs e)
+		private void Block_AfterRemovingAttributeDefinition(object sender, AfterItemChangeEventArgs<AttributeDefinition> e)
 			=> this.Owner.RemoveAttributeDefinitionFromDocument(e.Item);
 
 		#endregion

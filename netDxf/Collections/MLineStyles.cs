@@ -78,9 +78,9 @@ namespace netDxf.Collections
 			style.Owner = this;
 
 			style.NameChanged += this.Item_NameChanged;
-			style.MLineStyleElementAdded += this.MLineStyle_ElementAdded;
-			style.MLineStyleElementRemoved += this.MLineStyle_ElementRemoved;
-			style.MLineStyleElementLinetypeChanged += this.MLineStyle_ElementLinetypeChanged;
+			style.AfterAddingMLineStyleElement += this.MLineStyle_AfterAddingMLineStyleElement;
+			style.AfterRemovingMLineStyleElement += this.MLineStyle_AfterRemovingMLineStyleElement;
+			style.BeforeChangingLinetypeValue += this.MLineStyle_BeforeChangingLinetypeValue;
 
 			this.Owner.AddedObjects.Add(style.Handle, style);
 
@@ -125,9 +125,9 @@ namespace netDxf.Collections
 			item.Owner = null;
 
 			item.NameChanged -= this.Item_NameChanged;
-			item.MLineStyleElementAdded -= this.MLineStyle_ElementAdded;
-			item.MLineStyleElementRemoved -= this.MLineStyle_ElementRemoved;
-			item.MLineStyleElementLinetypeChanged -= this.MLineStyle_ElementLinetypeChanged;
+			item.AfterAddingMLineStyleElement -= this.MLineStyle_AfterAddingMLineStyleElement;
+			item.AfterRemovingMLineStyleElement -= this.MLineStyle_AfterRemovingMLineStyleElement;
+			item.BeforeChangingLinetypeValue -= this.MLineStyle_BeforeChangingLinetypeValue;
 
 			return true;
 		}
@@ -136,38 +136,46 @@ namespace netDxf.Collections
 
 		#region MLineStyle events
 
-		private void Item_NameChanged(TableObject sender, TableObjectChangedEventArgs<string> e)
+		private void Item_NameChanged(object sender, AfterValueChangeEventArgs<String> e)
 		{
 			if (this.Contains(e.NewValue))
 			{
 				throw new ArgumentException("There is already another multiline style with the same name.");
 			}
 
-			this.List.Remove(sender.Name);
+			this.List.Remove(e.OldValue);
 			this.List.Add(e.NewValue, (MLineStyle)sender);
 
-			List<DxfObjectReference> refs = this.GetReferences(sender.Name);
-			this.References.Remove(sender.Name);
+			var refs = this.GetReferences(e.OldValue);
+			this.References.Remove(e.OldValue);
 			this.References.Add(e.NewValue, new DxfObjectReferences());
 			this.References[e.NewValue].Add(refs);
 		}
 
-		private void MLineStyle_ElementLinetypeChanged(MLineStyle sender, TableObjectChangedEventArgs<Linetype> e)
+		private void MLineStyle_BeforeChangingLinetypeValue(object sender, BeforeValueChangeEventArgs<Linetype> e)
 		{
-			this.Owner.Linetypes.References[e.OldValue.Name].Remove(sender);
-
+			var senderT = (DxfObject)sender;
+			this.Owner.Linetypes.References[e.OldValue.Name].Remove(senderT);
 			e.NewValue = this.Owner.Linetypes.Add(e.NewValue);
-			this.Owner.Linetypes.References[e.NewValue.Name].Add(sender);
+			this.Owner.Linetypes.References[e.NewValue.Name].Add(senderT);
 		}
 
-		private void MLineStyle_ElementAdded(MLineStyle sender, MLineStyleElementChangeEventArgs e)
+		private void MLineStyle_AfterAddingMLineStyleElement(object sender, AfterItemChangeEventArgs<MLineStyleElement> e)
 		{
+			if (sender is not MLineStyle senderT)
+				return;
+
 			e.Item.Linetype = this.Owner.Linetypes.Add(e.Item.Linetype);
-			this.Owner.Linetypes.References[e.Item.Linetype.Name].Add(sender);
+			this.Owner.Linetypes.References[e.Item.Linetype.Name].Add(senderT);
 		}
 
-		private void MLineStyle_ElementRemoved(MLineStyle sender, MLineStyleElementChangeEventArgs e)
-			=> this.Owner.Linetypes.References[e.Item.Linetype.Name].Remove(sender);
+		private void MLineStyle_AfterRemovingMLineStyleElement(object sender, AfterItemChangeEventArgs<MLineStyleElement> e)
+		{
+			if (sender is not MLineStyle senderT)
+				return;
+
+			this.Owner.Linetypes.References[e.Item.Linetype.Name].Remove(senderT);
+		}
 
 		#endregion
 	}

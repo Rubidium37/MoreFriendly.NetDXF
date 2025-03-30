@@ -25,6 +25,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using netDxf.Objects;
 using netDxf.Tables;
 
@@ -36,18 +37,21 @@ namespace netDxf.Entities
 	{
 		#region delegates and events
 
-		public delegate void MLineStyleChangedEventHandler(MLine sender, TableObjectChangedEventArgs<MLineStyle> e);
-		public event MLineStyleChangedEventHandler MLineStyleChanged;
-		protected virtual MLineStyle OnMLineStyleChangedEvent(MLineStyle oldMLineStyle, MLineStyle newMLineStyle)
+		/// <summary>Generated when a property of <see cref="MLineStyle"/> type changes.</summary>
+		public event BeforeValueChangeEventHandler<MLineStyle> BeforeChangingMLineStyleValue;
+		/// <summary>Generates the <see cref="BeforeChangingMLineStyleValue"/> event.</summary>
+		/// <param name="oldValue">The old value, being changed.</param>
+		/// <param name="newValue">The new value, that will replace the old one.</param>
+		/// <param name="propertyName">(automatic) Name of the affected property.</param>
+		protected virtual MLineStyle OnBeforeChangingMLineStyleValue(MLineStyle oldValue, MLineStyle newValue, [CallerMemberName] string propertyName = "")
 		{
-			MLineStyleChangedEventHandler ae = this.MLineStyleChanged;
-			if (ae != null)
+			if (this.BeforeChangingMLineStyleValue is { } handler)
 			{
-				TableObjectChangedEventArgs<MLineStyle> eventArgs = new TableObjectChangedEventArgs<MLineStyle>(oldMLineStyle, newMLineStyle);
-				ae(this, eventArgs);
-				return eventArgs.NewValue;
+				var e = new BeforeValueChangeEventArgs<MLineStyle>(propertyName, oldValue, newValue);
+				handler(this, e);
+				return e.NewValue;
 			}
-			return newMLineStyle;
+			return newValue;
 		}
 
 		#endregion
@@ -210,7 +214,7 @@ namespace netDxf.Entities
 					throw new ArgumentNullException(nameof(value));
 				}
 
-				_Style = this.OnMLineStyleChangedEvent(_Style, value);
+				_Style = this.OnBeforeChangingMLineStyleValue(_Style, value);
 			}
 		}
 

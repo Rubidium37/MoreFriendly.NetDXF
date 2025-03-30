@@ -84,7 +84,7 @@ namespace netDxf.Collections
 			layer.Owner = this;
 
 			layer.NameChanged += this.Item_NameChanged;
-			layer.LinetypeChanged += this.LayerLinetypeChanged;
+			layer.BeforeChangingLinetypeValue += this.Layer_BeforeChangingLinetypeValue;
 
 			Debug.Assert(!string.IsNullOrEmpty(layer.Handle), "The layer handle cannot be null or empty.");
 			this.Owner.AddedObjects.Add(layer.Handle, layer);
@@ -126,7 +126,7 @@ namespace netDxf.Collections
 			item.Owner = null;
 
 			item.NameChanged -= this.Item_NameChanged;
-			item.LinetypeChanged -= this.LayerLinetypeChanged;
+			item.BeforeChangingLinetypeValue -= this.Layer_BeforeChangingLinetypeValue;
 
 			return true;
 		}
@@ -135,28 +135,28 @@ namespace netDxf.Collections
 
 		#region Layer events
 
-		private void Item_NameChanged(TableObject sender, TableObjectChangedEventArgs<string> e)
+		private void Item_NameChanged(object sender, AfterValueChangeEventArgs<String> e)
 		{
 			if (this.Contains(e.NewValue))
 			{
 				throw new ArgumentException("There is already another layer with the same name.");
 			}
 
-			this.List.Remove(sender.Name);
+			this.List.Remove(e.OldValue);
 			this.List.Add(e.NewValue, (Layer)sender);
 
-			List<DxfObjectReference> refs = this.GetReferences(sender.Name);
-			this.References.Remove(sender.Name);
+			var refs = this.GetReferences(e.OldValue);
+			this.References.Remove(e.OldValue);
 			this.References.Add(e.NewValue, new DxfObjectReferences());
 			this.References[e.NewValue].Add(refs);
 		}
 
-		private void LayerLinetypeChanged(TableObject sender, TableObjectChangedEventArgs<Linetype> e)
+		private void Layer_BeforeChangingLinetypeValue(object sender, BeforeValueChangeEventArgs<Linetype> e)
 		{
-			this.Owner.Linetypes.References[e.OldValue.Name].Remove(sender);
-
+			var senderT = (DxfObject)sender;
+			this.Owner.Linetypes.References[e.OldValue.Name].Remove(senderT);
 			e.NewValue = this.Owner.Linetypes.Add(e.NewValue);
-			this.Owner.Linetypes.References[e.NewValue.Name].Add(sender);
+			this.Owner.Linetypes.References[e.NewValue.Name].Add(senderT);
 		}
 
 		#endregion

@@ -26,6 +26,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using netDxf.Tables;
 
 namespace netDxf.Entities
@@ -36,18 +37,21 @@ namespace netDxf.Entities
 	{
 		#region delegates and events
 
-		public delegate void PolyfaceMeshFaceLayerChangedEventHandler(PolyfaceMesh sender, TableObjectChangedEventArgs<Layer> e);
-		public event PolyfaceMeshFaceLayerChangedEventHandler PolyfaceMeshFaceLayerChanged;
-		protected virtual Layer OnPolyfaceMeshFaceLayerChangedEvent(Layer oldLayer, Layer newLayer)
+		/// <summary>Generated when a property of <see cref="Layer"/> type changes.</summary>
+		public event BeforeValueChangeEventHandler<Layer> BeforeChangingFacesLayerValue;
+		/// <summary>Generates the <see cref="BeforeChangingFacesLayerValue"/> event.</summary>
+		/// <param name="oldValue">The old value, being changed.</param>
+		/// <param name="newValue">The new value, that will replace the old one.</param>
+		/// <param name="propertyName">(automatic) Name of the affected property.</param>
+		protected virtual Layer OnBeforeChangingFacesLayerValue(Layer oldValue, Layer newValue, [CallerMemberName] string propertyName = "")
 		{
-			PolyfaceMeshFaceLayerChangedEventHandler ae = this.PolyfaceMeshFaceLayerChanged;
-			if (ae != null)
+			if (this.BeforeChangingFacesLayerValue is { } handler)
 			{
-				TableObjectChangedEventArgs<Layer> eventArgs = new TableObjectChangedEventArgs<Layer>(oldLayer, newLayer);
-				ae(this, eventArgs);
-				return eventArgs.NewValue;
+				var e = new BeforeValueChangeEventArgs<Layer>(propertyName, oldValue, newValue);
+				handler(this, e);
+				return e.NewValue;
 			}
-			return newLayer;
+			return newValue;
 		}
 
 		#endregion
@@ -88,7 +92,7 @@ namespace netDxf.Entities
 			}
 			foreach (PolyfaceMeshFace face in this.Faces)
 			{
-				face.LayerChanged += this.PolyfaceMeshFace_LayerChanged;
+				face.BeforeChangingLayerValue += this.Faces_Item_BeforeChangingLayerValue;
 			}
 		}
 		/// <summary>Initializes a new instance of the class.</summary>
@@ -121,7 +125,7 @@ namespace netDxf.Entities
 
 			foreach (PolyfaceMeshFace face in this.Faces)
 			{
-				face.LayerChanged += this.PolyfaceMeshFace_LayerChanged;
+				face.BeforeChangingLayerValue += this.Faces_Item_BeforeChangingLayerValue;
 			}
 		}
 
@@ -301,8 +305,8 @@ namespace netDxf.Entities
 
 		#region PolyfaceMeshFace events
 
-		private void PolyfaceMeshFace_LayerChanged(PolyfaceMeshFace sender, TableObjectChangedEventArgs<Layer> e)
-			=> e.NewValue = this.OnPolyfaceMeshFaceLayerChangedEvent(e.OldValue, e.NewValue);
+		private void Faces_Item_BeforeChangingLayerValue(object sender, BeforeValueChangeEventArgs<Layer> e)
+			=> e.NewValue = this.OnBeforeChangingFacesLayerValue(e.OldValue, e.NewValue, $"{nameof(this.Faces)}.{e.PropertyName}");
 
 		#endregion
 	}

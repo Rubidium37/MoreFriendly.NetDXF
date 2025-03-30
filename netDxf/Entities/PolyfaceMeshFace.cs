@@ -26,6 +26,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using netDxf.Tables;
 
 namespace netDxf.Entities
@@ -44,18 +45,21 @@ namespace netDxf.Entities
 	{
 		#region delegates and events
 
-		public delegate void LayerChangedEventHandler(PolyfaceMeshFace sender, TableObjectChangedEventArgs<Layer> e);
-		public event LayerChangedEventHandler LayerChanged;
-		protected virtual Layer OnLayerChangedEvent(Layer oldLayer, Layer newLayer)
+		/// <summary>Generated when a property of <see cref="Layer"/> type changes.</summary>
+		public event BeforeValueChangeEventHandler<Layer> BeforeChangingLayerValue;
+		/// <summary>Generates the <see cref="BeforeChangingLayerValue"/> event.</summary>
+		/// <param name="oldValue">The old value, being changed.</param>
+		/// <param name="newValue">The new value, that will replace the old one.</param>
+		/// <param name="propertyName">(automatic) Name of the affected property.</param>
+		protected virtual Layer OnBeforeChangingLayerValue(Layer oldValue, Layer newValue, [CallerMemberName] string propertyName = "")
 		{
-			LayerChangedEventHandler ae = this.LayerChanged;
-			if (ae != null)
+			if (this.BeforeChangingLayerValue is { } handler)
 			{
-				TableObjectChangedEventArgs<Layer> eventArgs = new TableObjectChangedEventArgs<Layer>(oldLayer, newLayer);
-				ae(this, eventArgs);
-				return eventArgs.NewValue;
+				var e = new BeforeValueChangeEventArgs<Layer>(propertyName, oldValue, newValue);
+				handler(this, e);
+				return e.NewValue;
 			}
-			return newLayer;
+			return newValue;
 		}
 
 		#endregion
@@ -100,7 +104,7 @@ namespace netDxf.Entities
 		public Layer Layer
 		{
 			get => _Layer;
-			set => _Layer = this.OnLayerChangedEvent(_Layer, value);
+			set => _Layer = this.OnBeforeChangingLayerValue(_Layer, value);
 		}
 
 		#endregion
